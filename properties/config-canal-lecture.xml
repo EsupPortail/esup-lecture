@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+    
+<bean id="chanel" class="org.esupportail.lecture.domain.model.Chanel">
+        <property name="id" value="1" />
+        <property name="nom" value="Bouteille" />
+        <property name="prenom" value="Gwénaëlle" />
+        <property name="email" value="gwenaelle.bouteille@univ-rennes1.fr" />
+    </bean>
+
+    <bean id="adresse2" class="org.esupportail.maportlet.domain.model.EntreeCarnet">
+        <property name="id" value="2" />
+        <property name="nom" value="Dupont" />
+        <property name="prenom" value="Jean" />
+        <property name="email" value="Jean.Dupont@univ.fr" />
+    </bean>
+
+   <bean id="adresse3" class="org.esupportail.maportlet.domain.model.EntreeCarnet">
+        <property name="id" value="3" />
+        <property name="nom" value="Martin" />
+        <property name="prenom" value="Jacques" />
+        <property name="email" value="Jacques.Martin@univ.fr" />
+    </bean>
+
+   <bean id="domainService" class="org.esupportail.maportlet.domain.service.impl.DomainServiceStatic">
+        <property name="adresses">
+            <list>
+                <ref bean="adresse1" />
+                <ref bean="adresse2" />
+                <ref bean="adresse3" />
+            </list>
+        </property>
+    </bean>
+	 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	  <property name="location" value="/WEB-INF/classes/config.properties" />
+	</bean>
+	<bean id="domainService" class="org.esupportail.maportlet.domain.service.impl.DomainServiceDao">
+		<property name="dataService" ref="dataService" />
+	</bean>  
+
+</beans>
