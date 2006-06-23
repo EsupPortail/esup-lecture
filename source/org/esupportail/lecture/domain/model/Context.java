@@ -2,6 +2,8 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.*;
 
+import org.springframework.beans.factory.InitializingBean;
+
 
 /**
  * 
@@ -10,7 +12,7 @@ import java.util.*;
  *
  */
 
-public class Context {
+public class Context implements InitializingBean {
 /* ************************** PROPERTIES ******************************** */	
 	/**
 	 *  The context name 
@@ -34,10 +36,9 @@ public class Context {
 	
 	/**
 	 * Managed category profiles available in this context.
-	 * They are in a hashtable, reachable by their id
 	 */
-	private Map managedCategoryProfilesMap = new HashMap();
-
+	private List<ManagedCategoryProfile> managedCategoryProfilesList;
+	
 /* ************************** ACCESSORS ******************************** */	
 	public String getName() {
 		return name;
@@ -68,12 +69,56 @@ public class Context {
 		this.edit = edit;
 	}
 
-	public Map getManagedCategoryProfiles() {
-		return managedCategoryProfilesMap;
+/*	public Hashtable getManagedCategoryProfilesHash() {
+		return managedCategoryProfilesHash;
 	}
-	public void setManagedCategoryProfiles(Map managedCategoryProfilesMap) {
-		this.managedCategoryProfilesMap = managedCategoryProfilesMap;
+	public void setManagedCategoryProfilesHash(Hashtable managedCategoryProfilesHash) {
+		this.managedCategoryProfilesHash = managedCategoryProfilesHash;
 	}
-/* ************************** METHODS ******************************** */	
+*/
+	public List<ManagedCategoryProfile> getManagedCategoryProfilesList() {
+		return managedCategoryProfilesList;
+	}
+	public void setManagedCategoryProfilesList(List<ManagedCategoryProfile> managedCategoryProfilesList) {
+		this.managedCategoryProfilesList = managedCategoryProfilesList;
+	}
+
+/* ************************** Initialization *********************************** */
+	public void afterPropertiesSet (){
+		/*		managedCategoryProfilesHash = new Hashtable();
+				 for(int i = 0; i < onglets.length; i++){
+						listOnglets.add(new Onglet(onglets[i]));
+			     }
+			     */
+			}
+	
+/* ************************** METHODS ******************************** */
+
+	public String toString(){
+		
+		String string = "";
+	
+	/* The context name */
+		string += "	name : "+ name +"\n";
+		
+    /* The context description */
+		string += "	description : "+ description +"\n";
+	
+	/* The context id */
+		string += "	id : "+ id +"\n";
+
+	/* The context edit mode : not used for the moment */
+	// 	string += "	edit : "+ edit +"\n";;
+	
+	/* Managed category profiles available in this context */
+		string += "	managedCategoryProfilesList : \n";
+		Iterator iterator = managedCategoryProfilesList.iterator();
+		for (ManagedCategoryProfile m = null; iterator.hasNext();) {
+			m = (ManagedCategoryProfile)iterator.next();
+			string += "          ("+ m.getId() + "," + m.getName()+")\n";
+		}
+		
+		return string;
+	}
 
 }

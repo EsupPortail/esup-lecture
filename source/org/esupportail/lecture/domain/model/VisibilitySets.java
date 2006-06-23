@@ -47,4 +47,17 @@ public class VisibilitySets {
 		this.obliged = obliged;
 	}
 
+/* ************************** METHODS ******************************** */	
+	
+	public String toString(){
+		
+		String string ="";
+		string += "	   allowed : "+"\n"+ allowed.toString();
+		//string += "    autoSubscribed : "+ autoSubscribed.toString()+"\n";
+		//string += "    obliged : "+ obliged.toString()+"\n";
+		
+		return string;
+	}
+	
+	
 }

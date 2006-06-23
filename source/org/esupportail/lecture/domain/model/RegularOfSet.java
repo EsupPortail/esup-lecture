@@ -34,5 +34,15 @@ public class RegularOfSet {
 	public void setValue(String value) {
 		this.value = value;
 	}
-
+/* ************************** METHODS ******************************** */	
+	
+	public String toString(){
+		
+		String string ="";
+		string += "attribute : "+ attribute;
+		string += ", value : "+ value ;
+		
+		return string;
+	}
+	
 }

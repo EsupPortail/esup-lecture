@@ -71,4 +71,27 @@ public class Mapping {
 		this.xmlType = xmlType;
 	}
 
+	/* ************************** Methods ******************************** */	
+
+	public String toString(){
+	
+		String string="";
+		
+		/* The dtd name*/
+		string += "	dtd : "+ dtd +"\n";
+
+		/* The path of the xslt file */
+		string += "	xsltFile : "+ xsltFile +"\n";
+	
+		/* The Xpath to get an item in the source xml stream */
+		string += "	itemXPath : "+ itemXPath +"\n";
+	
+		/* The xmlns of the source xml stream */
+		string += "	xmlns : "+ xmlns +"\n";
+	
+		/* The xml type ??? */
+		string += "	xmlType : "+ xmlType +"\n";
+	
+		return string;
+	}
 }

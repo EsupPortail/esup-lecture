@@ -2,43 +2,207 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-    
+  
+<!-- Définition du canal avec ses
+	- contexts
+	- profiles de catégories controllées
+	- mappings
+-->	  
 <bean id="chanel" class="org.esupportail.lecture.domain.model.Chanel">
-        <property name="id" value="1" />
-        <property name="nom" value="Bouteille" />
-        <property name="prenom" value="Gwénaëlle" />
-        <property name="email" value="gwenaelle.bouteille@univ-rennes1.fr" />
-    </bean>
+   <property name="contexts">
+    <list>
+      <ref bean="c1"/>
+	  <ref bean="c2"/>	
+      <ref bean="c3"/>
+    </list>
+   </property>
+   <property name="managedCategoryProfiles">
+    <list>
+      <ref bean="mc1"/>
+	  <ref bean="mc2"/>	
+      <ref bean="mc3"/>
+	  <ref bean="mc4"/>
+	  <ref bean="mc5"/>
+	  <ref bean="mc6"/>
+    </list>
+  </property>	
+   <property name="mappingList">
+    <list>
+      <ref bean="m1"/>
+	  <ref bean="m2"/>	
+      <ref bean="m3"/>
+    </list>
+  </property>
+</bean>
 
-    <bean id="adresse2" class="org.esupportail.maportlet.domain.model.EntreeCarnet">
-        <property name="id" value="2" />
-        <property name="nom" value="Dupont" />
-        <property name="prenom" value="Jean" />
-        <property name="email" value="Jean.Dupont@univ.fr" />
-    </bean>
-
-   <bean id="adresse3" class="org.esupportail.maportlet.domain.model.EntreeCarnet">
-        <property name="id" value="3" />
-        <property name="nom" value="Martin" />
-        <property name="prenom" value="Jacques" />
-        <property name="email" value="Jacques.Martin@univ.fr" />
-    </bean>
-
-   <bean id="domainService" class="org.esupportail.maportlet.domain.service.impl.DomainServiceStatic">
-        <property name="adresses">
-            <list>
-                <ref bean="adresse1" />
-                <ref bean="adresse2" />
-                <ref bean="adresse3" />
-            </list>
-        </property>
-    </bean>
-	 -->
-	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-	  <property name="location" value="/WEB-INF/classes/config.properties" />
-	</bean>
-	<bean id="domainService" class="org.esupportail.maportlet.domain.service.impl.DomainServiceDao">
-		<property name="dataService" ref="dataService" />
-	</bean>  
+<!-- Définition des contexts avec :
+	- name
+	- description
+	- id
+	- edit : pas pour l'instant
+	- managedCategoryProfilesList
+	-->
+<bean id="c1" class="org.esupportail.lecture.domain.model.Context">
+	<property name="name" value="mon contexte 1"/>
+    <property name="description" value="c'est le premier context"/>
+	<property name="id" value="1"/>
+	<property name="managedCategoryProfilesList">
+		<list>
+			<ref bean="mc1" />
+			<ref bean="mc2" />
+			<ref bean="mc3" />
+			<ref bean="mc4" />
+		</list>
+	</property> 
+</bean>	
+<bean id="c2" class="org.esupportail.lecture.domain.model.Context">
+	<property name="name" value="mon contexte 2"/>
+    <property name="description" value="c'est le deuxieme context"/>
+	<property name="id" value="2"/>
+	<property name="managedCategoryProfilesList">
+		<list>
+			<ref bean="mc5" />
+			<ref bean="mc6" />
+		</list>
+	</property> 
+</bean>	
+<bean id="c3" class="org.esupportail.lecture.domain.model.Context">
+	<property name="name" value="mon contexte 3"/>
+    <property name="description" value="c'est le troisieme context"/>
+	<property name="id" value="3"/>
+	<property name="managedCategoryProfilesList">
+		<list>
+			<ref bean="mc1" />
+			<ref bean="mc2" />
+			<ref bean="mc5" />
+			<ref bean="mc6" />
+		</list>
+	</property> 
+</bean>		
+	
+<!-- Définition des managed category profiles avec :
+	- name
+	- description
+	- id
+	- urlCategory
+	- trustCategory (bool)
+	- edit : pas pour l'instant;
+	- access;
+	- visibility
+	-->	
+<bean id="mc1" class="org.esupportail.lecture.domain.model.ManagedCategoryProfile">
+	<property name="name" value="ma categorie 1"/>
+    <property name="description" value="c'est la première categorie"/>
+	<property name="id" value="1"/>
+	<property name="urlCategory" value="http://listes.univ-rennes1.fr/"/>
+	<property name="trustCategory" value="false"/>
+	<property name="access" value="PUBLIC"/>
+	<property name="visibility" ref ="visibMc1"/>
+</bean>	
+<bean id="mc2" class="org.esupportail.lecture.domain.model.ManagedCategoryProfile">
+	<property name="name" value="ma categorie 2"/>
+    <property name="description" value="c'est la deuxieme categorie"/>
+	<property name="id" value="2"/>
+	<property name="urlCategory" value="http://listes.univ-rennes1.fr/wws"/>
+	<property name="trustCategory" value="false"/>
+	<property name="access" value="PUBLIC"/>
+	<property name="visibility" ref ="visibMc1"/>
+</bean>	
+<bean id="mc3" class="org.esupportail.lecture.domain.model.ManagedCategoryProfile">
+	<property name="name" value="ma categorie 3"/>
+    <property name="description" value="c'est la troisieme categorie"/>
+	<property name="id" value="3"/>
+	<property name="urlCategory" value="http://listes.etudiant.univ-rennes1.fr/wws"/>
+	<property name="trustCategory" value="false"/>
+	<property name="access" value="PUBLIC"/>
+	<property name="visibility" ref ="visibMc1"/>
+</bean>	
+<bean id="mc4" class="org.esupportail.lecture.domain.model.ManagedCategoryProfile">
+	<property name="name" value="ma categorie 4"/>
+    <property name="description" value="c'est la quatrieme categorie"/>
+	<property name="id" value="4"/>
+	<property name="urlCategory" value="http://listes.asso.univ-rennes1.fr/wws"/>
+	<property name="trustCategory" value="false"/>
+	<property name="access" value="PUBLIC"/>
+	<property name="visibility" ref ="visibMc1"/>
+</bean>
+<bean id="mc5" class="org.esupportail.lecture.domain.model.ManagedCategoryProfile">
+	<property name="name" value="ma categorie 5"/>
+    <property name="description" value="c'est la cinquieme categorie"/>
+	<property name="id" value="5"/>
+	<property name="urlCategory" value="http://listes.univ-bretagne.fr/wws"/>
+	<property name="trustCategory" value="false"/>
+	<property name="access" value="PUBLIC"/>
+	<property name="visibility" ref ="visibMc1"/>
+</bean>
+<bean id="mc6" class="org.esupportail.lecture.domain.model.ManagedCategoryProfile">
+	<property name="name" value="ma categorie 6"/>
+    <property name="description" value="c'est la sixieme categorie"/>
+	<property name="id" value="6"/>
+	<property name="urlCategory" value="http://listes.ensc-rennes.fr/wws"/>
+	<property name="trustCategory" value="false"/>
+	<property name="access" value="PUBLIC"/>
+	<property name="visibility" ref ="visibMc1"/>
+</bean>		
+	
+<!-- Définition des ensembles de visibilité des managed category profiles avec :
+	- allowed
+	- autoSubscribed
+	- obliged
+	-->		
+<!-- Je trouve la défintion des groupes assez lourde comme ça ???-->
+<bean id="visibMc1" class="org.esupportail.lecture.domain.model.VisibilitySets">
+	<property name="allowed" ref = "def1"/>
+<!--	<property name="autoSubscribed" ref="def2"/>
+	<property name="obliged" ref="def3"/>
+-->
+</bean>	
+	
+<bean id="def1" class="org.esupportail.lecture.domain.model.DefAndContentSets">
+	<property name="groups">
+		<set>
+			<value>"a"</value>
+			<value>"b"</value>
+			<value>"c"</value>
+		</set>
+	</property>
+	<property name="regulars">
+		<set>
+			<ref bean="rs1"/>
+		</set>
+	</property>
+</bean>	
+<bean id="rs1" class="org.esupportail.lecture.domain.model.RegularOfSet">
+	<property name="attribute" value="attr1"/>
+	<property name="value" value="val1"/>
+</bean>
+	
+<!-- Définition des mappings avec :
+	- keys :
+		dtd ou/et xmlns
+	- valeurs :
+		xsltFile,itemXPath 
+	- xmlType ???
+	-->		
+<bean id="m1" class="org.esupportail.lecture.domain.model.Mapping">
+	<property name="dtd" value ="dtd1" />
+	<property name="xmlns" value ="xmlns1" />
+	<property name="xsltFile" value ="file1" />
+	<property name="itemXPath" value ="xpath1" />
+</bean>	
+<bean id="m2" class="org.esupportail.lecture.domain.model.Mapping">
+	<property name="dtd" value ="dtd2" />
+	<property name="xmlns" value ="xmlns2" />
+	<property name="xsltFile" value ="file2" />
+	<property name="itemXPath" value ="xpath2" />
+</bean>	
+<bean id="m3" class="org.esupportail.lecture.domain.model.Mapping">
+	<property name="dtd" value ="dtd3" />
+	<property name="xmlns" value ="xmlns3" />
+	<property name="xsltFile" value ="file3" />
+	<property name="itemXPath" value ="xpath3" />
+</bean>		
+	
+		
 
 </beans>

@@ -6,10 +6,10 @@ import java.util.Set;
 
 /**
  * DefAndContentSets is composed of two parts :
- *  - a set of users that belongs to the group after computing its definition
- * 	- the group definition, two ways :
- * 		- an enumeration of groups
- * 		- a set of regulars defining groups
+ *  - the content of defined set after computing its definition
+ * 	- the set definition, two ways :
+ * 		- an enumeration of groups (groups)
+ * 		- a set of regulars defining groups (regulars)
  *  - 
  * @author gbouteil
  *
@@ -27,7 +27,7 @@ public class DefAndContentSets {
 	private Set<RegularOfSet> regulars;
 	
 	/**
-	 * a set of remote groups to define the group (or a part)
+	 * the defined set content 
 	 */
 	private Set content;
 
@@ -55,4 +55,17 @@ public class DefAndContentSets {
 		this.content = content;
 	}
 
+/* ************************** METHODS ******************************** */	
+	
+	public String toString(){
+		
+		String string="";
+		string += "		groups : "+ groups.toString()+"\n";
+		string += "		regulars : "+ regulars.toString()+"\n";
+		//string += "	content : "+ content.toString()+"\n";
+		
+		return string;
+	}
+	
+	
 }

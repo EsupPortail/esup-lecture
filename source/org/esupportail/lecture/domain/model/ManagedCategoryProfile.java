@@ -2,6 +2,7 @@ package org.esupportail.lecture.domain.model;
 
 
 import java.util.*;
+
 import org.esupportail.lecture.utils.exception.MissingPtCasException;
 
 public class ManagedCategoryProfile extends CategoryProfile implements ManagedComposantProfile {
@@ -50,7 +51,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 */
 	private ManagedCategory category = null; 
 	
-	private Map contextsMap = new HashMap();;
+	/**
+	 * Contexts where these profiles category are defined
+	 */
+	private List<Context> contextsList;
 
 
 /* ************************** ACCESSORS ******************************** */	
@@ -112,15 +116,57 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		this.category = category;
 	}
 
-	public Map getContextsMap() {
-		return contextsMap;
+	public List<Context> getContextsList() {
+		return contextsList;
 	}
-	public void setContextsMap(Map contextsMap) {
-		this.contextsMap = contextsMap;
+	public void setContextsList(List<Context> contextsMap) {
+		this.contextsList = contextsList;
 	}	
 	
 /* ************************** METHODS ******************************** */	
 
+	public String toString(){
+		
+		String string ="";
+		
+		string += super.toString();
+		
+		/* Proxy ticket CAS */
+		string += "	PtCas : " + ptCas.toString() +"\n";
+		
+		/* URL of the remote managed category */
+		string += "	urlCategory : " + urlCategory.toString() +"\n";		
+		
+		/* trustCategory parameter */
+		if (trustCategory){
+			string += "	trust Category : true \n";		
+		} else {
+			string += "	trust Category : false \n";		
+		}
+		
+		/* The remote managed category edit mode : not used for the moment */	
+		//string += "	edit : " + edit.toString() +"\n";	
+		
+		/* Access mode on this remote managed category */
+		string += "	access : " + access.toString() +"\n";	
+
+		/* Visibility rights for groups */
+		string += "	visibility : " +"\n"+ visibility.toString();
+		
+		/* ttl of the remote managed category */
+		string += "	ttl : " + ttl +"\n";
+		
+		/* The remote managed category */
+		string += "	category : " + category +"\n";
+
+		/* Contexts where these profiles category are defined */
+		string += "	contextsList : " + contextsList +"\n";
+
+		return string;
+		
+	}
+	
+	
 		/**
 		 */
 	public void refresh(){

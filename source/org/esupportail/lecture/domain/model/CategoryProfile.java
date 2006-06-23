@@ -16,6 +16,11 @@ public abstract class CategoryProfile {
 	 *  Category profile id
 	 */
 	private int id;
+	/**
+	 * The category description
+	 */
+	private String description = "";
+	
 
 /* ************************** ACCESSORS ******************************** */	
 	public String getName() {
@@ -32,5 +37,29 @@ public abstract class CategoryProfile {
 		this.id = id;
 	}
 
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 /* ************************** METHODS ******************************** */	
+
+	public String toString(){
+		
+		String string = "";
+		
+		/* The category profile name */
+		string += "	name : "+ name +"\n";
+		
+		/* The category profile description */
+		string += "	description : "+ description +"\n";
+	
+		/* The category profile id */
+		string += "	id : "+ id +"\n";
+		
+		return string;
+	}
+
+
 }

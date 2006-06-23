@@ -19,7 +19,9 @@ public class TestCanalLecture {
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		
 		Chanel myChanel = (Chanel)factory.getBean("chanel");
-
+		
+		System.out.println("***********************Configuration du canal lecture : ***********************");
+		System.out.println(myChanel.toString());
 	}
 
 }

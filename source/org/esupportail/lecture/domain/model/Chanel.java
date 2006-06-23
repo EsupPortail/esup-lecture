@@ -2,65 +2,156 @@ package org.esupportail.lecture.domain.model;
 
 
 import java.util.*;
+
+import org.springframework.beans.factory.InitializingBean;
 /**
  * 22.06.2006
  * @author gbouteil
  *
  * The "lecture" chanel
  */
-public class Chanel {
+public class Chanel implements InitializingBean {
 /* ************************** PROPERTIES ******************************** */	
     /**
      * Contexts defined in the chanel
      */
-	private Set<Context> contexts;
+	private List<Context> contexts;
 	/**
 	 * Managed category profiles defined in the chanel
 	 */
-	private Set<ManagedCategoryProfile> managedCategoryProfiles;
+	private List<ManagedCategoryProfile> managedCategoryProfiles;
 	/**
 	 * Xslt mappings defined in the chanel
 	 */
-	private Set<Mapping> mappings;
+	private List<Mapping> mappingList;
+	/**
+	 * hash to access mappings by dtd
+	 */	
+	private Hashtable<String,Mapping> mappingHashByDtd;
+	/**
+	 * hash to access mappings by xmlns
+	 */	
+	private Hashtable<String,Mapping> mappingHashByXmlns;
 	/**
 	 * User Profiles connected to the chanel
 	 */
-//	private Set<UserProfile> userProfiles;
+//	private List<UserProfile> userProfiles;
 
 	
 /* ************************** ACCESSORS ********************************* */
-	public Set<Context> getContexts() {
+	public List<Context> getContexts() {
 		return contexts;
 	}
-	public void setContexts(Set<Context> contexts) {
+	public void setContexts(List<Context> contexts) {
 		this.contexts = contexts;
 	}	
 
-	public Set<ManagedCategoryProfile> getManagedCategoryProfiles() {
+	public List<ManagedCategoryProfile> getManagedCategoryProfiles() {
 		return managedCategoryProfiles;
 	}
-	public void setManagedCategoryProfiles(Set<ManagedCategoryProfile> managedCategoryProfiles) {
+	public void setManagedCategoryProfiles(List<ManagedCategoryProfile> managedCategoryProfiles) {
 		this.managedCategoryProfiles = managedCategoryProfiles;
 	}
 
-	public Set<Mapping> getMappings() {
-		return mappings;
+	public List<Mapping> getMappingList() {
+		return mappingList;
 	}
-	public void setMappings(Set<Mapping> mappings) {
-		this.mappings = mappings;
+	public void setMappingList(List<Mapping> mappingList) {
+		this.mappingList = mappingList;
 	}
-
-/*	public Set getUserProfiles() {
+	
+	public Hashtable<String,Mapping> getMappingHashByDtd() {
+		return mappingHashByDtd;
+	}
+	public void setMappingHashByDtd(Hashtable<String,Mapping> mappingHashByDtd) {
+		this.mappingHashByDtd = mappingHashByDtd;
+	}
+	
+	public Hashtable<String,Mapping> getMappingHashByXmlns() {
+		return mappingHashByXmlns;
+	}
+	public void setMappingHashByXmlns(Hashtable<String,Mapping> mappingHashByXmlns) {
+		this.mappingHashByXmlns = mappingHashByXmlns;
+	}	
+	
+/*	public List getUserProfiles() {
 		return userProfiles;
 	}
-	public void setUserProfiles(Set userProfiles) {
+	public void setUserProfiles(List userProfiles) {
 		this.userProfiles = userProfiles;
 	}
 */
+
+/* ************************** Initialization *********************************** */
+	/**
+	 * method called by Spring for initialization bean
+	 */
+	public void afterPropertiesSet (){
+		mappingHashByDtd = new Hashtable<String,Mapping>();
+		mappingHashByXmlns = new Hashtable<String,Mapping>();
+		Iterator iterator = mappingList.iterator();
+		while (iterator.hasNext()) {
+	        Mapping m = (Mapping)iterator.next();
+	        String dtd = m.getDtd();
+	        String xmlns = m.getXmlns();
+	        if (dtd != null){
+	        	mappingHashByDtd.put(m.getDtd(),m);
+	        }
+	        if (xmlns != null){
+	        	mappingHashByXmlns.put(m.getXmlns(),m);
+	        }
+	    }
+	}	
 	
 /* ************************** METHODS *********************************** */
 
+	public String toString() {
+		String string = "";
+			
+		/* Contexts */ 
+		string += "***************** Contexts : \n\n";
+		string += contexts.toString();
+	    string += "\n";
+				
+		/* Managed categories profiles */
+		string += "***************** Managed categories profiles : \n\n";
+		string += managedCategoryProfiles.toString();
+	    string += "\n";
+		
+		/* Xslt mappings*/
+		string += "***************** Xslt mappings : \n\n";
+		string += mappingList.toString();
+		string += "\n";
+		
+		/* Hash to access mappings by dtd */
+		string += "***************** Hash mappings by dtd : \n\n";
+		string += mappingHashByDtd.toString();
+		string += "\n";
+				
+		/* Hash to access mappings by xmlns */
+		string += "***************** Hash mappings by xmlns : \n\n";
+		string += mappingHashByXmlns.toString();      
+	    string += "\n";
+		
+		
+		/* User Profiles connected to the chanel */
+		string += "***************** User profiles : \n\n";
+		string += " later ...";
+        string += "\n";
+		
+        return string;
+	}		
+			
+			
 
+
+	
+	
+	
+	
+	
+	
+/* *********************************************************************/	
 
 
 	/**
