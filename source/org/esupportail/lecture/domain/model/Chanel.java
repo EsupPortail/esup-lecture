@@ -4,6 +4,9 @@ package org.esupportail.lecture.domain.model;
 import java.util.*;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * 22.06.2006
  * @author gbouteil
@@ -12,6 +15,11 @@ import org.springframework.beans.factory.InitializingBean;
  */
 public class Chanel implements InitializingBean {
 /* ************************** PROPERTIES ******************************** */	
+	/**
+	 * Logs
+	 */
+	protected static final Log log = LogFactory.getLog(Chanel.class); 
+	
     /**
      * Contexts defined in the chanel
      */
@@ -105,19 +113,20 @@ public class Chanel implements InitializingBean {
 		while(iterator.hasNext()){
 			Context c = (Context)iterator.next();
 			c.initManagedCategoryProfiles();
+			log.warn("Ca logue :"+ c.getName());
 		}
 		
 
 	}	
 	
-	public void init(){
+/*	public void init(){
 		Iterator iterator = contexts.iterator();
 		while(iterator.hasNext()){
 			Context c = (Context)iterator.next();
 			c.initManagedCategoryProfiles();
 		}
 	}
-	
+	*/
 /* ************************** METHODS *********************************** */
 
 	public String toString() {
