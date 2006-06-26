@@ -54,7 +54,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	/**
 	 * Contexts where these profiles category are defined
 	 */
-	private List<Context> contextsList;
+	private List<Context> contextsList = new ArrayList();
 
 
 /* ************************** ACCESSORS ******************************** */	
@@ -119,7 +119,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	public List<Context> getContextsList() {
 		return contextsList;
 	}
-	public void setContextsList(List<Context> contextsMap) {
+	public void setContextsList(List<Context> contextsList) {
 		this.contextsList = contextsList;
 	}	
 	
@@ -160,13 +160,29 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		string += "	category : " + category +"\n";
 
 		/* Contexts where these profiles category are defined */
-		string += "	contextsList : " + contextsList +"\n";
-
+		string += "	contextsList : \n";
+		Iterator iterator = contextsList.iterator();
+		for (Context c = null; iterator.hasNext();) {
+			c = (Context)iterator.next();
+			string += "          ("+ c.getId() + "," + c.getName()+")\n";
+		}
+		
 		return string;
 		
 	}
 	
-	
+	/**
+	 * Add a context to  contextsList if is not present in.
+	 * (Method used by context where the managed Category is referenced to be known by a managedCategoryProfile)
+	 * @param c : context added
+	 * Method used by context where the managed Category is referenced to be known by a managedCategoryProfile
+	 */
+	public void addContext(Context c){
+		
+		if (contextsList.indexOf(c) < 0){
+			contextsList.add(c);
+		}
+	}
 		/**
 		 */
 	public void refresh(){
@@ -264,11 +280,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 						}
 
 							
-							/**
-							 */
-							public void addContext(Context c){
-							
-							}
+	
 
 								
 								/**

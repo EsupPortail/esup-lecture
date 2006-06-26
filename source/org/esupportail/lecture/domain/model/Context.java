@@ -85,15 +85,28 @@ public class Context implements InitializingBean {
 
 /* ************************** Initialization *********************************** */
 	public void afterPropertiesSet (){
-		/*		managedCategoryProfilesHash = new Hashtable();
-				 for(int i = 0; i < onglets.length; i++){
-						listOnglets.add(new Onglet(onglets[i]));
-			     }
-			     */
-			}
+		/* Connecting Managed category profiles and contexts */
+/*		Iterator iterator=managedCategoryProfilesList.iterator();
+
+		while (iterator.hasNext()) {
+	        ManagedCategoryProfile m = (ManagedCategoryProfile)iterator.next();
+	        m.addContext(this);    
+		}
+*/	}
 	
 /* ************************** METHODS ******************************** */
 
+	public void initManagedCategoryProfiles (){
+		/* Connecting Managed category profiles and contexts */
+		Iterator iterator=managedCategoryProfilesList.iterator();
+
+		while (iterator.hasNext()) {
+	        ManagedCategoryProfile m = (ManagedCategoryProfile)iterator.next();
+	        m.addContext(this);    
+		}
+	}
+	
+	
 	public String toString(){
 		
 		String string = "";

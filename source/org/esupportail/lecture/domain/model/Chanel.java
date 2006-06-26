@@ -101,7 +101,22 @@ public class Chanel implements InitializingBean {
 	        	mappingHashByXmlns.put(m.getXmlns(),m);
 	        }
 	    }
+		iterator = contexts.iterator();
+		while(iterator.hasNext()){
+			Context c = (Context)iterator.next();
+			c.initManagedCategoryProfiles();
+		}
+		
+
 	}	
+	
+	public void init(){
+		Iterator iterator = contexts.iterator();
+		while(iterator.hasNext()){
+			Context c = (Context)iterator.next();
+			c.initManagedCategoryProfiles();
+		}
+	}
 	
 /* ************************** METHODS *********************************** */
 
