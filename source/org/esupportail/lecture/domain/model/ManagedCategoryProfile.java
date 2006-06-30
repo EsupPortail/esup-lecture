@@ -102,6 +102,27 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		this.visibility = visibility;
 	}
 
+	public void setVisibilityAllowed(DefAndContentSets d) {
+		this.visibility.setAllowed(d);
+	}
+	public DefAndContentSets getVisibilityAllowed() {
+		return this.visibility.getAllowed();
+	}
+	
+	public void setVisibilityAutoSubcribed(DefAndContentSets d) {
+		this.visibility.setAutoSubscribed(d);
+	}
+	public DefAndContentSets getVisibilityAutoSubscribed() {
+		return this.visibility.getAutoSubscribed();
+	}
+	
+	public void setVisibilityObliged(DefAndContentSets d) {
+		this.visibility.setObliged(d);
+	}
+	public DefAndContentSets getVisibilityObliged() {
+		return this.visibility.getObliged();
+	}
+	
 	public int getTtl() {
 		return ttl;
 	}
@@ -132,7 +153,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		string += super.toString();
 		
 		/* Proxy ticket CAS */
-		string += "	PtCas : " + ptCas.toString() +"\n";
+//		string += "	PtCas : " + ptCas.toString() +"\n";
 		
 		/* URL of the remote managed category */
 		string += "	urlCategory : " + urlCategory.toString() +"\n";		
@@ -160,12 +181,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		string += "	category : " + category +"\n";
 
 		/* Contexts where these profiles category are defined */
-		string += "	contextsList : \n";
-		Iterator iterator = contextsList.iterator();
-		for (Context c = null; iterator.hasNext();) {
-			c = (Context)iterator.next();
-			string += "          ("+ c.getId() + "," + c.getName()+")\n";
-		}
+//		string += "	contextsList : \n";
+//		Iterator iterator = contextsList.iterator();
+//		for (Context c = null; iterator.hasNext();) {
+//			c = (Context)iterator.next();
+//			string += "          ("+ c.getId() + "," + c.getName()+")\n";
+//		}
 		
 		return string;
 		

@@ -12,7 +12,7 @@ import org.springframework.beans.factory.InitializingBean;
  *
  */
 
-public class Context implements InitializingBean {
+public class Context  {
 /* ************************** PROPERTIES ******************************** */	
 	/**
 	 *  The context name 
@@ -38,6 +38,11 @@ public class Context implements InitializingBean {
 	 * Managed category profiles available in this context.
 	 */
 	private List<ManagedCategoryProfile> managedCategoryProfilesList;
+	
+	/**
+	 * reference id on managed category profile
+	 */
+	private List<String>refIdManagedCategoryProfilesList;
 	
 /* ************************** ACCESSORS ******************************** */	
 	public String getName() {
@@ -83,16 +88,19 @@ public class Context implements InitializingBean {
 		this.managedCategoryProfilesList = managedCategoryProfilesList;
 	}
 
+	public void setRefIdManagedCategoryProfile(String s){
+		refIdManagedCategoryProfilesList.add(s);
+	}
 /* ************************** Initialization *********************************** */
-	public void afterPropertiesSet (){
-		/* Connecting Managed category profiles and contexts */
-/*		Iterator iterator=managedCategoryProfilesList.iterator();
-
-		while (iterator.hasNext()) {
-	        ManagedCategoryProfile m = (ManagedCategoryProfile)iterator.next();
-	        m.addContext(this);    
-		}
-*/	}
+//	public void afterPropertiesSet (){
+//		/* Connecting Managed category profiles and contexts */
+///*		Iterator iterator=managedCategoryProfilesList.iterator();
+//
+//		while (iterator.hasNext()) {
+//	        ManagedCategoryProfile m = (ManagedCategoryProfile)iterator.next();
+//	        m.addContext(this);    
+//		}
+//*/	}
 	
 /* ************************** METHODS ******************************** */
 

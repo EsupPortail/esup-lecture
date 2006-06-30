@@ -1,6 +1,6 @@
 package org.esupportail.lecture;
 
-import org.esupportail.lecture.domain.model.Chanel;
+import org.esupportail.lecture.domain.model.Channel;
 import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.FactoryBean;
@@ -18,10 +18,16 @@ public class TestCanalLecture {
 		ClassPathResource res = new ClassPathResource("applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		
-		Chanel myChanel = (Chanel)factory.getBean("chanel");
+		Channel myChannel = (Channel)factory.getBean("channel");
+		try {
+			myChannel.loadConfig();
+		} catch (Exception e) {
+			System.out.println("Exception !!!");
+		}
 
 		System.out.println("***********************Configuration du canal lecture : ***********************");
-		System.out.println(myChanel.toString());
+		System.out.println(myChannel.toString());
+	
 	
 		
 	}

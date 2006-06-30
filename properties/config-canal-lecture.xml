@@ -8,7 +8,7 @@
 	- profiles de catégories controllées
 	- mappings
 -->	  
-<bean id="chanel" class="org.esupportail.lecture.domain.model.Chanel">
+<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
    <property name="contexts">
     <list>
       <ref bean="c1"/>

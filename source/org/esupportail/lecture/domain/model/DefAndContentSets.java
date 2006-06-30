@@ -2,7 +2,10 @@ package org.esupportail.lecture.domain.model;
 
 
 import java.util.Collection;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
+import java.util.HashSet;
 
 /**
  * DefAndContentSets is composed of two parts :
@@ -19,42 +22,49 @@ public class DefAndContentSets {
 	/**
 	 * the group : a set of users
 	 */
-	private Set groups;
+	private List<String> groups = new ArrayList();
 	
 	/**
 	 * a set of regular to define the group (or a part)
 	 */
-	private Set<RegularOfSet> regulars;
+	private List<RegularOfSet> regulars = new ArrayList();
 	
 	/**
 	 * the defined set content 
 	 */
-	private Set content;
+	private Set<String> content = new HashSet();
 
 	
 /* ************************** ACCESSORS ******************************** */	
 
-	public Set getGroups() {
+	public List<String> getGroups() {
 		return groups;
 	}
-	public void setGroups(Set groups) {
+	public void setGroups(List<String> groups) {
 		this.groups = groups;
 	}
-	
-	public Set<RegularOfSet> getRegulars() {
+	public void addGroup(String group) {
+		this.groups.add(group);
+	}
+	public List<RegularOfSet> getRegulars() {
 		return regulars;
 	}
-	public void setRegulars(Set<RegularOfSet> regulars) {
+	public void setRegulars(List<RegularOfSet> regulars) {
 		this.regulars = regulars;
 	}
-
+	public void addRegular(RegularOfSet regular) {
+		this.regulars.add(regular);
+	}
+	
 	public Set getContent() {
 		return content;
 	}
-	public void setContent(Set content) {
+	public void setContent(Set<String> content) {
 		this.content = content;
 	}
-
+	public void addContent(String aContent){
+		this.content.add(aContent);
+	}
 /* ************************** METHODS ******************************** */	
 	
 	public String toString(){
