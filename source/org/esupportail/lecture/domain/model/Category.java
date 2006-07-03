@@ -1,7 +1,7 @@
 package org.esupportail.lecture.domain.model;
 
 
-public class Category {
+public abstract class Category {
 
 	/**
 	 * @uml.property  name="name"
