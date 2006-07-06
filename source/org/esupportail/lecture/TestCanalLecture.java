@@ -20,7 +20,7 @@ public class TestCanalLecture {
 		
 		Channel myChannel = (Channel)factory.getBean("channel");
 		try {
-			myChannel.loadConfig();
+			myChannel.startup();
 		} catch (Exception e) {
 			System.out.println("Exception !!!");
 		}

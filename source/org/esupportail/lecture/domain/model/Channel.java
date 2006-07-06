@@ -137,12 +137,20 @@ public class Channel  {
 */
 
 /* ************************** Initialization *********************************** */
+	public void startup() throws Exception {
+		loadConfig();
+		loadMappingFile();
+		//TODO charger les mappings dans la mappingList
+		//TODO faire le hash mapping by dtd
+		//TODO fair le hash mapping by xmlns
+	}
+	
+	
 	/**
 	 * Load config file, containing contexts and managed category profiles definition.
 	 * Initialize these elements.
 	 */
 	public void loadConfig()throws Exception{
-		
 		// load config
 		config = ChannelConfig.getInstance(this);
 		
@@ -153,14 +161,16 @@ public class Channel  {
 			c.initManagedCategoryProfiles(this);
 		}
 
-		//TODO relier les contexts avec les profiles de category
-		//TODO charger les mappings dans la mappingList
-		//TODO faire le hash mapping by dtd
-		//TODO fair le hash mapping by xmlns
-
-		
+	
+	
 	}
 	
+	public void loadMappingFile() throws Exception {
+		//load file
+		mappingFile = MappingFile.getInstance(this);
+		
+		//initialize mappings and hashs
+	}
 	
 	
 //	/**
@@ -190,7 +200,7 @@ public class Channel  {
 		String string = "";
 			
 		/* mappingFile */
-		string += "***************** Mapping File ***************";
+		string += "***************** Mapping File : \n\n";
 		string += mappingFile.toString();
 		string += "\n";
 		
@@ -204,10 +214,10 @@ public class Channel  {
 		string += managedCategoryProfilesHash.toString();
 	    string += "\n";
 //		
-//		/* Xslt mappings*/
-//		string += "***************** Xslt mappings : \n\n";
-//		string += mappingList.toString();
-//		string += "\n";
+		/* Xslt mappings*/
+		string += "***************** Xslt mappings : \n\n";
+		string += mappingList.toString();
+		string += "\n";
 //		
 //		/* Hash to access mappings by dtd */
 //		string += "***************** Hash mappings by dtd : \n\n";

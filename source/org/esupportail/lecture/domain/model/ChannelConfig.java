@@ -38,7 +38,9 @@ public class ChannelConfig {
 	 */
 	private static Channel channel;
 	
-	XMLConfiguration config;
+	private static XMLConfiguration config;
+	
+	private static String urlMappingFile = "";
 	
 	/*path of the config file*/
 	private static String configFilePath ="/properties/channelConfig.xml";
@@ -52,6 +54,13 @@ public class ChannelConfig {
 	
 	public Channel getChannel(){
 		return channel;
+	}
+	
+	public void setUrlMappingFile(String u){
+		urlMappingFile = u;
+	}
+	public String getUrlMappingFile() {
+		return urlMappingFile;
 	}
 /* ********************** METHODS *****************************************/
 
@@ -111,9 +120,7 @@ public class ChannelConfig {
 	 *
 	 */
 	private void loadUrlMappingFile() {
-	   	MappingFile mappingFile = new MappingFile();
-	   	mappingFile.setLocation(config.getString("[@mappingFile]"));
-	   	channel.setMappingFile(mappingFile);
+	   	MappingFile.setMappingFilePath(config.getString("[@mappingFile]"));
     }	
 
 	private void loadManagedCategoryProfiles() throws Exception {
