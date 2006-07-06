@@ -22,17 +22,17 @@ public class DefAndContentSets {
 	/**
 	 * the group : a set of users
 	 */
-	private List<String> groups = new ArrayList();
+	private List<String> groups = new ArrayList<String>();
 	
 	/**
 	 * a set of regular to define the group (or a part)
 	 */
-	private List<RegularOfSet> regulars = new ArrayList();
+	private List<RegularOfSet> regulars = new ArrayList<RegularOfSet>();
 	
 	/**
 	 * the defined set content 
 	 */
-	private Set<String> content = new HashSet();
+	private Set<String> content = new HashSet<String>();
 
 	
 /* ************************** ACCESSORS ******************************** */	

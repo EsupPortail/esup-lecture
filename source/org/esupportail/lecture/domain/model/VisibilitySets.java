@@ -53,8 +53,8 @@ public class VisibilitySets {
 		
 		String string ="";
 		string += "	   allowed : "+"\n"+ allowed.toString();
-		string += "    autoSubscribed : "+ autoSubscribed.toString()+"\n";
-		string += "    obliged : "+ obliged.toString()+"\n";
+		string += "           autoSubscribed : "+"\n"+ autoSubscribed.toString()+"\n";
+		string += "           obliged : "+"\n"+ obliged.toString()+"\n";
 		
 		return string;
 	}

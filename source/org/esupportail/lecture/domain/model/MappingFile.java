@@ -4,11 +4,14 @@ package org.esupportail.lecture.domain.model;
 
 public class MappingFile {
 
+/* ********************** PROPERTIES**************************************/ 
 	/**
 	 * location of the mapping file
 	 */
 	private String location = "";
 
+	
+/* ********************** ACCESSORS**************************************/ 
 	/**
 	 * Getter of the property <tt>location</tt>
 	 * @return  Returns the location.
@@ -25,6 +28,7 @@ public class MappingFile {
 		this.location = location;
 	}
 	
+/* ********************** METHODS**************************************/ 	
 	public String toString(){
 		String string = "Location : "+ location ;
 		System.out.println(string);

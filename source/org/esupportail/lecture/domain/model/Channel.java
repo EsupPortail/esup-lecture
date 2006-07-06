@@ -29,11 +29,11 @@ public class Channel  {
     /**
      * Contexts defined in the chanel
      */
-	private List<Context> contexts = new ArrayList();
+	private Set<Context> contexts = new HashSet<Context>();
 	/**
 	 * HAsh of References id on Managed category profiles defined in the chanel
 	 */
-	private Hashtable<Integer,ManagedCategoryProfile> managedCategoryProfilesHash = new Hashtable();
+	private Hashtable<Integer,ManagedCategoryProfile> managedCategoryProfilesHash = new Hashtable<Integer,ManagedCategoryProfile>();
 	/**
 	 * The  mapping File (xslt)
 	 */
@@ -41,26 +41,33 @@ public class Channel  {
 	/**
 	 * Xslt mappings defined in the chanel
 	 */
-	private List<Mapping> mappingList = new ArrayList();
+	private List<Mapping> mappingList = new ArrayList<Mapping>();
 	/**
 	 * hash to access mappings by dtd
 	 */	
-	private Hashtable<String,Mapping> mappingHashByDtd = new Hashtable();
+	private Hashtable<String,Mapping> mappingHashByDtd = new Hashtable<String,Mapping>();
 	/**
 	 * hash to access mappings by xmlns
 	 */	
-	private Hashtable<String,Mapping> mappingHashByXmlns = new Hashtable();
+	private Hashtable<String,Mapping> mappingHashByXmlns = new Hashtable<String,Mapping>();
 	/**
 	 * User Profiles connected to the chanel
 	 */
-//	private List<UserProfile> userProfiles;
+//	private Set<UserProfile> userProfiles = new HAshSet<UserProfile>();;
 
 	
 /* ************************** ACCESSORS ********************************* */
-	public List<Context> getContexts() {
+	public ChannelConfig getChannelConfig(){
+		return config;
+	}
+	public void setChannelConfig (ChannelConfig config){
+		this.config = config;
+	}
+	
+	public Set<Context> getContexts() {
 		return contexts;
 	}
-	public void setContexts(List<Context> contexts) {
+	public void setContexts(Set<Context> contexts) {
 		this.contexts = contexts;
 	}	
 	
@@ -75,6 +82,9 @@ public class Channel  {
 		this.managedCategoryProfilesHash = managedCategoryProfilesHash;
 	}
 
+	public ManagedCategoryProfile getManagedCategoryProfile(int i){
+		return managedCategoryProfilesHash.get(i);
+	}
 	public void setManagedCategoryProfile(ManagedCategoryProfile m) {
 		this.managedCategoryProfilesHash.put(m.getId(),m);
 	}
@@ -91,6 +101,10 @@ public class Channel  {
 	}
 	public void setMappingList(List<Mapping> mappingList) {
 		this.mappingList = mappingList;
+	}
+	
+	public void setMapping(Mapping m){
+		this.mappingList.add(m);
 	}
 	
 	public Hashtable<String,Mapping> getMappingHashByDtd() {
@@ -114,10 +128,10 @@ public class Channel  {
 		this.mappingHashByXmlns.put(s,m);
 	}	
 	
-/*	public List getUserProfiles() {
+/*	public Set getUserProfiles() {
 		return userProfiles;
 	}
-	public void setUserProfiles(List userProfiles) {
+	public void setUserProfiles(Set userProfiles) {
 		this.userProfiles = userProfiles;
 	}
 */
@@ -129,26 +143,32 @@ public class Channel  {
 	 */
 	public void loadConfig()throws Exception{
 		
+		// load config
 		config = ChannelConfig.getInstance(this);
-		log.error("OK");
-//		contexts = config.listContexts;
-//		Iterator iterator = contexts.iterator();
-//		while(iterator.hasNext()){
-//			Context c = (Context)iterator.next();
-//			c.initManagedCategoryProfiles();
-//			log.warn("Ca logue :"+ c.getName());
-//		}
+		
+		// initialize category and contexts
+		Iterator iterator = contexts.iterator();
+		while(iterator.hasNext()){
+			Context c = (Context)iterator.next();
+			c.initManagedCategoryProfiles(this);
+		}
+
+		//TODO relier les contexts avec les profiles de category
+		//TODO charger les mappings dans la mappingList
+		//TODO faire le hash mapping by dtd
+		//TODO fair le hash mapping by xmlns
+
 		
 	}
 	
 	
 	
-	/**
-	 * method called by Spring for initialization bean
-	 */
-	public void afterPropertiesSet () throws Exception{
-		mappingHashByDtd = new Hashtable<String,Mapping>();
-		mappingHashByXmlns = new Hashtable<String,Mapping>();
+//	/**
+//	 * method called by Spring for initialization bean
+//	 */
+//	public void afterPropertiesSet () throws Exception{
+//		mappingHashByDtd = new Hashtable<String,Mapping>();
+//		mappingHashByXmlns = new Hashtable<String,Mapping>();
 //		Iterator iterator = mappingList.iterator();
 //		while (iterator.hasNext()) {
 //	        Mapping m = (Mapping)iterator.next();
@@ -161,11 +181,7 @@ public class Channel  {
 //	        	mappingHashByXmlns.put(m.getXmlns(),m);
 //	        }
 //	    }
-		
-		
-	
-
-	}	
+//	}	
 	
 	
 /* ************************** METHODS *********************************** */
@@ -179,9 +195,9 @@ public class Channel  {
 		string += "\n";
 		
 //		/* Contexts */ 
-//		string += "***************** Contexts : \n\n";
-//		string += contexts.toString();
-//	    string += "\n";
+		string += "***************** Contexts : \n\n";
+		string += contexts.toString();
+	    string += "\n";
 //				
 //		/* Managed categories profiles */
 		string += "***************** Managed categories profiles : \n\n";

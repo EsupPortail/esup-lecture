@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <chanelConfig mappingFile="http://listes.univ-rennes1.fr" >
+	<context 
+	  name = "context1"
+	  id = "1">
+	  <description>C'est le context 1</description> 
+	  <refCategoryProfile refId="1"/>
+  	  <refCategoryProfile refId="2"/>
+  	  <refCategoryProfile refId="3"/>
+  	  <refCategoryProfile refId="4"/>
+	</context>
+	<context 
+	  name = "context2"
+	  id = "2">
+	  <description>C'est le context 2</description> 
+	  <refCategoryProfile refId="1"/>
+  	  <refCategoryProfile refId="2"/>
+ 	</context>
+	<context 
+	  name = "context3"
+	  id = "3">
+	  <description>C'est le context 3</description> 
+  	  <refCategoryProfile refId="2"/>
+  	  <refCategoryProfile refId="3"/>
+  	  <refCategoryProfile refId="4"/>
+	</context>
 	<categoryProfile 
 		name="categorie1"
 		id="1"

@@ -4,13 +4,27 @@ package org.esupportail.lecture.domain.model;
 import java.util.Collection;
 
 
-public class ManagedCategory extends org.esupportail.lecture.domain.model.Category {
+public class ManagedCategory extends Category {
+
+/* ********************** PROPERTIES**************************************/ 
 
 	/**
 	 * @uml.property  name="visibility"
 	 */
 	private VisibilitySets visibility;
 
+	/**
+	 * @uml.property  name="ttl"
+	 */
+	private int ttl;
+
+	/**
+	 * @uml.property  name="edit"
+	 */
+	private Editability edit;
+
+
+/* ********************** ACCESSORS**************************************/ 
 	/**
 	 * Getter of the property <tt>visibility</tt>
 	 * @return  Returns the visibility.
@@ -28,11 +42,6 @@ public class ManagedCategory extends org.esupportail.lecture.domain.model.Catego
 	public void setVisibility(VisibilitySets visibility) {
 		this.visibility = visibility;
 	}
-
-	/**
-	 * @uml.property  name="ttl"
-	 */
-	private int ttl;
 
 	/**
 	 * Getter of the property <tt>ttl</tt>
@@ -53,11 +62,6 @@ public class ManagedCategory extends org.esupportail.lecture.domain.model.Catego
 	}
 
 	/**
-	 * @uml.property  name="edit"
-	 */
-	private Editability edit;
-
-	/**
 	 * Getter of the property <tt>edit</tt>
 	 * @return  Returns the edit.
 	 * @uml.property  name="edit"
@@ -74,7 +78,8 @@ public class ManagedCategory extends org.esupportail.lecture.domain.model.Catego
 	public void setEdit(Editability edit) {
 		this.edit = edit;
 	}
-
+	
+// TODO : peut etre eutre chose que des collections ?
 	/** 
 	 * @uml.property name="managedChildren"
 	 * @uml.associationEnd multiplicity="(0 -1)" aggregation="composite" inverse="managedCategory:org.esupportail.lecture.domain.model.ManagedComposantProfile"
