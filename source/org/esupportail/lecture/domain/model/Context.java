@@ -32,7 +32,7 @@ public class Context  {
 	/**
 	 * The context id
 	 */
-	private int id;
+	private String id;
 
 	/**
 	 * The context edit mode : not used for the moment
@@ -46,7 +46,8 @@ public class Context  {
 	/**
 	 * reference id on managed category profile
 	 */
-	private Set<Integer>refIdManagedCategoryProfilesSet = new HashSet<Integer>();
+	private Set<String>refIdManagedCategoryProfilesSet = new HashSet<String>();
+	
 	
 /* ************************** ACCESSORS ******************************** */	
 	public String getName() {
@@ -63,10 +64,10 @@ public class Context  {
 		this.description = description;
 	}
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -78,13 +79,6 @@ public class Context  {
 		this.edit = edit;
 	}
 
-/*	public Hashtable getManagedCategoryProfilesHash() {
-		return managedCategoryProfilesHash;
-	}
-	public void setManagedCategoryProfilesHash(Hashtable managedCategoryProfilesHash) {
-		this.managedCategoryProfilesHash = managedCategoryProfilesHash;
-	}
-*/
 	public Set<ManagedCategoryProfile> getManagedCategoryProfilesSet() {
 		return managedCategoryProfilesSet;
 	}
@@ -92,12 +86,11 @@ public class Context  {
 		this.managedCategoryProfilesSet = managedCategoryProfilesSet;
 	}
 
-	public void setRefIdManagedCategoryProfile(int s){
+	public void setRefIdManagedCategoryProfile(String s){
 		refIdManagedCategoryProfilesSet.add(s);
-		log.debug("Ref id : "+s );
 	}
 	
-	public void setSetRefIdManagedCategoryProfiles(Set<Integer> s){
+	public void setSetRefIdManagedCategoryProfiles(Set<String> s){
 		refIdManagedCategoryProfilesSet = s;
 	}
 /* ************************** Initialization *********************************** */
@@ -111,20 +104,20 @@ public class Context  {
 //		}
 //*/	}
 	
-/* ************************** METHODS ******************************** */
 
 	public void initManagedCategoryProfiles (Channel channel){
 		/* Connecting Managed category profiles and contexts */
 		Iterator iterator=refIdManagedCategoryProfilesSet.iterator();
 
 		while (iterator.hasNext()) {
-			Integer id = (Integer)iterator.next();
+			String id = (String)iterator.next();
 			ManagedCategoryProfile mcp = channel.getManagedCategoryProfile(id);
 			managedCategoryProfilesSet.add(mcp);
 	        mcp.setContext(this);    
 		}
 	}
 	
+/* ************************** METHODS ******************************** */
 	
 	public String toString(){
 		

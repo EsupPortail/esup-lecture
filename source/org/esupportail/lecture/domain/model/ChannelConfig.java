@@ -37,14 +37,19 @@ public class ChannelConfig {
 	 * The channel of the config
 	 */
 	private static Channel channel;
-	
+	 
 	private static XMLConfiguration config;
-	
-	/* path of the config file*/
+	/**
+	 *  path of the config file
+	 */
 	private static String configFilePath ="properties/test.xml";
-	/* time of the config file last modified */
+	
+	/**
+	 * time of the config file last modified
+	 */
 	private static long configFileLastModified;
 		
+	
 /* ********************** ACCESSORS *****************************************/
 	
 	public void setChannel(Channel c){
@@ -63,12 +68,14 @@ public class ChannelConfig {
 	* @return an instance of the channel configuration
 	* @throws Exception
 	*/
-	public static ChannelConfig getInstance(Channel c) throws Exception  {
+	synchronized public static ChannelConfig getInstance(Channel c) throws Exception  {
 		if (singleton == null) {
 			singleton = new ChannelConfig(c);
 		}else {
 			// TODO : voir le chargt de fichier modifie + cf. new ChannelConfig()
-//			URL url = ChannelConfig.class.getResource(configFilePath);
+//			//sync
+			
+//		URL url = ChannelConfig.class.getResource(configFilePath);
 //			File configFile = new File(url.getFile());
 //			
 //			long newDate = configFile.lastModified();
@@ -76,6 +83,7 @@ public class ChannelConfig {
 //				log.debug("getInstance :: "+"Configuration reloaded");
 //				configFileLastModified = newDate;
 //				config = new ChannelConfig(c);
+			//sync
 		}		
 		return singleton;
 	}
@@ -88,27 +96,24 @@ public class ChannelConfig {
 		this.channel = c;
 		
 		try {
-			config = new XMLConfiguration(configFilePath);
-//			TODO faire la check de la DTD
-//			config.setValidating(true);
-			// TODO automatic reloading
-//			config.setReloadingStrategy(new FileChangedReloadingStrategy());
-//			config.load();
-
-			/* Loading UrlMappingFile */
-			loadUrlMappingFile();
-
-			/* Loading managed category profiles */
-			loadManagedCategoryProfiles();
+			config = new XMLConfiguration();
+			config.setFileName(configFilePath);
+			config.setValidating(true);
+			config.load();
 			
-//			/* Loading Contexts */
-			loadContexts();
+		/* Loading UrlMappingFile */
+		loadUrlMappingFile();
 
-		} catch (ConfigurationException cex) {
+		/* Loading managed category profiles */
+		loadManagedCategoryProfiles();
+		
+		/* Loading Contexts */
+		loadContexts();
+
+		} catch (ConfigurationException e) {
 			if (log.isDebugEnabled()){
-				log.debug(" Erreur config");	
+				log.debug(e.getMessage());	
 			}
-			
 		}
 	}
 
@@ -118,7 +123,6 @@ public class ChannelConfig {
 	 */
 	private void loadUrlMappingFile() {
 	   	MappingFile.setMappingFilePath(config.getString("[@mappingFile]"));
-	   	log.debug(config.getString("[@mappingFile]"));
     }	
 
 	private void loadManagedCategoryProfiles() throws Exception {
@@ -127,7 +131,7 @@ public class ChannelConfig {
 		for(int i = 0; i<nbProfiles;i++ ){
 			String pathCategoryProfile = "categoryProfile(" + i + ")";
 			ManagedCategoryProfile mcp = new ManagedCategoryProfile();
-			mcp.setId(config.getInt(pathCategoryProfile+ "[@id]"));
+			mcp.setId(config.getString(pathCategoryProfile+ "[@id]"));
 			mcp.setName(config.getString(pathCategoryProfile+ "[@name]"));
 			mcp.setUrlCategory(config.getString(pathCategoryProfile+ "[@urlCategory]"));
 			mcp.setTrustCategory(config.getBoolean(pathCategoryProfile+ "[@trustCategory]"));
@@ -136,9 +140,9 @@ public class ChannelConfig {
 			
 		    // Accessibility
 		    String access = config.getString(pathCategoryProfile+"[@access]");
-		    if (access.equalsIgnoreCase("PUBLIC")) {
+		    if (access.equalsIgnoreCase("public")) {
 				mcp.setAccess(Accessibility.PUBLIC);
-			} else if (access.equalsIgnoreCase("CAS")) {
+			} else if (access.equalsIgnoreCase("cas")) {
 				mcp.setAccess(Accessibility.CAS);
 			} else {
 				throw new Exception();
@@ -204,14 +208,14 @@ public class ChannelConfig {
 		for(int i = 0; i<nbContexts;i++ ){
 			String pathContext = "context(" + i + ")";
 			Context c = new Context();
-			c.setId(config.getInt(pathContext+ "[@id]"));
+			c.setId(config.getString(pathContext+ "[@id]"));
 			c.setName(config.getString(pathContext+ "[@name]"));
 			c.setDescription(config.getString(pathContext+".description"));
 			List refIdList = config.getList(pathContext+ ".refCategoryProfile[@refId]");
 			Iterator iterator = refIdList.iterator();
 			for (String s = null; iterator.hasNext();){
 				s = (String)iterator.next();
-				c.setRefIdManagedCategoryProfile(Integer.parseInt(s));
+				c.setRefIdManagedCategoryProfile(s);
 			}
 			channel.setContext(c);
 		}

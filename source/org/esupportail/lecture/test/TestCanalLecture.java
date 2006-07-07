@@ -23,6 +23,7 @@ public class TestCanalLecture {
 			myChannel.startup();
 		} catch (Exception e) {
 			System.out.println("Exception !!!");
+			System.out.println(e.toString());
 		}
 
 		System.out.println("***********************Configuration du canal lecture : ***********************");

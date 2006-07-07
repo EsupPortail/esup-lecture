@@ -33,7 +33,7 @@ public class Channel  {
 	/**
 	 * HAsh of References id on Managed category profiles defined in the chanel
 	 */
-	private Hashtable<Integer,ManagedCategoryProfile> managedCategoryProfilesHash = new Hashtable<Integer,ManagedCategoryProfile>();
+	private Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash = new Hashtable<String,ManagedCategoryProfile>();
 	/**
 	 * The  mapping File (xslt)
 	 */
@@ -75,15 +75,15 @@ public class Channel  {
 		this.contexts.add(c);
 	}	
 
-	public Hashtable<Integer,ManagedCategoryProfile> getManagedCategoryProfilesHash() {
+	public Hashtable<String,ManagedCategoryProfile> getManagedCategoryProfilesHash() {
 		return managedCategoryProfilesHash;
 	}
-	public void setManagedCategoryProfiles(Hashtable<Integer,ManagedCategoryProfile> managedCategoryProfilesHash) {
+	public void setManagedCategoryProfiles(Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash) {
 		this.managedCategoryProfilesHash = managedCategoryProfilesHash;
 	}
 
-	public ManagedCategoryProfile getManagedCategoryProfile(int i){
-		return managedCategoryProfilesHash.get(i);
+	public ManagedCategoryProfile getManagedCategoryProfile(String s){
+		return managedCategoryProfilesHash.get(s);
 	}
 	public void setManagedCategoryProfile(ManagedCategoryProfile m) {
 		this.managedCategoryProfilesHash.put(m.getId(),m);

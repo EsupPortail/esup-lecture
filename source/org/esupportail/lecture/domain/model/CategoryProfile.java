@@ -15,7 +15,7 @@ public abstract class CategoryProfile {
 	/**
 	 *  Category profile id
 	 */
-	private int id;
+	private String id;
 	/**
 	 * The category description
 	 */
@@ -30,10 +30,10 @@ public abstract class CategoryProfile {
 		this.name = name;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

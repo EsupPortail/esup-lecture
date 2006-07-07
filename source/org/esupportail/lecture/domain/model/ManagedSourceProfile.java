@@ -167,4 +167,9 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 		this.itemXPath = itemXPath;
 	}
 
+	public void setId(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

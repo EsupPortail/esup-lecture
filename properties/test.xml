@@ -1,36 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<chanelConfig mappingFile="properties/mappings.xml" >
+<!DOCTYPE channelConfig SYSTEM "clecture.dtd" >
+<channelConfig mappingFile="properties/mappings.xml">
 	<context 
 	  name = "context1"
-	  id = "1">
+	  id = "c1">
 	  <description>C'est le context 1</description> 
-	  <refCategoryProfile refId="1"/>
-  	  <refCategoryProfile refId="2"/>
-  	  <refCategoryProfile refId="3"/>
-  	  <refCategoryProfile refId="4"/>
+	  <refCategoryProfile refId="cp1"/>
+  	  <refCategoryProfile refId="cp2"/>
+  	  <refCategoryProfile refId="cp3"/>
+  	  <refCategoryProfile refId="cp4"/>
 	</context>
 	<context 
 	  name = "context2"
-	  id = "2">
+	  id = "c2">
 	  <description>C'est le context 2</description> 
-	  <refCategoryProfile refId="1"/>
-  	  <refCategoryProfile refId="2"/>
+	  <refCategoryProfile refId="cp1"/>
+  	  <refCategoryProfile refId="cp2"/>
  	</context>
 	<context 
 	  name = "context3"
-	  id = "3">
+	  id = "c3">
 	  <description>C'est le context 3</description> 
-  	  <refCategoryProfile refId="2"/>
-  	  <refCategoryProfile refId="3"/>
-  	  <refCategoryProfile refId="4"/>
+  	  <refCategoryProfile refId="cp2"/>
+  	  <refCategoryProfile refId="cp3"/>
+  	  <refCategoryProfile refId="cp4"/>
 	</context>
 	<categoryProfile 
 		name="categorie1"
-		id="1"
+		id="cp1"
 		urlCategory="http://listes.univ-rennes1.fr/"
-		trustCategory="false"
-		access="PUBLIC"
+		trustCategory="no"
+		access="public"
 		ttl = "3600" >
 		<description> c'est la categorie1</description>
 		<visibility>
@@ -66,14 +66,14 @@
 	</categoryProfile>
  	<categoryProfile 
 		name="categorie2"
-		id="2"
+		id="cp2"
 		urlCategory="http://listes.univ-rennes1.fr/"
-		trustCategory="false"
-		access="PUBLIC"
+		trustCategory="no"
+		access="public"
 		ttl = "3600" >
 		<description> c'est la categorie2</description>
-		 		<visibility>
-		 			<allowed>
+	 	<visibility>
+	 		<allowed>
 				<regular
 					attribute="attr21"
 					value="val21"/>
@@ -89,36 +89,39 @@
 				<group
 					name="group222"/>
 			</autoSubscribed>
-					 		</visibility>
+			<obliged/>
+		</visibility>
 	</categoryProfile>
 		<categoryProfile 
 		name="categorie3"
-		id="3"
+		id="cp3"
 		urlCategory="http://listes.univ-rennes1.fr/"
-		trustCategory="false"
-		access="PUBLIC"
+		trustCategory="no"
+		access="public"
 		ttl = "3600" >
 		<description> c'est la categorie3</description>
-					<visibility>
-		<allowed>
+		<visibility>
+			<allowed>
 				<regular
 					attribute="attr31"
 					value="val31"/>
 				<group
 					name="group31"/>
 			</allowed>	
-								</visibility>
+			<autoSubscribed/>
+			<obliged/>
+		</visibility>
 	</categoryProfile>
 		<categoryProfile 
 		name="categorie4"
-		id="4"
+		id="cp4"
 		urlCategory="http://listes.univ-rennes1.fr/"
-		trustCategory="false"
-		access="PUBLIC"
+		trustCategory="no"
+		access="public"
 		ttl = "3600" >
 		<description> c'est la categorie4</description>
-					<visibility>
-						<allowed>
+		<visibility>
+			<allowed>
 				<regular
 					attribute="attr41"
 					value="val41"/>
@@ -139,6 +142,6 @@
 					attribute="attr43"
 					value="val43"/>	
 			</obliged>
-								</visibility>
+		</visibility>
 	</categoryProfile>
-</chanelConfig>
+</channelConfig>

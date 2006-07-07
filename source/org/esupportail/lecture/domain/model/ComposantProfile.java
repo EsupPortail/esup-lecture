@@ -2,8 +2,8 @@ package org.esupportail.lecture.domain.model;
 
 
 public interface ComposantProfile {
-	public int getId();
-	public void setId(int id);
+	public String getId();
+	public void setId(String id);
 	public String getName();
 	public void setName(String name);
 

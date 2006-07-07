@@ -1,0 +1,9 @@
+<!ELEMENT mappings (mapping+)>
+
+<!ELEMENT mapping EMPTY>
+<!ATTLIST mapping 
+    dtd CDATA #REQUIRED
+    xmlns CDATA #REQUIRED
+    xmlType CDATA #REQUIRED
+    xsltFile CDATA #REQUIRED
+    itemXPath CDATA #REQUIRED>

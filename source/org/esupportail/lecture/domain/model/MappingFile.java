@@ -55,7 +55,7 @@ public class MappingFile {
 	* @return an instance of the channel configuration
 	* @throws Exception
 	*/
-	public static MappingFile getInstance(Channel c) throws Exception  {
+	synchronized public static MappingFile getInstance(Channel c) throws Exception  {
 		if (singleton == null) {
 			singleton = new MappingFile(c);
 		}else {
@@ -80,18 +80,16 @@ public class MappingFile {
 		this.channel = c;
 		
 		try {
-			mappingFile = new XMLConfiguration(mappingFilePath);
-//			TODO faire la check de la DTD
-//			config.setValidating(true);
-			// TODO automatic reloading
-//			config.setReloadingStrategy(new FileChangedReloadingStrategy());
-//			config.load();
+			mappingFile = new XMLConfiguration();
+			mappingFile.setFileName(mappingFilePath);
+			mappingFile.setValidating(true);
+			mappingFile.load();
 
 			/* Loading Mappings */
 			loadMappings();
 
-		} catch (Exception cex) {
-			log.debug(" Erreur mappingFile");	
+		} catch (Exception e) {
+			log.debug(e.getMessage());	
 		}
 	}	
 	
