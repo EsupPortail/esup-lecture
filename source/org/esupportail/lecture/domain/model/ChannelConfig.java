@@ -187,11 +187,13 @@ public class ChannelConfig {
 		String fatherPath = "categoryProfile("+index+ ").visibility." + fatherName;
 		
 		// Definition by group enumeration
+		// TODO : peut etre abscent
 		int nbGroups = config.getMaxIndex(fatherPath + ".group") +1;
 		for (int i=0;i<nbGroups;i++){
 			defAndContentSets.addGroup(config.getString(fatherPath + ".group("+i+")[@name]"));
 		}
    		// Definition by regular 
+		// TODO : peut etre abscent
    		int nbRegulars = config.getMaxIndex(fatherPath + ".regular") +1;   	
    		for (int i=0;i<nbRegulars;i++){
    			RegularOfSet regular = new RegularOfSet();
@@ -220,12 +222,5 @@ public class ChannelConfig {
 			channel.setContext(c);
 		}
 		
-    }
-    
- 
-    
- 
-        
-        
-	
+    }     	
 }

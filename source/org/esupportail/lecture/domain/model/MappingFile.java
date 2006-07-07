@@ -27,9 +27,6 @@ public class MappingFile {
 	/*path of the mapping file*/
 	private static String mappingFilePath = "";
 	private static long configFileLastModified;
-
-
-
 	
 /* ********************** ACCESSORS**************************************/ 
 	/**
@@ -99,6 +96,7 @@ public class MappingFile {
 		for(int i = 0; i<nbMappings;i++ ){
 			String pathMapping = "mapping(" + i + ")";
 			Mapping m = new Mapping();
+			// TODO dtd ou xmlns : au moins un des deux => répercussion sur la fabrication des hash
 			m.setDtd(mappingFile.getString(pathMapping+ "[@dtd]"));
 			m.setXmlns(mappingFile.getString(pathMapping+ "[@xmlns]"));
 			m.setXmlType(mappingFile.getString(pathMapping+ "[@xmlType]"));
@@ -107,8 +105,7 @@ public class MappingFile {
 			channel.setMapping(m);
 		}
 	}
-	
-	
+		
 	public String toString(){
 		String string = "path : "+ mappingFilePath ;
 		return string ;
