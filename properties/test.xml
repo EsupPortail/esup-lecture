@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<chanelConfig mappingFile="/properties/mappings.xml" >
+<chanelConfig mappingFile="properties/mappings.xml" >
 	<context 
 	  name = "context1"
 	  id = "1">

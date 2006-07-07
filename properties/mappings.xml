@@ -2,39 +2,39 @@
 
 <mappings>
 	<mapping
-		dtd = ma_dtd1
-		xmlns = ma_xmlns1
-		xmlType = ma_xmlType1
-		xsltFile = mon_xsltFile1
-		itemXpath = mon_itemXpath1
+		dtd = "ma_dtd1"
+		xmlns = "ma_xmlns1"
+		xmlType = "ma_xmlType1"
+		xsltFile = "mon_xsltFile1"
+		itemXPath = "mon_itemXpath1"
 		/>
 		<mapping
-		dtd = ma_dtd2
-		xmlns = ma_xmlns2
-		xmlType = ma_xmlType2
-		xsltFile = mon_xsltFile2
-		itemXpath = mon_itemXpath2
+		dtd = "ma_dtd2"
+		xmlns = "ma_xmlns2"
+		xmlType = "ma_xmlType2"
+		xsltFile = "mon_xsltFile2"
+		itemXPath = "mon_itemXpath2"
 		/>
 		<mapping
-		dtd = ma_dtd3
-		xmlns = ma_xmlns3
-		xmlType = ma_xmlType3
-		xsltFile = mon_xsltFile3
-		itemXpath = mon_itemXpath3
+		dtd = "ma_dtd3"
+		xmlns = "ma_xmlns3"
+		xmlType = "ma_xmlType3"
+		xsltFile = "mon_xsltFile3"
+		itemXPath = "mon_itemXpath3"
 		/>
 		<mapping
-		dtd = ma_dtd4
-		xmlns = ma_xmlns4
-		xmlType = ma_xmlType4
-		xsltFile = mon_xsltFile4
-		itemXpath = mon_itemXpath4
+		dtd = "ma_dtd4"
+		xmlns = "ma_xmlns4"
+		xmlType = "ma_xmlType4"
+		xsltFile = "mon_xsltFile4"
+		itemXPath = "mon_itemXpath4"
 		/>
 		<mapping
-		dtd = ma_dtd5
-		xmlns = ma_xmlns5
-		xmlType = ma_xmlType5
-		xsltFile = mon_xsltFile5
-		itemXpath = mon_itemXpath5
+		dtd = "ma_dtd5"
+		xmlns = "ma_xmlns5"
+		xmlType = "ma_xmlType5"
+		xsltFile = "mon_xsltFile5"
+		itemXPath = "mon_itemXpath5"
 		/>
 	
 </mappings>

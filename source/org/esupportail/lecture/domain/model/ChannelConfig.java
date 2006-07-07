@@ -40,10 +40,9 @@ public class ChannelConfig {
 	
 	private static XMLConfiguration config;
 	
-	private static String urlMappingFile = "";
-	
-	/*path of the config file*/
-	private static String configFilePath ="/properties/channelConfig.xml";
+	/* path of the config file*/
+	private static String configFilePath ="properties/test.xml";
+	/* time of the config file last modified */
 	private static long configFileLastModified;
 		
 /* ********************** ACCESSORS *****************************************/
@@ -56,12 +55,7 @@ public class ChannelConfig {
 		return channel;
 	}
 	
-	public void setUrlMappingFile(String u){
-		urlMappingFile = u;
-	}
-	public String getUrlMappingFile() {
-		return urlMappingFile;
-	}
+
 /* ********************** METHODS *****************************************/
 
 	/**
@@ -94,7 +88,7 @@ public class ChannelConfig {
 		this.channel = c;
 		
 		try {
-			config = new XMLConfiguration("properties/test.xml");
+			config = new XMLConfiguration(configFilePath);
 //			TODO faire la check de la DTD
 //			config.setValidating(true);
 			// TODO automatic reloading
@@ -111,7 +105,10 @@ public class ChannelConfig {
 			loadContexts();
 
 		} catch (ConfigurationException cex) {
-			log.debug(" Erreur config");	
+			if (log.isDebugEnabled()){
+				log.debug(" Erreur config");	
+			}
+			
 		}
 	}
 
@@ -121,6 +118,7 @@ public class ChannelConfig {
 	 */
 	private void loadUrlMappingFile() {
 	   	MappingFile.setMappingFilePath(config.getString("[@mappingFile]"));
+	   	log.debug(config.getString("[@mappingFile]"));
     }	
 
 	private void loadManagedCategoryProfiles() throws Exception {

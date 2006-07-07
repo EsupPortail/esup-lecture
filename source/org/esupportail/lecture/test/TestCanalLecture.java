@@ -1,4 +1,4 @@
-package org.esupportail.lecture;
+package org.esupportail.lecture.test;
 
 import org.esupportail.lecture.domain.model.Channel;
 import java.util.Iterator;

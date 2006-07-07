@@ -140,9 +140,6 @@ public class Channel  {
 	public void startup() throws Exception {
 		loadConfig();
 		loadMappingFile();
-		//TODO charger les mappings dans la mappingList
-		//TODO faire le hash mapping by dtd
-		//TODO fair le hash mapping by xmlns
 	}
 	
 	
@@ -160,16 +157,19 @@ public class Channel  {
 			Context c = (Context)iterator.next();
 			c.initManagedCategoryProfiles(this);
 		}
-
-	
-	
 	}
 	
 	public void loadMappingFile() throws Exception {
 		//load file
 		mappingFile = MappingFile.getInstance(this);
 		
-		//initialize mappings and hashs
+		//initialize hash mappings 
+		Iterator iterator = mappingList.iterator();
+		for(Mapping m = null; iterator.hasNext();){
+			m = (Mapping)iterator.next();
+			setMappingByXmlns(m.getXmlns(),m);
+			setMappingByDtd(m.getDtd(),m);
+		}
 	}
 	
 	
@@ -218,62 +218,25 @@ public class Channel  {
 		string += "***************** Xslt mappings : \n\n";
 		string += mappingList.toString();
 		string += "\n";
-//		
-//		/* Hash to access mappings by dtd */
-//		string += "***************** Hash mappings by dtd : \n\n";
-//		string += mappingHashByDtd.toString();
-//		string += "\n";
-//				
-//		/* Hash to access mappings by xmlns */
-//		string += "***************** Hash mappings by xmlns : \n\n";
-//		string += mappingHashByXmlns.toString();      
-//	    string += "\n";
-//		
-//		
+		
+		/* Hash to access mappings by dtd */
+		string += "***************** Hash mappings by dtd : \n\n";
+		string += mappingHashByDtd.toString();
+		string += "\n";
+				
+		/* Hash to access mappings by xmlns */
+		string += "***************** Hash mappings by xmlns : \n\n";
+		string += mappingHashByXmlns.toString();      
+	    string += "\n";
+		
+		
 //		/* User Profiles connected to the chanel */
 //		string += "***************** User profiles : \n\n";
 //		string += " later ...";
 //        string += "\n";
-//		
+		
         return string;
 	}		
 			
-			
-
-
-	
-	
-	
-	
-	
-	
-/* *********************************************************************/	
-
-
-	/**
-		 */
-		public void newUserSession(){
-		
-		}
-
-			
-
-				
-				/**
-				 */
-				public void loadManagedCategoryProfiles(){
-				
-				}
-
-
-
-					
-					/**
-					 */
-					public void initialize(){
-					
-					}
-
-	
 
 }

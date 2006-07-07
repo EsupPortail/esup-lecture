@@ -96,7 +96,7 @@ public class MappingFile {
 	}	
 	
 	public void loadMappings() {
-		int nbMappings = mappingFile.getMaxIndex("categoryProfile") + 1;
+		int nbMappings = mappingFile.getMaxIndex("mapping") + 1;
 		
 		for(int i = 0; i<nbMappings;i++ ){
 			String pathMapping = "mapping(" + i + ")";
@@ -105,7 +105,7 @@ public class MappingFile {
 			m.setXmlns(mappingFile.getString(pathMapping+ "[@xmlns]"));
 			m.setXmlType(mappingFile.getString(pathMapping+ "[@xmlType]"));
 			m.setXsltFile(mappingFile.getString(pathMapping+ "[@xsltFile]"));
-			m.setItemXPath(mappingFile.getString(pathMapping+ "[@itemxpath]"));
+			m.setItemXPath(mappingFile.getString(pathMapping+ "[@itemXPath]"));
 			channel.setMapping(m);
 		}
 	}
@@ -113,7 +113,6 @@ public class MappingFile {
 	
 	public String toString(){
 		String string = "path : "+ mappingFilePath ;
-		System.out.println(string);
 		return string ;
 	}
 	
