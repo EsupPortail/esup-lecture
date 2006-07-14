@@ -9,3 +9,4 @@ Library
  myfaces-api-1.1.2.jar
  commons-digester-1.6.jar (for myfaces)
  commons-beanutils-1.7.0.jar (for myfaces)
+ tomahawk --> http://apache.fastorama.com/dist/myfaces/binaries/tomahawk-1.1.3-bin.zip
