@@ -49,6 +49,14 @@ public class VisibilitySets {
 
 /* ************************** METHODS ******************************** */	
 	
+	public void checkNamesExistence(){
+		allowed.checkNamesExistence();
+		obliged.checkNamesExistence();
+		autoSubscribed.checkNamesExistence();
+	}
+	
+	
+	
 	public String toString(){
 		
 		String string ="";

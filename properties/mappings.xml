@@ -2,7 +2,7 @@
 <!DOCTYPE mappings SYSTEM "mappings.dtd" >
 <mappings>
 	<mapping
-		dtd = "ma_dtd1"
+		
 		xmlns = "ma_xmlns1"
 		xmlType = "ma_xmlType1"
 		xsltFile = "mon_xsltFile1"

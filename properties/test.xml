@@ -4,7 +4,7 @@
 	<context 
 	  name = "context1"
 	  id = "c1">
-	  <description>C'est le context 1</description> 
+	  <description>C'est le context 1 modifié1 !!!</description> 
 	  <refCategoryProfile refId="cp1"/>
   	  <refCategoryProfile refId="cp2"/>
   	  <refCategoryProfile refId="cp3"/>

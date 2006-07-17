@@ -36,6 +36,13 @@ public class RegularOfSet {
 	}
 /* ************************** METHODS ******************************** */	
 	
+	public void checkNamesExistence(){
+		// TODO vérification de l'existence de l'attribut dans le portail ?
+		// TODO vérifiaction de l'existance de la valeur dans le portail ?
+	}
+	
+	
+	
 	public String toString(){
 		
 		String string ="";

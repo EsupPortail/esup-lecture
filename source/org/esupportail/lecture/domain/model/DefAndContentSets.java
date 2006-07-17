@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
-
+import java.util.Iterator;
 /**
  * DefAndContentSets is composed of two parts :
  *  - the content of defined set after computing its definition
@@ -20,17 +20,17 @@ import java.util.HashSet;
 public class DefAndContentSets {
 /* ************************** PROPERTIES ******************************** */	
 	/**
-	 * the group : a set of users
+	 * groups : definition by existent group listing
 	 */
 	private List<String> groups = new ArrayList<String>();
 	
 	/**
-	 * a set of regular to define the group (or a part)
+	 * regulars : defintion by regulars to define groups
 	 */
 	private List<RegularOfSet> regulars = new ArrayList<RegularOfSet>();
 	
 	/**
-	 * the defined set content 
+	 * the defined set content : after evaluation of "goups" and "regulars"
 	 */
 	private Set<String> content = new HashSet<String>();
 
@@ -66,6 +66,26 @@ public class DefAndContentSets {
 		this.content.add(aContent);
 	}
 /* ************************** METHODS ******************************** */	
+	
+	public void checkNamesExistence(){
+		
+		Iterator iterator;
+		iterator = groups.iterator();
+		for(String group = null; iterator.hasNext();){
+			group = (String)iterator.next();
+//			 TODO vérification de l'existence du groupe dans le portail
+		}
+		
+		iterator = regulars.iterator();
+		for(RegularOfSet reg = null; iterator.hasNext();){
+			reg = (RegularOfSet)iterator.next();
+			reg.checkNamesExistence();
+		}
+		
+		
+	
+	}
+	
 	
 	public String toString(){
 		

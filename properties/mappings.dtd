@@ -4,8 +4,8 @@
 
 <!ELEMENT mapping EMPTY>
 <!ATTLIST mapping 
-    dtd CDATA #REQUIRED
-    xmlns CDATA #REQUIRED
-    xmlType CDATA #REQUIRED
+    dtd CDATA #IMPLIED
+    xmlns CDATA #IMPLIED
+    xmlType CDATA #IMPLIED
     xsltFile CDATA #REQUIRED
     itemXPath CDATA #REQUIRED>

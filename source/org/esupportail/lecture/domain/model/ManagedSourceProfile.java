@@ -168,7 +168,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	}
 
 	public void setId(String id) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub ?
 		
 	}
 

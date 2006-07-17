@@ -20,7 +20,6 @@
     id ID #REQUIRED
 	name CDATA #REQUIRED
     urlCategory CDATA #REQUIRED
-    display (all|push-end|read|not-read) "all"	
     trustCategory (yes|no) "no"
     edit (all|personal|managed|no) "no"
     access (public|cas) "public"

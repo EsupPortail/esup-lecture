@@ -2,104 +2,109 @@ package org.esupportail.lecture.domain.model;
 
 
 import java.io.File;
-import java.io.IOException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.configuration.HierarchicalConfiguration;
+//import org.apache.commons.configuration.HierarchicalConfiguration; version 1.3
 
 /**
- * 26/06/2006
- * Channel Config : class for loading and parsing chanel file config.
+ * Channel Config : used for loading and parsing XML channel file config.
  * @author gbouteil
- *
  */
 public class ChannelConfig {
 	
 /* ********************** PROPERTIES**************************************/ 
 
 	/**
-	 * The instance of the channel configuration
+	 * Instance of the channel configuration
 	 */
 	private static ChannelConfig singleton = null;
 	
+	/**
+	 * Log instance 
+	 */
 	protected static final Log log = LogFactory.getLog(ChannelConfig.class);
 	
 	/**
-	 * The channel of the config
+	 * The channel that the configuration file refers to 
 	 */
 	private static Channel channel;
 	 
-	private static XMLConfiguration config;
 	/**
-	 *  path of the config file
+	 * XML file loaded
+	 */
+	private static XMLConfiguration config;
+	
+	/**
+	 *  classpath relative path of the config file
 	 */
 	private static String configFilePath ="properties/test.xml";
 	
 	/**
-	 * time of the config file last modified
+	 * Last modified time of the config file
 	 */
 	private static long configFileLastModified;
-		
 	
-/* ********************** ACCESSORS *****************************************/
-	
-	public void setChannel(Channel c){
-		channel = c;
-	}
-	
-	public Channel getChannel(){
-		return channel;
-	}
-	
+	/**
+	 * Instance of the configuration file
+	 */
+	// TODO à supprimer 
+	private static File configFile;
+		 
 
 /* ********************** METHODS *****************************************/
 
 	/**
-	* Get an instance of the chanel configuration
-	* @return an instance of the channel configuration
+	* Get an instance of the channel configuration
+	* @param c channel that the config refers to
+	* @return an instance of the channel configuration (singleton)
+	* @see ChannelConfig#singleton
 	* @throws Exception
 	*/
-	synchronized public static ChannelConfig getInstance(Channel c) throws Exception  {
+	synchronized protected static ChannelConfig getInstance(Channel c) throws Exception  {
 		if (singleton == null) {
+			configFile = new File(configFilePath);
+			configFileLastModified = configFile.lastModified();
+//			 TODO remplacer par (+ supprimer configFile, 
+			//configFileLastModified = config.getFile().lastModified();
+			
 			singleton = new ChannelConfig(c);
 		}else {
-			// TODO : voir le chargt de fichier modifie + cf. new ChannelConfig()
-//			//sync
-			
-//		URL url = ChannelConfig.class.getResource(configFilePath);
-//			File configFile = new File(url.getFile());
-//			
-//			long newDate = configFile.lastModified();
-//			if (configFileLastModified < newDate) {
-//				log.debug("getInstance :: "+"Configuration reloaded");
-//				configFileLastModified = newDate;
-//				config = new ChannelConfig(c);
-			//sync
+			log.debug("getInstance :: "+"singleton non null ");
+			long newDate = configFile.lastModified();
+			// TODO remplacer par 
+			// long newDate = config.getFile().lastModified();
+			if (configFileLastModified < newDate) {
+				log.debug("getInstance :: "+"Configuration reloaded");
+				configFileLastModified = newDate;
+				singleton = new ChannelConfig(c);
+			}
 		}		
 		return singleton;
 	}
 			
 	/**
-	 * Constructor
+	 * Private constructor : load config file and initilized these elements in the channel
+	 * @param c channel that the config refers to
 	 * @throws Exception
 	 */
 	private ChannelConfig(Channel c) throws Exception {
-		this.channel = c;
+		ChannelConfig.channel = c;
 		
 		try {
 			config = new XMLConfiguration();
 			config.setFileName(configFilePath);
 			config.setValidating(true);
 			config.load();
+			
+		/* Reset channel properties loaded from config */
+		c.resetChannelConfigProperties();
 			
 		/* Loading UrlMappingFile */
 		loadUrlMappingFile();
@@ -109,6 +114,9 @@ public class ChannelConfig {
 		
 		/* Loading Contexts */
 		loadContexts();
+		
+		/* Initialize Contexts and ManagedCategoryProfiles links */
+		initContextManagedCategoryProfilesLinks();
 
 		} catch (ConfigurationException e) {
 			if (log.isDebugEnabled()){
@@ -118,13 +126,18 @@ public class ChannelConfig {
 	}
 
 	/**
-	 * Load Mapping file location 
+	 * Load Mapping file location from config file
 	 *
 	 */
 	private void loadUrlMappingFile() {
+		log.debug("Appel de setMappingFilePath");
 	   	MappingFile.setMappingFilePath(config.getString("[@mappingFile]"));
     }	
 
+	/**
+	 * Load Managed Category profiles from config file
+	 * @throws Exception
+	 */
 	private void loadManagedCategoryProfiles() throws Exception {
 		int nbProfiles = config.getMaxIndex("categoryProfile") + 1;
 		
@@ -134,6 +147,7 @@ public class ChannelConfig {
 			mcp.setId(config.getString(pathCategoryProfile+ "[@id]"));
 			mcp.setName(config.getString(pathCategoryProfile+ "[@name]"));
 			mcp.setUrlCategory(config.getString(pathCategoryProfile+ "[@urlCategory]"));
+			//TODO : c.setEdit(...) le param edit plus tard
 			mcp.setTrustCategory(config.getBoolean(pathCategoryProfile+ "[@trustCategory]"));
 			mcp.setTtl(config.getInt(pathCategoryProfile+ "[@ttl]"));
 			mcp.setDescription(config.getString(pathCategoryProfile+".description"));
@@ -154,12 +168,12 @@ public class ChannelConfig {
 		    visibilitySets.setAllowed(loadDefAndContentSets("allowed",i));
 		    visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed",i));
 		   	visibilitySets.setObliged(loadDefAndContentSets("obliged",i));
+		   	visibilitySets.checkNamesExistence();
 		    mcp.setVisibility(visibilitySets);
 		    
-		    channel.setManagedCategoryProfile(mcp);    
+		    channel.addManagedCategoryProfile(mcp);    
 		}
-		
-		// Code pour la version commons-configuration 1.3
+// Code pour la version commons-configuration 1.3
 //		List configCategoryProfiles = config.configurationsAt("categoryProfiles");
 //		for(Iterator it = configCategoryProfiles.iterator(); it.hasNext();) {
 //		    HierarchicalConfiguration sub = (HierarchicalConfiguration) it.next();
@@ -182,18 +196,22 @@ public class ChannelConfig {
 //		   // Visibility	
 	}
 	
+	/**
+	 * Load a DefAndContentSets that is used to define visibility groups of a managed category profile
+	 * @param fatherName name of the father XML element refered to (which visibility group)
+	 * @param index index of the XML element category profile
+	 * @return the initialized DefAndContentSets
+	 */
 	private DefAndContentSets loadDefAndContentSets(String fatherName,int index){
 		DefAndContentSets defAndContentSets = new DefAndContentSets();
 		String fatherPath = "categoryProfile("+index+ ").visibility." + fatherName;
 		
 		// Definition by group enumeration
-		// TODO : peut etre abscent
 		int nbGroups = config.getMaxIndex(fatherPath + ".group") +1;
 		for (int i=0;i<nbGroups;i++){
 			defAndContentSets.addGroup(config.getString(fatherPath + ".group("+i+")[@name]"));
 		}
    		// Definition by regular 
-		// TODO : peut etre abscent
    		int nbRegulars = config.getMaxIndex(fatherPath + ".regular") +1;   	
    		for (int i=0;i<nbRegulars;i++){
    			RegularOfSet regular = new RegularOfSet();
@@ -203,7 +221,10 @@ public class ChannelConfig {
    		}
    		return defAndContentSets;
 	}
-	    
+	
+	/**
+	 * Load Contexts from config file
+	 */
     private void loadContexts(){
 		int nbContexts = config.getMaxIndex("context") + 1;
 		
@@ -213,14 +234,67 @@ public class ChannelConfig {
 			c.setId(config.getString(pathContext+ "[@id]"));
 			c.setName(config.getString(pathContext+ "[@name]"));
 			c.setDescription(config.getString(pathContext+".description"));
+			//TODO : c.setEdit(...) le param edit plus tard
 			List refIdList = config.getList(pathContext+ ".refCategoryProfile[@refId]");
 			Iterator iterator = refIdList.iterator();
 			for (String s = null; iterator.hasNext();){
 				s = (String)iterator.next();
-				c.setRefIdManagedCategoryProfile(s);
+				c.addRefIdManagedCategoryProfile(s);
 			}
-			channel.setContext(c);
+			channel.addContext(c);
 		}
-		
-    }     	
+    }    
+    
+    /**
+     * Initialises associations between contexts and managed category profiles 
+     * defined in the channel config
+     */
+    private void initContextManagedCategoryProfilesLinks(){
+    	
+    	Iterator iterator = channel.getContexts().iterator();
+    	while(iterator.hasNext()){
+    		Context c = (Context)iterator.next();
+    		c.initManagedCategoryProfiles(channel);
+    	}
+	}
+/* ********************** ACCESSORS *****************************************/
+	
+	/**
+	 * Set channel properties
+	 * @param c the channel to set
+	 * @see ChannelConfig#channel
+	 */
+	protected void setChannel(Channel c){
+		channel = c;
+	}
+	 
+	/**
+	 * Returns the channel that the config refers to
+	 * @return channel
+	 * @see ChannelConfig#channel
+	 */
+	protected Channel getChannel(){
+		return channel;
+	}
+	
+	/**
+	 * Returns the classpath relative path of the channel config
+	 * @return configFilePath
+	 * @see ChannelConfig#configFilePath
+	 */
+	protected static String getConfigFilePath() {
+		return configFilePath;
+	}
+
+	/**
+	 * Set the classpath relative file path of the channel config
+	 * @param configFilePath
+	 * @see ChannelConfig#configFilePath
+	 */
+	protected static void setConfigFilePath(String configFilePath) {
+		ChannelConfig.configFilePath = configFilePath;
+		// TODO refaire un nouveau fichier ??? cf MappingFile
+	}
+   
+
 }

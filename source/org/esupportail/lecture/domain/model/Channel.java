@@ -3,199 +3,129 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.*;
 
-import org.springframework.beans.factory.InitializingBean;
+//import org.springframework.beans.factory.InitializingBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * 22.06.2006
+ * The "lecture" channel
  * @author gbouteil
- *
- * The "lecture" chanel
  */
 public class Channel  {
 
 /* ************************** PROPERTIES ******************************** */	
 	/**
-	 * Logs
+	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(Channel.class); 
 	
 	/**
-	 * Configuration
+	 * Channel configuration from xml file.
 	 */
-	private ChannelConfig config;
+	private ChannelConfig config; // TODO inutile ?
 	
-    /**
-     * Contexts defined in the chanel
+	/**
+     * Set of contexts defined in the channel.
      */
-	private Set<Context> contexts = new HashSet<Context>();
+	private Set<Context> contexts;
+	
 	/**
-	 * HAsh of References id on Managed category profiles defined in the chanel
+	 * Hashtable of ManagedCategoryProfiles defined in the chanel, indexed by their Id.
 	 */
-	private Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash = new Hashtable<String,ManagedCategoryProfile>();
+	private Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash;
+	
 	/**
-	 * The  mapping File (xslt)
+	 * The mapping File from xml file.
 	 */
+	// TODO inutile ?
 	private MappingFile mappingFile;
+	
 	/**
-	 * Xslt mappings defined in the chanel
+	 * List of mappings defined by the mapping file.
 	 */
-	private List<Mapping> mappingList = new ArrayList<Mapping>();
+	private List<Mapping> mappingList;
+	
 	/**
-	 * hash to access mappings by dtd
+	 * Hash to access mappings by dtd
 	 */	
-	private Hashtable<String,Mapping> mappingHashByDtd = new Hashtable<String,Mapping>();
+	private Hashtable<String,Mapping> mappingHashByDtd;
+	
 	/**
-	 * hash to access mappings by xmlns
+	 * Hash to access mappings by xmlns
 	 */	
-	private Hashtable<String,Mapping> mappingHashByXmlns = new Hashtable<String,Mapping>();
+	private Hashtable<String,Mapping> mappingHashByXmlns;
+	
 	/**
-	 * User Profiles connected to the chanel
-	 */
+	 * Hash to access mappings by xmlType.
+	 */	
+	private Hashtable<String,Mapping> mappingHashByXmlType;
+
+	// Utile plus tard
+//	/**
+//	 * User Profiles connected to the chanel
+//	 */
 //	private Set<UserProfile> userProfiles = new HAshSet<UserProfile>();;
 
 	
-/* ************************** ACCESSORS ********************************* */
-	public ChannelConfig getChannelConfig(){
-		return config;
-	}
-	public void setChannelConfig (ChannelConfig config){
-		this.config = config;
-	}
-	
-	public Set<Context> getContexts() {
-		return contexts;
-	}
-	public void setContexts(Set<Context> contexts) {
-		this.contexts = contexts;
-	}	
-	
-	public void setContext(Context c) {
-		this.contexts.add(c);
-	}	
-
-	public Hashtable<String,ManagedCategoryProfile> getManagedCategoryProfilesHash() {
-		return managedCategoryProfilesHash;
-	}
-	public void setManagedCategoryProfiles(Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash) {
-		this.managedCategoryProfilesHash = managedCategoryProfilesHash;
-	}
-
-	public ManagedCategoryProfile getManagedCategoryProfile(String s){
-		return managedCategoryProfilesHash.get(s);
-	}
-	public void setManagedCategoryProfile(ManagedCategoryProfile m) {
-		this.managedCategoryProfilesHash.put(m.getId(),m);
-	}
-	
-	public void setMappingFile(MappingFile m){
-		this.mappingFile = m;
-	}
-	public MappingFile getMappingFile(){
-		return this.mappingFile;
-	}
-	
-	public List<Mapping> getMappingList() {
-		return mappingList;
-	}
-	public void setMappingList(List<Mapping> mappingList) {
-		this.mappingList = mappingList;
-	}
-	
-	public void setMapping(Mapping m){
-		this.mappingList.add(m);
-	}
-	
-	public Hashtable<String,Mapping> getMappingHashByDtd() {
-		return mappingHashByDtd;
-	}
-	public void setMappingHashByDtd(Hashtable<String,Mapping> mappingHashByDtd) {
-		this.mappingHashByDtd = mappingHashByDtd;
-	}
-	public void setMappingByDtd(String s,Mapping m) {
-		this.mappingHashByDtd.put(s,m);
-	}
-	
-	public Hashtable<String,Mapping> getMappingHashByXmlns() {
-		return mappingHashByXmlns;
-	}
-	public void setMappingHashByXmlns(Hashtable<String,Mapping> mappingHashByXmlns) {
-		this.mappingHashByXmlns = mappingHashByXmlns;
-	}	
-	
-	public void setMappingByXmlns(String s,Mapping m) {
-		this.mappingHashByXmlns.put(s,m);
-	}	
-	
-/*	public Set getUserProfiles() {
-		return userProfiles;
-	}
-	public void setUserProfiles(Set userProfiles) {
-		this.userProfiles = userProfiles;
-	}
-*/
-
 /* ************************** Initialization *********************************** */
+	
+	/**
+	 * Methods call to load or reload the config and mapping file 
+	 * if needed (when files are modified from last loading)
+	 * @throws Exception
+	 */
 	public void startup() throws Exception {
 		loadConfig();
 		loadMappingFile();
 	}
 	
+	/**
+	 * Load config file if needed (using ChannelConfig), containing contexts and managed category profiles definition.
+	 * Initialize these elements.
+	 * @see org.esupportail.lecture.domain.model.ChannelConfig#getInstance(Channel)
+	 * @exception Exception
+	 */
+	private void loadConfig()throws Exception{
+		config = ChannelConfig.getInstance(this);
+	}
 	
 	/**
-	 * Load config file, containing contexts and managed category profiles definition.
-	 * Initialize these elements.
+	 * Initialize every channel properties that are set up by loading channel configuration file
 	 */
-	public void loadConfig()throws Exception{
-		// load config
-		config = ChannelConfig.getInstance(this);
-		
-		// initialize category and contexts
-		Iterator iterator = contexts.iterator();
-		while(iterator.hasNext()){
-			Context c = (Context)iterator.next();
-			c.initManagedCategoryProfiles(this);
-		}
+	protected void resetChannelConfigProperties(){
+		contexts = new HashSet<Context>();
+		managedCategoryProfilesHash = new Hashtable<String,ManagedCategoryProfile>();
 	}
 	
-	public void loadMappingFile() throws Exception {
-		//load file
+	/**
+	 * Load mapping file if needed (using MappingFile), containing list of mappings used by the channel.
+	 * Initialize these elements.
+	 * @see org.esupportail.lecture.domain.model.MappingFile#getInstance(Channel)
+	 * @exception Exception
+	 */	
+	private void loadMappingFile() throws Exception {
 		mappingFile = MappingFile.getInstance(this);
-		
-		//initialize hash mappings 
-		Iterator iterator = mappingList.iterator();
-		for(Mapping m = null; iterator.hasNext();){
-			m = (Mapping)iterator.next();
-			setMappingByXmlns(m.getXmlns(),m);
-			setMappingByDtd(m.getDtd(),m);
-		}
 	}
-	
-	
-//	/**
-//	 * method called by Spring for initialization bean
-//	 */
-//	public void afterPropertiesSet () throws Exception{
-//		mappingHashByDtd = new Hashtable<String,Mapping>();
-//		mappingHashByXmlns = new Hashtable<String,Mapping>();
-//		Iterator iterator = mappingList.iterator();
-//		while (iterator.hasNext()) {
-//	        Mapping m = (Mapping)iterator.next();
-//	        String dtd = m.getDtd();
-//	        String xmlns = m.getXmlns();
-//	        if (dtd != null){
-//	        	mappingHashByDtd.put(m.getDtd(),m);
-//	        }
-//	        if (xmlns != null){
-//	        	mappingHashByXmlns.put(m.getXmlns(),m);
-//	        }
-//	    }
-//	}	
-	
+
+	/**
+	 * Initialize every channel properties that are set up by loading mapping file
+	 */
+	protected void resetMappingFileProperties(){
+		mappingList = new ArrayList<Mapping>();
+		mappingHashByDtd = new Hashtable<String,Mapping>();
+		mappingHashByXmlns = new Hashtable<String,Mapping>();
+		mappingHashByXmlType = new Hashtable<String,Mapping>();
+	}
+
 	
 /* ************************** METHODS *********************************** */
 
+	/**
+	 * Return a string containing channel content : mapping file, contexts, managed category profiles,
+	 * xslt mappings, hash mappings by dtd, Hash mappings by xmlns,Hash mappings by xmlType
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString() {
 		String string = "";
 			
@@ -229,6 +159,10 @@ public class Channel  {
 		string += mappingHashByXmlns.toString();      
 	    string += "\n";
 		
+		/* Hash to access mappings by xmlType */
+		string += "***************** Hash mappings by xmlType : \n\n";
+		string += mappingHashByXmlType.toString();      
+	    string += "\n";
 		
 //		/* User Profiles connected to the chanel */
 //		string += "***************** User profiles : \n\n";
@@ -237,6 +171,155 @@ public class Channel  {
 		
         return string;
 	}		
-			
+	/* ************************** ACCESSORS ********************************* */
+	 
+//  TODO A retirer si inutile
+//	public ChannelConfig getChannelConfig(){
+//		return config;
+//	}
+//	public void setChannelConfig (ChannelConfig config){
+//		this.config = config;
+//	}
+	
+	/**
+	 * Returns a set of contexts defined in the channel
+	 * @return contexts
+	 * @see Channel#contexts
+	 */
+	protected Set<Context> getContexts() {
+		return contexts;
+	}
+
+//  TODO A retirer si inutile
+//	protected void setContexts(Set<Context> contexts) {
+//		this.contexts = contexts;
+//	}	
+	
+	/**
+	 * Add a context to the set of contexts defined in the channel.
+	 * @param c context to add
+	 * @see Channel#contexts
+	 */
+	protected void addContext(Context c) {
+		this.contexts.add(c);
+	}	
+
+//  TODO A retirer si inutile	
+//	public Hashtable<String,ManagedCategoryProfile> getManagedCategoryProfilesHash() {
+//		return managedCategoryProfilesHash;
+//	}
+//	public void setManagedCategoryProfiles(Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash) {
+//		this.managedCategoryProfilesHash = managedCategoryProfilesHash;
+//	}
+
+	/**
+	 * Returns the managed category profile by giving its Id.
+	 * @param s the managed category profile Id
+	 * @return managedCategoryProfilesHash
+	 * @see Channel#managedCategoryProfilesHash
+	 */
+	protected ManagedCategoryProfile getManagedCategoryProfile(String s){
+		return managedCategoryProfilesHash.get(s);
+	}
+	
+	/**
+	 * Add a managed category profile to the hash(indexed by their id) of managed category profiles defined in the channel.
+	 * @param m the managed category profile
+	 * @see Channel#managedCategoryProfilesHash
+	 */
+	public void addManagedCategoryProfile(ManagedCategoryProfile m) {
+		this.managedCategoryProfilesHash.put(m.getId(),m);
+	}
+
+//  TODO A retirer si inutile	
+//	public void setMappingFile(MappingFile m){
+//		this.mappingFile = m;
+//	}
+//	public MappingFile getMappingFile(){
+//		return this.mappingFile;
+//	}
+	
+	/**
+	 * Returns a list of mappings defined in the channel.
+	 * @return mappingList
+	 * @see Channel#mappingList
+	 */
+	protected List<Mapping> getMappingList() {
+		return mappingList;
+	}
+	
+//  TODO A retirer si inutile	
+//	public void setMappingList(List<Mapping> mappingList) {
+//		this.mappingList = mappingList;
+//	}
+	
+	/**
+	 * Add a mapping to the list of mappings defined in the channel.
+	 * @param m the mapping to add
+	 * @see Channel#mappingList
+	 */
+	protected void addMapping(Mapping m){
+		this.mappingList.add(m);
+	}
+	
+//  TODO A retirer si inutile	
+//	public Hashtable<String,Mapping> getMappingHashByDtd() {
+//		return mappingHashByDtd;
+//	}
+//	public void setMappingHashByDtd(Hashtable<String,Mapping> mappingHashByDtd) {
+//		this.mappingHashByDtd = mappingHashByDtd;
+//	}
+	
+	/**
+	 * Add a mapping to the hash of mappings indexed by its dtd, defined in the channel
+	 * @param m the mapping to add
+	 * @see Channel#mappingHashByDtd
+	 */
+	protected void addMappingByDtd(Mapping m) {
+		this.mappingHashByDtd.put(m.getDtd(),m);
+	}
+//  TODO A retirer si inutile		
+//	public Hashtable<String,Mapping> getMappingHashByXmlns() {
+//		return mappingHashByXmlns;
+//	}
+//	public void setMappingHashByXmlns(Hashtable<String,Mapping> mappingHashByXmlns) {
+//		this.mappingHashByXmlns = mappingHashByXmlns;
+//	}	
+
+	/**
+	 * Add a mapping to the hash of mappings indexed by its xmlns, defined in the channel
+	 * @param m the mapping to add
+	 * @see Channel#mappingHashByXmlns
+	 */
+	protected void addMappingByXmlns(Mapping m) {
+		this.mappingHashByXmlns.put(m.getXmlns(),m);
+	}	
+	
+//  TODO A retirer si inutile			
+//	public Hashtable<String,Mapping> getMappingHashByXmlType() {
+//		return mappingHashByXmlType;
+//	}
+//	public void setMappingHashByXmlType(Hashtable<String,Mapping> mappingHashByXmlType) {
+//		this.mappingHashByXmlType = mappingHashByXmlType;
+//	}	
+	
+	/**
+	 * Add a mapping to the hash of mappings indexed by its xmlType, defined in the channel
+	 * @param m the mapping to add
+	 * @see Channel#mappingHashByXmlType
+	 */
+	protected void addMappingByXmlType(Mapping m) {
+		this.mappingHashByXmlType.put(m.getXmlType(),m);
+	}	
+	
+// utile plus tard	
+/*	public Set getUserProfiles() {
+		return userProfiles;
+	}
+	public void setUserProfiles(Set userProfiles) {
+		this.userProfiles = userProfiles;
+	}
+*/
+		
 
 }

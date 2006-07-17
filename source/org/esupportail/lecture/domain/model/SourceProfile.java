@@ -5,14 +5,14 @@ public abstract class SourceProfile {
 	/**
 	 * @uml.property  name="id"
 	 */
-	private int id;
+	private String id;
 
 	/**
 	 * Getter of the property <tt>id</tt>
 	 * @return  Returns the id.
 	 * @uml.property  name="id"
 	 */
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -21,7 +21,7 @@ public abstract class SourceProfile {
 	 * @param id  The id to set.
 	 * @uml.property  name="id"
 	 */
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

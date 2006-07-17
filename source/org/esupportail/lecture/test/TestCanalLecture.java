@@ -8,10 +8,15 @@ import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 
+/**
+ * Stub to test classes in package org.esupportail.domain.model
+ * @author gbouteil
+ * @see org.esupportail.domain.model
+ */
 public class TestCanalLecture {
 
 	/**
-	 * @param args
+	 * @param args non argumet needed
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -21,16 +26,16 @@ public class TestCanalLecture {
 		Channel myChannel = (Channel)factory.getBean("channel");
 		try {
 			myChannel.startup();
+			System.out.println("Tapez une touche ...");
+			System.in.read();
+			myChannel.startup();
+		
 		} catch (Exception e) {
-			System.out.println("Exception !!!");
-			System.out.println(e.toString());
+			System.out.println("Exception 1 !!!");
+			System.out.println(e.getMessage());
 		}
-
+		
 		System.out.println("***********************Configuration du canal lecture : ***********************");
 		System.out.println(myChannel.toString());
-	
-	
-		
 	}
-
 }
