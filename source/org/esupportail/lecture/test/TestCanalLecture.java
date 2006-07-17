@@ -11,7 +11,7 @@ import org.springframework.core.io.FileSystemResource;
 /**
  * Stub to test classes in package org.esupportail.domain.model
  * @author gbouteil
- * @see org.esupportail.domain.model
+ * @see org.esupportail.lecture.domain.model
  */
 public class TestCanalLecture {
 

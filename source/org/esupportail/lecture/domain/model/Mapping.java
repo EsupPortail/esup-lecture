@@ -6,73 +6,44 @@ package org.esupportail.lecture.domain.model;
  *
  */
 
+/**
+ * @author gbouteil
+ *
+ */
 public class Mapping {
 /* ************************** PROPERTIES ******************************** */	
 
 	/**
-	 * The name of the dtd
+	 * Name of the dtd
 	 */
 	private String dtd = "";
 	
 	/**
-	 * The path of the xslt file
-	 */
-	private String xsltFile = "";
-	
-	/**
-	 * The Xpath to get an item in the source xml stream
-	 */
-	private String itemXPath = "";
-	
-	/**
-	 * The xmlns of the source xml stream
+	 * Xmlns of the source xml stream
 	 */
 	private String xmlns = "";
 	
 	/**
-	 * The xml type ???
+	 * Xml type 
 	 */
 	private String xmlType;
 
-/* ************************** ACCESSORS ******************************** */	
+	/**
+	 * Path of the xslt file 
+	 */
+	private String xsltFile = "";
+	
+	/**
+	 * Xpath to get an item in the source xml stream
+	 */
+	private String itemXPath = "";
+	
+/* ************************** Methods ******************************** */	
 
-	public String getDtd() {
-		return dtd;
-	}
-	public void setDtd(String dtd) {
-		this.dtd = dtd;
-	}
-
-	public String getXsltFile() {
-		return xsltFile;
-	}
-	public void setXsltFile(String xsltFile) {
-		this.xsltFile = xsltFile;
-	}
-
-	public String getItemXPath() {
-		return itemXPath;
-	}
-	public void setItemXPath(String itemXPath) {
-		this.itemXPath = itemXPath;
-	}
-
-	public String getXmlns() {
-		return xmlns;
-	}
-	public void setXmlns(String xmlns) {
-		this.xmlns = xmlns;
-	}
-
-	public String getXmlType() {
-		return xmlType;
-	}
-	public void setXmlType(String xmlType) {
-		this.xmlType = xmlType;
-	}
-
-	/* ************************** Methods ******************************** */	
-
+	/**
+	 * Return a string containing mapping content : dtd, xsltfile, itemXPath, xmlns and xmlType 
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString(){
 	
 		String string="";
@@ -94,4 +65,95 @@ public class Mapping {
 	
 		return string;
 	}
+
+/* ************************** ACCESSORS ******************************** */	
+
+	/**
+	 * Returns the dtd of the mapping
+	 * @return dtd
+	 * @see Mapping#dtd
+	 */
+	protected String getDtd() {
+		return dtd;
+	}
+	/**
+	 * Sets the dtd
+	 * @param dtd
+	 * @see Mapping#dtd
+	 */
+	protected void setDtd(String dtd) {
+		this.dtd = dtd;
+	}
+
+	/**
+	 * Returns the xslt file
+	 * @return xsltFile
+	 * @see Mapping#xsltFile
+	 */
+	protected String getXsltFile() {
+		return xsltFile;
+	}
+	
+	/**
+	 * Sets the xsltFile
+	 * @param xsltFile
+	 * @see Mapping#xsltFile
+	 */
+	protected void setXsltFile(String xsltFile) {
+		this.xsltFile = xsltFile;
+	}
+
+	/**
+	 * Returns the item XPath
+	 * @return itemXPath
+	 * @see Mapping#itemXPath
+	 */
+	protected String getItemXPath() {
+		return itemXPath;
+	}
+	
+	/**
+	 * Sets the item XPath
+	 * @param itemXPath
+	 * @see Mapping#itemXPath
+	 */
+	protected void setItemXPath(String itemXPath) {
+		this.itemXPath = itemXPath;
+	}
+
+	/**
+	 * Returns the xmlns
+	 * @return xmlns
+	 * @see Mapping#xmlns
+	 */
+	protected String getXmlns() {
+		return xmlns;
+	}
+	/**
+	 * Sets the xmlns
+	 * @param xmlns
+	 * @see Mapping#xmlns
+	 */
+	protected void setXmlns(String xmlns) {
+		this.xmlns = xmlns;
+	}
+
+	/**
+	 * Returns the XML type
+	 * @return xmlType
+	 * @see Mapping#xmlType
+	 */
+	protected String getXmlType() {
+		return xmlType;
+	}
+	/**
+	 * Sets the XML type
+	 * @param xmlType
+	 * @see Mapping#xmlType
+	 */
+	protected void setXmlType(String xmlType) {
+		this.xmlType = xmlType;
+	}
+	
+	
 }

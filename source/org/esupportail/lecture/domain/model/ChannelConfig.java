@@ -150,7 +150,6 @@ public class ChannelConfig {
 			//TODO : c.setEdit(...) le param edit plus tard
 			mcp.setTrustCategory(config.getBoolean(pathCategoryProfile+ "[@trustCategory]"));
 			mcp.setTtl(config.getInt(pathCategoryProfile+ "[@ttl]"));
-			mcp.setDescription(config.getString(pathCategoryProfile+".description"));
 			
 		    // Accessibility
 		    String access = config.getString(pathCategoryProfile+"[@access]");

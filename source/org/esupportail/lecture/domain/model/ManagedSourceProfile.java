@@ -1,175 +1,309 @@
+
 package org.esupportail.lecture.domain.model;
 
 
-import java.util.Collection;
-
+/**
+ * Managed source profile element.
+ * @author gbouteil
+ * @see org.esupportail.lecture.domain.model.SourceProfile
+ * @see org.esupportail.lecture.domain.model.ManagedComposantProfile
+ *
+ */
+/**
+ * @author gbouteil
+ *
+ */
 public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.SourceProfile implements org.esupportail.lecture.domain.model.ManagedComposantProfile {
+	
+/* ************************** PROPERTIES ******************************** */	
 
 	/**
-	 * @uml.property  name="globalSource"
-	 * @uml.associationEnd  aggregation="composite" inverse="managedSourceProfile:org.esupportail.lecture.domain.model.GlobalSource"
+	 * Remote source loaded : a managed source profile has a global or a single source
+	 * Thats depends on "specificUserContent" parameter.
+	 * @see ManagedSourceProfile#specificUserContent
 	 */
-	private GlobalSource globalSource;
-
-	/** 
-	 * Getter of the property <tt>globalSource</tt>
-	 * @return  Returns the globalSource.
-	 * @uml.property  name="globalSource"
-	 */
-	public GlobalSource getGlobalSource() {
-		return globalSource;
-	}
-
-	/** 
-	 * Setter of the property <tt>globalSource</tt>
-	 * @param globalSource  The globalSource to set.
-	 * @uml.property  name="globalSource"
-	 */
-	public void setGlobalSource(GlobalSource globalSource) {
-		this.globalSource = globalSource;
-	}
-
+	private Source source;
 	/**
-	 * @uml.property  name="access"
+	 * Access mode on the remote source
 	 */
 	private Accessibility access;
+	
+	/**
+	 * Visibility rights for groups on the remote source
+	 */
+	private VisibilitySets visibility;
 
-	/** 
-	 * Getter of the property <tt>access</tt>
-	 * @return  Returns the access.
-	 * @uml.property  name="access"
+	/**
+	 * Ttl of the remote source reloading
+	 * Using depends on trustCategory parameter
+	 */
+	private int ttl;
+	
+	/**
+	 * Specific user content parameter : indicates source multiplicity :
+	 * - true : source is specific to a user, it is loaded in user profile => source is a SingleSource
+	 * - false : source is global to users, it is loaded in channel environnement => source is a GlobalSource
+	 */
+	private boolean specificUserContent;
+	
+	
+	/**
+	 * URL of the xslt file to display remote source
+	 */
+	private String xsltURL = "";
+	
+	/**
+	 * Xpath to access item in the XML source file correspoding to this source profile
+	 */
+	private String itemXPath = "";
+
+// TODO : utile ou pas ?
+//	/**
+//	 * Optionnal : xmlns of the source (one of these parameter is required : xmlns, xmlType, dtd)
+//	 */
+	private String xmlns = "";
+//	
+//	/**
+//	 * Optionnal : xmlType of the source (one of these parameter is required : xmlns, xmlType, dtd)
+//	 */
+	private String xmlType = "";
+//	
+//	/**
+//	 * Opitionnal : DTD of the source (one of these parameter is required : xmlns, xmlType, dtd)
+//	 */
+	private String dtd = "";
+
+
+/* ************************** METHODS ******************************** */	
+	
+/* ************************** ACCESSORS ******************************** */	
+
+
+	/**
+	 * Returns source of this managed source profile (if loaded)
+	 * @return source
+	 */
+	protected Source getSource() {
+		return source;
+	}
+	
+	/**
+	 * Sets source on the profile
+	 * @param source
+	 */
+	protected void setSource(Source source) {
+		this.source = source;
+	}
+
+	/**	 
+	 * @return access
+	 * @see ManagedSourceProfile#access
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getAccess()
 	 */
 	public Accessibility getAccess() {
 		return access;
 	}
 
-	/** 
-	 * Setter of the property <tt>access</tt>
-	 * @param access  The access to set.
-	 * @uml.property  name="access"
+	/**
+	 * @see ManagedSourceProfile#access
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setAccess(org.esupportail.lecture.domain.model.Accessibility)
 	 */
 	public void setAccess(Accessibility access) {
 		this.access = access;
 	}
 
 	/**
-	 * @uml.property  name="visibility"
-	 */
-	private VisibilitySets visibility;
-
-	/**
-	 * Getter of the property <tt>visibility</tt>
-	 * @return  Returns the visibility.
-	 * @uml.property  name="visibility"
+	 * @return visibility
+	 * @see ManagedSourceProfile#visibility
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibility()
 	 */
 	public VisibilitySets getVisibility() {
 		return visibility;
 	}
 
+
 	/**
-	 * Setter of the property <tt>visibility</tt>
-	 * @param visibility  The visibility to set.
-	 * @uml.property  name="visibility"
+	 * @see ManagedSourceProfile#visibility
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibility(org.esupportail.lecture.domain.model.VisibilitySets)
 	 */
 	public void setVisibility(VisibilitySets visibility) {
 		this.visibility = visibility;
 	}
-
+	
 	/**
-	 * @uml.property  name="ttl"
-	 */
-	private int ttl;
-
-	/**
-	 * Getter of the property <tt>ttl</tt>
-	 * @return  Returns the ttl.
-	 * @uml.property  name="ttl"
+	 * Returns ttl
+	 * @see ManagedSourceProfile#ttl
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getTtl()
 	 */
 	public int getTtl() {
 		return ttl;
 	}
 
 	/**
-	 * Setter of the property <tt>ttl</tt>
-	 * @param ttl  The ttl to set.
-	 * @uml.property  name="ttl"
+	 * @see ManagedSourceProfile#ttl
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setTtl(int)
 	 */
 	public void setTtl(int ttl) {
 		this.ttl = ttl;
 	}
 
 	/**
-	 * @uml.property  name="specificUserContent"
+	 * Returns specificUserContent value.
+	 * @return specificUserContent
+	 * @see ManagedSourceProfile#specificUserContent
 	 */
-	private boolean specificUserContent;
-
-	/**
-	 * Getter of the property <tt>specificUserContent</tt>
-	 * @return  Returns the specificUserContent.
-	 * @uml.property  name="specificUserContent"
-	 */
-	public boolean getSpecificUserContent() {
+	protected boolean getSpecificUserContent() {
 		return specificUserContent;
 	}
 
 	/**
-	 * Setter of the property <tt>specificUserContent</tt>
-	 * @param specificUserContent  The specificUserContent to set.
-	 * @uml.property  name="specificUserContent"
+	 * Sets specificUserContent
+	 * @param specificUserContent
+	 * @see ManagedSourceProfile#specificUserContent
 	 */
-	public void setSpecificUserContent(boolean specificUserContent) {
+	protected void setSpecificUserContent(boolean specificUserContent) {
 		this.specificUserContent = specificUserContent;
 	}
 
-	/**
-	 * @uml.property  name="xsltURL"
-	 */
-	private String xsltURL = "";
 
 	/**
-	 * Getter of the property <tt>xsltURL</tt>
-	 * @return  Returns the xsltURL.
-	 * @uml.property  name="xsltURL"
+	 * Returns URL of xslt file
+	 * @return xsltURL
+	 * @see ManagedSourceProfile#xsltURL
 	 */
-	public String getXsltURL() {
+	protected String getXsltURL() {
 		return xsltURL;
 	}
 
+
 	/**
-	 * Setter of the property <tt>xsltURL</tt>
-	 * @param xsltURL  The xsltURL to set.
-	 * @uml.property  name="xsltURL"
+	 * Sets URL of xslt file
+	 * @param xsltURL
+	 * @see ManagedSourceProfile#xsltURL
 	 */
-	public void setXsltURL(String xsltURL) {
+	protected void setXsltURL(String xsltURL) {
 		this.xsltURL = xsltURL;
 	}
 
-	/**
-	 * @uml.property  name="itemXPath"
-	 */
-	private String itemXPath = "";
 
-	/** 
-	 * Getter of the property <tt>xpath</tt>
-	 * @return  Returns the xpath.
-	 * @uml.property  name="itemXPath"
+	/**
+	 * Returns Xpath to access to item in source XML file
+	 * @return itemXPath
+	 * @see ManagedSourceProfile#xsltURL
 	 */
-	public String getItemXPath() {
+	protected String getItemXPath() {
 		return itemXPath;
 	}
 
-	/** 
-	 * Setter of the property <tt>xpath</tt>
-	 * @param xpath  The xpath to set.
-	 * @uml.property  name="itemXPath"
+	/**
+	 * Sets Xpath to access to item in source XML file
+	 * @param itemXPath
+	 * @see ManagedSourceProfile#xsltURL
 	 */
-	public void setItemXPath(String itemXPath) {
+	protected void setItemXPath(String itemXPath) {
 		this.itemXPath = itemXPath;
 	}
+	
+	/**
+	 * Returns the dtd.
+	 * @return dtd
+	 * @see ManagedSourceProfile#dtd
+	 */
+	protected String getDtd() {
+		return dtd;
+	}
 
-	public void setId(String id) {
-		// TODO Auto-generated method stub ?
+	/**
+	 * Sets dtd
+	 * @param dtd 
+	 * @see ManagedSourceProfile#dtd
+	 */
+	protected void setDtd(String dtd) {
+		this.dtd = dtd;
+	}
+
+	/**
+	 * Returns the xmlns.
+	 * @return xmlns
+	 * @see ManagedSourceProfile#xmlns
+	 */
+	protected String getXmlns() {
+		return xmlns;
+	}
+
+	/**
+	 * Sets xmlns
+	 * @param xmlns
+	 * @see ManagedSourceProfile#xmlns
+	 */
+	protected void setXmlns(String xmlns) {
+		this.xmlns = xmlns;
+	}
+
+	/**
+	 * Returns the xmlType.
+	 * @return xmlType.
+	 * @see ManagedSourceProfile#xmlType
+	 */
+	protected String getXmlType() {
+		return xmlType;
+	}
+
+	/**
+	 * Sets the xmlType.
+	 * @param xmlType 
+	 * @see ManagedSourceProfile#xmlType
+	 */
+	protected void setXmlType(String xmlType) {
+		this.xmlType = xmlType;
+	}
+
+	/** 
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefAndContentSets)
+	 */
+	public void setVisibilityAllowed(DefAndContentSets d) {
+		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAllowed()
+	 */
+	public DefAndContentSets getVisibilityAllowed() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefAndContentSets)
+	 */
+	public void setVisibilityAutoSubcribed(DefAndContentSets d) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAutoSubscribed()
+	 */
+	public DefAndContentSets getVisibilityAutoSubscribed() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefAndContentSets)
+	 */
+	public void setVisibilityObliged(DefAndContentSets d) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityObliged()
+	 */
+	public DefAndContentSets getVisibilityObliged() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -15,7 +15,7 @@
 <!ATTLIST refCategoryProfile 
     refId IDREF #REQUIRED>
 
-<!ELEMENT categoryProfile (description,visibility)>
+<!ELEMENT categoryProfile (visibility)>
 <!ATTLIST categoryProfile
     id ID #REQUIRED
 	name CDATA #REQUIRED

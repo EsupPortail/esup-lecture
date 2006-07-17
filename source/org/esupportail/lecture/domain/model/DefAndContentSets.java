@@ -1,7 +1,6 @@
 package org.esupportail.lecture.domain.model;
 
 
-import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
@@ -13,61 +12,35 @@ import java.util.Iterator;
  * 	- the set definition, two ways :
  * 		- an enumeration of groups (groups)
  * 		- a set of regulars defining groups (regulars)
- *  - 
+ *
  * @author gbouteil
  *
  */
 public class DefAndContentSets {
 /* ************************** PROPERTIES ******************************** */	
 	/**
-	 * groups : definition by existent group listing
+	 * groups : set definition by existent group listing
 	 */
 	private List<String> groups = new ArrayList<String>();
 	
 	/**
-	 * regulars : defintion by regulars to define groups
+	 * regulars : set definition by regulars 
 	 */
 	private List<RegularOfSet> regulars = new ArrayList<RegularOfSet>();
 	
 	/**
-	 * the defined set content : after evaluation of "goups" and "regulars"
+	 * the defined set content : after evaluation of "groups" and "regulars"
 	 */
 	private Set<String> content = new HashSet<String>();
 
 	
-/* ************************** ACCESSORS ******************************** */	
 
-	public List<String> getGroups() {
-		return groups;
-	}
-	public void setGroups(List<String> groups) {
-		this.groups = groups;
-	}
-	public void addGroup(String group) {
-		this.groups.add(group);
-	}
-	public List<RegularOfSet> getRegulars() {
-		return regulars;
-	}
-	public void setRegulars(List<RegularOfSet> regulars) {
-		this.regulars = regulars;
-	}
-	public void addRegular(RegularOfSet regular) {
-		this.regulars.add(regular);
-	}
-	
-	public Set getContent() {
-		return content;
-	}
-	public void setContent(Set<String> content) {
-		this.content = content;
-	}
-	public void addContent(String aContent){
-		this.content.add(aContent);
-	}
 /* ************************** METHODS ******************************** */	
-	
-	public void checkNamesExistence(){
+	/**
+	 * Check existence of group names, attributes names used in group enumeration
+	 * and regulars definition
+	 */
+	protected void checkNamesExistence(){
 		
 		Iterator iterator;
 		iterator = groups.iterator();
@@ -81,12 +54,13 @@ public class DefAndContentSets {
 			reg = (RegularOfSet)iterator.next();
 			reg.checkNamesExistence();
 		}
-		
-		
-	
 	}
 	
 	
+	/**
+	 * Returns a string containing this object content :groups, regulars and content sets
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString(){
 		
 		String string="";
@@ -97,5 +71,66 @@ public class DefAndContentSets {
 		return string;
 	}
 	
+	/* ************************** ACCESSORS ******************************** */	
+
+	/**
+	 * Returns groups enumeration of this object
+	 * @return groups
+	 * @see DefAndContentSets#groups
+	 */
+	protected List<String> getGroups() {
+		return groups;
+	}
+	/**
+	 * Sets groups enumeration of this object
+	 * @param groups 
+	 * @see DefAndContentSets#groups
+	 */
+	protected void setGroups(List<String> groups) {
+		this.groups = groups;
+	}
+	/**
+	 * Add a group in groups enumeration
+	 * @param group group to add
+	 * @see DefAndContentSets#groups
+	 */
+	protected void addGroup(String group) {
+		this.groups.add(group);
+	}
+	/**
+	 * Returns regulars of this object
+	 * @return regulars
+	 * @see DefAndContentSets#regulars
+	 */
+	protected List<RegularOfSet> getRegulars() {
+		return regulars;
+	}
+	/**
+	 * Sets regulars of this object
+	 * @param regulars
+	 * @see DefAndContentSets#regulars
+	 */
+	protected void setRegulars(List<RegularOfSet> regulars) {
+		this.regulars = regulars;
+	}
+	/**
+	 * Add a regulars in list of regulars of this object
+	 * @param regular
+	 * @see DefAndContentSets#regulars
+	 */
+	protected void addRegular(RegularOfSet regular) {
+		this.regulars.add(regular);
+	}
+	
+	/**
+	 * Returns set content of this object
+	 * (No setter for this attribute : it is evaluated from "groups" and "regulars"
+	 * @return content
+	 * @see DefAndContentSets#content
+	 */
+	protected Set getContent() {
+		return content;
+	}
+
 	
 }

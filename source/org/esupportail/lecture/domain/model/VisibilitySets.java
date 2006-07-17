@@ -1,10 +1,12 @@
 package org.esupportail.lecture.domain.model;
 
 
-import java.util.*;
-
 /**
- * group Visibility sets for managed categories and sources 
+ * Visibility sets for managed categories and sources 
+ * @author gbouteil
+ *
+ */
+/**
  * @author gbouteil
  *
  */
@@ -24,32 +26,13 @@ public class VisibilitySets {
 	 */
 	private DefAndContentSets obliged = new DefAndContentSets();
 
-/* ************************** ACCESSORS ******************************** */	
-
-	public DefAndContentSets getAllowed() {
-		return allowed;
-	}
-	public void setAllowed(DefAndContentSets allowed) {
-		this.allowed = allowed;
-	}
-
-	public DefAndContentSets getAutoSubscribed() {
-		return autoSubscribed;
-	}
-	public void setAutoSubscribed(DefAndContentSets autoSubscribed) {
-		this.autoSubscribed = autoSubscribed;
-	}
-
-	public DefAndContentSets getObliged() {
-		return obliged;
-	}
-	public void setObliged(DefAndContentSets obliged) {
-		this.obliged = obliged;
-	}
 
 /* ************************** METHODS ******************************** */	
 	
-	public void checkNamesExistence(){
+	/**
+	 * Check existence of group names, attributes names used in group definition
+	 */
+	protected void checkNamesExistence(){
 		allowed.checkNamesExistence();
 		obliged.checkNamesExistence();
 		autoSubscribed.checkNamesExistence();
@@ -57,6 +40,11 @@ public class VisibilitySets {
 	
 	
 	
+	/**
+	 * Returns a string containing VisibilitySets content : allowed group, autoSubscribed group
+	 * and obliged group.
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString(){
 		
 		String string ="";
@@ -66,6 +54,61 @@ public class VisibilitySets {
 		
 		return string;
 	}
+
+
+	/* ************************** ACCESSORS ******************************** */	
+
+	/**
+	 * Returns allowed group visibility
+	 * @return allowed
+	 * @see VisibilitySets#allowed
+	 */
+	protected DefAndContentSets getAllowed() {
+		return allowed;
+	}
+	/**
+	 * Sets allowed group visibility
+	 * @param allowed
+	 * @see VisibilitySets#allowed
+	 */
+	protected void setAllowed(DefAndContentSets allowed) {
+		this.allowed = allowed;
+	}
+
+	/**
+	 * Returns autoSubscribed group visibility
+	 * @return autoSubscribed
+	 * @see VisibilitySets#autoSubscribed
+	 */
+	protected DefAndContentSets getAutoSubscribed() {
+		return autoSubscribed;
+	}
+	/**
+	 * Sets autoSubscribed group visibility
+	 * @param autoSubscribed
+	 * @see VisibilitySets#autoSubscribed
+	 */
+	protected void setAutoSubscribed(DefAndContentSets autoSubscribed) {
+		this.autoSubscribed = autoSubscribed;
+	}
+
+	/**
+	 * Returns obliged group visibility
+	 * @return obliged
+	 * @see VisibilitySets#obliged
+	 */
+	protected DefAndContentSets getObliged() {
+		return obliged;
+	}
 	
+	/**
+	 * Sets obliged group visibility
+	 * @param obliged
+	 * @see VisibilitySets#obliged
+	 */
+	protected void setObliged(DefAndContentSets obliged) {
+		this.obliged = obliged;
+	}
+
 	
 }

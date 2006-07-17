@@ -1,72 +1,84 @@
 package org.esupportail.lecture.domain.model;
 
 
+/**
+ * @author gbouteil
+ *
+ */
 public abstract class Category {
 
+/* ************************** PROPERTIES ******************************** */	
+	
 	/**
-	 * @uml.property  name="name"
+	 * Name of the category
 	 */
 	private String name = "";
 
 	/**
-	 * Getter of the property <tt>name</tt>
-	 * @return  Returns the name.
-	 * @uml.property  name="name"
+	 * Description of the category
 	 */
-	public String getName() {
+	private String description = "";
+	/**
+	 * Id of the category
+	 */
+	private int id;
+	
+/* ************************** METHODS ******************************** */
+	
+	
+/* ************************** ACCESSORS ******************************** */	
+	/**
+	 * Returns catgeory name
+	 * @return name
+	 * @see Category#name
+	 */
+	protected String getName() {
 		return name;
 	}
 
+
 	/**
-	 * Setter of the property <tt>name</tt>
-	 * @param name  The name to set.
-	 * @uml.property  name="name"
+	 * Sets categroy name
+	 * @param name
+	 * @see Category#name
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	
 	/**
-	 * @uml.property  name="description"
-	 */
-	private String description = "";
-
-	/**
-	 * Getter of the property <tt>description</tt>
-	 * @return  Returns the description.
-	 * @uml.property  name="description"
+	 * Returns category description
+	 * @return description
+	 * @see Category#description
 	 */
 	public String getDescription() {
 		return description;
 	}
 
 	/**
-	 * Setter of the property <tt>description</tt>
-	 * @param description  The description to set.
-	 * @uml.property  name="description"
+	 * Sets category description
+	 * @param description
+	 * @see Category#description
 	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	
 	/**
-	 * @uml.property  name="id"
-	 */
-	private int id;
-
-	/**
-	 * Getter of the property <tt>id</tt>
-	 * @return  Returns the id.
-	 * @uml.property  name="id"
+	 * Returns the id category
+	 * @return id
+	 * @see Category#id
 	 */
 	public int getId() {
 		return id;
 	}
 
+
 	/**
-	 * Setter of the property <tt>id</tt>
-	 * @param id  The id to set.
-	 * @uml.property  name="id"
+	 * Sets id category
+	 * @param id
+	 * @see Category#id
 	 */
 	public void setId(int id) {
 		this.id = id;

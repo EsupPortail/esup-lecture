@@ -10,7 +10,7 @@ public class RegularOfSet {
 /* ************************** PROPERTIES ******************************** */	
 
 	/**
-	 * user attribute
+	 * attribute required value 
 	 */
 	private String attribute = "";
 	
@@ -19,30 +19,19 @@ public class RegularOfSet {
 	 */
 	private String value = "";
 
-/* ************************** ACCESSORS ******************************** */	
 
-	public String getAttribute() {
-		return attribute;
-	}
-	public void setAttribute(String attribute) {
-		this.attribute = attribute;
-	}
-
-	public String getValue() {
-		return value;
-	}
-	public void setValue(String value) {
-		this.value = value;
-	}
 /* ************************** METHODS ******************************** */	
-	
-	public void checkNamesExistence(){
+	/**
+	 * Check existence of attributes names used in regular definition
+	 */
+	protected void checkNamesExistence(){
 		// TODO vérification de l'existence de l'attribut dans le portail ?
 		// TODO vérifiaction de l'existance de la valeur dans le portail ?
 	}
 	
-	
-	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString(){
 		
 		String string ="";
@@ -50,6 +39,42 @@ public class RegularOfSet {
 		string += ", value : "+ value ;
 		
 		return string;
+	}
+
+/* ************************** ACCESSORS ******************************** */	
+
+	/**
+	 * Returns attribute name
+	 * @return attribute
+	 * @see RegularOfSet#attribute
+	 */
+	protected String getAttribute() {
+		return attribute;
+	}
+	/**
+	 * Sets attribute name
+	 * @param attribute
+	 * @see RegularOfSet#attribute
+	 */
+	protected void setAttribute(String attribute) {
+		this.attribute = attribute;
+	}
+
+	/**
+	 * Returns attribute required value
+	 * @return value
+	 * @see RegularOfSet#value
+	 */
+	protected String getValue() {
+		return value;
+	}
+	/**
+	 * Sets attribute required value
+	 * @param value
+	 * @see RegularOfSet#value
+	 */
+	protected void setValue(String value) {
+		this.value = value;
 	}
 	
 }

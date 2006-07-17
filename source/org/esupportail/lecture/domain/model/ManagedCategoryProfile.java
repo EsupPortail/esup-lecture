@@ -27,33 +27,36 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	/**
 	 * trustCategory parameter : indicates between managed category and category profile, which one to trust
 	 * True : category is trusted. 
-	 * False : category is not trusted, only profile is good for following 
+	 * False : category is not trusted, only parameters profile are good 
 	 * parameters (edit, visibility, ttl)
 	 */
 	private boolean trustCategory;
 	
 	/**
-	 * The remote managed category edit mode : not used for the moment
+	 * Remote managed category edit mode : not used for the moment
+	 * Using depends on trustCategory parameter
 	 */	
 	private Editability edit;
 	
 	/**
-	 * Access mode on this remote managed category
+	 * Access mode on the remote managed category
 	 */
 	private Accessibility access;
 	
 	/**
 	 * Visibility rights for groups on the remote managed category
+	 * Using depends on trustCategory parameter
 	 */
 	private VisibilitySets visibility;
 
 	/**
 	 * Ttl of the remote managed category reloading
+	 * Using depends on trustCategory parameter
 	 */
 	private int ttl;
 	
 	/**
-	 * The remote managed category loaded
+	 * Remote managed category loaded
 	 */
 	private ManagedCategory category = null; 
 	
@@ -61,9 +64,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * Contexts where these profiles category are referenced
 	 */
 	private Set<Context> contextsSet = new HashSet<Context>();
-	/**
-	 * Timer to refresh category
-	 */
+//	/**
+//	 * Timer to refresh category
+//	 */
 
 	// TODO : initialiser come il faut */
 	//private int refreshTimer;
@@ -72,7 +75,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 /* ************************** METHODS ******************************** */	
 
 	/**
-	 * Return a string containing the content of the managed category profile :
+	 * Return a string containing content of the managed category profile :
 	 * URL of the remote managed category, trustCategory parameter, Access mode on remote managed category,
 	 * Visibility rights for groups, ttl of the remote managed category,The remote managed category,
 	 * Contexts where these profiles category are defined
@@ -189,6 +192,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 //	}
 
 	/**
+	 * @return access
 	 * @see ManagedCategoryProfile#access
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getAccess()
 	 */
@@ -205,6 +209,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	}
 	
 	/**
+	 * @return Visibility
 	 * @see ManagedCategoryProfile#visibility
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibility()
 	 */
@@ -221,7 +226,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	}
 
 	/**
-	 * @see VisibilitySets#allowed
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefAndContentSets)
 	 */
 	public void setVisibilityAllowed(DefAndContentSets d) {
@@ -229,7 +233,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	}
 	
 	/**
-	 * @see VisibilitySets#allowed
+	 * @return allowed visibility group 
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAllowed()
 	 */
 	public DefAndContentSets getVisibilityAllowed() {
@@ -237,7 +241,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	}
 	
 	/**
-	 * @see VisibilitySets#autoSubscribed
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefAndContentSets)
 	 */
 	public void setVisibilityAutoSubcribed(DefAndContentSets d) {
@@ -245,7 +248,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	}
 	
 	/** 
-	 * @see VisibilitySets#autoSubscribed
+	 * @return autoSubscribed group visibility
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAutoSubscribed()
 	 */
 	public DefAndContentSets getVisibilityAutoSubscribed() {
@@ -253,7 +256,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	}
 	
 	/**
-	 * @see VisibilitySets#obliged
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefAndContentSets)
 	 */
 	public void setVisibilityObliged(DefAndContentSets d) {
@@ -261,7 +263,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	}
 	
 	/**
-	 * @see VisibilitySets#obliged
+	 * @return obliged group visibility
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityObliged()
 	 */
 	public DefAndContentSets getVisibilityObliged() {
@@ -269,6 +271,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	}
 	
 	/**
+	 * Returns ttl
 	 * @see ManagedCategoryProfile#ttl
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getTtl()
 	 */
@@ -314,7 +317,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	
 	/**
 	 * Add a context to the set of context in this managed category profile
-	 * @param c the context to add
+	 * @param c context to add
 	 * @see ManagedCategoryProfile#contextsSet
 	 */
 	protected void addContext(Context c){
