@@ -25,73 +25,73 @@ public abstract class Source {
 ///* ************************** ACCESSORS ******************************** */	
 //
 //
-//	public String getDtd() {
+//	protected String getDtd() {
 //		return dtd;
 //	}
 //
 //
-//	public void setDtd(String dtd) {
+//	protected void setDtd(String dtd) {
 //		this.dtd = dtd;
 //	}
 //
-//	public String getXmlStream() {
+//	protected String getXmlStream() {
 //		return xmlStream;
 //	}
 //
-//	public void setXmlStream(String xmlStream) {
+//	protected void setXmlStream(String xmlStream) {
 //		this.xmlStream = xmlStream;
 //	}
 //
-//	public String getName() {
+//	protected String getName() {
 //		return name;
 //	}
 //
-//	public void setName(String name) {
+//	protected void setName(String name) {
 //		this.name = name;
 //	}
 //
 //
-//	public String getItemXPath() {
+//	protected String getItemXPath() {
 //		return itemXPath;
 //	}
 //
-//	public void setItemXPath(String itemXPath) {
+//	protected void setItemXPath(String itemXPath) {
 //		this.itemXPath = itemXPath;
 //	}
 //
-//	public String getXsltFile() {
+//	protected String getXsltFile() {
 //		return xsltFile;
 //	}
 //
-//	public void setXsltFile(String xsltFile) {
+//	protected void setXsltFile(String xsltFile) {
 //		this.xsltFile = xsltFile;
 //	}
 //
 //
-//	public String getXmlns() {
+//	protected String getXmlns() {
 //		return xmlns;
 //	}
 //
-//	public void setXmlns(String xmlns) {
+//	protected void setXmlns(String xmlns) {
 //		this.xmlns = xmlns;
 //	}
 //
 //
-//	public String getXmlType() {
+//	protected String getXmlType() {
 //		return xmlType;
 //	}
 //
 //
-//	public void setXmlType(String xmlType) {
+//	protected void setXmlType(String xmlType) {
 //		this.xmlType = xmlType;
 //	}
 //
 //	
-//	public int getId() {
+//	protected int getId() {
 //		return id;
 //	}
 //
-//	public void setId(int id) {
+//	protected void setId(int id) {
 //		this.id = id;
 //	}
 

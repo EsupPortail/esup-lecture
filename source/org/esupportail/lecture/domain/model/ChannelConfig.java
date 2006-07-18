@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.esupportail.lecture.utils.exception.*;
 //import org.apache.commons.configuration.HierarchicalConfiguration; version 1.3
 
 /**
@@ -54,8 +55,7 @@ public class ChannelConfig {
 	/**
 	 * Instance of the configuration file
 	 */
-	// TODO à supprimer 
-	private static File configFile;
+	private static File configFile = new File(configFilePath);
 		 
 
 /* ********************** METHODS *****************************************/
@@ -65,23 +65,24 @@ public class ChannelConfig {
 	* @param c channel that the config refers to
 	* @return an instance of the channel configuration (singleton)
 	* @see ChannelConfig#singleton
-	* @throws Exception
+	* @throws MyException
 	*/
-	synchronized protected static ChannelConfig getInstance(Channel c) throws Exception  {
+	synchronized protected static ChannelConfig getInstance(Channel c)throws MyException {
+		if (log.isDebugEnabled()){
+			log.debug("getInstance()");
+		}
 		if (singleton == null) {
-			configFile = new File(configFilePath);
-			configFileLastModified = configFile.lastModified();
-//			 TODO remplacer par (+ supprimer configFile, 
-			//configFileLastModified = config.getFile().lastModified();
-			
+			configFileLastModified = configFile.lastModified();		
 			singleton = new ChannelConfig(c);
 		}else {
-			log.debug("getInstance :: "+"singleton non null ");
-			long newDate = configFile.lastModified();
-			// TODO remplacer par 
-			// long newDate = config.getFile().lastModified();
+			if (log.isDebugEnabled()){
+				log.debug("getInstance :: "+" singleton not null ");
+			}
+			long newDate = config.getFile().lastModified();
 			if (configFileLastModified < newDate) {
-				log.debug("getInstance :: "+"Configuration reloaded");
+				if (log.isDebugEnabled()){
+					log.debug("getInstance :: "+"Configuration reloaded");
+				}
 				configFileLastModified = newDate;
 				singleton = new ChannelConfig(c);
 			}
@@ -92,9 +93,12 @@ public class ChannelConfig {
 	/**
 	 * Private constructor : load config file and initilized these elements in the channel
 	 * @param c channel that the config refers to
-	 * @throws Exception
+	 * @throws MyException
 	 */
-	private ChannelConfig(Channel c) throws Exception {
+	private ChannelConfig(Channel c) throws MyException {
+		if (log.isDebugEnabled()){
+			log.debug("ChannelConfig()");
+		}
 		ChannelConfig.channel = c;
 		
 		try {
@@ -106,9 +110,6 @@ public class ChannelConfig {
 		/* Reset channel properties loaded from config */
 		c.resetChannelConfigProperties();
 			
-		/* Loading UrlMappingFile */
-		loadUrlMappingFile();
-
 		/* Loading managed category profiles */
 		loadManagedCategoryProfiles();
 		
@@ -119,27 +120,26 @@ public class ChannelConfig {
 		initContextManagedCategoryProfilesLinks();
 
 		} catch (ConfigurationException e) {
-			if (log.isDebugEnabled()){
-				log.debug(e.getMessage());	
-			}
+			log.fatal(e.getMessage());	
+		} catch (MyException e){
+			log.fatal(e.getMessage());
 		}
 	}
 
-	/**
-	 * Load Mapping file location from config file
-	 *
-	 */
-	private void loadUrlMappingFile() {
-		log.debug("Appel de setMappingFilePath");
-	   	MappingFile.setMappingFilePath(config.getString("[@mappingFile]"));
-    }	
 
 	/**
 	 * Load Managed Category profiles from config file
-	 * @throws Exception
+	 * @throws MyException
 	 */
-	private void loadManagedCategoryProfiles() throws Exception {
+	private void loadManagedCategoryProfiles() throws MyException {
+		if (log.isDebugEnabled()){
+			log.debug("loadManagedCategoryProfiles()");
+		}
 		int nbProfiles = config.getMaxIndex("categoryProfile") + 1;
+		
+		if (nbProfiles == 0) {
+			log.warn("No managed category profile declared in channel config");
+		}
 		
 		for(int i = 0; i<nbProfiles;i++ ){
 			String pathCategoryProfile = "categoryProfile(" + i + ")";
@@ -158,7 +158,7 @@ public class ChannelConfig {
 			} else if (access.equalsIgnoreCase("cas")) {
 				mcp.setAccess(Accessibility.CAS);
 			} else {
-				throw new Exception();
+				throw new MyException("Error in Element \"accessibility\" declaration in channel config, value must be 'public' or 'cas'");
 			}
 			
 		    // Visibility
@@ -190,7 +190,7 @@ public class ChannelConfig {
 //			} else if (access == "CAS"){
 //				mcp.setAccess(Accessibility.CAS);
 //			} else {
-//				throw new Exception();
+//				throw new MyException();
 //			}
 //		   // Visibility	
 	}
@@ -202,6 +202,9 @@ public class ChannelConfig {
 	 * @return the initialized DefAndContentSets
 	 */
 	private DefAndContentSets loadDefAndContentSets(String fatherName,int index){
+		if (log.isDebugEnabled()){
+			log.debug("loadDefAndContentSets("+fatherName+","+index+")");
+		}
 		DefAndContentSets defAndContentSets = new DefAndContentSets();
 		String fatherPath = "categoryProfile("+index+ ").visibility." + fatherName;
 		
@@ -225,7 +228,14 @@ public class ChannelConfig {
 	 * Load Contexts from config file
 	 */
     private void loadContexts(){
+    	if (log.isDebugEnabled()){
+    		log.debug("loadContexts()");
+    	}
 		int nbContexts = config.getMaxIndex("context") + 1;
+		
+		if (nbContexts == 0) {
+			log.warn("No context declared in channel config");
+		}
 		
 		for(int i = 0; i<nbContexts;i++ ){
 			String pathContext = "context(" + i + ")";
@@ -241,7 +251,7 @@ public class ChannelConfig {
 				c.addRefIdManagedCategoryProfile(s);
 			}
 			channel.addContext(c);
-		}
+		};
     }    
     
     /**
@@ -249,6 +259,9 @@ public class ChannelConfig {
      * defined in the channel config
      */
     private void initContextManagedCategoryProfilesLinks(){
+    	if (log.isDebugEnabled()){
+    		log.debug("initContextManagedCategoryProfilesLinks()");
+    	}
     	
     	Iterator iterator = channel.getContexts().iterator();
     	while(iterator.hasNext()){
@@ -292,7 +305,7 @@ public class ChannelConfig {
 	 */
 	protected static void setConfigFilePath(String configFilePath) {
 		ChannelConfig.configFilePath = configFilePath;
-		// TODO refaire un nouveau fichier ??? cf MappingFile
+		configFile = new File(configFilePath);
 	}
    
 

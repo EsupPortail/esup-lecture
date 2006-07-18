@@ -1,10 +1,5 @@
 package org.esupportail.lecture.domain.model;
 
-
-/**
- * @author gbouteil
- *
- */
 public abstract class Category {
 
 /* ************************** PROPERTIES ******************************** */	
@@ -42,7 +37,7 @@ public abstract class Category {
 	 * @param name
 	 * @see Category#name
 	 */
-	public void setName(String name) {
+	protected void setName(String name) {
 		this.name = name;
 	}
 	
@@ -51,7 +46,7 @@ public abstract class Category {
 	 * @return description
 	 * @see Category#description
 	 */
-	public String getDescription() {
+	protected String getDescription() {
 		return description;
 	}
 
@@ -60,7 +55,7 @@ public abstract class Category {
 	 * @param description
 	 * @see Category#description
 	 */
-	public void setDescription(String description) {
+	protected void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -70,7 +65,7 @@ public abstract class Category {
 	 * @return id
 	 * @see Category#id
 	 */
-	public int getId() {
+	protected int getId() {
 		return id;
 	}
 
@@ -80,7 +75,7 @@ public abstract class Category {
 	 * @param id
 	 * @see Category#id
 	 */
-	public void setId(int id) {
+	protected void setId(int id) {
 		this.id = id;
 	}
 

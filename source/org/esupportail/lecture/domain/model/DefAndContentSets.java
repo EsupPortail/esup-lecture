@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Iterator;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 /**
  * DefAndContentSets is composed of two parts :
  *  - the content of defined set after computing its definition
@@ -18,6 +21,10 @@ import java.util.Iterator;
  */
 public class DefAndContentSets {
 /* ************************** PROPERTIES ******************************** */	
+	/**
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(ChannelConfig.class);
 	/**
 	 * groups : set definition by existent group listing
 	 */
@@ -41,12 +48,15 @@ public class DefAndContentSets {
 	 * and regulars definition
 	 */
 	protected void checkNamesExistence(){
-		
+	   	if (log.isDebugEnabled()){
+    		log.debug("checkNamesExistence()");
+    	}
 		Iterator iterator;
 		iterator = groups.iterator();
 		for(String group = null; iterator.hasNext();){
 			group = (String)iterator.next();
 //			 TODO vérification de l'existence du groupe dans le portail
+			// si PB : log.warn();
 		}
 		
 		iterator = regulars.iterator();

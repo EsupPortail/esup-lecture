@@ -1,11 +1,10 @@
 package org.esupportail.lecture.domain.model;
 
 /**
- * Category profile element : a categroey profile can be a managed or personal one.
+ * Category profile element : a category profile can be a managed or personal one.
  * @author gbouteil
  *
  */
-
 public abstract class CategoryProfile {
 	
 /* ************************** PROPERTIES ******************************** */	
@@ -17,10 +16,7 @@ public abstract class CategoryProfile {
 	 *  Category profile id
 	 */
 	private String id;
-	/**
-	 * Category description
-	 */
-	private String description = "";
+
 	
 
 
@@ -40,8 +36,6 @@ public abstract class CategoryProfile {
 		/* The category profile name */
 		string += "	name : "+ name +"\n";
 		
-		/* The category profile description */
-		string += "	description : "+ description +"\n";
 	
 		/* The category profile id */
 		string += "	id : "+ id +"\n";

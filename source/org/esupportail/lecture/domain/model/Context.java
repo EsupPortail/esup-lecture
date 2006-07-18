@@ -59,6 +59,9 @@ public class Context {
 	 * @param channel channel where the context is defined 
 	 */
 	protected void initManagedCategoryProfiles(Channel channel) {
+		if (log.isDebugEnabled()){
+			log.debug("initManagedCategoryProfiles()");
+		}
 		/* Connecting Managed category profiles and contexts */
 		Iterator iterator = refIdManagedCategoryProfilesSet.iterator();
 

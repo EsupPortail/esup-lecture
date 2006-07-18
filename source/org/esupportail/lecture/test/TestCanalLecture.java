@@ -1,12 +1,12 @@
 package org.esupportail.lecture.test;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.model.Channel;
-import java.util.Iterator;
-import java.util.List;
-import org.springframework.beans.factory.FactoryBean;
+
+import java.io.IOException;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.FileSystemResource;
 
 /**
  * Stub to test classes in package org.esupportail.domain.model
@@ -14,7 +14,9 @@ import org.springframework.core.io.FileSystemResource;
  * @see org.esupportail.lecture.domain.model
  */
 public class TestCanalLecture {
-
+	
+	protected static final Log log = LogFactory.getLog(Channel.class); 
+	
 	/**
 	 * @param args non argumet needed
 	 */
@@ -30,12 +32,15 @@ public class TestCanalLecture {
 			System.in.read();
 			myChannel.startup();
 		
+		} catch (IOException e) {
+			log.fatal("Exception I/O !!!");
+			log.fatal(e.getMessage());
 		} catch (Exception e) {
-			System.out.println("Exception 1 !!!");
-			System.out.println(e.getMessage());
+			log.fatal("Exception on startup !!!");
+			log.fatal(e.getMessage());
 		}
 		
-		System.out.println("***********************Configuration du canal lecture : ***********************");
+		System.out.println("*********************** Configuration du canal lecture : ***********************");
 		System.out.println(myChannel.toString());
 	}
 }

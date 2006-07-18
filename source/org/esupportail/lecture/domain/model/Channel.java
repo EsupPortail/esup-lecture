@@ -6,7 +6,7 @@ import java.util.*;
 //import org.springframework.beans.factory.InitializingBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
+import org.esupportail.lecture.utils.exception.MyException;
 /**
  * The "lecture" channel
  * @author gbouteil
@@ -72,9 +72,12 @@ public class Channel  {
 	/**
 	 * Methods call to load or reload the config and mapping file 
 	 * if needed (when files are modified from last loading)
-	 * @throws Exception
+	 * @throws MyException
 	 */
-	public void startup() throws Exception {
+	public void startup() throws MyException {
+		if (log.isDebugEnabled()){
+			log.debug("startup()");
+		}
 		loadConfig();
 		loadMappingFile();
 	}
@@ -83,9 +86,12 @@ public class Channel  {
 	 * Load config file if needed (using ChannelConfig), containing contexts and managed category profiles definition.
 	 * Initialize these elements.
 	 * @see org.esupportail.lecture.domain.model.ChannelConfig#getInstance(Channel)
-	 * @exception Exception
+	 * @exception MyException
 	 */
-	private void loadConfig()throws Exception{
+	private void loadConfig()throws MyException {
+		if (log.isDebugEnabled()){
+			log.debug("loadConfig()");
+		}
 		config = ChannelConfig.getInstance(this);
 	}
 	
@@ -93,6 +99,9 @@ public class Channel  {
 	 * Initialize every channel properties that are set up by loading channel configuration file
 	 */
 	protected void resetChannelConfigProperties(){
+		if (log.isDebugEnabled()){
+			log.debug("resetChannelConfigProperties()");
+		}
 		contexts = new HashSet<Context>();
 		managedCategoryProfilesHash = new Hashtable<String,ManagedCategoryProfile>();
 	}
@@ -101,9 +110,12 @@ public class Channel  {
 	 * Load mapping file if needed (using MappingFile), containing list of mappings used by the channel.
 	 * Initialize these elements.
 	 * @see org.esupportail.lecture.domain.model.MappingFile#getInstance(Channel)
-	 * @exception Exception
+	 * @exception MyException
 	 */	
-	private void loadMappingFile() throws Exception {
+	private void loadMappingFile() throws MyException {
+		if (log.isDebugEnabled()){
+			log.debug("loadMappingFile()");
+		}
 		mappingFile = MappingFile.getInstance(this);
 	}
 
@@ -111,6 +123,9 @@ public class Channel  {
 	 * Initialize every channel properties that are set up by loading mapping file
 	 */
 	protected void resetMappingFileProperties(){
+		if (log.isDebugEnabled()){
+			log.debug("resetMappingFileProperties()");
+		}
 		mappingList = new ArrayList<Mapping>();
 		mappingHashByDtd = new Hashtable<String,Mapping>();
 		mappingHashByXmlns = new Hashtable<String,Mapping>();

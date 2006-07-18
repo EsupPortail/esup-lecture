@@ -3,7 +3,7 @@
 <mappings>
 	<mapping
 		
-		xmlns = "ma_xmlns1"
+		xmlns = "ma_xmlns1 AAAAAAAAAAAAAAAAAAAAAA"
 		xmlType = "ma_xmlType1"
 		xsltFile = "mon_xsltFile1"
 		itemXPath = "mon_itemXpath1"

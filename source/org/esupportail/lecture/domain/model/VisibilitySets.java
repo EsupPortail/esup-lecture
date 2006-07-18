@@ -1,5 +1,8 @@
 package org.esupportail.lecture.domain.model;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * Visibility sets for managed categories and sources 
@@ -13,6 +16,10 @@ package org.esupportail.lecture.domain.model;
 public class VisibilitySets {
 
 /* ************************** PROPERTIES ******************************** */	
+	/**
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(ChannelConfig.class);
 	/**
 	 * Group of allowed users to subscribe to element
 	 */
@@ -33,6 +40,9 @@ public class VisibilitySets {
 	 * Check existence of group names, attributes names used in group definition
 	 */
 	protected void checkNamesExistence(){
+	   	if (log.isDebugEnabled()){
+    		log.debug("checkNamesExistence()");
+    	}
 		allowed.checkNamesExistence();
 		obliged.checkNamesExistence();
 		autoSubscribed.checkNamesExistence();

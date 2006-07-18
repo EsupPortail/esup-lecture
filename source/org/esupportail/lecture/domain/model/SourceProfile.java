@@ -1,5 +1,10 @@
 package org.esupportail.lecture.domain.model;
 
+/**
+ * Source profile element : a source profile can be a managed or personal one.
+ * @author gbouteil
+ *
+ */
 public abstract class SourceProfile {
 
 /* ************************** PROPERTIES ******************************** */	

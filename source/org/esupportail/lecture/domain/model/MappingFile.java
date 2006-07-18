@@ -7,6 +7,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.utils.exception.*;
 
 
 
@@ -41,7 +42,7 @@ public class MappingFile {
 	/**
 	 *  classpath relative path of the mapping file
 	 */
-	private static String mappingFilePath = "";
+	private static String mappingFilePath = "properties/mappings.xml";
 	
 	/**
 	 * Last modified time of the mapping file
@@ -51,10 +52,8 @@ public class MappingFile {
 	/**
 	 * Instance of the mapping file
 	 */
-	// TODO à supprimer ?
-	private static File file;
-	
-	
+	private static File file = new File(mappingFilePath);
+
 
 	
 /* ********************** METHODS**************************************/ 	
@@ -63,22 +62,24 @@ public class MappingFile {
 	* Get an instance of the mapping file
 	* @param c channel that the mapping file belongs to
 	* @return an instance of the mapping file (singleton)
-	* @throws Exception
+	* @throws MyException
 	*/
-	synchronized protected static MappingFile getInstance(Channel c) throws Exception  {
+	synchronized protected static MappingFile getInstance(Channel c) throws MyException  {
+		if (log.isDebugEnabled()){
+			log.debug("getInstance()");
+		}
 		if (singleton == null) {
 			fileLastModified = file.lastModified();
-//			 TODO remplacer par (+ supprimer file, 
-			//fileLastModified = mappings.getFile().lastModified();
-			
 			singleton = new MappingFile(c);
 		}else {
-			log.debug("getInstance :: "+"singleton non null ");
+			if (log.isDebugEnabled()){
+				log.debug("getInstance :: "+"singleton not null ");
+			}
 			long newDate = file.lastModified();
-			// TODO remplacer par
-			// long newDate = mappings.getFile().lastModified();
 			if (fileLastModified < newDate) {
-				log.debug("getInstance :: "+"mapping file reloaded");
+				if (log.isDebugEnabled()){
+					log.debug("getInstance :: "+"mapping file reloaded");
+				}
 				fileLastModified = newDate;
 				singleton = new MappingFile(c);
 			}				
@@ -89,9 +90,12 @@ public class MappingFile {
 	/**
 	 * Private Constructor: load mapping file and initilized these elements in the channel
 	 * @param c channel that the mapping file belongs to 
-	 * @throws Exception
+	 * @throws MyException
 	 */
-	private MappingFile(Channel c) throws Exception {
+	private MappingFile(Channel c) throws MyException {
+		if (log.isDebugEnabled()){
+			log.debug("MappingFile()");
+		}
 		MappingFile.channel = c;
 		
 		try {
@@ -109,16 +113,21 @@ public class MappingFile {
 			/* Initialize hashs mapping if channel */
 			initChannelHashMappings();
 
-		} catch (Exception e) {
-			log.debug(e.getMessage());	
+		} catch (ConfigurationException e) {
+			log.fatal(e.getMessage());	
+		} catch (MyException e){
+			log.fatal(e.getMessage());
 		}
 	}	
 	
 	/**
 	 * Load mappings from mapping file
-	 * @throws Exception
+	 * @throws MyException
 	 */
-	private void loadMappings() throws Exception {
+	private void loadMappings() throws MyException {
+		if (log.isDebugEnabled()){
+			log.debug("loadMappings()");
+		}
 		int nbMappings = mappings.getMaxIndex("mapping") + 1;
 		
 		for(int i = 0; i<nbMappings;i++ ){
@@ -129,7 +138,7 @@ public class MappingFile {
 			String xmlType = mappings.getString(pathMapping+ "[@xmlType]");
 			
 			if (dtd == null && xmlns == null && xmlType == null){
-				throw new Exception("You must declare dtd or xmlns or xmltype in a mapping.");
+				throw new MyException("loadMappings :: you must declare dtd or xmlns or xmltype in a mapping.");
 			}
 			
 			if (dtd == null){
@@ -160,6 +169,9 @@ public class MappingFile {
 	 *  Initialize hash mappings in channel
 	 */
 	private void initChannelHashMappings(){
+		if (log.isDebugEnabled()){
+			log.debug("initChannelHashMappings()");
+		}
 		Iterator iterator = channel.getMappingList().iterator();
 		for(Mapping m = null; iterator.hasNext();){
 			m = (Mapping)iterator.next();
@@ -224,7 +236,6 @@ public class MappingFile {
 	 */
 	protected static void setMappingFilePath(String mappingFilePath) {
 		log.debug("Nouveau mappingFilePath : "+mappingFilePath);
-		// TODO : a refaire !!!
 		MappingFile.mappingFilePath = mappingFilePath;
 		file = new File(mappingFilePath);
 	}

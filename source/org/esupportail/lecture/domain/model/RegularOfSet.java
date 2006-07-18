@@ -1,5 +1,8 @@
 package org.esupportail.lecture.domain.model;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * Regular definition of a group : 
  * Every user that "attribute x" has "value Y"
@@ -8,7 +11,11 @@ package org.esupportail.lecture.domain.model;
  */
 public class RegularOfSet {
 /* ************************** PROPERTIES ******************************** */	
-
+	/**
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(ChannelConfig.class);
+	
 	/**
 	 * attribute required value 
 	 */
@@ -25,8 +32,11 @@ public class RegularOfSet {
 	 * Check existence of attributes names used in regular definition
 	 */
 	protected void checkNamesExistence(){
-		// TODO vérification de l'existence de l'attribut dans le portail ?
-		// TODO vérifiaction de l'existance de la valeur dans le portail ?
+	   	if (log.isDebugEnabled()){
+    		log.debug("checkNamesExistence()");
+    	}
+		// TODO vérification de l'existence de l'attribut dans le portail ? + log.warn si pb
+		// TODO vérifiaction de l'existance de la valeur dans le portail ? + log.warn si pb
 	}
 	
 	/**
