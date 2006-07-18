@@ -8,7 +8,12 @@ import org.esupportail.lecture.domain.model.GlobalSource;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.service.LectureService;
 
-public class LectureServiceTestImpl implements LectureService {
+/**
+ * Et la javadoc, elle est où ???
+ * @author gbouteil
+ *
+ */
+public class LectureServiceImplRaymond implements LectureService {
 
 	public List<Category> getCategories() {
 		ArrayList<Category> ret = new ArrayList<Category>();
@@ -30,7 +35,7 @@ public class LectureServiceTestImpl implements LectureService {
 		// Volontairement ici je ne tiens pas compte du parametre passé à la fonction...
 		Source src;
 		src = new GlobalSource();
-		src.setName("Cinéma");
+		src.setName("Cinéma"); 
 		ret.add(src);
 		src = new GlobalSource();
 		src.setName("Théatre");
@@ -43,5 +48,17 @@ public class LectureServiceTestImpl implements LectureService {
 		ret.add(src);
 		return ret;
 	}
+	/**
+	 * @deprecated
+	 */
+	public void startChannel() {
+		
+	}
 
+	/**
+	 * @deprecated
+	 */
+	public void newUserSession(){
+		
+	}
 }

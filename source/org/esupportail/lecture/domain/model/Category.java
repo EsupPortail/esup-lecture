@@ -27,7 +27,7 @@ public abstract class Category {
 	 * @return name
 	 * @see Category#name
 	 */
-	protected String getName() {
+	public String getName() {
 		return name;
 	}
 
@@ -37,7 +37,7 @@ public abstract class Category {
 	 * @param name
 	 * @see Category#name
 	 */
-	protected void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 	

@@ -8,12 +8,10 @@
     <property name="prefix" value="/WEB-INF/jsp/"/>
     <property name="suffix" value=".jsp"/>
   </bean>
-  <!-- <import resource="config-canal-lecture.xml"/>-->
-  <bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
-  </bean>	
+ 
   
   <!--  import other spring configuration files -->
-  <import resource="portlet-spring-domain.xml"/>
+  <import resource="portlet-spring-domain-gwe.xml"/>
 
 
 </beans>

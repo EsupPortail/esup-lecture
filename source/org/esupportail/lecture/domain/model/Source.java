@@ -8,7 +8,7 @@ public abstract class Source {
 //	
 //	private String xmlStream = "";
 //
-//	private String name = "";
+	private String name = "";
 //
 //	private String itemXPath = "";
 //
@@ -42,13 +42,13 @@ public abstract class Source {
 //		this.xmlStream = xmlStream;
 //	}
 //
-//	protected String getName() {
-//		return name;
-//	}
-//
-//	protected void setName(String name) {
-//		this.name = name;
-//	}
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 //
 //
 //	protected String getItemXPath() {
