@@ -61,4 +61,12 @@ public class LectureServiceImplRaymond implements LectureService {
 	public void newUserSession(){
 		
 	}
+
+	/**
+	 * @deprecated
+	 */
+	public String channelToString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

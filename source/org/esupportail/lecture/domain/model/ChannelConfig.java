@@ -169,7 +169,7 @@ public class ChannelConfig {
 		   	visibilitySets.setObliged(loadDefAndContentSets("obliged",i));
 		   	visibilitySets.checkNamesExistence();
 		    mcp.setVisibility(visibilitySets);
-		    
+		    // TODO forcer_timer_categorie(mcp)
 		    channel.addManagedCategoryProfile(mcp);    
 		}
 // Code pour la version commons-configuration 1.3

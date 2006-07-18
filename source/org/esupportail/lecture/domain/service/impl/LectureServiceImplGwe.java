@@ -37,11 +37,17 @@ public class LectureServiceImplGwe implements LectureService {
 		return myChannel.toString();
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public List<Category> getCategories() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	/**
+	 * @deprecated
+	 */
 	public List<Source> getSources(Category cat) {
 		// TODO Auto-generated method stub
 		return null;
