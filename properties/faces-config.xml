@@ -4,6 +4,10 @@
   "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
 <faces-config>
 	<application>
+		<!-- interfaçage spring-jsf :
+			- définition de var dans ce fichier de config JSF (ex : #{facadeService}
+			- spring instancie ces variables
+			-->
 		<variable-resolver>
 			org.springframework.web.jsf.DelegatingVariableResolver
 		</variable-resolver>
@@ -12,19 +16,30 @@
 	<!-- NAVIGATION -->
 
 	<!-- FORM BEANS -->
+	<!-- Un bean par vue : défintion de ces beans
+		- pour l'usage du controleur
+		- stockage des données saisies dans le fomrulaire
+		(cela peut être donc être aussi deux beans différents)
+		-->
      <managed-bean>
+		<!-- nom du bean utilisée par la vue -->
         <managed-bean-name>homeBean</managed-bean-name>
+		<!-- classe correspondant au bean manipulé --> 
         <managed-bean-class>org.esupportail.lecture.web.HomeBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
+			<!-- attribut du bean : nom -->
 			<property-name>facadeService</property-name>
+			<!-- classe de l'attribut -->
 			<property-class>org.esupportail.lecture.web.FacadeService</property-class>
+			<!-- valeur de l'attribut -->
 			<value>#{facadeService}</value>
 		</managed-property>
     </managed-bean>
 
 	<!-- OTHERS -->
 	<managed-bean>
+		<!-- correspond à la var #{facadeService} -->
 		<managed-bean-name>facadeService</managed-bean-name>
 		<managed-bean-class>
 			org.esupportail.lecture.web.FacadeService
@@ -35,6 +50,7 @@
 			<property-class>
 				org.esupportail.lecture.domain.service.LectureService
 			</property-class>
+			<!-- definie dans la config spring -->
 			<value>#{lectureService}</value>
 		</managed-property>
 	</managed-bean>

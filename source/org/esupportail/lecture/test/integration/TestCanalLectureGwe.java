@@ -1,4 +1,4 @@
-package org.esupportail.lecture.test;
+package org.esupportail.lecture.test.integration;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

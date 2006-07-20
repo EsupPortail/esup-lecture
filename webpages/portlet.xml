@@ -1,21 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd" version="1.0">
-    
+   
+<!-- description du déploiement de la portlet -->		 
     <portlet>
-        <portlet-name>jsf</portlet-name>
+		<!-- identifiant unique de notre portlet -->	
+        <portlet-name>lecture</portlet-name>
+	    <!-- Aiguilleur des requetes vers les controlleurs -->
         <portlet-class>org.apache.myfaces.portlet.MyFacesGenericPortlet</portlet-class>
         <init-param>
+			<!-- vue à utiliser par défaut -->
             <name>default-view</name>
             <value>/home.jsp</value>
         </init-param>
         <supports>
+			<!-- mode et supports traités par la portlet -->		
             <mime-type>text/html</mime-type>
         </supports>
         <portlet-info>
-            <title>jsf</title>
-            <short-title>Sample JSF MyFaces Portlet</short-title>
-			<keywords>Sample JSF MyFaces Portlet</keywords>
+            <title>Lecture</title>
+            <short-title>Sample JSF MyFaces Portlet lecture</short-title>
+			<keywords>Sample JSF MyFaces Portlet Lecture</keywords>
         </portlet-info>      
     </portlet>
     

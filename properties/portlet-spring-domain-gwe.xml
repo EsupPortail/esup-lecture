@@ -2,7 +2,10 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean id="services" class="org.esupportail.lecture.domain.service.impl.LectureServiceImplGwe">
+<!--	<bean id="services" class="org.esupportail.lecture.domain.service.impl.LectureServiceImplGwe">
+	</bean>
+	-->
+	<bean id="lectureService" class="org.esupportail.lecture.domain.service.impl.LectureServiceImplRaymond">
 	</bean>
     
 </beans>

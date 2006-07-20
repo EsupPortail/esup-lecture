@@ -45,7 +45,7 @@ public class ChannelConfig {
 	/**
 	 *  classpath relative path of the config file
 	 */
-	private static String configFilePath ="properties/test.xml";
+	private static String configFilePath ="properties/config-lecture.xml";
 	
 	/**
 	 * Last modified time of the config file

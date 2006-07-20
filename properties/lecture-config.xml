@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE channelConfig SYSTEM "clecture.dtd" >
-<channelConfig mappingFile="properties/mappings.xml">
+<channelConfig>
 	<context 
 	  name = "context1"
 	  id = "c1">
-	  <description>C'est le context 1 modifié1 !!!</description> 
+	  <description>C'est le context 1 BBBBBBBBBBBBBBBBBBBBB</description> 
 	  <refCategoryProfile refId="cp1"/>
   	  <refCategoryProfile refId="cp2"/>
   	  <refCategoryProfile refId="cp3"/>
@@ -32,7 +32,6 @@
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
-		<description> c'est la categorie1</description>
 		<visibility>
 			<allowed>
 				<regular
@@ -71,7 +70,6 @@
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
-		<description> c'est la categorie2</description>
 	 	<visibility>
 	 		<allowed>
 				<regular
@@ -99,7 +97,6 @@
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
-		<description> c'est la categorie3</description>
 		<visibility>
 			<allowed>
 				<regular
@@ -118,8 +115,7 @@
 		urlCategory="http://listes.univ-rennes1.fr/"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" >
-		<description> c'est la categorie4</description>
+		ttl = "3600" > 
 		<visibility>
 			<allowed>
 				<regular
