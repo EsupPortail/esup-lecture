@@ -1,7 +1,10 @@
 package org.esupportail.lecture.domain.model;
 
 
+
+
 import java.io.File;
+import java.net.URL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -45,7 +48,7 @@ public class ChannelConfig {
 	/**
 	 *  classpath relative path of the config file
 	 */
-	private static String configFilePath ="properties/config-lecture.xml";
+	private static String configFilePath ="lecture-config.xml";
 	
 	/**
 	 * Last modified time of the config file
@@ -74,6 +77,8 @@ public class ChannelConfig {
 		if (singleton == null) {
 			configFileLastModified = configFile.lastModified();		
 			singleton = new ChannelConfig(c);
+			URL url = ChannelConfig.class.getResource(configFilePath);
+			log.debug("L'URL : "+url.toString());
 		}else {
 			if (log.isDebugEnabled()){
 				log.debug("getInstance :: "+" singleton not null ");

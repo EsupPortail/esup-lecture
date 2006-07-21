@@ -23,9 +23,9 @@
 		-->
      <managed-bean>
 		<!-- nom du bean utilisée par la vue -->
-        <managed-bean-name>homeBean</managed-bean-name>
+        <managed-bean-name>homeContextBean</managed-bean-name>
 		<!-- classe correspondant au bean manipulé --> 
-        <managed-bean-class>org.esupportail.lecture.web.HomeBean</managed-bean-class>
+        <managed-bean-class>org.esupportail.lecture.web.HomeContextBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<!-- attribut du bean : nom -->

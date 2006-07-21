@@ -117,7 +117,7 @@ public class Context {
 	 * @return name
 	 * @see Context#name
 	 */
-	protected String getName() {
+	public String getName() {
 		return name;
 	}
 
@@ -135,7 +135,7 @@ public class Context {
 	 * @return description
 	 * @see Context#description
 	 */
-	protected String getDescription() {
+	public String getDescription() {
 		return description;
 	}
 
@@ -153,7 +153,7 @@ public class Context {
 	 * @return id
 	 * @see Context#id
 	 */
-	protected String getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -175,14 +175,14 @@ public class Context {
 //		this.edit = edit;
 //	}
 
-// TODO a retirer si inutile	
-//	protected Set<ManagedCategoryProfile> getManagedCategoryProfilesSet() {
-//		return managedCategoryProfilesSet;
-//	}
-//	protected void setManagedCategoryProfilesSet(
-//			Set<ManagedCategoryProfile> managedCategoryProfilesSet) {
-//		this.managedCategoryProfilesSet = managedCategoryProfilesSet;
-//	}
+
+	public Set<ManagedCategoryProfile> getManagedCategoryProfilesSet() {
+		return managedCategoryProfilesSet;
+	}
+	protected void setManagedCategoryProfilesSet(
+			Set<ManagedCategoryProfile> managedCategoryProfilesSet) {
+		this.managedCategoryProfilesSet = managedCategoryProfilesSet;
+	}
 
 	/**
 	 * Add a managed category profile id to the set of id refered to in this context

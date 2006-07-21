@@ -11,7 +11,7 @@
         <init-param>
 			<!-- vue à utiliser par défaut -->
             <name>default-view</name>
-            <value>/home.jsp</value>
+            <value>/homeContext.jsp</value>
         </init-param>
         <supports>
 			<!-- mode et supports traités par la portlet -->		

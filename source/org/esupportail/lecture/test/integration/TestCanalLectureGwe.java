@@ -26,12 +26,12 @@ public class TestCanalLectureGwe {
 		ClassPathResource res = new ClassPathResource("applicationContextGwe.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		
-		LectureService myServices = (LectureService)factory.getBean("services");
+		LectureService myServices = (LectureService)factory.getBean("lectureService");
 		try {
-			myServices.startChannel();
+			myServices.loadChannel();
 			System.out.println("Tapez une touche ...");
 			System.in.read();
-			myServices.startChannel();
+			myServices.loadChannel();
 		
 		} catch (IOException e) {
 			log.fatal("Exception I/O !!!");

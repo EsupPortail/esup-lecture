@@ -201,7 +201,7 @@ public class Channel  {
 	 * @return contexts
 	 * @see Channel#contexts
 	 */
-	protected Set<Context> getContexts() {
+	public Set<Context> getContexts() {
 		return contexts;
 	}
 
