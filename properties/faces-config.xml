@@ -31,7 +31,7 @@
 			<!-- attribut du bean : nom -->
 			<property-name>facadeService</property-name>
 			<!-- classe de l'attribut -->
-			<property-class>org.esupportail.lecture.web.FacadeService</property-class>
+			<property-class>org.esupportail.lecture.web.FacadeWeb</property-class>
 			<!-- valeur de l'attribut -->
 			<value>#{facadeService}</value>
 		</managed-property>
@@ -42,7 +42,7 @@
 		<!-- correspond à la var #{facadeService} -->
 		<managed-bean-name>facadeService</managed-bean-name>
 		<managed-bean-class>
-			org.esupportail.lecture.web.FacadeService
+			org.esupportail.lecture.web.FacadeWeb
 		</managed-bean-class>
 		<managed-bean-scope>application</managed-bean-scope>
 		<managed-property>

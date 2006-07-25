@@ -19,17 +19,17 @@ import org.esupportail.lecture.domain.model.Context;
  */
 public class HomeContextBean {
 	private List<ContextWeb> contextWebs;
-	private FacadeService facadeService;
+	private FacadeWeb facadeWeb;
 	
-	public void setFacadeService(FacadeService facadeService) {
-		this.facadeService = facadeService;
+	public void setFacadeService(FacadeWeb facadeService) {
+		this.facadeWeb = facadeService;
 	}
 	
 	public List<ContextWeb> getContextWebs() {
 		// calculer ça à chaque fois qu'on le demande ou le garder en mémoire ?
 		// mieux de le mettre dans le constructeur
 		contextWebs = new ArrayList<ContextWeb>();
-		Set<Context> contexts = facadeService.getLectureService().getContexts();
+		Set<Context> contexts = facadeWeb.getLectureService().getContexts();
 		Iterator iterator = contexts.iterator();
 		for (Context c = null; iterator.hasNext();){
 			c=(Context)iterator.next();
@@ -51,8 +51,8 @@ public class HomeContextBean {
 	/**
 	 * @return Returns the facadeService.
 	 */
-	protected FacadeService getFacadeService() {
-		return facadeService;
+	protected FacadeWeb getFacadeService() {
+		return facadeWeb;
 	}
 	
 

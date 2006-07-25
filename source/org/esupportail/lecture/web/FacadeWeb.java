@@ -12,7 +12,7 @@ import org.esupportail.lecture.domain.service.LectureService;
  * @author gbouteil
  *
  */
-public class FacadeService {
+public class FacadeWeb {
 	
 	private LectureService lectureService;
 	

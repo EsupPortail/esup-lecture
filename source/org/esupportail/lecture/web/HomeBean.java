@@ -10,14 +10,14 @@ import org.esupportail.lecture.domain.model.Category;
 
 public class HomeBean {
 	private List<Category> categories;
-	private FacadeService facadeService;
+	private FacadeWeb facadeWeb;
 	
-	public void setFacadeService(FacadeService facadeService) {
-		this.facadeService = facadeService;
+	public void setFacadeWeb(FacadeWeb facadeWeb) {
+		this.facadeWeb = facadeWeb;
 	}
 	
 	public List<Category> getCategories() {
-		this.categories = facadeService.getLectureService().getCategories();
+		this.categories = facadeWeb.getLectureService().getCategories();
 		return this.categories;
 	}
 
