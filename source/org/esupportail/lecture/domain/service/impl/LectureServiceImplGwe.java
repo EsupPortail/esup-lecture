@@ -1,5 +1,9 @@
 package org.esupportail.lecture.domain.service.impl;
-import java.util.Iterator;
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 import java.util.Set;
 import java.util.List;
 
@@ -35,7 +39,7 @@ public class LectureServiceImplGwe implements LectureService {
 		try {
 			loadChannel();
 		} catch (Exception e){
-			log.fatal(e.getMessage());
+			log.fatal("LectureServiceImplGwe() :: "+e.getMessage());
 		}
 
 	}
@@ -63,6 +67,9 @@ public class LectureServiceImplGwe implements LectureService {
 		return myChannel.toString();
 	}
 	
+	/**
+	 * @see org.esupportail.lecture.domain.service.LectureService#getContexts()
+	 */
 	public Set<Context> getContexts() {
 		return myChannel.getContexts();
 	}

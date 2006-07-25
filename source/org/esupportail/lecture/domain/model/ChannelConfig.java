@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.model;
 
 
@@ -77,8 +82,6 @@ public class ChannelConfig {
 		if (singleton == null) {
 			configFileLastModified = configFile.lastModified();		
 			singleton = new ChannelConfig(c);
-			URL url = ChannelConfig.class.getResource(configFilePath);
-			log.debug("L'URL : "+url.toString());
 		}else {
 			if (log.isDebugEnabled()){
 				log.debug("getInstance :: "+" singleton not null ");
@@ -125,9 +128,9 @@ public class ChannelConfig {
 		initContextManagedCategoryProfilesLinks();
 
 		} catch (ConfigurationException e) {
-			log.fatal(e.getMessage());	
+			log.fatal("ChannelConfig :: ConfigurationException, "+e.getMessage());	
 		} catch (MyException e){
-			log.fatal(e.getMessage());
+			log.fatal("ChannelConfig :: MyException, "+e.getMessage());
 		}
 	}
 
@@ -143,7 +146,7 @@ public class ChannelConfig {
 		int nbProfiles = config.getMaxIndex("categoryProfile") + 1;
 		
 		if (nbProfiles == 0) {
-			log.warn("No managed category profile declared in channel config");
+			log.warn("loadManagedCategoryProfiles :: No managed category profile declared in channel config");
 		}
 		
 		for(int i = 0; i<nbProfiles;i++ ){
@@ -239,7 +242,7 @@ public class ChannelConfig {
 		int nbContexts = config.getMaxIndex("context") + 1;
 		
 		if (nbContexts == 0) {
-			log.warn("No context declared in channel config");
+			log.warn("loadContexts :: No context declared in channel config");
 		}
 		
 		for(int i = 0; i<nbContexts;i++ ){

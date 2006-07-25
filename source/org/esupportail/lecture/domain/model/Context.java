@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.model;
 
 import java.util.HashSet;
@@ -175,10 +180,19 @@ public class Context {
 //		this.edit = edit;
 //	}
 
-
+	
+	/**
+	 * Returns set of Managed category profiles defined in the context
+	 * @return managedCategoryProfilesSet
+	 */
 	public Set<ManagedCategoryProfile> getManagedCategoryProfilesSet() {
 		return managedCategoryProfilesSet;
 	}
+	
+	 /**
+	  * Sets the set of managed category profiles in the channel
+	 * @param managedCategoryProfilesSet
+	 */
 	protected void setManagedCategoryProfilesSet(
 			Set<ManagedCategoryProfile> managedCategoryProfilesSet) {
 		this.managedCategoryProfilesSet = managedCategoryProfilesSet;

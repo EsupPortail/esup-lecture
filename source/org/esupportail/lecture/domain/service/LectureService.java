@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.service;
 
 import java.util.Set;
@@ -8,6 +13,12 @@ import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.utils.exception.MyException;
 
+
+/**
+ * Interface to access domain services.
+ * @author gbouteil
+ *
+ */
 public interface LectureService {
 		/* démarrage du canal + ligne de commande */
 		/**
@@ -32,12 +43,12 @@ public interface LectureService {
 		
 		/**
 		 * Returns list of contexts (full of data) defiend in the channel
-		 * @return
+		 * @return a set of contexts defined in the channel
 		 */
 		public Set<Context> getContexts();
 		
-		/* ??? A quoi elle sert */
+		/* ??? A quoi elle sert : doit disparaitre*/
 		public List<Category> getCategories();
-		/* ??? A quoi elle sert*/
+		/* ??? A quoi elle sert : doit disparaitre*/
 		public List<Source> getSources(Category cat);
 }

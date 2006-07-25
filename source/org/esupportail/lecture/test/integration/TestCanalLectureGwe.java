@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.test.integration;
 
 import org.apache.commons.logging.Log;
@@ -28,20 +33,23 @@ public class TestCanalLectureGwe {
 		
 		LectureService myServices = (LectureService)factory.getBean("lectureService");
 		try {
-			myServices.loadChannel();
-			System.out.println("Tapez une touche ...");
-			System.in.read();
-			myServices.loadChannel();
+//			myServices.loadChannel();
+//			System.out.println("Tapez une touche ...");
+//			System.in.read();
+//			myServices.loadChannel();
 		
-		} catch (IOException e) {
-			log.fatal("Exception I/O !!!");
-			log.fatal(e.getMessage());
+//		} catch (IOException e) {
+//			log.fatal("Exception I/O !!! : "+e.getMessage());
 		} catch (Exception e) {
-			log.fatal("Exception on startChannel !!!");
-			log.fatal(e.getMessage());
+			log.fatal("Exception on startChannel !!! : "+e.getMessage());
 		}
 		
 		System.out.println("*********************** Configuration du canal lecture : ***********************");
-		System.out.println(myServices.channelToString());
+		try {
+			System.out.println(myServices.channelToString());
+		} catch (Exception e) {
+			log.fatal("Exception on toString !!! : "+e.getMessage());
+		}
+		
 	}
 }

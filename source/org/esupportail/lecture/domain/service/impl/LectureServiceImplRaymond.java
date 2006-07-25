@@ -1,7 +1,15 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+
+import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.GlobalSource;
@@ -66,6 +74,14 @@ public class LectureServiceImplRaymond implements LectureService {
 	 * @deprecated
 	 */
 	public String channelToString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/** 
+	 * deprecated
+	 */
+	public Set<Context> getContexts() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,5 +1,9 @@
 package org.esupportail.lecture.domain.model;
-
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 import java.io.File;
 import java.util.Iterator;
 
@@ -42,7 +46,7 @@ public class MappingFile {
 	/**
 	 *  classpath relative path of the mapping file
 	 */
-	private static String mappingFilePath = "properties/mappings.xml";
+	private static String mappingFilePath = "mappings.xml";
 	
 	/**
 	 * Last modified time of the mapping file
@@ -114,9 +118,9 @@ public class MappingFile {
 			initChannelHashMappings();
 
 		} catch (ConfigurationException e) {
-			log.fatal(e.getMessage());	
+			log.fatal("MappingFile :: ConfigurationException, "+e.getMessage());	
 		} catch (MyException e){
-			log.fatal(e.getMessage());
+			log.fatal("MappingFile :: MyException, "+e.getMessage());
 		}
 	}	
 	
@@ -235,7 +239,7 @@ public class MappingFile {
 	 * @see MappingFile#mappingFilePath
 	 */
 	protected static void setMappingFilePath(String mappingFilePath) {
-		log.debug("Nouveau mappingFilePath : "+mappingFilePath);
+		log.debug("setMappingFilePath("+mappingFilePath+")");
 		MappingFile.mappingFilePath = mappingFilePath;
 		file = new File(mappingFilePath);
 	}
