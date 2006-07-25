@@ -17,7 +17,7 @@ public class HomeBean {
 	}
 	
 	public List<Category> getCategories() {
-		this.categories = facadeWeb.getLectureService().getCategories();
+		this.categories = facadeWeb.getFacadeService().getCategories();
 		return this.categories;
 	}
 

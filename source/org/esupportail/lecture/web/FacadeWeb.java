@@ -5,7 +5,7 @@
 */
 package org.esupportail.lecture.web;
 
-import org.esupportail.lecture.domain.service.LectureService;
+import org.esupportail.lecture.domain.service.FacadeService;
 
 /**
  * Entry point to access domain service, used by org.esupportail.lecture.web package
@@ -14,22 +14,22 @@ import org.esupportail.lecture.domain.service.LectureService;
  */
 public class FacadeWeb {
 	
-	private LectureService lectureService;
+	private FacadeService facadeService;
 	
 	/**
-	 * Return a LectureService
-	 * @return lectureService
+	 * Return a FacadeService
+	 * @return facadeService
 	 */
-	public LectureService getLectureService() {
-		return lectureService;
+	public FacadeService getFacadeService() {
+		return facadeService;
 	}
 
 	/**
-	 * Sets a LectureService
-	 * @param lectureService
+	 * Sets a FacadeService
+	 * @param facadeService
 	 */
-	public void setLectureService(LectureService lectureService) {
-		this.lectureService = lectureService;
+	public void setFacadeService(FacadeService facadeService) {
+		this.facadeService = facadeService;
 	}
 	
 }

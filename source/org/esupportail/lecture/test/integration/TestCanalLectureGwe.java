@@ -8,7 +8,7 @@ package org.esupportail.lecture.test.integration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.model.Channel;
-import org.esupportail.lecture.domain.service.LectureService;
+import org.esupportail.lecture.domain.service.FacadeService;
 
 import java.io.IOException;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
@@ -31,7 +31,7 @@ public class TestCanalLectureGwe {
 		ClassPathResource res = new ClassPathResource("applicationContextGwe.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		
-		LectureService myServices = (LectureService)factory.getBean("lectureService");
+		FacadeService myServices = (FacadeService)factory.getBean("facadeService");
 		try {
 //			myServices.loadChannel();
 //			System.out.println("Tapez une touche ...");
