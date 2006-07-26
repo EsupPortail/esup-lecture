@@ -60,7 +60,7 @@
         <init-param>
 			<!-- classe wrappée par pluto (définie dans portlet-class du portlet.xml) -->
             <param-name>portlet-class</param-name>
-            <param-value>org.apache.myfaces.portlet.MyFacesGenericPortlet</param-value>
+            <param-value>org.esupportail.lecture.portlet.MyLecturePortlet</param-value>
         </init-param>
         <init-param>
 			<!-- Identifiant unique de notre portlet :

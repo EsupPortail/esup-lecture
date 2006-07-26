@@ -7,7 +7,7 @@
 		<!-- identifiant unique de notre portlet -->	
         <portlet-name>lecture</portlet-name>
 	    <!-- Aiguilleur des requetes vers les controlleurs -->
-        <portlet-class>org.apache.myfaces.portlet.MyFacesGenericPortlet</portlet-class>
+        <portlet-class>org.esupportail.lecture.portlet.MyLecturePortlet</portlet-class>
         <init-param>
 			<!-- vue à utiliser par défaut -->
             <name>default-view</name>

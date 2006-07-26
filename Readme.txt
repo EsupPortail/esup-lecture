@@ -10,3 +10,4 @@ Library
  commons-digester-1.6.jar (for myfaces)
  commons-beanutils-1.7.0.jar (for myfaces)
  tomahawk --> http://apache.fastorama.com/dist/myfaces/binaries/tomahawk-1.1.3-bin.zip
+ portlet-api-1.0.jar --> esupdev-2.5-esup-2\uPortal-quick-start\uPortal_rel-2-5-1\lib

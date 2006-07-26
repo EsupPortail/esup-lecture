@@ -49,7 +49,7 @@ public class ManagedCategory extends Category {
 	protected VisibilitySets getVisibility() {
 		return visibility;
 	}
-// TODO faire des method pour ltester l'existance de ces param optionnels
+// TODO faire des method pour tester l'existance de ces param optionnels
 
 	/**
 	 * Sets visibility sets of this managed category

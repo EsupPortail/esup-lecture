@@ -33,13 +33,13 @@ public class TestCanalLectureGwe {
 		
 		FacadeService myServices = (FacadeService)factory.getBean("facadeService");
 		try {
-//			myServices.loadChannel();
-//			System.out.println("Tapez une touche ...");
-//			System.in.read();
-//			myServices.loadChannel();
+			myServices.loadChannel();
+			System.out.println("Tapez une touche ...");
+			System.in.read();
+			myServices.loadChannel();
 		
-//		} catch (IOException e) {
-//			log.fatal("Exception I/O !!! : "+e.getMessage());
+		} catch (IOException e) {
+			log.fatal("Exception I/O !!! : "+e.getMessage());
 		} catch (Exception e) {
 			log.fatal("Exception on startChannel !!! : "+e.getMessage());
 		}

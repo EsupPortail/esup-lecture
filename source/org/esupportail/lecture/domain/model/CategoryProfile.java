@@ -31,9 +31,6 @@ public abstract class CategoryProfile {
 	 * Returns a string containing category profile content : name, description and Id.
 	 * @see java.lang.Object#toString()
 	 */
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	public String toString(){
 		
 		String string = "";
