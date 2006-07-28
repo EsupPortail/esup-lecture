@@ -5,14 +5,16 @@ package org.esupportail.lecture.domain.model;
 * You may obtain a copy of the licence at http://www.esup-portail.org/license/
 */
 import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.utils.exception.*;
-
 
 
 /**
@@ -34,115 +36,123 @@ public class MappingFile {
 	protected static final Log log = LogFactory.getLog(MappingFile.class);
 	
 	/**
-	 * The channel that the mapping file belongs to
-	 */
-	private static Channel channel;
-	
-	/**
 	 * XML file loaded
 	 */
-	private static XMLConfiguration mappings;
+	private static XMLConfiguration xmlFile;
 	
 	/**
 	 *  classpath relative path of the mapping file
 	 */
-	private static String mappingFilePath = "mappings.xml";
+	private static String mappingFilePath = "/mappings.xml";
+	
+	/**
+	 *  Base path of the mapping file
+	 */
+	private static String mappingFileBasePath;
 	
 	/**
 	 * Last modified time of the mapping file
 	 */
-	private static long fileLastModified;
+	private static long mappingFileLastModified;
+
+	/**
+	 * Indicates if mapping file has been modified since the last loading
+	 */
+	private static boolean modified = false;
 	
 	/**
-	 * Instance of the mapping file
+	 * List of loaded mappings for file to be set in channel
 	 */
-	private static File file = new File(mappingFilePath);
-
+	private static List<Mapping> mappingList;
+	
 
 	
 /* ********************** METHODS**************************************/ 	
 	
+
 	/**
 	* Get an instance of the mapping file
-	* @param c channel that the mapping file belongs to
-	* @return an instance of the mapping file (singleton)
-	* @throws MyException
-	*/
-	synchronized protected static MappingFile getInstance(Channel c) throws MyException  {
+	 * @return an instance of the mapping file (singleton)
+	 * @throws ErrorException
+	 * @throws WarningException
+	 * @see MappingFile#singleton
+	 */
+	synchronized protected static MappingFile getInstance() throws ErrorException,WarningException  {
 		if (log.isDebugEnabled()){
 			log.debug("getInstance()");
 		}
 		if (singleton == null) {
-			fileLastModified = file.lastModified();
-			singleton = new MappingFile(c);
+			URL url = MappingFile.class.getResource(mappingFilePath);
+			File mappingFile = new File(url.getFile());
+			mappingFileBasePath = mappingFile.getAbsolutePath();
+			mappingFileLastModified = mappingFile.lastModified();		
+			singleton = new MappingFile();
+	
 		}else {
 			if (log.isDebugEnabled()){
 				log.debug("getInstance :: "+"singleton not null ");
 			}
-			long newDate = file.lastModified();
-			if (fileLastModified < newDate) {
+			
+			File mappingFile = new File(mappingFileBasePath);
+			long newDate = mappingFile.lastModified();
+			if (mappingFileLastModified < newDate) {
 				if (log.isDebugEnabled()){
-					log.debug("getInstance :: "+"mapping file reloaded");
+					log.debug("getInstance :: "+"Mappings reloading");
 				}
-				fileLastModified = newDate;
-				singleton = new MappingFile(c);
-			}				
+				mappingFileLastModified = newDate;
+				singleton = new MappingFile();
+			} else {
+				log.debug("getInstance :: mappings not reloaded");
+			}
 		}
 		return singleton;
 	}
 
+
 	/**
-	 * Private Constructor: load mapping file and initilized these elements in the channel
-	 * @param c channel that the mapping file belongs to 
-	 * @throws MyException
+	 * Private Constructor: load xml mapping file 
+	 * @throws ErrorException
+	 * @throws WarningException
 	 */
-	private MappingFile(Channel c) throws MyException {
+	protected MappingFile() throws ErrorException,WarningException {
 		if (log.isDebugEnabled()){
 			log.debug("MappingFile()");
 		}
-		MappingFile.channel = c;
 		
 		try {
-			mappings = new XMLConfiguration();
-			mappings.setFileName(mappingFilePath);
-			mappings.setValidating(true);
-			mappings.load();
+			xmlFile = new XMLConfiguration();
+			xmlFile.setFileName(mappingFileBasePath);
+			xmlFile.setValidating(true);
+			xmlFile.load();
+			checkXmlFile();
+			modified = true;
 
-			/* Reset channel properties loaded from mapping file */
-			c.resetMappingFileProperties();
-			
-			/* Loading Mappings */
-			loadMappings();
-			
-			/* Initialize hashs mapping if channel */
-			initChannelHashMappings();
 
 		} catch (ConfigurationException e) {
-			log.fatal("MappingFile :: ConfigurationException, "+e.getMessage());	
-		} catch (MyException e){
-			log.fatal("MappingFile :: MyException, "+e.getMessage());
-		}
+			log.error("MappingFile :: ConfigurationException, "+e.getMessage());
+			throw new ErrorException(e.getMessage());	
+		} 
 	}	
-	
+
 	/**
-	 * Load mappings from mapping file
-	 * @throws MyException
+	 * Check syntax file that cannot be checked by DTD
+	 * @throws ErrorException
+	 * @throws WarningException
 	 */
-	private void loadMappings() throws MyException {
-		if (log.isDebugEnabled()){
-			log.debug("loadMappings()");
-		}
-		int nbMappings = mappings.getMaxIndex("mapping") + 1;
+	private static void checkXmlFile() throws ErrorException,WarningException{
+	
+		int nbMappings = xmlFile.getMaxIndex("mapping") + 1;
+		mappingList = new ArrayList<Mapping>();
 		
 		for(int i = 0; i<nbMappings;i++ ){
 			String pathMapping = "mapping(" + i + ")";
 			Mapping m = new Mapping();
-			String dtd = mappings.getString(pathMapping+ "[@dtd]");
-			String xmlns = mappings.getString(pathMapping+ "[@xmlns]");
-			String xmlType = mappings.getString(pathMapping+ "[@xmlType]");
+			String dtd = xmlFile.getString(pathMapping+ "[@dtd]");
+			String xmlns = xmlFile.getString(pathMapping+ "[@xmlns]");
+			String xmlType = xmlFile.getString(pathMapping+ "[@xmlType]");
 			
 			if (dtd == null && xmlns == null && xmlType == null){
-				throw new MyException("loadMappings :: you must declare dtd or xmlns or xmltype in a mapping.");
+				throw new ErrorException("loadMappings :: you must declare dtd or xmlns or xmltype in a mapping.");
 			}
 			
 			if (dtd == null){
@@ -163,16 +173,29 @@ public class MappingFile {
 				m.setXmlType(xmlType);
 			}	
 				
-			m.setXsltFile(mappings.getString(pathMapping+ "[@xsltFile]"));
-			m.setItemXPath(mappings.getString(pathMapping+ "[@itemXPath]"));
-			channel.addMapping(m);
+			m.setXsltFile(xmlFile.getString(pathMapping+ "[@xsltFile]"));
+			m.setItemXPath(xmlFile.getString(pathMapping+ "[@itemXPath]"));
+			mappingList.add(m);
 		}
 	}
-		
+	
 	/**
-	 *  Initialize hash mappings in channel
+	 * Load mappings in the channel 
+	 * @param channel of the loading
 	 */
-	private void initChannelHashMappings(){
+	protected static void loadMappings(Channel channel) {
+		if (log.isDebugEnabled()){
+			log.debug("loadMappings()");
+		}
+		
+		channel.setMappingList(mappingList);
+	}
+
+	/**
+	 * Initialize hash mappings in channel
+	 * @param channel of the initialization
+	 */
+	protected static void initChannelHashMappings(Channel channel){
 		if (log.isDebugEnabled()){
 			log.debug("initChannelHashMappings()");
 		}
@@ -206,23 +229,7 @@ public class MappingFile {
 	}
 	
 /* ********************** ACCESSORS**************************************/ 
-	/**
-	 * Returns the channel that the mapping file belongs to
-	 * @return channel
-	 * @see MappingFile#channel
-	 */
-	protected static Channel getChannel() {
-		return channel;
-	}
 	
-	/**
-	 * Set channel properties
-	 * @param channel the channel to set
-	 * @see MappingFile#channel
-	 */
-	public static void setChannel(Channel channel) {
-		MappingFile.channel = channel;
-	}	
 	
 	/**
 	 * Returns the classpath relative path of the mapping file
@@ -241,7 +248,20 @@ public class MappingFile {
 	protected static void setMappingFilePath(String mappingFilePath) {
 		log.debug("setMappingFilePath("+mappingFilePath+")");
 		MappingFile.mappingFilePath = mappingFilePath;
-		file = new File(mappingFilePath);
+	}
+
+	/**
+	 * @return Returns the modified.
+	 */
+	protected static boolean isModified() {
+		return modified;
+	}
+
+	/**
+	 * @param modified The modified to set.
+	 */
+	protected static void setModified(boolean modified) {
+		MappingFile.modified = modified;
 	}
 
 

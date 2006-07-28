@@ -4,7 +4,7 @@
 	<context 
 	  name = "context1"
 	  id = "c1">
-	  <description>C'est le context 1 BBBBBBBBBBBBBBBBBBBBB</description> 
+	  <description>C'est le context 1 ZZZZZZZZZZZZZZZ</description> 
 	  <refCategoryProfile refId="cp1"/>
   	  <refCategoryProfile refId="cp2"/>
   	  <refCategoryProfile refId="cp3"/>
@@ -23,7 +23,7 @@
 	  <description>C'est le context 3</description> 
   	  <refCategoryProfile refId="cp2"/>
   	  <refCategoryProfile refId="cp3"/>
-  	  <refCategoryProfile refId="cp4"/>
+  	  <refCategoryProfile refId="cp4"/>  
 	</context>
 	<categoryProfile 
 		name="categorie1"

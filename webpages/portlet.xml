@@ -11,7 +11,9 @@
         <init-param>
 			<!-- vue à utiliser par défaut -->
             <name>default-view</name>
-            <value>/homeContext.jsp</value>
+            <!-- apres: <value>/home.jsp</value> -->
+			<value>/homeContext.jsp</value>
+			
         </init-param>
         <supports>
 			<!-- mode et supports traités par la portlet -->		
@@ -19,8 +21,8 @@
         </supports>
         <portlet-info>
             <title>Lecture</title>
-            <short-title>Sample JSF MyFaces Portlet lecture</short-title>
-			<keywords>Sample JSF MyFaces Portlet Lecture</keywords>
+            <short-title>Portlet lecture</short-title>
+			<keywords>XML generic display</keywords>
         </portlet-info>      
     </portlet>
     

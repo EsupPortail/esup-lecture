@@ -5,17 +5,24 @@
 */
 package org.esupportail.lecture.portlet;
 
+import java.io.IOException;
+import java.util.Enumeration;
+
+import javax.portlet.PortalContext;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.UnavailableException;
+import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.myfaces.portlet.MyFacesGenericPortlet;
 import org.esupportail.lecture.domain.model.Channel;
-import org.esupportail.lecture.domain.model.ChannelConfig;
 import org.esupportail.lecture.domain.service.FacadeService;
-import org.esupportail.lecture.utils.exception.MyException;
-import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.esupportail.lecture.utils.exception.*;
+
+import sun.security.action.GetPropertyAction;
 
 
 /**
@@ -30,7 +37,8 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 	
 
 	private FacadeService facadeService;
-	private ApplicationContext appCtx;
+	private WebApplicationContext appCtx;
+	private PortletContext portletCtx;
 
 	/**
 	 * Log instance 
@@ -46,16 +54,36 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 	 */
 	@Override
 	public void init() throws PortletException, UnavailableException {
+	
 		super.init();
 		if (log.isDebugEnabled()){
 			log.debug("init()");
 		}
 		try {
-			appCtx = (ApplicationContext)super.getPortletContext().getAttribute("org.springframework.web.context.WebApplicationContext.ROOT");
+			portletCtx = (PortletContext)super.getPortletContext();
+			appCtx = (WebApplicationContext)portletCtx.getAttribute("org.springframework.web.context.WebApplicationContext.ROOT");
 			facadeService = (FacadeService)appCtx.getBean("facadeService");
+//			ServletContext servlCtx = (ServletContext) appCtx.getServletContext();
+//			Enumeration enumerator= servlCtx.getAttributeNames();
+//			while(enumerator.hasMoreElements()) {
+//				String s = enumerator.nextElement().toString();
+//				log.debug("Attribut : "+s );
+//			}
+//	
+
+//			log.debug("objWeb : "+ objWeb.toString());
+//			log.debug("objCtxList : "+objCtxList.toString());
+//			log.debug("objRunConf : "+objRunConf.toString());
+//			log.debug("objFaces : "+objFaces.toString());
+//			log.debug("objRess : "+objRess.toString());
+//			
 			facadeService.loadChannel();
-		} catch (MyException e) {
+	
+		} catch (Exception e) {
 			log.fatal("init() :: "+e.getMessage());
+//		} catch (IOException e) {
+			// TODO Auto-generated catch block
+//			e.printStackTrace();
 		}
 	}
 	

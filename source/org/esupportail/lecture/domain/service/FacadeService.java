@@ -11,7 +11,7 @@ import java.util.List;
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.Source;
-import org.esupportail.lecture.utils.exception.MyException;
+import org.esupportail.lecture.utils.exception.*;
 
 
 /**
@@ -22,17 +22,31 @@ import org.esupportail.lecture.utils.exception.MyException;
 public interface FacadeService {
 	
 		/**
-		 * Service called when the channel may be
-		 * reloaded (by command line / at channel start)
+		 * Service called when the all channel need to be loaded or reloaded
+		 * (by command line / at channel start)
 		 * @exception MyException
+		 * @exception FatalException
 		 */
-		public void loadChannel()throws MyException;
+		public void loadChannel()throws FatalException,MyException;
 		
 		/**
 		 * Service called when a user open a session
 		 * @exception MyException
+		 * @exception FatalException
 		 */
-		public void newUserSession() throws MyException;
+		public void newUserSession() throws MyException,FatalException;
+		
+		/**
+		 * Service called to reload the channel config
+		 * @throws FatalException
+		 */
+		public void reloadChannelConfig() throws FatalException;
+		
+		/**
+		 * Service called to reload the mapping file
+		 * @throws FatalException
+		 */
+		public void reloadMappingFile()throws FatalException;
 		/**
 		 * Call toString method on channel
 		 * @return string return by toString method of channel

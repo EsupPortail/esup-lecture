@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ELEMENT channelConfig (context+, categoryProfile+)>
+<!ELEMENT channelConfig (context*, categoryProfile*)>
 
 <!ELEMENT context (description,refCategoryProfile*)>
 <!ATTLIST context

@@ -11,7 +11,7 @@ import java.util.*;
 //import org.springframework.beans.factory.InitializingBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.utils.exception.MyException;
+import org.esupportail.lecture.utils.exception.*;
 /**
  * The "lecture" channel
  * @author gbouteil
@@ -27,7 +27,7 @@ public class Channel  {
 	/**
 	 * Channel configuration from xml file.
 	 */
-	private ChannelConfig config; // TODO inutile ?
+	private ChannelConfig config; 
 	
 	/**
      * Set of contexts defined in the channel.
@@ -42,7 +42,6 @@ public class Channel  {
 	/**
 	 * The mapping File from xml file.
 	 */
-	// TODO inutile ?
 	private MappingFile mappingFile;
 	
 	/**
@@ -64,7 +63,11 @@ public class Channel  {
 	 * Hash to access mappings by xmlType.
 	 */	
 	private Hashtable<String,Mapping> mappingHashByXmlType;
-
+	
+	private boolean configLoaded = false;
+	
+	private boolean mappingsLoaded = false;
+	
 	// Utile plus tard
 //	/**
 //	 * User Profiles connected to the chanel
@@ -75,11 +78,13 @@ public class Channel  {
 /* ************************** Initialization *********************************** */
 	
 	/**
-	 * Methods call to load or reload the config and mapping file 
+	 * Methods call to load the config and mapping file 
 	 * if needed (when files are modified from last loading)
 	 * @throws MyException
+	 * @throws FatalException
 	 */
-	public void startup() throws MyException {
+
+	public void startup() throws FatalException, MyException {
 		if (log.isDebugEnabled()){
 			log.debug("startup()");
 		}
@@ -90,20 +95,51 @@ public class Channel  {
 	/**
 	 * Load config file if needed (using ChannelConfig), containing contexts and managed category profiles definition.
 	 * Initialize these elements.
-	 * @see org.esupportail.lecture.domain.model.ChannelConfig#getInstance(Channel)
-	 * @exception MyException
+	 * @see org.esupportail.lecture.domain.model.ChannelConfig#getInstance()
+	 * @exception FatalException
 	 */
-	private void loadConfig()throws MyException {
+	public void loadConfig()throws FatalException {
 		if (log.isDebugEnabled()){
 			log.debug("loadConfig()");
 		}
-		config = ChannelConfig.getInstance(this);
+		try {
+			ChannelConfig config = (ChannelConfig)ChannelConfig.getInstance();
+			// TODO plustard : utiliser l'objet config pour appeler les méthodes après (reset ...)
+			// et faire une classe FileToLoad avec ces méthodes en non static
+		} catch (WarningException w) {
+			log.warn(w.getMessage());
+			
+		} catch (ErrorException e) {
+			if (configLoaded) {
+				log.error("loadConfig :: unable to load new config : "+e.getMessage());
+			} else {
+				log.fatal("loadConfig :: unable to load config and start initialization : "+e.getMessage());
+				throw new FatalException();
+			}
+		}
+		
+		if (ChannelConfig.isModified()){
+			/* Reset channel properties loaded from config */
+			resetChannelConfigProperties();
+			
+			/* Loading managed category profiles */
+			ChannelConfig.loadManagedCategoryProfiles(this);
+		
+			/* Loading Contexts */
+			ChannelConfig.loadContexts(this);
+		
+			/* Initialize Contexts and ManagedCategoryProfiles links */
+			ChannelConfig.initContextManagedCategoryProfilesLinks(this);
+		}
+		if (!configLoaded){
+			configLoaded = true;
+		}
 	}
 	
 	/**
 	 * Initialize every channel properties that are set up by loading channel configuration file
 	 */
-	protected void resetChannelConfigProperties(){
+	private void resetChannelConfigProperties(){
 		if (log.isDebugEnabled()){
 			log.debug("resetChannelConfigProperties()");
 		}
@@ -111,17 +147,49 @@ public class Channel  {
 		managedCategoryProfilesHash = new Hashtable<String,ManagedCategoryProfile>();
 	}
 	
+
 	/**
 	 * Load mapping file if needed (using MappingFile), containing list of mappings used by the channel.
 	 * Initialize these elements.
-	 * @see org.esupportail.lecture.domain.model.MappingFile#getInstance(Channel)
-	 * @exception MyException
+	 * @see org.esupportail.lecture.domain.model.MappingFile#getInstance()
+	 * @exception FatalException
 	 */	
-	private void loadMappingFile() throws MyException {
+	public void loadMappingFile() throws FatalException {
 		if (log.isDebugEnabled()){
 			log.debug("loadMappingFile()");
 		}
-		mappingFile = MappingFile.getInstance(this);
+		
+		try {
+			mappingFile = MappingFile.getInstance();
+			
+		} catch (WarningException w) {
+			log.warn(w.getMessage());
+			
+		} catch (ErrorException e) {
+			if (mappingsLoaded) {
+				log.error("loadMappingFile :: unable to load new mappings : "+e.getMessage());
+			} else {
+				log.fatal("loadMappingFile :: unable to load mappings and start initialization : "+e.getMessage());
+				throw new FatalException();
+			}
+		}
+		
+		if (MappingFile.isModified()){
+			/* Reset channel properties loaded from config */
+			resetMappingFileProperties();
+				
+			/* Loading Mappings */
+			MappingFile.loadMappings(this);
+			
+			/* Initialize hashs mapping if channel */
+			MappingFile.initChannelHashMappings(this);
+
+		}
+		if (!configLoaded){
+			configLoaded = true;
+		}
+		
+		
 	}
 
 	/**
@@ -268,10 +336,14 @@ public class Channel  {
 		return mappingList;
 	}
 	
-//  TODO A retirer si inutile	
-//	public void setMappingList(List<Mapping> mappingList) {
-//		this.mappingList = mappingList;
-//	}
+
+	/**
+	 * Sets the mappings list in the channel
+	 * @param mappingList
+	 */
+	public void setMappingList(List<Mapping> mappingList) {
+		this.mappingList = mappingList;
+	}
 	
 	/**
 	 * Add a mapping to the list of mappings defined in the channel.

@@ -35,28 +35,39 @@ public class FacadeServiceImplGwe implements FacadeService {
 	 */
 	public FacadeServiceImplGwe(){
 		myChannel = new Channel();
-		log.debug("COUCOU !!!!!!!!!!!!!!!!!!!!!!!");
-		
-	
-
 	}
 	
 	
 	/** 
 	 * @see org.esupportail.lecture.domain.service.FacadeService#loadChannel()
 	 */
-	public void loadChannel() throws MyException {
+	public void loadChannel() throws FatalException,MyException {
 		myChannel.startup();
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.service.FacadeService#newUserSession()
 	 */
-	public void newUserSession() throws MyException {
+	public void newUserSession() throws MyException,FatalException {
 		myChannel.startup();
 		// TODO le reste à propos du user
 	}
 
+	
+	/**
+	 * @see org.esupportail.lecture.domain.service.FacadeService#reloadChannelConfig()
+	 */
+	public void reloadChannelConfig() throws FatalException{
+		myChannel.loadConfig();
+	}
+	
+	/**
+	 * @see org.esupportail.lecture.domain.service.FacadeService#reloadMappingFile()
+	 */
+	public void reloadMappingFile()throws FatalException {
+		myChannel.loadMappingFile();
+	}
+	
 	/**
 	 * @see org.esupportail.lecture.domain.service.FacadeService#channelToString()
 	 */

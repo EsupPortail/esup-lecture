@@ -22,7 +22,7 @@
     <context-param>
         <param-name>javax.faces.CONFIG_FILES</param-name>
         <param-value>
-            /WEB-INF/classes/faces-config.xml
+            /WEB-INF/classes/faces-config-gwe.xml
         </param-value>
         <description>
             Comma separated list of URIs of (additional) faces config files.
