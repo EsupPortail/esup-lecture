@@ -12,7 +12,6 @@ import javax.portlet.PortalContext;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
 import javax.portlet.UnavailableException;
-//import javax.servlet.ServletContext;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
