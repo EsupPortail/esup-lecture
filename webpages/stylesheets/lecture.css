@@ -1,0 +1,33 @@
+@CHARSET "ISO-8859-1";
+#left {
+	padding: 15px 10px;
+	overflow: auto;
+}
+#right {
+}
+li.collapsed {
+	list-style-image: url("http://localhost:8080/esup-lecture/images/plus.gif");
+}
+li.expended {
+	list-style-image: url("http://localhost:8080/esup-lecture/images/moins.gif");
+}
+li ul li {
+	list-style-image: none;
+	list-style-type: square;
+}
+div.unreadArticle {
+	margin: 0px 0px 10px 0px; 
+	padding: 15px;
+	background-color: #CACACA;
+	border-style: dotted;
+	border-width: 1px;
+	border-color: black;
+}
+div.readArticle {
+	margin: 0px 0px 10px 0px; 
+	padding: 15px;
+	background-color: #FEC98D;
+	border-style: dotted;
+	border-width: 1px;
+	border-color: black;
+}
