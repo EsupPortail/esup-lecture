@@ -29,6 +29,7 @@
 	<property name="build.static" value="${build.home}/images" />
 	<property name="build.scripts" value="${build.home}/scripts" />
 	<property name="build.resources" value="${build.home}/resources" />
+	<property name="build.stylesheets" value="${build.home}/stylesheets" />
 	<property name="build.lib" value="${build.web}/lib" />
 	
 	<!-- Chemins DocBook -->
@@ -118,6 +119,10 @@
 		<!-- Copie des ressources statiques -->
 		<copy todir="${build.static}">
 			<fileset dir="${media.home}" />
+		</copy>
+		<!-- Copie des stylesheets -->
+		<copy todir="${build.stylesheets}">
+			<fileset dir="${stylesheets.home}" />
 		</copy>
 		<!-- Copie des ressources javaScript -->
 		<copy todir="${build.scripts}">
