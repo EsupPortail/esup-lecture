@@ -15,6 +15,7 @@ import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.GlobalSource;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.service.FacadeService;
+import org.esupportail.lecture.utils.exception.FatalException;
 
 /**
  * Et la javadoc, elle est où ???
@@ -84,5 +85,15 @@ public class FacadeServiceImplRaymond implements FacadeService {
 	public Set<Context> getContexts() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void reloadChannelConfig() throws FatalException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void reloadMappingFile() throws FatalException {
+		// TODO Auto-generated method stub
+		
 	}
 }
