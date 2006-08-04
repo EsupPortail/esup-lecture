@@ -2,7 +2,7 @@
 	href="http://localhost:8080/esup-lecture/stylesheets/lecture.css" />
 <table class="portlet-table-body">
 	<tr>
-		<td style="width: 20%" valign="top">
+		<td class="esupLectureTD" style="width: 20%">
 		<div id="left">
 		<p class="portlet-section-header">Nom du context</p>
 		<ul>
@@ -19,13 +19,23 @@
 		</ul>
 		</div>
 		</td>
-		<td style="width: 80%" valign="top">
+		<td class="esupLectureTD" style="width: 80%">
+		<div id="menu">
+		<div id="menuTitle"><span class="portlet-section-header">Titre de la source</span></div>
+		<div id="menuButton">
+		<ul>
+			<li>Afficher</li>
+			<li>Liste 1</li>
+			<li>Action 1</li>
+			<li>Action 2</li>
+		</ul>
+		</div>
+		</div>
 		<div id="right">
 		<div class="unreadArticle">
 		<p>Du 5 juillet au 30 août : toute réinscription doit se faire
 		obligatoirement en ligne.</p>
-		<img alt=""
-			src="http://portail0.univ-rennes1.fr/html/htmlStatique/images/carte_etudiant_mini.png" />
+		<img src="http://portail0.univ-rennes1.fr/html/htmlStatique/images/carte_etudiant_mini.png" />
 		Du 5 juillet au 30 ao&ucirc;t 2006 : ouverture des inscriptions
 		universitaires par internet, à partir de votre <b>Espace numérique de
 		travail </b>onglet<b> &laquo;&nbsp;Me r&eacute;inscrire&nbsp;&raquo;</b><br />

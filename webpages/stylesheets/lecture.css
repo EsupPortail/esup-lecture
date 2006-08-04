@@ -1,10 +1,37 @@
 @CHARSET "ISO-8859-1";
+
+#menuTitle {
+	float: left;
+}
+#menuButton{
+	text-align: right;
+	vertical-align: middle;
+}
+#menuButton ul {
+ 	list-style-type:none;
+	display:block;
+} 
+#menuButton li {
+	display:inline;
+	margin: 0 0 0 3px;
+	padding:0%;
+}
+
 #left {
-	padding: 15px 10px;
+	padding: 0px 10px;
 	overflow: auto;
 }
-#right {
+
+td.esupLectureTD  {
+	vertical-align: top;
 }
+
+#right {
+	padding: 0px;
+	margin: 0px;
+	clear: both;
+}
+
 li.collapsed {
 	list-style-image: url("http://localhost:8080/esup-lecture/images/plus.gif");
 }
