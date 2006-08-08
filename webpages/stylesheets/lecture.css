@@ -25,7 +25,7 @@
 .menuButton{
 	text-align: right;
 	padding-right: 5px;
-/*	vertical-align: middle; */
+	vertical-align: bottom;
 }
 .menuButton ul {
  	list-style-type:none;

@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
+<!-- 
+TODO : 
+- 
+- toutes les chaines à externaliser
+- gestion des actions
+ -->
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html">
@@ -32,8 +38,13 @@
 					<div class="menuTitle">&#160;</div>
 					<div class="menuButton">
 					<ul>
-						<li>Action 1</li>
-						<li>Action 2</li>
+						<li><h:commandLink action="ACTION_MOINS5POURCENT">
+							<h:graphicImage value="/images/retract.gif"
+								alt="Arbre moins large" />
+						</h:commandLink></li>
+						<li><h:commandLink action="ACTION_PLUS5POURCENT">
+							<h:graphicImage value="/images/extand.gif" alt="Arbre plus large" />
+						</h:commandLink></li>
 					</ul>
 					</div>
 					</div>
@@ -44,10 +55,21 @@
 					de la source</span></div>
 					<div class="menuButton">
 					<ul>
-						<li>Afficher</li>
-						<li>Liste 1</li>
-						<li>Action 1</li>
-						<li>Action 2</li>
+						<li>Afficher : <h:selectOneMenu id="mode"
+							valueChangeListener="ACTION_GESTIONDESLUES">
+							<f:selectItem itemValue="all" itemLabel="Tous" />
+							<f:selectItem itemValue="notRead" itemLabel="Non Lus" />
+							<f:selectItem itemValue="unreadFirst"
+								itemLabel="Déjà lus en dernier" />
+						</h:selectOneMenu></li>
+						<li><h:commandLink action="ACTION_MENUANDXML">
+							<h:graphicImage value="/images/menuAndXML.gif"
+								alt="Afficher l'arbre et les annonces" />
+						</h:commandLink></li>
+						<li><h:commandLink action="ACION_XMLWITHOUTMENU">
+							<h:graphicImage value="/images/XMLWithoutMenu.gif"
+								alt="Afficher seulement les annonces" />
+						</h:commandLink></li>
 					</ul>
 					</div>
 					</div>
