@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!-- 
 TODO : 
-- 
+- sélection des catégories
+- sélection des sources
+- bouton lus/non lus
 - toutes les chaines à externaliser
-- gestion des actions
+- gestion des actions dans un bean
  -->
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
 	xmlns:f="http://java.sun.com/jsf/core"
