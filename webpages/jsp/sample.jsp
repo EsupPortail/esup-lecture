@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!-- 
 TODO : 
-- bouton lus/non lus
 - toutes les chaines à externaliser
 - gestion des actions dans un bean
  -->
@@ -20,6 +19,7 @@ menuTitle: text in menu bar
 menuButton: buttons in menu bar
 unreadArticle: unread article
 readArticle: read article
+toggleButton: read/unread toggle button
  -->
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -90,6 +90,11 @@ readArticle: read article
 					</div>
 					</div>
 					<div id="right">
+					<div class="toggleButton"><h:commandLink
+						action="ACION_MARKASREAD">
+						<h:graphicImage value="/images/unread.gif"
+							alt="Marquer comme non lu" />
+					</h:commandLink></div>
 					<div class="unreadArticle">
 					<p>Du 5 juillet au 30 août : toute réinscription doit se faire
 					obligatoirement en ligne.</p>
@@ -109,10 +114,30 @@ readArticle: read article
 					Cette inscription officialise votre statut d'étudiant avec l'envoi
 					de votre carte d'étudiant.</p>
 					</div>
-					<div class="unreadArticle">Article 1</div>
-					<div class="unreadArticle">Article 1</div>
-					<div class="readArticle">Article 1</div>
-					<div class="readArticle">Article 1</div>
+					<div class="toggleButton"><h:commandLink
+						action="ACION_MARKASREAD">
+						<h:graphicImage value="/images/unread.gif"
+							alt="Marquer comme non lu" />
+					</h:commandLink></div>
+					<div class="unreadArticle"><p>Article 1</p></div>
+					<div class="toggleButton"><h:commandLink
+						action="ACION_MARKASREAD">
+						<h:graphicImage value="/images/unread.gif"
+							alt="Marquer comme non lu" />
+					</h:commandLink></div>
+					<div class="unreadArticle"><p>Article 1</p></div>
+					<div class="toggleButton"><h:commandLink
+						action="ACION_MARKASREAD">
+						<h:graphicImage value="/images/read.gif"
+							alt="Marquer comme lu" />
+					</h:commandLink></div>
+					<div class="readArticle"><p>Article 1</p></div>
+					<div class="toggleButton"><h:commandLink
+						action="ACION_MARKASREAD">
+						<h:graphicImage value="/images/read.gif"
+							alt="Marquer comme lu" />
+					</h:commandLink></div>
+					<div class="readArticle"><p>Article 1</p></div>
 					</div>
 					</td>
 				</tr>

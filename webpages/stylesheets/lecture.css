@@ -50,9 +50,14 @@ li ul li {
 }
 
 /* Articles Style */
+div.toggleButton {
+	float: left;
+	margin: 0px 0px 10px 5px; 
+	padding: 5px;
+}
 div.unreadArticle {
 	margin: 0px 0px 10px 5px; 
-	padding: 15px;
+	padding: 5px;
 	background-color: #CACACA;
 	border-style: dotted;
 	border-width: 1px;
@@ -60,7 +65,7 @@ div.unreadArticle {
 }
 div.readArticle {
 	margin: 0px 0px 10px 5px; 
-	padding: 15px;
+	padding: 5px;
 	background-color: #FEC98D;
 	border-style: dotted;
 	border-width: 1px;
