@@ -4,6 +4,11 @@
   "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
 <faces-config>
 	<application>
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>en</supported-locale>
+			<supported-locale>fr</supported-locale>
+		</locale-config>
 		<!-- interfaçage spring-jsf :
 			- définition de var dans ce fichier de config JSF (ex : #{facadeWeb}
 			- spring instancie ces variables

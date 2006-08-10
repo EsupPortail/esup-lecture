@@ -12,3 +12,4 @@ Library
  tomahawk --> http://apache.fastorama.com/dist/myfaces/binaries/tomahawk-1.1.3-bin.zip
  portlet-api-1.0.jar --> esupdev-2.5-esup-2\uPortal-quick-start\uPortal_rel-2-5-1\lib
  commons-codec --> http://apache.crihan.fr/dist/jakarta/commons/codec/binaries/commons-codec-1.3.zip
+ jstl.jar and standard.jar --> http://jakarta.apache.org/site/downloads/downloads_taglibs-standard.cgi

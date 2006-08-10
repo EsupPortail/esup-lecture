@@ -28,8 +28,8 @@ toggleButton: read/unread toggle button
 	<link rel="stylesheet"
 		href="http://localhost:8080/esup-lecture/stylesheets/lecture.css"
 		media="screen" />
-	<f:loadBundle basename="messages" var="messages" />
 	<f:view>
+		<f:loadBundle basename="messages" var="messages" />
 		<h:form>
 			<table class="portlet-table-body">
 				<tr>
