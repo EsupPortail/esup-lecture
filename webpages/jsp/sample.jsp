@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!-- 
 TODO : 
-- toutes les chaines à externaliser
 - gestion des actions dans un bean
  -->
 <!-- 
@@ -29,6 +28,7 @@ toggleButton: read/unread toggle button
 	<link rel="stylesheet"
 		href="http://localhost:8080/esup-lecture/stylesheets/lecture.css"
 		media="screen" />
+	<f:loadBundle basename="messages" var="messages" />
 	<f:view>
 		<h:form>
 			<table class="portlet-table-body">
@@ -57,10 +57,11 @@ toggleButton: read/unread toggle button
 					<ul>
 						<li><h:commandLink action="ACTION_MOINS5POURCENT">
 							<h:graphicImage value="/images/retract.gif"
-								alt="Arbre moins large" />
+								alt="#{messages.treeSmaller}" />
 						</h:commandLink></li>
 						<li><h:commandLink action="ACTION_PLUS5POURCENT">
-							<h:graphicImage value="/images/extand.gif" alt="Arbre plus large" />
+							<h:graphicImage value="/images/extand.gif"
+								alt="#{messages.treeLarger}" />
 						</h:commandLink></li>
 					</ul>
 					</div>
@@ -72,28 +73,27 @@ toggleButton: read/unread toggle button
 					de la source</span></div>
 					<div class="menuButton">
 					<ul>
-						<li>Afficher : <h:selectOneMenu id="mode">
-							<f:selectItem itemValue="all" itemLabel="Tous" />
-							<f:selectItem itemValue="notRead" itemLabel="Non Lus" />
+						<li><h:outputText value="#{messages.selectorLabel}" /><h:selectOneMenu id="mode">
+							<f:selectItem itemValue="all" itemLabel="#{messages.all}" />
+							<f:selectItem itemValue="notRead" itemLabel="#{messages.notRead}" />
 							<f:selectItem itemValue="unreadFirst"
-								itemLabel="Déjà lus en dernier" />
+								itemLabel="#{messages.unreadFirst}" />
 						</h:selectOneMenu></li>
 						<li><h:commandLink action="ACTION_MENUANDXML">
 							<h:graphicImage value="/images/menuAndXML.gif"
-								alt="Afficher l'arbre et les annonces" />
+								alt="#{messages.showTree}" />
 						</h:commandLink></li>
 						<li><h:commandLink action="ACION_XMLWITHOUTMENU">
 							<h:graphicImage value="/images/XMLWithoutMenu.gif"
-								alt="Afficher seulement les annonces" />
+								alt="#{messages.hideTree}" />
 						</h:commandLink></li>
 					</ul>
 					</div>
 					</div>
 					<div id="right">
-					<div class="toggleButton"><h:commandLink
-						action="ACION_MARKASREAD">
+					<div class="toggleButton"><h:commandLink action="ACION_MARKASREAD">
 						<h:graphicImage value="/images/unread.gif"
-							alt="Marquer comme non lu" />
+							alt="#{messages.markAsUnread}" />
 					</h:commandLink></div>
 					<div class="unreadArticle">
 					<p>Du 5 juillet au 30 août : toute réinscription doit se faire
@@ -114,30 +114,34 @@ toggleButton: read/unread toggle button
 					Cette inscription officialise votre statut d'étudiant avec l'envoi
 					de votre carte d'étudiant.</p>
 					</div>
-					<div class="toggleButton"><h:commandLink
-						action="ACION_MARKASREAD">
+					<div class="toggleButton"><h:commandLink action="ACION_MARKASREAD">
 						<h:graphicImage value="/images/unread.gif"
-							alt="Marquer comme non lu" />
+							alt="#{messages.markAsUnread}" />
 					</h:commandLink></div>
-					<div class="unreadArticle"><p>Article 1</p></div>
-					<div class="toggleButton"><h:commandLink
-						action="ACION_MARKASREAD">
+					<div class="unreadArticle">
+					<p>Article 1</p>
+					</div>
+					<div class="toggleButton"><h:commandLink action="ACION_MARKASREAD">
 						<h:graphicImage value="/images/unread.gif"
-							alt="Marquer comme non lu" />
+							alt="#{messages.markAsUnread}" />
 					</h:commandLink></div>
-					<div class="unreadArticle"><p>Article 1</p></div>
-					<div class="toggleButton"><h:commandLink
-						action="ACION_MARKASREAD">
+					<div class="unreadArticle">
+					<p>Article 1</p>
+					</div>
+					<div class="toggleButton"><h:commandLink action="ACION_MARKASREAD">
 						<h:graphicImage value="/images/read.gif"
-							alt="Marquer comme lu" />
+							alt="#{messages.markAsRead}" />
 					</h:commandLink></div>
-					<div class="readArticle"><p>Article 1</p></div>
-					<div class="toggleButton"><h:commandLink
-						action="ACION_MARKASREAD">
+					<div class="readArticle">
+					<p>Article 1</p>
+					</div>
+					<div class="toggleButton"><h:commandLink action="ACION_MARKASREAD">
 						<h:graphicImage value="/images/read.gif"
-							alt="Marquer comme lu" />
+							alt="#{messages.markAsRead}" />
 					</h:commandLink></div>
-					<div class="readArticle"><p>Article 1</p></div>
+					<div class="readArticle">
+					<p>Article 1</p>
+					</div>
 					</div>
 					</td>
 				</tr>
