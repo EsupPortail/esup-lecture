@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!-- 
 TODO : 
-- sélection des catégories
-- sélection des sources
 - bouton lus/non lus
 - toutes les chaines à externaliser
 - gestion des actions dans un bean
+ -->
+<!-- 
+CSS Class :
+Portlet :
+portlet-table-body: table body
+portlet-section-header: header
+portlet-section-alternate: With unread element
+portlet-section-selected: for selected element
+
+Lecture specific:
+collapsed: collapsed tree element
+expended: expended tree element
+menuTitle: text in menu bar
+menuButton: buttons in menu bar
+unreadArticle: unread article
+readArticle: read article
  -->
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -23,12 +37,13 @@ TODO :
 					<div id="left">
 					<p class="portlet-section-header">Nom du context</p>
 					<ul>
-						<li class="collapsed">Bibliothèques</li>
+						<li class="collapsed"><h:commandLink
+							action="ACTION_SELECTCATEGORY" value="Bibliothèques" /></li>
 						<li class="expended"><span class="portlet-section-alternate">Vie
 						culturelle</span>
 						<ul>
 							<li><span class="portlet-section-selected">Cinéma</span></li>
-							<li>Théatre</li>
+							<li><h:commandLink action="ACTION_SELECTSOURCE" value="Théatre" /></li>
 							<li><span class="portlet-section-alternate">Concert</span></li>
 							<li>Danse</li>
 						</ul>
@@ -57,8 +72,7 @@ TODO :
 					de la source</span></div>
 					<div class="menuButton">
 					<ul>
-						<li>Afficher : <h:selectOneMenu id="mode"
-							valueChangeListener="ACTION_GESTIONDESLUES">
+						<li>Afficher : <h:selectOneMenu id="mode">
 							<f:selectItem itemValue="all" itemLabel="Tous" />
 							<f:selectItem itemValue="notRead" itemLabel="Non Lus" />
 							<f:selectItem itemValue="unreadFirst"
