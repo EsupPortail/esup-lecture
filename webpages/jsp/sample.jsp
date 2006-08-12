@@ -2,6 +2,8 @@
 <!-- 
 TODO : 
 - gestion des actions dans un bean
+--- en cours mais il faut initialiser homeBean
+--- passer tous les bouton en commandbutton
  -->
 <!-- 
 CSS Class :
@@ -30,12 +32,14 @@ toggleButton: read/unread toggle button
 		media="screen" />
 	<f:view>
 		<f:loadBundle basename="messages" var="messages" />
-		<h:form>
+		<!-- TODO : trouver un autre moyen d'initialiser homeBean -->
+		<h:outputText value="#{homeBean.treeSize}" />
+		<h:form id="home">
 			<table class="portlet-table-body">
 				<tr>
-					<td id="TDLeft" style="width: 20%">
+					<td id="TDLeft" style="width: ${sessionScope.homeBean.treeSize}%">
 					<div id="left">
-					<p class="portlet-section-header">Nom du context</p>
+					<p class="portlet-section-header">Nom du contexte</p>
 					<ul>
 						<li class="collapsed"><h:commandLink
 							action="ACTION_SELECTCATEGORY" value="Bibliothèques" /></li>
@@ -55,25 +59,25 @@ toggleButton: read/unread toggle button
 					<div class="menuTitle">&#160;</div>
 					<div class="menuButton">
 					<ul>
-						<li><h:commandLink action="ACTION_MOINS5POURCENT">
-							<h:graphicImage value="/images/retract.gif"
-								alt="#{messages.treeSmaller}" />
-						</h:commandLink></li>
-						<li><h:commandLink action="ACTION_PLUS5POURCENT">
-							<h:graphicImage value="/images/extand.gif"
-								alt="#{messages.treeLarger}" />
-						</h:commandLink></li>
+						<li><h:commandButton id="treeSmaller" 
+							actionListener="#{homeBean.adjustTreeSize}" image="/images/retract.gif"
+							alt="#{messages.treeSmaller}" /></li>
+						<li><h:commandButton id="treeLarger"
+							actionListener="#{homeBean.adjustTreeSize}" image="/images/extand.gif"
+							alt="#{messages.treeLarger}" /></li>
 					</ul>
 					</div>
 					</div>
 					</td>
-					<td id="TDRight" style="width: 80%">
+					<td id="TDRight"
+						style="width: ${100 - sessionScope.homeBean.treeSize}%">
 					<div id="menuRight">
 					<div class="menuTitle"><span class="portlet-section-header">Titre
 					de la source</span></div>
 					<div class="menuButton">
 					<ul>
-						<li><h:outputText value="#{messages.selectorLabel}" /><h:selectOneMenu id="mode">
+						<li><h:outputText value="#{messages.selectorLabel}" /><h:selectOneMenu
+							id="mode">
 							<f:selectItem itemValue="all" itemLabel="#{messages.all}" />
 							<f:selectItem itemValue="notRead" itemLabel="#{messages.notRead}" />
 							<f:selectItem itemValue="unreadFirst"
