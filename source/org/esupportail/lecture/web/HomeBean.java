@@ -16,7 +16,7 @@ public class HomeBean {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(ChannelConfig.class);
+	protected static final Log log = LogFactory.getLog(HomeBean.class);
 	private List<Category> categories;
 	private FacadeWeb facadeWeb;
 	
