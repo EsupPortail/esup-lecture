@@ -152,8 +152,12 @@
 	</target>	
 	<!-- Target deploy -->
 	<target name="deploy" description="Déploiement de la portlet" depends="init">
-		<!-- Copie web-pluto.xml -->
-		<copy file="${webpages.home}/web-pluto.xml" tofile="${build.web}/web.xml" overwrite="true" />
+		<!-- Copie specific confuguration files -->
+		<copy file="${webpages.home}/web-pluto-${developer.pseudo}.xml" tofile="${build.web}/web.xml" overwrite="true" />
+		<copy file="${webpages.home}/portlet${developer.pseudo}.xml" tofile="${build.web}/portlet.xml" overwrite="true" />
+		<copy file="${properties.home}/applicationContext${developer.pseudo}.xml" tofile="${build.classes}/applicationContext.xml" overwrite="true"/>
+		<copy file="${properties.home}/faces-config-${developer.pseudo}.xml" tofile="${build.classes}/faces-config.xml" overwrite="true"/>
+		<copy file="${properties.home}/portlet-spring-domain-${developer.pseudo}.xml" tofile="${build.classes}/portlet-spring-domain.xml" overwrite="true"/>
 		<!-- Copie webapps -->
 		<copy todir="${deploy.home}/${application.name}">
 			<fileset dir="${build.home}" />
