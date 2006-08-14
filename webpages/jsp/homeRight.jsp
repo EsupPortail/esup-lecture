@@ -25,11 +25,11 @@
 								itemLabel="#{messages.unreadFirst}" />
 						</h:selectOneMenu>
 					</t:htmlTag>
-					<t:htmlTag value="li">
+					<t:htmlTag id="menuAndXML" value="li" rendered="#{!homeBean.treeVisible}">
 						<h:commandButton actionListener="#{homeBean.toggleTreeVisibility}"
 							image="/images/menuAndXML.gif" alt="#{messages.showTree}" />
 					</t:htmlTag>
-					<t:htmlTag value="li">
+					<t:htmlTag id="XMLWithoutMenu" value="li" rendered="#{homeBean.treeVisible}">
 						<h:commandButton actionListener="#{homeBean.toggleTreeVisibility}"
 							image="/images/XMLWithoutMenu.gif" alt="#{messages.showTree}" />
 					</t:htmlTag>

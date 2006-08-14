@@ -9,7 +9,7 @@
 	<f:subview id="leftSubview">
 		<t:htmlTag value="div" id="left" forceId="true">
 			<t:htmlTag value="p" styleClass="portlet-section-header">
-				<f:verbatim>Nom du contexte</f:verbatim>
+				<f:verbatim >Nom du contexte</f:verbatim>
 			</t:htmlTag>
 			<t:htmlTag value="ul">
 				<t:htmlTag value="li" styleClass="collapsed">

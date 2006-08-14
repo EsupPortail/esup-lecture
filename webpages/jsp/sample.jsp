@@ -2,8 +2,7 @@
 <!-- 
 TODO : 
 - gestion des actions dans un bean
-=== en cours mais il faut initialiser homeBean
-=== passer tous les bouton en commandbutton
+=== en cours mais passer tous les bouton en commandbutton
  -->
 <!-- 
 CSS Class :
@@ -34,24 +33,31 @@ toggleButton: read/unread toggle button
 		media="screen" />
 	<f:view>
 		<f:loadBundle basename="messages" var="messages" />
-		<!-- TODO : trouver un autre moyen d'initialiser homeBean 
-		<h:outputText value="#{homeBean.treeSize}" />-->
 		<h:form id="home">
-			<c:if test="${sessionScope.homeBean.treeVisible}">
-		!!!!!!!!!!!!!!!
-		</c:if>
-			<t:htmlTag value="table" styleClass="portlet-table-body">
-				<t:htmlTag value="tr">
-					<t:htmlTag value="td" id="TDLeft" forceId="true"
-						style="width: #{homeBean.treeSize}%">
-						<jsp:include page="homeLeft.jsp" />
-					</t:htmlTag>
-					<t:htmlTag value="td" id="TDRight" forceId="true"
-						style="width: #{100 - homeBean.treeSize}%">
-						<jsp:include page="homeRight.jsp" />
+			<!-- ********* With Tree View ********* -->
+			<t:buffer into="#{withTree}">
+				<t:htmlTag value="table" styleClass="portlet-table-body">
+					<t:htmlTag value="tr">
+						<t:htmlTag value="td" id="TDLeft" forceId="true"
+							style="width: #{homeBean.treeSize}%">
+							<jsp:include page="homeLeft.jsp" />
+						</t:htmlTag>
+						<t:htmlTag value="td" id="TDRight" forceId="true"
+							style="width: #{100 - homeBean.treeSize}%">
+							<jsp:include page="homeRight.jsp" />
+						</t:htmlTag>
 					</t:htmlTag>
 				</t:htmlTag>
-			</t:htmlTag>
+			</t:buffer>
+			<!-- ********* Without Tree View ********* -->
+			<t:buffer into="#{withoutTree}">
+				<jsp:include page="homeRight.jsp" />
+			</t:buffer>
+			<!-- ********* Rendering ********* -->
+			<h:outputText id="left" value="#{withTree}" escape="false"
+				rendered="#{homeBean.treeVisible}" />
+			<h:outputText id="right" value="#{withoutTree}" escape="false"
+					rendered="#{!homeBean.treeVisible}" />
 		</h:form>
 	</f:view>
 </jsp:root>
