@@ -22,6 +22,15 @@ public class HomeBean {
 	private List<Category> categories;
 	private FacadeWeb facadeWeb;
 	private int treeSize=20;
+	private boolean treeVisible=true;
+
+	public boolean isTreeVisible() {
+		return treeVisible;
+	}
+
+	public void setTreeVisible(boolean treeVisible) {
+		this.treeVisible = treeVisible;
+	}
 
 	public int getTreeSize() {
 		if (log.isDebugEnabled()) {
@@ -56,11 +65,22 @@ public class HomeBean {
 		}
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		String id = e.getComponent().getClientId(ctx);
-		if (id.equals("home:treeSmaller")) {
+		if (id.equals("home:leftSubview:treeSmallerButton")) {
 			this.treeSize -= 5;			
 		}
-		if (id.equals("home:treeLarger")) {
+		if (id.equals("home:leftSubview:treeLargerButton")) {
 			this.treeSize += 5;			
+		}
+	}
+	
+	public void toggleTreeVisibility(ActionEvent e) {
+		if (log.isDebugEnabled()) {
+			log.debug("In toggleTreeVisibility");
+		}
+		if (isTreeVisible()) {
+			this.treeVisible=false;
+		} else {
+			this.treeVisible=true;
 		}
 	}
 }
