@@ -66,10 +66,14 @@ public class HomeBean {
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		String id = e.getComponent().getClientId(ctx);
 		if (id.equals("home:leftSubview:treeSmallerButton")) {
-			this.treeSize -= 5;			
+			if (this.treeSize > 10) {
+				this.treeSize -= 5;				
+			}
 		}
 		if (id.equals("home:leftSubview:treeLargerButton")) {
-			this.treeSize += 5;			
+			if (this.treeSize < 90) {
+				this.treeSize += 5;				
+			}
 		}
 	}
 	

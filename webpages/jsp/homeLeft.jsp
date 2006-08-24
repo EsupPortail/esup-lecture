@@ -9,8 +9,9 @@
 	<f:subview id="leftSubview">
 		<t:htmlTag value="div" id="left" forceId="true">
 			<t:htmlTag value="p" styleClass="portlet-section-header">
-				<f:verbatim >Nom du contexte</f:verbatim>
+				<f:verbatim>Nom du contexte</f:verbatim>
 			</t:htmlTag>
+			<!-- TODO : Remove this hardcoding ul -->
 			<t:htmlTag value="ul">
 				<t:htmlTag value="li" styleClass="collapsed">
 					<h:commandLink action="ACTION_SELECTCATEGORY" value="Bibliothèques" />
@@ -42,6 +43,14 @@
 				<t:htmlTag value="li" styleClass="collapsed">
 					<f:verbatim>Vie de l'ENT</f:verbatim>
 				</t:htmlTag>
+			</t:htmlTag>
+			<!-- First try to remove the previous hardoding ul -->
+			<t:htmlTag value="ul">
+				<t:dataList value="#{homeBean.categories}" var="cat" layout="simple">
+					<t:htmlTag value="li" styleClass="collapsed">
+						<h:commandLink action="ACTION_SELECTCATEGORY" value="#{cat.name}" />
+					</t:htmlTag>
+				</t:dataList>
 			</t:htmlTag>
 		</t:htmlTag>
 		<t:htmlTag value="div" id="menuLeft" forceId="true">

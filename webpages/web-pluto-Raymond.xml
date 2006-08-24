@@ -112,7 +112,6 @@
 	</welcome-file-list>
 
 	<!-- Interdire l'accès direct aux pages .jsp -->
-	<!-- 
 		<security-constraint>
 		<display-name>
 		Prevent access to raw JSP pages that are for JSF pages.
@@ -125,5 +124,4 @@
 		<description>No roles, so no direct access</description>
 		</auth-constraint>
 		</security-constraint>
-	-->
 </web-app>
