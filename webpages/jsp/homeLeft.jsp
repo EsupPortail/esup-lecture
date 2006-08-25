@@ -47,6 +47,7 @@
 			</t:htmlTag>
 		</t:htmlTag>
 		<!-- Ajust Tree Size buttons -->
+		<t:htmlTag value="hr"/>
 		<t:htmlTag value="div" id="menuLeft" forceId="true">
 			<t:htmlTag value="div" styleClass="menuTitle">&#160;</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuButton">

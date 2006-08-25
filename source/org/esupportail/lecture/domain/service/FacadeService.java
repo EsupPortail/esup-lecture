@@ -67,12 +67,4 @@ public interface FacadeService {
 		 * @author bourges
 		 */
 		public List<Category> getCategories();
-
-		/**
-		 * Toogle form read to unread or unread to read a item form a source
-		 * @param sourceID ID of Source
-		 * @param itemID ID of item
-		 * @author bourges
-		 */
-		public void toogleItemReadState(int sourceID, int itemID);
 }

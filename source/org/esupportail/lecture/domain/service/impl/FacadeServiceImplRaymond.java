@@ -94,35 +94,6 @@ public class FacadeServiceImplRaymond implements FacadeService {
 		return null;
 	}
 
-	public void toogleItemReadState(int sourceID, int itemID) {
-		//TODO
-//		Iterator<Item> ite = getItems(sourceID).iterator();
-//		while (ite.hasNext()) {
-//			Item item = ite.next();
-//			if (item.getId() == itemID) {
-//				item.setRead(!item.isRead());
-//			}
-//		}
-	}
-
-//	public List<Item> getItems() {
-//		return items;
-//	}
-//
-//	// For spring injection
-//	public void setItems(List<Item> items) {
-//		this.items = items;
-//	}
-
-//	public List<SourceRB> getSources() {
-//		return sources;
-//	}
-
-//	// For spring injection
-//	public void setSources(List<SourceRB> sources) {
-//		this.sources = sources;
-//	}
-
     // For spring injection
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;

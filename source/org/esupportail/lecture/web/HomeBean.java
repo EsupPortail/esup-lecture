@@ -106,7 +106,18 @@ public class HomeBean {
 		if (log.isDebugEnabled()) {
 			log.debug("itemID = "+id);
 		}
-		facadeWeb.getFacadeService().toogleItemReadState(this.currentSourceID, Integer.parseInt(id));
+		if (currentSource == null) {
+			currentSource = getCurrentSource();
+		}
+		if (currentSource != null) {
+			Iterator<Item> iter = currentSource.getItems().iterator();
+			while (iter.hasNext()) {
+				Item item = (Item) iter.next();
+				if (item.getId() == Integer.parseInt(id)) {
+					item.setRead(!item.isRead());
+				}				
+			}
+		}
 	}
 
 	public void selectASource(ActionEvent e) {
