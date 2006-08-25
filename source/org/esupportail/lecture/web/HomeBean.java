@@ -13,6 +13,8 @@ import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.model.Category;
+import org.esupportail.lecture.domain.model.tmp.Item;
+import org.esupportail.lecture.domain.model.tmp.SourceRB;
 
 public class HomeBean {
 	/**
@@ -23,6 +25,8 @@ public class HomeBean {
 	private FacadeWeb facadeWeb;
 	private int treeSize=20;
 	private boolean treeVisible=true;
+	private SourceRB currentSource;
+	private int currentSourceID=1;
 
 	public boolean isTreeVisible() {
 		return treeVisible;
@@ -86,5 +90,25 @@ public class HomeBean {
 		} else {
 			this.treeVisible=true;
 		}
+	}
+
+	public SourceRB getCurrentSource() {
+		return facadeWeb.getFacadeService().getSource(this.currentSourceID);
+	}
+
+	public void setCurrentSource(SourceRB currentSource) {
+		this.currentSource = currentSource;
+	}
+
+	public List<Item> getItems() {
+		return facadeWeb.getFacadeService().getItems(this.currentSourceID);
+	}
+	
+	public int getCurrentSourceID() {
+		return currentSourceID;
+	}
+
+	public void setCurrentSourceID(int currentSourceID) {
+		this.currentSourceID = currentSourceID;
 	}
 }

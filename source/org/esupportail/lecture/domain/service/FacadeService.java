@@ -11,6 +11,8 @@ import java.util.List;
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.Source;
+import org.esupportail.lecture.domain.model.tmp.Item;
+import org.esupportail.lecture.domain.model.tmp.SourceRB;
 import org.esupportail.lecture.utils.exception.*;
 
 
@@ -59,8 +61,29 @@ public interface FacadeService {
 		 */
 		public Set<Context> getContexts();
 		
-		/* ??? A quoi elle sert : doit disparaitre*/
+		/**
+		 * Returns list of Categories of the current context
+		 * @return a List of Categories of the current context
+		 * @author bourges
+		 */
 		public List<Category> getCategories();
+
 		/* ??? A quoi elle sert : doit disparaitre*/
-		public List<Source> getSources(Category cat);
+//		public List<Source> getSources(Category cat);
+
+		/**
+		 * Returns a Source with a specific ID
+		 * @param SourceID ID of Source to return
+		 * @return Source
+		 * @author bourges
+		 */
+		public SourceRB getSource(int sourceID);
+		
+		/**
+		 * Returns Items form a Source with a specific ID
+		 * @param SourceID ID of Source to return
+		 * @return A List of Items
+		 * @author bourges
+		 */
+		public List<Item> getItems(int sourceID);
 }

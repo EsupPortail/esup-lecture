@@ -7,11 +7,11 @@
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" />
 	<f:subview id="rightSubview">
+		<!-- MENU with Source name, sort list and zoom -->
 		<t:htmlTag value="div" id="menuRight" forceId="true">
 			<t:htmlTag value="div" styleClass="menuTitle">
 				<t:htmlTag value="span" styleClass="portlet-section-header">
-					<f:verbatim>Titre de la
-	source</f:verbatim>
+					<h:outputText value="#{homeBean.currentSource.name}" />
 				</t:htmlTag>
 			</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuButton">
@@ -36,79 +36,19 @@
 				</t:htmlTag>
 			</t:htmlTag>
 		</t:htmlTag>
+		<!-- Items display -->
 		<t:htmlTag value="div" id="right">
-			<t:htmlTag value="div" styleClass="toggleButton">
-				<h:commandLink action="ACION_MARKASREAD">
-					<h:graphicImage value="/images/unread.gif"
-						alt="#{messages.markAsUnread}" />
-				</h:commandLink>
-			</t:htmlTag>
-			<t:htmlTag value="div" styleClass="unreadArticle">
-				<f:verbatim>
-					<p>Du 5 juillet au 30 août : toute réinscription doit se faire
-					obligatoirement en ligne.</p>
-					<img
-						src="http://portail0.univ-rennes1.fr/html/htmlStatique/images/carte_etudiant_mini.png" />
-	Du 5 juillet au 30 août 2006 : ouverture des inscriptions
-	universitaires par internet, à partir de votre <b>Espace numérique de
-					travail </b>onglet<b> Me réinscrire</b>
-					<br />
-					<p>Cas particuliersé:<br />
-					- Les étudiants de <b>l'IUT de Saint-Malo</b> doivent se réinscrire
-					avant le <b>31 juillet.</b> <br />
-					- Les étudiants qui passent la <b>2ème session en septembre</b>, ne
-					sont pas concernés par la limite du 30 août <br />
-					Durant cette période, réalisez votre inscription pour l'année
-					universitaire 2006-2007 en quelques clics avec paiement des droits
-					d'inscription et de sécurité sociale par carte bancaire.<br />
-					Cette inscription officialise votre statut d'étudiant avec l'envoi
-					de votre carte d'étudiant.</p>
-				</f:verbatim>
-			</t:htmlTag>
-			<t:htmlTag value="div" styleClass="toggleButton">
-				<h:commandLink action="ACION_MARKASREAD">
-					<h:graphicImage value="/images/unread.gif"
-						alt="#{messages.markAsUnread}" />
-				</h:commandLink>
-			</t:htmlTag>
-			<t:htmlTag value="div" styleClass="unreadArticle">
-				<f:verbatim>
-					<p>Article 1</p>
-				</f:verbatim>
-			</t:htmlTag>
-			<t:htmlTag value="div" styleClass="toggleButton">
-				<h:commandLink action="ACION_MARKASREAD">
-					<h:graphicImage value="/images/unread.gif"
-						alt="#{messages.markAsUnread}" />
-				</h:commandLink>
-			</t:htmlTag>
-			<t:htmlTag value="div" styleClass="unreadArticle">
-				<f:verbatim>
-					<p>Article 1</p>
-				</f:verbatim>
-			</t:htmlTag>
-			<t:htmlTag value="div" styleClass="toggleButton">
-				<h:commandLink action="ACION_MARKASREAD">
-					<h:graphicImage value="/images/read.gif"
-						alt="#{messages.markAsRead}" />
-				</h:commandLink>
-			</t:htmlTag>
-			<t:htmlTag value="div" styleClass="readArticle">
-				<f:verbatim>
-					<p>Article 1</p>
-				</f:verbatim>
-			</t:htmlTag>
-			<t:htmlTag value="div" styleClass="toggleButton">
-				<h:commandLink action="ACION_MARKASREAD">
-					<h:graphicImage value="/images/read.gif"
-						alt="#{messages.markAsRead}" />
-				</h:commandLink>
-			</t:htmlTag>
-			<t:htmlTag value="div" styleClass="readArticle">
-				<f:verbatim>
-					<p>Article 1</p>
-				</f:verbatim>
-			</t:htmlTag>
+			<t:dataList value="#{homeBean.items}" var="item" layout="simple">
+				<t:htmlTag value="div" styleClass="toggleButton">
+					<h:commandButton actionListener="ACION_MARKASREAD" image="/images/unread.gif" alt="#{messages.markAsUnread}" rendered="#{!item.read}"/>
+					<h:commandButton actionListener="ACION_MARKASREAD" image="/images/read.gif" alt="#{messages.markAsRead}" rendered="#{item.read}"/>
+				</t:htmlTag>
+				<t:htmlTag value="div" styleClass="#{item.read ? 'readArticle' : 'unreadArticle'}">
+					<f:verbatim>
+						<h:outputText value="#{item.body}" escape="false"/>
+					</f:verbatim>
+				</t:htmlTag>
+			</t:dataList>
 		</t:htmlTag>
 	</f:subview>
 </jsp:root>
