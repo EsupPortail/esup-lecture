@@ -11,44 +11,31 @@
 			<t:htmlTag value="p" styleClass="portlet-section-header">
 				<f:verbatim>Nom du contexte</f:verbatim>
 			</t:htmlTag>
-			<!-- TODO : Remove this hardcoding ul -->
-			<t:htmlTag value="ul">
-				<t:htmlTag value="li" styleClass="collapsed">
-					<h:commandLink action="ACTION_SELECTCATEGORY" value="Bibliothèques" />
-				</t:htmlTag>
-				<t:htmlTag value="li" styleClass="expended">
-					<t:htmlTag value="span" styleClass="portlet-section-alternate">
-						<f:verbatim>Vie
-				culturelle</f:verbatim>
-					</t:htmlTag>
-					<t:htmlTag value="ul">
-						<t:htmlTag value="li">
-							<t:htmlTag value="span" styleClass="portlet-section-selected">
-								<f:verbatim>Cinéma</f:verbatim>
-							</t:htmlTag>
-						</t:htmlTag>
-						<t:htmlTag value="li">
-							<h:commandLink action="ACTION_SELECTSOURCE" value="Théatre" />
-						</t:htmlTag>
-						<t:htmlTag value="li">
-							<t:htmlTag value="span" styleClass="portlet-section-alternate">
-								<f:verbatim>Concert</f:verbatim>
-							</t:htmlTag>
-						</t:htmlTag>
-						<t:htmlTag value="li">
-							<f:verbatim>Danse</f:verbatim>
-						</t:htmlTag>
-					</t:htmlTag>
-				</t:htmlTag>
-				<t:htmlTag value="li" styleClass="collapsed">
-					<f:verbatim>Vie de l'ENT</f:verbatim>
-				</t:htmlTag>
-			</t:htmlTag>
-			<!-- First try to remove the previous hardoding ul -->
 			<t:htmlTag value="ul">
 				<t:dataList value="#{homeBean.categories}" var="cat" layout="simple">
-					<t:htmlTag value="li" styleClass="collapsed">
+					<t:htmlTag value="li"
+						styleClass="#{cat.expanded ? 'expanded' : 'collapsed'}">
 						<h:commandLink action="ACTION_SELECTCATEGORY" value="#{cat.name}" />
+						<t:htmlTag value="ul">
+							<t:dataList value="#{cat.sources}" var="src" layout="simple">
+								<t:htmlTag value="li">
+									<t:htmlTag value="span" styleClass="portlet-section-selected"
+										rendered="#{src.selected}">
+										<h:outputText value="#{src.name}" />
+									</t:htmlTag>
+									<h:commandLink action="ACTION_SELECTCATEGORY"
+										rendered="#{src.withUnread and !src.selected}">
+										<t:htmlTag value="span" styleClass="portlet-section-alternate">
+											<h:outputText value="#{src.name}" />
+										</t:htmlTag>
+									</h:commandLink>
+									<h:commandLink action="ACTION_SELECTCATEGORY"
+										rendered="#{!src.withUnread and !src.selected}">
+										<h:outputText value="#{src.name}" />
+									</h:commandLink>
+								</t:htmlTag>
+							</t:dataList>
+						</t:htmlTag>
 					</t:htmlTag>
 				</t:dataList>
 			</t:htmlTag>
@@ -58,12 +45,12 @@
 			<t:htmlTag value="div" styleClass="menuButton">
 				<t:htmlTag value="ul">
 					<t:htmlTag value="li">
-						<h:commandButton id="treeSmallerButton" 
+						<h:commandButton id="treeSmallerButton"
 							actionListener="#{homeBean.adjustTreeSize}"
 							image="/images/retract.gif" alt="#{messages.treeSmaller}" />
 					</t:htmlTag>
 					<t:htmlTag value="li">
-						<h:commandButton id="treeLargerButton" 
+						<h:commandButton id="treeLargerButton"
 							actionListener="#{homeBean.adjustTreeSize}"
 							image="/images/extand.gif" alt="#{messages.treeLarger}" />
 					</t:htmlTag>

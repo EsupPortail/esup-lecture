@@ -41,7 +41,7 @@
 li.collapsed {
 	list-style-image: url("http://localhost:8080/esup-lecture/images/plus.gif");
 }
-li.expended {
+li.expanded {
 	list-style-image: url("http://localhost:8080/esup-lecture/images/moins.gif");
 }
 li ul li {
