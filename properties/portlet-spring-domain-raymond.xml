@@ -4,11 +4,13 @@
 <beans>
 
 	<bean id="categorie1" class="org.esupportail.lecture.domain.model.tmp.CategoryRB">
+		<property name="id" value="1" />
 		<property name="name" value="Bibliothèques" />
 		<property name="selected" value="false" />
 		<property name="expanded" value="false" />
 	</bean>
 	<bean id="categorie2" class="org.esupportail.lecture.domain.model.tmp.CategoryRB">
+		<property name="id" value="2" />
 		<property name="name" value="Vie culturelle" />
 		<property name="selected" value="true" />
 		<property name="expanded" value="true" />
@@ -22,6 +24,7 @@
 		</property>
 	</bean>
 	<bean id="categorie3" class="org.esupportail.lecture.domain.model.tmp.CategoryRB">
+		<property name="id" value="3" />
 		<property name="name" value="Vie de l'ENT" />
 		<property name="selected" value="false" />
 		<property name="expanded" value="false" />

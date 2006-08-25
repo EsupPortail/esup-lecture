@@ -122,15 +122,33 @@ public class HomeBean {
 
 	public void selectASource(ActionEvent e) {
 		if (log.isDebugEnabled()) {
-			log.debug("In selectASource(ActionEvent)");
+			log.debug("In selectASource");
 		}
 		FacesContext context = FacesContext.getCurrentInstance(); 
 		Map map = context.getExternalContext().getRequestParameterMap();
-		String id = (String)map.get("sourceID");
+		String id = (String)map.get("categoryID");
+		if (log.isDebugEnabled()) {
+			log.debug("categoryID = "+id);
+		}
+		setCurrentCategory(Integer.parseInt(id));
+		id = (String)map.get("sourceID");
 		if (log.isDebugEnabled()) {
 			log.debug("sourceID = "+id);
 		}
 		setCurrentSource(Integer.parseInt(id));
+	}
+
+	public void selectACategory(ActionEvent e) {
+		if (log.isDebugEnabled()) {
+			log.debug("In selectACategory");
+		}
+		FacesContext context = FacesContext.getCurrentInstance(); 
+		Map map = context.getExternalContext().getRequestParameterMap();
+		String id = (String)map.get("categoryID");
+		if (log.isDebugEnabled()) {
+			log.debug("categoryID = "+id);
+		}
+		setCurrentCategory(Integer.parseInt(id));
 	}
 
 	public List<Item> getItems() {
@@ -163,12 +181,15 @@ public class HomeBean {
 		}
 		if (currentCategory != null) {
 			CategoryRB cat = (CategoryRB)currentCategory;
-			Iterator<SourceRB> iter = cat.getSources().iterator();
-			while (iter.hasNext()) {
-				SourceRB src = (SourceRB) iter.next();
-				if (src.isSelected()) {
-					ret = src;
-				}
+			List<SourceRB> sources = cat.getSources();
+			if (sources != null) {
+				Iterator<SourceRB> iter = sources.iterator();
+				while (iter.hasNext()) {
+					SourceRB src = (SourceRB) iter.next();
+					if (src.isSelected()) {
+						ret = src;
+					}
+				}				
 			}
 		}
 		return ret;
@@ -192,13 +213,46 @@ public class HomeBean {
 			SourceRB src = (SourceRB)currentSource;
 			src.setSelected(false);
 		}
+		// find Source to select
 		CategoryRB cat = (CategoryRB)currentCategory;
-		Iterator<SourceRB> iter = cat.getSources().iterator();
+		List<SourceRB> sources = cat.getSources();
+		if (sources != null) {
+			Iterator<SourceRB> iter = sources.iterator();
+			while (iter.hasNext()) {
+				SourceRB src = (SourceRB) iter.next();
+				if (src.getId() == sourceID) {
+					src.setSelected(true);
+					currentSource=src;
+				}
+			}
+		}
+	}
+
+	public void setCurrentCategory(int categoryID) {
+		// find currentCategory
+		if (currentCategory == null) {
+			currentCategory = getCurrentCategory();
+		}
+		// unselect this CurrentCategory
+		if (currentCategory != null) {
+			CategoryRB cat = (CategoryRB)currentCategory;
+			cat.setSelected(false);
+		}
+		// find Categorie to select
+		Iterator<Category> iter = getCategories().iterator();
 		while (iter.hasNext()) {
-			SourceRB src = (SourceRB) iter.next();
-			if (src.getId() == sourceID) {
-				src.setSelected(true);
-				currentSource=src;
+			CategoryRB cat = (CategoryRB) iter.next();
+			if (cat.getId() == categoryID) {
+				//this category is selected --> change expand mode
+				if (cat.isSelected()) {
+					//TODO ???? selected toujours à false. cat.setSelected(true) pas pris en compte car cat est local ???
+					cat.setExpanded(!cat.isExpanded());
+				}
+				//this category is not selected --> change as selected
+				else {
+					cat.setSelected(true);
+					currentCategory=cat;					
+				}
 			}
 		}
 	}

@@ -18,7 +18,10 @@
 				<t:dataList value="#{homeBean.categories}" var="cat" layout="simple">
 					<t:htmlTag value="li"
 						styleClass="#{cat.expanded ? 'expanded' : 'collapsed'}">
-						<h:commandLink action="ACTION_SELECTCATEGORY" value="#{cat.name}" />
+						<h:commandLink actionListener="#{homeBean.selectACategory}"
+							value="#{cat.name}">
+							<f:param name="categoryID" value="#{cat.id}" />
+						</h:commandLink>
 						<t:htmlTag value="ul">
 							<!-- Souces -->
 							<t:dataList value="#{cat.sources}" var="src" layout="simple">
@@ -33,11 +36,13 @@
 											<h:outputText value="#{src.name}" />
 										</t:htmlTag>
 										<f:param name="sourceID" value="#{src.id }" />
+										<f:param name="categoryID" value="#{cat.id}" />
 									</h:commandLink>
 									<h:commandLink action="#{homeBean.selectASource}"
 										rendered="#{!src.withUnread and !src.selected}">
 										<h:outputText value="#{src.name}" />
 										<f:param name="sourceID" value="#{src.id }" />
+										<f:param name="categoryID" value="#{cat.id}" />
 									</h:commandLink>
 								</t:htmlTag>
 							</t:dataList>
@@ -47,7 +52,7 @@
 			</t:htmlTag>
 		</t:htmlTag>
 		<!-- Ajust Tree Size buttons -->
-		<t:htmlTag value="hr"/>
+		<t:htmlTag value="hr" />
 		<t:htmlTag value="div" id="menuLeft" forceId="true">
 			<t:htmlTag value="div" styleClass="menuTitle">&#160;</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuButton">

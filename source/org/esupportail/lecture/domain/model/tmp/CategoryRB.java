@@ -6,6 +6,7 @@ public class CategoryRB extends org.esupportail.lecture.domain.model.Category {
 	private List<SourceRB> sources;
 	private boolean selected;
 	private boolean expanded;
+	private int id;
 
 	public List<SourceRB> getSources() {
 		return sources;
@@ -29,6 +30,14 @@ public class CategoryRB extends org.esupportail.lecture.domain.model.Category {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }
