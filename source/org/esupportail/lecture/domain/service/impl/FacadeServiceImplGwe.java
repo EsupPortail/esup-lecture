@@ -13,8 +13,6 @@ import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.Channel;
-import org.esupportail.lecture.domain.model.tmp.Item;
-import org.esupportail.lecture.domain.model.tmp.SourceRB;
 import org.esupportail.lecture.domain.service.FacadeService;
 import org.esupportail.lecture.utils.exception.*;
 /**
@@ -84,14 +82,20 @@ public class FacadeServiceImplGwe implements FacadeService {
 		return myChannel.getContexts();
 	}
 	
+	/**
+	 * @deprecated
+	 */
 	public List<Category> getCategories() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public void toogleItemReadState(int sourceID, int itemID) {
+	/**
+	 * @deprecated
+	 */
+	public List<Source> getSources(Category cat) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 
