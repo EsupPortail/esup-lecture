@@ -68,22 +68,11 @@ public interface FacadeService {
 		 */
 		public List<Category> getCategories();
 
-		/* ??? A quoi elle sert : doit disparaitre*/
-//		public List<Source> getSources(Category cat);
-
 		/**
-		 * Returns a Source with a specific ID
-		 * @param SourceID ID of Source to return
-		 * @return Source
+		 * Toogle form read to unread or unread to read a item form a source
+		 * @param sourceID ID of Source
+		 * @param itemID ID of item
 		 * @author bourges
 		 */
-		public SourceRB getSource(int sourceID);
-		
-		/**
-		 * Returns Items form a Source with a specific ID
-		 * @param SourceID ID of Source to return
-		 * @return A List of Items
-		 * @author bourges
-		 */
-		public List<Item> getItems(int sourceID);
+		public void toogleItemReadState(int sourceID, int itemID);
 }

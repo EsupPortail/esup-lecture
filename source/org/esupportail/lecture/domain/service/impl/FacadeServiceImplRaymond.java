@@ -6,13 +6,13 @@
 package org.esupportail.lecture.domain.service.impl;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.Context;
-import org.esupportail.lecture.domain.model.GlobalSource;
 import org.esupportail.lecture.domain.model.tmp.Item;
 import org.esupportail.lecture.domain.model.tmp.SourceRB;
 import org.esupportail.lecture.domain.model.tmp.CategoryRB;
@@ -26,100 +26,43 @@ import org.esupportail.lecture.utils.exception.MyException;
  *
  */
 public class FacadeServiceImplRaymond implements FacadeService {
+	//List<Item> items;
+	//List<SourceRB> sources;
+	List<Category> categories;
 
 	public List<Category> getCategories() {
-		ArrayList<Category> ret = new ArrayList<Category>();
-		CategoryRB cat;
-		cat = new CategoryRB();
-		cat.setName("Bibliothèques");
-		cat.setSelected(false);
-		cat.setExpanded(false);
-		ret.add(cat);
-		cat = new CategoryRB();
-		cat.setName("Vie culturelle");
-		cat.setSelected(true);
-		cat.setExpanded(true);
-		cat.setSources(getSourcesRB(cat));
-		ret.add(cat);
-		cat = new CategoryRB();
-		cat.setName("Vie de l'ENT");
-		cat.setSelected(false);
-		cat.setExpanded(false);
-		ret.add(cat);
-		return ret;
+		return categories;
 	}
 
-	public List<Source> getSources(Category cat) {
-		return null;
-	}
-	
-	public List<Item> getItems(int sourceID) {
-		ArrayList<Item> ret = new ArrayList<Item>();
-		Item item;
-		item = new Item();
-		item.setBody("<p>Du 5 juillet au 30 août : toute réinscription doit se faire obligatoirement en ligne.</p>" +
-				"<img src=\"http://portail0.univ-rennes1.fr/html/htmlStatique/images/carte_etudiant_mini.png\" />" +
-				"Du 5 juillet au 30 août 2006 : ouverture des inscriptions universitaires par internet, à partir de votre <b>Espace numérique de travail </b>onglet<b> Me réinscrire</b>" +
-				"<br /><p>Cas particuliersé:<br />" +
-				"- Les étudiants de <b>l'IUT de Saint-Malo</b> doivent se réinscrire avant le <b>31 juillet.</b> <br />" +
-				"- Les étudiants qui passent la <b>2ème session en septembre</b>, ne sont pas concernés par la limite du 30 août <br />" +
-				"Durant cette période, réalisez votre inscription pour l'année universitaire 2006-2007 en quelques clics avec paiement des droits d'inscription et de sécurité sociale par carte bancaire.<br />" +
-				"Cette inscription officialise votre statut d'étudiant avec l'envoi	de votre carte d'étudiant.</p>");
-		item.setRead(false);
-		ret.add(item);
-		item = new Item();
-		item.setBody("Article 2");
-		item.setRead(true);
-		ret.add(item);
-		item = new Item();
-		item.setBody("Article 3");
-		item.setRead(false);
-		ret.add(item);
-		item = new Item();
-		item.setBody("Article 4");
-		item.setRead(true);
-		ret.add(item);
-		item = new Item();
-		item.setBody("Article 5");
-		item.setRead(false);
-		ret.add(item);
-		return ret;
-	}
+//	public List<Item> getItems(int sourceID) {
+//		// Volontairement ici je ne tiens pas compte du parametre passé à la fonction...		
+//		return getItems();
+//	}
 
-	private List<SourceRB> getSourcesRB(Category cat) {
-		ArrayList<SourceRB> ret = new ArrayList<SourceRB>();
-		// Volontairement ici je ne tiens pas compte du parametre passé à la fonction...
-		ret.add(getSource(1));
-		ret.add(getSource(2));
-		ret.add(getSource(3));
-		ret.add(getSource(4));
-		return ret;
-	}
+//	private List<SourceRB> getSourcesRB(Category cat) {
+//		ArrayList<SourceRB> ret = new ArrayList<SourceRB>();
+//		// Volontairement ici je ne tiens pas compte du parametre passé à la fonction...
+//		ret.add(getSource(1));
+//		ret.add(getSource(2));
+//		ret.add(getSource(3));
+//		ret.add(getSource(4));
+//		return ret;
+//	}
 
-	public SourceRB getSource(int sourceID) {
-		SourceRB src;
-		src = new SourceRB();
-		if (sourceID == 1) {
-			src.setId(1);
-			src.setName("Cinéma"); 
-			src.setSelected(true);			
-		}
-		if (sourceID == 2) {
-			src.setId(2);
-			src.setName("Théatre");
-			src.setWithUnread(false);
-		}
-		if (sourceID == 3) {
-			src.setId(3);
-			src.setName("Concert");
-		}
-		if (sourceID == 4) {
-			src.setId(4);
-			src.setName("Danse");
-			src.setWithUnread(false);
-		}
-		return src;
-	}
+//	public SourceRB getSource(int sourceID) {
+//		SourceRB ret = null;
+//		List<SourceRB> sources = getSources();
+//		if (sources != null) {
+//			Iterator<SourceRB> ite = sources.iterator();
+//			while (ite.hasNext()) {
+//				SourceRB source = ite.next();
+//				if (source.getId() == sourceID) {
+//					ret=source;
+//				}
+//			}			
+//		}
+//		return ret;
+//	}
 
 	public void loadChannel() throws FatalException, MyException {
 		// TODO Auto-generated method stub
@@ -149,5 +92,39 @@ public class FacadeServiceImplRaymond implements FacadeService {
 	public Set<Context> getContexts() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void toogleItemReadState(int sourceID, int itemID) {
+		//TODO
+//		Iterator<Item> ite = getItems(sourceID).iterator();
+//		while (ite.hasNext()) {
+//			Item item = ite.next();
+//			if (item.getId() == itemID) {
+//				item.setRead(!item.isRead());
+//			}
+//		}
+	}
+
+//	public List<Item> getItems() {
+//		return items;
+//	}
+//
+//	// For spring injection
+//	public void setItems(List<Item> items) {
+//		this.items = items;
+//	}
+
+//	public List<SourceRB> getSources() {
+//		return sources;
+//	}
+
+//	// For spring injection
+//	public void setSources(List<SourceRB> sources) {
+//		this.sources = sources;
+//	}
+
+    // For spring injection
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 }

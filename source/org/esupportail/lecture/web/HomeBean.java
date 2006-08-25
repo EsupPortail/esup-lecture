@@ -5,7 +5,9 @@
  */
 package org.esupportail.lecture.web;
 
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -13,6 +15,7 @@ import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.model.Category;
+import org.esupportail.lecture.domain.model.tmp.CategoryRB;
 import org.esupportail.lecture.domain.model.tmp.Item;
 import org.esupportail.lecture.domain.model.tmp.SourceRB;
 
@@ -25,9 +28,18 @@ public class HomeBean {
 	private FacadeWeb facadeWeb;
 	private int treeSize=20;
 	private boolean treeVisible=true;
-	private SourceRB currentSource;
 	private int currentSourceID=1;
-
+	private Category currentCategory;
+	private SourceRB currentSource;
+	
+	/**
+	 * For Spring injection of Service Class
+	 * @param facadeWeb facade og Spring Service Class
+	 */
+	public void setFacadeWeb(FacadeWeb facadeWeb) {
+		this.facadeWeb = facadeWeb;
+	}
+	
 	public boolean isTreeVisible() {
 		return treeVisible;
 	}
@@ -47,20 +59,12 @@ public class HomeBean {
 		this.treeSize = treeSize;
 	}
 
-	public void setFacadeWeb(FacadeWeb facadeWeb) {
-		this.facadeWeb = facadeWeb;
-	}
-	
 	public List<Category> getCategories() {
 		if (log.isDebugEnabled()) {
 			log.debug("In getCategories");
 		}
 		this.categories = facadeWeb.getFacadeService().getCategories();
 		return this.categories;
-	}
-	
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
 	}
 	
 	public void adjustTreeSize(ActionEvent e) {
@@ -92,18 +96,73 @@ public class HomeBean {
 		}
 	}
 
-	public SourceRB getCurrentSource() {
-		return facadeWeb.getFacadeService().getSource(this.currentSourceID);
+	public void toggleItemReadState(ActionEvent e) {
+		if (log.isDebugEnabled()) {
+			log.debug("In toggleItemReadState");
+		}
+		FacesContext context = FacesContext.getCurrentInstance(); 
+		Map map = context.getExternalContext().getRequestParameterMap();
+		String id = (String)map.get("itemID");
+		if (log.isDebugEnabled()) {
+			log.debug("itemID = "+id);
+		}
+		facadeWeb.getFacadeService().toogleItemReadState(this.currentSourceID, Integer.parseInt(id));
 	}
 
-	public void setCurrentSource(SourceRB currentSource) {
-		this.currentSource = currentSource;
+	public void selectASource(ActionEvent e) {
+		if (log.isDebugEnabled()) {
+			log.debug("In selectASource(ActionEvent)");
+		}
+		FacesContext context = FacesContext.getCurrentInstance(); 
+		Map map = context.getExternalContext().getRequestParameterMap();
+		String id = (String)map.get("sourceID");
+		if (log.isDebugEnabled()) {
+			log.debug("sourceID = "+id);
+		}
+		setCurrentSource(Integer.parseInt(id));
 	}
 
 	public List<Item> getItems() {
-		return facadeWeb.getFacadeService().getItems(this.currentSourceID);
+		if (currentSource == null) {
+			currentSource = getCurrentSource();
+		}
+		if (currentSource != null) {
+			SourceRB src = (SourceRB)currentSource;
+			return src.getItems();
+		}
+		return null;
 	}
 	
+	public Category getCurrentCategory() {
+		Category ret = null;
+		Iterator<Category> iter = categories.iterator();
+		while (iter.hasNext()) {
+			CategoryRB cat = (CategoryRB) iter.next();
+			if (cat.isSelected()) {
+				ret = cat;
+			}
+		}
+		return ret;
+	}
+	
+	public SourceRB getCurrentSource() {
+		SourceRB ret = null;
+		if (currentCategory == null) {
+			currentCategory = getCurrentCategory();
+		}
+		if (currentCategory != null) {
+			CategoryRB cat = (CategoryRB)currentCategory;
+			Iterator<SourceRB> iter = cat.getSources().iterator();
+			while (iter.hasNext()) {
+				SourceRB src = (SourceRB) iter.next();
+				if (src.isSelected()) {
+					ret = src;
+				}
+			}
+		}
+		return ret;
+	}
+
 	public int getCurrentSourceID() {
 		return currentSourceID;
 	}
@@ -111,4 +170,26 @@ public class HomeBean {
 	public void setCurrentSourceID(int currentSourceID) {
 		this.currentSourceID = currentSourceID;
 	}
+
+	public void setCurrentSource(int sourceID) {
+		// find currentSource
+		if (currentSource == null) {
+			currentSource = getCurrentSource();
+		}
+		// unselect this CurrentSource
+		if (currentSource != null) {
+			SourceRB src = (SourceRB)currentSource;
+			src.setSelected(false);
+		}
+		CategoryRB cat = (CategoryRB)currentCategory;
+		Iterator<SourceRB> iter = cat.getSources().iterator();
+		while (iter.hasNext()) {
+			SourceRB src = (SourceRB) iter.next();
+			if (src.getId() == sourceID) {
+				src.setSelected(true);
+				currentSource=src;
+			}
+		}
+	}
+
 }

@@ -82,3 +82,6 @@ div.readArticle {
 #TDRight {
 	vertical-align: top;
 }
+a img { 
+	border: none; 
+}

@@ -1,9 +1,12 @@
 package org.esupportail.lecture.domain.model.tmp;
 
+import java.util.List;
+
 public class SourceRB extends org.esupportail.lecture.domain.model.Source {
 	private boolean selected=false;
 	private boolean withUnread=true;
 	private int id;
+	private List<Item> items;
 
 	public boolean isSelected() {
 		return selected;
@@ -27,6 +30,14 @@ public class SourceRB extends org.esupportail.lecture.domain.model.Source {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 
 }

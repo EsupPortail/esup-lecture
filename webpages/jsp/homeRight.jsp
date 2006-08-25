@@ -39,13 +39,26 @@
 		<!-- Items display -->
 		<t:htmlTag value="div" id="right">
 			<t:dataList value="#{homeBean.items}" var="item" layout="simple">
+				<!-- Read/Unread Button -->
 				<t:htmlTag value="div" styleClass="toggleButton">
-					<h:commandButton actionListener="ACION_MARKASREAD" image="/images/unread.gif" alt="#{messages.markAsUnread}" rendered="#{!item.read}"/>
-					<h:commandButton actionListener="ACION_MARKASREAD" image="/images/read.gif" alt="#{messages.markAsRead}" rendered="#{item.read}"/>
+					<h:commandLink actionListener="#{homeBean.toggleItemReadState}"
+						rendered="#{!item.read}">
+						<f:param name="itemID" value="#{item.id}" />
+						<h:graphicImage value="/images/unread.gif"
+							alt="#{messages.markAsUnread}" />
+					</h:commandLink>
+					<h:commandLink actionListener="#{homeBean.toggleItemReadState}"
+						rendered="#{item.read}">
+						<f:param name="itemID" value="#{item.id}" />
+						<h:graphicImage value="/images/read.gif"
+							alt="#{messages.markAsRead}" />
+					</h:commandLink>
 				</t:htmlTag>
-				<t:htmlTag value="div" styleClass="#{item.read ? 'readArticle' : 'unreadArticle'}">
+				<!-- Item Display -->
+				<t:htmlTag value="div"
+					styleClass="#{item.read ? 'readArticle' : 'unreadArticle'}">
 					<f:verbatim>
-						<h:outputText value="#{item.body}" escape="false"/>
+						<h:outputText value="#{item.body}" escape="false" />
 					</f:verbatim>
 				</t:htmlTag>
 			</t:dataList>

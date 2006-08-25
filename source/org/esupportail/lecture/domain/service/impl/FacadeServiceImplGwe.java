@@ -89,23 +89,9 @@ public class FacadeServiceImplGwe implements FacadeService {
 		return null;
 	}
 
-	/**
-	 * @deprecated
-	 */
-	public List<Source> getSources(Category cat) {
+	public void toogleItemReadState(int sourceID, int itemID) {
 		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public SourceRB getSource(int sourceID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public List<Item> getItems(int sourceID) {
-		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 

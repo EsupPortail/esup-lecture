@@ -36,7 +36,7 @@ toggleButton: read/unread toggle button
 		<h:form id="home">
 			<!-- ********* With Tree View ********* -->
 			<t:buffer into="#{withTree}">
-				<t:htmlTag value="table" styleClass="portlet-table-body">
+				<t:htmlTag value="table" styleClass="portlet-table-body" style="width: 100%">
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td" id="TDLeft" forceId="true"
 							style="width: #{homeBean.treeSize}%">
