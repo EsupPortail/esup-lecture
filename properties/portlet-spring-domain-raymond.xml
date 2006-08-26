@@ -8,6 +8,11 @@
 		<property name="name" value="Bibliothèques" />
 		<property name="selected" value="false" />
 		<property name="expanded" value="false" />
+		<property name="sources">
+			<list>
+				<ref bean="source3" />
+			</list>
+		</property>
 	</bean>
 	<bean id="categorie2" class="org.esupportail.lecture.domain.model.tmp.CategoryRB">
 		<property name="id" value="2" />
@@ -18,8 +23,6 @@
 			<list>
 				<ref bean="source1" />
 				<ref bean="source2" />
-				<ref bean="source3" />
-				<ref bean="source4" />
 			</list>
 		</property>
 	</bean>
@@ -28,6 +31,11 @@
 		<property name="name" value="Vie de l'ENT" />
 		<property name="selected" value="false" />
 		<property name="expanded" value="false" />
+		<property name="sources">
+			<list>
+				<ref bean="source4" />
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="source1"

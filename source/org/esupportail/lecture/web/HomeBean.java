@@ -29,7 +29,7 @@ public class HomeBean {
 	private int treeSize=20;
 	private boolean treeVisible=true;
 	private int currentSourceID=1;
-	private Category currentCategory;
+	private CategoryRB currentCategory;
 	private SourceRB currentSource;
 	
 	/**
@@ -130,7 +130,7 @@ public class HomeBean {
 		if (log.isDebugEnabled()) {
 			log.debug("categoryID = "+id);
 		}
-		setCurrentCategory(Integer.parseInt(id));
+		setCurrentCategory(Integer.parseInt(id), false);
 		id = (String)map.get("sourceID");
 		if (log.isDebugEnabled()) {
 			log.debug("sourceID = "+id);
@@ -148,7 +148,30 @@ public class HomeBean {
 		if (log.isDebugEnabled()) {
 			log.debug("categoryID = "+id);
 		}
-		setCurrentCategory(Integer.parseInt(id));
+		setCurrentCategory(Integer.parseInt(id), true);
+		if (currentCategory.isExpanded()) {
+			currentSource = getSelectedSourceFromCategory(currentCategory);
+		} else {
+			currentSource = null;
+		}
+	}
+
+	private SourceRB getSelectedSourceFromCategory(CategoryRB cat) {
+		SourceRB ret = null;
+		if (cat != null) {
+			cat = (CategoryRB)currentCategory;
+			List<SourceRB> sources = cat.getSources();
+			if (sources != null) {
+				Iterator<SourceRB> iter = sources.iterator();
+				while (iter.hasNext()) {
+					SourceRB src = (SourceRB) iter.next();
+					if (src.isSelected()) {
+						ret = src;
+					}
+				}				
+			}
+		}
+		return ret;
 	}
 
 	public List<Item> getItems() {
@@ -162,8 +185,8 @@ public class HomeBean {
 		return null;
 	}
 	
-	public Category getCurrentCategory() {
-		Category ret = null;
+	public CategoryRB getCurrentCategory() {
+		CategoryRB ret = null;
 		Iterator<Category> iter = categories.iterator();
 		while (iter.hasNext()) {
 			CategoryRB cat = (CategoryRB) iter.next();
@@ -182,7 +205,7 @@ public class HomeBean {
 		if (currentCategory != null) {
 			CategoryRB cat = (CategoryRB)currentCategory;
 			List<SourceRB> sources = cat.getSources();
-			if (sources != null) {
+			if (sources != null & cat.isExpanded()) {
 				Iterator<SourceRB> iter = sources.iterator();
 				while (iter.hasNext()) {
 					SourceRB src = (SourceRB) iter.next();
@@ -228,7 +251,8 @@ public class HomeBean {
 		}
 	}
 
-	public void setCurrentCategory(int categoryID) {
+	public void setCurrentCategory(int categoryID, boolean clickOnCategory) {
+		int oldCurrentCategoryID = -1;
 		// find currentCategory
 		if (currentCategory == null) {
 			currentCategory = getCurrentCategory();
@@ -236,6 +260,7 @@ public class HomeBean {
 		// unselect this CurrentCategory
 		if (currentCategory != null) {
 			CategoryRB cat = (CategoryRB)currentCategory;
+			oldCurrentCategoryID = cat.getId();
 			cat.setSelected(false);
 		}
 		// find Categorie to select
@@ -243,16 +268,13 @@ public class HomeBean {
 		while (iter.hasNext()) {
 			CategoryRB cat = (CategoryRB) iter.next();
 			if (cat.getId() == categoryID) {
-				//this category is selected --> change expand mode
-				if (cat.isSelected()) {
-					//TODO ???? selected toujours à false. cat.setSelected(true) pas pris en compte car cat est local ???
+				// expanded management
+				if (clickOnCategory) {
 					cat.setExpanded(!cat.isExpanded());
 				}
-				//this category is not selected --> change as selected
-				else {
-					cat.setSelected(true);
-					currentCategory=cat;					
-				}
+				// change as selected
+				cat.setSelected(true);
+				currentCategory=cat;					
 			}
 		}
 	}
