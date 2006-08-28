@@ -18,12 +18,16 @@
 				<t:htmlTag value="ul">
 					<t:htmlTag value="li">
 						<h:outputText value="#{messages.selectorLabel}" />
-						<h:selectOneMenu id="mode">
+<!-- 
+						<h:selectOneMenu value="#{homeBean.itemDisplayMode}" onchange="document.elements['home:rightSubview:submit'].click();">
+ -->
+						<h:selectOneMenu value="#{homeBean.itemDisplayMode}" onchange="document.forms['home'].elements['home:rightSubview:submit'].click();">
 							<f:selectItem itemValue="all" itemLabel="#{messages.all}" />
 							<f:selectItem itemValue="notRead" itemLabel="#{messages.notRead}" />
 							<f:selectItem itemValue="unreadFirst"
 								itemLabel="#{messages.unreadFirst}" />
 						</h:selectOneMenu>
+						<h:commandButton id="submit" value="#{messages.changeItemDisplayModeButtonLabel}" action="#{homeBean.changeItemDisplayMode}"/>
 					</t:htmlTag>
 					<t:htmlTag id="menuAndXML" value="li" rendered="#{!homeBean.treeVisible}">
 						<h:commandButton actionListener="#{homeBean.toggleTreeVisibility}"

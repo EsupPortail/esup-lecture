@@ -34,24 +34,31 @@ toggleButton: read/unread toggle button
 	<f:view>
 		<f:loadBundle basename="messages" var="messages" />
 		<h:form id="home">
+			<!-- ********* homeRight and homeLeft fisrt for just one jsp:include/page ********* -->
+			<t:buffer into="#{homeRight}">
+				<jsp:include page="homeRight.jsp" />
+			</t:buffer>
+			<t:buffer into="#{homeLeft}">
+				<jsp:include page="homeLeft.jsp" />
+			</t:buffer>
 			<!-- ********* With Tree View ********* -->
 			<t:buffer into="#{withTree}">
 				<t:htmlTag value="table" styleClass="portlet-table-body" style="width: 100%">
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td" id="TDLeft" forceId="true"
 							style="width: #{homeBean.treeSize}%">
-							<jsp:include page="homeLeft.jsp" />
+							<h:outputText value="#{homeLeft}" escape="false"/>
 						</t:htmlTag>
 						<t:htmlTag value="td" id="TDRight" forceId="true"
 							style="width: #{100 - homeBean.treeSize}%">
-							<jsp:include page="homeRight.jsp" />
+							<h:outputText value="#{homeRight}" escape="false"/>
 						</t:htmlTag>
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:buffer>
 			<!-- ********* Without Tree View ********* -->
 			<t:buffer into="#{withoutTree}">
-				<jsp:include page="homeRight.jsp" />
+				<h:outputText value="#{homeRight}" escape="false"/>
 			</t:buffer>
 			<!-- ********* Rendering ********* -->
 			<h:outputText id="left" value="#{withTree}" escape="false"

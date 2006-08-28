@@ -5,6 +5,7 @@
  */
 package org.esupportail.lecture.web;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +32,7 @@ public class HomeBean {
 	private int currentSourceID=1;
 	private CategoryRB currentCategory;
 	private SourceRB currentSource;
+	private String itemDisplayMode="all";
 	
 	/**
 	 * For Spring injection of Service Class
@@ -180,14 +182,58 @@ public class HomeBean {
 		}
 		if (currentSource != null) {
 			SourceRB src = (SourceRB)currentSource;
-			return src.getItems();
+			return sortedItems(src.getItems());
 		}
 		return null;
 	}
 	
+	private List<Item> sortedItems(List<Item> items) {
+		if (itemDisplayMode.equals("all")) {
+			// nothing to do
+		} else if (itemDisplayMode.equals("notRead")) {
+			if (items != null){
+				List<Item> ret = new ArrayList<Item>();
+				Iterator<Item> iter = items.iterator();
+				while (iter.hasNext()) {
+					Item item = (Item)iter.next();
+					if (!item.isRead()) {
+						ret.add(item);
+					}
+				}
+				return ret;
+			}
+		} else if (itemDisplayMode.equals("unreadFirst")) {
+			if (items != null){
+				List<Item> ret = new ArrayList<Item>();
+				// find unread
+				Iterator<Item> iter = items.iterator();
+				while (iter.hasNext()) {
+					Item item = (Item)iter.next();
+					if (!item.isRead()) {
+						ret.add(item);
+					}
+				}
+				// and read
+				iter = items.iterator();
+				while (iter.hasNext()) {
+					Item item = (Item)iter.next();
+					if (item.isRead()) {
+						ret.add(item);
+					}
+				}
+				return ret;
+			}
+			
+		} else {
+			log.warn("Unknown itemDisplayMode value \""+itemDisplayMode+"\" in sortedItems function");
+			// nothing to do
+		}
+		return(items);
+	}
+
 	public CategoryRB getCurrentCategory() {
 		CategoryRB ret = null;
-		Iterator<Category> iter = categories.iterator();
+		Iterator<Category> iter = getCategories().iterator();
 		while (iter.hasNext()) {
 			CategoryRB cat = (CategoryRB) iter.next();
 			if (cat.isSelected()) {
@@ -277,6 +323,18 @@ public class HomeBean {
 				currentCategory=cat;					
 			}
 		}
+	}
+
+	public String changeItemDisplayMode() {
+		return "OK";
+	}
+	
+	public String getItemDisplayMode() {
+		return itemDisplayMode;
+	}
+
+	public void setItemDisplayMode(String itemDisplayMode) {
+		this.itemDisplayMode = itemDisplayMode;
 	}
 
 }
