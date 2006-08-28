@@ -11,7 +11,7 @@
 		<t:htmlTag value="div" id="menuRight" forceId="true">
 			<t:htmlTag value="div" styleClass="menuTitle">
 				<t:htmlTag value="span" styleClass="portlet-section-header">
-					<h:outputText value="#{homeBean.currentSource.name}" />
+					<h:outputText value="#{homeBean.currentCategory.selectedSource.name}" />
 				</t:htmlTag>
 			</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuButton">

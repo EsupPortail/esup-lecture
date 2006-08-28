@@ -20,19 +20,22 @@ import org.esupportail.lecture.domain.model.tmp.CategoryRB;
 import org.esupportail.lecture.domain.model.tmp.Item;
 import org.esupportail.lecture.domain.model.tmp.SourceRB;
 
+//TODO find bug in category selection
+//TODO Javadoc
 public class HomeBean {
 	/**
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(HomeBean.class);
-	private List<Category> categories;
 	private FacadeWeb facadeWeb;
 	private int treeSize=20;
 	private boolean treeVisible=true;
-	private int currentSourceID=1;
+	private String itemDisplayMode;
 	private CategoryRB currentCategory;
-	private SourceRB currentSource;
-	private String itemDisplayMode="all";
+	
+/*
+ * **************** Getter and Setter ****************
+ */
 	
 	/**
 	 * For Spring injection of Service Class
@@ -61,14 +64,42 @@ public class HomeBean {
 		this.treeSize = treeSize;
 	}
 
-	public List<Category> getCategories() {
-		if (log.isDebugEnabled()) {
-			log.debug("In getCategories");
+	public List<Item> getItems() {
+		SourceRB src = getCurrentCategory().getSelectedSource();
+		if (src != null) {
+			List<Item> items = src.getItems();
+			return sortedItems(items);			
 		}
-		this.categories = facadeWeb.getFacadeService().getCategories();
-		return this.categories;
+		return null;
 	}
 	
+	public CategoryRB getCurrentCategory() {
+		CategoryRB ret = null;
+		Iterator<Category> iter = getCategories().iterator();
+		while (iter.hasNext()) {
+			CategoryRB cat = (CategoryRB) iter.next();
+			if (cat.isSelected()) {
+				ret = cat;
+			}
+		}
+		return ret;
+	}
+
+	public void setCurrentCategory(CategoryRB currentCategory) {
+		this.currentCategory = currentCategory;
+	}
+	
+	public String getItemDisplayMode() {
+		return itemDisplayMode;
+	}
+
+	public void setItemDisplayMode(String itemDisplayMode) {
+		this.itemDisplayMode = itemDisplayMode;
+	}
+
+/*
+ * **************** Action and listener method ****************
+ */		
 	public void adjustTreeSize(ActionEvent e) {
 		if (log.isDebugEnabled()) {
 			log.debug("In adjustTreeSize");
@@ -76,13 +107,15 @@ public class HomeBean {
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		String id = e.getComponent().getClientId(ctx);
 		if (id.equals("home:leftSubview:treeSmallerButton")) {
-			if (this.treeSize > 10) {
-				this.treeSize -= 5;				
+			int treeSize = getTreeSize();
+			if (treeSize > 10) {
+				setTreeSize(treeSize-5);
 			}
 		}
 		if (id.equals("home:leftSubview:treeLargerButton")) {
-			if (this.treeSize < 90) {
-				this.treeSize += 5;				
+			int treeSize = getTreeSize();
+			if (treeSize < 90) {
+				setTreeSize(treeSize+5);
 			}
 		}
 	}
@@ -92,9 +125,9 @@ public class HomeBean {
 			log.debug("In toggleTreeVisibility");
 		}
 		if (isTreeVisible()) {
-			this.treeVisible=false;
+			setTreeVisible(false);
 		} else {
-			this.treeVisible=true;
+			setTreeVisible(true);
 		}
 	}
 
@@ -108,11 +141,9 @@ public class HomeBean {
 		if (log.isDebugEnabled()) {
 			log.debug("itemID = "+id);
 		}
-		if (currentSource == null) {
-			currentSource = getCurrentSource();
-		}
-		if (currentSource != null) {
-			Iterator<Item> iter = currentSource.getItems().iterator();
+		SourceRB src = getCurrentCategory().getSelectedSource();
+		if (src != null) {
+			Iterator<Item> iter = src.getItems().iterator();
 			while (iter.hasNext()) {
 				Item item = (Item) iter.next();
 				if (item.getId() == Integer.parseInt(id)) {
@@ -132,12 +163,21 @@ public class HomeBean {
 		if (log.isDebugEnabled()) {
 			log.debug("categoryID = "+id);
 		}
-		setCurrentCategory(Integer.parseInt(id), false);
+		CategoryRB cat = getCategorieByID(Integer.parseInt(id));
+		setCurrentCategory(cat);
+		//unselect current selected source
+		SourceRB src2 = cat.getSelectedSource();
+		if (src2 != null) {
+			src2.setSelected(false);
+		}
 		id = (String)map.get("sourceID");
 		if (log.isDebugEnabled()) {
 			log.debug("sourceID = "+id);
 		}
-		setCurrentSource(Integer.parseInt(id));
+		SourceRB src = getSourceByID(cat, Integer.parseInt(id));
+		//select new source
+		cat.setSelectedSource(src);
+		src.setSelected(true);
 	}
 
 	public void selectACategory(ActionEvent e) {
@@ -150,18 +190,66 @@ public class HomeBean {
 		if (log.isDebugEnabled()) {
 			log.debug("categoryID = "+id);
 		}
-		setCurrentCategory(Integer.parseInt(id), true);
-		if (currentCategory.isExpanded()) {
-			currentSource = getSelectedSourceFromCategory(currentCategory);
-		} else {
-			currentSource = null;
+		CategoryRB cat = getCategorieByID(Integer.parseInt(id));
+		// is current category
+		CategoryRB currentCategory = getCurrentCategory();
+		if (currentCategory != null) {
+			if (cat.getId() == currentCategory.getId()) {
+				//toggle expanded status
+				currentCategory.setExpanded(!currentCategory.isExpanded());
+			}
 		}
+		//set current category
+		setCurrentCategory(cat);
+		cat.setSelected(true);
 	}
+	
+	public String changeItemDisplayMode() {
+		return "OK";
+	}	
 
+/*
+ * **************** internal  method ****************
+ */
+	
+	private CategoryRB getCategorieByID(int id) {
+		CategoryRB ret = null;
+		Iterator<Category> iter = getCategories().iterator();
+		while (iter.hasNext()) {
+			CategoryRB cat = (CategoryRB) iter.next();
+			if (cat.getId() == id) {
+				ret = cat;
+			}
+		}
+		return ret;
+	}
+	
+	private SourceRB getSourceByID(CategoryRB cat, int sourceID) {
+		List<SourceRB> sources = cat.getSources();
+		if (sources != null) {
+			Iterator<SourceRB> iter = sources.iterator();
+			while (iter.hasNext()) {
+				SourceRB src = (SourceRB) iter.next();
+				if (src.getId() == sourceID) {
+					return src; 
+				}
+			}
+		}
+		return null;
+	}
+	
+	public List<Category> getCategories() {
+		if (log.isDebugEnabled()) {
+			log.debug("In getCategories");
+		}
+		// Call of domain.service class
+		return facadeWeb.getFacadeService().getCategories();
+	}
+	
 	private SourceRB getSelectedSourceFromCategory(CategoryRB cat) {
 		SourceRB ret = null;
 		if (cat != null) {
-			cat = (CategoryRB)currentCategory;
+			cat = getCurrentCategory();
 			List<SourceRB> sources = cat.getSources();
 			if (sources != null) {
 				Iterator<SourceRB> iter = sources.iterator();
@@ -176,18 +264,8 @@ public class HomeBean {
 		return ret;
 	}
 
-	public List<Item> getItems() {
-		if (currentSource == null) {
-			currentSource = getCurrentSource();
-		}
-		if (currentSource != null) {
-			SourceRB src = (SourceRB)currentSource;
-			return sortedItems(src.getItems());
-		}
-		return null;
-	}
-	
 	private List<Item> sortedItems(List<Item> items) {
+		String itemDisplayMode = getItemDisplayMode();
 		if (itemDisplayMode.equals("all")) {
 			// nothing to do
 		} else if (itemDisplayMode.equals("notRead")) {
@@ -229,112 +307,6 @@ public class HomeBean {
 			// nothing to do
 		}
 		return(items);
-	}
-
-	public CategoryRB getCurrentCategory() {
-		CategoryRB ret = null;
-		Iterator<Category> iter = getCategories().iterator();
-		while (iter.hasNext()) {
-			CategoryRB cat = (CategoryRB) iter.next();
-			if (cat.isSelected()) {
-				ret = cat;
-			}
-		}
-		return ret;
-	}
-	
-	public SourceRB getCurrentSource() {
-		SourceRB ret = null;
-		if (currentCategory == null) {
-			currentCategory = getCurrentCategory();
-		}
-		if (currentCategory != null) {
-			CategoryRB cat = (CategoryRB)currentCategory;
-			List<SourceRB> sources = cat.getSources();
-			if (sources != null & cat.isExpanded()) {
-				Iterator<SourceRB> iter = sources.iterator();
-				while (iter.hasNext()) {
-					SourceRB src = (SourceRB) iter.next();
-					if (src.isSelected()) {
-						ret = src;
-					}
-				}				
-			}
-		}
-		return ret;
-	}
-
-	public int getCurrentSourceID() {
-		return currentSourceID;
-	}
-
-	public void setCurrentSourceID(int currentSourceID) {
-		this.currentSourceID = currentSourceID;
-	}
-
-	public void setCurrentSource(int sourceID) {
-		// find currentSource
-		if (currentSource == null) {
-			currentSource = getCurrentSource();
-		}
-		// unselect this CurrentSource
-		if (currentSource != null) {
-			SourceRB src = (SourceRB)currentSource;
-			src.setSelected(false);
-		}
-		// find Source to select
-		CategoryRB cat = (CategoryRB)currentCategory;
-		List<SourceRB> sources = cat.getSources();
-		if (sources != null) {
-			Iterator<SourceRB> iter = sources.iterator();
-			while (iter.hasNext()) {
-				SourceRB src = (SourceRB) iter.next();
-				if (src.getId() == sourceID) {
-					src.setSelected(true);
-					currentSource=src;
-				}
-			}
-		}
-	}
-
-	public void setCurrentCategory(int categoryID, boolean clickOnCategory) {
-		int oldCurrentCategoryID = -1;
-		// find currentCategory
-		if (currentCategory == null) {
-			currentCategory = getCurrentCategory();
-		}
-		// unselect this CurrentCategory
-		if (currentCategory != null) {
-			CategoryRB cat = (CategoryRB)currentCategory;
-			oldCurrentCategoryID = cat.getId();
-			cat.setSelected(false);
-		}
-		// find Categorie to select
-		Iterator<Category> iter = getCategories().iterator();
-		while (iter.hasNext()) {
-			CategoryRB cat = (CategoryRB) iter.next();
-			if (cat.getId() == categoryID) {
-				// expanded management
-				if (clickOnCategory) {
-					cat.setExpanded(!cat.isExpanded());
-				}
-				// change as selected
-				cat.setSelected(true);
-				currentCategory=cat;					
-			}
-		}
-	}
-
-	public String changeItemDisplayMode() {
-		return "OK";
-	}
-	
-	public String getItemDisplayMode() {
-		return itemDisplayMode;
-	}
-
-	public void setItemDisplayMode(String itemDisplayMode) {
-		this.itemDisplayMode = itemDisplayMode;
 	}
 
 }

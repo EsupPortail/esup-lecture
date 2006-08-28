@@ -42,7 +42,7 @@
 		class="org.esupportail.lecture.domain.model.tmp.SourceRB">
 		<property name="id" value="1" />
 		<property name="name" value="Cinéma" />
-		<property name="selected" value="true" />
+		<property name="selected" value="false" />
 		<property name="items">
 			<list>
 				<ref bean="item1" />
