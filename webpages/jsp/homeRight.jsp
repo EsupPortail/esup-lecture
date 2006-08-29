@@ -11,16 +11,13 @@
 		<t:htmlTag value="div" id="menuRight" forceId="true">
 			<t:htmlTag value="div" styleClass="menuTitle">
 				<t:htmlTag value="span" styleClass="portlet-section-header">
-					<h:outputText value="#{homeBean.currentCategory.selectedSource.name}" />
+					<h:outputText value="#{homeBean.currentCategoryName}" />
 				</t:htmlTag>
 			</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuButton">
 				<t:htmlTag value="ul">
 					<t:htmlTag value="li">
 						<h:outputText value="#{messages.selectorLabel}" />
-<!-- 
-						<h:selectOneMenu value="#{homeBean.itemDisplayMode}" onchange="document.elements['home:rightSubview:submit'].click();">
- -->
 						<h:selectOneMenu value="#{homeBean.itemDisplayMode}" onchange="document.forms['home'].elements['home:rightSubview:submit'].click();">
 							<f:selectItem itemValue="all" itemLabel="#{messages.all}" />
 							<f:selectItem itemValue="notRead" itemLabel="#{messages.notRead}" />

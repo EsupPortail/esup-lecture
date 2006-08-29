@@ -18,8 +18,9 @@
 				<t:dataList value="#{homeBean.categories}" var="cat" layout="simple">
 					<t:htmlTag value="li"
 						styleClass="#{cat.expanded ? 'expanded' : 'collapsed'}">
-						<h:commandLink actionListener="#{homeBean.selectACategory}"
+						<h:commandLink actionListener="#{homeBean.selectElement}"
 							value="#{cat.name}">
+							<f:param name="sourceID" value="" />
 							<f:param name="categoryID" value="#{cat.id}" />
 						</h:commandLink>
 						<t:htmlTag value="ul" rendered="#{cat.expanded}">
@@ -30,7 +31,7 @@
 										rendered="#{src.selected and cat.selected}">
 										<h:outputText value="#{src.name}" />
 									</t:htmlTag>
-									<h:commandLink actionListener="#{homeBean.selectASource}"
+									<h:commandLink actionListener="#{homeBean.selectElement}"
 										rendered="#{src.withUnread and (!src.selected or !cat.selected)}">
 										<t:htmlTag value="span" styleClass="portlet-section-alternate">
 											<h:outputText value="#{src.name}" />
@@ -38,7 +39,7 @@
 										<f:param name="sourceID" value="#{src.id }" />
 										<f:param name="categoryID" value="#{cat.id}" />
 									</h:commandLink>
-									<h:commandLink action="#{homeBean.selectASource}"
+									<h:commandLink action="#{homeBean.selectElement}"
 										rendered="#{!src.withUnread and (!src.selected or !cat.selected)}">
 										<h:outputText value="#{src.name}" />
 										<f:param name="sourceID" value="#{src.id }" />
