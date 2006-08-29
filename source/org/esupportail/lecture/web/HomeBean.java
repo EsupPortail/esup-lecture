@@ -247,6 +247,7 @@ public class HomeBean {
 
 	private List<Item> sortedItems(List<Item> items) {
 		String itemDisplayMode = getItemDisplayMode();
+		if (itemDisplayMode ==  null) return items;
 		if (itemDisplayMode.equals("all")) {
 			// nothing to do
 		} else if (itemDisplayMode.equals("notRead")) {

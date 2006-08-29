@@ -29,7 +29,7 @@ toggleButton: read/unread toggle button
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" />
 	<link rel="stylesheet"
-		href="http://localhost:8080/esup-lecture/stylesheets/lecture.css"
+		href="http://129.20.129.80:8080/esup-lecture/stylesheets/lecture.css"
 		media="screen" />
 	<f:view>
 		<f:loadBundle basename="messages" var="messages" />
