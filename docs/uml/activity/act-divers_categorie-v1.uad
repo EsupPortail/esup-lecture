@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<editmodel:ActivityDiagramEditModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:editmodel="editmodel.xmi" xmlns:options="options.xmi" name="act-divers_categorie-v1" size="1461,1191" metadata="uml2-1.0" initialized="true" scrolledY="-55" tag="5" key="323030353039323720646F635F63616E616C5F6C656374757265">
+  <children xsi:type="editmodel:NotepadEditModel" location="420,-50" size="355,80" fontInfo="Arial-8-0" note="DIVERS CATEGORIE 1.00&#xD;&#xA;&#xD;&#xA;modifier_vue_categorie&#x9;&#xD;&#xA;plier/deplier_categorie&#x9;&#xD;&#xA;sélectionner_source"/>
+  <children xsi:type="editmodel:EndEditModel" targetConnections="//@children.2/@children.0/@sourceConnections.0" location="313,580" size="21,21"/>
+  <children xsi:type="editmodel:PartitionEditModel" location="152,440" size="262,86" itemName="&quot;afficher_categorie&quot;">
+    <children xsi:type="editmodel:ActivityEditModel" targetConnections="//@children.3/@children.3/@sourceConnections.0" location="59,37" size="154,24" itemName="cf. act-afficher_categorie">
+      <sourceConnections xsi:type="editmodel:TransitionEditModel" autoLocated="true" source="//@children.2/@children.0" target="//@children.1" targetEnd="//@children.2/@children.0/@sourceConnections.0/@children.1" label="//@children.2/@children.0/@sourceConnections.0/@children.2" sourceEnd="//@children.2/@children.0/@sourceConnections.0/@children.0" connectionRouterKind="Manual" eventName="" eventArgument="" condition="" action="">
+        <children xsi:type="editmodel:StateEndEditModel" location="112,24" attachSource="true"/>
+        <children xsi:type="editmodel:StateEndEditModel" location="10,0"/>
+        <children xsi:type="editmodel:WireLabelEditModel" size="0,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:TransitionEditModel" autoLocated="true" source="//@children.2/@children.0" target="//@children.5" targetEnd="//@children.2/@children.0/@sourceConnections.1/@children.1" label="//@children.2/@children.0/@sourceConnections.1/@children.2" sourceEnd="//@children.2/@children.0/@sourceConnections.1/@children.0" connectionRouterKind="Manual" eventName="" eventArgument="" condition="erreur" action="">
+        <children xsi:type="editmodel:StateEndEditModel" location="69,24" attachSource="true"/>
+        <children xsi:type="editmodel:StateEndEditModel" location="61,0"/>
+        <children xsi:type="editmodel:WireLabelEditModel" name=" [erreur]" size="39,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+      </sourceConnections>
+    </children>
+  </children>
+  <children xsi:type="editmodel:PartitionEditModel" targetConnections="//@children.7/@sourceConnections.0" location="40,120" size="466,253" itemName="&quot;modifier_vue_categorie&quot;">
+    <children xsi:type="editmodel:PartitionEditModel" location="7,104" size="125,85" itemName="&quot;replier_categorie&quot;">
+      <children xsi:type="editmodel:ActivityEditModel" targetConnections="//@children.3/@children.4/@sourceConnections.1" location="8,50" size="109,24" itemName="cat.etat := plié">
+        <sourceConnections xsi:type="editmodel:TransitionEditModel" autoLocated="true" source="//@children.3/@children.0/@children.0" target="//@children.3/@children.3" targetEnd="//@children.3/@children.0/@children.0/@sourceConnections.0/@children.1" label="//@children.3/@children.0/@children.0/@sourceConnections.0/@children.2" sourceEnd="//@children.3/@children.0/@children.0/@sourceConnections.0/@children.0" connectionRouterKind="Manual" eventName="O.2" eventArgument="" condition="" action="">
+          <children xsi:type="editmodel:StateEndEditModel" location="76,24" attachSource="true"/>
+          <children xsi:type="editmodel:StateEndEditModel" location="32,0"/>
+          <children xsi:type="editmodel:WireLabelEditModel" name="O.2" size="17,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+        </sourceConnections>
+      </children>
+    </children>
+    <children xsi:type="editmodel:PartitionEditModel" location="142,105" size="125,84" itemName="&quot;deplier_categorie&quot;">
+      <children xsi:type="editmodel:ActivityEditModel" targetConnections="//@children.3/@children.4/@sourceConnections.0" location="6,46" size="114,24" itemName="cat.etat := déplié">
+        <sourceConnections xsi:type="editmodel:TransitionEditModel" autoLocated="true" source="//@children.3/@children.1/@children.0" target="//@children.3/@children.3" targetEnd="//@children.3/@children.1/@children.0/@sourceConnections.0/@children.1" label="//@children.3/@children.1/@children.0/@sourceConnections.0/@children.2" sourceEnd="//@children.3/@children.1/@children.0/@sourceConnections.0/@children.0" connectionRouterKind="Manual" eventName="O.1" eventArgument="" condition="" action="">
+          <children xsi:type="editmodel:StateEndEditModel" location="56,24" attachSource="true"/>
+          <children xsi:type="editmodel:StateEndEditModel" location="145,0"/>
+          <children xsi:type="editmodel:WireLabelEditModel" name="O.1" size="17,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+        </sourceConnections>
+      </children>
+    </children>
+    <children xsi:type="editmodel:PartitionEditModel" location="274,106" size="179,83" itemName="&quot;sélectionner_source&quot;">
+      <children xsi:type="editmodel:ActivityEditModel" targetConnections="//@children.3/@children.4/@sourceConnections.2" location="5,49" size="170,24" itemName="cat.source_selectionnée := s">
+        <sourceConnections xsi:type="editmodel:TransitionEditModel" autoLocated="true" source="//@children.3/@children.2/@children.0" target="//@children.3/@children.3" targetEnd="//@children.3/@children.2/@children.0/@sourceConnections.0/@children.1" label="//@children.3/@children.2/@children.0/@sourceConnections.0/@children.2" sourceEnd="//@children.3/@children.2/@children.0/@sourceConnections.0/@children.0" connectionRouterKind="Manual" eventName="O.3" eventArgument="" condition="" action="">
+          <children xsi:type="editmodel:StateEndEditModel" location="68,24" attachSource="true"/>
+          <children xsi:type="editmodel:StateEndEditModel" location="288,0"/>
+          <children xsi:type="editmodel:WireLabelEditModel" name="O.3" size="17,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+        </sourceConnections>
+      </children>
+    </children>
+    <children xsi:type="editmodel:ActivityEditModel" targetConnections="//@children.3/@children.0/@children.0/@sourceConnections.0 //@children.3/@children.1/@children.0/@sourceConnections.0 //@children.3/@children.2/@children.0/@sourceConnections.0" location="59,205" size="358,24" itemName="enregistrer les personnalisations de la catégorie dans le user profile">
+      <sourceConnections xsi:type="editmodel:TransitionEditModel" source="//@children.3/@children.3" target="//@children.2/@children.0" targetEnd="//@children.3/@children.3/@sourceConnections.0/@children.1" label="//@children.3/@children.3/@sourceConnections.0/@children.2" sourceEnd="//@children.3/@children.3/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan" eventName="O.4" eventArgument="" condition="" action="">
+        <children xsi:type="editmodel:StateEndEditModel" location="149,24" attachSource="true"/>
+        <children xsi:type="editmodel:StateEndEditModel" location="133,0"/>
+        <children xsi:type="editmodel:WireLabelEditModel" name="O.4" size="17,14" fontInfo="Arial-8-0" anchorKind="MiddlePart"/>
+      </sourceConnections>
+    </children>
+    <children xsi:type="editmodel:ActivityEditModel" targetConnections="//@children.4/@sourceConnections.0" location="211,42" size="39,24" itemName="...">
+      <sourceConnections xsi:type="editmodel:TransitionEditModel" autoLocated="true" source="//@children.3/@children.4" target="//@children.3/@children.1/@children.0" targetEnd="//@children.3/@children.4/@sourceConnections.0/@children.1" label="//@children.3/@children.4/@sourceConnections.0/@children.2" sourceEnd="//@children.3/@children.4/@sourceConnections.0/@children.0" connectionRouterKind="Manual" eventName="" eventArgument="" condition="cat.etat = plié" action="">
+        <children xsi:type="editmodel:StateEndEditModel" location="19,24" attachSource="true"/>
+        <children xsi:type="editmodel:StateEndEditModel" location="82,0"/>
+        <children xsi:type="editmodel:WireLabelEditModel" name=" [cat.etat = plié]" location="235,213" size="73,14" fontInfo="Arial-8-0" automaticRelocationAllowed="false" locationOnWireFromSource="-7.000000000000001" distanceFromWire="1.9999999999999964" anchorKind="MiddlePart"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:TransitionEditModel" source="//@children.3/@children.4" target="//@children.3/@children.0/@children.0" targetEnd="//@children.3/@children.4/@sourceConnections.1/@children.1" label="//@children.3/@children.4/@sourceConnections.1/@children.2" sourceEnd="//@children.3/@children.4/@sourceConnections.1/@children.0" connectionRouterKind="Manhattan" eventName="" eventArgument="" condition="cat.etat = déplié" action="">
+        <children xsi:type="editmodel:StateEndEditModel" location="0,10" attachSource="true"/>
+        <children xsi:type="editmodel:StateEndEditModel" location="79,0"/>
+        <children xsi:type="editmodel:WireLabelEditModel" name=" [cat.etat = déplié]" location="86,155" size="85,14" fontInfo="Arial-8-0" automaticRelocationAllowed="false" locationOnWireFromSource="64.0" distanceFromWire="-9.999999999999954" anchorKind="MiddlePart"/>
+      </sourceConnections>
+      <sourceConnections xsi:type="editmodel:TransitionEditModel" source="//@children.3/@children.4" target="//@children.3/@children.2/@children.0" targetEnd="//@children.3/@children.4/@sourceConnections.2/@children.1" label="//@children.3/@children.4/@sourceConnections.2/@children.2" sourceEnd="//@children.3/@children.4/@sourceConnections.2/@children.0" connectionRouterKind="Manhattan" eventName="" eventArgument="s" condition="source définie dans la catégorie" action="">
+        <children xsi:type="editmodel:StateEndEditModel" location="39,10" attachSource="true"/>
+        <children xsi:type="editmodel:StateEndEditModel" location="74,0"/>
+        <children xsi:type="editmodel:WireLabelEditModel" name="(s) [source définie dans la catégorie]" location="329,194" size="178,14" fontInfo="Arial-8-0" automaticRelocationAllowed="false" locationOnWireFromSource="77.99999999999999" distanceFromWire="-29.000000000000032" anchorKind="MiddlePart"/>
+      </sourceConnections>
+    </children>
+  </children>
+  <children xsi:type="editmodel:StartEditModel" location="263,70" size="20,20">
+    <sourceConnections xsi:type="editmodel:TransitionEditModel" source="//@children.4" target="//@children.3/@children.4" targetEnd="//@children.4/@sourceConnections.0/@children.1" label="//@children.4/@sourceConnections.0/@children.2" sourceEnd="//@children.4/@sourceConnections.0/@children.0" connectionRouterKind="Manhattan" eventName="" eventArgument="" condition="catégorie définie dans le user profile &amp; affichée dans la fenêtre gauche" action="">
+      <children xsi:type="editmodel:StateEndEditModel" location="9,20" attachSource="true"/>
+      <children xsi:type="editmodel:StateEndEditModel" location="20,0"/>
+      <children xsi:type="editmodel:WireLabelEditModel" name=" [catégorie définie dans le user profile &amp; affichée dans la fenêtre gauche]" location="117,95" size="353,14" fontInfo="Arial-8-0" automaticRelocationAllowed="false" locationOnWireFromSource="-21.457033360143516" distanceFromWire="-22.52988502815068" anchorKind="MiddlePart"/>
+    </sourceConnections>
+  </children>
+  <children xsi:type="editmodel:StateEditModel" targetConnections="//@children.6/@sourceConnections.0 //@children.2/@children.0/@sourceConnections.1" location="109,668" size="82,60" itemName="Warning" content="">
+    <children xsi:type="editmodel:CompartmentEditModel"/>
+  </children>
+  <children xsi:type="editmodel:NotepadEditModel" location="25,551" size="146,80" fontInfo="Arial-8-0" note="Warning de&#xD;&#xA;&quot;modifier_vue_categorie&quot;&#xD;&#xA;">
+    <sourceConnections xsi:type="editmodel:IndicationEditModel" autoLocated="true" source="//@children.6" target="//@children.5" targetEnd="//@children.6/@sourceConnections.0/@children.1" sourceEnd="//@children.6/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:StateEndEditModel" location="114,80" attachSource="true"/>
+      <children xsi:type="editmodel:StateEndEditModel" location="30,0"/>
+    </sourceConnections>
+  </children>
+  <children xsi:type="editmodel:NotepadEditModel" location="160,-22" size="184,24" fontInfo="Arial-8-0" note="Hérite de &quot;modifier_vue_élément&quot;">
+    <sourceConnections xsi:type="editmodel:IndicationEditModel" source="//@children.7" target="//@children.3" targetEnd="//@children.7/@sourceConnections.0/@children.1" sourceEnd="//@children.7/@sourceConnections.0/@children.0" connectionRouterKind="Manual">
+      <children xsi:type="editmodel:StateEndEditModel" location="131,24" attachSource="true"/>
+      <children xsi:type="editmodel:StateEndEditModel" location="371,0"/>
+    </sourceConnections>
+  </children>
+  <diagramOptions xsi:type="options:ActivityDiagramOptions" level="0" autoName="false"/>
+  <boardSetting snapToGeometry="true" gridEnabled="true" gridSpacing="10,10" gridOrigin="0,0" rulerUnit="pixel">
+    <leftRuler/>
+    <topRuler/>
+  </boardSetting>
+</editmodel:ActivityDiagramEditModel>
