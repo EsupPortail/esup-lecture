@@ -12,7 +12,7 @@
 			<!-- vue à utiliser par défaut -->
             <name>default-view</name>
             <!-- apres: <value>/home.jsp</value> -->
-			<value>/sample.jsp</value>
+			<value>/homeContextUser.jsp</value>
 			
         </init-param>
         <supports>
@@ -27,7 +27,11 @@
     </portlet>
 	
    <user-attribute>
-		<description>user login</description>
-		<name>username</name>
+		<description>user email</description>
+		<name>mail</name>
+	</user-attribute> 
+	   <user-attribute>
+		<description>user display name</description>
+		<name>displayName</name>
 	</user-attribute> 
 </portlet-app>

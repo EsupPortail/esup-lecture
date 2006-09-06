@@ -4,15 +4,18 @@ package org.esupportail.lecture.domain.service.impl;
 * For any information please refer to http://esup-helpdesk.sourceforge.net
 * You may obtain a copy of the licence at http://www.esup-portail.org/license/
 */
-import java.util.Set;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.utils.PortletRequestUtils;
 import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.Context;
+import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.Channel;
+import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.service.FacadeService;
 import org.esupportail.lecture.utils.exception.*;
 /**
@@ -23,7 +26,9 @@ import org.esupportail.lecture.utils.exception.*;
  */
 public class FacadeServiceImplGwe implements FacadeService {
 
+	
 	Channel myChannel; 
+	
 	/**
 	 * Log instance 
 	 */
@@ -45,13 +50,13 @@ public class FacadeServiceImplGwe implements FacadeService {
 		myChannel.startup();
 	}
 
-	/**
-	 * @see org.esupportail.lecture.domain.service.FacadeService#newUserSession()
-	 */
-	public void newUserSession() throws MyException,FatalException {
-		myChannel.startup();
-		// TODO le reste à propos du user
-	}
+//	/**
+//	 * @see org.esupportail.lecture.domain.service.FacadeService#newUserSession()
+//	 */
+//	public void newUserSession() throws MyException,FatalException {
+//		myChannel.startup();
+//		// TODO le reste à propos du user
+//	}
 
 	
 	/**
@@ -75,12 +80,7 @@ public class FacadeServiceImplGwe implements FacadeService {
 		return myChannel.toString();
 	}
 	
-	/**
-	 * @see org.esupportail.lecture.domain.service.FacadeService#getContexts()
-	 */
-	public Set<Context> getContexts() {
-		return myChannel.getContexts();
-	}
+
 	
 	/**
 	 * @deprecated
@@ -98,6 +98,30 @@ public class FacadeServiceImplGwe implements FacadeService {
 		return null;
 	}
 
+
+
+
+	public Hashtable<String,Context> getContexts() {
+		
+		return myChannel.getContexts();
+	}
+
+
+
+
+
+	
+	public CustomContext getCustomContext() {
+		// TODO Auto-generated method stub
+		
+		return null;
+	}
+
+
+
+
+
+	
 
 
 

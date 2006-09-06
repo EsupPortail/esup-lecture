@@ -3,9 +3,18 @@
 
 <beans>
 	<bean id="facadeService" class="org.esupportail.lecture.domain.service.impl.FacadeServiceImplGwe">
+		
+	</bean>
+	
+	<bean id="portletService" class="org.esupportail.lecture.domain.service.impl.PortletServiceImpl">
+		<property name="requestUtils"> 
+			<ref bean="requestUtils"/>
+		</property>
+	</bean>
+	
+	
+	<bean id="requestUtils" class="org.esupportail.commons.utils.PortletRequestUtils">
 	</bean>
 
-<!--	<bean id="facadeService" class="org.esupportail.lecture.domain.service.impl.FacadeServiceFacadeImplRaymond">
-	</bean>
-    -->
+
 </beans>

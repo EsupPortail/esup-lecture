@@ -7,11 +7,9 @@ package org.esupportail.lecture.portlet;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.Map;
 
-import javax.portlet.PortalContext;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletException;
-import javax.portlet.UnavailableException;
+import javax.portlet.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -20,6 +18,7 @@ import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.service.FacadeService;
 import org.springframework.web.context.WebApplicationContext;
 import org.esupportail.lecture.utils.exception.*;
+import org.esupportail.lecture.web.FacadeWeb;
 
 import sun.security.action.GetPropertyAction;
 
@@ -62,6 +61,7 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 			portletCtx = (PortletContext)super.getPortletContext();
 			appCtx = (WebApplicationContext)portletCtx.getAttribute("org.springframework.web.context.WebApplicationContext.ROOT");
 			facadeService = (FacadeService)appCtx.getBean("facadeService");
+			
 //			ServletContext servlCtx = (ServletContext) appCtx.getServletContext();
 //			Enumeration enumerator= servlCtx.getAttributeNames();
 //			while(enumerator.hasMoreElements()) {
@@ -85,6 +85,8 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 //			e.printStackTrace();
 		}
 	}
+	
+
 	
 	/**
 	 * @return Returns the facadeService.

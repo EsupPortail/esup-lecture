@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.web;
 
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.List;
@@ -29,8 +30,9 @@ public class HomeContextBean {
 		// calculer ça à chaque fois qu'on le demande ou le garder en mémoire ?
 		// mieux de le mettre dans le constructeur
 		contextWebs = new ArrayList<ContextWeb>();
-		Set<Context> contexts = facadeWeb.getFacadeService().getContexts();
-		Iterator iterator = contexts.iterator();
+		Hashtable<String,Context> contexts = facadeWeb.getFacadeService().getContexts();
+		Set<String> set = contexts.keySet();
+		Iterator iterator = set.iterator();
 		for (Context c = null; iterator.hasNext();){
 			c=(Context)iterator.next();
 			ContextWeb cw = new ContextWeb(c);

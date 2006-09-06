@@ -5,12 +5,14 @@
 */
 package org.esupportail.lecture.domain.service;
 
-import java.util.Set;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.Category;
+import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.Source;
+import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.tmp.Item;
 import org.esupportail.lecture.domain.model.tmp.SourceRB;
 import org.esupportail.lecture.utils.exception.*;
@@ -31,12 +33,12 @@ public interface FacadeService {
 		 */
 		public void loadChannel()throws FatalException,MyException;
 		
-		/**
-		 * Service called when a user open a session
-		 * @exception MyException
-		 * @exception FatalException
-		 */
-		public void newUserSession() throws MyException,FatalException;
+//		/**
+//		 * Service called when a user open a session
+//		 * @exception MyException
+//		 * @exception FatalException
+//		 */
+//		public void newUserSession() throws MyException,FatalException;
 		
 		/**
 		 * Service called to reload the channel config
@@ -59,7 +61,7 @@ public interface FacadeService {
 		 * Returns list of contexts (full of data) defiend in the channel
 		 * @return a set of contexts defined in the channel
 		 */
-		public Set<Context> getContexts();
+		public Hashtable<String,Context> getContexts();
 		
 		/**
 		 * Returns list of Categories of the current context
@@ -67,4 +69,12 @@ public interface FacadeService {
 		 * @author bourges
 		 */
 		public List<Category> getCategories();
+		
+
+		
+		/**
+		 * @return the customContext of the user 
+		 */
+		public CustomContext getCustomContext();
+		
 }

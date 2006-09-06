@@ -6,6 +6,7 @@
 package org.esupportail.lecture.web;
 
 import org.esupportail.lecture.domain.service.FacadeService;
+import org.esupportail.lecture.domain.service.PortletService;
 
 /**
  * Entry point to access domain service, used by org.esupportail.lecture.web package
@@ -15,7 +16,22 @@ import org.esupportail.lecture.domain.service.FacadeService;
 public class FacadeWeb {
 	
 	private FacadeService facadeService;
+	private PortletService portletService;
 	
+	/**
+	 * @return Returns the portletService.
+	 */
+	public PortletService getPortletService() {
+		return portletService;
+	}
+
+	/**
+	 * @param portletService The portletService to set.
+	 */
+	public void setPortletService(PortletService portletService) {
+		this.portletService = portletService;
+	}
+
 	/**
 	 * Return a FacadeService
 	 * @return facadeService

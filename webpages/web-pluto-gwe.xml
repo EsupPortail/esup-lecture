@@ -16,13 +16,13 @@
     <!-- Fichier de configuration Spring => sera appelé au démarrage TOMCAT-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/classes/applicationContextRaymond.xml</param-value>
+        <param-value>/WEB-INF/classes/applicationContextGwe.xml</param-value>
     </context-param>
 	<!-- Fichier de config JSF -->
     <context-param>
         <param-name>javax.faces.CONFIG_FILES</param-name>
         <param-value>
-            /WEB-INF/classes/faces-config-raymond.xml
+            /WEB-INF/classes/faces-config-gwe.xml
         </param-value>
         <description>
             Comma separated list of URIs of (additional) faces config files.

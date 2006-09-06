@@ -32,7 +32,7 @@ public class Channel  {
 	/**
      * Set of contexts defined in the channel.
      */
-	private Set<Context> contexts;
+	private Hashtable<String,Context> contextsHash;
 	
 	/**
 	 * Hashtable of ManagedCategoryProfiles defined in the chanel, indexed by their Id.
@@ -68,11 +68,10 @@ public class Channel  {
 	
 	private boolean mappingsLoaded = false;
 	
-	// Utile plus tard
-//	/**
-//	 * User Profiles connected to the chanel
-//	 */
-//	private Set<UserProfile> userProfiles = new HAshSet<UserProfile>();;
+	/**
+	 * User Profiles connected to the chanel
+	 */
+	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();;
 
 	
 /* ************************** Initialization *********************************** */
@@ -143,7 +142,7 @@ public class Channel  {
 		if (log.isDebugEnabled()){
 			log.debug("resetChannelConfigProperties()");
 		}
-		contexts = new HashSet<Context>();
+		contextsHash = new Hashtable<String,Context>();
 		managedCategoryProfilesHash = new Hashtable<String,ManagedCategoryProfile>();
 	}
 	
@@ -208,6 +207,7 @@ public class Channel  {
 	
 /* ************************** METHODS *********************************** */
 
+
 	/**
 	 * Return a string containing channel content : mapping file, contexts, managed category profiles,
 	 * xslt mappings, hash mappings by dtd, Hash mappings by xmlns,Hash mappings by xmlType
@@ -224,7 +224,7 @@ public class Channel  {
 		
 //		/* Contexts */ 
 		string += "***************** Contexts : \n\n";
-		string += contexts.toString();
+		string += contextsHash.toString();
 	    string += "\n";
 //				
 //		/* Managed categories profiles */
@@ -274,8 +274,8 @@ public class Channel  {
 	 * @return contexts
 	 * @see Channel#contexts
 	 */
-	public Set<Context> getContexts() {
-		return contexts;
+	public Hashtable<String,Context> getContexts() {
+		return contextsHash;
 	}
 
 //  TODO A retirer si inutile
@@ -289,9 +289,14 @@ public class Channel  {
 	 * @see Channel#contexts
 	 */
 	protected void addContext(Context c) {
-		this.contexts.add(c);
+		this.contextsHash.put(c.getId(),c);
 	}	
 
+	protected Context getContextById(String id){
+		return contextsHash.get(id);
+	}
+	
+	
 //  TODO A retirer si inutile	
 //	public Hashtable<String,ManagedCategoryProfile> getManagedCategoryProfilesHash() {
 //		return managedCategoryProfilesHash;
@@ -404,14 +409,16 @@ public class Channel  {
 		this.mappingHashByXmlType.put(m.getXmlType(),m);
 	}	
 	
-// utile plus tard	
-/*	public Set getUserProfiles() {
+
+	public Set getUserProfiles() {
 		return userProfiles;
 	}
 	public void setUserProfiles(Set userProfiles) {
 		this.userProfiles = userProfiles;
 	}
-*/
-		
+
+	protected void addUserProfile(UserProfile userProfile){
+		userProfiles.add(userProfile);
+	}
 
 }

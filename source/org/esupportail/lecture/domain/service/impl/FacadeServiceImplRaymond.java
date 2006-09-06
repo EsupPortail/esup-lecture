@@ -6,11 +6,13 @@
 package org.esupportail.lecture.domain.service.impl;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import org.esupportail.lecture.domain.model.Category;
+import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.tmp.Item;
@@ -89,7 +91,7 @@ public class FacadeServiceImplRaymond implements FacadeService {
 		return null;
 	}
 
-	public Set<Context> getContexts() {
+	public Hashtable<String,Context> getContexts() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -97,5 +99,15 @@ public class FacadeServiceImplRaymond implements FacadeService {
     // For spring injection
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
+	}
+
+	public String getUserName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public CustomContext getCustomContext() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

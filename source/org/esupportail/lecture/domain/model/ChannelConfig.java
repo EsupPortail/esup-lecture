@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -200,7 +201,7 @@ public class ChannelConfig  {
 		    visibilitySets.setAllowed(loadDefAndContentSets("allowed",i));
 		    visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed",i));
 		   	visibilitySets.setObliged(loadDefAndContentSets("obliged",i));
-		   	//TODO : visibilitySets.checkNamesExistence(); => devient warnng, pas de groupe défini ... !
+		   	//TODO : visibilitySets.checkNamesExistence(); => devient warning, pas de groupe défini ... !
 		    mcp.setVisibility(visibilitySets);
 		    // TODO forcer_timer_categorie(mcp)
 		    channel.addManagedCategoryProfile(mcp);    
@@ -294,9 +295,11 @@ public class ChannelConfig  {
     		log.debug("initContextManagedCategoryProfilesLinks()");
     	}
     	
-    	Iterator iterator = channel.getContexts().iterator();
+    	Set<String> set = channel.getContexts().keySet();
+    	Iterator iterator =set.iterator();
     	while(iterator.hasNext()){
-    		Context c = (Context)iterator.next();
+    		String id = (String)iterator.next();
+    		Context c = channel.getContextById(id);
     		c.initManagedCategoryProfiles(channel);
     	}
 	}
