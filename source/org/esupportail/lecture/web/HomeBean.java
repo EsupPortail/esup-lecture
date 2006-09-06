@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.component.html.HtmlInputHidden;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
@@ -31,6 +32,9 @@ public class HomeBean {
 	private boolean treeVisible=true;
 	private String itemDisplayMode;
 	private String currentCategoryName;
+	private int categoryID;
+	private int sourceID;
+	private int itemID;
 	
 /*
  * **************** Getter and Setter ****************
@@ -96,7 +100,7 @@ public class HomeBean {
 		this.currentCategoryName = currentCategoryName;
 	}
 
-/*
+	/*
  * **************** Action and listener method ****************
  */		
 	public void adjustTreeSize(ActionEvent e) {
@@ -119,7 +123,7 @@ public class HomeBean {
 		}
 	}
 	
-	public void toggleTreeVisibility(ActionEvent e) {
+	public String toggleTreeVisibility() {
 		if (log.isDebugEnabled()) {
 			log.debug("In toggleTreeVisibility");
 		}
@@ -128,15 +132,14 @@ public class HomeBean {
 		} else {
 			setTreeVisible(true);
 		}
+		return "OK";
 	}
 
-	public void toggleItemReadState(ActionEvent e) {
+	public String toggleItemReadState() {
 		if (log.isDebugEnabled()) {
 			log.debug("In toggleItemReadState");
 		}
-		FacesContext context = FacesContext.getCurrentInstance(); 
-		Map map = context.getExternalContext().getRequestParameterMap();
-		String id = (String)map.get("itemID");
+		int id = itemID;
 		if (log.isDebugEnabled()) {
 			log.debug("itemID = "+id);
 		}
@@ -145,11 +148,12 @@ public class HomeBean {
 			Iterator<Item> iter = src.getItems().iterator();
 			while (iter.hasNext()) {
 				Item item = (Item) iter.next();
-				if (item.getId() == Integer.parseInt(id)) {
+				if (item.getId() == id) {
 					item.setRead(!item.isRead());
 				}				
 			}
 		}
+		return "OK";
 	}
 
 	public void selectElement(ActionEvent e) {
@@ -185,7 +189,31 @@ public class HomeBean {
 		if (current != null) current.setSelected(false);
 		cat.setSelected(true);
 	}
-	
+
+	public String selectElement2() {
+		int catID = this.categoryID;
+		int srcId = this.sourceID;
+		CategoryRB cat = getCategorieByID(catID);
+		CategoryRB current = getCurrentCategory();
+		if (srcId == 0) {
+			//toggle expanded status
+			cat.setExpanded(!cat.isExpanded());
+		} 
+		else {
+			//unselect current selected source
+			SourceRB src2 = getSelectedSourceFromCategory(cat);
+			if (src2 != null) {
+				src2.setSelected(false);
+			}
+			SourceRB src = getSourceByID(cat, srcId);
+			//select new source
+			src.setSelected(true);
+		}
+		if (current != null) current.setSelected(false);
+		cat.setSelected(true);
+		return "OK";
+	}
+
 	public String changeItemDisplayMode() {
 		return "OK";
 	}	
@@ -304,5 +332,18 @@ public class HomeBean {
 			}			
 		}
 		return ret;
-	}	
+	}
+
+	public void setCategoryID(int categoryID) {
+		this.categoryID = categoryID;
+	}
+
+	public void setSourceID(int sourceID) {
+		this.sourceID = sourceID;
+	}
+
+	public void setItemID(int itemID) {
+		this.itemID = itemID;
+	}
+
 }

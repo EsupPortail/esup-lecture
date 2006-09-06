@@ -41,6 +41,14 @@
 			<value>#{facadeWeb}</value>
 		</managed-property>
     </managed-bean>
+    
+     <managed-bean>
+		<!-- nom du bean utilisée par la vue -->
+        <managed-bean-name>testBean</managed-bean-name>
+		<!-- classe correspondant au bean manipulé --> 
+        <managed-bean-class>org.esupportail.lecture.web.TestBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 
 	<!-- OTHERS -->
 	<managed-bean>

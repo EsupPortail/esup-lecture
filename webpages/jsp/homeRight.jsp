@@ -18,7 +18,7 @@
 				<t:htmlTag value="ul">
 					<t:htmlTag value="li">
 						<h:outputText value="#{messages.selectorLabel}" />
-						<h:selectOneMenu value="#{homeBean.itemDisplayMode}" onchange="document.forms['home'].elements['home:rightSubview:submit'].click();">
+						<h:selectOneMenu value="#{homeBean.itemDisplayMode}">
 							<f:selectItem itemValue="all" itemLabel="#{messages.all}" />
 							<f:selectItem itemValue="notRead" itemLabel="#{messages.notRead}" />
 							<f:selectItem itemValue="unreadFirst"
@@ -27,12 +27,12 @@
 						<h:commandButton id="submit" value="#{messages.changeItemDisplayModeButtonLabel}" action="#{homeBean.changeItemDisplayMode}"/>
 					</t:htmlTag>
 					<t:htmlTag id="menuAndXML" value="li" rendered="#{!homeBean.treeVisible}">
-						<h:commandButton actionListener="#{homeBean.toggleTreeVisibility}"
-							image="/images/menuAndXML.gif" alt="#{messages.showTree}" />
+						<h:commandButton action="#{homeBean.toggleTreeVisibility}"
+							image="/images/menuAndXML.gif" alt="#{messages.showTree}" title="#{messages.showTree}"/>
 					</t:htmlTag>
 					<t:htmlTag id="XMLWithoutMenu" value="li" rendered="#{homeBean.treeVisible}">
-						<h:commandButton actionListener="#{homeBean.toggleTreeVisibility}"
-							image="/images/XMLWithoutMenu.gif" alt="#{messages.showTree}" />
+						<h:commandButton action="#{homeBean.toggleTreeVisibility}"
+							image="/images/XMLWithoutMenu.gif" alt="#{messages.hideTree}" title="#{messages.hideTree}"/>
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>
@@ -42,18 +42,18 @@
 			<t:dataList value="#{homeBean.items}" var="item" layout="simple">
 				<!-- Read/Unread Button -->
 				<t:htmlTag value="div" styleClass="toggleButton">
-					<h:commandLink actionListener="#{homeBean.toggleItemReadState}"
-						rendered="#{!item.read}">
-						<f:param name="itemID" value="#{item.id}" />
-						<h:graphicImage value="/images/unread.gif"
-							alt="#{messages.markAsUnread}" />
-					</h:commandLink>
-					<h:commandLink actionListener="#{homeBean.toggleItemReadState}"
-						rendered="#{item.read}">
-						<f:param name="itemID" value="#{item.id}" />
-						<h:graphicImage value="/images/read.gif"
-							alt="#{messages.markAsRead}" />
-					</h:commandLink>
+					<h:commandButton action="#{homeBean.toggleItemReadState}"
+						image="/images/unread.gif" alt="#{messages.markAsRead}"
+						title="#{messages.markAsRead}" rendered="#{!item.read}">
+						<t:updateActionListener property="#{homeBean.itemID}"
+							value="#{item.id}" />
+					</h:commandButton>
+					<h:commandButton action="#{homeBean.toggleItemReadState}"
+						image="/images/read.gif" alt="#{messages.markAsUnread}"
+						title="#{messages.markAsUnread}" rendered="#{item.read}">
+						<t:updateActionListener property="#{homeBean.itemID}"
+							value="#{item.id}" />
+					</h:commandButton>
 				</t:htmlTag>
 				<!-- Item Display -->
 				<t:htmlTag value="div"

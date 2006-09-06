@@ -13,7 +13,6 @@
             <name>default-view</name>
             <!-- apres: <value>/home.jsp</value> -->
 			<value>/sample.jsp</value>
-			
         </init-param>
         <supports>
 			<!-- mode et supports traités par la portlet -->		

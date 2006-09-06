@@ -9,7 +9,7 @@
 		On peut faire un fichier web-pluto.xml qui intègre les modifications de Pluto afin de déployer 
 		directement dans Tomcat.
 	-->
-	
+
 	<!-- no code in JSP -->
 	<jsp-config>
 		<jsp-property-group>
@@ -95,7 +95,15 @@
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-
+<servlet>
+    <servlet-name>Jenia internal servlet</servlet-name>
+    <servlet-class>org.jenia.faces.util.Servlet</servlet-class>
+    <load-on-startup>2</load-on-startup>
+</servlet>
+<servlet-mapping>
+    <servlet-name>Jenia internal servlet</servlet-name>
+    <url-pattern>/jenia4faces/*</url-pattern>
+</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>lecture</servlet-name>
 		<url-pattern>/jsf/*</url-pattern>
@@ -112,16 +120,16 @@
 	</welcome-file-list>
 
 	<!-- Interdire l'accès direct aux pages .jsp -->
-		<security-constraint>
+	<security-constraint>
 		<display-name>
-		Prevent access to raw JSP pages that are for JSF pages.
+			Prevent access to raw JSP pages that are for JSF pages.
 		</display-name>
 		<web-resource-collection>
-		<web-resource-name>Raw-JSF-JSP-Pages</web-resource-name>
-		<url-pattern>*.jsp</url-pattern>
+			<web-resource-name>Raw-JSF-JSP-Pages</web-resource-name>
+			<url-pattern>*.jsp</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
-		<description>No roles, so no direct access</description>
+			<description>No roles, so no direct access</description>
 		</auth-constraint>
-		</security-constraint>
+	</security-constraint>
 </web-app>

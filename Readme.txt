@@ -5,8 +5,8 @@ Library
  spring.jar
  commons-configuration-1.2.jar --> http://www.ibiblio.org/maven/commons-configuration/jars/commons-configuration-1.2.jar
  commons-lang-2.1.jar --> http://apache.cict.fr/jakarta/commons/lang/binaries/commons-lang-2.1.zip
- myfaces-impl-1.1.2.jar
- myfaces-api-1.1.2.jar
+ myfaces-impl-1.1.3.jar
+ myfaces-api-1.1.3.jar
  commons-digester-1.7.jar (for myfaces)
  commons-beanutils.jar (for myfaces)
  tomahawk-1.1.3.jar --> http://apache.fastorama.com/dist/myfaces/binaries/tomahawk-1.1.3-bin.zip

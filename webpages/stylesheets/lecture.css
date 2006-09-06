@@ -39,14 +39,17 @@
 
 /* Tree Style */
 li.collapsed {
-	list-style-image: url("http://localhost:8080/esup-lecture/images/plus.gif");
+/*	list-style-image: url("http://localhost:8080/esup-lecture/images/plus.gif"); */
+list-style: none;
 }
 li.expanded {
-	list-style-image: url("http://localhost:8080/esup-lecture/images/moins.gif");
+/*	list-style-image: url("http://localhost:8080/esup-lecture/images/moins.gif"); */
+list-style: none;
 }
 li ul li {
-	list-style-image: none;
-	list-style-type: square;
+/*	list-style-image: none;
+	list-style-type: square; */
+list-style: none;	
 }
 
 /* Articles Style */
