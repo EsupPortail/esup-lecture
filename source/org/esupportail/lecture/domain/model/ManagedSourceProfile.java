@@ -61,7 +61,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 */
 	private String itemXPath = "";
 
-// TODO : utile ou pas ?
+// utile ou pas ?
 //	/**
 //	 * Optionnal : xmlns of the source (one of these parameter is required : xmlns, xmlType, dtd)
 //	 */

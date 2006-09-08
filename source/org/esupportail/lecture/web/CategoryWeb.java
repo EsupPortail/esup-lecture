@@ -9,7 +9,7 @@ package org.esupportail.lecture.web;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 
 /**
- * Not good  design
+ * Not good  design : classe de tests
  * @author gbouteil
  *
  */

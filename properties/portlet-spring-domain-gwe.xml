@@ -2,6 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
+	<!-- Entry point to domain services -->
 	<bean id="facadeService" class="org.esupportail.lecture.domain.service.impl.FacadeServiceImplGwe">
 		<property name="portletService">
 			<ref bean="portletService"/>
@@ -12,15 +13,18 @@
 		
 	</bean>
 	
+	<!-- Entry point to portlet services -->
 	<bean id="portletService" class="org.esupportail.lecture.domain.service.impl.PortletServiceImpl">
 		<property name="requestUtils"> 
 			<ref bean="requestUtils"/>
 		</property>
 	</bean>
-		
+	
+	<!-- access to portlet request -->	
 	<bean id="requestUtils" class="org.esupportail.commons.utils.PortletRequestUtils">
 	</bean>
 
+	<!-- Main domain model class -->
 	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
 		<property name="daoService">
 			<ref bean="daoServiceStub"/>

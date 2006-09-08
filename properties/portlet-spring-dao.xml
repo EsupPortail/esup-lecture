@@ -2,7 +2,7 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	
+	<!-- DAO service de test -->
 	<bean id="daoServiceStub" class="org.esupportail.lecture.dao.DaoServiceStub">
 	</bean>
 	

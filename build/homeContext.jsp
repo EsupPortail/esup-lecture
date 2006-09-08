@@ -1,3 +1,4 @@
+<!-- Page de test -->
 <%@ taglib uri="http://java.sun.com/jsf/core" prefix="f"%>
 <%@ taglib uri="http://java.sun.com/jsf/html" prefix="h"%>
 <%@ taglib uri="http://myfaces.apache.org/tomahawk" prefix="t"%>
@@ -12,7 +13,7 @@
 			layout="unorderedList">
 			<h:outputText value="#{context.name}" />
 			<h:outputText value="  #{context.description}" />
-			<h:outputText value="Ses catégories :" />
+			<h:outputText value="Ses catï¿½gories :" />
 			<t:dataList value="#{context.categoryWebs}" var="cat" layout="unorderedList">
 				<h:outputText value="    #{cat.name}" />
 			</t:dataList>	

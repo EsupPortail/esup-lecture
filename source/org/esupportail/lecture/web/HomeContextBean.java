@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 import org.esupportail.lecture.domain.model.Context;
 /**
- * Essais
+ * Classe de tests
  * @author gbouteil
  *
  */

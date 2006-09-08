@@ -169,7 +169,7 @@ public class ChannelConfig  {
 	
 
 	/**
-	 * Load attribute name provided by portlet container 
+	 * Load attribute name provided by portlet request 
 	 * to identified user profiles (userId)
 	 */
 	public static void loadUserId() {

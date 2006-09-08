@@ -3,18 +3,38 @@ package org.esupportail.lecture.domain.service.impl;
 import org.esupportail.commons.utils.PortletRequestUtils;
 import org.esupportail.lecture.domain.service.PortletService;
 
+/**
+ * @see org.esupportail.lecture.domain.service.PortletService
+ * Implementation with org.essuportail.commons.utils
+ * @author gbouteil
+ *
+ */
 public class PortletServiceImpl implements PortletService{
+
+	/*
+	 ************************** PROPERTIES *********************************/	
+
+	/**
+	 * access to portlet request  
+	 */
 	PortletRequestUtils requestUtils;
 	
+	/*
+	 ************************** Initialization ************************************/
 	
+	/*
+	 *************************** METHODS ************************************/
 	
+	/**
+	 * @see org.esupportail.lecture.domain.service.PortletService#getUserAttribute(java.lang.String)
+	 */
 	public String getUserAttribute(String attributeName) {
-		String id = PortletRequestUtils.getUserAttribute(attributeName);
-		// TODO Auto-generated method stub
-		return id;
+		return PortletRequestUtils.getUserAttribute(attributeName);
 	}
 	
 	
+	/* ************************** ACCESSORS ********************************* */
+
 	
 	
 	/**

@@ -1,52 +1,47 @@
 package org.esupportail.lecture.domain.model;
 
 
-import java.util.Collection;
 import java.util.Hashtable;
-import java.util.Set;
+
 
 
 /**
- * @uml.dependency  supplier="SingleSource"
+ * Class where are defined user profile (and customizations ...)
+ * @author gbouteil
+ *
  */
 public class UserProfile {
 	
+	/*
+	 ************************** PROPERTIES *********************************/	
 	
 	/**
-	 * Id of the user
+	 * Id of the user, get from portlet request by USER_ID, defined in the channel config
+	 * @see UserAttributes#USER_ID
+	 * @see ChannelConfig#loadUserId()
 	 */
 	private String userId;
 	
-	
-	/**
-	 * Name of the user 
-	 */
-	private String name;
-
 	/**
 	 * Hashtable of CustomContexts defined for the user, indexed by their Id.
 	 */
 	private Hashtable<String,CustomContext> customContexts;
-	
+
+	/*
+	 ************************** Initialization ************************************/
+	/*
+	 *************************** METHODS ************************************/
+
 	protected void addContext(Context context){
-		// TODO vérifier que le context n'est pas déjà défini pour le user
+		// TODO a voir 
+		// vérifier que le context n'est pas déjà défini pour le user
 		CustomContext customContext = new CustomContext();
 		customContext.setContext(context);
 	}
+	
+	/* ************************** ACCESSORS ********************************* */
 
-	/**
-	 * @return Returns the name.
-	 */
-	protected String getName() {
-		return name;
-	}
 
-	/**
-	 * @param name The name to set.
-	 */
-	protected void setName(String name) {
-		this.name = name;
-	}
 
 	/**
 	 * @return Returns the customContexts.

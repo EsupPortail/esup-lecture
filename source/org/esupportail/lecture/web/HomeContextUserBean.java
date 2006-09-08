@@ -12,30 +12,47 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.service.FacadeService;
 
+/**
+ * Bean for displaying a context, for a user profile
+ * @author gbouteil
+ *
+ */
 public class HomeContextUserBean {
 
-	/* ************************** PROPERTIES ******************************** */	
+	/*
+	 ************************ PROPERTIES ******************************** */	
 	/**
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(Channel.class); 
 
-	
+	/**
+	 * Access to services
+	 */
 	private FacadeWeb facadeWeb;
+	
+	/**
+	 * Informations to display about user
+	 */
 	private UserWeb user;
 //	private ContextUserWeb contextUser;
 	
 
+
+
 	
-//	public ContextUserWeb getContextUser(){
-//		if (contextUser==null){
-//			contextUser = ;
-//		}
-//		return contextUser;
-//	}
-	
+	/*
+	 ************************** Initialization *******************************/
+	/*
+	 *************************** METHODS ************************************/
+
+
+	/*
+	 ************************** ACCESSORS ***********************************/
+
 	/**
 	 * @return Returns the facadeWeb.
+	 * @see HomeContextUserBean#facadeWeb
 	 */
 	public FacadeWeb getFacadeWeb() {
 		return facadeWeb;
@@ -43,6 +60,7 @@ public class HomeContextUserBean {
 
 	/**
 	 * @param facadeWeb The facadeWeb to set.
+	 * @see HomeContextUserBean#facadeWeb
 	 */
 	public void setFacadeWeb(FacadeWeb facadeWeb) {
 		this.facadeWeb = facadeWeb;
@@ -50,6 +68,7 @@ public class HomeContextUserBean {
 
 	/**
 	 * @return Returns the user.
+	 * @see HomeContextUserBean#user
 	 */
 	public UserWeb getUser() {
 		if (user == null){
@@ -60,12 +79,19 @@ public class HomeContextUserBean {
 
 	/**
 	 * @param user The user to set.
+	 * @see HomeContextUserBean#user
 	 */
 	public void setUser(UserWeb user) {
 		this.user = user;
 	}
 
-
+	
+//	public ContextUserWeb getContextUser(){
+//		if (contextUser==null){
+//			contextUser = ;
+//		}
+//		return contextUser;
+//	}
 
 	
 	

@@ -33,25 +33,7 @@ public interface FacadeService {
 		 * @exception FatalException
 		 */
 		public void loadChannel()throws FatalException,MyException;
-		
-//		/**
-//		 * Service called when a user open a session
-//		 * @exception MyException
-//		 * @exception FatalException
-//		 */
-//		public void newUserSession() throws MyException,FatalException;
-		
-		/**
-		 * Service called to reload the channel config
-		 * @throws FatalException
-		 */
-		public void reloadChannelConfig() throws FatalException;
-		
-		/**
-		 * Service called to reload the mapping file
-		 * @throws FatalException
-		 */
-		public void reloadMappingFile()throws FatalException;
+			
 		/**
 		 * Call toString method on channel
 		 * @return string return by toString method of channel
@@ -59,7 +41,7 @@ public interface FacadeService {
 		public String channelToString();
 		
 		/**
-		 * Returns list of contexts (full of data) defiend in the channel
+		 * Returns list of contexts (full of data) defined in the channel
 		 * @return a set of contexts defined in the channel
 		 */
 		public Hashtable<String,Context> getContexts();
@@ -70,18 +52,12 @@ public interface FacadeService {
 		 * @author bourges
 		 */
 		public List<Category> getCategories();
-				
-		/**
-		 * @return the customContext of the user 
-		 */
-		public CustomContext getCustomContext();
-
-		/**
-		 * @return the user attribute used to be user Id in a user profile
-		 */
-		public String getUserIdAttribute();
-
 		
+		/**
+		 * A UserWerb contains informations about a user profile to be displayed
+		 * @return a UserWeb
+		 * @see org.esupportail.lecture.web.UserWeb
+		 */
 		public UserWeb getUserWeb();
 
 }

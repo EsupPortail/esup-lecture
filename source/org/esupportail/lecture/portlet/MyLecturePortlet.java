@@ -5,9 +5,6 @@
 */
 package org.esupportail.lecture.portlet;
 
-import java.io.IOException;
-import java.util.Enumeration;
-import java.util.Map;
 
 import javax.portlet.*;
 
@@ -17,10 +14,7 @@ import org.apache.myfaces.portlet.MyFacesGenericPortlet;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.service.FacadeService;
 import org.springframework.web.context.WebApplicationContext;
-import org.esupportail.lecture.utils.exception.*;
-import org.esupportail.lecture.web.FacadeWeb;
 
-import sun.security.action.GetPropertyAction;
 
 
 /**

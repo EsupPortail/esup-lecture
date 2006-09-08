@@ -22,6 +22,10 @@ import org.esupportail.lecture.domain.model.tmp.Item;
 import org.esupportail.lecture.domain.model.tmp.SourceRB;
 
 //TODO Javadoc
+/**
+ * @author : Raymond 
+ * Classe de tests
+ */
 public class HomeBean {
 	/**
 	 * Log instance 

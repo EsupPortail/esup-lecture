@@ -30,7 +30,16 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class FacadeServiceImplGwe implements FacadeService {
 
+	/*
+	 ************************** PROPERTIES *********************************/	
+
+	/**
+	 * Services provided by portlet request
+	 */
 	PortletService portletService;
+	/** 
+	 * Main domain model class
+	 */
 	Channel myChannel; 
 	
 	/**
@@ -38,9 +47,8 @@ public class FacadeServiceImplGwe implements FacadeService {
 	 */
 	protected static final Log log = LogFactory.getLog(Channel.class); 
 	
-	
-
-	
+	/*
+	 ************************** Initialization ************************************/
 	
 	/** 
 	 * @see org.esupportail.lecture.domain.service.FacadeService#loadChannel()
@@ -48,30 +56,33 @@ public class FacadeServiceImplGwe implements FacadeService {
 	public void loadChannel() throws FatalException,MyException {
 		myChannel.startup();
 	}
-
-//	/**
-//	 * @see org.esupportail.lecture.domain.service.FacadeService#newUserSession()
-//	 */
-//	public void newUserSession() throws MyException,FatalException {
-//		myChannel.startup();
-//		// TODO le reste à propos du user
-//	}
-
 	
+	
+	/*
+	 *************************** METHODS ************************************/
+
 	/**
-	 * @see org.esupportail.lecture.domain.service.FacadeService#reloadChannelConfig()
+	 * @see org.esupportail.lecture.domain.service.FacadeService#getUserWeb()
 	 */
-	public void reloadChannelConfig() throws FatalException{
-		myChannel.loadConfig();
+	public UserWeb getUserWeb() {
+		String userId = portletService.getUserAttribute(UserAttributes.USER_ID);
+		UserProfile userProfile = myChannel.getUserProfile(userId);
+		
+		UserWeb userWeb = new UserWeb();
+		//TODO userWeb.init()
+		userWeb.setId(userProfile.getUserId());
+		return userWeb;
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.domain.service.FacadeService#reloadMappingFile()
+	 * @return hashtable of context defined in myChannel
+	 * @see org.esupportail.lecture.domain.model.Channel
 	 */
-	public void reloadMappingFile()throws FatalException {
-		myChannel.loadMappingFile();
+	public Hashtable<String,Context> getContextsHash() {
+		return myChannel.getContextsHash();
 	}
-	
+
+
 	/**
 	 * @see org.esupportail.lecture.domain.service.FacadeService#channelToString()
 	 */
@@ -80,60 +91,26 @@ public class FacadeServiceImplGwe implements FacadeService {
 	}
 	
 
-	
 	/**
-	 * @deprecated
+	 * @see org.esupportail.lecture.domain.service.FacadeService#getContexts()
+	 */
+	public Hashtable<String, Context> getContexts() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	/**
+	 * @see org.esupportail.lecture.domain.service.FacadeService#getCategories()
 	 */
 	public List<Category> getCategories() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * @deprecated
-	 */
-	public List<Source> getSources(Category cat) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-
-
-
-	public Hashtable<String,Context> getContexts() {
-		
-		return myChannel.getContextsHash();
-	}
-
-
-
-
-
+	/* ************************** ACCESSORS ********************************* */
 	
-	public CustomContext getCustomContext() {
-		// TODO Auto-generated method stub
-		
-		return null;
-	}
-
-
-	public String getUserIdAttribute() {
-		// TODO Auto-generated method stub
-		return UserAttributes.USER_ID;
-	}
-
-
-
-
-	public UserWeb getUserWeb() {
-		String userId = portletService.getUserAttribute(UserAttributes.USER_ID);
-		UserProfile userProfile = myChannel.getUserProfile(userId);
-		
-		UserWeb userWeb = new UserWeb();
-		userWeb.setId(userProfile.getUserId());
-		return userWeb;
-	}
-
 	/**
 	 * @return Returns the portletService.
 	 */

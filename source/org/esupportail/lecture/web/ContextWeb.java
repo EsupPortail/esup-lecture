@@ -15,7 +15,7 @@ import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 
 
 /**
- * Not a good design : bean context
+ * Not a good design : bean context : classe de tests
  * @author gbouteil
  *
  */

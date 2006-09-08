@@ -8,8 +8,9 @@
 <f:view>
 	<t:div id="left">
 	<h:outputText value="Test du canal lecture : " />
+	<br/>
 	<h:outputText value="User connecté : "/>
-	<h:outputText value="#{homeContextUserBean.userId}" />
+	<h:outputText value="#{homeContextUserBean.user.id}" />
 	<!--<h:outputText value="Context courant :#homeContextUserBean.contextName" />-->
 	
 	</t:div>

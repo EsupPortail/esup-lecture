@@ -9,15 +9,33 @@ import org.esupportail.lecture.domain.service.FacadeService;
 import org.esupportail.lecture.domain.service.PortletService;
 
 /**
- * Entry point to access domain service, used by org.esupportail.lecture.web package
+ * Entry point to access services, used by org.esupportail.lecture.web package
  * @author gbouteil
  *
  */
 public class FacadeWeb {
+
+	/* ************************** PROPERTIES ******************************** */	
 	
+	/**
+	 * Access to domain service
+	 */
 	private FacadeService facadeService;
-	private PortletService portletService;
 	
+	/**
+	 * Access to portlet request services 
+	 */
+	private PortletService portletService;
+
+	/*
+	 ************************** Initialization ******************************/
+	
+	
+	/*
+	 *************************** METHODS ************************************/
+
+	/* ************************** ACCESSORS ********************************* */
+
 	/**
 	 * @return Returns the portletService.
 	 */

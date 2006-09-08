@@ -11,6 +11,7 @@
  
   
   <!--  import other spring configuration files -->
+	<!-- Changer le nom des fichier : "portlet-spring" correspond au tutoriel spring -->
   <import resource="portlet-spring-domain-gwe.xml"/>
   <import resource="portlet-spring-dao.xml"/>
 

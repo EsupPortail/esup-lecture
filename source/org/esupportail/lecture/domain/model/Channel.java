@@ -159,7 +159,7 @@ public class Channel  {
 			log.debug("resetChannelConfigProperties()");
 		}
 		
-		UserAttributes.init();
+		// TODO UserAttributes.init();
 		contextsHash = new Hashtable<String,Context>();
 		managedCategoryProfilesHash = new Hashtable<String,ManagedCategoryProfile>();
 	}

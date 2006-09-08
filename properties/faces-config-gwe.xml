@@ -21,23 +21,19 @@
 		- stockage des données saisies dans le fomrulaire
 		(cela peut être donc être aussi deux beans différents)
 		-->
+	<!-- Test
      <managed-bean>
-		<!-- nom du bean utilisée par la vue -->
         <managed-bean-name>homeContextBean</managed-bean-name>
-		<!-- classe correspondant au bean manipulé --> 
         <managed-bean-class>org.esupportail.lecture.web.HomeContextBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
-			<!-- attribut du bean : nom -->
 			<property-name>facadeWeb</property-name>
-			<!-- classe de l'attribut -->
 			<property-class>org.esupportail.lecture.web.FacadeWeb</property-class>
-			<!-- valeur de l'attribut -->
 			<value>#{facadeWeb}</value>
 		</managed-property>
     </managed-bean>
-	
-	     <managed-bean>
+	-->
+	<managed-bean>
 		<!-- nom du bean utilisée par la vue -->
         <managed-bean-name>homeContextUserBean</managed-bean-name>
 		<!-- classe correspondant au bean manipulé --> 
