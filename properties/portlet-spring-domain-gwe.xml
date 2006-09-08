@@ -3,6 +3,12 @@
 
 <beans>
 	<bean id="facadeService" class="org.esupportail.lecture.domain.service.impl.FacadeServiceImplGwe">
+		<property name="portletService">
+			<ref bean="portletService"/>
+		</property>
+		<property name="myChannel">
+			<ref bean="channel"/>
+		</property>
 		
 	</bean>
 	
@@ -11,10 +17,15 @@
 			<ref bean="requestUtils"/>
 		</property>
 	</bean>
-	
-	
+		
 	<bean id="requestUtils" class="org.esupportail.commons.utils.PortletRequestUtils">
 	</bean>
 
+	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
+		<property name="daoService">
+			<ref bean="daoServiceStub"/>
+		</property>
+	</bean>
 
+	
 </beans>

@@ -207,7 +207,7 @@ public class Context {
 		refIdManagedCategoryProfilesSet.add(s);
 	}
 	
-//	 TODO a retirer si inutile	
+//	a retirer si inutile	
 //	protected void setSetRefIdManagedCategoryProfiles(Set<String> s) {
 //		refIdManagedCategoryProfilesSet = s;
 //	}

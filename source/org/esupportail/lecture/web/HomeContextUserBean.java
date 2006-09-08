@@ -22,17 +22,17 @@ public class HomeContextUserBean {
 
 	
 	private FacadeWeb facadeWeb;
-	//TODO identification du user connecté
-	private String userId;
-	private String contextName;
-	private CustomContext customContext;
+	private UserWeb user;
+//	private ContextUserWeb contextUser;
 	
+
 	
-	
-	public String getUserId(){
-		userId = facadeWeb.getPortletService().getUserAttribute("displayName");
-		return userId;
-	}
+//	public ContextUserWeb getContextUser(){
+//		if (contextUser==null){
+//			contextUser = ;
+//		}
+//		return contextUser;
+//	}
 	
 	/**
 	 * @return Returns the facadeWeb.
@@ -47,6 +47,25 @@ public class HomeContextUserBean {
 	public void setFacadeWeb(FacadeWeb facadeWeb) {
 		this.facadeWeb = facadeWeb;
 	}
+
+	/**
+	 * @return Returns the user.
+	 */
+	public UserWeb getUser() {
+		if (user == null){
+			user = facadeWeb.getFacadeService().getUserWeb();
+		}
+		return user;
+	}
+
+	/**
+	 * @param user The user to set.
+	 */
+	public void setUser(UserWeb user) {
+		this.user = user;
+	}
+
+
 
 	
 	

@@ -11,26 +11,35 @@ import java.util.*;
 //import org.springframework.beans.factory.InitializingBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.utils.exception.*;
 /**
- * The "lecture" channel
+ * The "lecture" channel : main domain model class
  * @author gbouteil
  */
 public class Channel  {
 
-/* ************************** PROPERTIES ******************************** */	
+	/*
+	 ************************** PROPERTIES *********************************/	
+	
 	/**
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(Channel.class); 
+
+// 	A retirer si inutile
+//	/**
+//	 * Channel configuration from xml file.
+//	 */
+//	private ChannelConfig config; 
 	
 	/**
-	 * Channel configuration from xml file.
+	 * DAO Service for persistance
 	 */
-	private ChannelConfig config; 
+	private DaoService daoService;
 	
 	/**
-     * Set of contexts defined in the channel.
+     * Hashtable of contexts defined in the channel, indexed by their ids.
      */
 	private Hashtable<String,Context> contextsHash;
 	
@@ -64,17 +73,20 @@ public class Channel  {
 	 */	
 	private Hashtable<String,Mapping> mappingHashByXmlType;
 	
+	/**
+	 * configLoaded = true if channel config has ever been loaded in channel
+	 */
 	private boolean configLoaded = false;
 	
+	/**
+	 * mappingsLoaded = true if channel config has ever been loaded in channel
+	 */
 	private boolean mappingsLoaded = false;
 	
-	/**
-	 * User Profiles connected to the chanel
-	 */
-	private Set<UserProfile> userProfiles = new HashSet<UserProfile>();;
-
 	
-/* ************************** Initialization *********************************** */
+	
+	/*
+	 ************************** Initialization ************************************/
 	
 	/**
 	 * Methods call to load the config and mapping file 
@@ -82,7 +94,6 @@ public class Channel  {
 	 * @throws MyException
 	 * @throws FatalException
 	 */
-
 	public void startup() throws FatalException, MyException {
 		if (log.isDebugEnabled()){
 			log.debug("startup()");
@@ -103,8 +114,10 @@ public class Channel  {
 		}
 		try {
 			ChannelConfig config = (ChannelConfig)ChannelConfig.getInstance();
-			// TODO plustard : utiliser l'objet config pour appeler les méthodes après (reset ...)
-			// et faire une classe FileToLoad avec ces méthodes en non static
+			// TODO plus tard 
+			// - utiliser l'objet config pour appeler les méthodes après (reset ...)
+			// 		et faire une classe FileToLoad avec ces méthodes en non static
+			// - charger la config via un DAO ?
 		} catch (WarningException w) {
 			log.warn(w.getMessage());
 			
@@ -120,6 +133,9 @@ public class Channel  {
 		if (ChannelConfig.isModified()){
 			/* Reset channel properties loaded from config */
 			resetChannelConfigProperties();
+			
+			/*Loading user attributes name for user id */
+			ChannelConfig.loadUserId();
 			
 			/* Loading managed category profiles */
 			ChannelConfig.loadManagedCategoryProfiles(this);
@@ -142,11 +158,12 @@ public class Channel  {
 		if (log.isDebugEnabled()){
 			log.debug("resetChannelConfigProperties()");
 		}
+		
+		UserAttributes.init();
 		contextsHash = new Hashtable<String,Context>();
 		managedCategoryProfilesHash = new Hashtable<String,ManagedCategoryProfile>();
 	}
 	
-
 	/**
 	 * Load mapping file if needed (using MappingFile), containing list of mappings used by the channel.
 	 * Initialize these elements.
@@ -205,9 +222,30 @@ public class Channel  {
 	}
 
 	
-/* ************************** METHODS *********************************** */
+	/*
+	 *************************** METHODS ************************************/
 
-
+	/* user profile */
+	
+	/**
+	 * return the user profile identified by "userId". 
+	 * It take it from the dao if exists, else, it create a user profile
+	 * @param userId : identifient of the user profile
+	 * @return the user profile
+	 */
+	public UserProfile getUserProfile(String userId){
+		UserProfile userProfile = daoService.getUserProfile(userId);
+		
+		if (userProfile == null){
+			userProfile = new UserProfile();
+			userProfile.setUserId(userId);
+// TODO			userProfile.init();	
+			daoService.addUserProfile(userProfile);
+		}
+		return userProfile;
+	}
+	
+	
 	/**
 	 * Return a string containing channel content : mapping file, contexts, managed category profiles,
 	 * xslt mappings, hash mappings by dtd, Hash mappings by xmlns,Hash mappings by xmlType
@@ -259,9 +297,10 @@ public class Channel  {
 		
         return string;
 	}		
+
 	/* ************************** ACCESSORS ********************************* */
 	 
-//  TODO A retirer si inutile
+//  A retirer si inutile
 //	public ChannelConfig getChannelConfig(){
 //		return config;
 //	}
@@ -269,41 +308,52 @@ public class Channel  {
 //		this.config = config;
 //	}
 	
+	/* contextsHash */
 	/**
-	 * Returns a set of contexts defined in the channel
-	 * @return contexts
-	 * @see Channel#contexts
+	 * Returns a hashtable of contexts, indexed by their ids
+	 * @return contextsHash
+	 * @see Channel#contextsHash
 	 */
-	public Hashtable<String,Context> getContexts() {
+	public Hashtable<String,Context> getContextsHash() {
 		return contextsHash;
 	}
-
-//  TODO A retirer si inutile
-//	protected void setContexts(Set<Context> contexts) {
-//		this.contexts = contexts;
-//	}	
-	
+  
 	/**
-	 * Add a context to the set of contexts defined in the channel.
+	 * Add a context to the hashtable of contexts, indexed by its id
 	 * @param c context to add
-	 * @see Channel#contexts
+	 * @see Channel#contextsHash
 	 */
 	protected void addContext(Context c) {
 		this.contextsHash.put(c.getId(),c);
 	}	
 
+	/**
+	 * Return the context identified "id"
+	 * @param id 
+	 * @return a context
+	 */
 	protected Context getContextById(String id){
 		return contextsHash.get(id);
 	}
 	
+	/* ManagedCategoryProfilesHash */
+	/**
+	 * Returns a hashtable of ManagedCategoryProfile, indexed by their ids
+	 * @return managedCategoryProfilesHash
+	 * @see Channel#managedCategoryProfilesHash
+	 */
+	public Hashtable<String,ManagedCategoryProfile> getManagedCategoryProfilesHash() {
+		return managedCategoryProfilesHash;
+	}
 	
-//  TODO A retirer si inutile	
-//	public Hashtable<String,ManagedCategoryProfile> getManagedCategoryProfilesHash() {
-//		return managedCategoryProfilesHash;
-//	}
-//	public void setManagedCategoryProfiles(Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash) {
-//		this.managedCategoryProfilesHash = managedCategoryProfilesHash;
-//	}
+	/**
+	 * Set Hashtable of managedCategoryProfiles, indexed by their ids
+	 * @param managedCategoryProfilesHash
+	 * @see Channel#managedCategoryProfilesHash
+	 */
+	public void setManagedCategoryProfilesHash(Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash) {
+		this.managedCategoryProfilesHash = managedCategoryProfilesHash;
+	}
 
 	/**
 	 * Returns the managed category profile by giving its Id.
@@ -324,7 +374,9 @@ public class Channel  {
 		this.managedCategoryProfilesHash.put(m.getId(),m);
 	}
 
-//  TODO A retirer si inutile	
+	/* Mappings */
+	
+//  A retirer si inutile	
 //	public void setMappingFile(MappingFile m){
 //		this.mappingFile = m;
 //	}
@@ -333,7 +385,7 @@ public class Channel  {
 //	}
 	
 	/**
-	 * Returns a list of mappings defined in the channel.
+	 * Returns the list of mappings defined in the channel.
 	 * @return mappingList
 	 * @see Channel#mappingList
 	 */
@@ -341,9 +393,8 @@ public class Channel  {
 		return mappingList;
 	}
 	
-
 	/**
-	 * Sets the mappings list in the channel
+	 * Sets a mappings list in the channel
 	 * @param mappingList
 	 */
 	public void setMappingList(List<Mapping> mappingList) {
@@ -359,7 +410,7 @@ public class Channel  {
 		this.mappingList.add(m);
 	}
 	
-//  TODO A retirer si inutile	
+//  A retirer si inutile	
 //	public Hashtable<String,Mapping> getMappingHashByDtd() {
 //		return mappingHashByDtd;
 //	}
@@ -375,7 +426,7 @@ public class Channel  {
 	protected void addMappingByDtd(Mapping m) {
 		this.mappingHashByDtd.put(m.getDtd(),m);
 	}
-//  TODO A retirer si inutile		
+//  A retirer si inutile		
 //	public Hashtable<String,Mapping> getMappingHashByXmlns() {
 //		return mappingHashByXmlns;
 //	}
@@ -392,7 +443,7 @@ public class Channel  {
 		this.mappingHashByXmlns.put(m.getXmlns(),m);
 	}	
 	
-//  TODO A retirer si inutile			
+//  A retirer si inutile			
 //	public Hashtable<String,Mapping> getMappingHashByXmlType() {
 //		return mappingHashByXmlType;
 //	}
@@ -410,15 +461,17 @@ public class Channel  {
 	}	
 	
 
-	public Set getUserProfiles() {
-		return userProfiles;
-	}
-	public void setUserProfiles(Set userProfiles) {
-		this.userProfiles = userProfiles;
-	}
-
-	protected void addUserProfile(UserProfile userProfile){
-		userProfiles.add(userProfile);
+	/**
+	 * @return Returns the daoService.
+	 */
+	public DaoService getDaoService() {
+		return daoService;
 	}
 
+	/**
+	 * @param daoService The daoService to set.
+	 */
+	public void setDaoService(DaoService daoService) {
+		this.daoService = daoService;
+	}
 }

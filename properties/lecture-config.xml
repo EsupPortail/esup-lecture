@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE channelConfig SYSTEM "clecture.dtd" >
 <channelConfig>
-	
+	<!-- user attribute used to create a user profile -->
+	<userId>displayName</userId>
 	<context 
 	  name = "context1"
 	  id = "c1">

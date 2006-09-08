@@ -21,6 +21,7 @@ import org.esupportail.lecture.domain.model.tmp.CategoryRB;
 import org.esupportail.lecture.domain.service.FacadeService;
 import org.esupportail.lecture.utils.exception.FatalException;
 import org.esupportail.lecture.utils.exception.MyException;
+import org.esupportail.lecture.web.UserWeb;
 
 /**
  * Et la javadoc, elle est où ???
@@ -107,6 +108,18 @@ public class FacadeServiceImplRaymond implements FacadeService {
 	}
 
 	public CustomContext getCustomContext() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String getUserIdAttribute() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	public UserWeb getUserWeb() {
 		// TODO Auto-generated method stub
 		return null;
 	}

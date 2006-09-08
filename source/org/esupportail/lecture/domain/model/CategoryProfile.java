@@ -12,7 +12,8 @@ package org.esupportail.lecture.domain.model;
  */
 public abstract class CategoryProfile {
 	
-/* ************************** PROPERTIES ******************************** */	
+	/* 
+	 *************************** PROPERTIES *********************************/	
 	/**
 	 *  Category profile name
 	 */
@@ -23,9 +24,8 @@ public abstract class CategoryProfile {
 	private String id;
 
 	
-
-
-/* ************************** METHODS ******************************** */	
+	/*
+	 *************************** METHODS *********************************/	
 
 	/** 
 	 * Returns a string containing category profile content : name, description and Id.
@@ -45,7 +45,8 @@ public abstract class CategoryProfile {
 		return string;
 	}
 
-/* ************************** ACCESSORS ******************************** */	
+	/*
+	 ************************** ACCESSORS *********************************/	
 	/**
 	 * @return name
 	 * @see CategoryProfile#name

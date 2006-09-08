@@ -11,7 +11,8 @@ package org.esupportail.lecture.domain.model;
  */
 public abstract class Category {
 
-/* ************************** PROPERTIES ******************************** */	
+	/*
+	 *************************** PROPERTIES *********************************/	
 	
 	/**
 	 * Name of the category
@@ -27,10 +28,12 @@ public abstract class Category {
 	 */
 	private int id;
 	
-/* ************************** METHODS ******************************** */
+	/*
+	 *************************** METHODS *********************************/
 	
 	
-/* ************************** ACCESSORS ******************************** */	
+	/*
+	 *************************** ACCESSORS *********************************/	
 	/**
 	 * Returns catgeory name
 	 * @return name

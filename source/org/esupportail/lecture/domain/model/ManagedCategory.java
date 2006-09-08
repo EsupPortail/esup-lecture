@@ -87,7 +87,7 @@ public class ManagedCategory extends Category {
 //		this.edit = edit;
 //	}
 //	
-// TODO : peut etre eutre chose que des collections ?
+
 //	/** 
 //	 * @uml.property name="managedChildren"
 //	 * @uml.associationEnd multiplicity="(0 -1)" aggregation="composite" inverse="managedCategory:org.esupportail.lecture.domain.model.ManagedComposantProfile"

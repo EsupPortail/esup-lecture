@@ -16,6 +16,7 @@ import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.tmp.Item;
 import org.esupportail.lecture.domain.model.tmp.SourceRB;
 import org.esupportail.lecture.utils.exception.*;
+import org.esupportail.lecture.web.UserWeb;
 
 
 /**
@@ -69,12 +70,18 @@ public interface FacadeService {
 		 * @author bourges
 		 */
 		public List<Category> getCategories();
-		
-
-		
+				
 		/**
 		 * @return the customContext of the user 
 		 */
 		public CustomContext getCustomContext();
+
+		/**
+		 * @return the user attribute used to be user Id in a user profile
+		 */
+		public String getUserIdAttribute();
+
 		
+		public UserWeb getUserWeb();
+
 }

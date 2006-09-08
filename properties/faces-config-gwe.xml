@@ -42,7 +42,7 @@
         <managed-bean-name>homeContextUserBean</managed-bean-name>
 		<!-- classe correspondant au bean manipulé --> 
         <managed-bean-class>org.esupportail.lecture.web.HomeContextUserBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+			 <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<!-- attribut du bean : nom -->
 			<property-name>facadeWeb</property-name>

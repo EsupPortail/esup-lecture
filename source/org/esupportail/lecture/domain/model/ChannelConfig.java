@@ -169,6 +169,20 @@ public class ChannelConfig  {
 	
 
 	/**
+	 * Load attribute name provided by portlet container 
+	 * to identified user profiles (userId)
+	 */
+	public static void loadUserId() {
+		if (log.isDebugEnabled()){
+			log.debug("loadUserId()");
+		}
+		UserAttributes.setUSER_ID(xmlFile.getString("userId"));
+	}
+
+	
+	
+
+	/**
 	 * Load Managed Category profiles from config file in the channel
 	 * @param channel of the loading
 	 */
@@ -295,7 +309,7 @@ public class ChannelConfig  {
     		log.debug("initContextManagedCategoryProfilesLinks()");
     	}
     	
-    	Set<String> set = channel.getContexts().keySet();
+    	Set<String> set = channel.getContextsHash().keySet();
     	Iterator iterator =set.iterator();
     	while(iterator.hasNext()){
     		String id = (String)iterator.next();
@@ -304,7 +318,7 @@ public class ChannelConfig  {
     	}
 	}
 /* ********************** ACCESSORS *****************************************/
-	//TODO genrer d'autres accesseurs ?
+
 	/**
 	 * Returns the classpath relative path of the channel config
 	 * @return configFilePath

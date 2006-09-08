@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ELEMENT channelConfig (context*, categoryProfile*)>
+<!ELEMENT channelConfig (userId,context*, categoryProfile*)>
 
+<!ELEMENT userId (#PCDATA)>
 <!ELEMENT context (description,refCategoryProfile*)>
 <!ATTLIST context
     name CDATA #REQUIRED
