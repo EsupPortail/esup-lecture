@@ -3,7 +3,7 @@
 * For any information please refer to http://esup-helpdesk.sourceforge.net
 * You may obtain a copy of the licence at http://www.esup-portail.org/license/
 */
-package org.esupportail.lecture.web;
+package org.esupportail.lecture.domain.service;
 
 import org.esupportail.lecture.domain.service.DomainService;
 import org.esupportail.lecture.domain.service.PortletService;
@@ -14,7 +14,7 @@ import org.esupportail.lecture.domain.service.PortletService;
  * @author gbouteil
  *
  */
-public class FacadeWeb {
+public class FacadeService {
 
 	/* ************************** PROPERTIES ******************************** */	
 	

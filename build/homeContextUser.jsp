@@ -13,13 +13,13 @@
 	<h:outputText value="User connecté : "/>
 	<h:outputText value="#{homeContextUserBean.user.id}" />
 	<br/>	
-<!--	<h:outputText value="Context :"/>
+	<h:outputText value="Context :"/>
 	<br/>	
 	<h:outputText value="#homeContextUserBean.user.context.name" />
 	<br/>	
 	<br/>	
 	<h:outputText value="#homeContextUserBean.user.context.description" />
-	</t:div> -->
+	</t:div> 
 </f:view>
 
 

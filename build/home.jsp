@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
-<!-- Page de test -->
 <!-- 
 TODO : 
 - gestion des actions dans un bean

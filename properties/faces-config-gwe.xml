@@ -28,8 +28,8 @@
         <managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<property-name>facadeWeb</property-name>
-			<property-class>org.esupportail.lecture.web.FacadeWeb</property-class>
-			<value>#{facadeWeb}</value>
+			<property-class>org.esupportail.lecture.web.FacadeService</property-class>
+			<value>#{facadeService}</value>
 		</managed-property>
     </managed-bean>
 	-->
@@ -41,38 +41,14 @@
 			 <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<!-- attribut du bean : nom -->
-			<property-name>facadeWeb</property-name>
+			<property-name>facadeService</property-name>
 			<!-- classe de l'attribut -->
-			<property-class>org.esupportail.lecture.web.FacadeWeb</property-class>
-			<!-- valeur de l'attribut -->
-			<value>#{facadeWeb}</value>
+			<property-class>org.esupportail.lecture.domain.service.FacadeService</property-class>
+			<!-- valeur de l'attribut : cf fichier Spring -->
+			<value>#{facadeService}</value>
 		</managed-property>
     </managed-bean>
 
-	<!-- OTHERS -->
-	<managed-bean>
-		<!-- correspond à la var #{facadeWeb} -->
-		<managed-bean-name>facadeWeb</managed-bean-name>
-		<managed-bean-class>
-			org.esupportail.lecture.web.FacadeWeb
-		</managed-bean-class>
-		<managed-bean-scope>application</managed-bean-scope>
-		<managed-property>
-			<property-name>facadeService</property-name>
-			<property-class>
-				org.esupportail.lecture.domain.service.DomainService
-			</property-class>
-			<!-- definie dans la config spring -->
-			<value>#{facadeService}</value>
-		</managed-property>
-		<managed-property>
-			<property-name>portletService</property-name>
-			<property-class>
-				org.esupportail.lecture.domain.service.PortletService
-			</property-class>
-			<!-- definie dans la config spring -->
-			<value>#{portletService}</value>
-		</managed-property>
-	</managed-bean>
+
 
 </faces-config>

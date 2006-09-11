@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
+import org.esupportail.lecture.domain.service.FacadeService;
 //import org.esupportail.lecture.domain.model.CustomContext;
 //import org.esupportail.lecture.domain.model.UserProfile;
 //import org.esupportail.lecture.domain.service.DomainService;
@@ -30,7 +31,7 @@ public class HomeContextUserBean {
 	/**
 	 * Access to services
 	 */
-	private FacadeWeb facadeWeb;
+	private FacadeService facadeService;
 	
 	
 	
@@ -50,19 +51,19 @@ public class HomeContextUserBean {
 	 ************************** ACCESSORS ***********************************/
 
 	/**
-	 * @return Returns the facadeWeb.
-	 * @see HomeContextUserBean#facadeWeb
+	 * @return Returns the facadeService.
+	 * @see HomeContextUserBean#facadeService
 	 */
-	public FacadeWeb getFacadeWeb() {
-		return facadeWeb;
+	public FacadeService getFacadeService() {
+		return facadeService;
 	}
 
 	/**
-	 * @param facadeWeb The facadeWeb to set.
-	 * @see HomeContextUserBean#facadeWeb
+	 * @param facadeService The facadeService to set.
+	 * @see HomeContextUserBean#facadeService
 	 */
-	public void setFacadeWeb(FacadeWeb facadeWeb) {
-		this.facadeWeb = facadeWeb;
+	public void setFacadeService(FacadeService facadeService) {
+		this.facadeService = facadeService;
 	}
 
 	/**
@@ -71,7 +72,7 @@ public class HomeContextUserBean {
 	 */
 	public UserBean getUser() {
 		if (user == null){
-			user = facadeWeb.getDomainService().getUserBean();
+			user = facadeService.getDomainService().getUserBean();
 		}
 		return user;
 	}

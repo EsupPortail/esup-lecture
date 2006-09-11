@@ -2,10 +2,21 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<!-- Entry point to domain services -->
-	<bean id="domainService" class="org.esupportail.lecture.domain.service.impl.DomainServiceImplGwe">
+	<!-- Entry point to facade services -->
+	<bean id="facadeService" class="org.esupportail.lecture.domain.service.FacadeService">
+		<property name="domainService">
+			<ref bean="domainService"/>
+		</property>
 		<property name="portletService">
 			<ref bean="portletService"/>
+		</property>
+		
+	</bean>	
+	
+	<!-- Entry point to domain services -->
+	<bean id="domainService" class="org.esupportail.lecture.domain.service.impl.DomainServiceImplGwe">
+		<property name="facadeService">
+			<ref bean="facadeService"/>
 		</property>
 		<property name="myChannel">
 			<ref bean="channel"/>

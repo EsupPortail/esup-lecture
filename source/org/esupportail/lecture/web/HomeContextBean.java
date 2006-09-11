@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 
 import org.esupportail.lecture.domain.model.Context;
+import org.esupportail.lecture.domain.service.FacadeService;
 /**
  * Classe de tests
  * @author gbouteil
@@ -20,17 +21,17 @@ import org.esupportail.lecture.domain.model.Context;
  */
 public class HomeContextBean {
 	private List<ContextWeb> contextWebs;
-	private FacadeWeb facadeWeb;
+	private FacadeService facadeService;
 	
-	public void setFacadeWeb(FacadeWeb facadeWeb) {
-		this.facadeWeb = facadeWeb;
+	public void setFacadeService(FacadeService facadeService) {
+		this.facadeService = facadeService;
 	}
 	
 	public List<ContextWeb> getContextWebs() {
 		// calculer ça à chaque fois qu'on le demande ou le garder en mémoire ?
 		// mieux de le mettre dans le constructeur
 		contextWebs = new ArrayList<ContextWeb>();
-		Hashtable<String,Context> contexts = facadeWeb.getDomainService().getContexts();
+		Hashtable<String,Context> contexts = facadeService.getDomainService().getContexts();
 		Set<String> set = contexts.keySet();
 		Iterator iterator = set.iterator();
 		for (Context c = null; iterator.hasNext();){
@@ -51,10 +52,10 @@ public class HomeContextBean {
 	}
 
 	/**
-	 * @return Returns the facadeWeb.
+	 * @return Returns the facadeService.
 	 */
-	protected FacadeWeb getFacadeWeb() {
-		return facadeWeb;
+	protected FacadeService getFacadeService() {
+		return facadeService;
 	}
 	
 

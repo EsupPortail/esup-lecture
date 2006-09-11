@@ -17,6 +17,7 @@ import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.UserAttributes;
 import org.esupportail.lecture.domain.service.DomainService;
+import org.esupportail.lecture.domain.service.FacadeService;
 import org.esupportail.lecture.domain.service.PortletService;
 import org.esupportail.lecture.utils.exception.*;
 //import org.esupportail.lecture.beans.ContextUserBean;
@@ -36,7 +37,7 @@ public class DomainServiceImplGwe implements DomainService {
 	/**
 	 * Services provided by portlet request
 	 */
-	PortletService portletService;
+	FacadeService facadeService;
 	/** 
 	 * Main domain model class
 	 */
@@ -66,7 +67,7 @@ public class DomainServiceImplGwe implements DomainService {
 	 */
 	public UserBean getUserBean() {
 		/* Get user profile */
-		String userId = portletService.getUserAttribute(UserAttributes.USER_ID);
+		String userId = facadeService.getPortletService().getUserAttribute(UserAttributes.USER_ID);
 		UserProfile userProfile = myChannel.getUserProfile(userId);
 		
 		/* Create userBean */
@@ -143,15 +144,15 @@ public class DomainServiceImplGwe implements DomainService {
 	/**
 	 * @return Returns the portletService.
 	 */
-	public PortletService getPortletService() {
-		return portletService;
+	public FacadeService getFacadeService() {
+		return facadeService;
 	}
 
 	/**
 	 * @param portletService The portletService to set.
 	 */
-	public void setPortletService(PortletService portletService) {
-		this.portletService = portletService;
+	public void setFacadeService(FacadeService facadeService) {
+		this.facadeService = facadeService;
 	}
 
 	/**

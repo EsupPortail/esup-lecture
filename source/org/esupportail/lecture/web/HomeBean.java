@@ -20,6 +20,7 @@ import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.tmp.CategoryRB;
 import org.esupportail.lecture.domain.model.tmp.Item;
 import org.esupportail.lecture.domain.model.tmp.SourceRB;
+import org.esupportail.lecture.domain.service.FacadeService;
 
 //TODO Javadoc
 /**
@@ -31,7 +32,7 @@ public class HomeBean {
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(HomeBean.class);
-	private FacadeWeb facadeWeb;
+	private FacadeService facadeService;
 	private int treeSize=20;
 	private boolean treeVisible=true;
 	private String itemDisplayMode;
@@ -46,10 +47,10 @@ public class HomeBean {
 	
 	/**
 	 * For Spring injection of Service Class
-	 * @param facadeWeb facade og Spring Service Class
+	 * @param facadeService facade og Spring Service Class
 	 */
-	public void setFacadeWeb(FacadeWeb facadeWeb) {
-		this.facadeWeb = facadeWeb;
+	public void setFacadeService(FacadeService facadeService) {
+		this.facadeService = facadeService;
 	}
 	
 	public boolean isTreeVisible() {
@@ -257,7 +258,7 @@ public class HomeBean {
 			log.debug("In getCategories");
 		}
 		// Call of domain.service class
-		return facadeWeb.getDomainService().getCategories();
+		return facadeService.getDomainService().getCategories();
 	}
 	
 	private SourceRB getSelectedSourceFromCategory(CategoryRB cat) {

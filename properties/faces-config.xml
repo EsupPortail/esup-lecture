@@ -10,7 +10,7 @@
 			<supported-locale>fr</supported-locale>
 		</locale-config>
 		<!-- interfaçage spring-jsf :
-			- définition de var dans ce fichier de config JSF (ex : #{facadeWeb}
+			- définition de var dans ce fichier de config JSF (ex : #{facadeService}
 			- spring instancie ces variables
 			-->
 		<variable-resolver>
@@ -34,29 +34,29 @@
         <managed-bean-scope>request</managed-bean-scope>
 		<managed-property>
 			<!-- attribut du bean : nom -->
-			<property-name>facadeWeb</property-name>
+			<property-name>facadeService</property-name>
 			<!-- classe de l'attribut -->
-			<property-class>org.esupportail.lecture.web.FacadeWeb</property-class>
+			<property-class>org.esupportail.lecture.domain.service.FacadeService</property-class>
 			<!-- valeur de l'attribut -->
-			<value>#{facadeWeb}</value>
+			<value>#{facadeService}</value>
 		</managed-property>
     </managed-bean>
 
 	<!-- OTHERS -->
 	<managed-bean>
-		<!-- correspond à la var #{facadeWeb} -->
-		<managed-bean-name>facadeWeb</managed-bean-name>
+		<!-- correspond à la var #{facadeService} -->
+		<managed-bean-name>facadeService</managed-bean-name>
 		<managed-bean-class>
-			org.esupportail.lecture.web.FacadeWeb
+			org.esupportail.lecture.domain.service.FacadeService
 		</managed-bean-class>
 		<managed-bean-scope>application</managed-bean-scope>
 		<managed-property>
-			<property-name>facadeService</property-name>
+			<property-name>domainService</property-name>
 			<property-class>
 				org.esupportail.lecture.domain.service.DomainService
 			</property-class>
 			<!-- definie dans la config spring -->
-			<value>#{facadeService}</value>
+			<value>#{domainService}</value>
 		</managed-property>
 	</managed-bean>
 
