@@ -30,7 +30,7 @@ toggleButton: read/unread toggle button
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" />
 	<link rel="stylesheet"
-		href="http://129.20.129.80:8080/esup-lecture/stylesheets/lecture.css"
+		href="http://localhost:8080/esup-lecture/stylesheets/lecture.css"
 		media="screen" />
 	<f:view>
 		<f:loadBundle basename="messages" var="messages" />
@@ -40,7 +40,7 @@ toggleButton: read/unread toggle button
 				<jsp:include page="homeRight.jsp" />
 			</t:buffer>
 			<t:buffer into="#{homeLeft}">
-				<jsp:include page="homeLeft.jsp" />
+				<jsp:include page="homeLeftTestWAI.jsp" />
 			</t:buffer>
 			<!-- ********* With Tree View ********* -->
 			<t:buffer into="#{withTree}">

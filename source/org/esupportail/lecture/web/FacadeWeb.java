@@ -5,7 +5,7 @@
 */
 package org.esupportail.lecture.web;
 
-import org.esupportail.lecture.domain.service.FacadeService;
+import org.esupportail.lecture.domain.service.DomainService;
 import org.esupportail.lecture.domain.service.PortletService;
 
 /**
@@ -20,7 +20,7 @@ public class FacadeWeb {
 	/**
 	 * Access to domain service
 	 */
-	private FacadeService facadeService;
+	private DomainService facadeService;
 	
 	/**
 	 * Access to portlet request services 
@@ -51,18 +51,18 @@ public class FacadeWeb {
 	}
 
 	/**
-	 * Return a FacadeService
+	 * Return a DomainService
 	 * @return facadeService
 	 */
-	public FacadeService getFacadeService() {
+	public DomainService getFacadeService() {
 		return facadeService;
 	}
 
 	/**
-	 * Sets a FacadeService
+	 * Sets a DomainService
 	 * @param facadeService
 	 */
-	public void setFacadeService(FacadeService facadeService) {
+	public void setFacadeService(DomainService facadeService) {
 		this.facadeService = facadeService;
 	}
 	

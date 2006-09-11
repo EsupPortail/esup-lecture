@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.domain.service.FacadeService;
+import org.esupportail.lecture.domain.service.DomainService;
 
 /**
  * Bean for displaying a context, for a user profile
@@ -31,14 +31,12 @@ public class HomeContextUserBean {
 	 */
 	private FacadeWeb facadeWeb;
 	
+	
+	
 	/**
 	 * Informations to display about user
 	 */
 	private UserWeb user;
-//	private ContextUserWeb contextUser;
-	
-
-
 
 	
 	/*
@@ -85,13 +83,8 @@ public class HomeContextUserBean {
 		this.user = user;
 	}
 
-	
-//	public ContextUserWeb getContextUser(){
-//		if (contextUser==null){
-//			contextUser = ;
-//		}
-//		return contextUser;
-//	}
+
+
 
 	
 	

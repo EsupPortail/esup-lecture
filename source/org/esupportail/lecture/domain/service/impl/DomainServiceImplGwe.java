@@ -17,9 +17,10 @@ import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.UserAttributes;
-import org.esupportail.lecture.domain.service.FacadeService;
+import org.esupportail.lecture.domain.service.DomainService;
 import org.esupportail.lecture.domain.service.PortletService;
 import org.esupportail.lecture.utils.exception.*;
+import org.esupportail.lecture.web.ContextUserWeb;
 import org.esupportail.lecture.web.UserWeb;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 /**
@@ -28,7 +29,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  * @author gbouteil
  *
  */
-public class FacadeServiceImplGwe implements FacadeService {
+public class DomainServiceImplGwe implements DomainService {
 
 	/*
 	 ************************** PROPERTIES *********************************/	
@@ -51,7 +52,7 @@ public class FacadeServiceImplGwe implements FacadeService {
 	 ************************** Initialization ************************************/
 	
 	/** 
-	 * @see org.esupportail.lecture.domain.service.FacadeService#loadChannel()
+	 * @see org.esupportail.lecture.domain.service.DomainService#loadChannel()
 	 */
 	public void loadChannel() throws FatalException,MyException {
 		myChannel.startup();
@@ -62,19 +63,48 @@ public class FacadeServiceImplGwe implements FacadeService {
 	 *************************** METHODS ************************************/
 
 	/**
-	 * @see org.esupportail.lecture.domain.service.FacadeService#getUserWeb()
+	 * @see org.esupportail.lecture.domain.service.DomainService#getUserWeb()
 	 */
 	public UserWeb getUserWeb() {
+		/* Get user profile */
 		String userId = portletService.getUserAttribute(UserAttributes.USER_ID);
 		UserProfile userProfile = myChannel.getUserProfile(userId);
 		
+		/* Create userWeb */
 		UserWeb userWeb = new UserWeb();
-		//TODO userWeb.init()
 		userWeb.setId(userProfile.getUserId());
+	
+		//userWeb.setContext(userProfile);
+		
 		return userWeb;
 	}
 	
-	/**
+//	private ContextUserWeb
+//		
+//		/* Get custom context */
+//		String contextId = portletService.getCurrentContext();
+//		Context context = myChannel.getContext(contextId);
+//		if (context == null) {
+//			throw ErrorException("Context "+contextId+" is not defiend in this channel");
+//		}
+//		CustomContext customContext = userProfile.getCustomContext(contextId);
+//		
+//		/* Create ContextWeb */
+//		ContextUserWeb contextUserWeb = new ContextUserWeb();
+//		context
+//		
+//		
+//		return userWeb;
+//	}
+	
+
+
+
+	
+	
+	
+	/** 
+	 * Tests method
 	 * @return hashtable of context defined in myChannel
 	 * @see org.esupportail.lecture.domain.model.Channel
 	 */
@@ -84,7 +114,7 @@ public class FacadeServiceImplGwe implements FacadeService {
 
 
 	/**
-	 * @see org.esupportail.lecture.domain.service.FacadeService#channelToString()
+	 * @see org.esupportail.lecture.domain.service.DomainService#channelToString()
 	 */
 	public String channelToString(){
 		return myChannel.toString();
@@ -92,7 +122,7 @@ public class FacadeServiceImplGwe implements FacadeService {
 	
 
 	/**
-	 * @see org.esupportail.lecture.domain.service.FacadeService#getContexts()
+	 * @see org.esupportail.lecture.domain.service.DomainService#getContexts()
 	 */
 	public Hashtable<String, Context> getContexts() {
 		// TODO Auto-generated method stub
@@ -101,7 +131,7 @@ public class FacadeServiceImplGwe implements FacadeService {
 
 
 	/**
-	 * @see org.esupportail.lecture.domain.service.FacadeService#getCategories()
+	 * @see org.esupportail.lecture.domain.service.DomainService#getCategories()
 	 */
 	public List<Category> getCategories() {
 		// TODO Auto-generated method stub
@@ -138,6 +168,7 @@ public class FacadeServiceImplGwe implements FacadeService {
 	public void setMyChannel(Channel myChannel) {
 		this.myChannel = myChannel;
 	}
+
 
 
 

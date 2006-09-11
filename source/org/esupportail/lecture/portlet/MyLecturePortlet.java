@@ -12,7 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.myfaces.portlet.MyFacesGenericPortlet;
 import org.esupportail.lecture.domain.model.Channel;
-import org.esupportail.lecture.domain.service.FacadeService;
+import org.esupportail.lecture.domain.service.DomainService;
 import org.springframework.web.context.WebApplicationContext;
 
 
@@ -28,7 +28,7 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 /* ************************** PROPERTIES ******************************** */	
 	
 
-	private FacadeService facadeService;
+	private DomainService facadeService;
 	private WebApplicationContext appCtx;
 	private PortletContext portletCtx;
 
@@ -54,7 +54,7 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 		try {
 			portletCtx = (PortletContext)super.getPortletContext();
 			appCtx = (WebApplicationContext)portletCtx.getAttribute("org.springframework.web.context.WebApplicationContext.ROOT");
-			facadeService = (FacadeService)appCtx.getBean("facadeService");
+			facadeService = (DomainService)appCtx.getBean("facadeService");
 			
 //			ServletContext servlCtx = (ServletContext) appCtx.getServletContext();
 //			Enumeration enumerator= servlCtx.getAttributeNames();
@@ -85,13 +85,13 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 	/**
 	 * @return Returns the facadeService.
 	 */
-	public FacadeService getFacadeService() {
+	public DomainService getFacadeService() {
 		return facadeService;
 	}
 	/**
 	 * @param facadeService The facadeService to set.
 	 */
-	public void setFacadeService(FacadeService facadeService) {
+	public void setFacadeService(DomainService facadeService) {
 		this.facadeService = facadeService;
 	}
 

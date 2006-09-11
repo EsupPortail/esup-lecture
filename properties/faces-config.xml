@@ -53,7 +53,7 @@
 		<managed-property>
 			<property-name>facadeService</property-name>
 			<property-class>
-				org.esupportail.lecture.domain.service.FacadeService
+				org.esupportail.lecture.domain.service.DomainService
 			</property-class>
 			<!-- definie dans la config spring -->
 			<value>#{facadeService}</value>

@@ -16,6 +16,7 @@ import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.tmp.Item;
 import org.esupportail.lecture.domain.model.tmp.SourceRB;
 import org.esupportail.lecture.utils.exception.*;
+import org.esupportail.lecture.web.ContextUserWeb;
 import org.esupportail.lecture.web.UserWeb;
 
 
@@ -24,7 +25,7 @@ import org.esupportail.lecture.web.UserWeb;
  * @author gbouteil
  *
  */
-public interface FacadeService {
+public interface DomainService {
 	
 		/**
 		 * Service called when the all channel need to be loaded or reloaded
@@ -59,5 +60,7 @@ public interface FacadeService {
 		 * @see org.esupportail.lecture.web.UserWeb
 		 */
 		public UserWeb getUserWeb();
+
+
 
 }

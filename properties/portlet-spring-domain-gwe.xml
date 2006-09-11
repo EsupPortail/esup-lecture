@@ -3,7 +3,7 @@
 
 <beans>
 	<!-- Entry point to domain services -->
-	<bean id="facadeService" class="org.esupportail.lecture.domain.service.impl.FacadeServiceImplGwe">
+	<bean id="facadeService" class="org.esupportail.lecture.domain.service.impl.DomainServiceImplGwe">
 		<property name="portletService">
 			<ref bean="portletService"/>
 		</property>

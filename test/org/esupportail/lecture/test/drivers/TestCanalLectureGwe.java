@@ -8,7 +8,7 @@ package org.esupportail.lecture.test.drivers;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.model.Channel;
-import org.esupportail.lecture.domain.service.FacadeService;
+import org.esupportail.lecture.domain.service.DomainService;
 
 import java.io.IOException;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
@@ -31,7 +31,7 @@ public class TestCanalLectureGwe {
 		ClassPathResource res = new ClassPathResource("applicationContextGwe.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		
-		FacadeService myServices = (FacadeService)factory.getBean("facadeService");
+		DomainService myServices = (DomainService)factory.getBean("facadeService");
 		try {
 			myServices.loadChannel();
 			System.out.println("Tapez une touche ...");

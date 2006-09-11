@@ -18,9 +18,10 @@ import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.tmp.Item;
 import org.esupportail.lecture.domain.model.tmp.SourceRB;
 import org.esupportail.lecture.domain.model.tmp.CategoryRB;
-import org.esupportail.lecture.domain.service.FacadeService;
+import org.esupportail.lecture.domain.service.DomainService;
 import org.esupportail.lecture.utils.exception.FatalException;
 import org.esupportail.lecture.utils.exception.MyException;
+import org.esupportail.lecture.web.ContextUserWeb;
 import org.esupportail.lecture.web.UserWeb;
 
 /**
@@ -28,7 +29,7 @@ import org.esupportail.lecture.web.UserWeb;
  * @author gbouteil
  *
  */
-public class FacadeServiceImplRaymond implements FacadeService {
+public class DomainServiceImplRaymond implements DomainService {
 	//List<Item> items;
 	//List<SourceRB> sources;
 	List<Category> categories;
@@ -120,6 +121,11 @@ public class FacadeServiceImplRaymond implements FacadeService {
 	
 
 	public UserWeb getUserWeb() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ContextUserWeb getContextUserWeb() {
 		// TODO Auto-generated method stub
 		return null;
 	}
