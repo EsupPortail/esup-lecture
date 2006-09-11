@@ -32,8 +32,7 @@ public class PortletRequestUtils {
 	 */
 	private static final LoggerImpl LOG = new LoggerImpl(PortletRequestUtils.class);
 
-	
-//	TODO cela ne marcherait que dans pluto ?
+
 	/**
 	 * @return The current PortletRequest, null if not found.
 	 */

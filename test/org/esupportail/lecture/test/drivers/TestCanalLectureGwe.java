@@ -31,7 +31,7 @@ public class TestCanalLectureGwe {
 		ClassPathResource res = new ClassPathResource("applicationContextGwe.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		
-		DomainService myServices = (DomainService)factory.getBean("facadeService");
+		DomainService myServices = (DomainService)factory.getBean("domainService");
 		try {
 			myServices.loadChannel();
 			System.out.println("Tapez une touche ...");

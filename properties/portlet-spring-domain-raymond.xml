@@ -109,7 +109,7 @@ Cette inscription officialise votre statut d'étudiant avec l'envoi	de votre car
 		</property>
 	</bean>
 
-	<bean id="facadeService"
+	<bean id="domainService"
 		class="org.esupportail.lecture.domain.service.impl.DomainServiceImplRaymond">
 		<property name="categories">
 			<list>

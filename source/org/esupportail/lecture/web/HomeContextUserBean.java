@@ -7,10 +7,11 @@ package org.esupportail.lecture.web;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
-import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.domain.service.DomainService;
+//import org.esupportail.lecture.domain.model.CustomContext;
+//import org.esupportail.lecture.domain.model.UserProfile;
+//import org.esupportail.lecture.domain.service.DomainService;
 
 /**
  * Bean for displaying a context, for a user profile
@@ -36,7 +37,7 @@ public class HomeContextUserBean {
 	/**
 	 * Informations to display about user
 	 */
-	private UserWeb user;
+	private UserBean user;
 
 	
 	/*
@@ -68,9 +69,9 @@ public class HomeContextUserBean {
 	 * @return Returns the user.
 	 * @see HomeContextUserBean#user
 	 */
-	public UserWeb getUser() {
+	public UserBean getUser() {
 		if (user == null){
-			user = facadeWeb.getFacadeService().getUserWeb();
+			user = facadeWeb.getDomainService().getUserBean();
 		}
 		return user;
 	}
@@ -79,7 +80,7 @@ public class HomeContextUserBean {
 	 * @param user The user to set.
 	 * @see HomeContextUserBean#user
 	 */
-	public void setUser(UserWeb user) {
+	public void setUser(UserBean user) {
 		this.user = user;
 	}
 

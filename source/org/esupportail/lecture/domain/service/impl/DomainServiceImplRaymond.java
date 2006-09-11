@@ -21,8 +21,8 @@ import org.esupportail.lecture.domain.model.tmp.CategoryRB;
 import org.esupportail.lecture.domain.service.DomainService;
 import org.esupportail.lecture.utils.exception.FatalException;
 import org.esupportail.lecture.utils.exception.MyException;
-import org.esupportail.lecture.web.ContextUserWeb;
-import org.esupportail.lecture.web.UserWeb;
+import org.esupportail.lecture.beans.ContextUserBean;
+import org.esupportail.lecture.beans.UserBean;
 
 /**
  * Et la javadoc, elle est où ???
@@ -120,12 +120,12 @@ public class DomainServiceImplRaymond implements DomainService {
 
 	
 
-	public UserWeb getUserWeb() {
+	public UserBean getUserBean() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public ContextUserWeb getContextUserWeb() {
+	public ContextUserBean getContextUserBean() {
 		// TODO Auto-generated method stub
 		return null;
 	}

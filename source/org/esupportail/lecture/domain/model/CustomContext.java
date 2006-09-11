@@ -1,9 +1,9 @@
 package org.esupportail.lecture.domain.model;
 
 
-import java.util.Collection;
-import java.util.Set;
-import java.util.SortedSet;
+//import java.util.Collection;
+//import java.util.Set;
+//import java.util.SortedSet;
 
 /**
  * Customizations on a context for a user profile 

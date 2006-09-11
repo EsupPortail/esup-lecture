@@ -28,7 +28,7 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 /* ************************** PROPERTIES ******************************** */	
 	
 
-	private DomainService facadeService;
+	private DomainService domainService;
 	private WebApplicationContext appCtx;
 	private PortletContext portletCtx;
 
@@ -54,7 +54,7 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 		try {
 			portletCtx = (PortletContext)super.getPortletContext();
 			appCtx = (WebApplicationContext)portletCtx.getAttribute("org.springframework.web.context.WebApplicationContext.ROOT");
-			facadeService = (DomainService)appCtx.getBean("facadeService");
+			domainService = (DomainService)appCtx.getBean("domainService");
 			
 //			ServletContext servlCtx = (ServletContext) appCtx.getServletContext();
 //			Enumeration enumerator= servlCtx.getAttributeNames();
@@ -70,7 +70,7 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 //			log.debug("objFaces : "+objFaces.toString());
 //			log.debug("objRess : "+objRess.toString());
 //			
-			facadeService.loadChannel();
+			domainService.loadChannel();
 	
 		} catch (Exception e) {
 			log.fatal("init() :: "+e.getMessage());
@@ -83,16 +83,16 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 
 	
 	/**
-	 * @return Returns the facadeService.
+	 * @return Returns the domainService.
 	 */
-	public DomainService getFacadeService() {
-		return facadeService;
+	public DomainService getDomainService() {
+		return domainService;
 	}
 	/**
-	 * @param facadeService The facadeService to set.
+	 * @param domainService The domainService to set.
 	 */
-	public void setFacadeService(DomainService facadeService) {
-		this.facadeService = facadeService;
+	public void setDomainService(DomainService domainService) {
+		this.domainService = domainService;
 	}
 
 }

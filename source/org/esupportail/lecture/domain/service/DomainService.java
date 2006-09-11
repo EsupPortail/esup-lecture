@@ -10,14 +10,14 @@ import java.util.List;
 
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.Category;
-import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.domain.model.Source;
-import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.domain.model.tmp.Item;
-import org.esupportail.lecture.domain.model.tmp.SourceRB;
+//import org.esupportail.lecture.domain.model.CustomContext;
+//import org.esupportail.lecture.domain.model.Source;
+//import org.esupportail.lecture.domain.model.UserProfile;
+//import org.esupportail.lecture.domain.model.tmp.Item;
+//import org.esupportail.lecture.domain.model.tmp.SourceRB;
 import org.esupportail.lecture.utils.exception.*;
-import org.esupportail.lecture.web.ContextUserWeb;
-import org.esupportail.lecture.web.UserWeb;
+import org.esupportail.lecture.beans.ContextUserBean;
+import org.esupportail.lecture.beans.UserBean;
 
 
 /**
@@ -56,10 +56,10 @@ public interface DomainService {
 		
 		/**
 		 * A UserWerb contains informations about a user profile to be displayed
-		 * @return a UserWeb
-		 * @see org.esupportail.lecture.web.UserWeb
+		 * @return a UserBean
+		 * @see org.esupportail.lecture.beans.UserBean
 		 */
-		public UserWeb getUserWeb();
+		public UserBean getUserBean();
 
 
 

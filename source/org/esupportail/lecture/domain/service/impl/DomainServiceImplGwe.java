@@ -9,20 +9,19 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.commons.utils.PortletRequestUtils;
 import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.Context;
-import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.domain.model.Source;
+//import org.esupportail.lecture.domain.model.CustomContext;
+//import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.UserAttributes;
 import org.esupportail.lecture.domain.service.DomainService;
 import org.esupportail.lecture.domain.service.PortletService;
 import org.esupportail.lecture.utils.exception.*;
-import org.esupportail.lecture.web.ContextUserWeb;
-import org.esupportail.lecture.web.UserWeb;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+//import org.esupportail.lecture.beans.ContextUserBean;
+import org.esupportail.lecture.beans.UserBean;
+//import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 /**
  * Implémentation des services pour le test 
  * Utilisée par Gwénaëlle
@@ -63,23 +62,23 @@ public class DomainServiceImplGwe implements DomainService {
 	 *************************** METHODS ************************************/
 
 	/**
-	 * @see org.esupportail.lecture.domain.service.DomainService#getUserWeb()
+	 * @see org.esupportail.lecture.domain.service.DomainService#getUserBean()
 	 */
-	public UserWeb getUserWeb() {
+	public UserBean getUserBean() {
 		/* Get user profile */
 		String userId = portletService.getUserAttribute(UserAttributes.USER_ID);
 		UserProfile userProfile = myChannel.getUserProfile(userId);
 		
-		/* Create userWeb */
-		UserWeb userWeb = new UserWeb();
-		userWeb.setId(userProfile.getUserId());
+		/* Create userBean */
+		UserBean userBean = new UserBean();
+		userBean.setId(userProfile.getUserId());
 	
-		//userWeb.setContext(userProfile);
+		//userBean.setContext(userProfile);
 		
-		return userWeb;
+		return userBean;
 	}
 	
-//	private ContextUserWeb
+//	private ContextUserBean
 //		
 //		/* Get custom context */
 //		String contextId = portletService.getCurrentContext();
@@ -90,11 +89,11 @@ public class DomainServiceImplGwe implements DomainService {
 //		CustomContext customContext = userProfile.getCustomContext(contextId);
 //		
 //		/* Create ContextWeb */
-//		ContextUserWeb contextUserWeb = new ContextUserWeb();
+//		ContextUserBean contextUserBean = new ContextUserBean();
 //		context
 //		
 //		
-//		return userWeb;
+//		return userBean;
 //	}
 	
 

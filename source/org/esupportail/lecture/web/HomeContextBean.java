@@ -30,7 +30,7 @@ public class HomeContextBean {
 		// calculer ça à chaque fois qu'on le demande ou le garder en mémoire ?
 		// mieux de le mettre dans le constructeur
 		contextWebs = new ArrayList<ContextWeb>();
-		Hashtable<String,Context> contexts = facadeWeb.getFacadeService().getContexts();
+		Hashtable<String,Context> contexts = facadeWeb.getDomainService().getContexts();
 		Set<String> set = contexts.keySet();
 		Iterator iterator = set.iterator();
 		for (Context c = null; iterator.hasNext();){

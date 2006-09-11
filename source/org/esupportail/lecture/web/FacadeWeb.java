@@ -9,6 +9,7 @@ import org.esupportail.lecture.domain.service.DomainService;
 import org.esupportail.lecture.domain.service.PortletService;
 
 /**
+ * A voir si on va la garder ultérieurement
  * Entry point to access services, used by org.esupportail.lecture.web package
  * @author gbouteil
  *
@@ -20,7 +21,7 @@ public class FacadeWeb {
 	/**
 	 * Access to domain service
 	 */
-	private DomainService facadeService;
+	private DomainService domainService;
 	
 	/**
 	 * Access to portlet request services 
@@ -52,18 +53,18 @@ public class FacadeWeb {
 
 	/**
 	 * Return a DomainService
-	 * @return facadeService
+	 * @return domainService
 	 */
-	public DomainService getFacadeService() {
-		return facadeService;
+	public DomainService getDomainService() {
+		return domainService;
 	}
 
 	/**
 	 * Sets a DomainService
-	 * @param facadeService
+	 * @param domainService
 	 */
-	public void setFacadeService(DomainService facadeService) {
-		this.facadeService = facadeService;
+	public void setDomainService(DomainService domainService) {
+		this.domainService = domainService;
 	}
 	
 }

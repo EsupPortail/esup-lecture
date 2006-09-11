@@ -9,6 +9,7 @@ package org.esupportail.lecture.web;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 
 /**
+ * A supprimer ultérieurement
  * Not good  design : classe de tests
  * @author gbouteil
  *

@@ -59,12 +59,12 @@
 		</managed-bean-class>
 		<managed-bean-scope>application</managed-bean-scope>
 		<managed-property>
-			<property-name>facadeService</property-name>
+			<property-name>domainService</property-name>
 			<property-class>
 				org.esupportail.lecture.domain.service.DomainService
 			</property-class>
 			<!-- definie dans la config spring -->
-			<value>#{facadeService}</value>
+			<value>#{domainService}</value>
 		</managed-property>
 	</managed-bean>
 

@@ -257,7 +257,7 @@ public class HomeBean {
 			log.debug("In getCategories");
 		}
 		// Call of domain.service class
-		return facadeWeb.getFacadeService().getCategories();
+		return facadeWeb.getDomainService().getCategories();
 	}
 	
 	private SourceRB getSelectedSourceFromCategory(CategoryRB cat) {
