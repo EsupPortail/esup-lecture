@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.esupportail.lecture.domain.model">
+	<class name="Customsource" table="CUSTOMSOURCE">
+		<id name="Id" type="integer" column="CUSTOMSOURCEID">
+			<generator class="native" />
+		</id>
+
+		<property name="UserprofileId" column="USERPROFILE_ID"
+			type="string" not-null="true" length="50" />
+		<property name="CustomcategoryIdSubscribed"
+			column="CUSTOMCATEGORY_ID_SUBSCRIBED" type="integer" not-null="false"
+			length="10" />
+		<property name="CustomcategoryIdCreated"
+			column="CUSTOMCATEGORY_ID_CREATED" type="integer" not-null="false"
+			length="10" />
+		<property name="CustomcategoryIdImported"
+			column="CUSTOMCATEGORY_ID_IMPORTED" type="integer" not-null="false"
+			length="10" />
+		<property name="Managedsourceprofileid"
+			column="MANAGEDSOURCEPROFILEID" type="integer" not-null="false"
+			length="10" />
+		<property name="Zoomed" column="ZOOMED" type="java.lang.Byte"
+			not-null="false" length="1" />
+		<property name="Name" column="NAME" type="string"
+			not-null="false" length="50" />
+		<property name="Sourceurl" column="SOURCEURL" type="string"
+			not-null="false" length="255" />
+		<property name="Nature" column="NATURE" type="string"
+			not-null="false" length="1" />
+
+
+	</class>
+</hibernate-mapping>

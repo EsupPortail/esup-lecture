@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.esupportail.lecture.domain.model">
+	<class name="Customcategory" table="CUSTOMCATEGORY">
+		<meta attribute="sync-DAO">false</meta>
+		<id name="Id" type="integer" column="CUSTOMCATEGORYID">
+			<generator class="sequence" />
+		</id>
+
+		<property name="UserprofileId" column="USERPROFILE_ID"
+			type="string" not-null="true" length="50" />
+		<property name="CustomcontextIdImported"
+			column="CUSTOMCONTEXT_ID_IMPORTED" type="integer" not-null="false"
+			length="10" />
+		<property name="CustomcontextIdSubscribed"
+			column="CUSTOMCONTEXT_ID_SUBSCRIBED" type="integer" not-null="false"
+			length="10" />
+		<property name="CustomcontextIdCreated"
+			column="CUSTOMCONTEXT_ID_CREATED" type="integer" not-null="false"
+			length="10" />
+		<property name="Managedcategoryprofileid"
+			column="MANAGEDCATEGORYPROFILEID" type="integer" not-null="false"
+			length="10" />
+		<property name="Displaymode" column="DISPLAYMODE" type="integer"
+			not-null="false" length="10" />
+		<property name="Name" column="NAME" type="string"
+			not-null="false" length="50" />
+		<property name="Description" column="DESCRIPTION" type="string"
+			not-null="false" />
+		<property name="Folded" column="FOLDED" type="java.lang.Byte"
+			not-null="false" length="1" />
+		<property name="Nature" column="NATURE" type="string"
+			not-null="false" length="1" />
+
+
+	</class>
+</hibernate-mapping>
