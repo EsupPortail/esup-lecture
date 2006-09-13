@@ -10,7 +10,7 @@ import org.esupportail.lecture.domain.service.PortletService;
  *
  */
 
-// TODO : à voir si on garde ...
+
 public class PortletServiceImpl implements PortletService{
 
 	/*

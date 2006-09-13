@@ -38,7 +38,7 @@
         <managed-bean-name>homeContextUserBean</managed-bean-name>
 		<!-- classe correspondant au bean manipulé --> 
         <managed-bean-class>org.esupportail.lecture.web.HomeContextUserBean</managed-bean-class>
-		<managed-bean-scope>request</managed-bean-scope>
+		<managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
 			<!-- attribut du bean : nom -->
 			<property-name>facadeService</property-name>
@@ -48,19 +48,34 @@
 			<value>#{facadeService}</value>
 		</managed-property>
  		<managed-property>
-			<property-name>sessionManager</property-name>
-			<property-class>org.esupportail.lecture.web.SessionManager</property-class>
-			<value>#{sessionManager}</value>
+			<property-name>virtualSession</property-name>
+			<property-class>org.esupportail.lecture.web.VirtualSession</property-class>
+			<value>#{virtualSession}</value>
+		</managed-property>
+ 		<managed-property>
+			<property-name>portletService</property-name>
+			<property-class>org.esupportail.lecture.domain.service.PortletService</property-class>
+			<value>#{portletService}</value>
 		</managed-property>
 
     </managed-bean>
 
 	<managed-bean>
-		<managed-bean-name>sessionManager</managed-bean-name>
-		<managed-bean-class>org.esupportail.lecture.web.SessionManager</managed-bean-class>
+		<managed-bean-name>virtualSession</managed-bean-name>
+		<managed-bean-class>org.esupportail.lecture.web.VirtualSession</managed-bean-class>
 		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>portletService</property-name>
+			<property-class>org.esupportail.lecture.domain.service.PortletService</property-class>
+			<value>#{portletService}</value>
+		</managed-property>
 	</managed-bean>
 	
+	<managed-bean>
+		<managed-bean-name>portletService</managed-bean-name>
+		<managed-bean-class>org.esupportail.lecture.domain.service.impl.PortletServiceImpl</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
 
 	
 

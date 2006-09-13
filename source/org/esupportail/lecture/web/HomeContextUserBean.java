@@ -18,6 +18,7 @@ import org.esupportail.lecture.beans.ContextUserBean;
 import org.esupportail.lecture.beans.UserBean;
 import org.esupportail.lecture.domain.model.UserAttributes;
 import org.esupportail.lecture.domain.service.FacadeService;
+import org.esupportail.lecture.domain.service.PortletService;
 import org.esupportail.lecture.utils.exception.ErrorException;
 //import org.esupportail.lecture.domain.model.CustomContext;
 //import org.esupportail.lecture.domain.model.UserProfile;
@@ -42,33 +43,85 @@ public class HomeContextUserBean {
 	protected static final Log log = LogFactory.getLog(HomeContextUserBean.class); 
 
 	/**
-	 * Access to services
+	 * Access to global services 
 	 */
 	private FacadeService facadeService;
+	
+	/**
+	 * Access to portlet services
+	 */
+	private PortletService portletService;
+	
+	/**
+	 * Access to multiple instance of channel in a one session (contexts)
+	 */
+	private VirtualSession virtualSession;
+	
+	
+	/* Information to display */
 	
 	/**
 	 * Informations to display about user
 	 */
 	private UserBean user;
-	
+
 
 	
-
-	
-	
-	/**
-	 * Get session information that needs to be different from a instance channel to another
-	 */
-	private SessionManager sessionManager;
-
 	/*
 	 ************************** Initialization *******************************/
 	/*
 	 *************************** METHODS ************************************/
 
+	/**
+	 * @return id of the current user of the session
+	 */
+	private String getCurrentUserId() {
+		String userId = portletService.getUserAttribute(UserAttributes.USER_ID);
+		return userId;
+	}
 
 	/*
-	 ************************** ACCESSORS ***********************************/
+	 ************************** ACCESSORS for JSP DISPLAY ***********************************/
+
+	/**
+	 * @return Returns the user.
+	 * @see HomeContextUserBean#user
+	 */
+	public UserBean getUser() {
+		if (user == null){
+			user = facadeService.getDomainService().getUserBean(getCurrentUserId());
+		}
+		log.debug("UserBean id : "+user.getId());
+		return user;
+	}
+
+
+	/**
+	 * @return Returns the context.
+	 * @throws ErrorException
+	 */
+	public ContextUserBean getContext() throws ErrorException {
+
+		ContextUserBean context = (ContextUserBean) virtualSession.get("ContextUserBean");
+		String contextId = virtualSession.getCurrentContextId();
+		
+		if (context == null){
+			log.debug ("ContextUserBean null");
+			context = facadeService.getDomainService().getContextUserBean(getCurrentUserId(),contextId );
+			log.debug(" CurrentContextId : "+ contextId);
+			virtualSession.put("ContextUserBean",context);
+		}else{
+
+			log.debug ("Context already loaded : "+context.getId());
+		}
+		return context;
+	}
+
+	
+
+	
+	/*
+	 ************************** OTHER ACCESSORS ***********************************/
 
 	/**
 	 * @return Returns the facadeService.
@@ -87,75 +140,36 @@ public class HomeContextUserBean {
 	}
 
 	/**
-	 * @return Returns the user.
-	 * @see HomeContextUserBean#user
+	 * @return Returns the portletService.
 	 */
-	public UserBean getUser() {
-		if (user == null){
-			user = facadeService.getDomainService().getUserBean(getCurrentUserId());
-		}
-		log.info("UserBean id : "+user.getId());
-		return user;
+	public PortletService getPortletService() {
+		return portletService;
 	}
-
-	/**
-	 * @param user The user to set.
-	 * @see HomeContextUserBean#user
-	 */
-	public void setUser(UserBean user) {
-		this.user = user;
-	}
-
-	/**
-	 * @return Returns the context.
-	 * @throws ErrorException
-	 */
-	public ContextUserBean getContext() throws ErrorException {
-		ContextUserBean context = sessionManager.getContextUserBean();
-		
-		if (context == null){
-			log.info("Il est null !!!");
-			context = facadeService.getDomainService().getContextUserBean(getCurrentUserId(),getCurrentContextId());
-			log.info(" CurrentContextId : "+getCurrentContextId());
-			sessionManager.addContextUserBean(context);
-		}else{
-
-			log.info("Context deja charge : "+context.getId());
-		}
-		return context;
-	}
-
 
 
 	/**
-	 * @return Returns the current userId.
+	 * @param portletService The portletService to set.
 	 */
-	public String getCurrentUserId() {
-//		return facadeService.getPortletService().getUserAttribute(UserAttributes.USER_ID);
-		return SessionManager.getUserAttribute(UserAttributes.USER_ID);
+	public void setPortletService(PortletService portletService) {
+		this.portletService = portletService;
 	}
 
-	
-	/**
-	 * @return Returns the current contextId.
-	 */
-	public String getCurrentContextId() {
-		return sessionManager.getCurrentContextId();
-	}
 
 	/**
-	 * @return Returns the sessionManager.
+	 * @return Returns the virtualSession.
 	 */
-	public SessionManager getSessionManager() {
-		return sessionManager;
+	public VirtualSession getVirtualSession() {
+		return virtualSession;
 	}
 
+
 	/**
-	 * @param sessionManager The sessionManager to set.
+	 * @param virtualSession The virtualSession to set.
 	 */
-	public void setSessionManager(SessionManager sessionManager) {
-		this.sessionManager = sessionManager;
+	public void setVirtualSession(VirtualSession virtualSession) {
+		this.virtualSession = virtualSession;
 	}
+
 
 	/**
 	 * @return Returns the test.

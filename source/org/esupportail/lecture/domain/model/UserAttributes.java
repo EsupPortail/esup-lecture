@@ -34,6 +34,11 @@ public class UserAttributes {
 	 */
 	public static String USER_ID;
 	
+	/**
+	 * Name of the portlet preference that set a context to an instance of the channel
+	 */
+	public static final String CONTEXT = "context";
+	
 	// voir leur 
 	//lors de l'utilisation de ces attributs, verifier leur existance dans cette liste
 //	/**

@@ -7,18 +7,9 @@
 		<property name="domainService">
 			<ref bean="domainService"/>
 		</property>
-<!--	<property name="portletService">
-			<ref bean="portletService"/>
-		</property> -->
-		
 	</bean>	
 	
-<!-- 	<bean id="sessionManager" class="org.esupportail.lecture.web.SessionManager">
-		<property name="portletService">
-			<ref bean="portletService"/>
-		</property>
-	</bean>
--->	
+
 	<!-- Entry point to domain services -->
 	<bean id="domainService" class="org.esupportail.lecture.domain.service.impl.DomainServiceImplGwe">
 		<property name="facadeService">
@@ -30,24 +21,15 @@
 		
 	</bean>
 	
-	<!-- Entry point to portlet services -->
-<!--	<bean id="portletService" class="org.esupportail.lecture.domain.service.impl.PortletServiceImpl">
-		<property name="requestUtils"> 
-			<ref bean="requestUtils"/>
-		</property>
-	</bean>
-	 -->
-	<!-- access to portlet request -->	
-<!--	<bean id="requestUtils" class="org.esupportail.commons.utils.PortletRequestUtils">
-	</bean>
- -->
+
 	<!-- Main domain model class -->
 	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
 		<property name="daoService">
 			<ref bean="daoServiceStub"/>
 		</property>
 	</bean>
-
+	
+	
 
 	
 	
