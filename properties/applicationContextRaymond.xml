@@ -12,6 +12,7 @@
   
   <!--  import other spring configuration files -->
   <import resource="portlet-spring-domain-raymond.xml"/>
+  <import resource="portlet-spring-dao-raymond.xml"/>
 
 
 </beans>
