@@ -29,7 +29,7 @@ public class DefAndContentSets {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(ChannelConfig.class);
+	protected static final Log log = LogFactory.getLog(DefAndContentSets.class);
 	/**
 	 * groups : set definition by existent group listing
 	 */

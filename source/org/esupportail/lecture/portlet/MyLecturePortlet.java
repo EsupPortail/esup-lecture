@@ -11,7 +11,6 @@ import javax.portlet.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.myfaces.portlet.MyFacesGenericPortlet;
-import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.service.DomainService;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -35,7 +34,7 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(Channel.class); 
+	protected static final Log log = LogFactory.getLog(MyLecturePortlet.class); 
 	
 
 /* ************************** METHODS ******************************** */	

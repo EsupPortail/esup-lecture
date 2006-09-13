@@ -225,7 +225,7 @@ public class Channel  {
 	/*
 	 *************************** METHODS ************************************/
 
-	/* user profile */
+	/* user profiles */
 	
 	/**
 	 * return the user profile identified by "userId". 
@@ -245,6 +245,21 @@ public class Channel  {
 		return userProfile;
 	}
 	
+	/* Contexts */
+	
+	/**
+	 * return the context identified by "contextId".
+	 * The context is defiend in channel config if exists
+	 * @param contextId
+	 * @return  the context identified by "contextId"
+	 * @throws ErrorException if no context is iedntified by "contextId"
+	 */
+	public Context getContext(String contextId) throws ErrorException {
+		Context context = getContextById(contextId);
+		return context;
+	}
+	
+	/* miscellaneous */
 	
 	/**
 	 * Return a string containing channel content : mapping file, contexts, managed category profiles,
@@ -309,6 +324,7 @@ public class Channel  {
 //	}
 	
 	/* contextsHash */
+	
 	/**
 	 * Returns a hashtable of contexts, indexed by their ids
 	 * @return contextsHash
@@ -337,6 +353,7 @@ public class Channel  {
 	}
 	
 	/* ManagedCategoryProfilesHash */
+	
 	/**
 	 * Returns a hashtable of ManagedCategoryProfile, indexed by their ids
 	 * @return managedCategoryProfilesHash
@@ -460,6 +477,7 @@ public class Channel  {
 		this.mappingHashByXmlType.put(m.getXmlType(),m);
 	}	
 	
+	/* DAO Services */
 
 	/**
 	 * @return Returns the daoService.
@@ -474,4 +492,6 @@ public class Channel  {
 	public void setDaoService(DaoService daoService) {
 		this.daoService = daoService;
 	}
+
+
 }

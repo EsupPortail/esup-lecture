@@ -1,5 +1,7 @@
 package org.esupportail.lecture.beans;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.service.FacadeService;
 
 /**
@@ -12,6 +14,11 @@ public class UserBean {
 	 ************************ PROPERTIES ******************************** */	
 
 	/**
+	 * Log instance
+	 */
+	protected static final Log log = LogFactory.getLog(UserBean.class);
+
+	/**
 	 * Access to services
 	 */
 	private FacadeService facadeService;
@@ -21,14 +28,7 @@ public class UserBean {
 	 */
 	private String id;
 	
-	/**
-	 * User profile
-	 */
 	
-	/**
-	 * Context to display for the user
-	 */
-	private ContextUserBean context;
 	
 
 	
@@ -70,26 +70,6 @@ public class UserBean {
 	public void setFacadeService(FacadeService facadeService) {
 		this.facadeService = facadeService;
 	}
-
-	/**
-	 * @return Returns the context.
-	 * 
-	 */
-//	public ContextUserBean getContext() {
-//		// Context must or not be refresh to each request ?
-//		if (context == null) {
-//			context = facadeService.getDomainService().getContextUserBean(this);
-//		}
-//		return context;
-//	}
-
-	/**
-	 * @param context The context to set.
-	 */
-	public void setContext(ContextUserBean context) {
-		this.context = context;
-	}
-
 
 	
 }

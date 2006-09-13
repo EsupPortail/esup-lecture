@@ -2,6 +2,8 @@ package org.esupportail.lecture.dao;
 
 import java.util.Hashtable;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.model.UserProfile;
 /**
@@ -16,11 +18,24 @@ public class DaoServiceStub  implements DaoService {
 	 *************************** PROPERTIES *********************************/	
 
 	/**
+	 * Log instance
+	 */
+	protected static final Log log = LogFactory.getLog(DaoServiceStub.class);
+
+	/**
 	 * UserProfiles to be stored in the channel
 	 */
-	Hashtable<String,UserProfile> userProfiles = new Hashtable<String,UserProfile>();	
+	Hashtable<String,UserProfile> userProfiles;	
 	
-	
+	/* 
+	 *************************** INITIALIZATION *********************************/	
+
+	/**
+	 * Constructor
+	 */
+	public DaoServiceStub() {
+		userProfiles = new Hashtable<String,UserProfile>();
+	}
 	
 	/* 
 	 *************************** ACCESSORS *********************************/	

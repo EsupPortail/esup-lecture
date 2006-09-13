@@ -9,6 +9,8 @@ import org.esupportail.lecture.domain.service.PortletService;
  * @author gbouteil
  *
  */
+
+// TODO : à voir si on garde ...
 public class PortletServiceImpl implements PortletService{
 
 	/*
@@ -32,6 +34,12 @@ public class PortletServiceImpl implements PortletService{
 		return PortletRequestUtils.getUserAttribute(attributeName);
 	}
 	
+	/**
+	 * @see org.esupportail.lecture.domain.service.PortletService#getPreferences(String)
+	 */
+	public String getPreferences(String name) {
+		return PortletRequestUtils.getPreferences(name);
+	}
 	
 	/* ************************** ACCESSORS ********************************* */
 
@@ -51,4 +59,7 @@ public class PortletServiceImpl implements PortletService{
 	public void setRequestUtils(PortletRequestUtils requestUtils) {
 		this.requestUtils = requestUtils;
 	}
+
+
+
 }

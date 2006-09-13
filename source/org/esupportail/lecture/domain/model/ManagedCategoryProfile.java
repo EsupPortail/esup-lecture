@@ -310,12 +310,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		this.category = category;
 	}
 
-// TODO retirer si inutile	
+// Aretirer si inutile	
 //	protected Set<Context> getContextsSet() {
 //		return contextsSet;
 //	}
 	
-//	 TODO retirer si inutile	
+//	A retirer si inutile	
 //	protected void setContextsSet(Set<Context> contextsSet) {
 //		this.contextsSet = contextsSet;
 //	}	

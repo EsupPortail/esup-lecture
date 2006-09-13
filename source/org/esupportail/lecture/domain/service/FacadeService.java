@@ -6,7 +6,7 @@
 package org.esupportail.lecture.domain.service;
 
 import org.esupportail.lecture.domain.service.DomainService;
-import org.esupportail.lecture.domain.service.PortletService;
+//import org.esupportail.lecture.domain.service.PortletService;
 
 /**
  * A voir si on va la garder ultérieurement
@@ -26,7 +26,7 @@ public class FacadeService {
 	/**
 	 * Access to portlet request services 
 	 */
-	private PortletService portletService;
+//	private PortletService portletService;
 
 	/*
 	 ************************** Initialization ******************************/
@@ -37,19 +37,19 @@ public class FacadeService {
 
 	/* ************************** ACCESSORS ********************************* */
 
-	/**
-	 * @return Returns the portletService.
-	 */
-	public PortletService getPortletService() {
-		return portletService;
-	}
+//	/**
+//	 * @return Returns the portletService.
+//	 */
+//	public PortletService getPortletService() {
+//		return portletService;
+//	}
 
-	/**
-	 * @param portletService The portletService to set.
-	 */
-	public void setPortletService(PortletService portletService) {
-		this.portletService = portletService;
-	}
+//	/**
+//	 * @param portletService The portletService to set.
+//	 */
+//	public void setPortletService(PortletService portletService) {
+//		this.portletService = portletService;
+//	}
 
 	/**
 	 * Return a DomainService

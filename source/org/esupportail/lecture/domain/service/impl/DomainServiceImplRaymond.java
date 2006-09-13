@@ -15,10 +15,12 @@ import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.Context;
+import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.tmp.Item;
 import org.esupportail.lecture.domain.model.tmp.SourceRB;
 import org.esupportail.lecture.domain.model.tmp.CategoryRB;
 import org.esupportail.lecture.domain.service.DomainService;
+import org.esupportail.lecture.utils.exception.ErrorException;
 import org.esupportail.lecture.utils.exception.FatalException;
 import org.esupportail.lecture.utils.exception.MyException;
 import org.esupportail.lecture.beans.ContextUserBean;
@@ -126,6 +128,31 @@ public class DomainServiceImplRaymond implements DomainService {
 	}
 
 	public ContextUserBean getContextUserBean() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ContextUserBean getContextUserBean(String userId) throws ErrorException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ContextUserBean getContextUserBean(UserProfile userProfile) throws ErrorException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public UserProfile getUserProfile(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public UserBean getUserBean(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public ContextUserBean getContextUserBean(String userId, String contextId) throws ErrorException {
 		// TODO Auto-generated method stub
 		return null;
 	}

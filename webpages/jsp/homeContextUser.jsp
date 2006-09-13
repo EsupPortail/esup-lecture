@@ -15,10 +15,13 @@
 	<br/>	
 	<br/>	
 	<h:outputText value="Context :"/>
-	<h:outputText value="#homeContextUserBean.user.context.name" />
+	<h:outputText value="#{homeContextUserBean.context.name}" />
 	<br/>	
 	<br/>	
-	<h:outputText value="#homeContextUserBean.user.context.description" />
+	<h:outputText value="#{homeContextUserBean.context.description}" />
+	<br/>	
+	<br/>	
+	<h:outputText value="#{homeContextUserBean.context.test}" />
 	</t:div> 
 </f:view>
 

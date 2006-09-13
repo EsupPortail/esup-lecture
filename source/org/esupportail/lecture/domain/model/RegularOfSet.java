@@ -15,11 +15,13 @@ import org.apache.commons.logging.LogFactory;
  *
  */
 public class RegularOfSet {
-/* ************************** PROPERTIES ******************************** */	
+
+	/*
+	 *************************** PROPERTIES ******************************** */	
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(ChannelConfig.class);
+	protected static final Log log = LogFactory.getLog(RegularOfSet.class);
 	
 	/**
 	 * attribute required value 
@@ -32,7 +34,9 @@ public class RegularOfSet {
 	private String value = "";
 
 
-/* ************************** METHODS ******************************** */	
+	/*
+	 *************************** METHODS ******************************** */	
+	
 	/**
 	 * Check existence of attributes names used in regular definition
 	 */
@@ -56,7 +60,8 @@ public class RegularOfSet {
 		return string;
 	}
 
-/* ************************** ACCESSORS ******************************** */	
+	/*
+	 *************************** ACCESSORS ******************************** */	
 
 	/**
 	 * Returns attribute name

@@ -25,7 +25,9 @@ import org.esupportail.lecture.utils.exception.*;
  * @author gbouteil
  */
 public class ChannelConfig  {
-/* ********************** PROPERTIES**************************************/ 
+	
+	/* 
+	 ********************** PROPERTIES**************************************/ 
 	/**
 	 * Log instance 
 	 */
@@ -72,8 +74,11 @@ public class ChannelConfig  {
 	private static int nbContexts = 0;
 	
 
-/* ********************** METHODS *****************************************/
+	/*
+	 *********************** METHODS *****************************************/
 
+	
+	
 	/**
 	 * Get an instance of the file to load
 	 * @return an instance of the file to load (singleton)
@@ -317,7 +322,9 @@ public class ChannelConfig  {
     		c.initManagedCategoryProfiles(channel);
     	}
 	}
-/* ********************** ACCESSORS *****************************************/
+	
+	/*
+	 *********************** ACCESSORS *****************************************/
 
 	/**
 	 * Returns the classpath relative path of the channel config

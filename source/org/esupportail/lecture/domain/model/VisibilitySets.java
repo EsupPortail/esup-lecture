@@ -20,11 +20,12 @@ import org.apache.commons.logging.LogFactory;
  */
 public class VisibilitySets {
 
-/* ************************** PROPERTIES ******************************** */	
+	/*
+	 *************************** PROPERTIES ******************************** */	
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(ChannelConfig.class);
+	protected static final Log log = LogFactory.getLog(VisibilitySets.class);
 	/**
 	 * Group of allowed users to subscribe to element
 	 */
@@ -39,7 +40,8 @@ public class VisibilitySets {
 	private DefAndContentSets obliged = new DefAndContentSets();
 
 
-/* ************************** METHODS ******************************** */	
+	/*
+	 ************************** METHODS ******************************** */	
 	
 	/**
 	 * Check existence of group names, attributes names used in group definition
@@ -71,7 +73,8 @@ public class VisibilitySets {
 	}
 
 
-	/* ************************** ACCESSORS ******************************** */	
+	/*
+	 *************************** ACCESSORS ******************************** */	
 
 	/**
 	 * Returns allowed group visibility

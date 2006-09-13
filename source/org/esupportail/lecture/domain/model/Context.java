@@ -19,11 +19,12 @@ import org.apache.commons.logging.LogFactory;
 
 public class Context {
 	
-/* ************************** PROPERTIES ******************************** */
+	/*
+	 *************************** PROPERTIES ******************************** */
 	/**
 	 * Log instance
 	 */
-	protected static final Log log = LogFactory.getLog(Channel.class);
+	protected static final Log log = LogFactory.getLog(Context.class);
 
 	/**
 	 * The context name
@@ -48,16 +49,25 @@ public class Context {
 	/**
 	 * Managed category profiles available in this context.
 	 */
-	private Set<ManagedCategoryProfile> managedCategoryProfilesSet = new HashSet<ManagedCategoryProfile>();
+	private Set<ManagedCategoryProfile> managedCategoryProfilesSet;
 
 	/**
 	 * Set of managed category profiles id available in this context.
 	 */
-	private Set<String> refIdManagedCategoryProfilesSet = new HashSet<String>();
+	private Set<String> refIdManagedCategoryProfilesSet;
 
 
-/* *************************** Initialization ************************************/
+	/*
+	 **************************** Initialization ************************************/
 
+	/**
+	 * Constructor
+	 */
+	public Context() {
+		managedCategoryProfilesSet = new HashSet<ManagedCategoryProfile>();
+		refIdManagedCategoryProfilesSet = new HashSet<String>();
+	}
+	
 	/**
 	 * Initilizes associations to managed category profiles linked to this context.
 	 * The channel is given because it contains managed cateories profiles objects to link with
@@ -78,7 +88,8 @@ public class Context {
 		}
 	}
 
-	/* ************************** METHODS ******************************** */
+	/* 
+	 *************************** METHODS ******************************** */
 
 	/** 
 	 * Return the string containing context content : 
@@ -116,7 +127,8 @@ public class Context {
 		return string;
 	}
 
-/* ************************** ACCESSORS ******************************** */
+	/*
+	 * ************************** ACCESSORS ******************************** */
 	/**
 	 * Returns the name of the context 
 	 * @return name

@@ -1,5 +1,8 @@
 package org.esupportail.lecture.domain.model;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 //import java.util.Collection;
 //import java.util.Set;
@@ -16,9 +19,20 @@ public class CustomContext {
 	 ************************** PROPERTIES *********************************/	
 	
 	/**
-	 * The context of this customization refered to
+	 * Log instance
 	 */
-	Context context;
+	protected static final Log log = LogFactory.getLog(CustomContext.class);
+	
+	/**
+	 * Used for tests
+	 */
+	public String test = "CustomCharge";
+	
+	
+	/**
+	 * The context Id of this customization refered to
+	 */
+	String contextId;
 
 //	private Collection subscriptions;
 //	private Collection creations;
@@ -37,18 +51,18 @@ public class CustomContext {
 
 	/**
 	 * @return context
-	 * @see CustomContext#context
+	 * @see CustomContext#contextId
 	 */
-	public Context getContext() {
-		return context;
+	public String getContextId() {
+		return contextId;
 	}
 
 	/**
-	 * @param context : the context to set
-	 * @see CustomContext#context
+	 * @param contextId : the contextId to set
+	 * @see CustomContext#contextId
 	 */
-	public void setContext(Context context) {
-		this.context = context;
+	public void setContextId(String contextId) {
+		this.contextId = contextId;
 	}
 
 

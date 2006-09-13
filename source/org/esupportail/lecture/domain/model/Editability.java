@@ -6,12 +6,24 @@
 package org.esupportail.lecture.domain.model;
 
 /**
- * Editability mode of an element :
- * - no : no editibility
- * - personal : only personal element creation
- * - managed : only managed eleemnt importation
- * - all : personal element creation and managed element importaion
+ * Editability mode of an element 
  * @author gbouteil
  *
  */
-public enum Editability { NO,PERSONAL,MANAGED,ALL };
+public enum Editability { 
+	/**
+	 * no editibility
+	 */
+	NO,
+	/**
+	 * Only personal element creation
+	 */
+	PERSONAL,
+	/**
+	 * Only managed element importation
+	 */
+	MANAGED,
+	/**
+	 * Personal element creation and managed element importaion
+	 */
+	ALL };

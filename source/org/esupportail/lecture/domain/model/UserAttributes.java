@@ -1,11 +1,14 @@
 package org.esupportail.lecture.domain.model;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 //import java.util.ArrayList;
 //import java.util.Hashtable;
 //import java.util.List;
 
 /**
- * Class where are defined differents user attributes, provided by portlet conatiner,
+ * Class where are defined differents user attributes, provided by portlet container,
  * used by the lecture channel.
  * @author gbouteil
  *
@@ -15,10 +18,16 @@ package org.esupportail.lecture.domain.model;
  *
  */
 public class UserAttributes {
-
+	
 	/*
 	 ************************** PROPERTIES *********************************/	
 
+	/**
+	 * Log instance
+	 */
+	protected static final Log log = LogFactory.getLog(UserAttributes.class);
+
+	
 	/**
 	 * Attribute name used to identified the user profile.
 	 * It is defined in the channel config

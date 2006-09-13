@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletSession;
 import javax.servlet.http.HttpServletRequest;
@@ -19,49 +20,69 @@ import org.esupportail.commons.logging.LoggerImpl;
  * A class that provides facilities with portlet requests.
  */
 public class PortletRequestUtils {
+// TODO tout revoir ...
 
-
-//	
-//	/**
-//	 * The attribute to store the state of the application.
-//	 */
-//	private static final String APPLICATION_STATE = "applicationState";
-//	
 	/**
 	 * A logger.
 	 */
 	private static final LoggerImpl LOG = new LoggerImpl(PortletRequestUtils.class);
 
-
-	/**
-	 * @return The current PortletRequest, null if not found.
-	 */
-	private static PortletRequest getPortletRequest() {
+	
+	private static FacesContext getFacesContext(){
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		if (facesContext == null) {
 			LOG.warn("FacesContext.getCurrentInstance() returns null, " 
 					+ "can not get the current HTTP servlet request.");
 			return null;
 		}
-		ExternalContext externalContext = facesContext.getExternalContext();
+		return facesContext;
+	}
+
+	private static ExternalContext getExternalContext(){
+		FacesContext facesContext = getFacesContext();
+		ExternalContext externalContext = facesContext.getExternalContext(); 
 		if (externalContext == null) {
 			LOG.warn("facesContext.getExternalContext() returns null, " 
 					+ "can not get the current HTTP servlet request.");
 			return  null;
 		}
+		return externalContext;
+	}
+	
+	private static PortletRequest getPortletRequest() {
+
+		ExternalContext externalContext = getExternalContext();
 		Object requestObject = externalContext.getRequest();
+		
 		if (requestObject == null) {
 			LOG.warn("externalContext.getRequest() returns null, " 
-					+ "can not get the current HTTP servlet request.");
+				+ "can not get the current HTTP servlet request.");
 			return null;
 		}
 		if (!(requestObject instanceof PortletRequest)) {
 			LOG.warn("requestObject is not a PortletRequest, " 
-					+ "can not get the current portlet request.");
+				+ "can not get the current portlet request.");
 			return null;
 		}
-		return (PortletRequest) requestObject;
+		
+		PortletRequest portletRequest = (PortletRequest) requestObject;
+		
+		return portletRequest;
 	}
+	
+	private static PortletPreferences getPortletPreferences(){
+		
+		PortletRequest portletRequest = getPortletRequest();
+		return portletRequest.getPreferences();
+		
+	}
+	
+	
+	
+	// TODO completer
+	
+	
+	
 	
 	/**
 	 * @param request
@@ -90,8 +111,22 @@ public class PortletRequestUtils {
 		return getUserAttribute(null,attributeName);
 	}
 	
-	
-	
+	/**
+	 * Return the preference named by "name"
+	 * @param name
+	 * @return the preference value
+	 */
+	public static String getPreferences(String name){
+		
+	    ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+	    LOG.error(" external context : "+externalContext.toString() );
+        PortletRequest request = (PortletRequest) externalContext.getRequest();
+        PortletPreferences portletPreferences = request.getPreferences();
+        String value = portletPreferences.getValue(name, name+" not define !");
+        return value;
+//		String value = getPortletPreferences().getValue(name, "Preference '"+name+"' not define !");
+//		return value;
+	}
 //	/**
 //	 * Private constructor.
 //	 */

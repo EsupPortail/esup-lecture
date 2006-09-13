@@ -55,12 +55,25 @@ public interface DomainService {
 		public List<Category> getCategories();
 		
 		/**
-		 * A UserWerb contains informations about a user profile to be displayed
+		 * A UserBean contains informations about a user profile to be displayed
+		 * @param userId identifiant of the user
 		 * @return a UserBean
 		 * @see org.esupportail.lecture.beans.UserBean
 		 */
-		public UserBean getUserBean();
+		public UserBean getUserBean(String userId)  ;
+		
+		/**
+		 * This bean contains informations about a context to be displayed
+		 * according to a user profile identified by "userId"
+		 * @param userId identifiant of the user
+		 * @param contextId identifiant of the context
+		 * @return a ContextUserBean
+		 * @exception ErrorException
+		 * @see org.esupportail.lecture.beans.ContextUserBean
+		 */
+		public ContextUserBean getContextUserBean(String userId,String contextId) throws ErrorException;
 
 
+		
 
 }

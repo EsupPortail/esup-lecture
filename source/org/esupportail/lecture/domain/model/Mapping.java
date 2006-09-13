@@ -5,6 +5,9 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * An xslt and xpath mapping to source view and item acess
  * @author gbouteil
@@ -16,8 +19,16 @@ package org.esupportail.lecture.domain.model;
  *
  */
 public class Mapping {
-/* ************************** PROPERTIES ******************************** */	
 
+	/*
+	 ************************** PROPERTIES ******************************** */	
+
+	/**
+	 * Log instance
+	 */
+	protected static final Log log = LogFactory.getLog(Mapping.class);
+
+	
 	/**
 	 * Name of the dtd
 	 */
@@ -43,7 +54,8 @@ public class Mapping {
 	 */
 	private String itemXPath = "";
 	
-/* ************************** Methods ******************************** */	
+	/*
+	 ************************** Methods ******************************** */	
 
 	/**
 	 * Return a string containing mapping content : dtd, xsltfile, itemXPath, xmlns and xmlType 
@@ -71,7 +83,8 @@ public class Mapping {
 		return string;
 	}
 
-/* ************************** ACCESSORS ******************************** */	
+	/*
+	 ************************** ACCESSORS ******************************** */	
 
 	/**
 	 * Returns the dtd of the mapping

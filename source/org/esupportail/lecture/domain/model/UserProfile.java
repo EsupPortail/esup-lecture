@@ -3,6 +3,9 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.Hashtable;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 
 /**
@@ -14,6 +17,12 @@ public class UserProfile {
 	
 	/*
 	 ************************** PROPERTIES *********************************/	
+	
+	/**
+	 * Log instance
+	 */
+	protected static final Log log = LogFactory.getLog(UserProfile.class);
+
 	
 	/**
 	 * Id of the user, get from portlet request by USER_ID, defined in the channel config
@@ -29,18 +38,41 @@ public class UserProfile {
 
 	/*
 	 ************************** Initialization ************************************/
+	
+	protected UserProfile(){
+		customContexts = new Hashtable<String,CustomContext>();
+	}
+	
 	/*
 	 *************************** METHODS ************************************/
 
-	protected void addContext(Context context){
-		// TODO a voir 
+	
+	/**
+	 * Return the customContext identified by "id" if exists. Return null else
+	 * @param id identifier of the customContext
+	 * @return customContext (or null)
+	 */
+	public CustomContext getCustomContext(String id){
+		//TODO acces dao
+		CustomContext customContext = customContexts.get(id);
+		if (customContext == null){
+			customContext = new CustomContext();
+			customContext.setContextId(id);
+			addCustomContext(customContext);
+			//TODO ajout en base
+		}
+		return customContext;
+	}
+	
+	protected void addCustomContext(CustomContext customContext){
+		// TODO a voir, acces dao
 		// vérifier que le context n'est pas déjà défini pour le user
-		CustomContext customContext = new CustomContext();
-		customContext.setContext(context);
+		customContexts.put(customContext.getContextId(),customContext);
 	}
 	
 	/* ************************** ACCESSORS ********************************* */
 
+	
 
 
 	/**
