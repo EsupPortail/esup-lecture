@@ -3,26 +3,58 @@
 
 <beans>
 	<!-- DAO service de test -->
-	<bean id="daoServiceStub" class="org.esupportail.lecture.dao.DaoServiceStub">
+	<bean id="daoServiceStub"
+		class="org.esupportail.lecture.dao.DaoServiceStub">
 	</bean>
-	
-	
-<!--	<bean id="daoServiceHibernate" class="org.esupportail.lecture.dao.hibernate.DaoServiceHibernate">
+
+	<!-- DAO Hibernate -->
+	<bean id="daoServiceHibernate"
+		class="org.esupportail.lecture.dao.hibernate.DaoServiceHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-	  <property name="dataSource"><ref bean="dataSource"/></property>
-	  <property name="mappingResources">
-	    <list>
-	      <value>userprofiles.hbm</value>
-	    </list>
-	  </property>
-	  <property name="hibernateProperties">
-	    <props>
-	      <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-	    </props>
-	  </property>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+		<property name="mappingResources">
+			<list>
+<!-- 
+				<value>customCategory.hbm</value>
+				<value>customSource.hbm</value>
+				<value>customContext.hbm</value>
+ -->
+				<value>userProfile.hbm</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+			</props>
+		</property>
 	</bean>
-	-->
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+<!-- 
+		<property name="driverClassName" value="${db.driver}" />
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.user}" />
+		<property name="password" value="${db.password}" />
+ -->
+	</bean>
+
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+<!-- 
+		<property name="location"
+			value="/WEB-INF/classes/db.properties" />
+ -->
+		<property name="location"
+			value="classpath:db.properties" />
+
+ 	</bean>
 </beans>
