@@ -33,11 +33,8 @@
         <managed-bean-class>org.esupportail.lecture.web.HomeBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
-			<!-- attribut du bean : nom -->
 			<property-name>facadeService</property-name>
-			<!-- classe de l'attribut -->
-			<property-class>org.esupportail.lecture.web.FacadeService</property-class>
-			<!-- valeur de l'attribut -->
+			<property-class>org.esupportail.lecture.domain.service.FacadeService</property-class>
 			<value>#{facadeService}</value>
 		</managed-property>
     </managed-bean>

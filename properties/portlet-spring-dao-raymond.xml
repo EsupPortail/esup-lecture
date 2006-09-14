@@ -7,9 +7,25 @@
 		class="org.esupportail.lecture.dao.DaoServiceStub">
 	</bean>
 
+	<!-- DAO Impl -->
+	<bean id="daoServiceImpl"
+		class="org.esupportail.lecture.dao.impl.DaoServiceImpl">
+		<property name="hibernateService">
+			<ref bean="daoServiceHibernate" />
+		</property>
+		<property name="remoteXMLService">
+			<ref bean="daoServiceRemoteXML" />
+		</property>
+	</bean>
+
+	<!-- DAO Remote XML -->
+	<bean id="daoServiceRemoteXML"
+		class="org.esupportail.lecture.dao.impl.DaoServiceRemoteXML">
+	</bean>
+
 	<!-- DAO Hibernate -->
 	<bean id="daoServiceHibernate"
-		class="org.esupportail.lecture.dao.hibernate.DaoServiceHibernate">
+		class="org.esupportail.lecture.dao.impl.DaoServiceHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
@@ -33,6 +49,7 @@
 				<prop key="hibernate.dialect">
 					org.hibernate.dialect.MySQLDialect
 				</prop>
+				<prop key="hibernate.show_sql">true</prop>
 			</props>
 		</property>
 	</bean>
@@ -45,6 +62,10 @@
 		<property name="username" value="${db.user}" />
 		<property name="password" value="${db.password}" />
  -->
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://sgbd.univ-rennes1.fr/lecture_dev" />
+		<property name="username" value="dev_lecture_dev" />
+		<property name="password" value="qepP7fO5t" />
 	</bean>
 
 	<bean id="propertyConfigurer"

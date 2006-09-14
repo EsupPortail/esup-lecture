@@ -8,7 +8,7 @@ package org.esupportail.lecture.test.drivers;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
-import org.esupportail.lecture.dao.hibernate.DaoServiceHibernate;
+import org.esupportail.lecture.dao.impl.DaoServiceHibernate;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.UserProfile;
@@ -36,9 +36,14 @@ public class TestDAOLectureRaymond {
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		
 		// get one UserProfile
-		DaoService dao = (DaoService)factory.getBean("daoServiceHibernate");
+		DaoService dao = (DaoService)factory.getBean("daoServiceImpl");
 		UserProfile userProfile = dao.getUserProfile("bourges");
-		System.out.println("userProfile.getUserId --> " + userProfile.getUserId());
+		if (userProfile != null) {
+			System.out.println("userProfile.getUserId --> " + userProfile.getUserId());			
+		}
+		else {
+			System.out.println("userProfile est null");
+		}
 		// set and get an other UserProfile
 		userProfile = new UserProfile();
 		userProfile.setUserId("test");
