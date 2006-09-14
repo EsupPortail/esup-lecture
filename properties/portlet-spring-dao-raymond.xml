@@ -54,20 +54,6 @@
 		</property>
 	</bean>
 
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-<!-- 
-		<property name="driverClassName" value="${db.driver}" />
-		<property name="url" value="${db.url}" />
-		<property name="username" value="${db.user}" />
-		<property name="password" value="${db.password}" />
- -->
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://sgbd.univ-rennes1.fr/lecture_dev" />
-		<property name="username" value="dev_lecture_dev" />
-		<property name="password" value="qepP7fO5t" />
-	</bean>
-
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 <!-- 
@@ -75,7 +61,24 @@
 			value="/WEB-INF/classes/db.properties" />
  -->
 		<property name="location"
-			value="classpath:db.properties" />
+			value="D:/esupdev/esupdev-2.5-esup-2/uPortal-quick-start/webapps/esup-lecture/WEB-INF/classes/db.properties" />
 
  	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>${db.driver}</value>
+		</property>
+		<property name="url" value="${db.url}" />
+		<property name="username" value="${db.user}" />
+		<property name="password" value="${db.password}" />
+<!-- 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://sgbd.univ-rennes1.fr/lecture_dev" />
+		<property name="username" value="dev_lecture_dev" />
+		<property name="password" value="qepP7fO5t" />
+ -->
+	</bean>
+
 </beans>
