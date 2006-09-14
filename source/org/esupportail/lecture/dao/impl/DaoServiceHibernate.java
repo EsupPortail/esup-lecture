@@ -1,4 +1,4 @@
-package org.esupportail.lecture.dao.hibernate;
+package org.esupportail.lecture.dao.impl;
 
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.model.CustomContext;
@@ -8,7 +8,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 public class DaoServiceHibernate extends HibernateDaoSupport implements DaoService {
 	
 	public UserProfile getUserProfile(String userId) {
-	    return (UserProfile)getHibernateTemplate().load(UserProfile.class, userId);
+	    return (UserProfile)getHibernateTemplate().get(UserProfile.class, userId);
 	}
 
 	public void addUserProfile(UserProfile userProfile) {
@@ -17,7 +17,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport implements DaoServi
 	}	
 	
 	public CustomContext getCustomContext(int Id) {
-		return (CustomContext)getHibernateTemplate().load(CustomContext.class, Id);
+		return (CustomContext)getHibernateTemplate().get(CustomContext.class, Id);
 	}
 
 
