@@ -39,7 +39,7 @@ public class UserProfile {
 	/*
 	 ************************** Initialization ************************************/
 	
-	protected UserProfile(){
+	public UserProfile(){
 		customContexts = new Hashtable<String,CustomContext>();
 	}
 	
