@@ -91,6 +91,20 @@ public class Context {
 	/* 
 	 *************************** METHODS ******************************** */
 
+	public void getManagedCategories() {
+		
+		Iterator iterator = managedCategoryProfilesSet.iterator();
+			
+		while (iterator.hasNext()) {
+			ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
+			mcp.getCategory();
+		}
+	}
+	
+	
+	
+	
+	
 	/** 
 	 * Return the string containing context content : 
 	 * name, description, id, id category profiles set, managed category profiles available in this context
@@ -218,6 +232,8 @@ public class Context {
 	protected void addRefIdManagedCategoryProfile(String s) {
 		refIdManagedCategoryProfilesSet.add(s);
 	}
+
+
 	
 //	a retirer si inutile	
 //	protected void setSetRefIdManagedCategoryProfiles(Set<String> s) {

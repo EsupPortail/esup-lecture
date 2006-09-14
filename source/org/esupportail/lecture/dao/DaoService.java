@@ -1,4 +1,6 @@
 package org.esupportail.lecture.dao;
+import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.UserProfile;
 
 
@@ -23,5 +25,17 @@ public interface DaoService {
 	 * @param userProfile : user to add
 	 */
 	public void addUserProfile(UserProfile userProfile);
+
+	/**
+	 * Get a managed category from a remote place
+	 * @param urlCategory url of the remote category
+	 * @param ttl ttl of the category
+	 * @param profileId identifier of the managed category profile referer
+	 * @return the managedCategory
+	 */
+	public ManagedCategory getCategory(String urlCategory,int ttl,String profileId);
+
+
+
 		
 }

@@ -7,7 +7,7 @@ package org.esupportail.lecture.domain.model;
 
 
 import java.util.*;
-
+import org.esupportail.lecture.dao.DaoService;
 
 /**
  * Managed category profile element.
@@ -19,6 +19,11 @@ import java.util.*;
 public class ManagedCategoryProfile extends CategoryProfile implements ManagedComposantProfile {
 
 /* ************************** PROPERTIES ******************************** */	
+	/**
+	 * Access to data
+	 */
+	DaoService daoService;
+	
 	/**
 	 * Proxy ticket CAS to access remote managed category (not necessary) 
 	 */
@@ -60,11 +65,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 */
 	private int ttl;
 	
-	/**
-	 * Remote managed category loaded
-	 */
-	private ManagedCategory category = null; 
-	
+
 	/**
 	 * Contexts where these profiles category are referenced
 	 */
@@ -79,6 +80,15 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 
 /* ************************** METHODS ******************************** */	
 
+	
+	/** 
+	 * Returns the managed category
+	 * @return category
+	 * @see ManagedCategoryProfile#category
+	 */
+	protected ManagedCategory getCategory() {
+		return daoService.getCategory(urlCategory,ttl,this.getId());
+	}
 	/**
 	 * Return a string containing content of the managed category profile :
 	 * URL of the remote managed category, trustCategory parameter, Access mode on remote managed category,
@@ -118,7 +128,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		string += "	ttl : " + ttl +"\n";
 		
 		/* The remote managed category */
-		string += "	category : " + category +"\n";
+		//string += "	category : " + category +"\n";
 
 		/* Contexts where these profiles category are defined */
 		string += "	contextsSet : \n";
@@ -292,23 +302,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		this.ttl = ttl;
 	}
 
-	/** 
-	 * Returns the managed category
-	 * @return category
-	 * @see ManagedCategoryProfile#category
-	 */
-	protected ManagedCategory getCategory() {
-		return category;
-	}
+
 	
-	/**
-	 * Sets the managed category
-	 * @param category the managed category
-	 * @see ManagedCategoryProfile#category
-	 */
-	protected void setCategory(ManagedCategory category) {
-		this.category = category;
-	}
+
 
 // Aretirer si inutile	
 //	protected Set<Context> getContextsSet() {
@@ -328,6 +324,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	protected void addContext(Context c){
 		contextsSet.add(c);
 	}
+
+
 	
 // utiles plus tard	
 //	/**

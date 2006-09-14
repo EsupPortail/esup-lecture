@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
+import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.UserProfile;
 /**
  * Stub Service to Data Access Object : use to test upper layers, instead of using 
@@ -26,6 +28,8 @@ public class DaoServiceStub  implements DaoService {
 	 * UserProfiles to be stored in the channel
 	 */
 	Hashtable<String,UserProfile> userProfiles;	
+	
+
 	
 	/* 
 	 *************************** INITIALIZATION *********************************/	
@@ -53,6 +57,12 @@ public class DaoServiceStub  implements DaoService {
 	 */
 	public void addUserProfile(UserProfile userProfile) {
 		userProfiles.put(userProfile.getUserId(),userProfile);
-	}	
+	}
+
+	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

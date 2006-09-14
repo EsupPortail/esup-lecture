@@ -252,9 +252,8 @@ public class Channel  {
 	 * The context is defiend in channel config if exists
 	 * @param contextId
 	 * @return  the context identified by "contextId"
-	 * @throws ErrorException if no context is iedntified by "contextId"
 	 */
-	public Context getContext(String contextId) throws ErrorException {
+	public Context getContext(String contextId) {
 		Context context = getContextById(contextId);
 		return context;
 	}

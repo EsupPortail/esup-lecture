@@ -3,6 +3,8 @@ package org.esupportail.lecture.domain.model;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
+
 
 //import java.util.Collection;
 //import java.util.Set;
@@ -87,7 +89,7 @@ public class CustomContext {
 //		this.creations = creations;
 //	}
 
-
+	
 
 //
 //	public Set getFoldedCategories() {

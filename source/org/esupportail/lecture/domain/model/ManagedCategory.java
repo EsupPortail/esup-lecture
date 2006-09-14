@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.Hashtable;
+
 
 
 
@@ -37,10 +39,15 @@ public class ManagedCategory extends Category {
 	 * ManagedCategoryProfile corresponding
 	 */
 	private Editability edit;
+	
+	private Hashtable<String,SourceProfile> sourceProfiles;
 
 
 /* ********************** ACCESSORS**************************************/ 
 
+	public ManagedCategory() {
+		sourceProfiles = new Hashtable<String,SourceProfile>();
+	}
 	
 	/**
 	 * Returns visibility sets of this managed category (if defined)

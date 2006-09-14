@@ -5,6 +5,7 @@ import java.util.Hashtable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.dao.DaoService;
 
 
 
@@ -22,7 +23,6 @@ public class UserProfile {
 	 * Log instance
 	 */
 	protected static final Log log = LogFactory.getLog(UserProfile.class);
-
 	
 	/**
 	 * Id of the user, get from portlet request by USER_ID, defined in the channel config
@@ -30,6 +30,8 @@ public class UserProfile {
 	 * @see ChannelConfig#loadUserId()
 	 */
 	private String userId;
+	
+	
 	
 	/**
 	 * Hashtable of CustomContexts defined for the user, indexed by their Id.
@@ -48,46 +50,42 @@ public class UserProfile {
 
 	
 	/**
-	 * Return the customContext identified by "id" if exists. Return null else
-	 * @param id identifier of the customContext
+	 * Return the customContext identified by the id of the context (contextId)id" 
+	 * if exists, else return null.
+	 * @param constextId identifier of the context refered by the customContext
 	 * @return customContext (or null)
 	 */
-	public CustomContext getCustomContext(String id){
-		//TODO acces dao
-		CustomContext customContext = customContexts.get(id);
+	public CustomContext getCustomContext(String contextId){
+		CustomContext customContext = 
+				customContexts.get(contextId);
 		if (customContext == null){
 			customContext = new CustomContext();
-			customContext.setContextId(id);
-			addCustomContext(customContext);
-			//TODO ajout en base
+			customContext.setContextId(contextId);
+			customContexts.put(contextId,customContext);
 		}
 		return customContext;
 	}
 	
-	protected void addCustomContext(CustomContext customContext){
-		// TODO a voir, acces dao
-		// vérifier que le context n'est pas déjà défini pour le user
-		customContexts.put(customContext.getContextId(),customContext);
-	}
+
 	
 	/* ************************** ACCESSORS ********************************* */
 
 	
 
 
-	/**
-	 * @return Returns the customContexts.
-	 */
-	public Hashtable<String, CustomContext> getCustomContexts() {
-		return customContexts;
-	}
-
-	/**
-	 * @param customContexts The customContexts to set.
-	 */
-	public void setCustomContexts(Hashtable<String, CustomContext> customContexts) {
-		this.customContexts = customContexts;
-	}
+//	/**
+//	 * @return Returns the customContexts.
+//	 */
+//	public Hashtable<String, CustomContext> getCustomContexts() {
+//		return customContexts;
+//	}
+//
+//	/**
+//	 * @param customContexts The customContexts to set.
+//	 */
+//	public void setCustomContexts(Hashtable<String, CustomContext> customContexts) {
+//		this.customContexts = customContexts;
+//	}
 
 	/**
 	 * @return Returns the userId.

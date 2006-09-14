@@ -37,6 +37,7 @@ public class UserAttributes {
 	/**
 	 * Name of the portlet preference that set a context to an instance of the channel
 	 */
+	// TODO : est ce à garder dans cette classe ?
 	public static final String CONTEXT = "context";
 	
 	// voir leur 
