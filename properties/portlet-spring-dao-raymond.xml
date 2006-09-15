@@ -29,6 +29,7 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+	<!-- Hibernate sessionFactory -->
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="dataSource">
@@ -54,12 +55,14 @@
 		</property>
 	</bean>
 
+	<!-- External properties configurer -->
  	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location"
 			value="classpath:db.properties" />
  	</bean>
 
+	<!-- DataSource def -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 <!-- 
@@ -76,4 +79,25 @@
 		<property name="password" value="qepP7fO5t" />
 	</bean>
 
+	<!--  
+		The created cache manager is an instance of net.sf.ehcache.CacheManager
+	-->
+	<bean id="cacheManager"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+<!-- 
+		<property name="configLocation">
+			<value>classpath:ehcache.xml</value>
+		</property>
+ -->
+	</bean>
+
+	<bean id="cacheProviderFacade"
+		class="org.springmodules.cache.provider.ehcache.EhCacheFacade">
+		<property name="cacheManager" ref="cacheManager" />
+<!-- 
+		<property name="cacheName">
+			<value>org.esupportail.lecture.dao.impl.REMOTE_XML</value>
+		</property>
+ -->
+	</bean>
 </beans>
