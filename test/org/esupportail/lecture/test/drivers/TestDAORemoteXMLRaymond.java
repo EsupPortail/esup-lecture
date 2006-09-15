@@ -11,8 +11,10 @@ import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.dao.impl.DaoServiceHibernate;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.service.DomainService;
+import org.esupportail.lecture.utils.exception.ErrorException;
 
 import java.io.IOException;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
@@ -23,7 +25,7 @@ import org.springframework.core.io.ClassPathResource;
  * @author gbouteil
  * @see org.esupportail.lecture.domain.model
  */
-public class TestDAOLectureRaymond {
+public class TestDAORemoteXMLRaymond {
 	
 	protected static final Log log = LogFactory.getLog(Channel.class); 
 	
@@ -35,25 +37,13 @@ public class TestDAOLectureRaymond {
 		ClassPathResource res = new ClassPathResource("applicationContextRaymond.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		
-		// get one UserProfile
-		DaoService dao = (DaoService)factory.getBean("daoServiceImpl");
-		UserProfile userProfile = dao.getUserProfile("bourges");
-		if (userProfile != null) {
-			System.out.println("userProfile.getUserId --> " + userProfile.getUserId());			
+		try {
+			DaoService dao = (DaoService)factory.getBean("daoServiceImpl");
+			ManagedCategory cat = dao.getCategory("http://perso.univ-rennes1.fr:8080/raymond.bourges//categoryTest.xml", 100, "test");
+			System.out.println("name --> "+cat.getName());
+		} catch (ErrorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		else {
-			System.out.println("userProfile est null");
-		}
-		// set and get an other UserProfile
-		userProfile = new UserProfile();
-		userProfile.setUserId("test");
-		dao.addUserProfile(userProfile);
-		userProfile = dao.getUserProfile("test");
-		System.out.println("userProfile.getUserId --> " + userProfile.getUserId());
-//		CustomContext customContext = dao.getCustomContext(1);
-//		System.out.println("customContext.getContextId --> " + customContext.getContextId());
-		
-		
-		
 	}
 }
