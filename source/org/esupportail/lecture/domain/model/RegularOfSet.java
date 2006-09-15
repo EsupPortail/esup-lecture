@@ -76,7 +76,7 @@ public class RegularOfSet {
 	 * @param attribute
 	 * @see RegularOfSet#attribute
 	 */
-	protected void setAttribute(String attribute) {
+	public void setAttribute(String attribute) {
 		this.attribute = attribute;
 	}
 
@@ -93,7 +93,7 @@ public class RegularOfSet {
 	 * @param value
 	 * @see RegularOfSet#value
 	 */
-	protected void setValue(String value) {
+	public void setValue(String value) {
 		this.value = value;
 	}
 	

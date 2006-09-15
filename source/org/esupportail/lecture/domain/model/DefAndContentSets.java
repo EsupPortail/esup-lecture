@@ -109,7 +109,7 @@ public class DefAndContentSets {
 	 * @param group group to add
 	 * @see DefAndContentSets#groups
 	 */
-	protected void addGroup(String group) {
+	public void addGroup(String group) {
 		this.groups.add(group);
 	}
 	/**
@@ -133,7 +133,7 @@ public class DefAndContentSets {
 	 * @param regular
 	 * @see DefAndContentSets#regulars
 	 */
-	protected void addRegular(RegularOfSet regular) {
+	public void addRegular(RegularOfSet regular) {
 		this.regulars.add(regular);
 	}
 	

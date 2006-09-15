@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE category SYSTEM "category.dtd" >
+<category edit="all" name="TTTTTTTTT" ttl="">
+  <description>description</description>
+  <sourceProfiles>
+    <sourceProfile id="1" access="public" name="toto" specificUserContent="no" ttl="100" url="http://test" xpath="test" xslt="test">
+      <visibility>
+      <allowed>
+      	<regular attribute="attribute1.1" value="value1.1" />
+      	<regular attribute="attribute1.2" value="value1.2" />
+      	<group name="grp1.1" />
+      	<group name="grp1.2" />
+      </allowed>
+      <autoSubscribed>
+      	<regular attribute="attribute2.1" value="value2.1" />
+      	<regular attribute="attribute2.2" value="value2.2" />
+      	<group name="grp2.1" />
+      	<group name="grp2.2" />
+      </autoSubscribed>
+      <obliged>
+      	<regular attribute="attribute3.1" value="value3.1" />
+      	<regular attribute="attribute3.2" value="value3.2" />
+      	<group name="grp3.1" />
+      	<group name="grp3.2" />
+      </obliged>
+      </visibility>
+    </sourceProfile>
+    <sourceProfile id="2" access="public" name="toto2" specificUserContent="no" ttl="100" url="http://test" xpath="test" xslt="test">
+      <visibility>
+      </visibility>
+    </sourceProfile>
+    <sourceProfile id="3" access="cas" name="toto3" specificUserContent="no" ttl="100" url="http://test" xpath="test" xslt="test">
+      <visibility>
+      </visibility>
+    </sourceProfile>
+  </sourceProfiles>
+      <visibility>
+      <allowed>
+      	<regular attribute="attribute4.1" value="value4.1" />
+      	<regular attribute="attribute4.2" value="value4.2" />
+      	<group name="grp4.1" />
+      	<group name="grp4.2" />
+      </allowed>
+      <autoSubscribed>
+      	<regular attribute="attribute4.1" value="value4.1" />
+      	<regular attribute="attribute4.2" value="value4.2" />
+      	<group name="grp4.1" />
+      	<group name="grp4.2" />
+      </autoSubscribed>
+      <obliged>
+      	<regular attribute="attribute4.1" value="value4.1" />
+      	<regular attribute="attribute4.2" value="value4.2" />
+      	<group name="grp4.1" />
+      	<group name="grp4.2" />
+      </obliged>
+      </visibility>
+</category>

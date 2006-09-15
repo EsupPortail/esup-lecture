@@ -87,7 +87,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @see ManagedCategoryProfile#category
 	 */
 	protected ManagedCategory getCategory() {
-		return daoService.getCategory(urlCategory,ttl,this.getId());
+		//return daoService.getCategory(urlCategory,ttl,this.getId());
+		return null;
 	}
 	/**
 	 * Return a string containing content of the managed category profile :

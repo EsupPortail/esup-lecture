@@ -165,7 +165,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @param specificUserContent
 	 * @see ManagedSourceProfile#specificUserContent
 	 */
-	protected void setSpecificUserContent(boolean specificUserContent) {
+	public void setSpecificUserContent(boolean specificUserContent) {
 		this.specificUserContent = specificUserContent;
 	}
 
@@ -185,7 +185,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @param xsltURL
 	 * @see ManagedSourceProfile#xsltURL
 	 */
-	protected void setXsltURL(String xsltURL) {
+	public void setXsltURL(String xsltURL) {
 		this.xsltURL = xsltURL;
 	}
 
@@ -204,7 +204,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @param itemXPath
 	 * @see ManagedSourceProfile#xsltURL
 	 */
-	protected void setItemXPath(String itemXPath) {
+	public void setItemXPath(String itemXPath) {
 		this.itemXPath = itemXPath;
 	}
 	

@@ -62,7 +62,7 @@ public class ManagedCategory extends Category {
 	 * Sets visibility sets of this managed category
 	 * @param visibility
 	 */
-	protected void setVisibility(VisibilitySets visibility) {
+	public void setVisibility(VisibilitySets visibility) {
 		this.visibility = visibility;
 	}
 
@@ -80,8 +80,16 @@ public class ManagedCategory extends Category {
 	 * Sets ttl of this managed category
 	 * @param ttl
 	 */
-	protected void setTtl(int ttl) {
+	public void setTtl(int ttl) {
 		this.ttl = ttl;
+	}
+
+	public Hashtable<String, SourceProfile> getSourceProfiles() {
+		return sourceProfiles;
+	}
+
+	public void setSourceProfiles(Hashtable<String, SourceProfile> sourceProfiles) {
+		this.sourceProfiles = sourceProfiles;
 	}
 
 

@@ -23,10 +23,11 @@ public abstract class Category {
 	 * Description of the category
 	 */
 	private String description = "";
+
 	/**
 	 * Id of the category
 	 */
-	private int id;
+	private String profilId;
 	
 	/*
 	 *************************** METHODS *********************************/
@@ -67,7 +68,7 @@ public abstract class Category {
 	 * @param description
 	 * @see Category#description
 	 */
-	protected void setDescription(String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -75,20 +76,20 @@ public abstract class Category {
 	/**
 	 * Returns the id category
 	 * @return id
-	 * @see Category#id
+	 * @see Category#profilId
 	 */
-	protected int getId() {
-		return id;
+	public String getProfilId() {
+		return profilId;
 	}
 
 
 	/**
 	 * Sets id category
-	 * @param id
-	 * @see Category#id
+	 * @param profilId
+	 * @see Category#profilId
 	 */
-	protected void setId(int id) {
-		this.id = id;
+	public void setProfilId(String profilId) {
+		this.profilId = profilId;
 	}
 
 }

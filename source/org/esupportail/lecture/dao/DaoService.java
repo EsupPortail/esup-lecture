@@ -1,7 +1,7 @@
 package org.esupportail.lecture.dao;
-import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.UserProfile;
+import org.esupportail.lecture.utils.exception.ErrorException;
 
 
 
@@ -33,7 +33,7 @@ public interface DaoService {
 	 * @param profileId identifier of the managed category profile referer
 	 * @return the managedCategory
 	 */
-	public ManagedCategory getCategory(String urlCategory,int ttl,String profileId);
+	public ManagedCategory getCategory(String urlCategory,int ttl,String profileId) throws ErrorException;
 
 
 

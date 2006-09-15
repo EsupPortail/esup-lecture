@@ -161,39 +161,39 @@ public class HomeBean {
 		return "OK";
 	}
 
-	public void selectElement(ActionEvent e) {
-		if (log.isDebugEnabled()) {
-			log.debug("In selectElement");
-		}
-		FacesContext context = FacesContext.getCurrentInstance(); 
-		Map map = context.getExternalContext().getRequestParameterMap();
-		String catID = (String)map.get("categoryID");
-		if (log.isDebugEnabled()) {
-			log.debug("categoryID = "+catID);
-		}
-		String srcId = (String)map.get("sourceID");
-		if (log.isDebugEnabled()) {
-			log.debug("sourceID = "+srcId);
-		}
-		CategoryRB cat = getCategorieByID(Integer.parseInt(catID));
-		CategoryRB current = getCurrentCategory();
-		if (srcId.equals("")) {
-			//toggle expanded status
-			cat.setExpanded(!cat.isExpanded());
-		} 
-		else {
-			//unselect current selected source
-			SourceRB src2 = getSelectedSourceFromCategory(cat);
-			if (src2 != null) {
-				src2.setSelected(false);
-			}
-			SourceRB src = getSourceByID(cat, Integer.parseInt(srcId));
-			//select new source
-			src.setSelected(true);
-		}
-		if (current != null) current.setSelected(false);
-		cat.setSelected(true);
-	}
+//	public void selectElement(ActionEvent e) {
+//		if (log.isDebugEnabled()) {
+//			log.debug("In selectElement");
+//		}
+//		FacesContext context = FacesContext.getCurrentInstance(); 
+//		Map map = context.getExternalContext().getRequestParameterMap();
+//		String catID = (String)map.get("categoryID");
+//		if (log.isDebugEnabled()) {
+//			log.debug("categoryID = "+catID);
+//		}
+//		String srcId = (String)map.get("sourceID");
+//		if (log.isDebugEnabled()) {
+//			log.debug("sourceID = "+srcId);
+//		}
+//		CategoryRB cat = getCategorieByID(Integer.parseInt(catID));
+//		CategoryRB current = getCurrentCategory();
+//		if (srcId.equals("")) {
+//			//toggle expanded status
+//			cat.setExpanded(!cat.isExpanded());
+//		} 
+//		else {
+//			//unselect current selected source
+//			SourceRB src2 = getSelectedSourceFromCategory(cat);
+//			if (src2 != null) {
+//				src2.setSelected(false);
+//			}
+//			SourceRB src = getSourceByID(cat, Integer.parseInt(srcId));
+//			//select new source
+//			src.setSelected(true);
+//		}
+//		if (current != null) current.setSelected(false);
+//		cat.setSelected(true);
+//	}
 
 	public String selectElement2() {
 		int catID = this.categoryID;

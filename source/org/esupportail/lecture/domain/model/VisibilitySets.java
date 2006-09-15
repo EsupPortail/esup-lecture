@@ -89,7 +89,7 @@ public class VisibilitySets {
 	 * @param allowed
 	 * @see VisibilitySets#allowed
 	 */
-	protected void setAllowed(DefAndContentSets allowed) {
+	public void setAllowed(DefAndContentSets allowed) {
 		this.allowed = allowed;
 	}
 
@@ -124,7 +124,7 @@ public class VisibilitySets {
 	 * @param obliged
 	 * @see VisibilitySets#obliged
 	 */
-	protected void setObliged(DefAndContentSets obliged) {
+	public void setObliged(DefAndContentSets obliged) {
 		this.obliged = obliged;
 	}
 
