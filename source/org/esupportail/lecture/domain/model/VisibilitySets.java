@@ -81,7 +81,7 @@ public class VisibilitySets {
 	 * @return allowed
 	 * @see VisibilitySets#allowed
 	 */
-	protected DefAndContentSets getAllowed() {
+	public DefAndContentSets getAllowed() {
 		return allowed;
 	}
 	/**
@@ -98,7 +98,7 @@ public class VisibilitySets {
 	 * @return autoSubscribed
 	 * @see VisibilitySets#autoSubscribed
 	 */
-	protected DefAndContentSets getAutoSubscribed() {
+	public DefAndContentSets getAutoSubscribed() {
 		return autoSubscribed;
 	}
 	/**
@@ -106,7 +106,7 @@ public class VisibilitySets {
 	 * @param autoSubscribed
 	 * @see VisibilitySets#autoSubscribed
 	 */
-	protected void setAutoSubscribed(DefAndContentSets autoSubscribed) {
+	public void setAutoSubscribed(DefAndContentSets autoSubscribed) {
 		this.autoSubscribed = autoSubscribed;
 	}
 
@@ -115,7 +115,7 @@ public class VisibilitySets {
 	 * @return obliged
 	 * @see VisibilitySets#obliged
 	 */
-	protected DefAndContentSets getObliged() {
+	public DefAndContentSets getObliged() {
 		return obliged;
 	}
 	

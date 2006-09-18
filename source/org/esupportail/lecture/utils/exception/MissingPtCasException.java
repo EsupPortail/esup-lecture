@@ -11,7 +11,7 @@ package org.esupportail.lecture.utils.exception;
  * @author gbouteil
  *
  */
-public class MissingPtCasException extends java.lang.Exception {
+public class MissingPtCasException extends java.lang.RuntimeException {
 
 
 	

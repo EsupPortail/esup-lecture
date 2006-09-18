@@ -17,7 +17,8 @@ import java.util.Hashtable;
  */
 public class ManagedCategory extends Category {
 
-/* ********************** PROPERTIES**************************************/ 
+	/*
+	 *********************** PROPERTIES**************************************/ 
 
 	/**
 	 * Visibility sets of this category (if defined)
@@ -43,7 +44,8 @@ public class ManagedCategory extends Category {
 	private Hashtable<String,SourceProfile> sourceProfiles;
 
 
-/* ********************** ACCESSORS**************************************/ 
+	/*
+	 *********************** ACCESSORS**************************************/ 
 
 	public ManagedCategory() {
 		sourceProfiles = new Hashtable<String,SourceProfile>();
@@ -84,9 +86,23 @@ public class ManagedCategory extends Category {
 		this.ttl = ttl;
 	}
 
+	/**
+	 * @return Returns the edit.
+	 */
+	public Editability getEdit() {
+		return edit;
+	}
 	public Hashtable<String, SourceProfile> getSourceProfiles() {
 		return sourceProfiles;
 	}
+
+	/**
+	 * @param edit The edit to set.
+	 */
+	public void setEdit(Editability edit) {
+		this.edit = edit;
+	}
+
 
 	public void setSourceProfiles(Hashtable<String, SourceProfile> sourceProfiles) {
 		this.sourceProfiles = sourceProfiles;

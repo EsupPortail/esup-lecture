@@ -11,7 +11,7 @@ package org.esupportail.lecture.utils.exception;
  * @author gbouteil
  *
  */
-public class MyException extends java.lang.Exception {
+public class MyException extends java.lang.RuntimeException {
 
 	
 	

@@ -91,15 +91,19 @@ public class Context {
 	/* 
 	 *************************** METHODS ******************************** */
 
-	public void getManagedCategories() {
-		
+	/**
+	 * return managed categories profiles with their categories for the context 
+	 */
+	public Set<ManagedCategoryProfile> getFullManagedCategoryProfiles() {
 		Iterator iterator = managedCategoryProfilesSet.iterator();
-			
+		
 		while (iterator.hasNext()) {
 			ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
-			mcp.getCategory();
+			mcp.loadCategory();
 		}
+		return managedCategoryProfilesSet;
 	}
+	
 	
 	
 	
@@ -232,6 +236,8 @@ public class Context {
 	protected void addRefIdManagedCategoryProfile(String s) {
 		refIdManagedCategoryProfilesSet.add(s);
 	}
+
+
 
 
 	

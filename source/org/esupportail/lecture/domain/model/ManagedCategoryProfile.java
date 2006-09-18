@@ -7,7 +7,9 @@ package org.esupportail.lecture.domain.model;
 
 
 import java.util.*;
+
 import org.esupportail.lecture.dao.DaoService;
+import org.esupportail.lecture.domain.service.PortletService;
 
 /**
  * Managed category profile element.
@@ -19,10 +21,7 @@ import org.esupportail.lecture.dao.DaoService;
 public class ManagedCategoryProfile extends CategoryProfile implements ManagedComposantProfile {
 
 /* ************************** PROPERTIES ******************************** */	
-	/**
-	 * Access to data
-	 */
-	DaoService daoService;
+
 	
 	/**
 	 * Proxy ticket CAS to access remote managed category (not necessary) 
@@ -35,6 +34,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	private String urlCategory = "";
 	
 	/**
+	 * Access mode on the remote managed category
+	 */
+	private Accessibility access;
+	
+	/**
 	 * trustCategory parameter : indicates between managed category and category profile, which one to trust
 	 * True : category is trusted. 
 	 * False : category is not trusted, only parameters profile are good 
@@ -43,15 +47,18 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	private boolean trustCategory;
 	
 	/**
+	 * Resolve feature values (edit, visibility,tll) from :
+	 * - managedCategoryProfile features
+	 * - managedCategory features
+	 * - trustCategory parameter 
+	 */
+	private ActiveFeatures activeFeatures;
+		
+	/**
 	 * Remote managed category edit mode : not used for the moment
 	 * Using depends on trustCategory parameter
 	 */	
 	private Editability edit;
-	
-	/**
-	 * Access mode on the remote managed category
-	 */
-	private Accessibility access;
 	
 	/**
 	 * Visibility rights for groups on the remote managed category
@@ -70,15 +77,35 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * Contexts where these profiles category are referenced
 	 */
 	private Set<Context> contextsSet = new HashSet<Context>();
-//	/**
-//	 * Timer to refresh category
-//	 */
 
-	// TODO : initialiser come il faut */
-	//private int refreshTimer;
+	/**
+	 * Its category
+	 * When its managed category is not null,
+	 * The managed categroy profile is said "full"
+	 */
+	private ManagedCategory managedCategory;
+	
+	
+	/*
+	 ************************** INITIALIZATION ******************************** */	
+	
+	
 
-
-/* ************************** METHODS ******************************** */	
+	/**
+	 * Initialize activeFeature attribute
+	 */
+	public void initMiscellaneous() {
+		activeFeatures = new ActiveFeatures();
+		activeFeatures.update(edit,visibility,ttl);
+		if (!trustCategory) {
+			/* As the category is not trusted, 
+			 *  -> features are already computed */
+			activeFeatures.setComputed(true);
+		}
+	}
+	
+	/*
+	 ************************** METHODS ******************************** */	
 
 	
 	/** 
@@ -86,10 +113,106 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @return category
 	 * @see ManagedCategoryProfile#category
 	 */
-	protected ManagedCategory getCategory() {
-		//return daoService.getCategory(urlCategory,ttl,this.getId());
-		return null;
+	public void loadCategory() {
+		// TODO voir l'heritage
+		managedCategory 
+		= super.getDaoService().getCategory(
+				urlCategory,
+				activeFeatures.getTtl(),
+				this.getId());
+		computeActiveFeatures(managedCategory);
 	}
+	
+	/**
+	 * Computes rights on parameters shared between a ManagedCategoryProfile and its
+	 * ManagedCategory (edit, visibility
+	 * @param managedCategory
+	 */
+	private void computeActiveFeatures(ManagedCategory managedCategory) {
+		
+		Editability setEdit;
+		VisibilitySets setVisib;
+		int setTtl;
+		
+		if (trustCategory) {		
+			setEdit = managedCategory.getEdit();
+			setVisib = managedCategory.getVisibility();
+			setTtl = managedCategory.getTtl();
+			
+			if (setEdit == null) {
+				setEdit = this.edit;
+			}
+			if (setVisib == null) {
+				setVisib = this.visibility;
+			}
+			if (setTtl == -1) {
+				setTtl = this.ttl;
+			}	
+			activeFeatures.update(edit,visibility,ttl);
+			activeFeatures.setComputed(true);
+		}/* else {
+				Already done during channel config loading 
+		} */
+	}
+	
+	/**
+	 * Evaluate visibility of current user for this managed category.
+	 * Update customContext (belongs to user) if needed :
+	 * add or remove customCategories associated with
+	 * @param portletService
+	 * @param customContext
+	 */
+	public void evaluateVisibilityAndUpdateUser(PortletService portletService, CustomContext customContext) {
+		/*
+		 * Algo pour gerer les customCategories :
+		 * ------------------------------------
+		 * user app. obliged => enregistrer la cat dans le user profile + sortir
+		 * user app. autoSub => enregistrer la cat dans le user profile si c'est la première fois + sortir
+		 * user app.allowed => rien à faire + sortir
+		 * user n'app. rien => effacer la cat.
+		 */
+
+		boolean isInObliged = false;
+		boolean isInAutoSubscribed = false;
+		boolean isInAllowed = false;
+		
+		VisibilitySets sets = activeFeatures.getVisibility();
+		
+	/* ---OBLIGED SET--- */
+		isInObliged = sets.getObliged().evaluateVisibility(portletService);
+		
+		if (isInObliged) {
+			customContext.addManagedCustomCategory(this);
+		
+		} else {
+	/* ---AUTOSUBSCRIBED SET--- */	
+			// TODO isInAutoSubscribed = sets.getAutoSubscribed().evaluateVisibility(portletService);
+			// en attendant : isInAutoSubscribed = false 
+			
+			if(isInAutoSubscribed) {
+				// TODO l'ajouter dans le custom context si c'est la preniere fois
+				// customContext.addCustomCategory(mcp);
+			
+			} else {
+	/* ---ALLOWED SET--- */	
+				isInAllowed = sets.getAllowed().evaluateVisibility(portletService);
+				
+				if (!isInAllowed) { // If isInAllowed : nothing to do
+	/* ---CATEGORY NOT VISIBLE FOR USER--- */
+					customContext.removeManagedCustomCategory(this);
+				}
+				
+			}	
+		}
+		// TODO retirer les customCat du user profile qui correspondent à des profiles 
+		// de catégories  disparus	
+	}
+	
+	
+	
+	
+	
+
 	/**
 	 * Return a string containing content of the managed category profile :
 	 * URL of the remote managed category, trustCategory parameter, Access mode on remote managed category,
@@ -325,6 +448,22 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	protected void addContext(Context c){
 		contextsSet.add(c);
 	}
+
+	/**
+	 * @return Returns the managedCategory.
+	 */
+	public ManagedCategory getManagedCategory() {
+		return managedCategory;
+	}
+
+	/**
+	 * @return Returns the activeFeatures.
+	 */
+	public ActiveFeatures getActiveFeatures() {
+		return activeFeatures;
+	}
+
+
 
 
 	

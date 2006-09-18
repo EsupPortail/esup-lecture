@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import org.esupportail.lecture.dao.DaoService;
+
 /**
  * Category profile element : a category profile can be a managed or personal one.
  * @author gbouteil
@@ -23,6 +25,10 @@ public abstract class CategoryProfile {
 	 */
 	private String id;
 
+	/**
+	 * Access to data
+	 */
+	private DaoService daoService;
 	
 	/*
 	 *************************** METHODS *********************************/	
@@ -81,6 +87,20 @@ public abstract class CategoryProfile {
 	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return Returns the daoService.
+	 */
+	public DaoService getDaoService() {
+		return daoService;
+	}
+
+	/**
+	 * @param daoService The daoService to set.
+	 */
+	public void setDaoService(DaoService daoService) {
+		this.daoService = daoService;
 	}
 
 

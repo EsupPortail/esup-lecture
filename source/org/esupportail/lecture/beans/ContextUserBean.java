@@ -1,5 +1,8 @@
 package org.esupportail.lecture.beans;
 
+import java.util.List;
+import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.service.FacadeService;
@@ -44,11 +47,16 @@ public class ContextUserBean {
 	 */
 	private String test;
 	
-	
+	/**
+	 * Categories to display
+	 */
+	private List<CategoryUserBean> categories;
 	/*
 	 ************************ ACCESSORS ******************************** */	
 
-	
+	public void addCategoryUserBean(CategoryUserBean cat){
+		categories.add(cat);
+	}
 
 	/**
 	 * @return Returns the description.
@@ -118,5 +126,12 @@ public class ContextUserBean {
 	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return Returns the categories.
+	 */
+	public List<CategoryUserBean> getCategories() {
+		return categories;
 	}
 }

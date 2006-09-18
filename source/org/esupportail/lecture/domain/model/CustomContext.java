@@ -1,9 +1,12 @@
 package org.esupportail.lecture.domain.model;
 
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.sun.org.apache.xalan.internal.xsltc.runtime.Hashtable;
 
 
 //import java.util.Collection;
@@ -36,7 +39,8 @@ public class CustomContext {
 	 */
 	String contextId;
 
-//	private Collection subscriptions;
+	private Hashtable<String,CustomManagedCategory> subscriptions;
+	
 //	private Collection creations;
 //	private Set foldedCategories;
 //	private SortedSet orderCategories;
@@ -45,9 +49,36 @@ public class CustomContext {
 	
 	/*
 	 ************************** Initialization ************************************/
+	
+	public CustomContext() {
+		subscriptions = new Hashtable<String,CustomManagedCategory>();
+	}
+	
 	/*
 	 *************************** METHODS ************************************/
 
+	
+	
+	
+	/**
+	 * Add a custom category to this context if exist. Creates it if no exist
+	 * @param profile the managed category profile associated to the customCategory
+	 */
+	public void addManagedCustomCategory(ManagedCategoryProfile profile) {
+		String profileId = profile.getId();
+		
+		if (!subscriptions.containsKey(profileId)){
+			CustomManagedCategory customManagedCategory = new CustomManagedCategory();
+			customManagedCategory.setCategoryProfile(profile);
+			subscriptions.put(profileId,customManagedCategory);
+		}
+	}
+	
+	
+	public void removeManagedCustomCategory(ManagedCategoryProfile profile) {
+		subscriptions.remove(profile.getId());
+		
+	}
 	/* 
 	 ************************** ACCESSORS **********************************/
 
@@ -66,6 +97,13 @@ public class CustomContext {
 	public void setContextId(String contextId) {
 		this.contextId = contextId;
 	}
+
+	public Enumeration<CustomManagedCategory> getCustomCategories(){
+		// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
+		return subscriptions.elements();
+	}
+
+
 
 
 

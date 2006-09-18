@@ -60,8 +60,10 @@ public class DaoServiceStub  implements DaoService {
 	}
 
 	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId) {
-		// TODO Auto-generated method stub
-		return null;
+		ManagedCategory cat = new ManagedCategory();
+		cat.setName("Ma belle categorie de test : "+profileId);
+		
+		return cat;
 	}
 
 

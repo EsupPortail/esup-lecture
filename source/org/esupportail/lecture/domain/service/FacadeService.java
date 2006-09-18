@@ -23,7 +23,11 @@ public class FacadeService {
 	 */
 	private DomainService domainService;
 	
-
+	/**
+	 * Access to portlet service
+	 */
+	private PortletService portletService;
+	
 	/*
 	 ************************** Initialization ******************************/
 	
@@ -48,6 +52,20 @@ public class FacadeService {
 	 */
 	public void setDomainService(DomainService domainService) {
 		this.domainService = domainService;
+	}
+
+	/**
+	 * @return Returns the portletService.
+	 */
+	public PortletService getPortletService() {
+		return portletService;
+	}
+
+	/**
+	 * @param portletService The portletService to set.
+	 */
+	public void setPortletService(PortletService portletService) {
+		this.portletService = portletService;
 	}
 	
 }

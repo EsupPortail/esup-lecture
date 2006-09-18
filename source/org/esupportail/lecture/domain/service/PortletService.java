@@ -21,4 +21,11 @@ public interface PortletService {
 	 * @return the value of the preference
 	 */
 	public String getPreferences(String name);
+	
+	/**
+	 * Return true if the current user of the is in "role" of the portlet container
+	 * @param role
+	 * @return true or false
+	 */
+	public boolean isUserInRole(String role);
 }

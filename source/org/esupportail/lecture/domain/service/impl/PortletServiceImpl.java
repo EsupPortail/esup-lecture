@@ -60,6 +60,11 @@ public class PortletServiceImpl implements PortletService{
 		this.requestUtils = requestUtils;
 	}
 
+	public boolean isUserInRole(String role) {
+		PortletRequestUtils.isUserInRole(role);
+		return false;
+	}
+
 
 
 }

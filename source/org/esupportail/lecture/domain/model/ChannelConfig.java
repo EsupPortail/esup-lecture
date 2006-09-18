@@ -222,7 +222,9 @@ public class ChannelConfig  {
 		   	visibilitySets.setObliged(loadDefAndContentSets("obliged",i));
 		   	//TODO : visibilitySets.checkNamesExistence(); => devient warning, pas de groupe défini ... !
 		    mcp.setVisibility(visibilitySets);
-		    // TODO forcer_timer_categorie(mcp)
+		    
+		    mcp.setDaoService(channel.getDaoService());
+		    mcp.initMiscellaneous();
 		    channel.addManagedCategoryProfile(mcp);    
 		}
 // Code pour la version commons-configuration 1.3

@@ -111,7 +111,6 @@ public class HomeContextUserBean {
 			log.debug(" CurrentContextId : "+ contextId);
 			virtualSession.put("ContextUserBean",context);
 		}else{
-
 			log.debug ("Context already loaded : "+context.getId());
 		}
 		return context;

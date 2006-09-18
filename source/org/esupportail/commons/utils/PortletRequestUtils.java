@@ -10,9 +10,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletSession;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
 
 import org.esupportail.commons.logging.LoggerImpl;
 
@@ -110,6 +108,18 @@ public class PortletRequestUtils {
 	public static String getUserAttribute(String attributeName) {
 		return getUserAttribute(null,attributeName);
 	}
+	
+	public static boolean isUserInRole(String role) {
+		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		PortletRequest request = (PortletRequest) externalContext.getRequest();
+		if (request.isUserInRole(role)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
 	
 	/**
 	 * Return the preference named by "name"
@@ -393,6 +403,7 @@ public class PortletRequestUtils {
 //		return attributes;
 //	}
 //
+
 	
 	
 //	/**

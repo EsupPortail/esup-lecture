@@ -7,7 +7,14 @@
 		<property name="domainService">
 			<ref bean="domainService"/>
 		</property>
+		<property name="portletService">
+			<ref bean="portletService"/>
+		</property>
 	</bean>	
+	
+	<!-- Entry point to portlet services -->
+	<bean id="portletService" class="org.esupportail.lecture.domain.service.impl.PortletServiceImpl">
+	</bean>
 	
 
 	<!-- Entry point to domain services -->

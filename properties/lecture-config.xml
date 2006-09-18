@@ -48,7 +48,10 @@
 					name="group112"/>
 				<group
 					name="group113"/>
+				<group
+					name="Developers"/>
 			</allowed>
+			<!-- autoSubscribed not yet supported -->
 			<autoSubscribed>
 				<regular
 					attribute="attr12"
@@ -62,6 +65,8 @@
 				<regular
 					attribute="attr13"
 					value="val13"/>	
+				<group
+					name="local.4"/>
 			</obliged>
 		</visibility>
 	</categoryProfile>
@@ -79,7 +84,8 @@
 					value="val21"/>
 				<group
 					name="group21"/>
-			</allowed>
+			</allowed>			 
+			<!-- autoSubscribed not yet supported -->
 			<autoSubscribed>
 				<regular
 					attribute="attr22"
@@ -107,6 +113,7 @@
 				<group
 					name="group31"/>
 			</allowed>	
+			<!-- autoSubscribed not yet supported -->	
 			<autoSubscribed/>
 			<obliged/>
 		</visibility>
@@ -126,6 +133,7 @@
 				<group
 					name="group41"/>
 			</allowed>
+			<!-- autoSubscribed not yet supported -->
 			<autoSubscribed>
 				<regular
 					attribute="attr42"

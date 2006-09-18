@@ -41,6 +41,9 @@ public class UserProfile {
 	/*
 	 ************************** Initialization ************************************/
 	
+	/**
+	 * Constructor
+	 */
 	public UserProfile(){
 		customContexts = new Hashtable<String,CustomContext>();
 	}
@@ -51,7 +54,7 @@ public class UserProfile {
 	
 	/**
 	 * Return the customContext identified by the id of the context (contextId)id" 
-	 * if exists, else return null.
+	 * if exists, else create it.
 	 * @param constextId identifier of the context refered by the customContext
 	 * @return customContext (or null)
 	 */

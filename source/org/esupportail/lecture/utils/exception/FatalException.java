@@ -1,6 +1,6 @@
 package org.esupportail.lecture.utils.exception;
 
-public class FatalException extends Exception {
+public class FatalException extends RuntimeException {
 	public FatalException(){
 		super();
 	}

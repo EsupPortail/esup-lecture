@@ -145,6 +145,7 @@ public class Channel  {
 		
 			/* Initialize Contexts and ManagedCategoryProfiles links */
 			ChannelConfig.initContextManagedCategoryProfilesLinks(this);
+			
 		}
 		if (!configLoaded){
 			configLoaded = true;

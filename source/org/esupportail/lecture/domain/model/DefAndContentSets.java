@@ -14,6 +14,7 @@ import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.service.PortletService;
 /**
  * DefAndContentSets is composed of two parts :
  *  - the content of defined set after computing its definition
@@ -25,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
  *
  */
 public class DefAndContentSets {
+	//TODO renommer cette classe
 /* ************************** PROPERTIES ******************************** */	
 	/**
 	 * Log instance 
@@ -39,12 +41,6 @@ public class DefAndContentSets {
 	 * regulars : set definition by regulars 
 	 */
 	private List<RegularOfSet> regulars = new ArrayList<RegularOfSet>();
-	
-	/**
-	 * the defined set content : after evaluation of "groups" and "regulars"
-	 */
-	private Set<String> content = new HashSet<String>();
-
 	
 
 /* ************************** METHODS ******************************** */	
@@ -71,6 +67,36 @@ public class DefAndContentSets {
 		}
 	}
 	
+	/**
+	 * Evaluate current user visibility for this DefAndContentSets
+	 * @param portletService for portletContainer access, in order to know user rights
+	 * @return true if the user is define in this DefAndContentSets
+	 */
+	protected boolean evaluateVisibility(PortletService portletService) {
+			
+		/* group evaluation */
+		Iterator iteratorGroups = groups.iterator();
+		while (iteratorGroups.hasNext()){
+			String group = (String) iteratorGroups.next();
+			if (portletService.isUserInRole(group)){
+				return true;
+			}
+		}
+		
+		/* regulars evaluation */
+		Iterator iteratorReg = regulars.iterator();
+		while (iteratorReg.hasNext()){
+			RegularOfSet reg = (RegularOfSet) iteratorReg.next();
+			if (reg.evaluate(portletService)){
+				return true;
+			}
+		}
+		
+		
+		return false;
+	}
+	
+	
 	
 	/**
 	 * Returns a string containing this object content :groups, regulars and content sets
@@ -93,7 +119,7 @@ public class DefAndContentSets {
 	 * @return groups
 	 * @see DefAndContentSets#groups
 	 */
-	protected List<String> getGroups() {
+	public List<String> getGroups() {
 		return groups;
 	}
 	/**
@@ -117,7 +143,7 @@ public class DefAndContentSets {
 	 * @return regulars
 	 * @see DefAndContentSets#regulars
 	 */
-	protected List<RegularOfSet> getRegulars() {
+	public List<RegularOfSet> getRegulars() {
 		return regulars;
 	}
 	/**
@@ -137,15 +163,10 @@ public class DefAndContentSets {
 		this.regulars.add(regular);
 	}
 	
-	/**
-	 * Returns set content of this object
-	 * (No setter for this attribute : it is evaluated from "groups" and "regulars"
-	 * @return content
-	 * @see DefAndContentSets#content
-	 */
-	protected Set getContent() {
-		return content;
-	}
+	
+
+
+
 
 	
 }

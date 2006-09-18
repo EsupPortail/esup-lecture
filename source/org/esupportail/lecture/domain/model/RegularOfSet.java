@@ -7,6 +7,7 @@ package org.esupportail.lecture.domain.model;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.service.PortletService;
 
 /**
  * Regular definition of a group : 
@@ -36,6 +37,26 @@ public class RegularOfSet {
 
 	/*
 	 *************************** METHODS ******************************** */	
+	
+	/**
+	 * Return true if user check this regular
+	 * @param portletService
+	 * @return
+	 */
+	public boolean evaluate(PortletService portletService) {
+		
+		String userAttributeValue = portletService.getUserAttribute(attribute);
+		// TODO verifier que ce nom d'attribut est dans le fichier de config du canal
+		// TODO voir le cas ou il y est mais que le portail ne connait pas
+		if (userAttributeValue == null) {
+			return false;
+		}
+		if (userAttributeValue.equals(value)) {
+			return true;
+		}
+		return false;
+	}
+	
 	
 	/**
 	 * Check existence of attributes names used in regular definition
@@ -96,5 +117,7 @@ public class RegularOfSet {
 	public void setValue(String value) {
 		this.value = value;
 	}
+
+
 	
 }

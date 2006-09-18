@@ -4,9 +4,12 @@ package org.esupportail.lecture.domain.service.impl;
 * For any information please refer to http://esup-helpdesk.sourceforge.net
 * You may obtain a copy of the licence at http://www.esup-portail.org/license/
 */
+import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,13 +19,18 @@ import org.esupportail.lecture.domain.model.Context;
 //import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.CustomManagedCategory;
+import org.esupportail.lecture.domain.model.DefAndContentSets;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
+import org.esupportail.lecture.domain.model.VisibilitySets;
 import org.esupportail.lecture.domain.service.DomainService;
 import org.esupportail.lecture.domain.service.FacadeService;
+import org.esupportail.lecture.domain.service.PortletService;
 //import org.esupportail.lecture.domain.service.PortletService;
 import org.esupportail.lecture.utils.exception.*;
 //import org.esupportail.lecture.beans.ContextUserBean;
+import org.esupportail.lecture.beans.CategoryUserBean;
 import org.esupportail.lecture.beans.ContextUserBean;
 import org.esupportail.lecture.beans.UserBean;
 //import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -84,29 +92,29 @@ public class DomainServiceImplGwe implements DomainService {
 	 * @see org.esupportail.lecture.domain.service.DomainService#getContextUserBean(java.lang.String, java.lang.String)
 	 */
 	public ContextUserBean getContextUserBean(String userId,String contextId) throws ErrorException {
-	
+		
 		/* Get context */
 		Context context = myChannel.getContext(contextId);
 		if (context == null) {
 			throw new ErrorException("Context "+contextId+" is not defined in this channel");
 		}
 		
-		/* Get Managed category profiles */ // TODO : rafraichir_categorie_controllee 
-		context.getManagedCategories();
-	
+		/* Get Managed category profiles with their categories */ 
+		Set<ManagedCategoryProfile> fullManagedCategoryProfiles =  context.getFullManagedCategoryProfiles();
 		
-		/* Visibility evaluation */
-		
-		/*
-		 * ...
-		 */
-	
-		/* Get customContext */
+		/* Get user profile and customContext */
 		UserProfile userProfile = myChannel.getUserProfile(userId);
 		CustomContext customContext = userProfile.getCustomContext(contextId);
 		
+		/* Visibility evaluation and customContext updating */
+		
+		//TODO optimiser le nombre de fois où on évalue tout ça !!!
+		//     (trustCategory + reel chargement)
+		evaluateVisibilityOnCategories(fullManagedCategoryProfiles,customContext);
+		
+		
 		/*
-		 * set up user profile dans custom context
+		 * ...
 		 */
 		
 		/* Create ContextUserBean */
@@ -116,9 +124,41 @@ public class DomainServiceImplGwe implements DomainService {
 		contextUserBean.setId(contextId);
 		contextUserBean.setTest(customContext.test);
 	
-		return contextUserBean;
+		/* recuperer les categories à afficher */
+		// TODO afficher les categories
+		Enumeration enumeration= customContext.getCustomCategories();
+		while (enumeration.hasMoreElements()) {
+			CustomManagedCategory element = (CustomManagedCategory) enumeration.nextElement();
+			CategoryUserBean categoryUserBean = new CategoryUserBean();
+			categoryUserBean.setName(element.getCategoryProfile().getName());
+			contextUserBean.addCategoryUserBean(categoryUserBean) ;
+		}
 		
+		
+		return contextUserBean;		
 	}
+	
+	private void evaluateVisibilityOnCategories(
+		Set<ManagedCategoryProfile> fullManagedCategoryProfiles,
+		CustomContext customContext) {
+		
+		PortletService portletService = facadeService.getPortletService();
+		
+		Iterator iterator = fullManagedCategoryProfiles.iterator();
+		while (iterator.hasNext()) {
+			ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
+			mcp.evaluateVisibilityAndUpdateUser(portletService,customContext);
+		}
+	}
+			
+			
+			
+			
+			
+			
+	
+		
+
 
 	
 	
