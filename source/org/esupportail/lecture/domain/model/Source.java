@@ -15,7 +15,6 @@ package org.esupportail.lecture.domain.model;
  *
  */
 public abstract class Source {
-// TODO tout à faire
 ///* ************************** PROPERTIES ******************************** */	
 //	private String dtd = "";
 //	

@@ -157,9 +157,10 @@ public class ChannelConfig  {
 		}
 	
 		// TODO groupes visibility :
-		// - vérifier l'existances des noms de groupes et d'attributs dans le portletContext (portlet.xml) : WARNING
-		// - vérifier l'existance d'au moins un groupe de visibilité (au moins un des trois et non vide) : WARNING	
-		// => throw new WarningException("...");
+		// - vérifier l'existances des noms d'attributs (et de groupes) dans le portletContext (portlet.xml) : WARNING
+		// - vérifier qu'il y ait au moins un groupe de visibilité pour chq cat (au moins un des trois et non vide) : WARNING	
+		//  (vérifier que les attributs portail référencés dans la config
+	   	//      ont bien été déclarés dans le portlet.xml)
 		if (false){
 			throw new WarningException("...");
 		}
@@ -220,7 +221,6 @@ public class ChannelConfig  {
 		    visibilitySets.setAllowed(loadDefAndContentSets("allowed",i));
 		    visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed",i));
 		   	visibilitySets.setObliged(loadDefAndContentSets("obliged",i));
-		   	//TODO : visibilitySets.checkNamesExistence(); => devient warning, pas de groupe défini ... !
 		    mcp.setVisibility(visibilitySets);
 		    
 		    mcp.setDaoService(channel.getDaoService());

@@ -8,8 +8,11 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.*;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.service.PortletService;
+import org.esupportail.lecture.domain.service.impl.DomainServiceImplGwe;
 
 /**
  * Managed category profile element.
@@ -21,7 +24,10 @@ import org.esupportail.lecture.domain.service.PortletService;
 public class ManagedCategoryProfile extends CategoryProfile implements ManagedComposantProfile {
 
 /* ************************** PROPERTIES ******************************** */	
-
+	/**
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(ManagedCategoryProfile.class); 
 	
 	/**
 	 * Proxy ticket CAS to access remote managed category (not necessary) 
@@ -179,8 +185,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		VisibilitySets sets = activeFeatures.getVisibility();
 		
 	/* ---OBLIGED SET--- */
+		log.debug("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+this.getName());
 		isInObliged = sets.getObliged().evaluateVisibility(portletService);
-		
+		log.debug("IsInObliged : "+isInObliged);
 		if (isInObliged) {
 			customContext.addManagedCustomCategory(this);
 		
@@ -194,7 +201,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 				// customContext.addCustomCategory(mcp);
 			
 			} else {
-	/* ---ALLOWED SET--- */	
+	/* ---ALLOWED SET--- */
+				log.debug("Appel de evaluate sur DefenitionSets(allowed) de la cat : "+this.getName());
 				isInAllowed = sets.getAllowed().evaluateVisibility(portletService);
 				
 				if (!isInAllowed) { // If isInAllowed : nothing to do

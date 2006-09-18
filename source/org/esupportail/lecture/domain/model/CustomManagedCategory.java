@@ -1,5 +1,10 @@
 package org.esupportail.lecture.domain.model;
 
+/**
+ * Customizations on a managedCategory for a customContext
+ * @author gbouteil
+ *
+ */
 public class CustomManagedCategory {
 
 	private CategoryProfile categoryProfile;
@@ -20,7 +25,11 @@ public class CustomManagedCategory {
 		this.test = test;
 	}
 
-// TODO
+
+	/**
+	 * Sets the managedCategory profile associated with this CustomManagedCategoryProfile
+	 * @param profile
+	 */
 	public void setCategoryProfile(ManagedCategoryProfile profile) {
 		categoryProfile = profile;
 		

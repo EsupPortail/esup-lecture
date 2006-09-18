@@ -25,7 +25,6 @@ import org.esupportail.lecture.domain.service.PortletService;
  *
  */
 public class DefinitionSets {
-	//TODO renommer cette classe
 /* ************************** PROPERTIES ******************************** */	
 	/**
 	 * Log instance 
@@ -57,6 +56,7 @@ public class DefinitionSets {
 			group = (String)iterator.next();
 //			 TODO vérification de l'existence du groupe dans le portail
 			// si PB : log.warn();
+			// PAs sure que c'est par là qu'on le fasse 
 		}
 		
 		iterator = regulars.iterator();
@@ -77,6 +77,7 @@ public class DefinitionSets {
 		Iterator iteratorGroups = groups.iterator();
 		while (iteratorGroups.hasNext()){
 			String group = (String) iteratorGroups.next();
+			log.debug("DefinionSets, group evalue : "+group);
 			if (portletService.isUserInRole(group)){
 				return true;
 			}

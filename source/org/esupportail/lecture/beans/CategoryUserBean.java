@@ -1,5 +1,10 @@
 package org.esupportail.lecture.beans;
 
+/**
+ * Bean to display a category according to a user profile
+ * @author gbouteil
+ *
+ */
 public class CategoryUserBean {
 	/**
 	 * Name of the category

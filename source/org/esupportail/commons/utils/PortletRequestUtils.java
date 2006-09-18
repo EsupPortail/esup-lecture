@@ -77,7 +77,6 @@ public class PortletRequestUtils {
 	
 	
 	
-	// TODO completer
 	
 	
 	
@@ -98,7 +97,7 @@ public class PortletRequestUtils {
 		
 		Map userInfo = (Map)request.getAttribute(PortletRequest.USER_INFO);
 		String attributeValue = (String)userInfo.get(attributeName);
-		//TODO gerer attribute non trouvé
+		//TODO gerer attribute non trouvé ???
 		return attributeValue;
 	}
 	

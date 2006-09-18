@@ -84,7 +84,6 @@ public class VirtualSession {
 	public String getCurrentContextId() {
 		// TODO en attendant la resolution du bug dans uPortal
 		String currentContextId = "c1";
-		// TODO mettre context dans user attribute, fichier de confg ?
 		// String currentContextId = portletService.getPreferences(UserAttributes.CONTEXT);
 		return currentContextId;
 	}

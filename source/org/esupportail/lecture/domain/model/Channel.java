@@ -240,7 +240,7 @@ public class Channel  {
 		if (userProfile == null){
 			userProfile = new UserProfile();
 			userProfile.setUserId(userId);
-// TODO			userProfile.init();	
+// TODO			userProfile.init();	???
 			daoService.addUserProfile(userProfile);
 		}
 		return userProfile;

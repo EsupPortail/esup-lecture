@@ -107,16 +107,8 @@ public class DomainServiceImplGwe implements DomainService {
 		CustomContext customContext = userProfile.getCustomContext(contextId);
 		
 		/* Visibility evaluation and customContext updating */
-		
-		//TODO optimiser le nombre de fois où on évalue tout ça !!!
-		//     (trustCategory + reel chargement)
 		evaluateVisibilityOnCategories(fullManagedCategoryProfiles,customContext);
-		
-		
-		/*
-		 * ...
-		 */
-		
+			
 		/* Create ContextUserBean */
 		ContextUserBean contextUserBean = new ContextUserBean();
 		contextUserBean.setName(context.getName());
@@ -124,30 +116,30 @@ public class DomainServiceImplGwe implements DomainService {
 		contextUserBean.setId(contextId);
 		contextUserBean.setTest(customContext.test);
 	
-		/* recuperer les categories à afficher */
-		// TODO afficher les categories
+		/* Set categories to display in contextUserBean */
 		Enumeration enumeration= customContext.getCustomCategories();
 		while (enumeration.hasMoreElements()) {
 			CustomManagedCategory element = (CustomManagedCategory) enumeration.nextElement();
 			CategoryUserBean categoryUserBean = new CategoryUserBean();
 			categoryUserBean.setName(element.getCategoryProfile().getName());
 			contextUserBean.addCategoryUserBean(categoryUserBean) ;
+			log.debug("getContextUserBean, CustomCategorie à afficher : "+categoryUserBean.getName());		
 		}
-		
-		
 		return contextUserBean;		
 	}
 	
 	private void evaluateVisibilityOnCategories(
 		Set<ManagedCategoryProfile> fullManagedCategoryProfiles,
 		CustomContext customContext) {
-		
+		//TODO optimiser le nombre de fois où on évalue tout ça !!!
+		//     (trustCategory + reel chargement)
 		PortletService portletService = facadeService.getPortletService();
 		
 		Iterator iterator = fullManagedCategoryProfiles.iterator();
 		while (iterator.hasNext()) {
 			ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
 			mcp.evaluateVisibilityAndUpdateUser(portletService,customContext);
+			log.debug("evaluateVisibility, evaluation sur : "+mcp.getName());
 		}
 	}
 			

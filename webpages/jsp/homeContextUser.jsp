@@ -25,12 +25,11 @@
 	<br/>	
 	<br/>	
 	<h:outputText value="Ses categories :"/>	
-		<t:dataList value="#{homeContextBean.context.categories}" var="category"
-			layout="orderedList">
-			<h:outputText value="#{category.name}" />
-		</t:dataList>
+	<t:dataList value="#{homeContextUserBean.context.categories}" var="category"
+		layout="unorderedList">
+		<h:outputText value="#{category.name}" />
+	</t:dataList>
 	</t:div> 
 </f:view>
 
 
-	

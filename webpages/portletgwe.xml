@@ -25,13 +25,17 @@
 			<keywords>XML generic display</keywords>
         </portlet-info>    
     </portlet>
-	
-   <user-attribute>
+<!-- liste des attributs du portail utilisés par le canal -->	
+    <user-attribute>
 		<description>user email</description>
 		<name>mail</name>
-	</user-attribute> 
-	   <user-attribute>
+    </user-attribute> 
+    <user-attribute>
 		<description>user display name</description>
 		<name>displayName</name>
+    </user-attribute> 
+	<user-attribute>
+		<description>surname</description>
+		<name>sn</name>
 	</user-attribute> 
 </portlet-app>

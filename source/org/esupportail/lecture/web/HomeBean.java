@@ -22,7 +22,7 @@ import org.esupportail.lecture.domain.model.tmp.Item;
 import org.esupportail.lecture.domain.model.tmp.SourceRB;
 import org.esupportail.lecture.domain.service.FacadeService;
 
-//TODO Javadoc
+
 /**
  * @author : Raymond 
  * Classe de tests

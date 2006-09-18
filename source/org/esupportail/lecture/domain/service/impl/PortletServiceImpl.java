@@ -61,8 +61,8 @@ public class PortletServiceImpl implements PortletService{
 	}
 
 	public boolean isUserInRole(String role) {
-		PortletRequestUtils.isUserInRole(role);
-		return false;
+		
+		return PortletRequestUtils.isUserInRole(role);
 	}
 
 

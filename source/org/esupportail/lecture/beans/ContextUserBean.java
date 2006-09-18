@@ -1,5 +1,6 @@
 package org.esupportail.lecture.beans;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -51,10 +52,23 @@ public class ContextUserBean {
 	 * Categories to display
 	 */
 	private List<CategoryUserBean> categories;
+	
+	/*
+	 ************************ INITIALIZATION ******************************** */	
+
+	public ContextUserBean(){
+		categories = new ArrayList<CategoryUserBean>();
+	}
+	
 	/*
 	 ************************ ACCESSORS ******************************** */	
 
+	/**
+	 * Add a categoryUserBean to the list 
+	 * @param cat the categoryuserBean to add
+	 */
 	public void addCategoryUserBean(CategoryUserBean cat){
+		log.debug("addCategoryUserBean : "+cat.getName());
 		categories.add(cat);
 	}
 
@@ -132,6 +146,7 @@ public class ContextUserBean {
 	 * @return Returns the categories.
 	 */
 	public List<CategoryUserBean> getCategories() {
+		log.debug("!!! Dans ContextUserBean : appel de getCategories !!!");
 		return categories;
 	}
 }

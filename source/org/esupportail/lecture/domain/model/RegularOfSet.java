@@ -41,12 +41,11 @@ public class RegularOfSet {
 	/**
 	 * Return true if user check this regular
 	 * @param portletService
-	 * @return
+	 * @return boolean
 	 */
 	public boolean evaluate(PortletService portletService) {
 		
 		String userAttributeValue = portletService.getUserAttribute(attribute);
-		// TODO verifier que ce nom d'attribut est dans le fichier de config du canal
 		// TODO voir le cas ou il y est mais que le portail ne connait pas
 		if (userAttributeValue == null) {
 			return false;
@@ -65,8 +64,8 @@ public class RegularOfSet {
 	   	if (log.isDebugEnabled()){
     		log.debug("checkNamesExistence()");
     	}
-		// TODO vérification de l'existence de l'attribut dans le portail ? + log.warn si pb
-		// TODO vérifiaction de l'existance de la valeur dans le portail ? + log.warn si pb
+		// TODO vérification de l'existence de l'attribut dans le portail :impossible
+	   	// on ne peut verifier que sa declaration dans le portlet.xml ? + log.warn si pb
 	}
 	
 	/**
