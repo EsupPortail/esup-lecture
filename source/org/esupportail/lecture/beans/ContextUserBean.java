@@ -56,21 +56,27 @@ public class ContextUserBean {
 	/*
 	 ************************ INITIALIZATION ******************************** */	
 
+	/**
+	 * Constructors
+	 */
 	public ContextUserBean(){
 		categories = new ArrayList<CategoryUserBean>();
 	}
 	
 	/*
-	 ************************ ACCESSORS ******************************** */	
+	 ************************ METHODS ******************************** */	
 
 	/**
-	 * Add a categoryUserBean to the list 
+	 * Add a categoryUserBean to the list in this contextUserBean
 	 * @param cat the categoryuserBean to add
 	 */
 	public void addCategoryUserBean(CategoryUserBean cat){
 		log.debug("addCategoryUserBean : "+cat.getName());
 		categories.add(cat);
 	}
+
+	/*
+	 ************************ ACCESSORS ******************************** */	
 
 	/**
 	 * @return Returns the description.
@@ -146,7 +152,6 @@ public class ContextUserBean {
 	 * @return Returns the categories.
 	 */
 	public List<CategoryUserBean> getCategories() {
-		log.debug("!!! Dans ContextUserBean : appel de getCategories !!!");
 		return categories;
 	}
 }

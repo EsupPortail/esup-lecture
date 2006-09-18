@@ -68,6 +68,11 @@ public class PortletRequestUtils {
 		return portletRequest;
 	}
 	
+	
+	/** 
+	 * Return Portlet preferences by the request
+	 * @return the portletPreference
+	 */
 	private static PortletPreferences getPortletPreferences(){
 		
 		PortletRequest portletRequest = getPortletRequest();
@@ -84,6 +89,11 @@ public class PortletRequestUtils {
 	/**
 	 * @param request
 	 * @return The id of the current user.
+	 */
+	/**
+	 * @param request
+	 * @param attributeName name of the attribute
+	 * @return a string containing the user attribute value of
 	 */
 	public static String getUserAttribute(PortletRequest request,String attributeName) {
 		
@@ -108,6 +118,11 @@ public class PortletRequestUtils {
 		return getUserAttribute(null,attributeName);
 	}
 	
+	/**
+	 * Tests portlet container if current user is in role "role" 
+	 * @param role
+	 * @return true if the user is in the role, esle false
+	 */
 	public static boolean isUserInRole(String role) {
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 		PortletRequest request = (PortletRequest) externalContext.getRequest();

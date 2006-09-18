@@ -19,7 +19,8 @@ package org.esupportail.lecture.domain.model;
  */
 public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.SourceProfile implements org.esupportail.lecture.domain.model.ManagedComposantProfile {
 	
-/* ************************** PROPERTIES ******************************** */	
+	/*
+	 ************************** PROPERTIES ******************************** */	
 
 	/**
 	 * Remote source loaded : a managed source profile has a global or a single source

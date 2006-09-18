@@ -47,8 +47,12 @@ public class ActiveFeatures {
 	/*
 	 ********************* INITIALIZATION **************************************/
 	
+
+	/*
+	 *********************** METHODS **************************************/
 	
-	/**
+	
+		/**
 	 * Initialize attributes
 	 * @param edit
 	 * @param visibility
@@ -59,6 +63,9 @@ public class ActiveFeatures {
 		this.visibility = visibility;
 		this.ttl = ttl;
 	}
+	
+	/*
+	 *********************** ACCESSORS **************************************/ 
 
 
 	/**
@@ -126,10 +133,5 @@ public class ActiveFeatures {
 
 	
 	
-	/*
-	 *********************** METHODS **************************************/
 	
-	
-	/*
-	 *********************** ACCESSORS **************************************/ 
 }

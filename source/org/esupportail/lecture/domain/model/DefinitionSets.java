@@ -8,8 +8,6 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Set;
-import java.util.HashSet;
 import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
@@ -25,7 +23,9 @@ import org.esupportail.lecture.domain.service.PortletService;
  *
  */
 public class DefinitionSets {
-/* ************************** PROPERTIES ******************************** */	
+	
+	/*
+	 ************************** PROPERTIES ******************************** */	
 	/**
 	 * Log instance 
 	 */
@@ -41,7 +41,9 @@ public class DefinitionSets {
 	private List<RegularOfSet> regulars = new ArrayList<RegularOfSet>();
 	
 
-/* ************************** METHODS ******************************** */	
+	/*
+	 *************************** METHODS ******************************** */	
+	
 	/**
 	 * Check existence of group names, attributes names used in group enumeration
 	 * and regulars definition

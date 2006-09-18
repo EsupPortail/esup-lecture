@@ -47,6 +47,9 @@ public class ManagedCategory extends Category {
 	/*
 	 *********************** ACCESSORS**************************************/ 
 
+	/**
+	 * Constructor
+	 */
 	public ManagedCategory() {
 		sourceProfiles = new Hashtable<String,SourceProfile>();
 	}
@@ -92,6 +95,11 @@ public class ManagedCategory extends Category {
 	public Editability getEdit() {
 		return edit;
 	}
+	
+	
+	/**
+	 * @return Returns the sourceProfiles
+	 */
 	public Hashtable<String, SourceProfile> getSourceProfiles() {
 		return sourceProfiles;
 	}
@@ -104,6 +112,10 @@ public class ManagedCategory extends Category {
 	}
 
 
+	/**
+	 * Sets the sourceProfiles
+	 * @param sourceProfiles to set
+	 */
 	public void setSourceProfiles(Hashtable<String, SourceProfile> sourceProfiles) {
 		this.sourceProfiles = sourceProfiles;
 	}

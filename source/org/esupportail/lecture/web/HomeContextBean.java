@@ -20,13 +20,26 @@ import org.esupportail.lecture.domain.service.FacadeService;
  *
  */
 public class HomeContextBean {
+	
+	/*
+	 ************************ PROPERTIES ******************************** */	
+
 	private List<ContextWeb> contextWebs;
 	private FacadeService facadeService;
-	
+
+	/*
+	 ************************** ACCESSORS ***********************************/
+
+	/**
+	 * @param facadeService
+	 */
 	public void setFacadeService(FacadeService facadeService) {
 		this.facadeService = facadeService;
 	}
 	
+	/**
+	 * @return list of ContextWeb to dispaly
+	 */
 	public List<ContextWeb> getContextWebs() {
 		// calculer ça à chaque fois qu'on le demande ou le garder en mémoire ?
 		// mieux de le mettre dans le constructeur

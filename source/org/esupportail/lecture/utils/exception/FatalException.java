@@ -1,6 +1,10 @@
 package org.esupportail.lecture.utils.exception;
 
-public class FatalException extends RuntimeException {
+/**
+ * Exception throwed when there is a fatal error
+ * @author gbouteil
+ *
+ */public class FatalException extends RuntimeException {
 	public FatalException(){
 		super();
 	}

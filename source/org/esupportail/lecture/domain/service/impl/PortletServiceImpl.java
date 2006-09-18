@@ -9,8 +9,6 @@ import org.esupportail.lecture.domain.service.PortletService;
  * @author gbouteil
  *
  */
-
-
 public class PortletServiceImpl implements PortletService{
 
 	/*
@@ -41,6 +39,13 @@ public class PortletServiceImpl implements PortletService{
 		return PortletRequestUtils.getPreferences(name);
 	}
 	
+	/**
+	 * @see org.esupportail.lecture.domain.service.PortletService#isUserInRole(java.lang.String)
+	 */
+	public boolean isUserInRole(String role) {
+		return PortletRequestUtils.isUserInRole(role);
+	}
+	
 	/* ************************** ACCESSORS ********************************* */
 
 	
@@ -60,10 +65,7 @@ public class PortletServiceImpl implements PortletService{
 		this.requestUtils = requestUtils;
 	}
 
-	public boolean isUserInRole(String role) {
-		
-		return PortletRequestUtils.isUserInRole(role);
-	}
+	
 
 
 

@@ -39,7 +39,7 @@ public class RegularOfSet {
 	 *************************** METHODS ******************************** */	
 	
 	/**
-	 * Return true if user check this regular
+	 * Return true if user checks this regular
 	 * @param portletService
 	 * @return boolean
 	 */
@@ -48,6 +48,7 @@ public class RegularOfSet {
 		String userAttributeValue = portletService.getUserAttribute(attribute);
 		// TODO voir le cas ou il y est mais que le portail ne connait pas
 		if (userAttributeValue == null) {
+			log.warn("No value for user attribute '"+ attribute +"'");
 			return false;
 		}
 		if (userAttributeValue.equals(value)) {

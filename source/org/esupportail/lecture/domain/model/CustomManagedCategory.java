@@ -7,11 +7,18 @@ package org.esupportail.lecture.domain.model;
  */
 public class CustomManagedCategory {
 
+	/*
+	 ************************** PROPERTIES *********************************/	
+
 	private CategoryProfile categoryProfile;
 	/**
 	 * Used for tests
 	 */
 	public String test = "CustomCAtegoryCharge";
+	
+	/* 
+	 ************************** ACCESSORS **********************************/
+	
 	/**
 	 * @return Returns the test.
 	 */

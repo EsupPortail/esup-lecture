@@ -15,8 +15,14 @@ import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
  *
  */
 public class CategoryWeb {
+	/**
+	 * category name 
+	 */
 	public String name;
 	
+	/**
+	 * @param c
+	 */
 	public CategoryWeb(ManagedCategoryProfile c){
 		name = c.getName();
 	}

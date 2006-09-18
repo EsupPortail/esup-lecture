@@ -10,9 +10,7 @@ import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.service.PortletService;
-import org.esupportail.lecture.domain.service.impl.DomainServiceImplGwe;
 
 /**
  * Managed category profile element.
@@ -23,7 +21,8 @@ import org.esupportail.lecture.domain.service.impl.DomainServiceImplGwe;
  */
 public class ManagedCategoryProfile extends CategoryProfile implements ManagedComposantProfile {
 
-/* ************************** PROPERTIES ******************************** */	
+	/*
+	 ************************** PROPERTIES ******************************** */	
 	/**
 	 * Log instance 
 	 */
@@ -114,13 +113,13 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 ************************** METHODS ******************************** */	
 
 	
-	/** 
-	 * Returns the managed category
-	 * @return category
-	 * @see ManagedCategoryProfile#category
+	
+	/**
+	 * Load the managedCategory of this managedCategoryProfile
 	 */
 	public void loadCategory() {
 		// TODO voir l'heritage
+		// TODO et le ptCAS ???
 		managedCategory 
 		= super.getDaoService().getCategory(
 				urlCategory,
@@ -474,100 +473,5 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 
 
 
-	
-// utiles plus tard	
-//	/**
-//	 * Getter of the property <tt>refreshTimer</tt>
-//	 * @return  Returns the refreshTimer.
-//	 */
-//	protected int getRefreshTimer() {
-//		return refreshTimer;
-//	}
-//
-//	/**
-//	 * Setter of the property <tt>refreshTimer</tt>
-//	 * @param refreshTimer  The refreshTimer to set.
-//	 */
-//	protected void setRefreshTimer(int refreshTimer) {
-//		this.refreshTimer = refreshTimer;
-//	}	
-/* *******************************************************************/	
-
-// Utiles plus tard	
-	
-//		/**
-//		 */
-//	public void refresh(){
-//		
-//		}
-
-//	public void loadCategory(String urlCategory)	throws MissingPtCasException {
-//												
-//	}
-//
-//					/**
-//					 * @uml.property  name="realVisibility"
-//					 */
-//					private VisibilitySets realVisibility;
-//
-//					/**
-//					 * Getter of the property <tt>realVisibility</tt>
-//					 * @return  Returns the realVisibility.
-//					 * @uml.property  name="realVisibility"
-//					 */
-//					public VisibilitySets getRealVisibility() {
-//						return realVisibility;
-//					}
-//
-//					/**
-//					 * Setter of the property <tt>realVisibility</tt>
-//					 * @param realVisibility  The realVisibility to set.
-//					 * @uml.property  name="realVisibility"
-//					 */
-//					public void setRealVisibility(VisibilitySets realVisibility) {
-//						this.realVisibility = realVisibility;
-//					}
-//
-//					/**
-//					 * @uml.property  name="realTtl"
-//					 */
-//					private int realTtl;
-//
-//					/**
-//					 * Getter of the property <tt>realTtl</tt>
-//					 * @return  Returns the realTtl.
-//					 * @uml.property  name="realTtl"
-//					 */
-//					public int getRealTtl() {
-//						return realTtl;
-//					}
-//
-//					/**
-//					 * Setter of the property <tt>realTtl</tt>
-//					 * @param realTtl  The realTtl to set.
-//					 * @uml.property  name="realTtl"
-//					 */
-//					public void setRealTtl(int realTtl) {
-//						this.realTtl = realTtl;
-//					}
-
-
-
-						
-//						/**
-//						 */
-//						public boolean isTimeToReload(){
-//							return true;
-//						}
-//
-//							
-	
-
-//								
-//								/**
-//								 */
-//								public void forceRefreshTimer(){
-//								
-//								}
 
 }

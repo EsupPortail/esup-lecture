@@ -1,9 +1,7 @@
 package org.esupportail.lecture.domain.model;
 
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -50,6 +48,9 @@ public class CustomContext {
 	/*
 	 ************************** Initialization ************************************/
 	
+	/**
+	 * Constructor
+	 */
 	public CustomContext() {
 		subscriptions = new Hashtable<String,CustomManagedCategory>();
 	}
@@ -75,7 +76,12 @@ public class CustomContext {
 	}
 	
 	
+	/**
+	 * Remove the managedCategoryProfile from the customContext
+	 * @param profile managedCategoryProfile to remove
+	 */
 	public void removeManagedCustomCategory(ManagedCategoryProfile profile) {
+		// TODO tester avec la BDD
 		subscriptions.remove(profile.getId());
 		
 	}
@@ -98,6 +104,10 @@ public class CustomContext {
 		this.contextId = contextId;
 	}
 
+	/**
+	 * Returns the customCategories of this customContext
+	 * @return an Enumeration of the customCategories
+	 */
 	public Enumeration<CustomManagedCategory> getCustomCategories(){
 		// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
 		return subscriptions.elements();

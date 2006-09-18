@@ -5,7 +5,6 @@ package org.esupportail.lecture.domain.service.impl;
 * You may obtain a copy of the licence at http://www.esup-portail.org/license/
 */
 import java.util.Enumeration;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -15,25 +14,18 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.Context;
-//import org.esupportail.lecture.domain.model.CustomContext;
-//import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomManagedCategory;
-import org.esupportail.lecture.domain.model.DefinitionSets;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.domain.model.VisibilitySets;
 import org.esupportail.lecture.domain.service.DomainService;
 import org.esupportail.lecture.domain.service.FacadeService;
 import org.esupportail.lecture.domain.service.PortletService;
-//import org.esupportail.lecture.domain.service.PortletService;
 import org.esupportail.lecture.utils.exception.*;
-//import org.esupportail.lecture.beans.ContextUserBean;
 import org.esupportail.lecture.beans.CategoryUserBean;
 import org.esupportail.lecture.beans.ContextUserBean;
 import org.esupportail.lecture.beans.UserBean;
-//import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 /**
  * Implémentation des services pour le test 
  * Utilisée par Gwénaëlle

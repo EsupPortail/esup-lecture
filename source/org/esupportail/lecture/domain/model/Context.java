@@ -92,7 +92,8 @@ public class Context {
 	 *************************** METHODS ******************************** */
 
 	/**
-	 * return managed categories profiles with their categories for the context 
+	 * returns managed categories profiles with their categories loaded for the context 
+	 * @return a set of managedCategoryProfiles
 	 */
 	public Set<ManagedCategoryProfile> getFullManagedCategoryProfiles() {
 		Iterator iterator = managedCategoryProfilesSet.iterator();

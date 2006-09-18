@@ -5,7 +5,6 @@ import java.util.Hashtable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.dao.DaoService;
 
 
 
@@ -55,7 +54,7 @@ public class UserProfile {
 	/**
 	 * Return the customContext identified by the id of the context (contextId)id" 
 	 * if exists, else create it.
-	 * @param constextId identifier of the context refered by the customContext
+	 * @param contextId identifier of the context refered by the customContext
 	 * @return customContext (or null)
 	 */
 	public CustomContext getCustomContext(String contextId){

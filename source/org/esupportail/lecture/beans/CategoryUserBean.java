@@ -6,10 +6,18 @@ package org.esupportail.lecture.beans;
  *
  */
 public class CategoryUserBean {
+	
+	/*
+	 ************************ PROPERTIES ******************************** */	
+
 	/**
 	 * Name of the category
 	 */
 	private String name;
+
+	
+	/*
+	 ************************ ACCESSORS ******************************** */	
 
 	/**
 	 * @return Returns the name.

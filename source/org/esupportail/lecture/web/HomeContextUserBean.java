@@ -84,6 +84,7 @@ public class HomeContextUserBean {
 	 ************************** ACCESSORS for JSP DISPLAY ***********************************/
 
 	/**
+	 * To display information about the connected user
 	 * @return Returns the user.
 	 * @see HomeContextUserBean#user
 	 */
@@ -91,12 +92,13 @@ public class HomeContextUserBean {
 		if (user == null){
 			user = facadeService.getDomainService().getUserBean(getCurrentUserId());
 		}
-		log.debug("UserBean id : "+user.getId());
+		log.debug("getUser() : UserBean id : "+user.getId());
 		return user;
 	}
 
 
 	/**
+	 * To display information about the custom Context of the connected user
 	 * @return Returns the context.
 	 * @throws ErrorException
 	 */
@@ -106,12 +108,12 @@ public class HomeContextUserBean {
 		String contextId = virtualSession.getCurrentContextId();
 		
 		if (context == null){
-			log.debug ("ContextUserBean null");
+			log.debug ("getContext() : ContextUserBean is null");
 			context = facadeService.getDomainService().getContextUserBean(getCurrentUserId(),contextId );
-			log.debug(" CurrentContextId : "+ contextId);
+			log.debug("getContext() : CurrentContextId : "+ contextId);
 			virtualSession.put("ContextUserBean",context);
 		}else{
-			log.debug ("Context already loaded : "+context.getId());
+			log.debug ("getContext() :  Context already loaded : "+context.getId());
 		}
 		return context;
 	}

@@ -59,6 +59,9 @@ public class DaoServiceStub  implements DaoService {
 		userProfiles.put(userProfile.getUserId(),userProfile);
 	}
 
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getCategory(java.lang.String, int, java.lang.String)
+	 */
 	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId) {
 		ManagedCategory cat = new ManagedCategory();
 		cat.setName("Ma belle categorie de test : "+profileId);
