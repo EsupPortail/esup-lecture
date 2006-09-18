@@ -20,7 +20,7 @@ import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomManagedCategory;
-import org.esupportail.lecture.domain.model.DefAndContentSets;
+import org.esupportail.lecture.domain.model.DefinitionSets;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VisibilitySets;

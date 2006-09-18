@@ -365,9 +365,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefAndContentSets)
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
-	public void setVisibilityAllowed(DefAndContentSets d) {
+	public void setVisibilityAllowed(DefinitionSets d) {
 		this.visibility.setAllowed(d);
 	}
 	
@@ -375,14 +375,14 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @return allowed visibility group 
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAllowed()
 	 */
-	public DefAndContentSets getVisibilityAllowed() {
+	public DefinitionSets getVisibilityAllowed() {
 		return this.visibility.getAllowed();
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefAndContentSets)
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
-	public void setVisibilityAutoSubcribed(DefAndContentSets d) {
+	public void setVisibilityAutoSubcribed(DefinitionSets d) {
 		this.visibility.setAutoSubscribed(d);
 	}
 	
@@ -390,14 +390,14 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @return autoSubscribed group visibility
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAutoSubscribed()
 	 */
-	public DefAndContentSets getVisibilityAutoSubscribed() {
+	public DefinitionSets getVisibilityAutoSubscribed() {
 		return this.visibility.getAutoSubscribed();
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefAndContentSets)
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
-	public void setVisibilityObliged(DefAndContentSets d) {
+	public void setVisibilityObliged(DefinitionSets d) {
 		this.visibility.setObliged(d);
 	}
 	
@@ -405,7 +405,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @return obliged group visibility
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityObliged()
 	 */
-	public DefAndContentSets getVisibilityObliged() {
+	public DefinitionSets getVisibilityObliged() {
 		return this.visibility.getObliged();
 	}
 	

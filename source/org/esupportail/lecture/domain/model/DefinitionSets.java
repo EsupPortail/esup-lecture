@@ -16,22 +16,21 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.service.PortletService;
 /**
- * DefAndContentSets is composed of two parts :
- *  - the content of defined set after computing its definition
- * 	- the set definition, two ways :
+ * DefinitionSets is composed of the set definition, 
+ * by two ways :
  * 		- an enumeration of groups (groups)
  * 		- a set of regulars defining groups (regulars)
  *
  * @author gbouteil
  *
  */
-public class DefAndContentSets {
+public class DefinitionSets {
 	//TODO renommer cette classe
 /* ************************** PROPERTIES ******************************** */	
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(DefAndContentSets.class);
+	protected static final Log log = LogFactory.getLog(DefinitionSets.class);
 	/**
 	 * groups : set definition by existent group listing
 	 */
@@ -68,9 +67,9 @@ public class DefAndContentSets {
 	}
 	
 	/**
-	 * Evaluate current user visibility for this DefAndContentSets
+	 * Evaluate current user visibility for this DefinitionSets
 	 * @param portletService for portletContainer access, in order to know user rights
-	 * @return true if the user is define in this DefAndContentSets
+	 * @return true if the user is define in this DefinitionSets
 	 */
 	protected boolean evaluateVisibility(PortletService portletService) {
 			
@@ -117,7 +116,7 @@ public class DefAndContentSets {
 	/**
 	 * Returns groups enumeration of this object
 	 * @return groups
-	 * @see DefAndContentSets#groups
+	 * @see DefinitionSets#groups
 	 */
 	public List<String> getGroups() {
 		return groups;
@@ -125,7 +124,7 @@ public class DefAndContentSets {
 	/**
 	 * Sets groups enumeration of this object
 	 * @param groups 
-	 * @see DefAndContentSets#groups
+	 * @see DefinitionSets#groups
 	 */
 	protected void setGroups(List<String> groups) {
 		this.groups = groups;
@@ -133,7 +132,7 @@ public class DefAndContentSets {
 	/**
 	 * Add a group in groups enumeration
 	 * @param group group to add
-	 * @see DefAndContentSets#groups
+	 * @see DefinitionSets#groups
 	 */
 	public void addGroup(String group) {
 		this.groups.add(group);
@@ -141,7 +140,7 @@ public class DefAndContentSets {
 	/**
 	 * Returns regulars of this object
 	 * @return regulars
-	 * @see DefAndContentSets#regulars
+	 * @see DefinitionSets#regulars
 	 */
 	public List<RegularOfSet> getRegulars() {
 		return regulars;
@@ -149,7 +148,7 @@ public class DefAndContentSets {
 	/**
 	 * Sets regulars of this object
 	 * @param regulars
-	 * @see DefAndContentSets#regulars
+	 * @see DefinitionSets#regulars
 	 */
 	protected void setRegulars(List<RegularOfSet> regulars) {
 		this.regulars = regulars;
@@ -157,7 +156,7 @@ public class DefAndContentSets {
 	/**
 	 * Add a regulars in list of regulars of this object
 	 * @param regular
-	 * @see DefAndContentSets#regulars
+	 * @see DefinitionSets#regulars
 	 */
 	public void addRegular(RegularOfSet regular) {
 		this.regulars.add(regular);

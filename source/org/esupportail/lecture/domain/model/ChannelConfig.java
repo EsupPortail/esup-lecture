@@ -251,16 +251,16 @@ public class ChannelConfig  {
 	}
 	
 	/**
-	 * Load a DefAndContentSets that is used to define visibility groups of a managed category profile
+	 * Load a DefinitionSets that is used to define visibility groups of a managed category profile
 	 * @param fatherName name of the father XML element refered to (which visibility group)
 	 * @param index index of the XML element category profile
-	 * @return the initialized DefAndContentSets
+	 * @return the initialized DefinitionSets
 	 */
-	private static DefAndContentSets loadDefAndContentSets(String fatherName,int index){
+	private static DefinitionSets loadDefAndContentSets(String fatherName,int index){
 		if (log.isDebugEnabled()){
 			log.debug("loadDefAndContentSets("+fatherName+","+index+")");
 		}
-		DefAndContentSets defAndContentSets = new DefAndContentSets();
+		DefinitionSets defAndContentSets = new DefinitionSets();
 		String fatherPath = "categoryProfile("+index+ ").visibility." + fatherName;
 		
 		// Definition by group enumeration

@@ -4,7 +4,7 @@ import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.model.DefAndContentSets;
+import org.esupportail.lecture.domain.model.DefinitionSets;
 import org.esupportail.lecture.domain.model.RegularOfSet;
 
 public class XMLUtil {
@@ -13,11 +13,11 @@ public class XMLUtil {
 	 */
 	protected static final Log log = LogFactory.getLog(XMLUtil.class);
 	
-	public static DefAndContentSets loadDefAndContentSets(XMLConfiguration xmlFile, String fatherPath){
+	public static DefinitionSets loadDefAndContentSets(XMLConfiguration xmlFile, String fatherPath){
 		if (log.isDebugEnabled()){
 			log.debug("loadDefAndContentSets("+fatherPath+")");
 		}
-		DefAndContentSets defAndContentSets = new DefAndContentSets();
+		DefinitionSets defAndContentSets = new DefinitionSets();
 		
 		// Definition by group enumeration
 		int nbGroups = xmlFile.getMaxIndex(fatherPath + ".group");

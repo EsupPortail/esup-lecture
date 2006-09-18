@@ -263,9 +263,9 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	}
 
 	/** 
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefAndContentSets)
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
-	public void setVisibilityAllowed(DefAndContentSets d) {
+	public void setVisibilityAllowed(DefinitionSets d) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -273,15 +273,15 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	/**
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAllowed()
 	 */
-	public DefAndContentSets getVisibilityAllowed() {
+	public DefinitionSets getVisibilityAllowed() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefAndContentSets)
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
-	public void setVisibilityAutoSubcribed(DefAndContentSets d) {
+	public void setVisibilityAutoSubcribed(DefinitionSets d) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -289,15 +289,15 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	/**
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAutoSubscribed()
 	 */
-	public DefAndContentSets getVisibilityAutoSubscribed() {
+	public DefinitionSets getVisibilityAutoSubscribed() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefAndContentSets)
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
-	public void setVisibilityObliged(DefAndContentSets d) {
+	public void setVisibilityObliged(DefinitionSets d) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -305,7 +305,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	/**
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityObliged()
 	 */
-	public DefAndContentSets getVisibilityObliged() {
+	public DefinitionSets getVisibilityObliged() {
 		// TODO Auto-generated method stub
 		return null;
 	}

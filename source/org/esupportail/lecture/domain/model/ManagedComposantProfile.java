@@ -51,33 +51,33 @@ interface ManagedComposantProfile extends ComposantProfile {
 	 * Sets allowed visibility group of the composant
 	 * @param d allowed group
 	 */	
-	public void setVisibilityAllowed(DefAndContentSets d);
+	public void setVisibilityAllowed(DefinitionSets d);
 	
 	/**
 	 * Returns allowed visibility group of the composant
 	 * @return allowed 
 	 */
-	public DefAndContentSets getVisibilityAllowed();
+	public DefinitionSets getVisibilityAllowed();
 	/**
 	 * Sets autoSubscribed visibility group of the composant
 	 * @param d subscribed group
 	 */	
-	public void setVisibilityAutoSubcribed(DefAndContentSets d);
+	public void setVisibilityAutoSubcribed(DefinitionSets d);
 	/**
 	 * Returns autoSubscribed visibility group of the composant
 	 * @return autoSubscribed 
 	 */
-	public DefAndContentSets getVisibilityAutoSubscribed();
+	public DefinitionSets getVisibilityAutoSubscribed();
 	/**
 	 * Sets obliged visibility group of the composant
 	 * @param d obliged group
 	 */	
-	public void setVisibilityObliged(DefAndContentSets d);
+	public void setVisibilityObliged(DefinitionSets d);
 	/**
 	 * Returns obliged visibility group of the composant
 	 * @return d obliged group
 	 */
-	public DefAndContentSets getVisibilityObliged();
+	public DefinitionSets getVisibilityObliged();
 	
 
 }

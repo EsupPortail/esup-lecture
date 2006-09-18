@@ -29,15 +29,15 @@ public class VisibilitySets {
 	/**
 	 * Group of allowed users to subscribe to element
 	 */
-	private DefAndContentSets allowed = new DefAndContentSets();
+	private DefinitionSets allowed = new DefinitionSets();
 	/**
 	 * Group of autoSubribed users to element
 	 */
-	private DefAndContentSets autoSubscribed = new DefAndContentSets();
+	private DefinitionSets autoSubscribed = new DefinitionSets();
 	/**
 	 * Group of obliged users (no unsubscription possible) 
 	 */
-	private DefAndContentSets obliged = new DefAndContentSets();
+	private DefinitionSets obliged = new DefinitionSets();
 
 
 	/*
@@ -81,7 +81,7 @@ public class VisibilitySets {
 	 * @return allowed
 	 * @see VisibilitySets#allowed
 	 */
-	public DefAndContentSets getAllowed() {
+	public DefinitionSets getAllowed() {
 		return allowed;
 	}
 	/**
@@ -89,7 +89,7 @@ public class VisibilitySets {
 	 * @param allowed
 	 * @see VisibilitySets#allowed
 	 */
-	public void setAllowed(DefAndContentSets allowed) {
+	public void setAllowed(DefinitionSets allowed) {
 		this.allowed = allowed;
 	}
 
@@ -98,7 +98,7 @@ public class VisibilitySets {
 	 * @return autoSubscribed
 	 * @see VisibilitySets#autoSubscribed
 	 */
-	public DefAndContentSets getAutoSubscribed() {
+	public DefinitionSets getAutoSubscribed() {
 		return autoSubscribed;
 	}
 	/**
@@ -106,7 +106,7 @@ public class VisibilitySets {
 	 * @param autoSubscribed
 	 * @see VisibilitySets#autoSubscribed
 	 */
-	public void setAutoSubscribed(DefAndContentSets autoSubscribed) {
+	public void setAutoSubscribed(DefinitionSets autoSubscribed) {
 		this.autoSubscribed = autoSubscribed;
 	}
 
@@ -115,7 +115,7 @@ public class VisibilitySets {
 	 * @return obliged
 	 * @see VisibilitySets#obliged
 	 */
-	public DefAndContentSets getObliged() {
+	public DefinitionSets getObliged() {
 		return obliged;
 	}
 	
@@ -124,7 +124,7 @@ public class VisibilitySets {
 	 * @param obliged
 	 * @see VisibilitySets#obliged
 	 */
-	public void setObliged(DefAndContentSets obliged) {
+	public void setObliged(DefinitionSets obliged) {
 		this.obliged = obliged;
 	}
 

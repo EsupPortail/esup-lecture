@@ -12,7 +12,7 @@ import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.model.Accessibility;
-import org.esupportail.lecture.domain.model.DefAndContentSets;
+import org.esupportail.lecture.domain.model.DefinitionSets;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.SourceProfile;
