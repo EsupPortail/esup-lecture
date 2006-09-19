@@ -35,6 +35,15 @@ public interface DaoService {
 	 */
 	public ManagedCategory getCategory(String urlCategory,int ttl,String profileId);
 
+	/**
+	 * Get a managed category from a remote place
+	 * @param urlCategory url of the remote category
+	 * @param ttl ttl of the category
+	 * @param profileId identifier of the managed category profile referer
+	 * @param ptCAS user proxy ticket CAS to access categories needing authentification CAS 
+	 * @return the managedCategory
+	 */
+	public ManagedCategory getCategory(String urlCategory,int ttl,String profileId, String ptCAS);
 
 
 		

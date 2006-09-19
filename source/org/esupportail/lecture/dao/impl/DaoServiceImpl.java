@@ -48,4 +48,9 @@ public class DaoServiceImpl implements DaoService {
 		this.remoteXMLService = remoteXML;
 	}
 
+	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId, String ptCAS) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

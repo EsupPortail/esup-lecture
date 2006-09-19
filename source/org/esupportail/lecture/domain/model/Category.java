@@ -15,7 +15,7 @@ public abstract class Category {
 	 *************************** PROPERTIES *********************************/	
 	
 	/**
-	 * Name of the category
+	 * Name of the category : not used
 	 */
 	private String name = "";
 

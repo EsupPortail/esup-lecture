@@ -28,11 +28,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 */
 	protected static final Log log = LogFactory.getLog(ManagedCategoryProfile.class); 
 	
-	/**
-	 * Proxy ticket CAS to access remote managed category (not necessary) 
-	 */
-	private String ptCas = "";
-	
+
 	/**
 	 * URL of the remote managed category
 	 */
@@ -119,15 +115,19 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 */
 	public void loadCategory() {
 		// TODO voir l'heritage
-		// TODO et le ptCAS ???
-		managedCategory 
-		= super.getDaoService().getCategory(
-				urlCategory,
-				activeFeatures.getTtl(),
-				this.getId());
+		
+		if(access == Accessibility.PUBLIC) {
+			managedCategory = LectureTools.getDaoService().getCategory(
+				urlCategory,activeFeatures.getTtl(),this.getId());
+			
+		} else if (access == Accessibility.CAS) {
+			// TODO LectureTools.getDaoService
+			String ptCas = "";
+			managedCategory = super.getDaoService().getCategory(
+					urlCategory,activeFeatures.getTtl(),this.getId(),ptCas);
+		}
 		computeActiveFeatures(managedCategory);
 	}
-	
 	/**
 	 * Computes rights on parameters shared between a ManagedCategoryProfile and its
 	 * ManagedCategory (edit, visibility
@@ -275,23 +275,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	
 /* ************************** ACCESSORS ******************************** */	
 
-	/**
-	 * Return the proxy ticket CAS used to access to the remote managed category
-	 * @return ptCas
-	 * @see ManagedCategoryProfile#ptCas
-	 */
-	protected String getPtCas() {
-		return ptCas;
-	}
-	
-	/**
-	 * Sets the proxy ticket CAS used to access to the remote managed category
-	 * @param ptCas the proxy ticket CAS to set
-	 * @see ManagedCategoryProfile#ptCas
-	 */
-	protected void setPtCas(String ptCas) {
-		this.ptCas = ptCas;
-	}
+
 	
 	/**
 	 * Returns the URL of the remote managed category

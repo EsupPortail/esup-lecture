@@ -69,5 +69,12 @@ public class DaoServiceStub  implements DaoService {
 		return cat;
 	}
 
+	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId, String ptCAS) {
+		ManagedCategory cat = new ManagedCategory();
+		cat.setName("Ma belle categorie de test : "+profileId);
+		
+		return cat;
+	}
+
 
 }
