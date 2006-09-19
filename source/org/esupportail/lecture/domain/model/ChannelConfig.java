@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.esupportail.lecture.utils.LectureTools;
 import org.esupportail.lecture.utils.exception.*;
 //import org.apache.commons.configuration.HierarchicalConfiguration; version 1.3
 

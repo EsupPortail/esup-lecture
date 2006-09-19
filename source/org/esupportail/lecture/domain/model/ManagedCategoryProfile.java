@@ -11,6 +11,7 @@ import java.util.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.service.PortletService;
+import org.esupportail.lecture.utils.LectureTools;
 
 /**
  * Managed category profile element.

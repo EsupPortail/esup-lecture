@@ -1,8 +1,7 @@
 package org.esupportail.lecture.web;
 
 import java.util.Hashtable;
-
-import org.esupportail.lecture.domain.model.LectureTools;
+import org.esupportail.lecture.utils.LectureTools;
 import org.esupportail.lecture.domain.service.PortletService;
 
 

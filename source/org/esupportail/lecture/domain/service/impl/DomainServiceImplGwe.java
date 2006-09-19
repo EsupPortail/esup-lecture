@@ -12,13 +12,12 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomManagedCategory;
-import org.esupportail.lecture.domain.model.LectureTools;
+import org.esupportail.lecture.utils.LectureTools;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.service.DomainService;

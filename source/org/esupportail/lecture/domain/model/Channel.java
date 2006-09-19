@@ -11,7 +11,8 @@ import java.util.*;
 //import org.springframework.beans.factory.InitializingBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.dao.DaoService;
+
+import org.esupportail.lecture.utils.LectureTools;
 import org.esupportail.lecture.utils.exception.*;
 /**
  * The "lecture" channel : main domain model class
