@@ -114,7 +114,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	/**
 	 * Load the managedCategory of this managedCategoryProfile
 	 */
-	public void loadCategory() {
+	public void loadCategory(PortletService portletService) {
 		// TODO voir l'heritage
 		
 		if(access == Accessibility.PUBLIC) {
@@ -122,7 +122,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 				urlCategory,activeFeatures.getTtl(),this.getId());
 			
 		} else if (access == Accessibility.CAS) {
-			String ptCas = "";
+			String ptCas = portletService.getUserProxyTicketCAS();
 			managedCategory = LectureTools.getDaoService().getCategory(
 					urlCategory,activeFeatures.getTtl(),this.getId(),ptCas);
 		}

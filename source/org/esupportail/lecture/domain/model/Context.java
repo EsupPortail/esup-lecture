@@ -11,6 +11,7 @@ import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.service.PortletService;
 
 /**
  * Context element.
@@ -93,14 +94,15 @@ public class Context {
 
 	/**
 	 * returns managed categories profiles with their categories loaded for the context 
+	 * @param portletService access to portlet services
 	 * @return a set of managedCategoryProfiles
 	 */
-	public Set<ManagedCategoryProfile> getFullManagedCategoryProfiles() {
+	public Set<ManagedCategoryProfile> getFullManagedCategoryProfiles(PortletService portletService) {
 		Iterator iterator = managedCategoryProfilesSet.iterator();
 		
 		while (iterator.hasNext()) {
 			ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
-			mcp.loadCategory();
+			mcp.loadCategory(portletService);
 		}
 		return managedCategoryProfilesSet;
 	}

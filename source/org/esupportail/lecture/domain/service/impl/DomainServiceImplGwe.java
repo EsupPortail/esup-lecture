@@ -90,7 +90,7 @@ public class DomainServiceImplGwe implements DomainService {
 	 * @see org.esupportail.lecture.domain.service.DomainService#getContextUserBean(java.lang.String, java.lang.String)
 	 */
 	public ContextUserBean getContextUserBean(String userId,String contextId) throws ErrorException {
-		
+		// TODO faire des sous méthode pour alléger celle ci
 		/* Get context */
 		Context context = myChannel.getContext(contextId);
 		if (context == null) {
@@ -98,7 +98,7 @@ public class DomainServiceImplGwe implements DomainService {
 		}
 		
 		/* Get Managed category profiles with their categories */ 
-		Set<ManagedCategoryProfile> fullManagedCategoryProfiles =  context.getFullManagedCategoryProfiles();
+		Set<ManagedCategoryProfile> fullManagedCategoryProfiles =  context.getFullManagedCategoryProfiles(portletService);
 		
 		/* Get user profile and customContext */
 		UserProfile userProfile = myChannel.getUserProfile(userId);
@@ -125,7 +125,7 @@ public class DomainServiceImplGwe implements DomainService {
 			CategoryUserBean categoryUserBean = new CategoryUserBean();
 			categoryUserBean.setName(element.getCategoryProfile().getName());
 			contextUserBean.addCategoryUserBean(categoryUserBean) ;
-			log.debug("getContextUserBean, CustomCategorie à afficher : "+categoryUserBean.getName());		
+			log.debug("getContextUserBean, CustomCategorie to dispaly : "+categoryUserBean.getName());		
 		}
 		return contextUserBean;		
 	}

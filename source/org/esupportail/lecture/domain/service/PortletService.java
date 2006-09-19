@@ -28,4 +28,12 @@ public interface PortletService {
 	 * @return true or false
 	 */
 	public boolean isUserInRole(String role);
+
+
+
+	/**
+	 * Return the proxy ticket CAS of the user
+	 * @return the proxy ticket CAS
+	 */
+	public String getUserProxyTicketCAS();
 }

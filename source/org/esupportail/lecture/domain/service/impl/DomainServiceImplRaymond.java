@@ -44,6 +44,8 @@ public class DomainServiceImplRaymond implements DomainService {
 	List<Category> categories;
 	static Channel myChannel; 
 	static FacadeService facadeService;
+	// TODO init avec SPRING
+	static PortletService portletService;
 
 	public List<Category> getCategories() {
 		return categories;
@@ -163,12 +165,13 @@ public class DomainServiceImplRaymond implements DomainService {
 
 	public ContextUserBean getContextUserBean(String userId, String contextId) throws ErrorException {
 		/* Get context */
+		
 		Context context = myChannel.getContext(contextId);
 		if (context == null) {
 			throw new ErrorException("Context "+contextId+" is not defined in this channel");
 		}
 		/* Get Managed category profiles with their categories */ 
-		Set<ManagedCategoryProfile> fullManagedCategoryProfiles =  context.getFullManagedCategoryProfiles();
+		Set<ManagedCategoryProfile> fullManagedCategoryProfiles =  context.getFullManagedCategoryProfiles(portletService);
 		
 		/* Get user profile and customContext */
 		UserProfile userProfile = myChannel.getUserProfile(userId);

@@ -65,6 +65,11 @@ public class PortletServiceImpl implements PortletService{
 		this.requestUtils = requestUtils;
 	}
 
+	public String getUserProxyTicketCAS() {
+		// TODO a faire 
+		return null;
+	}
+
 	
 
 
