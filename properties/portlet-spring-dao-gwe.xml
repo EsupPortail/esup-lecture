@@ -3,7 +3,7 @@
 
 <beans>
 	<!-- DAO service de test -->
-	<bean id="daoServiceStub" class="org.esupportail.lecture.dao.DaoServiceStub">
+	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceStub">
 	</bean>
 	
 	

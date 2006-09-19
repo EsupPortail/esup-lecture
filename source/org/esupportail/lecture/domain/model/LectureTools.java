@@ -42,7 +42,7 @@ public class LectureTools {
 	public static final String CONTEXT = "context";
 	
 	/**
-	 * Current DomaineService initialised by Spring
+	 * Current DaoService initialised duriant portlet init
 	 */
 	private static DaoService daoService;
 	

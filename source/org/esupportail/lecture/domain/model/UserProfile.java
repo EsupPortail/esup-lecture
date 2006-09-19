@@ -62,6 +62,7 @@ public class UserProfile {
 				customContexts.get(contextId);
 		if (customContext == null){
 			customContext = new CustomContext();
+			// TODO customContext.init(...);
 			customContext.setContextId(contextId);
 			customContext.setUserProfile(this);
 			addCustomContext(customContext);

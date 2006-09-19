@@ -49,6 +49,11 @@ public class DomainServiceImplGwe implements DomainService {
 	static Channel myChannel; 
 	
 	/**
+	 * Access to Portlet Services 
+	 */
+	PortletService portletService;
+	
+	/**
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(DomainServiceImplGwe.class); 
@@ -131,7 +136,6 @@ public class DomainServiceImplGwe implements DomainService {
 		CustomContext customContext) {
 		//TODO optimiser le nombre de fois où on évalue tout ça !!!
 		//     (trustCategory + reel chargement)
-		PortletService portletService = facadeService.getPortletService();
 		
 		Iterator iterator = fullManagedCategoryProfiles.iterator();
 		while (iterator.hasNext()) {
@@ -229,6 +233,22 @@ public class DomainServiceImplGwe implements DomainService {
 	 */
 	public void setMyChannel(Channel myChannel) {
 		DomainServiceImplGwe.myChannel = myChannel;
+	}
+
+
+	/**
+	 * @return Returns the portletService.
+	 */
+	public PortletService getPortletService() {
+		return portletService;
+	}
+
+
+	/**
+	 * @param portletService The portletService to set.
+	 */
+	public void setPortletService(PortletService portletService) {
+		this.portletService = portletService;
 	}
 
 

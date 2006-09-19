@@ -33,11 +33,7 @@ public class Channel  {
 //	 */
 //	private ChannelConfig config; 
 	
-	/**
-	 * DAO Service for persistance
-	 */
-	private DaoService daoService;
-	
+
 	/**
      * Hashtable of contexts defined in the channel, indexed by their ids.
      */
@@ -235,13 +231,13 @@ public class Channel  {
 	 * @return the user profile
 	 */
 	public UserProfile getUserProfile(String userId){
-		UserProfile userProfile = daoService.getUserProfile(userId);
+		UserProfile userProfile = LectureTools.getDaoService().getUserProfile(userId);
 		
 		if (userProfile == null){
 			userProfile = new UserProfile();
 			userProfile.setUserId(userId);
 // TODO			userProfile.init();	???
-			daoService.addUserProfile(userProfile);
+			LectureTools.getDaoService().addUserProfile(userProfile);
 		}
 		return userProfile;
 	}
@@ -477,21 +473,7 @@ public class Channel  {
 		this.mappingHashByXmlType.put(m.getXmlType(),m);
 	}	
 	
-	/* DAO Services */
 
-	/**
-	 * @return Returns the daoService.
-	 */
-	public DaoService getDaoService() {
-		return daoService;
-	}
-
-	/**
-	 * @param daoService The daoService to set.
-	 */
-	public void setDaoService(DaoService daoService) {
-		this.daoService = daoService;
-	}
 
 
 }

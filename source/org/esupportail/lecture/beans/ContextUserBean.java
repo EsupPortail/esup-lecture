@@ -24,11 +24,6 @@ public class ContextUserBean {
 
 	
 	/**
-	 * Access to services
-	 */
-	private FacadeService facadeService;
-	
-	/**
 	 * Name of the context
 	 */
 	private String name;
@@ -104,20 +99,6 @@ public class ContextUserBean {
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * @return Returns the facadeService.
-	 */
-	public FacadeService getFacadeService() {
-		return facadeService;
-	}
-
-	/**
-	 * @param facadeService The facadeService to set.
-	 */
-	public void setFacadeService(FacadeService facadeService) {
-		this.facadeService = facadeService;
 	}
 
 	/**

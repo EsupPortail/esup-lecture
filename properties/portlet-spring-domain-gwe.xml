@@ -7,33 +7,25 @@
 		<property name="domainService">
 			<ref bean="domainService"/>
 		</property>
-		<property name="portletService">
-			<ref bean="portletService"/>
-		</property>
 	</bean>	
 	
-	<!-- Entry point to portlet services -->
-	<bean id="portletService" class="org.esupportail.lecture.domain.service.impl.PortletServiceImpl">
-	</bean>
-	
-
 	<!-- Entry point to domain services -->
 	<bean id="domainService" class="org.esupportail.lecture.domain.service.impl.DomainServiceImplGwe">
-		<property name="facadeService">
-			<ref bean="facadeService"/>
-		</property>
 		<property name="myChannel">
 			<ref bean="channel"/>
 		</property>
-		
+		<property name="portletService">
+			<ref bean="portletService"/>
+		</property>
+	</bean>
+
+		<!-- Entry point to portlet services -->
+	<bean id="portletService" class="org.esupportail.lecture.domain.service.impl.PortletServiceImpl">
 	</bean>
 	
 
 	<!-- Main domain model class -->
 	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
-		<property name="daoService">
-			<ref bean="daoServiceStub"/>
-		</property>
 	</bean>
 	
 	

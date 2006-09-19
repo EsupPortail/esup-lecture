@@ -19,11 +19,6 @@ public class UserBean {
 	protected static final Log log = LogFactory.getLog(UserBean.class);
 
 	/**
-	 * Access to services
-	 */
-	private FacadeService facadeService;
-	
-	/**
 	 * Id of the user
 	 */
 	private String id;
@@ -55,20 +50,6 @@ public class UserBean {
 	 */
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	/**
-	 * @return Returns the facadeService.
-	 */
-	public FacadeService getFacadeService() {
-		return facadeService;
-	}
-
-	/**
-	 * @param facadeService The facadeService to set.
-	 */
-	public void setFacadeService(FacadeService facadeService) {
-		this.facadeService = facadeService;
 	}
 
 	

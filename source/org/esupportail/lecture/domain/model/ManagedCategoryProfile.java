@@ -121,9 +121,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 				urlCategory,activeFeatures.getTtl(),this.getId());
 			
 		} else if (access == Accessibility.CAS) {
-			// TODO LectureTools.getDaoService
 			String ptCas = "";
-			managedCategory = super.getDaoService().getCategory(
+			managedCategory = LectureTools.getDaoService().getCategory(
 					urlCategory,activeFeatures.getTtl(),this.getId(),ptCas);
 		}
 		computeActiveFeatures(managedCategory);

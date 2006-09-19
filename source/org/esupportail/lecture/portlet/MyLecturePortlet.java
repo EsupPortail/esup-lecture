@@ -55,24 +55,12 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 		try {
 			portletCtx = (PortletContext)super.getPortletContext();
 			appCtx = (WebApplicationContext)portletCtx.getAttribute("org.springframework.web.context.WebApplicationContext.ROOT");
-			domainService = (DomainService)appCtx.getBean("domainService");
-			
-//			ServletContext servlCtx = (ServletContext) appCtx.getServletContext();
-//			Enumeration enumerator= servlCtx.getAttributeNames();
-//			while(enumerator.hasMoreElements()) {
-//				String s = enumerator.nextElement().toString();
-//				log.debug("Attribut : "+s );
-//			}
-//	
 
-//			log.debug("objWeb : "+ objWeb.toString());
-//			log.debug("objCtxList : "+objCtxList.toString());
-//			log.debug("objRunConf : "+objRunConf.toString());
-//			log.debug("objFaces : "+objFaces.toString());
-//			log.debug("objRess : "+objRess.toString());
-//			
+			//load configurations files
+			domainService = (DomainService)appCtx.getBean("domainService");
 			domainService.loadChannel();
-			//Add dosService to static property of LectureTools
+
+			//Add daoService to static property of LectureTools
 			DaoService daoService = (DaoService)appCtx.getBean("daoService");
 			LectureTools.setDaoService(daoService);
 	
@@ -86,17 +74,6 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 	
 
 	
-	/**
-	 * @return Returns the domainService.
-	 */
-	public DomainService getDomainService() {
-		return domainService;
-	}
-	/**
-	 * @param domainService The domainService to set.
-	 */
-	public void setDomainService(DomainService domainService) {
-		this.domainService = domainService;
-	}
+
 
 }

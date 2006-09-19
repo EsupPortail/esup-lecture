@@ -25,14 +25,6 @@ public abstract class CategoryProfile {
 	 */
 	private String id;
 
-	/**
-	 * Access to data
-	 */
-	private DaoService daoService;
-	
-	/*
-	 *************************** METHODS *********************************/	
-
 	/** 
 	 * Returns a string containing category profile content : name, description and Id.
 	 * @see java.lang.Object#toString()
@@ -87,20 +79,6 @@ public abstract class CategoryProfile {
 	 */
 	public void setId(String id) {
 		this.id = id;
-	}
-
-	/**
-	 * @return Returns the daoService.
-	 */
-	public DaoService getDaoService() {
-		return daoService;
-	}
-
-	/**
-	 * @param daoService The daoService to set.
-	 */
-	public void setDaoService(DaoService daoService) {
-		this.daoService = daoService;
 	}
 
 

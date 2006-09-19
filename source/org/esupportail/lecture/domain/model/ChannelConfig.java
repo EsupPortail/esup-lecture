@@ -223,7 +223,6 @@ public class ChannelConfig  {
 		   	visibilitySets.setObliged(loadDefAndContentSets("obliged",i));
 		    mcp.setVisibility(visibilitySets);
 		    
-		    mcp.setDaoService(channel.getDaoService());
 		    mcp.initMiscellaneous();
 		    channel.addManagedCategoryProfile(mcp);    
 		}
