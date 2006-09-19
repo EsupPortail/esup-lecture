@@ -8,5 +8,10 @@
 		<id name="userId" type="string" column="USERID">
 			<generator class="assigned" />
 		</id>
+		<map name="customContexts" table="CUSTOMCONTEXT">
+			<key column="USERPROFILE_ID" />
+			<index column="CUSTOMCONTEXTID" type="string" />
+			<one-to-many class="CustomContext" />
+		</map>
 	</class>
 </hibernate-mapping>

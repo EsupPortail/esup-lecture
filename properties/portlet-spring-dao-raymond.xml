@@ -2,9 +2,52 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
+	<bean id="lectureTools" class="org.esupportail.lecture.domain.model.LectureTools">
+		<property name="daoService">
+			<ref bean="daoServiceImpl" />
+		</property>
+	</bean>
+
 	<!-- DAO service de test -->
 	<bean id="daoServiceStub"
 		class="org.esupportail.lecture.dao.DaoServiceStub">
+	</bean>
+
+	<!-- Entry point to facade services -->
+	<bean id="facadeService" class="org.esupportail.lecture.domain.service.FacadeService">
+		<property name="domainService">
+			<ref bean="domainService"/>
+		</property>
+		<property name="portletService">
+			<ref bean="portletService"/>
+		</property>
+	</bean>	
+	
+	<!-- Entry point to portlet services -->
+	<bean id="portletService" class="org.esupportail.lecture.domain.service.impl.PortletServiceImpl">
+	</bean>
+	
+
+	<!-- Entry point to domain services -->
+	<bean id="domainService" class="org.esupportail.lecture.domain.service.impl.DomainServiceImplRaymond"> <!--  depends-on="lectureTools"> -->
+		<property name="facadeService">
+			<ref bean="facadeService"/>
+		</property>
+		<property name="myChannel">
+			<ref bean="channel"/>
+		</property>
+	</bean>
+
+	<!-- Main domain model class -->
+	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
+		<property name="daoService">
+			<ref bean="daoServiceImpl"/>
+		</property>
+	</bean>
+	
+	<!-- DAO Remote XML -->
+	<bean id="daoServiceRemoteXML"
+		class="org.esupportail.lecture.dao.impl.DaoServiceRemoteXML">
 	</bean>
 
 	<!-- DAO Impl -->
@@ -16,11 +59,6 @@
 		<property name="remoteXMLService">
 			<ref bean="daoServiceRemoteXML" />
 		</property>
-	</bean>
-
-	<!-- DAO Remote XML -->
-	<bean id="daoServiceRemoteXML"
-		class="org.esupportail.lecture.dao.impl.DaoServiceRemoteXML">
 	</bean>
 
 	<!-- DAO Hibernate -->
@@ -40,8 +78,8 @@
 <!-- 
 				<value>customCategory.hbm</value>
 				<value>customSource.hbm</value>
-				<value>customContext.hbm</value>
  -->
+				<value>customContext.hbm</value>
 				<value>userProfile.hbm</value>
 			</list>
 		</property>
@@ -51,6 +89,7 @@
 					org.hibernate.dialect.MySQLDialect
 				</prop>
 				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.cglib.use_reflection_optimizer">false</prop>
 			</props>
 		</property>
 	</bean>

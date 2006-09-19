@@ -37,6 +37,11 @@ public class CustomContext {
 	 */
 	String contextId;
 
+	/**
+	 * The Id of this CustomContext
+	 */
+	int Id;
+
 	private Hashtable<String,CustomManagedCategory> subscriptions;
 	
 //	private Collection creations;
@@ -111,6 +116,14 @@ public class CustomContext {
 	public Enumeration<CustomManagedCategory> getCustomCategories(){
 		// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
 		return subscriptions.elements();
+	}
+
+	public int getId() {
+		return Id;
+	}
+
+	public void setId(int id) {
+		Id = id;
 	}
 
 

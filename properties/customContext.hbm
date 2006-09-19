@@ -5,7 +5,7 @@
 
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
 	<class name="CustomContext" table="CUSTOMCONTEXT">
-		<id name="ID" type="integer" column="CUSTOMCONTEXTID">
+		<id name="Id" type="integer" column="CUSTOMCONTEXTID">
 			<generator class="native" />
 		</id>
 		<property name="ContextId" column="CONTEXTID" type="string"

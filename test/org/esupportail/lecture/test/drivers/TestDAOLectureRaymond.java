@@ -7,10 +7,13 @@ package org.esupportail.lecture.test.drivers;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.beans.ContextUserBean;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.dao.impl.DaoServiceHibernate;
 import org.esupportail.lecture.domain.model.Channel;
+import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.LectureTools;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.service.DomainService;
 
@@ -42,18 +45,23 @@ public class TestDAOLectureRaymond {
 			System.out.println("userProfile.getUserId --> " + userProfile.getUserId());			
 		}
 		else {
-			System.out.println("userProfile est null");
+			System.out.println("userProfile est null (bourges bot found)");
 		}
 		// set and get an other UserProfile
 		userProfile = new UserProfile();
 		userProfile.setUserId("test");
-		dao.addUserProfile(userProfile);
+		//dao.addUserProfile(userProfile);
 		userProfile = dao.getUserProfile("test");
 		System.out.println("userProfile.getUserId --> " + userProfile.getUserId());
-//		CustomContext customContext = dao.getCustomContext(1);
-//		System.out.println("customContext.getContextId --> " + customContext.getContextId());
-		
-		
+		CustomContext cc = userProfile.getCustomContext("c1");
+		System.out.println("cc.getContextId --> " + cc.getContextId());		
+		//TODO See how to use Spring for setDaoService
+		LectureTools.setDaoService(dao);
+//		DomainService ds = (DomainService)factory.getBean("domainService");
+//		ds.loadChannel();
+//		ContextUserBean cub = ds.getContextUserBean("test", "c1");
+		//userProfile.
+		//dao.
 		
 	}
 }

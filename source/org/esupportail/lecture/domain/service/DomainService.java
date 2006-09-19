@@ -73,7 +73,4 @@ public interface DomainService {
 		 */
 		public ContextUserBean getContextUserBean(String userId,String contextId) throws ErrorException;
 
-
-		
-
 }

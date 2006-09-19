@@ -33,7 +33,7 @@ public interface DaoService {
 	 * @param profileId identifier of the managed category profile referer
 	 * @return the managedCategory
 	 */
-	public ManagedCategory getCategory(String urlCategory,int ttl,String profileId) throws ErrorException;
+	public ManagedCategory getCategory(String urlCategory,int ttl,String profileId);
 
 
 

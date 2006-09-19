@@ -2,6 +2,8 @@ package org.esupportail.lecture.domain.model;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.dao.DaoService;
+import org.esupportail.lecture.domain.service.DomainService;
 
 //import java.util.ArrayList;
 //import java.util.Hashtable;
@@ -17,7 +19,7 @@ import org.apache.commons.logging.LogFactory;
  * @author gbouteil
  *
  */
-public class UserAttributes {
+public class LectureTools {
 	
 	/*
 	 ************************** PROPERTIES *********************************/	
@@ -25,7 +27,7 @@ public class UserAttributes {
 	/**
 	 * Log instance
 	 */
-	protected static final Log log = LogFactory.getLog(UserAttributes.class);
+	protected static final Log log = LogFactory.getLog(LectureTools.class);
 
 	
 	/**
@@ -37,8 +39,12 @@ public class UserAttributes {
 	/**
 	 * Name of the portlet preference that set a context to an instance of the channel
 	 */
-	// TODO : est ce à garder dans cette classe ?
 	public static final String CONTEXT = "context";
+	
+	/**
+	 * Current DomaineService initialised by Spring
+	 */
+	private static DaoService daoService;
 	
 	// voir leur 
 	//lors de l'utilisation de ces attributs, verifier leur existance dans cette liste
@@ -61,7 +67,7 @@ public class UserAttributes {
 
 	/**
 	 * @param userId
-	 * @see UserAttributes#USER_ID
+	 * @see LectureTools#USER_ID
 	 */
 	public static void setUSER_ID(String userId){
 		USER_ID=userId;
@@ -70,10 +76,25 @@ public class UserAttributes {
 	
 	/**
 	 * @return USER_ID
-	 * @see UserAttributes#USER_ID
+	 * @see LectureTools#USER_ID
 	 */
 	public static String getUSER_ID(){
 		return USER_ID;
+	}
+
+	/**
+	 * Return an instance of current DaoService initialised by Spring
+	 * @return current DomainService
+	 */
+	public static DaoService getDaoService() {
+		return LectureTools.daoService;
+	}
+
+	/**
+	 * set current DaoService (used by Spring)
+	 */
+	public static void setDaoService(DaoService daoService) {
+		LectureTools.daoService = daoService;
 	}
 	
 //	/**

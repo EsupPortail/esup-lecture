@@ -99,6 +99,7 @@ public class DomainServiceImplGwe implements DomainService {
 		CustomContext customContext = userProfile.getCustomContext(contextId);
 		
 		/* Visibility evaluation and customContext updating */
+		//TODO trouver meilleur nom
 		evaluateVisibilityOnCategories(fullManagedCategoryProfiles,customContext);
 			
 		/* Create ContextUserBean */

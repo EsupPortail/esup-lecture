@@ -16,7 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.beans.ContextUserBean;
 import org.esupportail.lecture.beans.UserBean;
-import org.esupportail.lecture.domain.model.UserAttributes;
+import org.esupportail.lecture.domain.model.LectureTools;
 import org.esupportail.lecture.domain.service.FacadeService;
 import org.esupportail.lecture.domain.service.PortletService;
 import org.esupportail.lecture.utils.exception.ErrorException;
@@ -76,7 +76,7 @@ public class HomeContextUserBean {
 	 * @return id of the current user of the session
 	 */
 	private String getCurrentUserId() {
-		String userId = portletService.getUserAttribute(UserAttributes.USER_ID);
+		String userId = portletService.getUserAttribute(LectureTools.USER_ID);
 		return userId;
 	}
 

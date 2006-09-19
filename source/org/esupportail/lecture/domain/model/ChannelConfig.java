@@ -182,7 +182,7 @@ public class ChannelConfig  {
 		if (log.isDebugEnabled()){
 			log.debug("loadUserId()");
 		}
-		UserAttributes.setUSER_ID(xmlFile.getString("userId"));
+		LectureTools.setUSER_ID(xmlFile.getString("userId"));
 	}
 
 	

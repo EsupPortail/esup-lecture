@@ -30,7 +30,7 @@
 	<categoryProfile 
 		name="categorie1"
 		id="cp1"
-		urlCategory="http://listes.univ-rennes1.fr/"
+		urlCategory="http://perso.univ-rennes1.fr:8080/raymond.bourges/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
@@ -72,7 +72,7 @@
  	<categoryProfile 
 		name="categorie2"
 		id="cp2"
-		urlCategory="http://listes.univ-rennes1.fr/"
+		urlCategory="http://perso.univ-rennes1.fr:8080/raymond.bourges/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
@@ -104,7 +104,7 @@
 		<categoryProfile 
 		name="categorie3"
 		id="cp3"
-		urlCategory="http://listes.univ-rennes1.fr/"
+		urlCategory="http://perso.univ-rennes1.fr:8080/raymond.bourges/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
@@ -124,7 +124,7 @@
 		<categoryProfile 
 		name="categorie4"
 		id="cp4"
-		urlCategory="http://listes.univ-rennes1.fr/"
+		urlCategory="http://perso.univ-rennes1.fr:8080/raymond.bourges/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" > 

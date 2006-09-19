@@ -25,7 +25,7 @@ public class UserProfile {
 	
 	/**
 	 * Id of the user, get from portlet request by USER_ID, defined in the channel config
-	 * @see UserAttributes#USER_ID
+	 * @see LectureTools#USER_ID
 	 * @see ChannelConfig#loadUserId()
 	 */
 	private String userId;
@@ -63,7 +63,7 @@ public class UserProfile {
 		if (customContext == null){
 			customContext = new CustomContext();
 			customContext.setContextId(contextId);
-			customContexts.put(contextId,customContext);
+			addCustomContext(customContext);
 		}
 		return customContext;
 	}
@@ -72,7 +72,9 @@ public class UserProfile {
 	
 	/* ************************** ACCESSORS ********************************* */
 
-	
+		public void addCustomContext(CustomContext customContext){
+			customContexts.put(customContext.getContextId(),customContext);
+		}
 
 
 //	/**
@@ -101,6 +103,14 @@ public class UserProfile {
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public Hashtable<String, CustomContext> getCustomContexts() {
+		return customContexts;
+	}
+
+	public void setCustomContexts(Hashtable<String, CustomContext> customContexts) {
+		this.customContexts = customContexts;
 	}
 
 //	/**

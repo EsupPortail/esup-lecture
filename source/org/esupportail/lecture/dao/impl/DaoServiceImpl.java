@@ -36,7 +36,7 @@ public class DaoServiceImpl implements DaoService {
 	 * @throws WarningException 
 	 * @see org.esupportail.lecture.dao.DaoService#getCategory(java.lang.String, int, java.lang.String)
 	 */
-	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId) throws ErrorException {
+	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId) {
 		return remoteXMLService.getCategory(urlCategory, ttl, profileId);
 	}
 
