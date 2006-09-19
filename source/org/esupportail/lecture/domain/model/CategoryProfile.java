@@ -25,6 +25,14 @@ public abstract class CategoryProfile {
 	 */
 	private String id;
 
+	/**
+	 * Its category
+	 * When its category is not null,
+	 * The categroy profile is said "full"
+	 */
+	private Category category;
+	
+	
 	/** 
 	 * Returns a string containing category profile content : name, description and Id.
 	 * @see java.lang.Object#toString()
@@ -79,6 +87,20 @@ public abstract class CategoryProfile {
 	 */
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return Returns the category.
+	 */
+	public Category getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category The category to set.
+	 */
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 

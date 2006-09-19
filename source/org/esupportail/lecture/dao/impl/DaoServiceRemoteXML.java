@@ -29,7 +29,7 @@ public class DaoServiceRemoteXML {
 	 * @throws ErrorException 
 	 * @see org.esupportail.lecture.dao.DaoService#getCategory(java.lang.String, int, java.lang.String)
 	 */
-	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId) {
+	public ManagedCategory getManagedCategory(String urlCategory, int ttl, String profileId) {
 		URL url;
 		ManagedCategory ret = new ManagedCategory();
 		//TODO cache !

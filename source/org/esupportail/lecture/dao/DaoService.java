@@ -40,7 +40,7 @@ public interface DaoService {
 	 * @param profileId identifier of the managed category profile referer
 	 * @return the managedCategory
 	 */
-	public ManagedCategory getCategory(String urlCategory,int ttl,String profileId);
+	public ManagedCategory getManagedCategory(String urlCategory,int ttl,String profileId);
 
 	/**
 	 * Delete userProfile that is identified with "userId" 
@@ -56,7 +56,7 @@ public interface DaoService {
 	 * @param ptCAS user proxy ticket CAS to access categories needing authentification CAS 
 	 * @return the managedCategory
 	 */
-	public ManagedCategory getCategory(String urlCategory,int ttl,String profileId, String ptCAS);
+	public ManagedCategory getManagedCategory(String urlCategory,int ttl,String profileId, String ptCAS);
 
 
 		

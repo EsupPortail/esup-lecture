@@ -121,9 +121,11 @@ public class DomainServiceImplGwe implements DomainService {
 		/* Set categories to display in contextUserBean */
 		Enumeration enumeration= customContext.getCustomCategories();
 		while (enumeration.hasMoreElements()) {
+			// TODO a voir vraiment
 			CustomManagedCategory element = (CustomManagedCategory) enumeration.nextElement();
 			CategoryUserBean categoryUserBean = new CategoryUserBean();
 			categoryUserBean.setName(element.getCategoryProfile().getName());
+			categoryUserBean.setDescription(element.getCategoryProfile().getCategory().getDescription());
 			contextUserBean.addCategoryUserBean(categoryUserBean) ;
 			log.debug("getContextUserBean, CustomCategorie to dispaly : "+categoryUserBean.getName());		
 		}

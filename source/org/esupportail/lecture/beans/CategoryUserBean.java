@@ -14,6 +14,11 @@ public class CategoryUserBean {
 	 * Name of the category
 	 */
 	private String name;
+	
+	/**
+	 *  Description of the category
+	 */
+	private String description;
 
 	
 	/*
@@ -31,6 +36,20 @@ public class CategoryUserBean {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @return Returns the description.
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description The description to set.
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 	

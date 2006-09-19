@@ -59,7 +59,7 @@ public abstract class Category {
 	 * @return description
 	 * @see Category#description
 	 */
-	protected String getDescription() {
+	public String getDescription() {
 		return description;
 	}
 

@@ -36,8 +36,8 @@ public class DaoServiceImpl implements DaoService {
 	 * @throws WarningException 
 	 * @see org.esupportail.lecture.dao.DaoService#getCategory(java.lang.String, int, java.lang.String)
 	 */
-	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId) {
-		return remoteXMLService.getCategory(urlCategory, ttl, profileId);
+	public ManagedCategory getManagedCategory(String urlCategory, int ttl, String profileId) {
+		return remoteXMLService.getManagedCategory(urlCategory, ttl, profileId);
 	}
 
 	public void setHibernateService(DaoServiceHibernate hibernateService) {
@@ -62,7 +62,10 @@ public class DaoServiceImpl implements DaoService {
 		this.hibernateService.deleteUserProfile(userProfile);
 	}
 
-	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId, String ptCAS) {
+	
+	
+
+	public ManagedCategory getManagedCategory(String urlCategory, int ttl, String profileId, String ptCAS) {
 		// TODO Auto-generated method stub
 		return null;
 	}

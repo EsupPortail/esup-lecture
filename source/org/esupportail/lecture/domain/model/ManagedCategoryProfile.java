@@ -80,12 +80,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 */
 	private Set<Context> contextsSet = new HashSet<Context>();
 
-	/**
-	 * Its category
-	 * When its managed category is not null,
-	 * The managed categroy profile is said "full"
-	 */
-	private ManagedCategory managedCategory;
+
 	
 	
 	/*
@@ -118,23 +113,24 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		// TODO voir l'heritage
 		
 		if(access == Accessibility.PUBLIC) {
-			managedCategory = LectureTools.getDaoService().getCategory(
-				urlCategory,activeFeatures.getTtl(),this.getId());
+			setCategory(LectureTools.getDaoService().getManagedCategory(
+					urlCategory,activeFeatures.getTtl(),this.getId())); 
 			
 		} else if (access == Accessibility.CAS) {
 			String ptCas = portletService.getUserProxyTicketCAS();
-			managedCategory = LectureTools.getDaoService().getCategory(
-					urlCategory,activeFeatures.getTtl(),this.getId(),ptCas);
+			setCategory(LectureTools.getDaoService().getManagedCategory(
+					urlCategory,activeFeatures.getTtl(),this.getId(),ptCas));
 		}
-		computeActiveFeatures(managedCategory);
+		computeActiveFeatures();
 	}
 	/**
 	 * Computes rights on parameters shared between a ManagedCategoryProfile and its
 	 * ManagedCategory (edit, visibility
 	 * @param managedCategory
 	 */
-	private void computeActiveFeatures(ManagedCategory managedCategory) {
+	private void computeActiveFeatures() {
 		
+		ManagedCategory managedCategory = (ManagedCategory)getCategory();
 		Editability setEdit;
 		VisibilitySets setVisib;
 		int setTtl;
@@ -440,12 +436,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		contextsSet.add(c);
 	}
 
-	/**
-	 * @return Returns the managedCategory.
-	 */
-	public ManagedCategory getManagedCategory() {
-		return managedCategory;
-	}
 
 	/**
 	 * @return Returns the activeFeatures.
@@ -454,7 +444,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		return activeFeatures;
 	}
 
-
+	
 
 
 

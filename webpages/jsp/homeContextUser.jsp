@@ -28,6 +28,9 @@
 	<t:dataList value="#{homeContextUserBean.context.categories}" var="category"
 		layout="unorderedList">
 		<h:outputText value="#{category.name}" />
+			<br/>	
+			<br/>
+		<h:outputText value="#{category.description}" />
 	</t:dataList>
 	</t:div> 
 </f:view>

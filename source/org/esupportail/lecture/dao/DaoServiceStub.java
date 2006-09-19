@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
+import org.esupportail.lecture.dao.impl.DaoServiceHibernate;
+import org.esupportail.lecture.dao.impl.DaoServiceRemoteXML;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.UserProfile;
@@ -27,7 +29,9 @@ public class DaoServiceStub  implements DaoService {
 	/**
 	 * UserProfiles to be stored in the channel
 	 */
-	Hashtable<String,UserProfile> userProfiles;	
+	Hashtable<String,UserProfile> userProfiles;
+
+	private DaoServiceRemoteXML remoteXMLService;	
 	
 
 	
@@ -59,30 +63,38 @@ public class DaoServiceStub  implements DaoService {
 		userProfiles.put(userProfile.getUserId(),userProfile);
 	}
 
-	/**
-	 * @see org.esupportail.lecture.dao.DaoService#getCategory(java.lang.String, int, java.lang.String)
-	 */
-	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId) {
-		ManagedCategory cat = new ManagedCategory();
-		cat.setName("Ma belle categorie de test : "+profileId);
-		
-		return cat;
+	
+	public ManagedCategory getManagedCategory(String urlCategory, int ttl, String profileId) {
+		return remoteXMLService.getManagedCategory(urlCategory, ttl, profileId);
 	}
+
+
+	public void setRemoteXMLService(DaoServiceRemoteXML remoteXML) {
+		this.remoteXMLService = remoteXML;
+	}
+	
 
 	public void addCustomContext(CustomContext customContext) {
 		// TODO Auto-generated method stub
 		
 	}
-	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId, String ptCAS) {
-		ManagedCategory cat = new ManagedCategory();
-		cat.setName("Ma belle categorie de test : "+profileId);
-		
-		return cat;
-	}
+	
 
 	public void deleteUserProfile(UserProfile userProfile) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public ManagedCategory getManagedCategory(String urlCategory, int ttl, String profileId, String ptCAS) {
+		return remoteXMLService.getManagedCategory(urlCategory, ttl, profileId);
+		
+	}
+
+	/**
+	 * @return Returns the remoteXMLService.
+	 */
+	public DaoServiceRemoteXML getRemoteXMLService() {
+		return remoteXMLService;
 	}
 
 
