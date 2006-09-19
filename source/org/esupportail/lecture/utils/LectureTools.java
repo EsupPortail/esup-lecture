@@ -41,30 +41,6 @@ public class LectureTools {
 	public static final String CONTEXT = "context";
 	
 	/**
-	 * Current DaoService initialised duriant portlet init
-	 */
-	private static DaoService daoService;
-	
-	// voir leur 
-	//lors de l'utilisation de ces attributs, verifier leur existance dans cette liste
-//	/**
-//	 * List of attributes used 
-//	 */
-//	private static List<String> ATTRIBUTES;
-
-	/*
-	 ************************** Initialization ************************************/
-
-//	public static void init(){
-//		ATTRIBUTES = new ArrayList();
-//	}
-
-	/*
-	 *************************** METHODS ************************************/
-	
-	/* ************************** ACCESSORS ********************************* */
-
-	/**
 	 * @param userId
 	 * @see LectureTools#USER_ID
 	 */
@@ -79,21 +55,6 @@ public class LectureTools {
 	 */
 	public static String getUSER_ID(){
 		return USER_ID;
-	}
-
-	/**
-	 * Return an instance of current DaoService initialised by Spring
-	 * @return current DomainService
-	 */
-	public static DaoService getDaoService() {
-		return LectureTools.daoService;
-	}
-
-	/**
-	 * set current DaoService (used by Spring)
-	 */
-	public static void setDaoService(DaoService daoService) {
-		LectureTools.daoService = daoService;
 	}
 	
 //	/**

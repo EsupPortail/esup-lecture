@@ -1,23 +1,27 @@
 package org.esupportail.lecture.domain.model;
 
+import org.esupportail.lecture.domain.DomainTools;
+
 /**
  * Customizations on a managedCategory for a customContext
  * @author gbouteil
  *
  */
-public class CustomManagedCategory {
+public class CustomManagedCategory extends CustomCategory {
 
 	/*
 	 ************************** PROPERTIES *********************************/	
 
-	private CategoryProfile categoryProfile;
 	/**
 	 * Used for tests
 	 */
 	public String test = "CustomCAtegoryCharge";
 	
-	/* 
-	 ************************** ACCESSORS **********************************/
+	
+	/**
+	 * The ID of related profilCategory
+	 */
+	private String categoryProfileID;
 	
 	/**
 	 * @return Returns the test.
@@ -33,18 +37,14 @@ public class CustomManagedCategory {
 	}
 
 
-	/**
-	 * Sets the managedCategory profile associated with this CustomManagedCategoryProfile
-	 * @param profile
-	 */
-	public void setCategoryProfile(ManagedCategoryProfile profile) {
-		categoryProfile = profile;
-		
+	public String getCategoryProfileID() {
+		return categoryProfileID;
 	}
-	/**
-	 * @return Returns the categoryProfile.
-	 */
+	public void setCategoryProfileID(String profilID) {
+		this.categoryProfileID = profilID;
+	}
 	public CategoryProfile getCategoryProfile() {
-		return categoryProfile;
+		return DomainTools.getChannel().getManagedCategoryProfile(this.categoryProfileID);
 	}
+	
 }

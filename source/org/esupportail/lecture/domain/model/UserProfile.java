@@ -30,12 +30,15 @@ public class UserProfile {
 	 */
 	private String userId;
 	
-	
-	
 	/**
-	 * Hashtable of CustomContexts defined for the user, indexed by their Id.
+	 * Hashtable of CustomContexts defined for the user, indexed by contexID.
 	 */
 	private Map<String,CustomContext> customContexts;
+
+	/**
+	 * Hashtable of CustomManagedCategory defined for the user, indexed by ManagedCategoryProfilID.
+	 */
+	private Map<String,CustomManagedCategory> customMabagedCategories;
 
 	/*
 	 ************************** Initialization ************************************/
@@ -113,6 +116,15 @@ public class UserProfile {
 
 	public void setCustomContexts(Map<String, CustomContext> customContexts) {
 		this.customContexts = customContexts;
+	}
+
+	public Map<String, CustomManagedCategory> getCustomMabagedCategories() {
+		return customMabagedCategories;
+	}
+
+	public void setCustomMabagedCategories(
+			Map<String, CustomManagedCategory> customMabagedCategories) {
+		this.customMabagedCategories = customMabagedCategories;
 	}
 
 //	/**

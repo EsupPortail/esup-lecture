@@ -10,6 +10,7 @@ import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.service.PortletService;
 import org.esupportail.lecture.utils.LectureTools;
 
@@ -113,12 +114,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		// TODO voir l'heritage
 		
 		if(access == Accessibility.PUBLIC) {
-			setCategory(LectureTools.getDaoService().getManagedCategory(
+			setCategory(DomainTools.getDaoService().getManagedCategory(
 					urlCategory,activeFeatures.getTtl(),this.getId())); 
 			
 		} else if (access == Accessibility.CAS) {
 			String ptCas = portletService.getUserProxyTicketCAS();
-			setCategory(LectureTools.getDaoService().getManagedCategory(
+			setCategory(DomainTools.getDaoService().getManagedCategory(
 					urlCategory,activeFeatures.getTtl(),this.getId(),ptCas));
 		}
 		computeActiveFeatures();

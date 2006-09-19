@@ -36,6 +36,7 @@ public class DaoServiceRemoteXML {
 		try {
 			url = new URL(urlCategory);
 			XMLConfiguration xml = new XMLConfiguration(url);
+			//TODO use and test Validating
 			//xml.setValidating(true);
 			xml.load();
 			// Category properties

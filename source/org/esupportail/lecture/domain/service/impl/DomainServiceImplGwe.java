@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.Channel;
@@ -42,6 +43,7 @@ public class DomainServiceImplGwe implements DomainService {
 	 * Services provided by portlet request
 	 */
 	static FacadeService facadeService;
+	
 	/** 
 	 * Main domain model class
 	 */
@@ -108,8 +110,8 @@ public class DomainServiceImplGwe implements DomainService {
 		evaluateVisibilityOnCategoriesAndUpdateCustomContext(fullManagedCategoryProfiles,customContext);
 			
 		//TODO a voir où mettre de façon intelligente
-		LectureTools.getDaoService().addCustomContext(customContext);
-		LectureTools.getDaoService().addUserProfile(userProfile);
+		DomainTools.getDaoService().addCustomContext(customContext);
+		DomainTools.getDaoService().addUserProfile(userProfile);
 		
 		/* Create ContextUserBean */
 		ContextUserBean contextUserBean = new ContextUserBean();

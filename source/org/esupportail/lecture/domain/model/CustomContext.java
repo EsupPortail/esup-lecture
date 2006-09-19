@@ -74,7 +74,8 @@ public class CustomContext {
 		
 		if (!subscriptions.containsKey(profileId)){
 			CustomManagedCategory customManagedCategory = new CustomManagedCategory();
-			customManagedCategory.setCategoryProfile(profile);
+			//customManagedCategory.setCategoryProfile(profile);
+			customManagedCategory.setCategoryProfileID(profileId);
 			subscriptions.put(profileId,customManagedCategory);
 		}
 	}

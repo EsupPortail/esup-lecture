@@ -12,6 +12,7 @@ import java.util.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.utils.LectureTools;
 import org.esupportail.lecture.utils.exception.*;
 /**
@@ -232,13 +233,13 @@ public class Channel  {
 	 * @return the user profile
 	 */
 	public UserProfile getUserProfile(String userId){
-		UserProfile userProfile = LectureTools.getDaoService().getUserProfile(userId);
+		UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
 		
 		if (userProfile == null){
 			userProfile = new UserProfile();
 			userProfile.setUserId(userId);
 // TODO			userProfile.init();	???
-			LectureTools.getDaoService().addUserProfile(userProfile);
+			DomainTools.getDaoService().addUserProfile(userProfile);
 		}
 		return userProfile;
 	}

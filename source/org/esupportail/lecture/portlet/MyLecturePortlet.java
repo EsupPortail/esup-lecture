@@ -12,7 +12,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.myfaces.portlet.MyFacesGenericPortlet;
 import org.esupportail.lecture.dao.DaoService;
-import org.esupportail.lecture.utils.LectureTools;
+//import org.esupportail.lecture.utils.LectureTools;
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.service.DomainService;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -62,7 +63,7 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 
 			//Add daoService to static property of LectureTools
 			DaoService daoService = (DaoService)appCtx.getBean("daoService");
-			LectureTools.setDaoService(daoService);
+			DomainTools.setDaoService(daoService);
 	
 		} catch (Exception e) {
 			log.fatal("init() :: "+e.getMessage());
