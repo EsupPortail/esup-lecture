@@ -11,6 +11,8 @@ import javax.portlet.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.myfaces.portlet.MyFacesGenericPortlet;
+import org.esupportail.lecture.dao.DaoService;
+import org.esupportail.lecture.domain.model.LectureTools;
 import org.esupportail.lecture.domain.service.DomainService;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -70,6 +72,9 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 //			log.debug("objRess : "+objRess.toString());
 //			
 			domainService.loadChannel();
+			//Add dosService to static property of LectureTools
+			DaoService daoService = (DaoService)appCtx.getBean("daoService");
+			LectureTools.setDaoService(daoService);
 	
 		} catch (Exception e) {
 			log.fatal("init() :: "+e.getMessage());

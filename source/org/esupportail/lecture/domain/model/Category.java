@@ -25,7 +25,7 @@ public abstract class Category {
 	private String description = "";
 
 	/**
-	 * Id of the category
+	 * Id of the categoryProfil
 	 */
 	private String profilId;
 	
