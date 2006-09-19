@@ -205,7 +205,7 @@ public class DomainServiceImplRaymond implements DomainService {
 			Iterator iterator = fullManagedCategoryProfiles.iterator();
 			while (iterator.hasNext()) {
 				ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
-				mcp.evaluateVisibilityAndUpdateUser(portletService,customContext);
+				mcp.evaluateVisibilityAndUpdateCustomContext(portletService,customContext);
 			}
 		}
 

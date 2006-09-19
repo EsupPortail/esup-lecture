@@ -167,7 +167,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @param portletService
 	 * @param customContext
 	 */
-	public void evaluateVisibilityAndUpdateUser(PortletService portletService, CustomContext customContext) {
+	public void evaluateVisibilityAndUpdateCustomContext(PortletService portletService, CustomContext customContext) {
 		/*
 		 * Algo pour gerer les customCategories :
 		 * ------------------------------------

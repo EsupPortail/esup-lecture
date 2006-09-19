@@ -99,8 +99,7 @@ public class DomainServiceImplGwe implements DomainService {
 		CustomContext customContext = userProfile.getCustomContext(contextId);
 		
 		/* Visibility evaluation and customContext updating */
-		//TODO trouver meilleur nom
-		evaluateVisibilityOnCategories(fullManagedCategoryProfiles,customContext);
+		evaluateVisibilityOnCategoriesAndUpdateCustomContext(fullManagedCategoryProfiles,customContext);
 			
 		/* Create ContextUserBean */
 		ContextUserBean contextUserBean = new ContextUserBean();
@@ -121,7 +120,7 @@ public class DomainServiceImplGwe implements DomainService {
 		return contextUserBean;		
 	}
 	
-	private void evaluateVisibilityOnCategories(
+	private void evaluateVisibilityOnCategoriesAndUpdateCustomContext(
 		Set<ManagedCategoryProfile> fullManagedCategoryProfiles,
 		CustomContext customContext) {
 		//TODO optimiser le nombre de fois où on évalue tout ça !!!
@@ -131,7 +130,7 @@ public class DomainServiceImplGwe implements DomainService {
 		Iterator iterator = fullManagedCategoryProfiles.iterator();
 		while (iterator.hasNext()) {
 			ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
-			mcp.evaluateVisibilityAndUpdateUser(portletService,customContext);
+			mcp.evaluateVisibilityAndUpdateCustomContext(portletService,customContext);
 			log.debug("evaluateVisibility, evaluation sur : "+mcp.getName());
 		}
 	}
