@@ -69,12 +69,22 @@ public class DaoServiceStub  implements DaoService {
 		return cat;
 	}
 
+	public void addCustomContext(CustomContext customContext) {
+		// TODO Auto-generated method stub
+		
+	}
 	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId, String ptCAS) {
 		ManagedCategory cat = new ManagedCategory();
 		cat.setName("Ma belle categorie de test : "+profileId);
 		
 		return cat;
 	}
+
+	public void deleteUserProfile(UserProfile userProfile) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

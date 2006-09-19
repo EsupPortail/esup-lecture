@@ -16,7 +16,6 @@
 		<property name="Treewinwidth" column="TREEWINWIDTH"
 			type="integer" not-null="false" length="10" />
  -->
-
-
+        <many-to-one name="userProfile" class="UserProfile" column="USERPROFILE_ID" not-null="true"/>
 	</class>
 </hibernate-mapping>

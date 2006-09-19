@@ -2,7 +2,7 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
-
+import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -42,16 +42,15 @@ public class CustomContext {
 	 */
 	int Id;
 
-	private Hashtable<String,CustomManagedCategory> subscriptions;
+	/**
+	 * The map of subscribed CustomManagedCategory
+	 */
+	private Map<String,CustomManagedCategory> subscriptions;
 	
-//	private Collection creations;
-//	private Set foldedCategories;
-//	private SortedSet orderCategories;
-//	private Collection importations;
-//	private int treeWinWidth;
-	
-	/*
-	 ************************** Initialization ************************************/
+	/**
+	 * The userprofile parent (used by hibernate)
+	 */
+	private UserProfile userProfile;
 	
 	/**
 	 * Constructor
@@ -115,7 +114,8 @@ public class CustomContext {
 	 */
 	public Enumeration<CustomManagedCategory> getCustomCategories(){
 		// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
-		return subscriptions.elements();
+		Hashtable<String,CustomManagedCategory> hash = (Hashtable<String, CustomManagedCategory>)this.subscriptions;
+		return hash.elements();
 	}
 
 	public int getId() {
@@ -124,6 +124,14 @@ public class CustomContext {
 
 	public void setId(int id) {
 		Id = id;
+	}
+
+	public UserProfile getUserProfile() {
+		return userProfile;
+	}
+
+	public void setUserProfile(UserProfile userprofile) {
+		this.userProfile = userprofile;
 	}
 
 

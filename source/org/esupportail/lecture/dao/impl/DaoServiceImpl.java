@@ -48,6 +48,20 @@ public class DaoServiceImpl implements DaoService {
 		this.remoteXMLService = remoteXML;
 	}
 
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#addCustomContext(org.esupportail.lecture.domain.model.CustomContext)
+	 */
+	public void addCustomContext(CustomContext customContext) {
+		this.hibernateService.addCustomContext(customContext);
+	}
+
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#deleteUserProfile(java.lang.String)
+	 */
+	public void deleteUserProfile(UserProfile userProfile) {
+		this.hibernateService.deleteUserProfile(userProfile);
+	}
+
 	public ManagedCategory getCategory(String urlCategory, int ttl, String profileId, String ptCAS) {
 		// TODO Auto-generated method stub
 		return null;

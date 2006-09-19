@@ -40,28 +40,26 @@ public class TestDAOLectureRaymond {
 		
 		// get one UserProfile
 		DaoService dao = (DaoService)factory.getBean("daoServiceImpl");
-		UserProfile userProfile = dao.getUserProfile("bourges");
+		UserProfile userProfile = dao.getUserProfile("test");
 		if (userProfile != null) {
 			System.out.println("userProfile.getUserId --> " + userProfile.getUserId());			
+			//delete userProfile test
+			dao.deleteUserProfile(userProfile);
 		}
 		else {
-			System.out.println("userProfile est null (bourges bot found)");
+			System.out.println("userProfile est null (test bot found)");
 		}
-		// set and get an other UserProfile
+		//set userProfile test
 		userProfile = new UserProfile();
 		userProfile.setUserId("test");
-		//dao.addUserProfile(userProfile);
-		userProfile = dao.getUserProfile("test");
+		dao.addUserProfile(userProfile);
+		//userProfile = dao.getUserProfile("test");
 		System.out.println("userProfile.getUserId --> " + userProfile.getUserId());
-		CustomContext cc = userProfile.getCustomContext("c1");
-		System.out.println("cc.getContextId --> " + cc.getContextId());		
-		//TODO See how to use Spring for setDaoService
-		LectureTools.setDaoService(dao);
-//		DomainService ds = (DomainService)factory.getBean("domainService");
-//		ds.loadChannel();
-//		ContextUserBean cub = ds.getContextUserBean("test", "c1");
-		//userProfile.
-		//dao.
-		
+		//add CustomContext to userProfile test
+		CustomContext cc = new CustomContext();
+		cc.setContextId("c1");
+		cc.setUserProfile(userProfile);
+		userProfile.getCustomContexts().put("c1", cc);
+		dao.addCustomContext(cc);
 	}
 }

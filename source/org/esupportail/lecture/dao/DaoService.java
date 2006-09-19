@@ -1,4 +1,5 @@
 package org.esupportail.lecture.dao;
+import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.utils.exception.ErrorException;
@@ -27,6 +28,12 @@ public interface DaoService {
 	public void addUserProfile(UserProfile userProfile);
 
 	/**
+	 * Add a customContext to persistent data.
+	 * @param customContext : customContext to add
+	 */
+	public void addCustomContext(CustomContext customContext);
+
+	/**
 	 * Get a managed category from a remote place
 	 * @param urlCategory url of the remote category
 	 * @param ttl ttl of the category
@@ -35,6 +42,12 @@ public interface DaoService {
 	 */
 	public ManagedCategory getCategory(String urlCategory,int ttl,String profileId);
 
+	/**
+	 * Delete userProfile that is identified with "userId" 
+	 * @param userProfile : userProfile to delete
+	 */
+	public void deleteUserProfile(UserProfile userProfile);
+	
 	/**
 	 * Get a managed category from a remote place
 	 * @param urlCategory url of the remote category

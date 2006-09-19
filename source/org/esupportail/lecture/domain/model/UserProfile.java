@@ -2,7 +2,7 @@ package org.esupportail.lecture.domain.model;
 
 
 import java.util.Hashtable;
-
+import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -35,7 +35,7 @@ public class UserProfile {
 	/**
 	 * Hashtable of CustomContexts defined for the user, indexed by their Id.
 	 */
-	private Hashtable<String,CustomContext> customContexts;
+	private Map<String,CustomContext> customContexts;
 
 	/*
 	 ************************** Initialization ************************************/
@@ -63,6 +63,7 @@ public class UserProfile {
 		if (customContext == null){
 			customContext = new CustomContext();
 			customContext.setContextId(contextId);
+			customContext.setUserProfile(this);
 			addCustomContext(customContext);
 		}
 		return customContext;
@@ -105,11 +106,11 @@ public class UserProfile {
 		this.userId = userId;
 	}
 
-	public Hashtable<String, CustomContext> getCustomContexts() {
+	public Map<String, CustomContext> getCustomContexts() {
 		return customContexts;
 	}
 
-	public void setCustomContexts(Hashtable<String, CustomContext> customContexts) {
+	public void setCustomContexts(Map<String, CustomContext> customContexts) {
 		this.customContexts = customContexts;
 	}
 

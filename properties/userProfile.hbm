@@ -8,9 +8,9 @@
 		<id name="userId" type="string" column="USERID">
 			<generator class="assigned" />
 		</id>
-		<map name="customContexts" table="CUSTOMCONTEXT">
+		<map name="customContexts" inverse="true" lazy="false" cascade="delete">
 			<key column="USERPROFILE_ID" />
-			<index column="CUSTOMCONTEXTID" type="string" />
+			<map-key column="CUSTOMCONTEXTID" type="int"/>
 			<one-to-many class="CustomContext" />
 		</map>
 	</class>

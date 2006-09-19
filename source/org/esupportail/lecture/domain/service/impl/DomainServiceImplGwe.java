@@ -12,11 +12,13 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomManagedCategory;
+import org.esupportail.lecture.domain.model.LectureTools;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.service.DomainService;
@@ -101,6 +103,10 @@ public class DomainServiceImplGwe implements DomainService {
 		/* Visibility evaluation and customContext updating */
 		evaluateVisibilityOnCategoriesAndUpdateCustomContext(fullManagedCategoryProfiles,customContext);
 			
+		//TODO a voir où mettre de façon intelligente
+		LectureTools.getDaoService().addCustomContext(customContext);
+		LectureTools.getDaoService().addUserProfile(userProfile);
+		
 		/* Create ContextUserBean */
 		ContextUserBean contextUserBean = new ContextUserBean();
 		contextUserBean.setName(context.getName());

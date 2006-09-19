@@ -24,5 +24,14 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		return (CustomContext)getHibernateTemplate().get(CustomContext.class, Id);
 	}
 
+	public void addCustomContext(CustomContext customContext) {
+		getHibernateTemplate().persist(customContext);
+	}
+
+
+	public void deleteUserProfile(UserProfile userProfile) {
+		getHibernateTemplate().delete(userProfile);
+	}
+
 
 }
