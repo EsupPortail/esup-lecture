@@ -7,17 +7,10 @@ package org.esupportail.lecture.test.drivers;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.beans.ContextUserBean;
 import org.esupportail.lecture.dao.DaoService;
-import org.esupportail.lecture.dao.impl.DaoServiceHibernate;
 import org.esupportail.lecture.domain.model.Channel;
-import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.domain.model.LectureTools;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.domain.service.DomainService;
-
-import java.io.IOException;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 

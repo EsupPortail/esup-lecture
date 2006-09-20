@@ -43,16 +43,16 @@ public class TestDAORemoteXMLRaymond {
 		
 		try {
 			DaoService dao = (DaoService)factory.getBean("daoServiceImpl");
-			ManagedCategory cat = dao.getCategory("http://perso.univ-rennes1.fr/raymond.bourges/categoryTest.xml", 100, "test");
-			System.out.println("name --> "+cat.getName());
-			Enumeration<String> keys = cat.getSourceProfiles().keys();
-			while (keys.hasMoreElements()) {
-				String key = (String) keys.nextElement();
-				ManagedSourceProfile sp = (ManagedSourceProfile)cat.getSourceProfiles().get(key);
-				System.out.println("sp name --> "+sp.getName());
-				System.out.println("sp access --> "+sp.getAccess());
-				
-			}
+			//ManagedCategory cat = dao.getCategory("http://perso.univ-rennes1.fr/raymond.bourges/categoryTest.xml", 100, "test");
+			//System.out.println("name --> "+cat.getName());
+			//Enumeration<String> keys = cat.getSourceProfiles().keys();
+//			while (keys.hasMoreElements()) {
+//				String key = (String) keys.nextElement();
+//				ManagedSourceProfile sp = (ManagedSourceProfile)cat.getSourceProfiles().get(key);
+//				System.out.println("sp name --> "+sp.getName());
+//				System.out.println("sp access --> "+sp.getAccess());
+//				
+//			}
 		} catch (ErrorException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

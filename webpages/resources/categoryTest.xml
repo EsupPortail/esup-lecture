@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE category SYSTEM "category.dtd" >
 <category edit="all" name="TTTTTTTTT" ttl="">
-  <description>description</description>
+  <description>Très belle description !!!!</description>
   <sourceProfiles>
     <sourceProfile id="1" access="public" name="toto" specificUserContent="no" ttl="100" url="http://test" xpath="test" xslt="test">
       <visibility>

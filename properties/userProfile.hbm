@@ -10,8 +10,13 @@
 		</id>
 		<map name="customContexts" inverse="true" lazy="false" cascade="delete">
 			<key column="USERPROFILE_ID" />
-			<map-key column="CUSTOMCONTEXTID" type="int"/>
+			<map-key column="CONTEXTID" type="string"/>
 			<one-to-many class="CustomContext" />
+		</map>
+		<map name="customMabagedCategories" inverse="true" lazy="false" cascade="delete">
+			<key column="USERPROFILE_ID" />
+			<map-key column="MANAGEDCATEGORYPROFILEID" type="int"/>
+			<one-to-many class="CustomManagedCategory" />
 		</map>
 	</class>
 </hibernate-mapping>

@@ -4,37 +4,20 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
-	<class name="Customcategory" table="CUSTOMCATEGORY">
-		<meta attribute="sync-DAO">false</meta>
+	<class name="CustomCategory" table="CUSTOMCATEGORY">
 		<id name="Id" type="integer" column="CUSTOMCATEGORYID">
-			<generator class="sequence" />
+			<generator class="native" />
 		</id>
-
-		<property name="UserprofileId" column="USERPROFILE_ID"
-			type="string" not-null="true" length="50" />
-		<property name="CustomcontextIdImported"
-			column="CUSTOMCONTEXT_ID_IMPORTED" type="integer" not-null="false"
-			length="10" />
-		<property name="CustomcontextIdSubscribed"
-			column="CUSTOMCONTEXT_ID_SUBSCRIBED" type="integer" not-null="false"
-			length="10" />
-		<property name="CustomcontextIdCreated"
-			column="CUSTOMCONTEXT_ID_CREATED" type="integer" not-null="false"
-			length="10" />
-		<property name="Managedcategoryprofileid"
-			column="MANAGEDCATEGORYPROFILEID" type="integer" not-null="false"
-			length="10" />
-		<property name="Displaymode" column="DISPLAYMODE" type="integer"
-			not-null="false" length="10" />
-		<property name="Name" column="NAME" type="string"
-			not-null="false" length="50" />
-		<property name="Description" column="DESCRIPTION" type="string"
-			not-null="false" />
-		<property name="Folded" column="FOLDED" type="java.lang.Byte"
+		<discriminator column="NATURE" />
+		<property name="folded" column="FOLDED" type="java.lang.Byte"
 			not-null="false" length="1" />
-		<property name="Nature" column="NATURE" type="string"
-			not-null="false" length="1" />
-
-
+		<many-to-one name="userProfile" class="UserProfile"
+			column="USERPROFILE_ID" not-null="true" />
+		<subclass name="CustomManagedCategory"
+			discriminator-value="M">
+			<property name="categoryProfileID"
+				column="MANAGEDCATEGORYPROFILEID" type="string" not-null="false"
+				length="10" />
+		</subclass>
 	</class>
 </hibernate-mapping>

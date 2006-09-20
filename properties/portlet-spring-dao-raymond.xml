@@ -38,11 +38,11 @@
 		<property name="mappingResources">
 			<list>
 <!-- 
-				<value>customCategory.hbm</value>
 				<value>customSource.hbm</value>
  -->
-				<value>customContext.hbm</value>
 				<value>userProfile.hbm</value>
+				<value>customContext.hbm</value>
+				<value>customCategory.hbm</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

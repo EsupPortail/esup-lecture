@@ -18,3 +18,4 @@ Library
   --> dom4j-1.6.jar
   --> ehcache-1.1.jar
   --> cglib-nodep-2.1_3.jar
+ spring-modules-cache.jar
