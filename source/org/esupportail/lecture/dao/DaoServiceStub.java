@@ -8,6 +8,7 @@ import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.dao.impl.DaoServiceRemoteXML;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;
+import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 /**
  * Stub Service to Data Access Object : use to test upper layers, instead of using 
@@ -94,6 +95,11 @@ public class DaoServiceStub  implements DaoService {
 	 */
 	public DaoServiceRemoteXML getRemoteXMLService() {
 		return remoteXMLService;
+	}
+
+	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -51,36 +51,6 @@ public class DomainServiceImplRaymond implements DomainService {
 		return categories;
 	}
 
-//	public List<Item> getItems(int sourceID) {
-//		// Volontairement ici je ne tiens pas compte du parametre passé à la fonction...		
-//		return getItems();
-//	}
-
-//	private List<SourceRB> getSourcesRB(Category cat) {
-//		ArrayList<SourceRB> ret = new ArrayList<SourceRB>();
-//		// Volontairement ici je ne tiens pas compte du parametre passé à la fonction...
-//		ret.add(getSource(1));
-//		ret.add(getSource(2));
-//		ret.add(getSource(3));
-//		ret.add(getSource(4));
-//		return ret;
-//	}
-
-//	public SourceRB getSource(int sourceID) {
-//		SourceRB ret = null;
-//		List<SourceRB> sources = getSources();
-//		if (sources != null) {
-//			Iterator<SourceRB> ite = sources.iterator();
-//			while (ite.hasNext()) {
-//				SourceRB source = ite.next();
-//				if (source.getId() == sourceID) {
-//					ret=source;
-//				}
-//			}			
-//		}
-//		return ret;
-//	}
-
 	public void loadChannel() throws FatalException, MyException {
 		myChannel.startup();
 		
@@ -164,37 +134,6 @@ public class DomainServiceImplRaymond implements DomainService {
 	}
 
 	public ContextUserBean getContextUserBean(String userId, String contextId) throws ErrorException {
-		/* Get context */
-		
-		Context context = myChannel.getContext(contextId);
-		if (context == null) {
-			throw new ErrorException("Context "+contextId+" is not defined in this channel");
-		}
-		/* Get Managed category profiles with their categories */ 
-		Set<ManagedCategoryProfile> fullManagedCategoryProfiles =  context.getFullManagedCategoryProfiles(portletService);
-		
-		/* Get user profile and customContext */
-		UserProfile userProfile = myChannel.getUserProfile(userId);
-		CustomContext customContext = userProfile.getCustomContext(contextId);
-		//evaluateVisibilityOnCategories(fullManagedCategoryProfiles,customContext);
-		ContextUserBean contextUserBean = new ContextUserBean();
-		contextUserBean.setName(context.getName());
-		contextUserBean.setDescription(context.getDescription());
-		contextUserBean.setId(contextId);
-		contextUserBean.setTest(customContext.test);
-	
-		/* recuperer les categories à afficher */
-		// TODO afficher les categories
-		Enumeration enumeration= customContext.getCustomCategories();
-		while (enumeration.hasMoreElements()) {
-			CustomManagedCategory element = (CustomManagedCategory) enumeration.nextElement();
-			CategoryUserBean categoryUserBean = new CategoryUserBean();
-			categoryUserBean.setName(element.getCategoryProfile().getName());
-			contextUserBean.addCategoryUserBean(categoryUserBean) ;
-		}
-		
-		
-		//return contextUserBean;		
 		return null;
 	}
 	

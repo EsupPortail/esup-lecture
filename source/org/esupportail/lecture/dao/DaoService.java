@@ -1,6 +1,7 @@
 package org.esupportail.lecture.dao;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;
+import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 
 
@@ -57,6 +58,15 @@ public interface DaoService {
 	 */
 	public ManagedCategory getManagedCategory(String urlCategory,int ttl,String profileId, String ptCAS);
 
+	/**
+	 * Get a Source from a remote place
+	 * @param urlSource url of the remote Source
+	 * @param ttl ttl of the Source
+	 * @param profileId identifier of the Source profile referer
+	 * @param specificUserContent specify if the content is current user specific. If true don't use cache 
+	 * @return the source
+	 */
+	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent);
 
 		
 }

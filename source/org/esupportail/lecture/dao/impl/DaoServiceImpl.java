@@ -3,6 +3,7 @@ package org.esupportail.lecture.dao.impl;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;
+import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.utils.exception.ErrorException;
 import org.esupportail.lecture.utils.exception.WarningException;
@@ -62,12 +63,19 @@ public class DaoServiceImpl implements DaoService {
 		this.hibernateService.deleteUserProfile(userProfile);
 	}
 
-	
-	
-
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(java.lang.String, int, java.lang.String, java.lang.String)
+	 */
 	public ManagedCategory getManagedCategory(String urlCategory, int ttl, String profileId, String ptCAS) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getSource(java.lang.String, int, java.lang.String, boolean)
+	 */
+	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
+		return remoteXMLService.getSource(urlSource, ttl, profileId, specificUserContent);
 	}
 
 }
