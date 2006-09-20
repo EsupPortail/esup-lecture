@@ -5,7 +5,7 @@ package org.esupportail.lecture.domain.model;
  * @author gbouteil
  *
  */
-public class CustomCategory {
+public abstract class CustomCategory {
 
 	/*
 	 ************************** PROPERTIES *********************************/	
@@ -46,4 +46,14 @@ public class CustomCategory {
 	public void setFolded(boolean folded) {
 		this.folded = folded;
 	}
+	
+	/**
+	 * @return the category associated with this customCategory
+	 */
+	public abstract Category getCategory() ;
+	/**
+	 * @return the categoryProfile associated with this customCategory
+	 */
+	public abstract CategoryProfile getCategoryProfile() ;
+	
 }

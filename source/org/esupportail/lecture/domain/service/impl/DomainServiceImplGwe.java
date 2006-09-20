@@ -16,6 +16,7 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.Channel;
+import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomManagedCategory;
 import org.esupportail.lecture.utils.LectureTools;
@@ -93,64 +94,70 @@ public class DomainServiceImplGwe implements DomainService {
 	 */
 	public ContextUserBean getContextUserBean(String userId,String contextId) throws ErrorException {
 		// TODO faire des sous méthode pour alléger celle ci
-		/* Get context */
-		Context context = myChannel.getContext(contextId);
-		if (context == null) {
-			throw new ErrorException("Context "+contextId+" is not defined in this channel");
-		}
 		
-		/* Get Managed category profiles with their categories */ 
-		Set<ManagedCategoryProfile> fullManagedCategoryProfiles =  context.getFullManagedCategoryProfiles(portletService);
+	/* *********************************************************************
+	 * Récupération et mise à jour des infos
+	 ***********************************************************************/
 		
-		/* Get user profile and customContext */
+		/* Get current user profile and customContext */
 		UserProfile userProfile = myChannel.getUserProfile(userId);
 		CustomContext customContext = userProfile.getCustomContext(contextId);
+	
+		customContext.updateData(portletService);
 		
-		/* Visibility evaluation and customContext updating */
-		evaluateVisibilityOnCategoriesAndUpdateCustomContext(fullManagedCategoryProfiles,customContext);
+		ContextUserBean contextUserBean = makeContextUserBean(customContext);
+	
+		
+	
 			
-		//TODO a voir où mettre de façon intelligente
+		//TODO a voir où mettre de façon intelligente 
 		DomainTools.getDaoService().addCustomContext(customContext);
 		DomainTools.getDaoService().addUserProfile(userProfile);
-		
-		/* Create ContextUserBean */
-		ContextUserBean contextUserBean = new ContextUserBean();
-		contextUserBean.setName(context.getName());
-		contextUserBean.setDescription(context.getDescription());
-		contextUserBean.setId(contextId);
-		contextUserBean.setTest(customContext.test);
 	
-		/* Set categories to display in contextUserBean */
-		Enumeration enumeration= customContext.getCustomCategories();
-		while (enumeration.hasMoreElements()) {
-			// TODO a voir vraiment
-			CustomManagedCategory element = (CustomManagedCategory) enumeration.nextElement();
-			CategoryUserBean categoryUserBean = new CategoryUserBean();
-			categoryUserBean.setName(element.getCategoryProfile().getName());
-			categoryUserBean.setDescription(element.getCategoryProfile().getCategory().getDescription());
-			contextUserBean.addCategoryUserBean(categoryUserBean) ;
-			log.debug("getContextUserBean, CustomCategorie to dispaly : "+categoryUserBean.getName());		
-		}
+	/* *********************************************************************
+	 * Remplissage des beans
+	 ***********************************************************************/
+		
+	
+	
 		return contextUserBean;		
 	}
 	
-	private void evaluateVisibilityOnCategoriesAndUpdateCustomContext(
-		Set<ManagedCategoryProfile> fullManagedCategoryProfiles,
-		CustomContext customContext) {
-		//TODO optimiser le nombre de fois où on évalue tout ça !!!
-		//     (trustCategory + reel chargement)
+
+			
+			
+			
+	private ContextUserBean makeContextUserBean(CustomContext customContext) {
 		
-		Iterator iterator = fullManagedCategoryProfiles.iterator();
+		/* Context */
+		ContextUserBean contextUserBean = new ContextUserBean();
+		contextUserBean.init(customContext);
+		
+		/* Categories */
+		List<CustomCategory> listCategories = customContext.getSortedCustomCategories();
+		Iterator iterator = listCategories.iterator();
 		while (iterator.hasNext()) {
-			ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
-			mcp.evaluateVisibilityAndUpdateCustomContext(portletService,customContext);
-			log.debug("evaluateVisibility, evaluation sur : "+mcp.getName());
+			CustomCategory customCategory = (CustomCategory) iterator.next();
+			CategoryUserBean categoryUserBean = new CategoryUserBean();
+			categoryUserBean.init(customCategory);
+
+			contextUserBean.addCategoryUserBean(categoryUserBean) ;
 		}
+		
+		
+		
+		return contextUserBean;
 	}
-			
-			
-			
-			
+
+
+
+
+
+	
+
+
+	/* ************************** ACCESSORS ********************************* */
+		
 			
 			
 	
@@ -208,7 +215,6 @@ public class DomainServiceImplGwe implements DomainService {
 	}
 
 
-	/* ************************** ACCESSORS ********************************* */
 	
 	/**
 	 * @return Returns the portletService.

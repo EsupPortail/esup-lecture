@@ -92,24 +92,27 @@ public class Context {
 	/* 
 	 *************************** METHODS ******************************** */
 
+	
+	
+
 	/**
-	 * returns managed categories profiles with their categories loaded for the context 
-	 * @param portletService access to portlet services
-	 * @return a set of managedCategoryProfiles
+	 * Evaluate user visibility on managed categories of the context after loading them
+	 * And update customContext according to visibilities
+	 * @param customContext customContext to upadte
+	 * @param portletService access to portlet service
 	 */
-	public Set<ManagedCategoryProfile> getFullManagedCategoryProfiles(PortletService portletService) {
-		Iterator iterator = managedCategoryProfilesSet.iterator();
+	public void evaluateVisibilityOnManagedCategoriesAndUpdateCustomContext(CustomContext customContext, PortletService portletService) {
+		//TODO optimiser le nombre de fois où on évalue tout ça !!!
+		//     (trustCategory + reel chargement)
 		
+		Iterator iterator = managedCategoryProfilesSet.iterator();
 		while (iterator.hasNext()) {
 			ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
 			mcp.loadCategory(portletService);
+			mcp.evaluateVisibilityAndUpdateCustomContext(portletService,customContext);
 		}
-		return managedCategoryProfilesSet;
 	}
-	
-	
-	
-	
+
 	
 	
 	/** 
@@ -239,7 +242,6 @@ public class Context {
 	protected void addRefIdManagedCategoryProfile(String s) {
 		refIdManagedCategoryProfilesSet.add(s);
 	}
-
 
 
 

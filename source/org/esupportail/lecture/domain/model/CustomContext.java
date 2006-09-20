@@ -1,10 +1,21 @@
 package org.esupportail.lecture.domain.model;
 
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.Vector;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.service.PortletService;
+import org.esupportail.lecture.utils.exception.ErrorException;
 
 
 //import java.util.Collection;
@@ -35,12 +46,17 @@ public class CustomContext {
 	/**
 	 * The context Id of this customization refered to
 	 */
-	String contextId;
+	private String contextId;
 
 	/**
-	 * The Id of this CustomContext
+	 * The context of this customization referred to, corresponding to the contextId
 	 */
-	int Id;
+	private Context context;
+	
+	/**
+	 * The Id of this CustomContext : for Database
+	 */
+	private int Id;
 
 	/**
 	 * The map of subscribed CustomManagedCategory
@@ -52,6 +68,10 @@ public class CustomContext {
 	 */
 	private UserProfile userProfile;
 	
+	/*
+	 ************************** INIT *********************************/	
+
+	
 	/**
 	 * Constructor
 	 */
@@ -62,6 +82,35 @@ public class CustomContext {
 	/*
 	 *************************** METHODS ************************************/
 
+	/** Update data contains in this customContext :
+	 *  - evaluation visibilty on managedCategories to update list of customManagedCategories
+	 * @param portletService
+	 */
+	public void updateData(PortletService portletService) {
+		
+		getContext().evaluateVisibilityOnManagedCategoriesAndUpdateCustomContext(this,portletService);
+		// later : loadPersonnalCategories();
+	}
+	
+	
+	/**
+	 * Returns the customCategories of this customContext
+	 * @return an Enumeration of the customCategories
+	 */
+	public List<CustomCategory> getSortedCustomCategories(){
+		// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
+		
+		List<CustomCategory> listCategories = new Vector<CustomCategory>();
+		Iterator iterator = subscriptions.values().iterator();
+		
+		while(iterator.hasNext()){
+			CustomCategory customCategory = (CustomCategory)iterator.next();
+			log.debug("CUSTOMCONTEXT CAST PB :"+ customCategory.getClass()+ "Nom : "+customCategory.getId());
+			listCategories.add(customCategory);
+		}
+		
+		return listCategories;
+	}
 	
 	
 	
@@ -109,16 +158,19 @@ public class CustomContext {
 		this.contextId = contextId;
 	}
 
-	/**
-	 * Returns the customCategories of this customContext
-	 * @return an Enumeration of the customCategories
-	 */
-	public Enumeration<CustomManagedCategory> getCustomCategories(){
-		// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
-		Hashtable<String,CustomManagedCategory> hash = (Hashtable<String, CustomManagedCategory>)this.subscriptions;
-		return hash.elements();
-	}
 
+
+	public Context getContext() {
+		if (context == null) {
+			context = DomainTools.getChannel().getContext(contextId);
+			if (context == null) {
+				throw new ErrorException("Context "+contextId+" is not defined in this channel");
+			}
+		}
+		return context;
+	}
+	
+	
 	public int getId() {
 		return Id;
 	}
@@ -134,6 +186,10 @@ public class CustomContext {
 	public void setUserProfile(UserProfile userprofile) {
 		this.userProfile = userprofile;
 	}
+
+
+
+	
 
 
 

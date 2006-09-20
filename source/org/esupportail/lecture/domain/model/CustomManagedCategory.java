@@ -47,4 +47,10 @@ public class CustomManagedCategory extends CustomCategory {
 		return DomainTools.getChannel().getManagedCategoryProfile(this.categoryProfileID);
 	}
 	
+	@Override
+	public Category getCategory() {
+		
+		return getCategoryProfile().getCategory();
+	}
+	
 }

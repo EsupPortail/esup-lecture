@@ -1,5 +1,10 @@
 package org.esupportail.lecture.beans;
 
+import org.esupportail.lecture.domain.model.Category;
+import org.esupportail.lecture.domain.model.CategoryProfile;
+import org.esupportail.lecture.domain.model.Context;
+import org.esupportail.lecture.domain.model.CustomCategory;
+
 /**
  * Bean to display a category according to a user profile
  * @author gbouteil
@@ -20,6 +25,19 @@ public class CategoryUserBean {
 	 */
 	private String description;
 
+	/*
+	 ************************ INIT ******************************** */	
+	
+	
+	
+	public void init(CustomCategory customCategory) {
+		
+		Category category = customCategory.getCategory();
+		CategoryProfile profile = customCategory.getCategoryProfile();
+		//TODO a voir quel name on met (cat ou profileCat)
+		setName(profile.getName());
+		setDescription(category.getDescription());
+	}
 	
 	/*
 	 ************************ ACCESSORS ******************************** */	
@@ -51,6 +69,7 @@ public class CategoryUserBean {
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
 	
 	
 	

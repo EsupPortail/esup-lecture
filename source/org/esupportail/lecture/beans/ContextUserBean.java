@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.model.Context;
+import org.esupportail.lecture.domain.model.CustomContext;
 /**
  * Bean to display a context according to a user profile
  * @author gbouteil
@@ -54,6 +56,20 @@ public class ContextUserBean {
 	public ContextUserBean(){
 		categories = new ArrayList<CategoryUserBean>();
 	}
+	
+	/**
+	 * Init with the customContext to display
+	 * @param customContext
+	 */
+	public void init(CustomContext customContext) {
+		Context context = customContext.getContext();
+
+		setName(context.getName());
+		setDescription(context.getDescription());
+		setId(context.getId());
+		setTest(test);
+	}
+	
 	
 	/*
 	 ************************ METHODS ******************************** */	
@@ -132,4 +148,6 @@ public class ContextUserBean {
 	public List<CategoryUserBean> getCategories() {
 		return categories;
 	}
+
+	
 }
