@@ -2,7 +2,6 @@ package org.esupportail.lecture.dao;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.utils.exception.ErrorException;
 
 
 

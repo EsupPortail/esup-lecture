@@ -14,6 +14,7 @@ import org.apache.myfaces.portlet.MyFacesGenericPortlet;
 import org.esupportail.lecture.dao.DaoService;
 //import org.esupportail.lecture.utils.LectureTools;
 import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.service.DomainService;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -57,11 +58,13 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 			portletCtx = (PortletContext)super.getPortletContext();
 			appCtx = (WebApplicationContext)portletCtx.getAttribute("org.springframework.web.context.WebApplicationContext.ROOT");
 
-			//load configurations files
+			/* load configurations files */
 			domainService = (DomainService)appCtx.getBean("domainService");
 			domainService.loadChannel();
 
-			//Add daoService to static property of LectureTools
+			/* Add channel and daoService to static property of DomainTools */
+			Channel channel = (Channel)appCtx.getBean("channel");
+			DomainTools.setChannel(channel);
 			DaoService daoService = (DaoService)appCtx.getBean("daoService");
 			DomainTools.setDaoService(daoService);
 	

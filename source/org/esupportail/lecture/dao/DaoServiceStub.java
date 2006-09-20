@@ -5,7 +5,6 @@ import java.util.Hashtable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
-import org.esupportail.lecture.dao.impl.DaoServiceHibernate;
 import org.esupportail.lecture.dao.impl.DaoServiceRemoteXML;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;

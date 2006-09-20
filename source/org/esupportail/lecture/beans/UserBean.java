@@ -2,7 +2,6 @@ package org.esupportail.lecture.beans;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.service.FacadeService;
 
 /**
  * Informations to display about a user

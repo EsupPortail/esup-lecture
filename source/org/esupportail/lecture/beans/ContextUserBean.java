@@ -2,12 +2,9 @@ package org.esupportail.lecture.beans;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.service.FacadeService;
-
 /**
  * Bean to display a context according to a user profile
  * @author gbouteil
