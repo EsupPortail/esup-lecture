@@ -16,34 +16,45 @@ package org.esupportail.lecture.domain.model;
  */
 public abstract class Source {
 ///* ************************** PROPERTIES ******************************** */	
-//	private String dtd = "";
-//	
-//	private String xmlStream = "";
-//
-	private String name = "";
-//
-//	private String itemXPath = "";
-//
-//	private String xsltFile = "";
-//
-//	private String xmlns = "";
-//
-//	private String xmlType = "";
-//	
-//	private int id;
-//
-///* ************************** METHODS ******************************** */	
-//
-///* ************************** ACCESSORS ******************************** */	
-//
-//
-//	protected String getDtd() {
-//		return dtd;
-//	}
-//
-//
-//	protected void setDtd(String dtd) {
-//		this.dtd = dtd;
+
+	private String xmlStream = "";
+
+	private int profileId;
+	
+
+
+	
+
+	/**
+	 * Opitionnal : DTD of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement)
+	 */
+	private String dtd;
+
+	/**
+	 * Optionnal : xmlType of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement)
+	 */
+	private String xmlType;
+	/**
+	 * Optionnal : xmlns of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement)
+	 */
+	private String xmlns;
+	/**
+	 * Optionnal : rootElement of the xmlStream (one of these parameter is required : xmlns, xmlType, dtd,rootElement)
+	 */
+	private String rootElement;
+	
+/* ************************** METHODS ******************************** */	
+
+/* ************************** ACCESSORS ******************************** */	
+
+
+	protected String getDtd() {
+		return dtd;
+	}
+
+
+	protected void setDtd(String dtd) {
+		this.dtd = dtd;
 //	}
 //
 //	protected String getXmlStream() {
@@ -55,65 +66,55 @@ public abstract class Source {
 //	}
 //
 	
-	/**
-	 * Returns the source name
-	 * @return name
-	 */
-	public String getName() {
-		return name;
-	}
+	
+
+}
+
 
 	/**
-	 * Sets the source name
-	 * @param name
+	 * @return Returns the rootElement.
 	 */
-	public void setName(String name) {
-		this.name = name;
+	protected String getRootElement() {
+		return rootElement;
 	}
-//
-//
-//	protected String getItemXPath() {
-//		return itemXPath;
-//	}
-//
-//	protected void setItemXPath(String itemXPath) {
-//		this.itemXPath = itemXPath;
-//	}
-//
-//	protected String getXsltFile() {
-//		return xsltFile;
-//	}
-//
-//	protected void setXsltFile(String xsltFile) {
-//		this.xsltFile = xsltFile;
-//	}
-//
-//
-//	protected String getXmlns() {
-//		return xmlns;
-//	}
-//
-//	protected void setXmlns(String xmlns) {
-//		this.xmlns = xmlns;
-//	}
-//
-//
-//	protected String getXmlType() {
-//		return xmlType;
-//	}
-//
-//
-//	protected void setXmlType(String xmlType) {
-//		this.xmlType = xmlType;
-//	}
-//
-//	
-//	protected int getId() {
-//		return id;
-//	}
-//
-//	protected void setId(int id) {
-//		this.id = id;
-//	}
 
+
+	/**
+	 * @param rootElement The rootElement to set.
+	 */
+	protected void setRootElement(String rootElement) {
+		this.rootElement = rootElement;
+	}
+
+
+	/**
+	 * @return Returns the xmlns.
+	 */
+	protected String getXmlns() {
+		return xmlns;
+	}
+
+
+	/**
+	 * @param xmlns The xmlns to set.
+	 */
+	protected void setXmlns(String xmlns) {
+		this.xmlns = xmlns;
+	}
+
+
+	/**
+	 * @return Returns the xmlType.
+	 */
+	protected String getXmlType() {
+		return xmlType;
+	}
+
+
+	/**
+	 * @param xmlType The xmlType to set.
+	 */
+	protected void setXmlType(String xmlType) {
+		this.xmlType = xmlType;
+	}
 }
