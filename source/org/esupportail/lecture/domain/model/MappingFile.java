@@ -175,7 +175,7 @@ public class MappingFile {
 				m.setXmlType(xmlType);
 			}	
 				
-			m.setXsltFile(xmlFile.getString(pathMapping+ "[@xsltFile]"));
+			m.setXsltUrl(xmlFile.getString(pathMapping+ "[@xsltFile]"));
 			m.setItemXPath(xmlFile.getString(pathMapping+ "[@itemXPath]"));
 			mappingList.add(m);
 		}

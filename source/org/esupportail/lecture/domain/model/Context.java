@@ -96,12 +96,13 @@ public class Context {
 	
 
 	/**
-	 * Evaluate user visibility on managed categories of the context after loading them
+	 * Load managedCategories of thsi context,
+	 * Evaluate user visibility on managed categories of the context 
 	 * And update customContext according to visibilities
 	 * @param customContext customContext to upadte
 	 * @param portletService access to portlet service
 	 */
-	public void evaluateVisibilityOnManagedCategoriesAndUpdateCustomContext(CustomContext customContext, PortletService portletService) {
+	public void loadAndEvaluateVisibilityOnManagedCategoriesToUpdate(CustomContext customContext, PortletService portletService) {
 		//TODO optimiser le nombre de fois où on évalue tout ça !!!
 		//     (trustCategory + reel chargement)
 		

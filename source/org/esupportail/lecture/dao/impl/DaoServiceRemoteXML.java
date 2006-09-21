@@ -2,6 +2,7 @@ package org.esupportail.lecture.dao.impl;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -19,6 +20,7 @@ import org.dom4j.Namespace;
 import org.dom4j.io.SAXReader;
 import org.esupportail.lecture.domain.model.Accessibility;
 import org.esupportail.lecture.domain.model.ManagedCategory;
+import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.SourceProfile;
@@ -35,12 +37,14 @@ public class DaoServiceRemoteXML {
 	 * @throws ErrorException 
 	 * @see org.esupportail.lecture.dao.DaoService#getCategory(java.lang.String, int, java.lang.String)
 	 */
-	public ManagedCategory getManagedCategory(String urlCategory, int ttl, String profileId) {
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
 		URL url;
 		ManagedCategory ret = new ManagedCategory();
 		//TODO cache !
+		
+		
 		try {
-			url = new URL(urlCategory);
+			url = new URL(profile.getUrlCategory());
 			XMLConfiguration xml = new XMLConfiguration(url);
 			//TODO use and test Validating
 			//xml.setValidating(true);
@@ -48,15 +52,16 @@ public class DaoServiceRemoteXML {
 			// Category properties
 			ret.setName(xml.getString("[@name]"));
 			ret.setDescription(xml.getString("description"));
-			ret.setProfilId(profileId);
-			ret.setTtl(ttl);
+			ret.setProfilId(profile.getId());
+			ret.setTtl(profile.getTtl());
 			// SourceProfiles loop
-			Hashtable<String,SourceProfile> sourceProfiles = new Hashtable<String, SourceProfile>();
+			HashSet<ManagedSourceProfile> sourceProfiles = new HashSet<ManagedSourceProfile>();
 			int max = xml.getMaxIndex("sourceProfiles(0).sourceProfile");
 			for(int i = 0; i <= max;i++ ){
 				Configuration subxml = xml.subset("sourceProfiles(0).sourceProfile("+i+")");
 				// SourceProfile properties
 				ManagedSourceProfile sp = new ManagedSourceProfile();
+				sp.setManagedCategoryProfile(profile);
 				sp.setId(subxml.getString("[@id]"));
 				sp.setName(subxml.getString("[@name]"));
 				sp.setSourceURL(subxml.getString("[@url]"));
@@ -77,9 +82,9 @@ public class DaoServiceRemoteXML {
 			    visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).obliged(0)"));
 			    visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).autoSubscribed(0)"));
 			    sp.setVisibility(visibilitySets);
-				sourceProfiles.put(sp.getId(), sp);
+				sourceProfiles.add(sp);
 			}
-			ret.setSourceProfiles(sourceProfiles);
+			ret.setManagedSourceProfilesSet(sourceProfiles);
 			// Category visibility
 		    VisibilitySets visibilitySets = new VisibilitySets();  
 		    // foreach (allowed / autoSubscribed / Obliged

@@ -224,7 +224,7 @@ public class ChannelConfig  {
 		   	visibilitySets.setObliged(loadDefAndContentSets("obliged",i));
 		    mcp.setVisibility(visibilitySets);
 		    
-		    mcp.initMiscellaneous();
+		    mcp.init();
 		    channel.addManagedCategoryProfile(mcp);    
 		}
 // Code pour la version commons-configuration 1.3

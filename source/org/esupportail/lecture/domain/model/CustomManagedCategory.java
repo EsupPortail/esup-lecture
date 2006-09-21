@@ -1,5 +1,7 @@
 package org.esupportail.lecture.domain.model;
 
+import java.util.Map;
+
 import org.esupportail.lecture.domain.DomainTools;
 
 /**
@@ -24,6 +26,47 @@ public class CustomManagedCategory extends CustomCategory {
 	private String categoryProfileID;
 	
 	/**
+	 * The map of subscribed CustomManagedSource
+	 */
+	private Map<String,CustomManagedSource> subscriptions;
+	// TODO mettre autre chose qu'une map ?
+	
+	/*
+	 ************************** INIT *********************************/	
+
+	/*
+	 ************************** METHODS *********************************/	
+	
+	/**
+	 * Add a custom source to this custom category if no exists after creating it.
+	 * @param profile the managed source profile associated to the customManagedSource
+	 */
+	public void addManagedCustomSource(ManagedSourceProfile managedSourceProfile) {
+		String profileId = managedSourceProfile.getId();
+		
+		if (!subscriptions.containsKey(profileId)){
+			CustomManagedSource customManagedSource = new CustomManagedSource();
+			customManagedSource.setSourceProfileID(profileId);
+			subscriptions.put(profileId,customManagedSource);
+		}
+	}
+	
+	
+
+	public void removeManagedCustomSource(ManagedSourceProfile profile) {
+		//		 TODO tester avec la BDD
+		subscriptions.remove(profile.getId());
+		
+	}
+	
+	public CategoryProfile getCategoryProfile() {
+		return DomainTools.getChannel().getManagedCategoryProfile(this.categoryProfileID);
+	}
+	
+	/*
+	 ************************** ACCESSORS *********************************/	
+
+	/**
 	 * @return Returns the test.
 	 */
 	public String getTest() {
@@ -43,14 +86,15 @@ public class CustomManagedCategory extends CustomCategory {
 	public void setCategoryProfileID(String profilID) {
 		this.categoryProfileID = profilID;
 	}
-	public CategoryProfile getCategoryProfile() {
-		return DomainTools.getChannel().getManagedCategoryProfile(this.categoryProfileID);
-	}
+
 	
 	@Override
 	public Category getCategory() {
 		
 		return getCategoryProfile().getCategory();
 	}
+
+
+
 	
 }

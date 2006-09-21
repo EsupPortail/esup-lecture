@@ -259,57 +259,57 @@ public class Channel  {
 	
 	/* miscellaneous */
 	
-	/**
-	 * Return a string containing channel content : mapping file, contexts, managed category profiles,
-	 * xslt mappings, hash mappings by dtd, Hash mappings by xmlns,Hash mappings by xmlType
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString() {
-		String string = "";
-			
-		/* mappingFile */
-		string += "***************** Mapping File : \n\n";
-		string += mappingFile.toString();
-		string += "\n";
-		
-//		/* Contexts */ 
-		string += "***************** Contexts : \n\n";
-		string += contextsHash.toString();
-	    string += "\n";
-//				
-//		/* Managed categories profiles */
-		string += "***************** Managed categories profiles : \n\n";
-		string += managedCategoryProfilesHash.toString();
-	    string += "\n";
+//	/**
+//	 * Return a string containing channel content : mapping file, contexts, managed category profiles,
+//	 * xslt mappings, hash mappings by dtd, Hash mappings by xmlns,Hash mappings by xmlType
+//	 * 
+//	 * @see java.lang.Object#toString()
+//	 */
+//	public String toString() {
+//		String string = "";
+//			
+//		/* mappingFile */
+//		string += "***************** Mapping File : \n\n";
+//		string += mappingFile.toString();
+//		string += "\n";
 //		
-		/* Xslt mappings*/
-		string += "***************** Xslt mappings : \n\n";
-		string += mappingList.toString();
-		string += "\n";
-		
-		/* Hash to access mappings by dtd */
-		string += "***************** Hash mappings by dtd : \n\n";
-		string += mappingHashByDtd.toString();
-		string += "\n";
-				
-		/* Hash to access mappings by xmlns */
-		string += "***************** Hash mappings by xmlns : \n\n";
-		string += mappingHashByXmlns.toString();      
-	    string += "\n";
-		
-		/* Hash to access mappings by xmlType */
-		string += "***************** Hash mappings by xmlType : \n\n";
-		string += mappingHashByXmlType.toString();      
-	    string += "\n";
-		
-//		/* User Profiles connected to the chanel */
-//		string += "***************** User profiles : \n\n";
-//		string += " later ...";
-//        string += "\n";
-		
-        return string;
-	}		
+////		/* Contexts */ 
+//		string += "***************** Contexts : \n\n";
+//		string += contextsHash.toString();
+//	    string += "\n";
+////				
+////		/* Managed categories profiles */
+//		string += "***************** Managed categories profiles : \n\n";
+//		string += managedCategoryProfilesHash.toString();
+//	    string += "\n";
+////		
+//		/* Xslt mappings*/
+//		string += "***************** Xslt mappings : \n\n";
+//		string += mappingList.toString();
+//		string += "\n";
+//		
+//		/* Hash to access mappings by dtd */
+//		string += "***************** Hash mappings by dtd : \n\n";
+//		string += mappingHashByDtd.toString();
+//		string += "\n";
+//				
+//		/* Hash to access mappings by xmlns */
+//		string += "***************** Hash mappings by xmlns : \n\n";
+//		string += mappingHashByXmlns.toString();      
+//	    string += "\n";
+//		
+//		/* Hash to access mappings by xmlType */
+//		string += "***************** Hash mappings by xmlType : \n\n";
+//		string += mappingHashByXmlType.toString();      
+//	    string += "\n";
+//		
+////		/* User Profiles connected to the chanel */
+////		string += "***************** User profiles : \n\n";
+////		string += " later ...";
+////        string += "\n";
+//		
+//        return string;
+//	}		
 
 	/* ************************** ACCESSORS ********************************* */
 	 
@@ -441,13 +441,11 @@ public class Channel  {
 	protected void addMappingByDtd(Mapping m) {
 		this.mappingHashByDtd.put(m.getDtd(),m);
 	}
-//  A retirer si inutile		
-//	public Hashtable<String,Mapping> getMappingHashByXmlns() {
-//		return mappingHashByXmlns;
-//	}
-//	public void setMappingHashByXmlns(Hashtable<String,Mapping> mappingHashByXmlns) {
-//		this.mappingHashByXmlns = mappingHashByXmlns;
-//	}	
+	
+	protected Mapping getMappingByDtd(String dtd){
+		return mappingHashByDtd.get(dtd);
+	}
+	
 
 	/**
 	 * Add a mapping to the hash of mappings indexed by its xmlns, defined in the channel
@@ -457,15 +455,11 @@ public class Channel  {
 	protected void addMappingByXmlns(Mapping m) {
 		this.mappingHashByXmlns.put(m.getXmlns(),m);
 	}	
+	protected Mapping getMappingByXmlns(String xmlns){
+		return mappingHashByXmlns.get(xmlns);
+	}
 	
-//  A retirer si inutile			
-//	public Hashtable<String,Mapping> getMappingHashByXmlType() {
-//		return mappingHashByXmlType;
-//	}
-//	public void setMappingHashByXmlType(Hashtable<String,Mapping> mappingHashByXmlType) {
-//		this.mappingHashByXmlType = mappingHashByXmlType;
-//	}	
-	
+
 	/**
 	 * Add a mapping to the hash of mappings indexed by its xmlType, defined in the channel
 	 * @param m the mapping to add
@@ -475,7 +469,9 @@ public class Channel  {
 		this.mappingHashByXmlType.put(m.getXmlType(),m);
 	}	
 	
-
+	protected Mapping getMappingByXmlType(String xmlType){
+		return mappingHashByXmlType.get(xmlType);
+	}
 
 
 }

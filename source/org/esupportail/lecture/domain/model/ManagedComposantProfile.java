@@ -14,6 +14,11 @@ package org.esupportail.lecture.domain.model;
  */
 interface ManagedComposantProfile extends ComposantProfile {
 	
+	
+	/**
+	 * Initialization 
+	 */
+	public void init();
 	/**
 	 * Returns access mode of the composant
 	 * @return access 
@@ -78,6 +83,11 @@ interface ManagedComposantProfile extends ComposantProfile {
 	 * @return d obliged group
 	 */
 	public DefinitionSets getVisibilityObliged();
+	/**
+	 * Computes rights on parameters shared between a ManagedComposantProfile and its
+	 * ManagedComposant (edit, visibility)
+	 */
+	public void computeFeatures();
 	
 
 }

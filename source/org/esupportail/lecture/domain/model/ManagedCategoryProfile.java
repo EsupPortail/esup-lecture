@@ -29,12 +29,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(ManagedCategoryProfile.class); 
-	
 
 	/**
 	 * URL of the remote managed category
 	 */
-	private String urlCategory = "";
+	private String urlCategory;
 	
 	/**
 	 * Access mode on the remote managed category
@@ -55,7 +54,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * - managedCategory features
 	 * - trustCategory parameter 
 	 */
-	private ActiveFeatures activeFeatures;
+	private ComputedManagedCategoryFeatures computedFeatures;
 		
 	/**
 	 * Remote managed category edit mode : not used for the moment
@@ -88,18 +87,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 ************************** INITIALIZATION ******************************** */	
 	
 	
-
 	/**
-	 * Initialize activeFeature attribute
+	 * Initialization 
 	 */
-	public void initMiscellaneous() {
-		activeFeatures = new ActiveFeatures();
-		activeFeatures.update(edit,visibility,ttl);
-		if (!trustCategory) {
-			/* As the category is not trusted, 
-			 *  -> features are already computed */
-			activeFeatures.setComputed(true);
-		}
+	public void init() {
+		computedFeatures = new ComputedManagedCategoryFeatures(this);
 	}
 	
 	/*
@@ -111,51 +103,18 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * Load the managedCategory of this managedCategoryProfile
 	 */
 	public void loadCategory(PortletService portletService) {
-		// TODO voir l'heritage
-		
+				
 		if(access == Accessibility.PUBLIC) {
-			setCategory(DomainTools.getDaoService().getManagedCategory(
-					urlCategory,activeFeatures.getTtl(),this.getId())); 
+			setCategory(DomainTools.getDaoService().getManagedCategory(this)); 
 			
 		} else if (access == Accessibility.CAS) {
 			String ptCas = portletService.getUserProxyTicketCAS();
-			setCategory(DomainTools.getDaoService().getManagedCategory(
-					urlCategory,activeFeatures.getTtl(),this.getId(),ptCas));
+			setCategory(DomainTools.getDaoService().getManagedCategory(this,ptCas));
 		}
-		computeActiveFeatures();
+		computedFeatures.setIsComputed(false); // TODO à optimiser
 	}
-	/**
-	 * Computes rights on parameters shared between a ManagedCategoryProfile and its
-	 * ManagedCategory (edit, visibility
-	 * @param managedCategory
-	 */
-	private void computeActiveFeatures() {
-		
-		ManagedCategory managedCategory = (ManagedCategory)getCategory();
-		Editability setEdit;
-		VisibilitySets setVisib;
-		int setTtl;
-		
-		if (trustCategory) {		
-			setEdit = managedCategory.getEdit();
-			setVisib = managedCategory.getVisibility();
-			setTtl = managedCategory.getTtl();
-			
-			if (setEdit == null) {
-				setEdit = this.edit;
-			}
-			if (setVisib == null) {
-				setVisib = this.visibility;
-			}
-			if (setTtl == -1) {
-				setTtl = this.ttl;
-			}	
-			activeFeatures.update(edit,visibility,ttl);
-			activeFeatures.setComputed(true);
-		}/* else {
-				Already done during channel config loading 
-		} */
-	}
+	
+	
 	
 	/**
 	 * Evaluate visibility of current user for this managed category.
@@ -178,10 +137,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		boolean isInAutoSubscribed = false;
 		boolean isInAllowed = false;
 		
-		VisibilitySets sets = activeFeatures.getVisibility();
+		VisibilitySets sets = getVisibility();
 		
 	/* ---OBLIGED SET--- */
-		log.debug("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+this.getName());
+		log.debug("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+ getName());
 		isInObliged = sets.getObliged().evaluateVisibility(portletService);
 		log.debug("IsInObliged : "+isInObliged);
 		if (isInObliged) {
@@ -198,14 +157,13 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 			
 			} else {
 	/* ---ALLOWED SET--- */
-				log.debug("Appel de evaluate sur DefenitionSets(allowed) de la cat : "+this.getName());
+				log.debug("Appel de evaluate sur DefenitionSets(allowed) de la cat : "+ getName());
 				isInAllowed = sets.getAllowed().evaluateVisibility(portletService);
 				
 				if (!isInAllowed) { // If isInAllowed : nothing to do
 	/* ---CATEGORY NOT VISIBLE FOR USER--- */
 					customContext.removeManagedCustomCategory(this);
-				}
-				
+				}			
 			}	
 		}
 		// TODO retirer les customCat du user profile qui correspondent à des profiles 
@@ -215,71 +173,47 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	
 	
 	
-	
-
 	/**
-	 * Return a string containing content of the managed category profile :
-	 * URL of the remote managed category, trustCategory parameter, Access mode on remote managed category,
-	 * Visibility rights for groups, ttl of the remote managed category,The remote managed category,
-	 * Contexts where these profiles category are defined
-	 * @see java.lang.Object#toString()
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#computeActiveFeatures()
 	 */
-	public String toString(){
+	public void computeFeatures() {
 		
-		String string ="";
+		ManagedCategory managedCategory = (ManagedCategory)getCategory();
+		//Editability setEdit;
+		VisibilitySets setVisib;
+		int setTtl;
 		
-		string += super.toString();
-		
-		/* Proxy ticket CAS */
-//		string += "	PtCas : " + ptCas.toString() +"\n";
-		
-		/* URL of the remote managed category */
-		string += "	urlCategory : " + urlCategory.toString() +"\n";		
-		
-		/* trustCategory parameter */
-		if (trustCategory){
-			string += "	trust Category : true \n";		
-		} else {
-			string += "	trust Category : false \n";		
-		}
-		
-		/* The remote managed category edit mode : not used for the moment */	
-		//string += "	edit : " + edit.toString() +"\n";	
-		
-		/* Access mode on this remote managed category */
-		string += "	access : " + access.toString() +"\n";	
-
-		/* Visibility rights for groups */
-		string += "	visibility : " +"\n"+ visibility.toString();
-		
-		/* ttl of the remote managed category */
-		string += "	ttl : " + ttl +"\n";
-		
-		/* The remote managed category */
-		//string += "	category : " + category +"\n";
-
-		/* Contexts where these profiles category are defined */
-		string += "	contextsSet : \n";
-		Iterator iterator = contextsSet.iterator();
-		for (Context c = null; iterator.hasNext();) {
-			c = (Context)iterator.next();
-			string += "          ("+ c.getId() + "," + c.getName()+")\n";
-		}
-		
-		return string;
-		
+		if (trustCategory) {		
+			//setEdit = managedCategory.getEdit();
+			setVisib = managedCategory.getVisibility();
+			setTtl = managedCategory.getTtl();
+			
+//			if (setEdit == null) {
+//				setEdit = this.edit;
+//			}
+			if (setVisib == null) {
+				setVisib = this.visibility;
+			}
+			if (setTtl == -1) {
+				setTtl = this.ttl;
+			}	
+			computedFeatures.update(setVisib,setTtl);
+		}/* else {
+				Already done during channel config loading 
+		} */
 	}
 	
-/* ************************** ACCESSORS ******************************** */	
+
+	/*
+	 *************************** ACCESSORS ******************************** */	
 
 
-	
 	/**
 	 * Returns the URL of the remote managed category
 	 * @return urlCategory
 	 * @see ManagedCategoryProfile#urlCategory
 	 */
-	protected String getUrlCategory() {
+	public String getUrlCategory() {
 		return urlCategory;
 	}
 	
@@ -310,13 +244,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		this.trustCategory = trustCategory;
 	}
 
-	// utile plus tard
-//	protected Editability getEdit() {
-//		return edit;
-//	}
-//	protected void setEdit(Editability edit) {
-//		this.edit = edit;
-//	}
 
 	/**
 	 * @return access
@@ -335,13 +262,23 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		this.access = access;
 	}
 	
+	// utile plus tard
+//	protected Editability getEdit() {
+//		return computedFeatures.getEdit();
+//	}
+//	protected void setEdit(Editability edit) {
+//		this.edit = edit;
+//	computedFeatures.setComputed(false);
+//	}
+	
+	
 	/**
 	 * @return Visibility
 	 * @see ManagedCategoryProfile#visibility
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibility()
 	 */
 	public VisibilitySets getVisibility() {
-		return visibility;
+		return computedFeatures.getVisibility();
 	}
 	
 	/**
@@ -350,21 +287,31 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 */
 	public void setVisibility(VisibilitySets visibility) {
 		this.visibility = visibility;
+		computedFeatures.setIsComputed(false);
 	}
 
-	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	public void setVisibilityAllowed(DefinitionSets d) {
-		this.visibility.setAllowed(d);
-	}
-	
 	/**
 	 * @return allowed visibility group 
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAllowed()
 	 */
 	public DefinitionSets getVisibilityAllowed() {
-		return this.visibility.getAllowed();
+		return getVisibility().getAllowed();
+	}
+	
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
+	 */
+	public void setVisibilityAllowed(DefinitionSets d) {
+		this.visibility.setAllowed(d);
+		computedFeatures.setIsComputed(false);
+	}
+
+	/** 
+	 * @return autoSubscribed group visibility
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAutoSubscribed()
+	 */
+	public DefinitionSets getVisibilityAutoSubscribed() {
+		return getVisibility().getAutoSubscribed();
 	}
 	
 	/**
@@ -372,21 +319,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 */
 	public void setVisibilityAutoSubcribed(DefinitionSets d) {
 		this.visibility.setAutoSubscribed(d);
-	}
-	
-	/** 
-	 * @return autoSubscribed group visibility
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAutoSubscribed()
-	 */
-	public DefinitionSets getVisibilityAutoSubscribed() {
-		return this.visibility.getAutoSubscribed();
-	}
-	
-	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	public void setVisibilityObliged(DefinitionSets d) {
-		this.visibility.setObliged(d);
+		computedFeatures.setIsComputed(false);
 	}
 	
 	/**
@@ -394,7 +327,16 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityObliged()
 	 */
 	public DefinitionSets getVisibilityObliged() {
-		return this.visibility.getObliged();
+		return getVisibility().getObliged();
+		
+	}
+	
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
+	 */
+	public void setVisibilityObliged(DefinitionSets d) {
+		this.visibility.setObliged(d);
+		computedFeatures.setIsComputed(false);
 	}
 	
 	/**
@@ -403,7 +345,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getTtl()
 	 */
 	public int getTtl() {
-		return ttl;
+		return computedFeatures.getTtl();
 	}
 	
 	/**
@@ -412,22 +354,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 */
 	public void setTtl(int ttl) {
 		this.ttl = ttl;
+		computedFeatures.setIsComputed(false);
 	}
 
 
-	
-
-
-// Aretirer si inutile	
-//	protected Set<Context> getContextsSet() {
-//		return contextsSet;
-//	}
-	
-//	A retirer si inutile	
-//	protected void setContextsSet(Set<Context> contextsSet) {
-//		this.contextsSet = contextsSet;
-//	}	
-	
 	/**
 	 * Add a context to the set of context in this managed category profile
 	 * @param c context to add
@@ -438,13 +368,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	}
 
 
-	/**
-	 * @return Returns the activeFeatures.
-	 */
-	public ActiveFeatures getActiveFeatures() {
-		return activeFeatures;
-	}
-
+	
 	
 
 

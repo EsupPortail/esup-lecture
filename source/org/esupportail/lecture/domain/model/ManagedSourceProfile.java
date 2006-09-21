@@ -5,6 +5,13 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.beans.FeatureDescriptor;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.service.PortletService;
+
 
 /**
  * Managed source profile element.
@@ -17,16 +24,21 @@ package org.esupportail.lecture.domain.model;
  * @author gbouteil
  *
  */
-public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.SourceProfile implements org.esupportail.lecture.domain.model.ManagedComposantProfile {
+public class ManagedSourceProfile extends SourceProfile implements ManagedComposantProfile {
 	
 	/*
 	 ************************** PROPERTIES ******************************** */	
-
+	/**
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(ManagedSourceProfile.class); 
+	
 	/**
 	 * Remote source loaded : a managed source profile has a global or a single source
 	 * Thats depends on "specificUserContent" parameter.
 	 * @see ManagedSourceProfile#specificUserContent
 	 */
+	
 	private Source source;
 	/**
 	 * Access mode on the remote source
@@ -51,35 +63,161 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 */
 	private boolean specificUserContent;
 	
+	/**
+	 * Resolve feature values (access, visibility,tll,ItemXpath,xsltURL) from :
+	 * - managedSourceProfile features
+	 * - source features
+	 * - trustCategory parameter 
+	 */
+	private ComputedManagedSourceFeatures computedFeatures;
+
+	private ManagedCategoryProfile managedCategoryProfile;
+	
+
+	
+
+	
+	/*
+	 ************************** PROPERTIES ******************************** */	
 	
 	/**
-	 * URL of the xslt file to display remote source
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#init()
 	 */
-	private String xsltURL = "";
+	public void init() {
+		computedFeatures = new ComputedManagedSourceFeatures(this);
+	}
+
+
+	/*
+	 *************************** METHODS ******************************** */	
+	
+
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#computeFeatures()
+	 * Can be called only when source has been realy get. (Not at the instantiation of the object)
+	 */
+	public void computeFeatures() {
+	
+		/* Features that can be herited by the managedCategoryProfile */
+		Accessibility setAccess;
+		VisibilitySets setVisib;
+		int setTtl;
+		
+		if (managedCategoryProfile.getTrustCategory()) {		
+			setAccess = access;
+			setVisib = visibility;
+			setTtl = ttl;
+			
+			if (setAccess == null) {
+				setAccess = managedCategoryProfile.getAccess();
+			}
+			if (setVisib == null) {
+				setVisib = managedCategoryProfile.getVisibility();
+			}
+			if (setTtl == -1) {
+				setTtl = managedCategoryProfile.getTtl();
+			}	
+		}else {
+			setAccess = managedCategoryProfile.getAccess();
+			setVisib = managedCategoryProfile.getVisibility();
+			setTtl = managedCategoryProfile.getTtl();
+		}
+		
+		/* Features that can be get from the mappingFile */
+		
+		Channel channel = DomainTools.getChannel();
+		String setXsltURL = getXsltURL();
+		String setItemXPath = getItemXPath();
+			
+		String dtd = source.getDtd();
+		String xmlType = source.getXmlType();
+		String xmlns = source.getXmlns();
+		//TODO faire le root element
+		//String rootElement = source.getRootElement();
+			
+		Mapping m = new Mapping();
+		
+		if (setXsltURL == null || setItemXPath == null) {
+			if (dtd != null) {
+				m = channel.getMappingByDtd(dtd);
+			} else {
+			if (xmlType != null) {
+				m = channel.getMappingByXmlType(xmlType);
+			} else {
+			if (xmlns != null) {
+				m = channel.getMappingByXmlns(xmlns);
+			}}}
+		
+			if (setXsltURL == null) {
+				setXsltURL = m.getXsltUrl();
+			}
+			if (setItemXPath == null) {
+				setItemXPath = m.getItemXPath();
+			}
+		}
+		
+		computedFeatures.update(setVisib,setTtl,setAccess,setItemXPath,setXsltURL);
+		
+	}
+
 	
 	/**
-	 * Xpath to access item in the XML source file correspoding to this source profile
+	 * Evaluate visibility of current user for this managed source profile.
+	 * Update customManagedCategory (belongs to user) if needed :
+	 * add or remove customManagedSources associated with
+	 * @param portletService
+	 * @param customManagedCategory
 	 */
-	private String itemXPath = "";
+	
+	public void evaluateVisibilityAndUpdateCustomCategory(PortletService portletService, CustomManagedCategory customManagedCategory) {
+			/*
+			 * Algo pour gerer les customSourceProfiles :
+			 * ------------------------------------
+			 * user app. obliged => enregistrer la source dans le user profile + sortir
+			 * user app. autoSub => enregistrer la source dans le user profile si c'est la première fois + sortir
+			 * user app.allowed => rien à faire + sortir
+			 * user n'app. rien => effacer la custom source .
+			 */
 
-// utile ou pas ?
-//	/**
-//	 * Optionnal : xmlns of the source (one of these parameter is required : xmlns, xmlType, dtd)
-//	 */
-	private String xmlns = "";
-//	
-//	/**
-//	 * Optionnal : xmlType of the source (one of these parameter is required : xmlns, xmlType, dtd)
-//	 */
-	private String xmlType = "";
-//	
-//	/**
-//	 * Opitionnal : DTD of the source (one of these parameter is required : xmlns, xmlType, dtd)
-//	 */
-	private String dtd = "";
+			boolean isInObliged = false;
+			boolean isInAutoSubscribed = false;
+			boolean isInAllowed = false;
+						
+		/* ---OBLIGED SET--- */
+			log.debug("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+this.getName());
+			isInObliged = visibility.getObliged().evaluateVisibility(portletService);
+			log.debug("IsInObliged : "+isInObliged);
+			if (isInObliged) {
+				customManagedCategory.addManagedCustomSource(this);
+			
+			} else {
+		/* ---AUTOSUBSCRIBED SET--- */	
+				// TODO isInAutoSubscribed = visibility.getAutoSubscribed().evaluateVisibility(portletService);
+				// en attendant : isInAutoSubscribed = false 
+				
+				if(isInAutoSubscribed) {
+					// TODO l'ajouter dans le custom category si c'est la preniere fois
+					// customManagedCategory.addManagedCustomSource(this);
+				
+				} else {
+		/* ---ALLOWED SET--- */
+					log.debug("Appel de evaluate sur DefenitionSets(allowed) de la source profile : "+this.getName());
+					isInAllowed = visibility.getAllowed().evaluateVisibility(portletService);
+					
+					if (!isInAllowed) { // If isInAllowed : nothing to do
+		/* ---CATEGORY NOT VISIBLE FOR USER--- */
+						customManagedCategory.removeManagedCustomSource(this);
+					}
+					
+				}	
+			}
+			// TODO retirer les customSource du user profile qui correspondent à des profiles 
+			// de sources  disparus	
+		}
 
-
-/* ************************** METHODS ******************************** */	
+	
+	
+	
 	
 /* ************************** ACCESSORS ******************************** */	
 
@@ -106,7 +244,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getAccess()
 	 */
 	public Accessibility getAccess() {
-		return access;
+		return computedFeatures.getAccess();
 	}
 
 	/**
@@ -115,6 +253,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 */
 	public void setAccess(Accessibility access) {
 		this.access = access;
+		computedFeatures.setIsComputed(false);
 	}
 
 	/**
@@ -123,7 +262,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibility()
 	 */
 	public VisibilitySets getVisibility() {
-		return visibility;
+		return computedFeatures.getVisibility();
 	}
 
 
@@ -133,6 +272,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 */
 	public void setVisibility(VisibilitySets visibility) {
 		this.visibility = visibility;
+		computedFeatures.setIsComputed(false);
 	}
 	
 	/**
@@ -141,7 +281,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getTtl()
 	 */
 	public int getTtl() {
-		return ttl;
+		return computedFeatures.getTtl();
 	}
 
 	/**
@@ -150,6 +290,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 */
 	public void setTtl(int ttl) {
 		this.ttl = ttl;
+		computedFeatures.setIsComputed(false);
 	}
 
 	/**
@@ -177,7 +318,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @see ManagedSourceProfile#xsltURL
 	 */
 	protected String getXsltURL() {
-		return xsltURL;
+		return computedFeatures.getXsltUrl();
 	}
 
 
@@ -187,7 +328,8 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @see ManagedSourceProfile#xsltURL
 	 */
 	public void setXsltURL(String xsltURL) {
-		this.xsltURL = xsltURL;
+		setXsltURL(xsltURL);
+		computedFeatures.setIsComputed(false);
 	}
 
 
@@ -197,7 +339,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @see ManagedSourceProfile#xsltURL
 	 */
 	protected String getItemXPath() {
-		return itemXPath;
+		return  computedFeatures.getItemXPath();
 	}
 
 	/**
@@ -206,7 +348,8 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @see ManagedSourceProfile#xsltURL
 	 */
 	public void setItemXPath(String itemXPath) {
-		this.itemXPath = itemXPath;
+		setItemXPath(itemXPath);
+		computedFeatures.setIsComputed(false);
 	}
 	
 	/**
@@ -215,7 +358,7 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @see ManagedSourceProfile#dtd
 	 */
 	protected String getDtd() {
-		return dtd;
+		return getDtd();
 	}
 
 	/**
@@ -224,50 +367,17 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @see ManagedSourceProfile#dtd
 	 */
 	protected void setDtd(String dtd) {
-		this.dtd = dtd;
+		setDtd(dtd);
 	}
 
-	/**
-	 * Returns the xmlns.
-	 * @return xmlns
-	 * @see ManagedSourceProfile#xmlns
-	 */
-	protected String getXmlns() {
-		return xmlns;
-	}
 
-	/**
-	 * Sets xmlns
-	 * @param xmlns
-	 * @see ManagedSourceProfile#xmlns
-	 */
-	protected void setXmlns(String xmlns) {
-		this.xmlns = xmlns;
-	}
-
-	/**
-	 * Returns the xmlType.
-	 * @return xmlType.
-	 * @see ManagedSourceProfile#xmlType
-	 */
-	protected String getXmlType() {
-		return xmlType;
-	}
-
-	/**
-	 * Sets the xmlType.
-	 * @param xmlType 
-	 * @see ManagedSourceProfile#xmlType
-	 */
-	protected void setXmlType(String xmlType) {
-		this.xmlType = xmlType;
-	}
 
 	/** 
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
 	public void setVisibilityAllowed(DefinitionSets d) {
-		// TODO Auto-generated method stub
+		visibility.setAllowed(d);
+		computedFeatures.setIsComputed(false);
 		
 	}
 
@@ -275,31 +385,30 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAllowed()
 	 */
 	public DefinitionSets getVisibilityAllowed() {
-		// TODO Auto-generated method stub
-		return null;
+		return computedFeatures.getVisibility().getAllowed();
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
 	public void setVisibilityAutoSubcribed(DefinitionSets d) {
-		// TODO Auto-generated method stub
-		
+		visibility.setAutoSubscribed(d);
+		computedFeatures.setIsComputed(false);	
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAutoSubscribed()
 	 */
 	public DefinitionSets getVisibilityAutoSubscribed() {
-		// TODO Auto-generated method stub
-		return null;
+		return computedFeatures.getVisibility().getAutoSubscribed();
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
 	public void setVisibilityObliged(DefinitionSets d) {
-		// TODO Auto-generated method stub
+		visibility.setObliged(d);
+		computedFeatures.setIsComputed(false);	
 		
 	}
 
@@ -307,8 +416,26 @@ public class ManagedSourceProfile extends org.esupportail.lecture.domain.model.S
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityObliged()
 	 */
 	public DefinitionSets getVisibilityObliged() {
-		// TODO Auto-generated method stub
-		return null;
+		return computedFeatures.getVisibility().getObliged();
 	}
 
+
+	public void setManagedCategoryProfile(ManagedCategoryProfile categoryProfile) {
+		this.managedCategoryProfile = categoryProfile;
+		
+	}
+
+
+
+
+
+
+
+	
+
+
+
+
+	
+	
 }

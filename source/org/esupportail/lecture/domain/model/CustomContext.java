@@ -62,6 +62,7 @@ public class CustomContext {
 	 * The map of subscribed CustomManagedCategory
 	 */
 	private Map<String,CustomManagedCategory> subscriptions;
+	// TODO mettre autre chose qu'une map ?
 	
 	/**
 	 * The userprofile parent (used by hibernate)
@@ -84,12 +85,23 @@ public class CustomContext {
 
 	/** Update data contains in this customContext :
 	 *  - evaluation visibilty on managedCategories to update list of customManagedCategories
+	 *  - evaluation visibility on visible managedCAtegories
 	 * @param portletService
 	 */
 	public void updateData(PortletService portletService) {
 		
-		getContext().evaluateVisibilityOnManagedCategoriesAndUpdateCustomContext(this,portletService);
+		getContext().loadAndEvaluateVisibilityOnManagedCategoriesToUpdate(this,portletService);
 		// later : loadPersonnalCategories();
+		
+		Iterator iterator = subscriptions.values().iterator();
+		while(iterator.hasNext()){
+			CustomManagedCategory customManagedCategory = (CustomManagedCategory)iterator.next();
+			ManagedCategory managedCategory = (ManagedCategory)customManagedCategory.getCategory();
+			managedCategory.evaluateVisibilityOnManagedSourceProfileToUpdate(
+					customManagedCategory,portletService);
+		}
+		
+		
 	}
 	
 	
@@ -115,7 +127,7 @@ public class CustomContext {
 	
 	
 	/**
-	 * Add a custom category to this context if exist. Creates it if no exist
+	 * Add a custom category to this custom context if no exists after creating it.
 	 * @param profile the managed category profile associated to the customCategory
 	 */
 	public void addManagedCustomCategory(ManagedCategoryProfile profile) {

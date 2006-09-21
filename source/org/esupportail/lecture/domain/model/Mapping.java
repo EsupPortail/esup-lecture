@@ -47,7 +47,7 @@ public class Mapping {
 	/**
 	 * Path of the xslt file 
 	 */
-	private String xsltFile = "";
+	private String xsltUrl = "";
 	
 	/**
 	 * Xpath to get an item in the source xml stream
@@ -57,31 +57,31 @@ public class Mapping {
 	/*
 	 ************************** Methods ******************************** */	
 
-	/**
-	 * Return a string containing mapping content : dtd, xsltfile, itemXPath, xmlns and xmlType 
-	 * @see java.lang.Object#toString()
-	 */
-	public String toString(){
-	
-		String string="";
-		
-		/* The dtd name*/
-		string += "	dtd : "+ dtd +"\n";
-
-		/* The path of the xslt file */
-		string += "	xsltFile : "+ xsltFile +"\n";
-	
-		/* The Xpath to get an item in the source xml stream */
-		string += "	itemXPath : "+ itemXPath +"\n";
-	
-		/* The xmlns of the source xml stream */
-		string += "	xmlns : "+ xmlns +"\n";
-	
-		/* The xml type ??? */
-		string += "	xmlType : "+ xmlType +"\n";
-	
-		return string;
-	}
+//	/**
+//	 * Return a string containing mapping content : dtd, xsltfile, itemXPath, xmlns and xmlType 
+//	 * @see java.lang.Object#toString()
+//	 */
+//	public String toString(){
+//	
+//		String string="";
+//		
+//		/* The dtd name*/
+//		string += "	dtd : "+ dtd +"\n";
+//
+//		/* The path of the xslt file */
+//		string += "	xsltFile : "+ xsltUrl +"\n";
+//	
+//		/* The Xpath to get an item in the source xml stream */
+//		string += "	itemXPath : "+ itemXPath +"\n";
+//	
+//		/* The xmlns of the source xml stream */
+//		string += "	xmlns : "+ xmlns +"\n";
+//	
+//		/* The xml type ??? */
+//		string += "	xmlType : "+ xmlType +"\n";
+//	
+//		return string;
+//	}
 
 	/*
 	 ************************** ACCESSORS ******************************** */	
@@ -108,8 +108,8 @@ public class Mapping {
 	 * @return xsltFile
 	 * @see Mapping#xsltFile
 	 */
-	protected String getXsltFile() {
-		return xsltFile;
+	protected String getXsltUrl() {
+		return xsltUrl;
 	}
 	
 	/**
@@ -117,8 +117,8 @@ public class Mapping {
 	 * @param xsltFile
 	 * @see Mapping#xsltFile
 	 */
-	protected void setXsltFile(String xsltFile) {
-		this.xsltFile = xsltFile;
+	protected void setXsltUrl(String xsltUrl) {
+		this.xsltUrl = xsltUrl;
 	}
 
 	/**

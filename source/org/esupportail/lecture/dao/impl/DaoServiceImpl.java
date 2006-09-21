@@ -1,9 +1,10 @@
 package org.esupportail.lecture.dao.impl;
 
 import org.esupportail.lecture.dao.DaoService;
+import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;
-import org.esupportail.lecture.domain.model.Source;
+import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.utils.exception.ErrorException;
 import org.esupportail.lecture.utils.exception.WarningException;
@@ -33,13 +34,7 @@ public class DaoServiceImpl implements DaoService {
 		return hibernateService.getCustomContext(Id);
 	}
 
-	/**
-	 * @throws WarningException 
-	 * @see org.esupportail.lecture.dao.DaoService#getCategory(java.lang.String, int, java.lang.String)
-	 */
-	public ManagedCategory getManagedCategory(String urlCategory, int ttl, String profileId) {
-		return remoteXMLService.getManagedCategory(urlCategory, ttl, profileId);
-	}
+	
 
 	public void setHibernateService(DaoServiceHibernate hibernateService) {
 		this.hibernateService = hibernateService;
@@ -63,19 +58,17 @@ public class DaoServiceImpl implements DaoService {
 		this.hibernateService.deleteUserProfile(userProfile);
 	}
 
-	/**
-	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(java.lang.String, int, java.lang.String, java.lang.String)
-	 */
-	public ManagedCategory getManagedCategory(String urlCategory, int ttl, String profileId, String ptCAS) {
+	
+	
+
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	/**
-	 * @see org.esupportail.lecture.dao.DaoService#getSource(java.lang.String, int, java.lang.String, boolean)
-	 */
-	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
-		return remoteXMLService.getSource(urlSource, ttl, profileId, specificUserContent);
+	public Category getManagedCategory(ManagedCategoryProfile profile, String ptCas) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

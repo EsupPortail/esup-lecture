@@ -93,39 +93,24 @@ public class DomainServiceImplGwe implements DomainService {
 	 * @see org.esupportail.lecture.domain.service.DomainService#getContextUserBean(java.lang.String, java.lang.String)
 	 */
 	public ContextUserBean getContextUserBean(String userId,String contextId) throws ErrorException {
-		// TODO faire des sous méthode pour alléger celle ci
-		
-	/* *********************************************************************
-	 * Récupération et mise à jour des infos
-	 ***********************************************************************/
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = myChannel.getUserProfile(userId);
 		CustomContext customContext = userProfile.getCustomContext(contextId);
 	
+		/* Updating data for the customContext */
 		customContext.updateData(portletService);
 		
-		ContextUserBean contextUserBean = makeContextUserBean(customContext);
-	
-		
-	
-			
 		//TODO a voir où mettre de façon intelligente 
 		DomainTools.getDaoService().addCustomContext(customContext);
 		DomainTools.getDaoService().addUserProfile(userProfile);
-	
-	/* *********************************************************************
-	 * Remplissage des beans
-	 ***********************************************************************/
 		
-	
-	
+		/* Make the contextUserBean to display */
+		ContextUserBean contextUserBean = makeContextUserBean(customContext);
+
 		return contextUserBean;		
 	}
-	
 
-			
-			
 			
 	private ContextUserBean makeContextUserBean(CustomContext customContext) {
 		

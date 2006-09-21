@@ -6,9 +6,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.dao.impl.DaoServiceRemoteXML;
+import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;
-import org.esupportail.lecture.domain.model.Source;
+import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
 /**
  * Stub Service to Data Access Object : use to test upper layers, instead of using 
@@ -64,9 +65,7 @@ public class DaoServiceStub  implements DaoService {
 	}
 
 	
-	public ManagedCategory getManagedCategory(String urlCategory, int ttl, String profileId) {
-		return remoteXMLService.getManagedCategory(urlCategory, ttl, profileId);
-	}
+
 
 
 	public void setRemoteXMLService(DaoServiceRemoteXML remoteXML) {
@@ -85,8 +84,8 @@ public class DaoServiceStub  implements DaoService {
 		
 	}
 
-	public ManagedCategory getManagedCategory(String urlCategory, int ttl, String profileId, String ptCAS) {
-		return remoteXMLService.getManagedCategory(urlCategory, ttl, profileId);
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
+		return remoteXMLService.getManagedCategory(profile);
 		
 	}
 
@@ -97,7 +96,7 @@ public class DaoServiceStub  implements DaoService {
 		return remoteXMLService;
 	}
 
-	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
+	public Category getManagedCategory(ManagedCategoryProfile profile, String ptCas) {
 		// TODO Auto-generated method stub
 		return null;
 	}

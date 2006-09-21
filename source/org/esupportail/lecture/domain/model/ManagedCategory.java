@@ -5,7 +5,12 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Set;
+
+import org.esupportail.lecture.domain.service.PortletService;
 
 
 
@@ -41,18 +46,46 @@ public class ManagedCategory extends Category {
 	 */
 	private Editability edit;
 	
-	private Hashtable<String,SourceProfile> sourceProfiles;
+	private Set<ManagedSourceProfile> managedSourceProfilesSet;
+	
 
 
 	/*
-	 *********************** ACCESSORS**************************************/ 
+	 *********************** INIT **************************************/ 
 
 	/**
 	 * Constructor
 	 */
 	public ManagedCategory() {
-		sourceProfiles = new Hashtable<String,SourceProfile>();
+		managedSourceProfilesSet = new HashSet<ManagedSourceProfile>();
 	}
+	
+	/*
+	 *********************** METHOD **************************************/ 
+		
+	/**
+	 * Evaluate user visibility on managed source profiles of this managed category 
+	 * And update the customManagedCategory associated with, according to visibilities
+	 * But there is not any loading of source at this time
+	 * @param customManagedCategory customManagedCAtegory to update
+	 * @param portletService Access to portlet service
+	 */
+	public void evaluateVisibilityOnManagedSourceProfileToUpdate(CustomManagedCategory customManagedCategory, PortletService portletService) {
+//		TODO optimiser le nombre de fois où on évalue tout ça !!!
+		Iterator iterator = managedSourceProfilesSet.iterator();
+		while (iterator.hasNext()) {
+			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
+			msp.evaluateVisibilityAndUpdateCustomCategory(portletService,customManagedCategory);
+		}
+	}
+	
+
+	
+
+	/*
+	 *********************** ACCESSORS**************************************/ 
+
+	
 	
 	/**
 	 * Returns visibility sets of this managed category (if defined)
@@ -97,12 +130,7 @@ public class ManagedCategory extends Category {
 	}
 	
 	
-	/**
-	 * @return Returns the sourceProfiles
-	 */
-	public Hashtable<String, SourceProfile> getSourceProfiles() {
-		return sourceProfiles;
-	}
+	
 
 	/**
 	 * @param edit The edit to set.
@@ -111,14 +139,26 @@ public class ManagedCategory extends Category {
 		this.edit = edit;
 	}
 
+	/**
+	 * @return Returns the managedSourceProfilesSet.
+	 */
+	public Set<ManagedSourceProfile> getManagedSourceProfilesSet() {
+		return managedSourceProfilesSet;
+	}
 
 	/**
-	 * Sets the sourceProfiles
-	 * @param sourceProfiles to set
+	 * @param managedSourceProfilesSet The managedSourceProfilesSet to set.
 	 */
-	public void setSourceProfiles(Hashtable<String, SourceProfile> sourceProfiles) {
-		this.sourceProfiles = sourceProfiles;
+	public void setManagedSourceProfilesSet(
+			Set<ManagedSourceProfile> managedSourceProfilesSet) {
+		this.managedSourceProfilesSet = managedSourceProfilesSet;
 	}
+
+
+
+
+
+	
 
 
 //	protected Editability getEdit() {
