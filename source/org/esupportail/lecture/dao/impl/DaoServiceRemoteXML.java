@@ -42,8 +42,6 @@ public class DaoServiceRemoteXML {
 		URL url;
 		ManagedCategory ret = new ManagedCategory();
 		//TODO cache !
-		
-		
 		try {
 			url = new URL(profile.getUrlCategory());
 			XMLConfiguration xml = new XMLConfiguration(url);
@@ -61,6 +59,7 @@ public class DaoServiceRemoteXML {
 				Configuration subxml = xml.subset("sourceProfiles(0).sourceProfile("+i+")");
 				// SourceProfile properties
 				ManagedSourceProfile sp = new ManagedSourceProfile();
+				sp.init();
 				sp.setManagedCategoryProfile(profile);
 				sp.setId(subxml.getString("[@id]"));
 				sp.setName(subxml.getString("[@name]"));

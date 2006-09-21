@@ -13,11 +13,6 @@ import org.apache.commons.logging.LogFactory;
  * @author gbouteil
  *
  */
-
-/**
- * @author gbouteil
- *
- */
 public class Mapping {
 
 	/*
@@ -53,6 +48,12 @@ public class Mapping {
 	 * Xpath to get an item in the source xml stream
 	 */
 	private String itemXPath = "";
+
+
+	/**
+	 * Optionnal : rootElement of the xmlStream (one of these parameter is required : xmlns, xmlType, dtd,rootElement)
+	 */
+	private String rootElement;
 	
 	/*
 	 ************************** Methods ******************************** */	
@@ -164,6 +165,7 @@ public class Mapping {
 	protected String getXmlType() {
 		return xmlType;
 	}
+	
 	/**
 	 * Sets the XML type
 	 * @param xmlType
@@ -171,6 +173,22 @@ public class Mapping {
 	 */
 	protected void setXmlType(String xmlType) {
 		this.xmlType = xmlType;
+	}
+
+	/**
+	 * Returns the root element of the XML
+	 * @return root element
+	 */
+	protected String getRootElement() {
+		return rootElement;
+	}
+
+	/**
+	 * Sets the root element of the XML
+	 * @param root element
+	 */
+	protected void setRootElement(String rootElement) {
+		this.rootElement = rootElement;
 	}
 	
 	

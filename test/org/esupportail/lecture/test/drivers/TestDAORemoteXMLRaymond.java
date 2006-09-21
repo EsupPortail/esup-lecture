@@ -48,6 +48,7 @@ public class TestDAORemoteXMLRaymond {
 			DaoService dao = (DaoService)factory.getBean("daoServiceImpl");
 			ManagedCategoryProfile test = new ManagedCategoryProfile();
 			test.setUrlCategory("http://perso.univ-rennes1.fr/raymond.bourges/categoryTest.xml");
+			test.init();
 			test.setTtl(100);
 			test.setId("test");
 			ManagedCategory cat = dao.getManagedCategory(test);

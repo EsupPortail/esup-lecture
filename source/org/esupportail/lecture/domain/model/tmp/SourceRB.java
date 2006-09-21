@@ -6,6 +6,7 @@ public class SourceRB extends org.esupportail.lecture.domain.model.Source {
 	private boolean selected=false;
 	private boolean withUnread=true;
 	private int id;
+	private String name;
 	private List<Item> items;
 
 	public boolean isSelected() {
@@ -38,6 +39,14 @@ public class SourceRB extends org.esupportail.lecture.domain.model.Source {
 
 	public void setItems(List<Item> items) {
 		this.items = items;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

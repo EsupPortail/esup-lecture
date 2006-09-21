@@ -63,8 +63,7 @@ public class DaoServiceImpl implements DaoService {
 	
 
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.remoteXMLService.getManagedCategory(profile);
 	}
 
 	public Category getManagedCategory(ManagedCategoryProfile profile, String ptCas) {

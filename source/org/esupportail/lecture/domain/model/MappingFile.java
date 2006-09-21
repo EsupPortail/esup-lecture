@@ -152,9 +152,10 @@ public class MappingFile {
 			String dtd = xmlFile.getString(pathMapping+ "[@dtd]");
 			String xmlns = xmlFile.getString(pathMapping+ "[@xmlns]");
 			String xmlType = xmlFile.getString(pathMapping+ "[@xmlType]");
+			String rootElement = xmlFile.getString(pathMapping+ "[@rootElement]");
 			
-			if (dtd == null && xmlns == null && xmlType == null){
-				throw new ErrorException("loadMappings :: you must declare dtd or xmlns or xmltype in a mapping.");
+			if (dtd == null && xmlns == null && xmlType == null && rootElement == null){
+				throw new ErrorException("loadMappings :: you must declare dtd or xmlns or xmltype or rootElement in a mapping.");
 			}
 			
 			if (dtd == null){
@@ -175,6 +176,12 @@ public class MappingFile {
 				m.setXmlType(xmlType);
 			}	
 				
+			if (rootElement == null){
+				m.setRootElement("");
+			}else{
+				m.setRootElement(rootElement);
+			}
+			
 			m.setXsltUrl(xmlFile.getString(pathMapping+ "[@xsltFile]"));
 			m.setItemXPath(xmlFile.getString(pathMapping+ "[@itemXPath]"));
 			mappingList.add(m);
@@ -207,15 +214,19 @@ public class MappingFile {
 			String dtd = m.getDtd();
 			String xmlns = m.getXmlns();
 			String xmlType = m.getXmlType();
+			String rootElement = m.getRootElement();
 			
-			if (dtd != "") {
+			if (!dtd.equals("")) {
 				channel.addMappingByDtd(m);
 			}
-			if (xmlns != "") {
+			if (!xmlns.equals("")) {
 				channel.addMappingByXmlns(m);
 			}
-			if (xmlType != "") {
+			if (!xmlType.equals("")) {
 				channel.addMappingByXmlType(m);
+			}
+			if (!rootElement.equals("")) {
+				channel.addMappingByRootElement(m);
 			}
 		}
 	}

@@ -11,9 +11,7 @@ import java.util.*;
 //import org.springframework.beans.factory.InitializingBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.utils.LectureTools;
 import org.esupportail.lecture.utils.exception.*;
 /**
  * The "lecture" channel : main domain model class
@@ -70,6 +68,11 @@ public class Channel  {
 	 * Hash to access mappings by xmlType.
 	 */	
 	private Hashtable<String,Mapping> mappingHashByXmlType;
+	
+	/**
+	 * Hash to access mappings by root element.
+	 */	
+	private Hashtable<String,Mapping> mappingHashByRootElement;
 	
 	/**
 	 * configLoaded = true if channel config has ever been loaded in channel
@@ -471,6 +474,19 @@ public class Channel  {
 	
 	protected Mapping getMappingByXmlType(String xmlType){
 		return mappingHashByXmlType.get(xmlType);
+	}
+
+	/**
+	 * Add a mapping to the hash of mappings indexed by its RootElement, defined in the channel
+	 * @param m the mapping to add
+	 * @see Channel#mappingHashByRootElement
+	 */
+	protected void addMappingByRootElement(Mapping m) {
+		this.mappingHashByRootElement.put(m.getRootElement(), m);
+	}
+
+	protected Mapping getMappingByRootElement(String rootElement){
+		return mappingHashByRootElement.get(rootElement);
 	}
 
 

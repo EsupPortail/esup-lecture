@@ -7,5 +7,6 @@
     dtd CDATA #IMPLIED
     xmlns CDATA #IMPLIED
     xmlType CDATA #IMPLIED
+    rootElement CDATA #IMPLIED
     xsltFile CDATA #REQUIRED
     itemXPath CDATA #REQUIRED>
