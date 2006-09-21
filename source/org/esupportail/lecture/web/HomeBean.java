@@ -95,7 +95,9 @@ public class HomeBean {
 		if (cat != null) {
 			SourceRB src = getSelectedSourceFromCategory(cat);
 			if (src != null) {
-				return src.getName();				
+				//return src.getName();
+				//TODO : TMP name of sourceProfile
+				return "!!SOURCE_NAME!!";
 			}
 		}
 		return ret;

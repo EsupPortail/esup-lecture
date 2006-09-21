@@ -48,33 +48,20 @@ public abstract class Source {
 /* ************************** ACCESSORS ******************************** */	
 
 
-	protected String getDtd() {
+	public String getDtd() {
 		return dtd;
 	}
 
 
-	protected void setDtd(String dtd) {
+	public void setDtd(String dtd) {
 		this.dtd = dtd;
-//	}
-//
-//	protected String getXmlStream() {
-//		return xmlStream;
-//	}
-//
-//	protected void setXmlStream(String xmlStream) {
-//		this.xmlStream = xmlStream;
-//	}
-//
-	
-	
-
-}
+	}
 
 
 	/**
 	 * @return Returns the rootElement.
 	 */
-	protected String getRootElement() {
+	public String getRootElement() {
 		return rootElement;
 	}
 
@@ -82,7 +69,7 @@ public abstract class Source {
 	/**
 	 * @param rootElement The rootElement to set.
 	 */
-	protected void setRootElement(String rootElement) {
+	public void setRootElement(String rootElement) {
 		this.rootElement = rootElement;
 	}
 
@@ -90,7 +77,7 @@ public abstract class Source {
 	/**
 	 * @return Returns the xmlns.
 	 */
-	protected String getXmlns() {
+	public String getXmlns() {
 		return xmlns;
 	}
 
@@ -98,7 +85,7 @@ public abstract class Source {
 	/**
 	 * @param xmlns The xmlns to set.
 	 */
-	protected void setXmlns(String xmlns) {
+	public void setXmlns(String xmlns) {
 		this.xmlns = xmlns;
 	}
 
@@ -106,7 +93,7 @@ public abstract class Source {
 	/**
 	 * @return Returns the xmlType.
 	 */
-	protected String getXmlType() {
+	public String getXmlType() {
 		return xmlType;
 	}
 
@@ -114,7 +101,17 @@ public abstract class Source {
 	/**
 	 * @param xmlType The xmlType to set.
 	 */
-	protected void setXmlType(String xmlType) {
+	public void setXmlType(String xmlType) {
 		this.xmlType = xmlType;
+	}
+
+
+	public String getXmlStream() {
+		return xmlStream;
+	}
+
+
+	public void setXmlStream(String xmlStream) {
+		this.xmlStream = xmlStream;
 	}
 }

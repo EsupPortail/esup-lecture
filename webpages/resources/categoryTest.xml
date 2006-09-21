@@ -3,7 +3,7 @@
 <category edit="all" name="TTTTTTTTT" ttl="">
   <description>Très belle description !!!!</description>
   <sourceProfiles>
-    <sourceProfile id="1" access="public" name="toto" specificUserContent="no" ttl="100" url="http://test" xpath="test" xslt="test">
+    <sourceProfile id="un" access="public" name="toto" specificUserContent="no" ttl="100" url="http://test" xpath="test" xslt="test">
       <visibility>
       <allowed>
       	<regular attribute="attribute1.1" value="value1.1" />
@@ -25,11 +25,11 @@
       </obliged>
       </visibility>
     </sourceProfile>
-    <sourceProfile id="2" access="public" name="toto2" specificUserContent="no" ttl="100" url="http://test" xpath="test" xslt="test">
+    <sourceProfile id="deux" access="public" name="toto2" specificUserContent="no" ttl="100" url="http://test" xpath="test" xslt="test">
       <visibility>
       </visibility>
     </sourceProfile>
-    <sourceProfile id="3" access="cas" name="toto3" specificUserContent="no" ttl="100" url="http://test" xpath="test" xslt="test">
+    <sourceProfile id="trois" access="cas" name="toto3" specificUserContent="no" ttl="100" url="http://test" xpath="test" xslt="test">
       <visibility>
       </visibility>
     </sourceProfile>

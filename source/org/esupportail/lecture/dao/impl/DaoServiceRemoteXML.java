@@ -19,6 +19,7 @@ import org.dom4j.Element;
 import org.dom4j.Namespace;
 import org.dom4j.io.SAXReader;
 import org.esupportail.lecture.domain.model.Accessibility;
+import org.esupportail.lecture.domain.model.GlobalSource;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
@@ -32,7 +33,7 @@ public class DaoServiceRemoteXML {
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(DaoServiceRemoteXML.class);
-
+	
 	/**
 	 * @throws ErrorException 
 	 * @see org.esupportail.lecture.dao.DaoService#getCategory(java.lang.String, int, java.lang.String)
@@ -46,8 +47,7 @@ public class DaoServiceRemoteXML {
 		try {
 			url = new URL(profile.getUrlCategory());
 			XMLConfiguration xml = new XMLConfiguration(url);
-			//TODO use and test Validating
-			//xml.setValidating(true);
+			xml.setValidating(true);
 			xml.load();
 			// Category properties
 			ret.setName(xml.getString("[@name]"));
@@ -69,29 +69,29 @@ public class DaoServiceRemoteXML {
 				sp.setSpecificUserContent(subxml.getBoolean("[@specificUserContent]"));
 				sp.setXsltURL(subxml.getString("[@xslt]"));
 				sp.setItemXPath(subxml.getString("[@xpath]"));
-			    String access = subxml.getString("[@access]");
-			    if (access.equalsIgnoreCase("public")) {
+				String access = subxml.getString("[@access]");
+				if (access.equalsIgnoreCase("public")) {
 					sp.setAccess(Accessibility.PUBLIC);
 				} else if (access.equalsIgnoreCase("cas")) {
 					sp.setAccess(Accessibility.CAS);
 				}
-			    // SourceProfile visibility
-			    VisibilitySets visibilitySets = new VisibilitySets();  
-			    // foreach (allowed / autoSubscribed / Obliged
-			    visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).allowed(0)"));
-			    visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).obliged(0)"));
-			    visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).autoSubscribed(0)"));
-			    sp.setVisibility(visibilitySets);
+				// SourceProfile visibility
+				VisibilitySets visibilitySets = new VisibilitySets();  
+				// foreach (allowed / autoSubscribed / Obliged
+				visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).allowed(0)"));
+				visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).obliged(0)"));
+				visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).autoSubscribed(0)"));
+				sp.setVisibility(visibilitySets);
 				sourceProfiles.add(sp);
 			}
 			ret.setManagedSourceProfilesSet(sourceProfiles);
 			// Category visibility
-		    VisibilitySets visibilitySets = new VisibilitySets();  
-		    // foreach (allowed / autoSubscribed / Obliged
-		    visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(xml, "visibility(0).allowed(0)"));
-		    visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "visibility(0).obliged(0)"));
-		    visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "visibility(0).autoSubscribed(0)"));
-		    ret.setVisibility(visibilitySets);
+			VisibilitySets visibilitySets = new VisibilitySets();  
+			// foreach (allowed / autoSubscribed / Obliged
+			visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(xml, "visibility(0).allowed(0)"));
+			visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "visibility(0).obliged(0)"));
+			visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "visibility(0).autoSubscribed(0)"));
+			ret.setVisibility(visibilitySets);
 		} catch (MalformedURLException e) {
 			log.error("DaoServiceRemoteXML :: getCategory, "+e.getMessage());
 			throw new ErrorException();
@@ -101,17 +101,18 @@ public class DaoServiceRemoteXML {
 		} 
 		return ret;
 	}
-
+	
 	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
-        try {
-        	String dtd = null;
-        	String root = null;
-        	String Rootnamespace = null;
-        	String xmltype = null;
-        	String xml = null;
-        	
-        	//get the XML
-            SAXReader reader = new SAXReader();
+		Source ret = new GlobalSource();
+		try {
+			String dtd = null;
+			String root = null;
+			String rootNamespace = null;
+			String xmltype = null;
+			String xml = null;
+			
+			//get the XML
+			SAXReader reader = new SAXReader();
 			Document document = reader.read(urlSource);
 			//find the dtd
 			DocumentType doctype = document.getDocType();
@@ -123,27 +124,31 @@ public class DaoServiceRemoteXML {
 			root = rootElement.getName();
 			//find xmlns on root element
 			Namespace ns = rootElement.getNamespace();
-			Rootnamespace = ns.getURI();
+			if (!ns.getURI().equals("")) {
+				rootNamespace = ns.getURI();				
+			}
 			//TODO get xmltype (xsd def)
 			Namespace xmlSchemaNameSpace = rootElement.getNamespaceForURI("http://www.w3.org/2001/XMLSchema-instance");
 			if (xmlSchemaNameSpace != null) {
 				String xmlSchemaNameSpacePrefix = xmlSchemaNameSpace.getPrefix();
 				for ( Iterator i = rootElement.attributeIterator(); i.hasNext(); ) {
-		            Attribute attribute = (Attribute) i.next();
-		            if (attribute.getQName().getNamespacePrefix().equals(xmlSchemaNameSpacePrefix) && attribute.getName().equals("schemaLocation")) {
-		            	xmltype = attribute.getValue();
+					Attribute attribute = (Attribute) i.next();
+					if (attribute.getQName().getNamespacePrefix().equals(xmlSchemaNameSpacePrefix) && attribute.getName().equals("schemaLocation")) {
+						xmltype = attribute.getValue();
 					}
-		        }				
+				}				
 			}
 			//get XML as String
 			xml = document.asXML();
-			
-			
-			String dtd2 = "bidon";
+			ret.setDtd(dtd);
+			ret.setRootElement(root);
+			ret.setXmlns(rootNamespace);
+			ret.setXmlStream(xml);
+			ret.setXmlType(xmltype);
 		} catch (DocumentException e) {
 			log.error("DaoServiceRemoteXML :: getSource, "+e.getMessage());
 			throw new ErrorException();
 		}
-		return null;
+		return ret;
 	}
 }

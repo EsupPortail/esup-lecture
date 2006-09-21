@@ -222,7 +222,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @param urlCategory the URL to set
 	 * @see ManagedCategoryProfile#urlCategory
 	 */
-	protected void setUrlCategory(String urlCategory) {
+	public void setUrlCategory(String urlCategory) {
 		this.urlCategory = urlCategory;
 	}
 

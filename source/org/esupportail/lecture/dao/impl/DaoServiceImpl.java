@@ -5,6 +5,7 @@ import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
+import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.utils.exception.ErrorException;
 import org.esupportail.lecture.utils.exception.WarningException;
@@ -69,6 +70,11 @@ public class DaoServiceImpl implements DaoService {
 	public Category getManagedCategory(ManagedCategoryProfile profile, String ptCas) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	//TODO : TMP !!
+	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
+		return this.remoteXMLService.getSource(urlSource, ttl, profileId, specificUserContent);
 	}
 
 }
