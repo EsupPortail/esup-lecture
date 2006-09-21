@@ -126,8 +126,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 		/* Features that can be get from the mappingFile */
 		
 		Channel channel = DomainTools.getChannel();
-		String setXsltURL = getXsltURL();
-		String setItemXPath = getItemXPath();
+		String setXsltURL = super.getXsltURL();
+		String setItemXPath = super.getItemXPath();
 			
 		String dtd = source.getDtd();
 		String xmlType = source.getXmlType();
@@ -328,7 +328,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	 * @see ManagedSourceProfile#xsltURL
 	 */
 	public void setXsltURL(String xsltURL) {
-		setXsltURL(xsltURL);
+		super.setXsltURL(xsltURL);
 		computedFeatures.setIsComputed(false);
 	}
 
@@ -348,7 +348,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	 * @see ManagedSourceProfile#xsltURL
 	 */
 	public void setItemXPath(String itemXPath) {
-		setItemXPath(itemXPath);
+		super.setItemXPath(itemXPath);
 		computedFeatures.setIsComputed(false);
 	}
 	

@@ -58,8 +58,7 @@ public class TestDAORemoteXMLRaymond {
 			while (iter.hasNext()) {
 				ManagedSourceProfile msp = (ManagedSourceProfile) iter.next();
 				System.out.println("sp name --> "+msp.getName());
-				System.out.println("sp access --> "+msp.getAccess());
-				
+				//System.out.println("sp access --> "+msp.getAccess());
 			}
 		} catch (ErrorException e) {
 			// TODO Auto-generated catch block
