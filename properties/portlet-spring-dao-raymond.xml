@@ -27,6 +27,8 @@
 	<!-- DAO Remote XML -->
 	<bean id="daoServiceRemoteXML"
 		class="org.esupportail.lecture.dao.impl.DaoServiceRemoteXML">
+		<property name="cacheProviderFacade" ref="cacheProviderFacade" />
+		<property name="cachingModel" ref="cachingModel" />
 	</bean>
 
 	<!-- DAO Hibernate -->
@@ -91,20 +93,20 @@
 	-->
 	<bean id="cacheManager"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-<!-- 
 		<property name="configLocation">
 			<value>classpath:ehcache.xml</value>
 		</property>
- -->
 	</bean>
 
 	<bean id="cacheProviderFacade"
 		class="org.springmodules.cache.provider.ehcache.EhCacheFacade">
 		<property name="cacheManager" ref="cacheManager" />
-<!-- 
+	</bean>
+	
+	<bean id="cachingModel" class="org.springmodules.cache.provider.ehcache.EhCacheCachingModel">
 		<property name="cacheName">
 			<value>org.esupportail.lecture.dao.impl.REMOTE_XML</value>
 		</property>
- -->
-	</bean>
+	</bean>	
+	
 </beans>

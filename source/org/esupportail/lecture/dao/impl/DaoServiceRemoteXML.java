@@ -2,10 +2,10 @@ package org.esupportail.lecture.dao.impl;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
-
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
@@ -24,24 +24,88 @@ import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
-import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.domain.model.VisibilitySets;
 import org.esupportail.lecture.utils.exception.ErrorException;
+import org.springmodules.cache.CachingModel;
+import org.springmodules.cache.provider.CacheProviderFacade;
 
 public class DaoServiceRemoteXML {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(DaoServiceRemoteXML.class);
+	private static final Log log = LogFactory.getLog(DaoServiceRemoteXML.class);
+	/**
+	 * cache Manager (init by Spring)
+	 */
+	private CacheProviderFacade cacheProviderFacade;
+	/**
+	 * caching model (init by Spring)
+	 */
+	private CachingModel cachingModel;
+	private Hashtable<String, Date> managedCategoryLastDate = new Hashtable<String, Date>();
+
+	
 	
 	/**
 	 * @throws ErrorException 
 	 * @see org.esupportail.lecture.dao.DaoService#getCategory(java.lang.String, int, java.lang.String)
 	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
+		/* *************************************
+		 * Cache logic :
+		 * hash of (url, lastDate)
+		 * search url in cache
+		 * if find
+		 * 	if lastDate + ttl > date
+		 *   if steel in cache
+		 *    get from cache
+		 *   else
+		 *    warning (cache to small)
+		 *   fi
+		 *  else
+		 *   get url
+		 *   send in cache
+		 *   update lastdate
+		 *  fi
+		 * else
+		 *  get url
+		 *  send in cache
+		 *  update lastdate
+		 * fi 
+		 * *************************************
+		 */		
+		ManagedCategory ret = new ManagedCategory();
+		String url = profile.getUrlCategory();
+		Date lastcatAccessDate = managedCategoryLastDate.get(url);
+		//TODO : RB --> use ttl
+		if (lastcatAccessDate != null) {
+			ret = (ManagedCategory)cacheProviderFacade.getFromCache(url, cachingModel);
+			if (ret == null) { // not in cache !
+				ret = getFreshManagedCategory(profile);
+				cacheProviderFacade.putInCache(url, cachingModel, ret);
+				managedCategoryLastDate.put(url, new Date());
+				if (log.isWarnEnabled()) {
+					log.warn("ManagedCategory from url "+url+" can't be found in cahe --> change cache size ?");
+				}
+			}
+		}
+		else {
+			ret = getFreshManagedCategory(profile);
+			cacheProviderFacade.putInCache(url, cachingModel, ret);
+			managedCategoryLastDate.put(url, new Date());
+		}
+		return ret;
+	}
+	
+	
+	/**
+	 * get a managed category from the web without cache
+	 * @param profile ManagedCategoryProfile of Managed category to get
+	 * @return Managed category
+	 */
+	private ManagedCategory getFreshManagedCategory(ManagedCategoryProfile profile) {
 		URL url;
 		ManagedCategory ret = new ManagedCategory();
-		//TODO cache !
 		try {
 			url = new URL(profile.getUrlCategory());
 			XMLConfiguration xml = new XMLConfiguration(url);
@@ -92,10 +156,10 @@ public class DaoServiceRemoteXML {
 			visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "visibility(0).autoSubscribed(0)"));
 			ret.setVisibility(visibilitySets);
 		} catch (MalformedURLException e) {
-			log.error("DaoServiceRemoteXML :: getCategory, "+e.getMessage());
+			log.error("DaoServiceRemoteXML :: getFreshManagedCategory, "+e.getMessage());
 			throw new ErrorException();
 		} catch (ConfigurationException e) {
-			log.error("DaoServiceRemoteXML :: getCategory, "+e.getMessage());
+			log.error("DaoServiceRemoteXML :: getFreshManagedCategory, "+e.getMessage());
 			throw new ErrorException();
 		} 
 		return ret;
@@ -126,7 +190,6 @@ public class DaoServiceRemoteXML {
 			if (!ns.getURI().equals("")) {
 				rootNamespace = ns.getURI();				
 			}
-			//TODO get xmltype (xsd def)
 			Namespace xmlSchemaNameSpace = rootElement.getNamespaceForURI("http://www.w3.org/2001/XMLSchema-instance");
 			if (xmlSchemaNameSpace != null) {
 				String xmlSchemaNameSpacePrefix = xmlSchemaNameSpace.getPrefix();
@@ -149,5 +212,25 @@ public class DaoServiceRemoteXML {
 			throw new ErrorException();
 		}
 		return ret;
+	}
+
+
+	public CacheProviderFacade getCacheProviderFacade() {
+		return cacheProviderFacade;
+	}
+
+
+	public void setCacheProviderFacade(CacheProviderFacade cacheProviderFacade) {
+		this.cacheProviderFacade = cacheProviderFacade;
+	}
+
+
+	public CachingModel getCachingModel() {
+		return cachingModel;
+	}
+
+
+	public void setCachingModel(CachingModel cachingModel) {
+		this.cachingModel = cachingModel;
 	}
 }

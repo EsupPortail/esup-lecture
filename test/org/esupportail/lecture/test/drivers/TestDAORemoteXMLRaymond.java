@@ -45,20 +45,22 @@ public class TestDAORemoteXMLRaymond {
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		
 		try {
-			DaoService dao = (DaoService)factory.getBean("daoServiceImpl");
-			ManagedCategoryProfile test = new ManagedCategoryProfile();
-			test.setUrlCategory("http://perso.univ-rennes1.fr/raymond.bourges/categoryTest.xml");
-			test.init();
-			test.setTtl(100);
-			test.setId("test");
-			ManagedCategory cat = dao.getManagedCategory(test);
-			System.out.println("name --> "+cat.getName());
-			Set<ManagedSourceProfile> set = cat.getManagedSourceProfilesSet();
-			Iterator<ManagedSourceProfile> iter = set.iterator();
-			while (iter.hasNext()) {
-				ManagedSourceProfile msp = (ManagedSourceProfile) iter.next();
-				System.out.println("sp name --> "+msp.getName());
-				//System.out.println("sp access --> "+msp.getAccess());
+			for (int i = 0; i < 10; i++) {
+				DaoService dao = (DaoService)factory.getBean("daoServiceImpl");
+				ManagedCategoryProfile test = new ManagedCategoryProfile();
+				test.setUrlCategory("http://perso.univ-rennes1.fr/raymond.bourges/categoryTest.xml");
+				test.init();
+				test.setTtl(100);
+				test.setId("test");
+				ManagedCategory cat = dao.getManagedCategory(test);
+				System.out.println("name --> "+cat.getName());
+				Set<ManagedSourceProfile> set = cat.getManagedSourceProfilesSet();
+				Iterator<ManagedSourceProfile> iter = set.iterator();
+				while (iter.hasNext()) {
+					ManagedSourceProfile msp = (ManagedSourceProfile) iter.next();
+					System.out.println("sp name --> "+msp.getName());
+					//System.out.println("sp access --> "+msp.getAccess());
+				}
 			}
 		} catch (ErrorException e) {
 			// TODO Auto-generated catch block

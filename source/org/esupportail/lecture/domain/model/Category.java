@@ -4,12 +4,15 @@
 * You may obtain a copy of the licence at http://www.esup-portail.org/license/
 */
 package org.esupportail.lecture.domain.model;
+
+import java.io.Serializable;
+
 /**
  * Category element : a category can be a managed or personal one.
  * @author gbouteil
  *
  */
-public abstract class Category {
+public abstract class Category implements Serializable {
 
 	/*
 	 *************************** PROPERTIES *********************************/	
