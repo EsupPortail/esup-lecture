@@ -2,7 +2,34 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
+	<!-- Entry point to facade services -->
+	<bean id="facadeService" class="org.esupportail.lecture.domain.service.FacadeService">
+		<property name="domainService">
+			<ref bean="domainService"/>
+		</property>
+	</bean>	
+	
+	<!-- Entry point to domain services -->
+	<bean id="domainService" class="org.esupportail.lecture.domain.service.impl.DomainServiceImplGwe">
+		<property name="myChannel">
+			<ref bean="channel"/>
+		</property>
+		<property name="portletService">
+			<ref bean="portletService"/>
+		</property>
+	</bean>
 
+	<!-- Entry point to portlet services -->
+	<bean id="portletService" class="org.esupportail.lecture.domain.service.impl.PortletServiceImpl">
+	</bean>
+	
+
+	<!-- Main domain model class -->
+	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
+	</bean>
+
+	<!-- TEST DATA -->
+	
 	<bean id="categorie1" class="org.esupportail.lecture.domain.model.tmp.CategoryRB">
 		<property name="id" value="1" />
 		<property name="name" value="Bibliothèques" />
@@ -109,6 +136,7 @@ Cette inscription officialise votre statut d'étudiant avec l'envoi	de votre car
 		</property>
 	</bean>
 
+<!-- 
 	<bean id="domainService"
 		class="org.esupportail.lecture.domain.service.impl.DomainServiceImplRaymond">
 		<property name="categories">
@@ -118,6 +146,7 @@ Cette inscription officialise votre statut d'étudiant avec l'envoi	de votre car
 				<ref bean="categorie3" />
 			</list>
 		</property>
-
 	</bean>
+ -->
+
 </beans>

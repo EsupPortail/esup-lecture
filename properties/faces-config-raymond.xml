@@ -21,15 +21,8 @@
 	<!-- NAVIGATION -->
 
 	<!-- FORM BEANS -->
-	<!-- Un bean par vue : défintion de ces beans
-		- pour l'usage du controleur
-		- stockage des données saisies dans le fomrulaire
-		(cela peut être donc être aussi deux beans différents)
-		-->
      <managed-bean>
-		<!-- nom du bean utilisée par la vue -->
         <managed-bean-name>homeBean</managed-bean-name>
-		<!-- classe correspondant au bean manipulé --> 
         <managed-bean-class>org.esupportail.lecture.web.HomeBean</managed-bean-class>
         <managed-bean-scope>session</managed-bean-scope>
 		<managed-property>
@@ -37,19 +30,27 @@
 			<property-class>org.esupportail.lecture.domain.service.FacadeService</property-class>
 			<value>#{facadeService}</value>
 		</managed-property>
+ 		<managed-property>
+			<property-name>virtualSession</property-name>
+			<property-class>org.esupportail.lecture.web.VirtualSession</property-class>
+			<value>#{virtualSession}</value>
+		</managed-property>
+ 		<managed-property>
+			<property-name>portletService</property-name>
+			<property-class>org.esupportail.lecture.domain.service.PortletService</property-class>
+			<value>#{portletService}</value>
+		</managed-property>
     </managed-bean>
     
      <managed-bean>
-		<!-- nom du bean utilisée par la vue -->
         <managed-bean-name>testBean</managed-bean-name>
-		<!-- classe correspondant au bean manipulé --> 
         <managed-bean-class>org.esupportail.lecture.web.TestBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
     </managed-bean>
 
 	<!-- OTHERS -->
+<!-- TODO : already is spring def
 	<managed-bean>
-		<!-- correspond à la var #{facadeService} -->
 		<managed-bean-name>facadeService</managed-bean-name>
 		<managed-bean-class>
 			org.esupportail.lecture.domain.service.FacadeService
@@ -60,9 +61,19 @@
 			<property-class>
 				org.esupportail.lecture.domain.service.DomainService
 			</property-class>
-			<!-- definie dans la config spring -->
 			<value>#{domainService}</value>
 		</managed-property>
 	</managed-bean>
-
+ -->
+	<managed-bean>
+		<managed-bean-name>virtualSession</managed-bean-name>
+		<managed-bean-class>org.esupportail.lecture.web.VirtualSession</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>portletService</property-name>
+			<property-class>org.esupportail.lecture.domain.service.PortletService</property-class>
+			<value>#{portletService}</value>
+		</managed-property>
+	</managed-bean>
+	
 </faces-config>

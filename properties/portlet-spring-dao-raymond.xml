@@ -2,14 +2,15 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
+	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceStub">
+		<property name="remoteXMLService">
+			<ref bean="daoServiceRemoteXML" />
+		</property>
+	</bean>
+
 	<!-- DAO service de test -->
 	<bean id="daoServiceStub"
 		class="org.esupportail.lecture.dao.DaoServiceStub">
-	</bean>
-
-	<!-- DAO Remote XML -->
-	<bean id="daoServiceRemoteXML"
-		class="org.esupportail.lecture.dao.impl.DaoServiceRemoteXML">
 	</bean>
 
 	<!-- DAO Impl -->
@@ -21,6 +22,11 @@
 		<property name="remoteXMLService">
 			<ref bean="daoServiceRemoteXML" />
 		</property>
+	</bean>
+
+	<!-- DAO Remote XML -->
+	<bean id="daoServiceRemoteXML"
+		class="org.esupportail.lecture.dao.impl.DaoServiceRemoteXML">
 	</bean>
 
 	<!-- DAO Hibernate -->
