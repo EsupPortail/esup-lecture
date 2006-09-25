@@ -43,7 +43,7 @@ public class DaoServiceRemoteXML {
 	 * caching model (init by Spring)
 	 */
 	private CachingModel cachingModel;
-	private Hashtable<String, Date> managedCategoryLastDate = new Hashtable<String, Date>();
+	private Hashtable<String, Long> managedCategoryLastDate = new Hashtable<String, Long>();
 
 	
 	
@@ -77,23 +77,31 @@ public class DaoServiceRemoteXML {
 		 */		
 		ManagedCategory ret = new ManagedCategory();
 		String url = profile.getUrlCategory();
-		Date lastcatAccessDate = managedCategoryLastDate.get(url);
-		//TODO : RB --> use ttl
-		if (lastcatAccessDate != null) {
-			ret = (ManagedCategory)cacheProviderFacade.getFromCache(url, cachingModel);
-			if (ret == null) { // not in cache !
+		System.currentTimeMillis();
+		Long lastcatAccess = managedCategoryLastDate.get(url);
+		Long currentTimeMillis = System.currentTimeMillis();
+		if (lastcatAccess != null) {
+			if (lastcatAccess + (profile.getTtl() * 1000) > currentTimeMillis) {
+				ret = (ManagedCategory)cacheProviderFacade.getFromCache(url, cachingModel);
+				if (ret == null) { // not in cache !
+					ret = getFreshManagedCategory(profile);
+					cacheProviderFacade.putInCache(url, cachingModel, ret);
+					managedCategoryLastDate.put(url, currentTimeMillis);
+					if (log.isWarnEnabled()) {
+						log.warn("ManagedCategory from url "+url+" can't be found in cahe --> change cache size ?");
+					}
+				}				
+			}
+			else{
 				ret = getFreshManagedCategory(profile);
 				cacheProviderFacade.putInCache(url, cachingModel, ret);
-				managedCategoryLastDate.put(url, new Date());
-				if (log.isWarnEnabled()) {
-					log.warn("ManagedCategory from url "+url+" can't be found in cahe --> change cache size ?");
-				}
+				managedCategoryLastDate.put(url, currentTimeMillis);
 			}
 		}
 		else {
 			ret = getFreshManagedCategory(profile);
 			cacheProviderFacade.putInCache(url, cachingModel, ret);
-			managedCategoryLastDate.put(url, new Date());
+			managedCategoryLastDate.put(url, currentTimeMillis);
 		}
 		return ret;
 	}

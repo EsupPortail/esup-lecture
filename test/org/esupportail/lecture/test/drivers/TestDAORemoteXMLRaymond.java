@@ -21,6 +21,7 @@ import org.esupportail.lecture.utils.exception.ErrorException;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -46,23 +47,28 @@ public class TestDAORemoteXMLRaymond {
 		
 		try {
 			for (int i = 0; i < 10; i++) {
+				Thread.sleep(1000);
 				DaoService dao = (DaoService)factory.getBean("daoServiceImpl");
 				ManagedCategoryProfile test = new ManagedCategoryProfile();
 				test.setUrlCategory("http://perso.univ-rennes1.fr/raymond.bourges/categoryTest.xml");
-				test.init();
+				//test.init();
 				test.setTtl(100);
 				test.setId("test");
 				ManagedCategory cat = dao.getManagedCategory(test);
 				System.out.println("name --> "+cat.getName());
-				Set<ManagedSourceProfile> set = cat.getManagedSourceProfilesSet();
-				Iterator<ManagedSourceProfile> iter = set.iterator();
-				while (iter.hasNext()) {
-					ManagedSourceProfile msp = (ManagedSourceProfile) iter.next();
+				Hashtable<String,SourceProfile> hash = cat.getSourceProfilesHash();
+				Enumeration<String> keys = hash.keys();
+				while (keys.hasMoreElements()) {
+					String element = (String) keys.nextElement();
+					ManagedSourceProfile msp = (ManagedSourceProfile)hash.get(element);
 					System.out.println("sp name --> "+msp.getName());
-					//System.out.println("sp access --> "+msp.getAccess());
+					//System.out.println("sp access --> "+msp.getAccess().name());
 				}
 			}
 		} catch (ErrorException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
