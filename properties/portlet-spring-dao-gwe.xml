@@ -12,17 +12,9 @@
 		</property>
 	</bean>
 	
-	<!-- DAO Service implementation : access to DAO layer -->
-
-	<bean id="daoServiceImpl"
-		class="org.esupportail.lecture.dao.impl.DaoServiceImpl">
-		<property name="hibernateService">
-			<ref bean="daoServiceHibernate" />
-		</property>
-		<property name="remoteXMLService">
-			<ref bean="daoServiceRemoteXML" />
-		</property>
-	</bean>
+	
+	
+	
 	
 	
 	<!-- DAO Remote XML -->
@@ -32,102 +24,4 @@
 
 
 
-	<!-- DAO Hibernate -->
-	<bean id="daoServiceHibernate"
-		class="org.esupportail.lecture.dao.impl.DaoServiceHibernate">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-	<!-- Hibernate sessionFactory -->
-	<bean id="sessionFactory"
-		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-		<property name="dataSource">
-			<ref bean="dataSource" />
-		</property>
-		<property name="mappingResources">
-			<list>
-<!-- 
-				<value>customCategory.hbm</value>
-				<value>customSource.hbm</value>
- -->
-				<value>customContext.hbm</value>
-				<value>userProfile.hbm</value>
-			</list>
-		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">
-					org.hibernate.dialect.MySQLDialect
-				</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.cglib.use_reflection_optimizer">false</prop>
-			</props>
-		</property>
-	</bean>
-
-	<!-- External properties configurer -->
- 	<bean id="propertyConfigurer"
-		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location"
-			value="classpath:db.properties" />
- 	</bean>
-
-	<!-- DataSource def -->
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-<!-- 
-		<property name="driverClassName">
-			<value>${db.driver}</value>
-		</property>
-		<property name="url" value="${db.url}" />
-		<property name="username" value="${db.user}" />
-		<property name="password" value="${db.password}" />
- -->
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://sgbd.univ-rennes1.fr/lecture_dev" />
-		<property name="username" value="dev_lecture_dev" />
-		<property name="password" value="qepP7fO5t" />
-	</bean>
-
-	<!--  
-		The created cache manager is an instance of net.sf.ehcache.CacheManager
-	-->
-	<bean id="cacheManager"
-		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-<!-- 
-		<property name="configLocation">
-			<value>classpath:ehcache.xml</value>
-		</property>
- -->
-	</bean>
-
-	<bean id="cacheProviderFacade"
-		class="org.springmodules.cache.provider.ehcache.EhCacheFacade">
-		<property name="cacheManager" ref="cacheManager" />
-<!-- 
-		<property name="cacheName">
-			<value>org.esupportail.lecture.dao.impl.REMOTE_XML</value>
-		</property>
- -->
-	</bean>
-	
-	
-<!--	<bean id="daoServiceHibernate" class="org.esupportail.lecture.dao.hibernate.DaoServiceHibernate">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
-	  <property name="dataSource"><ref bean="dataSource"/></property>
-	  <property name="mappingResources">
-	    <list>
-	      <value>userprofiles.hbm</value>
-	    </list>
-	  </property>
-	  <property name="hibernateProperties">
-	    <props>
-	      <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-	    </props>
-	  </property>
-	</bean>
-	-->
 </beans>

@@ -73,17 +73,18 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 
 	private ManagedCategoryProfile managedCategoryProfile;
 	
+	private String xsltURL;
 
-	
-
+	private String itemXPath;
 	
 	/*
 	 ************************** PROPERTIES ******************************** */	
 	
 	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#init()
+	 * Constructor
 	 */
-	public void init() {
+	public ManagedSourceProfile(ManagedCategoryProfile mcp) {
+		managedCategoryProfile = mcp;
 		computedFeatures = new ComputedManagedSourceFeatures(this);
 	}
 
@@ -122,41 +123,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 			setVisib = managedCategoryProfile.getVisibility();
 			setTtl = managedCategoryProfile.getTtl();
 		}
-		
-		/* Features that can be get from the mappingFile */
-		
-		Channel channel = DomainTools.getChannel();
-		String setXsltURL = super.getXsltURL();
-		String setItemXPath = super.getItemXPath();
-			
-		String dtd = source.getDtd();
-		String xmlType = source.getXmlType();
-		String xmlns = source.getXmlns();
-		//TODO faire le root element
-		//String rootElement = source.getRootElement();
-			
-		Mapping m = new Mapping();
-		
-		if (setXsltURL == null || setItemXPath == null) {
-			if (dtd != null) {
-				m = channel.getMappingByDtd(dtd);
-			} else {
-			if (xmlType != null) {
-				m = channel.getMappingByXmlType(xmlType);
-			} else {
-			if (xmlns != null) {
-				m = channel.getMappingByXmlns(xmlns);
-			}}}
-		
-			if (setXsltURL == null) {
-				setXsltURL = m.getXsltUrl();
-			}
-			if (setItemXPath == null) {
-				setItemXPath = m.getItemXPath();
-			}
-		}
-		
-		computedFeatures.update(setVisib,setTtl,setAccess,setItemXPath,setXsltURL);
+				
+		computedFeatures.update(setVisib,setTtl,setAccess);
 		
 	}
 
@@ -185,14 +153,14 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 						
 		/* ---OBLIGED SET--- */
 			log.debug("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+this.getName());
-			isInObliged = visibility.getObliged().evaluateVisibility(portletService);
+			isInObliged = getVisibilityObliged().evaluateVisibility(portletService);
 			log.debug("IsInObliged : "+isInObliged);
 			if (isInObliged) {
 				customManagedCategory.addManagedCustomSource(this);
 			
 			} else {
 		/* ---AUTOSUBSCRIBED SET--- */	
-				// TODO isInAutoSubscribed = visibility.getAutoSubscribed().evaluateVisibility(portletService);
+				// TODO isInAutoSubscribed =  getVisibilitySubscribed().evaluateVisibility(portletService);
 				// en attendant : isInAutoSubscribed = false 
 				
 				if(isInAutoSubscribed) {
@@ -202,7 +170,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 				} else {
 		/* ---ALLOWED SET--- */
 					log.debug("Appel de evaluate sur DefenitionSets(allowed) de la source profile : "+this.getName());
-					isInAllowed = visibility.getAllowed().evaluateVisibility(portletService);
+					isInAllowed = getVisibilityAllowed().evaluateVisibility(portletService);
 					
 					if (!isInAllowed) { // If isInAllowed : nothing to do
 		/* ---CATEGORY NOT VISIBLE FOR USER--- */
@@ -313,46 +281,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 
 
 	/**
-	 * Returns URL of xslt file
-	 * @return xsltURL
-	 * @see ManagedSourceProfile#xsltURL
-	 */
-	protected String getXsltURL() {
-		return computedFeatures.getXsltUrl();
-	}
-
-
-	/**
-	 * Sets URL of xslt file
-	 * @param xsltURL
-	 * @see ManagedSourceProfile#xsltURL
-	 */
-	public void setXsltURL(String xsltURL) {
-		super.setXsltURL(xsltURL);
-		computedFeatures.setIsComputed(false);
-	}
-
-
-	/**
-	 * Returns Xpath to access to item in source XML file
-	 * @return itemXPath
-	 * @see ManagedSourceProfile#xsltURL
-	 */
-	protected String getItemXPath() {
-		return  computedFeatures.getItemXPath();
-	}
-
-	/**
-	 * Sets Xpath to access to item in source XML file
-	 * @param itemXPath
-	 * @see ManagedSourceProfile#xsltURL
-	 */
-	public void setItemXPath(String itemXPath) {
-		super.setItemXPath(itemXPath);
-		computedFeatures.setIsComputed(false);
-	}
-	
-	/**
 	 * Returns the dtd.
 	 * @return dtd
 	 * @see ManagedSourceProfile#dtd
@@ -422,6 +350,18 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 
 	public void setManagedCategoryProfile(ManagedCategoryProfile categoryProfile) {
 		this.managedCategoryProfile = categoryProfile;
+		
+	}
+
+
+	public void setXsltURL(String string) {
+		xsltURL = string;
+		
+	}
+
+
+	public void setItemXPath(String string) {
+		itemXPath = string;
 		
 	}
 

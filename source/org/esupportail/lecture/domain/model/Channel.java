@@ -11,6 +11,7 @@ import java.util.*;
 //import org.springframework.beans.factory.InitializingBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.utils.exception.*;
 /**
@@ -141,6 +142,8 @@ public class Channel  {
 			/* Loading managed category profiles */
 			ChannelConfig.loadManagedCategoryProfiles(this);
 		
+			
+			
 			/* Loading Contexts */
 			ChannelConfig.loadContexts(this);
 		
@@ -236,6 +239,7 @@ public class Channel  {
 	 * @return the user profile
 	 */
 	public UserProfile getUserProfile(String userId){
+	
 		UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
 		
 		if (userProfile == null){
@@ -472,6 +476,7 @@ public class Channel  {
 		this.mappingHashByXmlType.put(m.getXmlType(),m);
 	}	
 	
+
 	protected Mapping getMappingByXmlType(String xmlType){
 		return mappingHashByXmlType.get(xmlType);
 	}

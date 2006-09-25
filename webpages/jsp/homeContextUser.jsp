@@ -19,18 +19,25 @@
 	<br/>	
 	<br/>	
 	<h:outputText value="#{homeContextUserBean.context.description}" />
-	<br/>	
-	<br/>	
-	<h:outputText value="#{homeContextUserBean.context.test}" />
+	
 	<br/>	
 	<br/>	
 	<h:outputText value="Ses categories :"/>	
 	<t:dataList value="#{homeContextUserBean.context.categories}" var="category"
 		layout="unorderedList">
+		<br/>	
 		<h:outputText value="#{category.name}" />
-			<br/>	
-			<br/>
+		<br/>	
+		<br/>
 		<h:outputText value="#{category.description}" />
+		<br/>	
+		<br/>
+		<h:outputText value="Ses sources :"/>	
+		<t:dataList value="#{category.sourceNames}" var="sourceName"
+			layout="unorderedList">
+		<br/>	
+			<h:outputText value="#{sourceName}" />
+		</t:dataList>
 	</t:dataList>
 	</t:div> 
 </f:view>

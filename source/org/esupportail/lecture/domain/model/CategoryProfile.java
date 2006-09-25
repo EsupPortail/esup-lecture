@@ -5,6 +5,10 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
 import org.esupportail.lecture.dao.DaoService;
 
 /**
@@ -59,8 +63,26 @@ public abstract class CategoryProfile {
 	 * @see ComposantProfile#getName()
 	 */
 	public String getName() {
-		return name;
+		
+		if (category == null ){
+			return name;
+		}else {
+			return getCategory().getName();
+		}
+			
 	}
+	
+	
+	public String getDescription() {
+		if (category == null){
+			return null;
+		}else {
+			return getCategory().getDescription();
+		}
+	}
+	
+
+	
 	
 	/**
 	 * @param name
@@ -102,6 +124,10 @@ public abstract class CategoryProfile {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
+	
+
+	
 
 
 }

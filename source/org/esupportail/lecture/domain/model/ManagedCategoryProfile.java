@@ -88,9 +88,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	
 	
 	/**
-	 * Initialization 
+	 * Constructor 
 	 */
-	public void init() {
+	public ManagedCategoryProfile() {
 		computedFeatures = new ComputedManagedCategoryFeatures(this);
 	}
 	
@@ -111,7 +111,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 			String ptCas = portletService.getUserProxyTicketCAS();
 			setCategory(DomainTools.getDaoService().getManagedCategory(this,ptCas));
 		}
-		computedFeatures.setIsComputed(false); // TODO à optimiser
+		computedFeatures.compute();
+		//computedFeatures.setIsComputed(false); // TODO à optimiser
 	}
 	
 	
@@ -137,18 +138,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		boolean isInAutoSubscribed = false;
 		boolean isInAllowed = false;
 		
-		VisibilitySets sets = getVisibility();
 		
 	/* ---OBLIGED SET--- */
 		log.debug("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+ getName());
-		isInObliged = sets.getObliged().evaluateVisibility(portletService);
+		isInObliged =  getVisibilityObliged().evaluateVisibility(portletService);
 		log.debug("IsInObliged : "+isInObliged);
 		if (isInObliged) {
 			customContext.addManagedCustomCategory(this);
 		
 		} else {
 	/* ---AUTOSUBSCRIBED SET--- */	
-			// TODO isInAutoSubscribed = sets.getAutoSubscribed().evaluateVisibility(portletService);
+			// TODO isInAutoSubscribed =  getVisibilityAutoSubscribed().evaluateVisibility(portletService);
 			// en attendant : isInAutoSubscribed = false 
 			
 			if(isInAutoSubscribed) {
@@ -158,7 +158,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 			} else {
 	/* ---ALLOWED SET--- */
 				log.debug("Appel de evaluate sur DefenitionSets(allowed) de la cat : "+ getName());
-				isInAllowed = sets.getAllowed().evaluateVisibility(portletService);
+				isInAllowed =  getVisibilityAllowed().evaluateVisibility(portletService);
 				
 				if (!isInAllowed) { // If isInAllowed : nothing to do
 	/* ---CATEGORY NOT VISIBLE FOR USER--- */
@@ -180,8 +180,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		
 		ManagedCategory managedCategory = (ManagedCategory)getCategory();
 		//Editability setEdit;
-		VisibilitySets setVisib;
-		int setTtl;
+		VisibilitySets setVisib = visibility;
+		int setTtl = ttl;
 		
 		if (trustCategory) {		
 			//setEdit = managedCategory.getEdit();
@@ -197,10 +197,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 			if (setTtl == -1) {
 				setTtl = this.ttl;
 			}	
-			computedFeatures.update(setVisib,setTtl);
+			
 		}/* else {
 				Already done during channel config loading 
 		} */
+		computedFeatures.update(setVisib,setTtl);
 	}
 	
 
@@ -366,6 +367,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	protected void addContext(Context c){
 		contextsSet.add(c);
 	}
+
+	
 
 
 	

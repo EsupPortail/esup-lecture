@@ -5,6 +5,12 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Set;
+
+
+
 import java.io.Serializable;
 
 /**
@@ -12,7 +18,7 @@ import java.io.Serializable;
  * @author gbouteil
  *
  */
-public abstract class Category implements Serializable {
+public abstract class Category {
 
 	/*
 	 *************************** PROPERTIES *********************************/	
@@ -32,12 +38,38 @@ public abstract class Category implements Serializable {
 	 */
 	private String profilId;
 	
+	private Hashtable<String,SourceProfile> sourceProfilesHash;
+	
+	
 	/*
 	 *************************** METHODS *********************************/
 	
 	
+	protected SourceProfile getSourceProfileById(String id){
+		return sourceProfilesHash.get(id);
+	}
+
+
+
 	/*
 	 *************************** ACCESSORS *********************************/	
+	
+	
+	
+	/**
+	 * @return Returns the sourceProfilesSet.
+	 */
+	public Hashtable<String,SourceProfile> getSourceProfilesHash() {
+		return sourceProfilesHash;
+	}
+
+
+	/**
+	 * @param sourceProfilesSet The sourceProfilesSet to set.
+	 */
+	public void setSourceProfilesHash(Hashtable<String,SourceProfile> sourceProfilesHash) {
+		this.sourceProfilesHash = sourceProfilesHash;
+	}
 	/**
 	 * Returns catgeory name
 	 * @return name

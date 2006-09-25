@@ -27,8 +27,10 @@
   	  <refCategoryProfile refId="cp3"/>
   	  <refCategoryProfile refId="cp4"/>  
 	</context>
+	<!-- JE VOIS -->
 	<categoryProfile 
 		name="categorie1"
+		
 		id="cp1"
 		urlCategory="http://perso.univ-rennes1.fr:8080/raymond.bourges/categoryTest.xml"
 		trustCategory="no"
@@ -69,8 +71,10 @@
 			</obliged>
 		</visibility>
 	</categoryProfile>
+	 <!-- JE VOIS -->
  	<categoryProfile 
 		name="categorie2"
+		
 		id="cp2"
 		urlCategory="http://perso.univ-rennes1.fr:8080/raymond.bourges/categoryTest.xml"
 		trustCategory="no"

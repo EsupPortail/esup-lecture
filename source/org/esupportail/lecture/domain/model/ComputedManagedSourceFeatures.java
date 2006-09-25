@@ -13,9 +13,7 @@ public class ComputedManagedSourceFeatures extends ComputedManagedComposantFeatu
 	 *********************** PROPERTIES**************************************/ 
 	private Accessibility access;
 	
-	private String itemXPath;
 	
-	private String xsltUrl;
 	
 	
 	/*
@@ -37,11 +35,9 @@ public class ComputedManagedSourceFeatures extends ComputedManagedComposantFeatu
 	 * @param setItemXPath itemXpath
 	 * @param setXsltURL xsltURL
 	 */
-	public void update(VisibilitySets setVisib, int setTtl, Accessibility setAccess, String setItemXPath, String setXsltURL) {
+	public void update(VisibilitySets setVisib, int setTtl, Accessibility setAccess) {
 		super.update(setVisib,setTtl);
 		access = setAccess;
-		itemXPath = setItemXPath;
-		xsltUrl = setXsltURL;
 	}
 
 
@@ -60,24 +56,5 @@ public class ComputedManagedSourceFeatures extends ComputedManagedComposantFeatu
 	}
 
 
-	/**
-	 * @return Returns the itemXPath.
-	 */
-	protected String getItemXPath() {
-		if (!super.isComputed()){
-			super.compute();
-		}
-		return itemXPath;
-	}
 
-
-	/**
-	 * @return Returns the xsltUrl.
-	 */
-	protected String getXsltUrl() {
-		if (!super.isComputed()){
-			super.compute();
-		}
-		return xsltUrl;
-	}
 }

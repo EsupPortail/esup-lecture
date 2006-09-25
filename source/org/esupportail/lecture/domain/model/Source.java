@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import org.esupportail.lecture.domain.DomainTools;
+
 /**
  * Source element : a source can be a managed or personal one.
  * @author gbouteil
@@ -43,7 +45,64 @@ public abstract class Source {
 	 */
 	private String rootElement;
 	
+	
+	/**
+	 * URL of the xslt file to display remote source
+	 */
+	private String xsltURL = "";
+	
+	/**
+	 * Xpath to access item in the XML source file correspoding to this source profile
+	 */
+	private String itemXPath = "";
+	
 /* ************************** METHODS ******************************** */	
+	
+	protected void computeXslt(){
+		// TODO revoir cette fonction : à adapter, 
+		//voir si on n'a pas aussi ici un computedFeatures 
+
+		Channel channel = DomainTools.getChannel();
+		String setXsltURL = getXsltURL();
+		String setItemXPath = getItemXPath();
+			
+		String dtd = getDtd();
+		String xmlType = getXmlType();
+		String xmlns = getXmlns();
+		//TODO faire le root element
+		//String rootElement = source.getRootElement();
+			
+		Mapping m = new Mapping();
+		
+		if (setXsltURL == null || setItemXPath == null) {
+			if (dtd != null) {
+				m = channel.getMappingByDtd(dtd);
+			} else {
+			if (xmlType != null) {
+				m = channel.getMappingByXmlType(xmlType);
+			} else {
+			if (xmlns != null) {
+				m = channel.getMappingByXmlns(xmlns);
+			}}}
+		
+			if (setXsltURL == null) {
+				setXsltURL = m.getXsltUrl();
+			}
+			if (setItemXPath == null) {
+				setItemXPath = m.getItemXPath();
+			}
+		}
+		
+	}
+	
+	
+	
+//	public void update(String setItemXPath, String setXsltURL) {
+//	//TODO  A mettre dans le computed feature de la ssource ?	
+//		itemXPath = setItemXPath;
+//		xsltUrl = setXsltURL;
+//	}
+
 
 /* ************************** ACCESSORS ******************************** */	
 
@@ -113,5 +172,33 @@ public abstract class Source {
 
 	public void setXmlStream(String xmlStream) {
 		this.xmlStream = xmlStream;
+	}
+	
+	/**
+	 * @return Returns the itemXPath.
+	 */
+	protected String getItemXPath() {
+		return itemXPath;
+	}
+
+	/**
+	 * @param itemXPath The itemXPath to set.
+	 */
+	protected void setItemXPath(String itemXPath) {
+		this.itemXPath = itemXPath;
+	}
+
+	/**
+	 * @return Returns the xsltURL.
+	 */
+	protected String getXsltURL() {
+		return xsltURL;
+	}
+
+	/**
+	 * @param xsltURL The xsltURL to set.
+	 */
+	protected void setXsltURL(String xsltURL) {
+		this.xsltURL = xsltURL;
 	}
 }

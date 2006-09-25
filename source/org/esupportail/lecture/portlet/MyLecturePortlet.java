@@ -14,10 +14,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.myfaces.portlet.MyFacesGenericPortlet;
 import org.esupportail.lecture.dao.DaoService;
+//import org.esupportail.lecture.utils.LectureTools;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.service.DomainService;
 import org.springframework.web.context.WebApplicationContext;
+
+
 
 /**
  * Portlet of the "Lecture channel"
@@ -53,28 +56,47 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 		if (log.isDebugEnabled()){
 			log.debug("init()");
 		}
-		portletCtx = (PortletContext)super.getPortletContext();
-		if (log.isDebugEnabled()){
-			Enumeration<String> attributesNames = portletCtx.getAttributeNames();
-			while (attributesNames.hasMoreElements()) {
-				String attribute = (String) attributesNames.nextElement();
-				log.debug("PortletContext attribute :"+attribute);
+//		try {
+			portletCtx = (PortletContext)super.getPortletContext();
+			if (log.isDebugEnabled()){
+				Enumeration<String> attributesNames = portletCtx.getAttributeNames();
+				while (attributesNames.hasMoreElements()) {
+					String attribute = (String) attributesNames.nextElement();
+					log.debug("PortletContext attribute :"+attribute);
+				}
+				
 			}
 			
-		}
-		appCtx = (WebApplicationContext)portletCtx.getAttribute("org.springframework.web.context.WebApplicationContext.ROOT");
+			appCtx = (WebApplicationContext)portletCtx.getAttribute("org.springframework.web.context.WebApplicationContext.ROOT");
+
+			/* load configurations files */
+			domainService = (DomainService)appCtx.getBean("domainService");
+			domainService.loadChannel();
+
+			/* Add channel and daoService to static property of DomainTools */
+			Channel channel = (Channel)appCtx.getBean("channel");
+			DomainTools.setChannel(channel);
+			DaoService daoService = (DaoService)appCtx.getBean("daoService");
+			DomainTools.setDaoService(daoService);
+	
+//		} catch (Exception e) {
+//			log.fatal("init() :: "+e.getMessage());
+////		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+////			e.printStackTrace();
+//		}
 		
-		/* load configurations files */
-		domainService = (DomainService)appCtx.getBean("domainService");
-		domainService.loadChannel();
 		
-		/* Add channel and daoService to static property of DomainTools */
-		Channel channel = (Channel)appCtx.getBean("channel");
-		DomainTools.setChannel(channel);
-		DaoService daoService = (DaoService)appCtx.getBean("daoService");
-		DomainTools.setDaoService(daoService);
+		
+		
+	
+		
+	
 		
 	}
+	
+
+	
 
 
 }

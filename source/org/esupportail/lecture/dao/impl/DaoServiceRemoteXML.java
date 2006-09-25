@@ -24,6 +24,7 @@ import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
+import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.domain.model.VisibilitySets;
 import org.esupportail.lecture.utils.exception.ErrorException;
 import org.springmodules.cache.CachingModel;
@@ -117,13 +118,12 @@ public class DaoServiceRemoteXML {
 			ret.setProfilId(profile.getId());
 			ret.setTtl(profile.getTtl());
 			// SourceProfiles loop
-			HashSet<ManagedSourceProfile> sourceProfiles = new HashSet<ManagedSourceProfile>();
+			Hashtable<String,SourceProfile> sourceProfiles = new Hashtable<String,SourceProfile>();
 			int max = xml.getMaxIndex("sourceProfiles(0).sourceProfile");
 			for(int i = 0; i <= max;i++ ){
 				Configuration subxml = xml.subset("sourceProfiles(0).sourceProfile("+i+")");
 				// SourceProfile properties
-				ManagedSourceProfile sp = new ManagedSourceProfile();
-				sp.init();
+				ManagedSourceProfile sp = new ManagedSourceProfile(profile);
 				sp.setManagedCategoryProfile(profile);
 				sp.setId(subxml.getString("[@id]"));
 				sp.setName(subxml.getString("[@name]"));
@@ -145,9 +145,9 @@ public class DaoServiceRemoteXML {
 				visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).obliged(0)"));
 				visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).autoSubscribed(0)"));
 				sp.setVisibility(visibilitySets);
-				sourceProfiles.add(sp);
+				sourceProfiles.put(sp.getId(),sp);
 			}
-			ret.setManagedSourceProfilesSet(sourceProfiles);
+			ret.setSourceProfilesHash(sourceProfiles);
 			// Category visibility
 			VisibilitySets visibilitySets = new VisibilitySets();  
 			// foreach (allowed / autoSubscribed / Obliged

@@ -46,7 +46,6 @@ public class ManagedCategory extends Category {
 	 */
 	private Editability edit;
 	
-	private Set<ManagedSourceProfile> managedSourceProfilesSet;
 	
 
 
@@ -57,7 +56,7 @@ public class ManagedCategory extends Category {
 	 * Constructor
 	 */
 	public ManagedCategory() {
-		managedSourceProfilesSet = new HashSet<ManagedSourceProfile>();
+		super.setSourceProfilesHash(new Hashtable<String,SourceProfile>());
 	}
 	
 	/*
@@ -72,7 +71,7 @@ public class ManagedCategory extends Category {
 	 */
 	public void evaluateVisibilityOnManagedSourceProfileToUpdate(CustomManagedCategory customManagedCategory, PortletService portletService) {
 //		TODO optimiser le nombre de fois où on évalue tout ça !!!
-		Iterator iterator = managedSourceProfilesSet.iterator();
+		Iterator iterator = getSourceProfilesHash().values().iterator();
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
 			msp.evaluateVisibilityAndUpdateCustomCategory(portletService,customManagedCategory);
@@ -139,21 +138,7 @@ public class ManagedCategory extends Category {
 		this.edit = edit;
 	}
 
-	/**
-	 * @return Returns the managedSourceProfilesSet.
-	 */
-	public Set<ManagedSourceProfile> getManagedSourceProfilesSet() {
-		return managedSourceProfilesSet;
-	}
-
-	/**
-	 * @param managedSourceProfilesSet The managedSourceProfilesSet to set.
-	 */
-	public void setManagedSourceProfilesSet(
-			Set<ManagedSourceProfile> managedSourceProfilesSet) {
-		this.managedSourceProfilesSet = managedSourceProfilesSet;
-	}
-
+	
 
 
 

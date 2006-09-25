@@ -1,8 +1,13 @@
 package org.esupportail.lecture.domain.model;
 
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.service.PortletService;
 
 /**
  * Customizations on a managedCategory for a customContext
@@ -34,6 +39,10 @@ public class CustomManagedCategory extends CustomCategory {
 	/*
 	 ************************** INIT *********************************/	
 
+	public CustomManagedCategory(){
+		subscriptions = new Hashtable<String,CustomManagedSource>();
+	}
+	
 	/*
 	 ************************** METHODS *********************************/	
 	
@@ -45,8 +54,8 @@ public class CustomManagedCategory extends CustomCategory {
 		String profileId = managedSourceProfile.getId();
 		
 		if (!subscriptions.containsKey(profileId)){
-			CustomManagedSource customManagedSource = new CustomManagedSource();
-			customManagedSource.setSourceProfileID(profileId);
+			CustomManagedSource customManagedSource = new CustomManagedSource(managedSourceProfile);
+			customManagedSource.setManagedCategoryProfileId(this.getCategoryProfileID());
 			subscriptions.put(profileId,customManagedSource);
 		}
 	}
@@ -59,7 +68,7 @@ public class CustomManagedCategory extends CustomCategory {
 		
 	}
 	
-	public CategoryProfile getCategoryProfile() {
+	public ManagedCategoryProfile getCategoryProfile() {
 		return DomainTools.getChannel().getManagedCategoryProfile(this.categoryProfileID);
 	}
 	
@@ -87,11 +96,28 @@ public class CustomManagedCategory extends CustomCategory {
 		this.categoryProfileID = profilID;
 	}
 
-	
-	@Override
-	public Category getCategory() {
+
+
+	public void evaluateVisibilityOnManagedSourceProfileToUpdate(PortletService portletService) {
+		// TODO fiare evaluate sur le profile
+		ManagedCategory managedCategory = (ManagedCategory)getCategoryProfile().getCategory();
 		
-		return getCategoryProfile().getCategory();
+		managedCategory.evaluateVisibilityOnManagedSourceProfileToUpdate(this,portletService);
+	}
+
+	
+	public List<CustomSource> getSortedCustomSources(){
+	// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
+		
+		List<CustomSource> listSources = new Vector<CustomSource>();
+		Iterator iterator = subscriptions.values().iterator();
+		
+		while(iterator.hasNext()){
+			CustomSource customSource = (CustomSource)iterator.next();
+			listSources.add(customSource);
+		}
+		
+		return listSources;
 	}
 
 

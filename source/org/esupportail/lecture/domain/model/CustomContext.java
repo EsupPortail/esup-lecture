@@ -96,9 +96,7 @@ public class CustomContext {
 		Iterator iterator = subscriptions.values().iterator();
 		while(iterator.hasNext()){
 			CustomManagedCategory customManagedCategory = (CustomManagedCategory)iterator.next();
-			ManagedCategory managedCategory = (ManagedCategory)customManagedCategory.getCategory();
-			managedCategory.evaluateVisibilityOnManagedSourceProfileToUpdate(
-					customManagedCategory,portletService);
+			customManagedCategory.evaluateVisibilityOnManagedSourceProfileToUpdate(portletService);
 		}
 		
 		
@@ -123,7 +121,6 @@ public class CustomContext {
 		
 		return listCategories;
 	}
-	
 	
 	
 	/**

@@ -1,5 +1,7 @@
 package org.esupportail.lecture.domain.model;
 
+import java.util.List;
+
 /**
  * Customizations on a managedCategory for a customContext
  * @author gbouteil
@@ -47,13 +49,14 @@ public abstract class CustomCategory {
 		this.folded = folded;
 	}
 	
-	/**
-	 * @return the category associated with this customCategory
-	 */
-	public abstract Category getCategory() ;
+	
+	
+	
 	/**
 	 * @return the categoryProfile associated with this customCategory
 	 */
 	public abstract CategoryProfile getCategoryProfile() ;
+	
+	public abstract List<CustomSource> getSortedCustomSources();
 	
 }

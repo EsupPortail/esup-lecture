@@ -20,15 +20,7 @@ public abstract class SourceProfile {
 
 	private String sourceURL = "";
 
-	/**
-	 * URL of the xslt file to display remote source
-	 */
-	private String xsltURL = "";
-	
-	/**
-	 * Xpath to access item in the XML source file correspoding to this source profile
-	 */
-	private String itemXPath = "";
+
 
 
 /* ************************** METHODS ******************************** */	
@@ -83,32 +75,6 @@ public abstract class SourceProfile {
 		this.sourceURL = sourceURL;
 	}
 
-	/**
-	 * @return Returns the itemXPath.
-	 */
-	protected String getItemXPath() {
-		return itemXPath;
-	}
-
-	/**
-	 * @param itemXPath The itemXPath to set.
-	 */
-	protected void setItemXPath(String itemXPath) {
-		this.itemXPath = itemXPath;
-	}
-
-	/**
-	 * @return Returns the xsltURL.
-	 */
-	protected String getXsltURL() {
-		return xsltURL;
-	}
-
-	/**
-	 * @param xsltURL The xsltURL to set.
-	 */
-	protected void setXsltURL(String xsltURL) {
-		this.xsltURL = xsltURL;
-	}
+	
 
 }
