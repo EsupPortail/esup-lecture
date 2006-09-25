@@ -4,7 +4,7 @@
 	<description>Très belle description !!!!</description>
 	<sourceProfiles>
 		<sourceProfile id="un" access="public" name="toto"
-			specificUserContent="no" ttl="100" url="http://test" xpath="test"
+			specificUserContent="no" ttl="100" url="http://info.cri.univ-rennes1.fr/rss/rss.php" xpath="test"
 			xslt="test">
 			<visibility>
 				<allowed>
@@ -28,12 +28,12 @@
 			</visibility>
 		</sourceProfile>
 		<sourceProfile id="deux" access="public" name="toto2"
-			specificUserContent="no" ttl="100" url="http://test" xpath="test"
+			specificUserContent="no" ttl="100" url="http://info.cri.univ-rennes1.fr/rss/rss.php" xpath="test"
 			xslt="test">
 			<visibility></visibility>
 		</sourceProfile>
 		<sourceProfile id="trois" access="cas" name="toto3"
-			specificUserContent="no" ttl="100" url="http://test" xpath="test"
+			specificUserContent="no" ttl="100" url="http://info.cri.univ-rennes1.fr/rss/rss.php" xpath="test"
 			xslt="test">
 			<visibility></visibility>
 		</sourceProfile>

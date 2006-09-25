@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
+
 import org.esupportail.lecture.domain.DomainTools;
 
 /**
@@ -16,7 +18,7 @@ import org.esupportail.lecture.domain.DomainTools;
  * @author gbouteil
  *
  */
-public abstract class Source {
+public abstract class Source implements Serializable {
 ///* ************************** PROPERTIES ******************************** */	
 
 	private String xmlStream = "";

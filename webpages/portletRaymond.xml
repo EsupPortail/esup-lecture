@@ -31,4 +31,8 @@
 		</portlet-info>
 	</portlet>
 
+    <user-attribute>
+		<description>user display name</description>
+		<name>displayName</name>
+    </user-attribute> 
 </portlet-app>

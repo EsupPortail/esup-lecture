@@ -11,10 +11,7 @@
 		<t:htmlTag value="div" id="left" forceId="true">
 			<!-- Title -->
 			<t:htmlTag value="p" styleClass="portlet-section-header">
-				<!-- 
 				<h:outputText value="#{homeBean.context.name}"/>
-				 -->
-				<f:verbatim>!!Nom du contexte!!!!!!</f:verbatim>
 			</t:htmlTag>
 			<!-- Categories -->
 			<t:htmlTag value="ul">

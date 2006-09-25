@@ -4,7 +4,7 @@
 	<!-- user attribute used to create a user profile -->
 	<userId>displayName</userId>
 	<context 
-	  name = "context1"
+	  name = "Très beau context1"
 	  id = "c1">
 	  <description>C'est le context 1 ZZZZZZZZZZZZZZZ</description> 
 	  <refCategoryProfile refId="cp1"/>

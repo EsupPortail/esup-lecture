@@ -31,7 +31,6 @@
 	</bean>
 
 	<!-- TEST DATA -->
-	
 	<bean id="categorie1" class="org.esupportail.lecture.domain.model.tmp.CategoryRB">
 		<property name="id" value="1" />
 		<property name="name" value="Bibliothèques" />

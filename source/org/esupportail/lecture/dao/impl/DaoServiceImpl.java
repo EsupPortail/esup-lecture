@@ -1,5 +1,7 @@
 package org.esupportail.lecture.dao.impl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.CustomContext;
@@ -16,13 +18,11 @@ public class DaoServiceImpl implements DaoService {
 	DaoServiceHibernate hibernateService;
 	DaoServiceRemoteXML remoteXMLService;
 	
-	
-	
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#getUserProfile(java.lang.String)
 	 */
 	public UserProfile getUserProfile(String userId) {
-	    return hibernateService.getUserProfile(userId);
+	    return hibernateService.getUserProfile(userId);			
 	}
 
 	/**

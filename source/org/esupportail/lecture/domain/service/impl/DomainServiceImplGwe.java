@@ -105,7 +105,8 @@ public class DomainServiceImplGwe implements DomainService {
 		
 		//TODO a voir où mettre de façon intelligente 
 		DomainTools.getDaoService().addCustomContext(customContext);
-		DomainTools.getDaoService().addUserProfile(userProfile);
+		//TODO !!!! add not correct because userProfile already exist --> duplicate key in database !!!!
+		//DomainTools.getDaoService().addUserProfile(userProfile);
 		
 		/* Make the contextUserBean to display */
 		ContextUserBean contextUserBean = makeContextUserBean(customContext);

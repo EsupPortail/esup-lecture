@@ -4,15 +4,18 @@
 	"http://www.springframework.org/dtd/spring-beans.dtd">
 
 <beans>
-	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceStub">
-		<property name="remoteXMLService">
-			<ref bean="daoServiceRemoteXML" />
-		</property>
-	</bean>
+
+<!-- 
+	<alias name="daoServiceStub" alias="daoService"/>	
+ -->
+	<alias name="daoServiceImpl" alias="daoService"/>
 
 	<!-- DAO service de test -->
 	<bean id="daoServiceStub"
 		class="org.esupportail.lecture.dao.DaoServiceStub">
+		<property name="remoteXMLService">
+			<ref bean="daoServiceRemoteXML" />
+		</property>
 	</bean>
 
 	<!-- DAO Impl -->
