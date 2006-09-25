@@ -69,7 +69,7 @@ public class CustomContext {
 	 */
 	private UserProfile userProfile;
 	
-	private 
+	
 	
 	/*
 	 ************************** INIT *********************************/	
