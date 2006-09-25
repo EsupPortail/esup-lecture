@@ -127,6 +127,20 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 		computedFeatures.update(setVisib,setTtl,setAccess);
 		
 	}
+	public void loadSource(PortletService portletService) {
+		
+		if(getAccess() == Accessibility.PUBLIC) {
+			// managed SOurce Profile => single or globalSource
+			setSource(DomainTools.getDaoService().getSource(this));
+			
+		} else if (getAccess() == Accessibility.CAS) {
+			String ptCas = portletService.getUserProxyTicketCAS();
+			setSource(DomainTools.getDaoService().getSource(this,ptCas));
+			
+		}
+		computedFeatures.compute();
+		//computedFeatures.setIsComputed(false); // TODO à optimiser
+	}
 
 	
 	/**
@@ -266,7 +280,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	 * @return specificUserContent
 	 * @see ManagedSourceProfile#specificUserContent
 	 */
-	protected boolean getSpecificUserContent() {
+	public boolean getSpecificUserContent() {
 		return specificUserContent;
 	}
 
@@ -364,6 +378,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 		itemXPath = string;
 		
 	}
+
+
 
 
 

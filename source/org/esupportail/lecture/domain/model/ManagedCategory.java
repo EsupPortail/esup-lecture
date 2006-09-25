@@ -69,16 +69,15 @@ public class ManagedCategory extends Category {
 	 * @param customManagedCategory customManagedCAtegory to update
 	 * @param portletService Access to portlet service
 	 */
-	public void evaluateVisibilityOnManagedSourceProfileToUpdate(CustomManagedCategory customManagedCategory, PortletService portletService) {
-//		TODO optimiser le nombre de fois où on évalue tout ça !!!
+	public void loadAndEvaluateVisibilityOnSourcesToUpdate(CustomManagedCategory customManagedCategory, PortletService portletService) {
 		Iterator iterator = getSourceProfilesHash().values().iterator();
+		
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
+			msp.loadSource(portletService);
 			msp.evaluateVisibilityAndUpdateCustomCategory(portletService,customManagedCategory);
 		}
 	}
-	
-
 	
 
 	/*
@@ -137,6 +136,8 @@ public class ManagedCategory extends Category {
 	public void setEdit(Editability edit) {
 		this.edit = edit;
 	}
+
+	
 
 	
 

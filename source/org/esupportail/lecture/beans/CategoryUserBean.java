@@ -1,15 +1,12 @@
 package org.esupportail.lecture.beans;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
-import org.esupportail.lecture.domain.model.Category;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.model.CategoryProfile;
-import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.CustomCategory;
-import org.esupportail.lecture.domain.model.CustomSource;
-import org.esupportail.lecture.domain.model.SourceProfile;
 
 /**
  * Bean to display a category according to a user profile
@@ -19,7 +16,13 @@ import org.esupportail.lecture.domain.model.SourceProfile;
 public class CategoryUserBean {
 	
 	/*
-	 ************************ PROPERTIES ******************************** */	
+	 ************************ PROPERTIES ******************************** */
+	
+	/**
+	 * Log instance
+	 */
+	protected static final Log log = LogFactory.getLog(ContextUserBean.class);
+
 
 	/**
 	 * Name of the category
@@ -31,27 +34,32 @@ public class CategoryUserBean {
 	 */
 	private String description;
 
-	private List<String> sourceNames;
+	/**
+	 * Sources to display
+	 */
+	private List<SourceUserBean> sources;
+	
 	/*
 	 ************************ INIT ******************************** */	
+	public CategoryUserBean() {
+		sources = new Vector<SourceUserBean>();
+	}
 	
-	
-	
+	/**
+	 * Init with the customCategory to display
+	 * @param customCategory
+	 */
 	public void init(CustomCategory customCategory) {
 		
 		CategoryProfile profile = customCategory.getCategoryProfile();
 		//TODO a voir quel name on met (cat ou profileCat)
 		setName(profile.getName());
 		setDescription(profile.getDescription());
-		
-		sourceNames = new Vector<String>();
-		Iterator iterator = customCategory.getSortedCustomSources().iterator();
-		while(iterator.hasNext()){
-			CustomSource customSource = (CustomSource)iterator.next();
-			SourceProfile sourceProfile = customSource.getSourceProfile();
-			sourceNames.add(sourceProfile.getName());
-			
-		}
+	}
+	
+	public void addSourceUserBean(SourceUserBean sourceUserBean) {
+		log.debug("addSourceUserBean : "+ sourceUserBean.getName());
+		sources.add(sourceUserBean);
 	}
 	
 	/*
@@ -86,15 +94,23 @@ public class CategoryUserBean {
 	}
 
 	/**
-	 * @return Returns the sourceNames.
+	 * @return Returns the sources.
 	 */
-	public List<String> getSourceNames() {
-		return sourceNames;
+	public List<SourceUserBean> getSources() {
+		return sources;
 	}
 
-
+	/**
+	 * @param sources The sources to set.
+	 */
+	public void setSources(List<SourceUserBean> sources) {
+		this.sources = sources;
+	}
 
 	
+
+
+
 	
 	
 }

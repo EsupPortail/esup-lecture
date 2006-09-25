@@ -10,6 +10,8 @@ import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
+import org.esupportail.lecture.domain.model.ManagedSourceProfile;
+import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 /**
  * Stub Service to Data Access Object : use to test upper layers, instead of using 
@@ -97,6 +99,16 @@ public class DaoServiceStub  implements DaoService {
 	}
 
 	public Category getManagedCategory(ManagedCategoryProfile profile, String ptCas) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Source getSource(ManagedSourceProfile profile, String ptCas) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Source getSource(ManagedSourceProfile profile) {
 		// TODO Auto-generated method stub
 		return null;
 	}

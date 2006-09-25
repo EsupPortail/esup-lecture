@@ -69,6 +69,8 @@ public class CustomContext {
 	 */
 	private UserProfile userProfile;
 	
+	private 
+	
 	/*
 	 ************************** INIT *********************************/	
 
@@ -85,21 +87,18 @@ public class CustomContext {
 
 	/** Update data contains in this customContext :
 	 *  - evaluation visibilty on managedCategories to update list of customManagedCategories
-	 *  - evaluation visibility on visible managedCAtegories
 	 * @param portletService
 	 */
 	public void updateData(PortletService portletService) {
 		
 		getContext().loadAndEvaluateVisibilityOnManagedCategoriesToUpdate(this,portletService);
-		// later : loadPersonnalCategories();
+		// later :  Personnal Categories
 		
 		Iterator iterator = subscriptions.values().iterator();
 		while(iterator.hasNext()){
 			CustomManagedCategory customManagedCategory = (CustomManagedCategory)iterator.next();
-			customManagedCategory.evaluateVisibilityOnManagedSourceProfileToUpdate(portletService);
-		}
-		
-		
+			customManagedCategory.updateData(portletService);
+		}	
 	}
 	
 	

@@ -104,10 +104,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 */
 	public void loadCategory(PortletService portletService) {
 				
-		if(access == Accessibility.PUBLIC) {
+		if(getAccess() == Accessibility.PUBLIC) {
 			setCategory(DomainTools.getDaoService().getManagedCategory(this)); 
 			
-		} else if (access == Accessibility.CAS) {
+		} else if (getAccess() == Accessibility.CAS) {
 			String ptCas = portletService.getUserProxyTicketCAS();
 			setCategory(DomainTools.getDaoService().getManagedCategory(this,ptCas));
 		}

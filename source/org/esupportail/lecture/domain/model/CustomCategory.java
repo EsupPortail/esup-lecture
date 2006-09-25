@@ -1,6 +1,9 @@
 package org.esupportail.lecture.domain.model;
 
+import java.util.Iterator;
 import java.util.List;
+
+import org.esupportail.lecture.domain.service.PortletService;
 
 /**
  * Customizations on a managedCategory for a customContext
@@ -58,5 +61,12 @@ public abstract class CustomCategory {
 	public abstract CategoryProfile getCategoryProfile() ;
 	
 	public abstract List<CustomSource> getSortedCustomSources();
+	
+	/** Update data contains in this customCategory :
+	 *  - evaluation visibilty on managedSources to update list of customManagedSources
+	 * @param portletService
+	 */
+	public abstract void updateData(PortletService portletService); 
+	
 	
 }

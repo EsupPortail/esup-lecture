@@ -96,14 +96,16 @@ public class CustomManagedCategory extends CustomCategory {
 		this.categoryProfileID = profilID;
 	}
 
+	
 
-
-	public void evaluateVisibilityOnManagedSourceProfileToUpdate(PortletService portletService) {
-		// TODO fiare evaluate sur le profile
+	public void updateData(PortletService portletService) {	
+//		 TODO faire evaluate sur le profile
 		ManagedCategory managedCategory = (ManagedCategory)getCategoryProfile().getCategory();
+		managedCategory.loadAndEvaluateVisibilityOnSourcesToUpdate(this,portletService);
+		// later : Personnal Sources;
 		
-		managedCategory.evaluateVisibilityOnManagedSourceProfileToUpdate(this,portletService);
 	}
+	
 
 	
 	public List<CustomSource> getSortedCustomSources(){

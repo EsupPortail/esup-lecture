@@ -5,6 +5,7 @@ import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
+import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.utils.exception.ErrorException;
@@ -71,9 +72,20 @@ public class DaoServiceImpl implements DaoService {
 		return null;
 	}
 
-	//TODO : TMP !!
+	//TODO : TMP !! Pas la bonne signature : à retirer
 	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
 		return this.remoteXMLService.getSource(urlSource, ttl, profileId, specificUserContent);
 	}
+	public Source getSource(ManagedSourceProfile profile) {
+		// TODO Auto-generated method stub
+		return this.remoteXMLService.getSource(profile.getSourceURL(), profile.getTtl(), profile.getId(), profile.getSpecificUserContent());
+	}
+
+	public Source getSource(ManagedSourceProfile profile, String ptCas) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }

@@ -19,6 +19,7 @@ import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomManagedCategory;
+import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.utils.LectureTools;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
@@ -28,6 +29,7 @@ import org.esupportail.lecture.domain.service.PortletService;
 import org.esupportail.lecture.utils.exception.*;
 import org.esupportail.lecture.beans.CategoryUserBean;
 import org.esupportail.lecture.beans.ContextUserBean;
+import org.esupportail.lecture.beans.SourceUserBean;
 import org.esupportail.lecture.beans.UserBean;
 /**
  * Implémentation des services pour le test 
@@ -110,7 +112,6 @@ public class DomainServiceImplGwe implements DomainService {
 
 		return contextUserBean;		
 	}
-
 			
 	private ContextUserBean makeContextUserBean(CustomContext customContext) {
 		
@@ -123,22 +124,34 @@ public class DomainServiceImplGwe implements DomainService {
 		Iterator iterator = listCategories.iterator();
 		while (iterator.hasNext()) {
 			CustomCategory customCategory = (CustomCategory) iterator.next();
-			CategoryUserBean categoryUserBean = new CategoryUserBean();
-			categoryUserBean.init(customCategory);
-
+			CategoryUserBean categoryUserBean = makeCategoryUserBean(customCategory);
 			contextUserBean.addCategoryUserBean(categoryUserBean) ;
 		}
-		
-		
-		
 		return contextUserBean;
 	}
 
+	private CategoryUserBean makeCategoryUserBean(CustomCategory customCategory) {
+		
+		CategoryUserBean categoryUserBean = new CategoryUserBean();
+		categoryUserBean.init(customCategory);
+		List<CustomSource> listSources = customCategory.getSortedCustomSources();
+		Iterator iterator = listSources.iterator();
+		while (iterator.hasNext()) {
+			CustomSource customSource = (CustomSource) iterator.next();
+			SourceUserBean sourceUserBean = makeSourceUserBean(customSource);
+			categoryUserBean.addSourceUserBean(sourceUserBean) ;
+		}
+		return categoryUserBean;
+	}
 
 
-
-
+	private SourceUserBean makeSourceUserBean(CustomSource customSource) {
+		
+		SourceUserBean sourceUserBean = new SourceUserBean();
+		sourceUserBean.init(customSource);
 	
+		return sourceUserBean;
+	}
 
 
 	/* ************************** ACCESSORS ********************************* */

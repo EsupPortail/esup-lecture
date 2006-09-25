@@ -7,9 +7,6 @@
 
 <f:view>
 	<t:div id="left">
-	<h:outputText value="Test du canal lecture : " />
-	<br/>	
-	<br/>	
 	<h:outputText value="User connecté : "/>
 	<h:outputText value="#{homeContextUserBean.user.id}" />
 	<br/>	
@@ -33,13 +30,16 @@
 		<br/>	
 		<br/>
 		<h:outputText value="Ses sources :"/>	
-		<t:dataList value="#{category.sourceNames}" var="sourceName"
+		<t:dataList value="#{category.sources}" var="source"
 			layout="unorderedList">
 		<br/>	
-			<h:outputText value="#{sourceName}" />
+			<h:outputText value="#{source.name}" />
 		</t:dataList>
 	</t:dataList>
 	</t:div> 
+	<h:outputText value="Element sélectionnée :"/>	
+	<br/>	
+	<br/>	
 </f:view>
 
 
