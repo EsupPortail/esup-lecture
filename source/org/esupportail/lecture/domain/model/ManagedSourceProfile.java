@@ -280,7 +280,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	 * @return specificUserContent
 	 * @see ManagedSourceProfile#specificUserContent
 	 */
-	public boolean getSpecificUserContent() {
+	public boolean isSpecificUserContent() {
 		return specificUserContent;
 	}
 

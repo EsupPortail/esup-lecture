@@ -60,27 +60,31 @@ public class DaoServiceImpl implements DaoService {
 		this.hibernateService.deleteUserProfile(userProfile);
 	}
 
-	
-	
-
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile)
+	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
 		return this.remoteXMLService.getManagedCategory(profile);
 	}
 
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile, java.lang.String)
+	 */
 	public Category getManagedCategory(ManagedCategoryProfile profile, String ptCas) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	//TODO : TMP !! Pas la bonne signature : à retirer
-	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
-		return this.remoteXMLService.getSource(urlSource, ttl, profileId, specificUserContent);
-	}
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
+	 */
 	public Source getSource(ManagedSourceProfile profile) {
-		// TODO Auto-generated method stub
-		return this.remoteXMLService.getSource(profile.getSourceURL(), profile.getTtl(), profile.getId(), profile.getSpecificUserContent());
+		return this.remoteXMLService.getSource(profile);
 	}
 
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile, java.lang.String)
+	 */
 	public Source getSource(ManagedSourceProfile profile, String ptCas) {
 		// TODO Auto-generated method stub
 		return null;

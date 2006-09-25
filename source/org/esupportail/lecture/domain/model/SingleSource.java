@@ -12,7 +12,7 @@ package org.esupportail.lecture.domain.model;
  * @author gbouteil
  *
  */
-public class SingleSource extends org.esupportail.lecture.domain.model.Source {
+public class SingleSource extends Source {
 /* ************************** PROPERTIES ******************************** */	
 
 /* ************************** METHODS ******************************** */	

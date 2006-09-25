@@ -19,6 +19,7 @@ import org.dom4j.Element;
 import org.dom4j.Namespace;
 import org.dom4j.io.SAXReader;
 import org.esupportail.lecture.domain.model.Accessibility;
+import org.esupportail.lecture.domain.model.CustomManagedSource;
 import org.esupportail.lecture.domain.model.GlobalSource;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
@@ -43,13 +44,17 @@ public class DaoServiceRemoteXML {
 	 * caching model (init by Spring)
 	 */
 	private CachingModel cachingModel;
-	private Hashtable<String, Long> managedCategoryLastDate = new Hashtable<String, Long>();
-
-	
+	/**
+	 * hash of last last Access in milliseconds by url of managedCategory
+	 */
+	private Hashtable<String, Long> managedCategoryLastAccess = new Hashtable<String, Long>();
+	/**
+	 * hash of last last Access in milliseconds by url of Source
+	 */
+	private Hashtable<String, Long> sourceLastAccess = new Hashtable<String, Long>();
 	
 	/**
-	 * @throws ErrorException 
-	 * @see org.esupportail.lecture.dao.DaoService#getCategory(java.lang.String, int, java.lang.String)
+	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile)
 	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
 		/* *************************************
@@ -78,7 +83,7 @@ public class DaoServiceRemoteXML {
 		ManagedCategory ret = new ManagedCategory();
 		String url = profile.getUrlCategory();
 		System.currentTimeMillis();
-		Long lastcatAccess = managedCategoryLastDate.get(url);
+		Long lastcatAccess = managedCategoryLastAccess.get(url);
 		Long currentTimeMillis = System.currentTimeMillis();
 		if (lastcatAccess != null) {
 			if (lastcatAccess + (profile.getTtl() * 1000) > currentTimeMillis) {
@@ -86,7 +91,7 @@ public class DaoServiceRemoteXML {
 				if (ret == null) { // not in cache !
 					ret = getFreshManagedCategory(profile);
 					cacheProviderFacade.putInCache(url, cachingModel, ret);
-					managedCategoryLastDate.put(url, currentTimeMillis);
+					managedCategoryLastAccess.put(url, currentTimeMillis);
 					if (log.isWarnEnabled()) {
 						log.warn("ManagedCategory from url "+url+" can't be found in cahe --> change cache size ?");
 					}
@@ -95,19 +100,18 @@ public class DaoServiceRemoteXML {
 			else{
 				ret = getFreshManagedCategory(profile);
 				cacheProviderFacade.putInCache(url, cachingModel, ret);
-				managedCategoryLastDate.put(url, currentTimeMillis);
+				managedCategoryLastAccess.put(url, currentTimeMillis);
 			}
 		}
 		else {
 			ret = getFreshManagedCategory(profile);
 			cacheProviderFacade.putInCache(url, cachingModel, ret);
-			managedCategoryLastDate.put(url, currentTimeMillis);
+			managedCategoryLastAccess.put(url, currentTimeMillis);
 		}
 		return ret;
 	}
 	
-	
-	/**
+		/**
 	 * get a managed category from the web without cache
 	 * @param profile ManagedCategoryProfile of Managed category to get
 	 * @return Managed category
@@ -173,7 +177,52 @@ public class DaoServiceRemoteXML {
 		return ret;
 	}
 	
-	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
+	 */
+	public Source getSource(ManagedSourceProfile profile) {
+		Source ret = new GlobalSource();
+		String url = profile.getSourceURL();
+		String profileId = profile.getId();
+		if (profile.isSpecificUserContent()) { // no cache if the content can be different for a specific user
+			return getFreshSource(url, profileId);
+		}
+		System.currentTimeMillis();
+		Long lastcatAccess = sourceLastAccess.get(url);
+		Long currentTimeMillis = System.currentTimeMillis();
+		if (lastcatAccess != null) {
+			if (lastcatAccess + (profile.getTtl() * 1000) > currentTimeMillis) {
+				ret = (GlobalSource)cacheProviderFacade.getFromCache(url, cachingModel);
+				if (ret == null) { // not in cache !
+					ret = getFreshSource(url, profileId);
+					cacheProviderFacade.putInCache(url, cachingModel, ret);
+					sourceLastAccess.put(url, currentTimeMillis);
+					if (log.isWarnEnabled()) {
+						log.warn("Source from url "+url+" can't be found in cahe --> change cache size ?");
+					}
+				}				
+			}
+			else{
+				ret = getFreshSource(url, profileId);
+				cacheProviderFacade.putInCache(url, cachingModel, ret);
+				sourceLastAccess.put(url, currentTimeMillis);
+			}
+		}
+		else {
+			ret = getFreshSource(url, profileId);
+			cacheProviderFacade.putInCache(url, cachingModel, ret);
+			sourceLastAccess.put(url, currentTimeMillis);
+		}
+		return ret;
+	}
+
+	/**
+	 * get a source from the web without cache
+	 * @param urlSource url of the source
+	 * @param profileId of the profile of the source
+	 * @return the source
+	 */
+	private Source getFreshSource(String urlSource, String profileId) {
 		Source ret = new GlobalSource();
 		try {
 			String dtd = null;
@@ -241,4 +290,5 @@ public class DaoServiceRemoteXML {
 	public void setCachingModel(CachingModel cachingModel) {
 		this.cachingModel = cachingModel;
 	}
+
 }

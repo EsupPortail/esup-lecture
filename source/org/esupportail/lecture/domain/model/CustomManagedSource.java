@@ -1,7 +1,5 @@
 package org.esupportail.lecture.domain.model;
 
-import org.esupportail.lecture.domain.DomainTools;
-
 public class CustomManagedSource extends CustomSource{
 
 	protected CustomManagedSource(ManagedSourceProfile profile) {
