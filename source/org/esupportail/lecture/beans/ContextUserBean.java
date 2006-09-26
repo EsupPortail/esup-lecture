@@ -47,6 +47,9 @@ public class ContextUserBean {
 	 */
 	private List<CategoryUserBean> categories;
 	
+	// TODO : à affecter dans la page web
+	private SelectedBean selectedBean;
+	
 	/*
 	 ************************ INITIALIZATION ******************************** */	
 
@@ -147,6 +150,21 @@ public class ContextUserBean {
 	 */
 	public List<CategoryUserBean> getCategories() {
 		return categories;
+	}
+
+	/**
+	 * @return Returns the selectedBean.
+	 */
+	public SelectedBean getSelectedBean() {
+		log.debug("Dans COntextUserBEan::getSelectedBean(), son nom : "+selectedBean.getName());
+		return selectedBean;
+	}
+
+	/**
+	 * @param selectedBean The selectedBean to set.
+	 */
+	public void setSelectedBean(SelectedBean selectedBean) {
+		this.selectedBean = selectedBean;
 	}
 
 	
