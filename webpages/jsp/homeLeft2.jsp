@@ -15,9 +15,16 @@
 			</t:htmlTag>
 			<!-- Categories -->
 			<t:htmlTag value="ul">
+			<!-- 
 				<t:dataList value="#{homeBean.categories}" var="cat" layout="simple">
+			 -->
+				<t:dataList value="#{homeBean.context.categories}" var="cat" layout="simple">
+					<!-- 
 					<t:htmlTag value="li"
 						styleClass="#{cat.expanded ? 'expanded' : 'collapsed'}">
+					 -->
+					<t:htmlTag value="li">
+						<!-- 
 						<h:commandButton action="#{homeBean.selectElement2}"
 							image="/images/moins.gif" alt="#{messages.colapseCategory}"
 							title="#{messages.colapseCategory}" rendered="#{cat.expanded}">
@@ -32,11 +39,16 @@
 							<t:updateActionListener property="#{homeBean.categoryID}"
 								value="#{cat.id}" />
 						</h:commandButton>
+						 -->
 						<h:outputText value="#{cat.name}" />
+						<!-- 
 						<t:htmlTag value="ul" rendered="#{cat.expanded}">
+						 -->
+						<t:htmlTag value="ul">
 							<!-- Souces -->
 							<t:dataList value="#{cat.sources}" var="src" layout="simple">
 								<t:htmlTag value="li">
+								<!-- 
 									<h:commandButton action="#{homeBean.selectElement2}"
 										image="/images/puce.gif" alt="#{messages.selectSource}" title="#{messages.selectSource}"
 										rendered="#{!src.selected or !cat.selected}">
@@ -52,7 +64,11 @@
 										rendered="#{src.withUnread}">
 										<h:outputText value="#{src.name}" />
 									</t:htmlTag>
+								 -->
+								 <!-- 
 									<h:outputText value="#{src.name}" rendered="#{!src.withUnread}" />
+								  -->
+									<h:outputText value="#{src.name}" />
 								</t:htmlTag>
 							</t:dataList>
 						</t:htmlTag>

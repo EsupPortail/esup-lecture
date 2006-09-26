@@ -89,8 +89,7 @@ public class DaoServiceImpl implements DaoService {
 	}
 
 	public void updateCustomContext(CustomContext customContext) {
-		// TODO Auto-generated method stub
-		
+		this.hibernateService.updateCustomContext(customContext);		
 	}
 
 	public void updateUserProfile(UserProfile userProfile) {

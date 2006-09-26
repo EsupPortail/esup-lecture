@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE category SYSTEM "category.dtd" >
-<category edit="all" name="TTTTTTTTT" ttl="">
+<category edit="all" name="category 1" ttl="">
 	<description>Très belle description !!!!</description>
 	<sourceProfiles>
 		<sourceProfile id="un" access="public" name="toto"
