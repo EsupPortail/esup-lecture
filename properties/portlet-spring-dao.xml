@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- DAO service de test -->
+	<bean id="daoServiceStub" class="org.esupportail.lecture.dao.DaoServiceStub">
+	</bean>
+	
+	
+<!--	<bean id="daoServiceHibernate" class="org.esupportail.lecture.dao.hibernate.DaoServiceHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+	  <property name="dataSource"><ref bean="dataSource"/></property>
+	  <property name="mappingResources">
+	    <list>
+	      <value>userprofiles.hbm</value>
+	    </list>
+	  </property>
+	  <property name="hibernateProperties">
+	    <props>
+	      <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+	    </props>
+	  </property>
+	</bean>
+	-->
+</beans>

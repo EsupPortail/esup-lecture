@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE faces-config PUBLIC
+  "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+  "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+<faces-config>
+	<application>
+		<!-- interfaçage spring-jsf :
+			- définition de var dans ce fichier de config JSF (ex : #{facadeWeb}
+			- spring instancie ces variables
+			-->
+		<variable-resolver>
+			org.springframework.web.jsf.DelegatingVariableResolver
+		</variable-resolver>
+	</application>
+
+	<!-- NAVIGATION -->
+
+	<!-- FORM BEANS -->
+	<!-- Un bean par vue : défintion de ces beans
+		- pour l'usage du controleur
+		- stockage des données saisies dans le fomrulaire
+		(cela peut être donc être aussi deux beans différents)
+		-->
+	<!-- Test
+     <managed-bean>
+        <managed-bean-name>homeContextBean</managed-bean-name>
+        <managed-bean-class>org.esupportail.lecture.web.HomeContextBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+		<managed-property>
+			<property-name>facadeWeb</property-name>
+			<property-class>org.esupportail.lecture.web.FacadeService</property-class>
+			<value>#{facadeService}</value>
+		</managed-property>
+    </managed-bean>
+	-->
+	<managed-bean>
+		<!-- nom du bean utilisée par la vue -->
+        <managed-bean-name>homeContextUserBean</managed-bean-name>
+		<!-- classe correspondant au bean manipulé --> 
+        <managed-bean-class>org.esupportail.lecture.web.HomeContextUserBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<!-- attribut du bean : nom -->
+			<property-name>facadeService</property-name>
+			<!-- classe de l'attribut -->
+			<property-class>org.esupportail.lecture.domain.service.FacadeService</property-class>
+			<!-- valeur de l'attribut : cf fichier Spring -->
+			<value>#{facadeService}</value>
+		</managed-property>
+ 		<managed-property>
+			<property-name>virtualSession</property-name>
+			<property-class>org.esupportail.lecture.web.VirtualSession</property-class>
+			<value>#{virtualSession}</value>
+		</managed-property>
+ 		<managed-property>
+			<property-name>portletService</property-name>
+			<property-class>org.esupportail.lecture.domain.service.PortletService</property-class>
+			<value>#{portletService}</value>
+		</managed-property>
+
+    </managed-bean>
+	
+	
+
+	<managed-bean>
+		<managed-bean-name>virtualSession</managed-bean-name>
+		<managed-bean-class>org.esupportail.lecture.web.VirtualSession</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<property-name>portletService</property-name>
+			<property-class>org.esupportail.lecture.domain.service.PortletService</property-class>
+			<value>#{portletService}</value>
+		</managed-property>
+	</managed-bean>
+	
+	<managed-bean>
+		<managed-bean-name>portletService</managed-bean-name>
+		<managed-bean-class>org.esupportail.lecture.domain.service.impl.PortletServiceImpl</managed-bean-class>
+		<managed-bean-scope>application</managed-bean-scope>
+	</managed-bean>
+
+	
+
+</faces-config>

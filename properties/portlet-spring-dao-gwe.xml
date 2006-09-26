@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+
+	<!-- Access to DAO Service must be "daoService" -->
+
+<beans>
+	<!-- DAO service de test -->
+	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceStub">
+		<property name="remoteXMLService">
+			<ref bean="daoServiceRemoteXML" />
+		</property>
+	</bean>
+	
+	
+	
+	
+	
+	
+	<!-- DAO Remote XML -->
+
+   <bean id="daoServiceRemoteXML"
+        class="org.esupportail.lecture.dao.impl.DaoServiceRemoteXML">
+        <property name="cacheProviderFacade" ref="cacheProviderFacade" />
+        <property name="cachingModel" ref="cachingModel" />
+    </bean>
+
+    <bean id="cacheProviderFacade"
+        class="org.springmodules.cache.provider.ehcache.EhCacheFacade">
+        <property name="cacheManager" ref="cacheManager" />
+    </bean>
+   
+    <bean id="cachingModel" class="org.springmodules.cache.provider.ehcache.EhCacheCachingModel">
+        <property name="cacheName">
+            <value>org.esupportail.lecture.dao.impl.REMOTE_XML</value>
+        </property>
+    </bean>   
+
+    <bean id="cacheManager"
+        class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation">
+            <value>classpath:ehcache.xml</value>
+        </property>
+    </bean>
+
+
+</beans>

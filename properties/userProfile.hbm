@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.esupportail.lecture.domain.model">
+	<class name="UserProfile" table="USERPROFILE">
+		<id name="userId" type="string" column="USERID">
+			<generator class="assigned" />
+		</id>
+		<map name="customContexts" inverse="true" lazy="false" cascade="delete">
+			<key column="USERPROFILE_ID" />
+			<map-key column="CONTEXTID" type="string"/>
+			<one-to-many class="CustomContext" />
+		</map>
+		<map name="customMabagedCategories" inverse="true" lazy="false" cascade="delete">
+			<key column="USERPROFILE_ID" />
+			<map-key column="MANAGEDCATEGORYPROFILEID" type="int"/>
+			<one-to-many class="CustomManagedCategory" />
+		</map>
+	</class>
+</hibernate-mapping>

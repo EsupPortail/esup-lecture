@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT channelConfig (userId,context*, categoryProfile*)>
+
+<!ELEMENT userId (#PCDATA)>
+<!ELEMENT context (description,refCategoryProfile*)>
+<!ATTLIST context
+    name CDATA #REQUIRED
+	id ID #REQUIRED
+    edit (all|personal|managed|no) "no">
+
+<!ELEMENT description (#PCDATA)>
+
+<!ELEMENT refCategoryProfile EMPTY>
+<!ATTLIST refCategoryProfile 
+    refId IDREF #REQUIRED>
+
+<!ELEMENT categoryProfile (visibility)>
+<!ATTLIST categoryProfile
+    id ID #REQUIRED
+	name CDATA #REQUIRED
+    urlCategory CDATA #REQUIRED
+    trustCategory (yes|no) "no"
+    edit (all|personal|managed|no) "no"
+    access (public|cas) "public"
+    ttl CDATA #REQUIRED>	
+    
+<!ELEMENT visibility (allowed,autoSubscribed,obliged)>
+
+<!ELEMENT allowed (regular*, group*)>
+<!-- Element "autoSubscribed" is not yet supported 
+	but must be declared -->
+<!ELEMENT autoSubscribed (regular*, group*)>
+<!ELEMENT obliged (regular*, group*)>
+
+<!ELEMENT regular EMPTY>
+<!ATTLIST regular 
+    attribute CDATA #REQUIRED
+    value CDATA #REQUIRED>
+
+<!ELEMENT group EMPTY>
+<!ATTLIST group 
+    name CDATA #REQUIRED> 

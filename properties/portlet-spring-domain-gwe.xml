@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<!-- Entry point to facade services -->
+	<bean id="facadeService" class="org.esupportail.lecture.domain.service.FacadeService">
+		<property name="domainService">
+			<ref bean="domainService"/>
+		</property>
+	</bean>	
+	
+	<!-- Entry point to domain services -->
+	<bean id="domainService" class="org.esupportail.lecture.domain.service.impl.DomainServiceImplGwe">
+		<property name="myChannel">
+			<ref bean="channel"/>
+		</property>
+		<property name="portletService">
+			<ref bean="portletService"/>
+		</property>
+	</bean>
+
+		<!-- Entry point to portlet services -->
+	<bean id="portletService" class="org.esupportail.lecture.domain.service.impl.PortletServiceImpl">
+	</bean>
+	
+
+	<!-- Main domain model class -->
+	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
+	</bean>
+	
+	
+
+	
+	
+</beans>
