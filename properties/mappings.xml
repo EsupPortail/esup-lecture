@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mappings SYSTEM "mappings.dtd" >
 <mappings>
+	
 	<mapping
 		
-		xmlns = "ma_xmlns1 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-		xmlType = "ma_xmlType1"
-		xsltFile = "mon_xsltFile1"
-		itemXPath = "mon_itemXpath1"
+		xmlns = "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+		xmlType = "ma_xmlType1 test"
+		xsltFile = "mon_xsltFile1 test"
+		itemXPath = "mon_itemXpath1 test"
 		/>
 		<mapping
 		dtd = "ma_dtd2"

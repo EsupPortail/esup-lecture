@@ -59,6 +59,8 @@
 		</managed-property>
 
     </managed-bean>
+	
+	
 
 	<managed-bean>
 		<managed-bean-name>virtualSession</managed-bean-name>
