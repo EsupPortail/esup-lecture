@@ -24,6 +24,18 @@ public class CustomManagedSource extends CustomSource{
 		managedSourceProfileId = managedSourceProfileId;
 	}
 
+
+
+	public String getName() {
+		return getSourceProfile().getName();
+	}
+
+
+
+	public String getContent() {
+		return getSourceProfile().getContent();
+	}
+
 	
 
  

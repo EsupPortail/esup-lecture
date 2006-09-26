@@ -20,7 +20,7 @@ public abstract class SourceProfile {
 
 	private String sourceURL = "";
 
-
+	private Source source;
 
 
 /* ************************** METHODS ******************************** */	
@@ -75,6 +75,22 @@ public abstract class SourceProfile {
 		this.sourceURL = sourceURL;
 	}
 
+	public abstract String getContent(); 
+
+	/**
+	 * Returns source of this managed source profile (if loaded)
+	 * @return source
+	 */
+	protected Source getSource() {
+		return source;
+	}
 	
+	/**
+	 * Sets source on the profile
+	 * @param source
+	 */
+	protected void setSource(Source source) {
+		this.source = source;
+	}
 
 }

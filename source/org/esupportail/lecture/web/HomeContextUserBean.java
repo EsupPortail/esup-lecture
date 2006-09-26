@@ -65,7 +65,7 @@ public class HomeContextUserBean {
 	 */
 	private UserBean user;
 
-
+// TODO une variable global avec le customContext ??? => acces plus simple aux divers elements
 	
 	/*
 	 ************************** Initialization *******************************/

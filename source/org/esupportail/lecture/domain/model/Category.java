@@ -18,7 +18,7 @@ import java.io.Serializable;
  * @author gbouteil
  *
  */
-public abstract class Category implements Serializable {
+public abstract class Category implements Serializable{
 
 	/*
 	 *************************** PROPERTIES *********************************/	

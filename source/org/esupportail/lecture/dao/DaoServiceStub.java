@@ -109,8 +109,7 @@ public class DaoServiceStub  implements DaoService {
 	}
 
 	public Source getSource(ManagedSourceProfile profile) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.remoteXMLService.getSource(profile.getSourceURL(), profile.getTtl(), profile.getId(), profile.isSpecificUserContent());
 	}
 
 

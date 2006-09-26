@@ -19,7 +19,6 @@ import org.dom4j.Element;
 import org.dom4j.Namespace;
 import org.dom4j.io.SAXReader;
 import org.esupportail.lecture.domain.model.Accessibility;
-import org.esupportail.lecture.domain.model.CustomManagedSource;
 import org.esupportail.lecture.domain.model.GlobalSource;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
@@ -53,10 +52,14 @@ public class DaoServiceRemoteXML {
 	 */
 	private Hashtable<String, Long> sourceLastAccess = new Hashtable<String, Long>();
 	
+	
+	
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile)
+	 * @throws ErrorException 
+	 * @see org.esupportail.lecture.dao.DaoService#getCategory(java.lang.String, int, java.lang.String)
 	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
+	
 		/* *************************************
 		 * Cache logic :
 		 * hash of (url, lastDate)
@@ -130,13 +133,16 @@ public class DaoServiceRemoteXML {
 			ret.setProfilId(profile.getId());
 			ret.setTtl(profile.getTtl());
 			// SourceProfiles loop
-			Hashtable<String,SourceProfile> sourceProfiles = new Hashtable<String,SourceProfile>();
+
+			Hashtable<String, SourceProfile> sourceProfiles = new Hashtable<String,SourceProfile>();
+
 			int max = xml.getMaxIndex("sourceProfiles(0).sourceProfile");
 			for(int i = 0; i <= max;i++ ){
 				Configuration subxml = xml.subset("sourceProfiles(0).sourceProfile("+i+")");
 				// SourceProfile properties
+
 				ManagedSourceProfile sp = new ManagedSourceProfile(profile);
-				sp.setManagedCategoryProfile(profile);
+
 				sp.setId(subxml.getString("[@id]"));
 				sp.setName(subxml.getString("[@name]"));
 				sp.setSourceURL(subxml.getString("[@url]"));
@@ -177,52 +183,7 @@ public class DaoServiceRemoteXML {
 		return ret;
 	}
 	
-	/**
-	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
-	 */
-	public Source getSource(ManagedSourceProfile profile) {
-		Source ret = new GlobalSource();
-		String url = profile.getSourceURL();
-		String profileId = profile.getId();
-		if (profile.isSpecificUserContent()) { // no cache if the content can be different for a specific user
-			return getFreshSource(url, profileId);
-		}
-		System.currentTimeMillis();
-		Long lastcatAccess = sourceLastAccess.get(url);
-		Long currentTimeMillis = System.currentTimeMillis();
-		if (lastcatAccess != null) {
-			if (lastcatAccess + (profile.getTtl() * 1000) > currentTimeMillis) {
-				ret = (GlobalSource)cacheProviderFacade.getFromCache(url, cachingModel);
-				if (ret == null) { // not in cache !
-					ret = getFreshSource(url, profileId);
-					cacheProviderFacade.putInCache(url, cachingModel, ret);
-					sourceLastAccess.put(url, currentTimeMillis);
-					if (log.isWarnEnabled()) {
-						log.warn("Source from url "+url+" can't be found in cahe --> change cache size ?");
-					}
-				}				
-			}
-			else{
-				ret = getFreshSource(url, profileId);
-				cacheProviderFacade.putInCache(url, cachingModel, ret);
-				sourceLastAccess.put(url, currentTimeMillis);
-			}
-		}
-		else {
-			ret = getFreshSource(url, profileId);
-			cacheProviderFacade.putInCache(url, cachingModel, ret);
-			sourceLastAccess.put(url, currentTimeMillis);
-		}
-		return ret;
-	}
-
-	/**
-	 * get a source from the web without cache
-	 * @param urlSource url of the source
-	 * @param profileId of the profile of the source
-	 * @return the source
-	 */
-	private Source getFreshSource(String urlSource, String profileId) {
+	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
 		Source ret = new GlobalSource();
 		try {
 			String dtd = null;
@@ -290,5 +251,4 @@ public class DaoServiceRemoteXML {
 	public void setCachingModel(CachingModel cachingModel) {
 		this.cachingModel = cachingModel;
 	}
-
 }

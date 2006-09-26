@@ -39,7 +39,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	 * @see ManagedSourceProfile#specificUserContent
 	 */
 	
-	private Source source;
+	
 	/**
 	 * Access mode on the remote source
 	 */
@@ -92,6 +92,14 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	/*
 	 *************************** METHODS ******************************** */	
 	
+	
+	@Override
+	public String getContent() {
+		// TODO : normalemùent, c'est un html qu'on passe : xml avec son xslt + itemXpath ...
+		// c'est çd dire : 
+		String xmlStream = getSource().getXmlStream();
+		return xmlStream;
+	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#computeFeatures()
@@ -131,11 +139,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 		
 		if(getAccess() == Accessibility.PUBLIC) {
 			// managed SOurce Profile => single or globalSource
-			setSource(DomainTools.getDaoService().getSource(this));
+			Source source = DomainTools.getDaoService().getSource(this);
+			setSource(source);
 			
 		} else if (getAccess() == Accessibility.CAS) {
 			String ptCas = portletService.getUserProxyTicketCAS();
-			setSource(DomainTools.getDaoService().getSource(this,ptCas));
+			Source source = DomainTools.getDaoService().getSource(this,ptCas);
+			setSource(source);
 			
 		}
 		computedFeatures.compute();
@@ -204,21 +214,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 /* ************************** ACCESSORS ******************************** */	
 
 
-	/**
-	 * Returns source of this managed source profile (if loaded)
-	 * @return source
-	 */
-	protected Source getSource() {
-		return source;
-	}
 	
-	/**
-	 * Sets source on the profile
-	 * @param source
-	 */
-	protected void setSource(Source source) {
-		this.source = source;
-	}
 
 	/**	 
 	 * @return access
@@ -378,6 +374,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 		itemXPath = string;
 		
 	}
+
+
+	
 
 
 

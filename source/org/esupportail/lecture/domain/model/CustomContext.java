@@ -27,7 +27,7 @@ import org.esupportail.lecture.utils.exception.ErrorException;
  * @author gbouteil
  *
  */
-public class CustomContext {
+public class CustomContext implements CustomElement {
 
 	/*
 	 ************************** PROPERTIES *********************************/	
@@ -69,6 +69,11 @@ public class CustomContext {
 	 */
 	private UserProfile userProfile;
 	
+	/**
+	 * Selected element to be display on right part window
+	 */
+	// TODO mettre dans la BDD ?
+	private CustomElement selectedElement;
 	
 	
 	/*
@@ -80,6 +85,7 @@ public class CustomContext {
 	 */
 	public CustomContext() {
 		subscriptions = new Hashtable<String,CustomManagedCategory>();
+		selectedElement = this;
 	}
 	
 	/*
@@ -147,6 +153,11 @@ public class CustomContext {
 		subscriptions.remove(profile.getId());
 		
 	}
+	
+	public String getContent() {
+		return getContext().getDescription();
+	}
+	
 	/* 
 	 ************************** ACCESSORS **********************************/
 
@@ -194,6 +205,26 @@ public class CustomContext {
 	public void setUserProfile(UserProfile userprofile) {
 		this.userProfile = userprofile;
 	}
+
+	/**
+	 * @return Returns the selectedElement.
+	 */
+	public CustomElement getSelectedElement() {
+		return selectedElement;
+	}
+
+	/**
+	 * @param selectedElement The selectedElement to set.
+	 */
+	public void setSelectedElement(CustomElement selectedElement) {
+		this.selectedElement = selectedElement;
+	}
+
+	public String getName() {
+		return getContext().getName();
+	}
+
+	
 
 
 

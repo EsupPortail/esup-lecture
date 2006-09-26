@@ -5,8 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
-import java.io.Serializable;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 
 /**
@@ -18,7 +18,7 @@ import org.esupportail.lecture.domain.DomainTools;
  * @author gbouteil
  *
  */
-public abstract class Source implements Serializable {
+public abstract class Source {
 ///* ************************** PROPERTIES ******************************** */	
 
 	private String xmlStream = "";
@@ -26,7 +26,10 @@ public abstract class Source implements Serializable {
 	private int profileId;
 	
 
-
+	/**
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(Source.class); 
 	
 
 	/**
@@ -51,12 +54,14 @@ public abstract class Source implements Serializable {
 	/**
 	 * URL of the xslt file to display remote source
 	 */
-	private String xsltURL = "";
+	private String xsltURL;
 	
 	/**
 	 * Xpath to access item in the XML source file correspoding to this source profile
 	 */
-	private String itemXPath = "";
+	private String itemXPath;
+	
+	private boolean isXsltComputed = false;
 	
 /* ************************** METHODS ******************************** */	
 	
@@ -65,14 +70,18 @@ public abstract class Source implements Serializable {
 		//voir si on n'a pas aussi ici un computedFeatures 
 
 		Channel channel = DomainTools.getChannel();
-		String setXsltURL = getXsltURL();
-		String setItemXPath = getItemXPath();
+		String setXsltURL = xsltURL;
+		String setItemXPath = itemXPath;
 			
+		log.debug("Source::computeXslt() : "+profileId);
 		String dtd = getDtd();
+		log.debug("DTD : "+dtd);
 		String xmlType = getXmlType();
+		log.debug("xmlType : "+xmlType);
 		String xmlns = getXmlns();
-		//TODO faire le root element
-		//String rootElement = source.getRootElement();
+		log.debug("xmlns : "+xmlns);
+		String rootElement = getRootElement();
+		log.debug("rootElement : "+rootElement);
 			
 		Mapping m = new Mapping();
 		
@@ -85,16 +94,28 @@ public abstract class Source implements Serializable {
 			} else {
 			if (xmlns != null) {
 				m = channel.getMappingByXmlns(xmlns);
-			}}}
+			} else {
+			if (rootElement != null) {
+				m = channel.getMappingByRootElement(rootElement);
+			} else {
+				log.warn("Source "+profileId+" does not have any xslt information : no dtd, xmlType, xmlns, rootElement");
+			}}}}
 		
-			if (setXsltURL == null) {
-				setXsltURL = m.getXsltUrl();
-			}
-			if (setItemXPath == null) {
-				setItemXPath = m.getItemXPath();
+			if (m == null) {
+				log.warn("Source "+profileId+" does not find xslt in mapping file ");
+			} else {
+		
+				if (setXsltURL == null) {
+					setXsltURL = m.getXsltUrl();
+				}
+				if (setItemXPath == null) {
+					setItemXPath = m.getItemXPath();
+				}
 			}
 		}
-		
+		this.itemXPath = setItemXPath;
+		this.xsltURL = setXsltURL;
+		isXsltComputed = true;
 	}
 	
 	
@@ -180,6 +201,9 @@ public abstract class Source implements Serializable {
 	 * @return Returns the itemXPath.
 	 */
 	protected String getItemXPath() {
+		if (!isXsltComputed){
+			computeXslt();
+		}
 		return itemXPath;
 	}
 
@@ -188,12 +212,16 @@ public abstract class Source implements Serializable {
 	 */
 	protected void setItemXPath(String itemXPath) {
 		this.itemXPath = itemXPath;
+		isXsltComputed = false;
 	}
 
 	/**
 	 * @return Returns the xsltURL.
 	 */
 	protected String getXsltURL() {
+		if (!isXsltComputed){
+			computeXslt();
+		}
 		return xsltURL;
 	}
 
@@ -202,5 +230,6 @@ public abstract class Source implements Serializable {
 	 */
 	protected void setXsltURL(String xsltURL) {
 		this.xsltURL = xsltURL;
+		isXsltComputed = false;
 	}
 }

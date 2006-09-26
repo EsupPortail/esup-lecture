@@ -29,6 +29,7 @@ import org.esupportail.lecture.domain.service.PortletService;
 import org.esupportail.lecture.utils.exception.*;
 import org.esupportail.lecture.beans.CategoryUserBean;
 import org.esupportail.lecture.beans.ContextUserBean;
+import org.esupportail.lecture.beans.SelectedBean;
 import org.esupportail.lecture.beans.SourceUserBean;
 import org.esupportail.lecture.beans.UserBean;
 /**
@@ -119,6 +120,12 @@ public class DomainServiceImplGwe implements DomainService {
 		/* Context */
 		ContextUserBean contextUserBean = new ContextUserBean();
 		contextUserBean.init(customContext);
+		
+		/* selectedBean */
+		SelectedBean selectedBean = new SelectedBean();
+		// Un selectedBean dure moins longtemps qu'un ContextUserBean : peut changer à chaque requete.
+		selectedBean.init(customContext);
+		contextUserBean.setSelectedBean(selectedBean);
 		
 		/* Categories */
 		List<CustomCategory> listCategories = customContext.getSortedCustomCategories();

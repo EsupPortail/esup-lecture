@@ -17,7 +17,13 @@ public class SourceUserBean {
 	 */
 	private String name;
 	
+	// Que pour les tests 
+	// TODO : à retirer => passer par selectedBEan
+	private String content;
 	
+	// TODO : à retirer : pour les tests
+	private String itemXPath;
+	private String xslt;
 	/*
 	 ************************ INIT ******************************** */	
 	
@@ -30,6 +36,13 @@ public class SourceUserBean {
 		SourceProfile profile = customSource.getSourceProfile();
 		//TODO a voir quel name on met (cat ou profileCat)
 		setName(profile.getName());
+		
+		// TODO : à retirer => fait par selectedBean (ici que pour les tests)
+		content = customSource.getContent();
+		
+		// TODO : à retirer : pour les tests	
+		itemXPath = customSource.getItemXPath();
+		xslt = customSource.getXslt();
 	}	
 	/*
 	 ************************ ACCESSORS ******************************** */
@@ -47,6 +60,42 @@ public class SourceUserBean {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	/**
+	 * @return Returns the content.
+	 */
+	public String getContent() {
+		return content;
+	}
+	/**
+	 * @param content The content to set.
+	 */
+	public void setContent(String content) {
+		this.content = content;
+	}
+	/**
+	 * @return Returns the itemXPath.
+	 */
+	public String getItemXPath() {
+		return itemXPath;
+	}
+	/**
+	 * @param itemXPath The itemXPath to set.
+	 */
+	public void setItemXPath(String itemXPath) {
+		this.itemXPath = itemXPath;
+	}
+	/**
+	 * @return Returns the xslt.
+	 */
+	public String getXslt() {
+		return xslt;
+	}
+	/**
+	 * @param xslt The xslt to set.
+	 */
+	public void setXslt(String xslt) {
+		this.xslt = xslt;
 	}
 	
 

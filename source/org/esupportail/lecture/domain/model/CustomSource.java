@@ -1,6 +1,6 @@
 package org.esupportail.lecture.domain.model;
 
-public abstract class CustomSource {
+public abstract class CustomSource implements CustomElement {
 
 	private SourceProfile sourceProfile;
 	
@@ -18,6 +18,15 @@ public abstract class CustomSource {
 
 	public SourceProfile getSourceProfile(){
 		return sourceProfile;
+	}
+	
+//	 TODO : à retirer : pour les tests	
+	public String getItemXPath() {
+		return sourceProfile.getSource().getItemXPath();
+	}
+//	 TODO : à retirer : pour les tests	
+	public String getXslt() {
+		return sourceProfile.getSource().getXsltURL();
 	}
 
 }

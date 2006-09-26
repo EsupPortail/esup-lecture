@@ -122,6 +122,14 @@ public class CustomManagedCategory extends CustomCategory {
 		return listSources;
 	}
 
+	public String getName() {
+		return getCategoryProfile().getName();
+	}
+
+	public String getContent() {
+		return getCategoryProfile().getDescription();
+	}
+
 
 
 	

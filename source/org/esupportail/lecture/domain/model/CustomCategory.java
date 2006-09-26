@@ -10,7 +10,7 @@ import org.esupportail.lecture.domain.service.PortletService;
  * @author gbouteil
  *
  */
-public abstract class CustomCategory {
+public abstract class CustomCategory implements CustomElement {
 
 	/*
 	 ************************** PROPERTIES *********************************/	
