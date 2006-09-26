@@ -95,10 +95,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	
 	@Override
 	public String getContent() {
-		// TODO : normalemùent, c'est un html qu'on passe : xml avec son xslt + itemXpath ...
-		// c'est çd dire : 
-		String xmlStream = getSource().getXmlStream();
-		return xmlStream;
+		
+		return getSource().getContent();
 	}
 
 	/**

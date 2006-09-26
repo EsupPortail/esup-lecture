@@ -103,9 +103,12 @@ public class DomainServiceImplGwe implements DomainService {
 	
 		/* Updating data for the customContext */
 		customContext.updateData(portletService);
+
 		
-		//TODO a voir où mettre de façon intelligente 
+		//TODO a voir où mettre de façon intelligente
+		// à cet endroit, le custom context ne peux pas etre null si le context s'est affiché à l'écran.
 		DomainTools.getDaoService().addCustomContext(customContext);
+		
 		//TODO !!!! add not correct because userProfile already exist --> duplicate key in database !!!!
 		//DomainTools.getDaoService().addUserProfile(userProfile);
 		

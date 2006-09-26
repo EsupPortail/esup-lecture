@@ -232,4 +232,14 @@ public abstract class Source {
 		this.xsltURL = xsltURL;
 		isXsltComputed = false;
 	}
+
+
+
+	public String getContent() {
+//		 TODO : normalemùent, c'est un html qu'on passe : xml transformé avec son xslt + itemXpath ...
+		// pour l'instant, on simplilfie :
+		return xmlStream;
+		
+		
+	}
 }
