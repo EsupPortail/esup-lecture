@@ -88,6 +88,16 @@ public class DaoServiceImpl implements DaoService {
 		return null;
 	}
 
+	public void updateCustomContext(CustomContext customContext) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateUserProfile(UserProfile userProfile) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

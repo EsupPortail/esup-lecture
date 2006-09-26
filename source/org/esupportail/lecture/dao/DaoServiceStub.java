@@ -112,6 +112,16 @@ public class DaoServiceStub  implements DaoService {
 		return this.remoteXMLService.getSource(profile.getSourceURL(), profile.getTtl(), profile.getId(), profile.isSpecificUserContent());
 	}
 
+	public void updateCustomContext(CustomContext customContext) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateUserProfile(UserProfile userProfile) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

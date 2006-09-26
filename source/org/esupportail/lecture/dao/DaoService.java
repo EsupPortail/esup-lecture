@@ -57,6 +57,10 @@ public interface DaoService {
 
 	public Source getSource(ManagedSourceProfile profile);
 
+	public void updateCustomContext(CustomContext customContext);
+
+	public void updateUserProfile(UserProfile userProfile);
+
 	
 	
 		
