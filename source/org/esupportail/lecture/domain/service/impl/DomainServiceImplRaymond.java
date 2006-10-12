@@ -31,6 +31,7 @@ import org.esupportail.lecture.utils.exception.FatalException;
 import org.esupportail.lecture.utils.exception.MyException;
 import org.esupportail.lecture.beans.CategoryUserBean;
 import org.esupportail.lecture.beans.ContextUserBean;
+import org.esupportail.lecture.beans.EditUserBean;
 import org.esupportail.lecture.beans.UserBean;
 
 /**
@@ -138,18 +139,18 @@ public class DomainServiceImplRaymond implements DomainService {
 	}
 	
 	
-	private void evaluateVisibilityOnCategories(
-			Set<ManagedCategoryProfile> fullManagedCategoryProfiles,
-			CustomContext customContext) {
-			
-			PortletService portletService = facadeService.getPortletService();
-			
-			Iterator iterator = fullManagedCategoryProfiles.iterator();
-			while (iterator.hasNext()) {
-				ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
-				mcp.evaluateVisibilityAndUpdateCustomContext(portletService,customContext);
-			}
-		}
+//	private void evaluateVisibilityOnCategories(
+//			Set<ManagedCategoryProfile> fullManagedCategoryProfiles,
+//			CustomContext customContext) {
+//			
+//			PortletService portletService = facadeService.getPortletService();
+//			
+//			Iterator iterator = fullManagedCategoryProfiles.iterator();
+//			while (iterator.hasNext()) {
+//				ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
+//				mcp.evaluateVisibilityAndUpdateCustomContext(portletService,customContext);
+//			}
+//		}
 
 	/**
 	 * @return Returns the myChannel.
@@ -175,5 +176,12 @@ public class DomainServiceImplRaymond implements DomainService {
 	public void setFacadeService(FacadeService facadeService) {
 		this.facadeService = facadeService;
 	}
+
+	public EditUserBean getEditUserBean(String currentUserId, String contextId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }

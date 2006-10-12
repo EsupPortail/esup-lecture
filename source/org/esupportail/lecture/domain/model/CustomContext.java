@@ -91,6 +91,15 @@ public class CustomContext implements CustomElement {
 	/*
 	 *************************** METHODS ************************************/
 
+	public List<ManagedCategoryProfile> getVisibleManagedCategoryProfile(PortletService portletService) {
+		
+		return getContext().loadAndEvaluateVisibilityOnManagedCategoriesToUpdate(this,portletService);
+		
+	}
+
+	
+	
+	
 	/** Update data contains in this customContext :
 	 *  - evaluation visibilty on managedCategories to update list of customManagedCategories
 	 * @param portletService
@@ -223,6 +232,9 @@ public class CustomContext implements CustomElement {
 	public String getName() {
 		return getContext().getName();
 	}
+
+	
+	
 
 	
 

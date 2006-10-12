@@ -123,8 +123,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * add or remove customCategories associated with
 	 * @param portletService
 	 * @param customContext
+	 * @return true if the mcp is visible by the user of the customContext, else return false
 	 */
-	public void evaluateVisibilityAndUpdateCustomContext(PortletService portletService, CustomContext customContext) {
+	public boolean evaluateVisibilityAndUpdateCustomContext(PortletService portletService, CustomContext customContext) {
 		/*
 		 * Algo pour gerer les customCategories :
 		 * ------------------------------------
@@ -163,11 +164,13 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 				if (!isInAllowed) { // If isInAllowed : nothing to do
 	/* ---CATEGORY NOT VISIBLE FOR USER--- */
 					customContext.removeManagedCustomCategory(this);
+					return false;
 				}			
 			}	
 		}
 		// TODO retirer les customCat du user profile qui correspondent à des profiles 
-		// de catégories  disparus	
+		// de catégories  disparus
+		return true;
 	}
 	
 	

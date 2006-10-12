@@ -8,6 +8,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -20,6 +21,7 @@ import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomManagedCategory;
 import org.esupportail.lecture.domain.model.CustomSource;
+import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.utils.LectureTools;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
@@ -29,6 +31,8 @@ import org.esupportail.lecture.domain.service.PortletService;
 import org.esupportail.lecture.utils.exception.*;
 import org.esupportail.lecture.beans.CategoryUserBean;
 import org.esupportail.lecture.beans.ContextUserBean;
+import org.esupportail.lecture.beans.EditCategoryBean;
+import org.esupportail.lecture.beans.EditUserBean;
 import org.esupportail.lecture.beans.SelectedBean;
 import org.esupportail.lecture.beans.SourceUserBean;
 import org.esupportail.lecture.beans.UserBean;
@@ -74,6 +78,9 @@ public class DomainServiceImplGwe implements DomainService {
 	}
 	
 	
+	 
+	
+	
 	/*
 	 *************************** METHODS ************************************/
 
@@ -92,6 +99,42 @@ public class DomainServiceImplGwe implements DomainService {
 		return userBean;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.esupportail.lecture.domain.service.DomainService#getEditUserBean(java.lang.String, java.lang.String)
+	 */
+	public EditUserBean getEditUserBean(String currentUserId,String contextId) {
+		// TODO pour l'instant, je lui propose un seul contexte : celui de la page (sinon problèmede droit)
+		EditUserBean editUserBean = new EditUserBean();
+		
+		UserProfile userProfile = myChannel.getUserProfile(currentUserId);
+		CustomContext customContext = userProfile.getCustomContext(contextId);
+		customContext.updateData(portletService);
+		editUserBean.setContextName(customContext.getName());
+		
+		Iterator iterator =  customContext.getVisibleManagedCategoryProfile(portletService).iterator();
+		while(iterator.hasNext()){
+			ManagedCategoryProfile categoryProfile = (ManagedCategoryProfile) iterator.next(); 
+			editUserBean.addCategory(categoryProfile.getName());
+		}
+		
+		
+		// TODO à retirer : pour les tests  
+		editUserBean.setSelectedCategory(getEditCategoryBean("cp2"));
+	
+		return editUserBean;
+	}
+	
+	
+	private EditCategoryBean getEditCategoryBean(String categoryProfileId) {
+		EditCategoryBean editCategoryBean = new EditCategoryBean();
+		
+		editCategoryBean.init(myChannel.getManagedCategoryProfilesHash().get(categoryProfileId));
+		
+		
+		return null;
+	}
+
+
 	/**
 	 * @see org.esupportail.lecture.domain.service.DomainService#getContextUserBean(java.lang.String, java.lang.String)
 	 */
@@ -270,6 +313,9 @@ public class DomainServiceImplGwe implements DomainService {
 	public void setPortletService(PortletService portletService) {
 		this.portletService = portletService;
 	}
+
+
+	
 
 
 

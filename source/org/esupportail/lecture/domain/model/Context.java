@@ -6,8 +6,10 @@
 package org.esupportail.lecture.domain.model;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Iterator;
+import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -102,16 +104,20 @@ public class Context {
 	 * @param customContext customContext to upadte
 	 * @param portletService access to portlet service
 	 */
-	public void loadAndEvaluateVisibilityOnManagedCategoriesToUpdate(CustomContext customContext, PortletService portletService) {
+	public List<ManagedCategoryProfile> loadAndEvaluateVisibilityOnManagedCategoriesToUpdate(CustomContext customContext, PortletService portletService) {
 		//TODO optimiser le nombre de fois où on évalue tout ça !!!
 		//     (trustCategory + reel chargement)
 		
 		Iterator iterator = managedCategoryProfilesSet.iterator();
+		List<ManagedCategoryProfile> visibleCategories = new Vector();
 		while (iterator.hasNext()) {
 			ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
 			mcp.loadCategory(portletService);
-			mcp.evaluateVisibilityAndUpdateCustomContext(portletService,customContext);
+			if(mcp.evaluateVisibilityAndUpdateCustomContext(portletService,customContext)) {
+				visibleCategories.add(mcp);
+			}
 		}
+		return visibleCategories;
 	}
 
 	

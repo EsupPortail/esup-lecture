@@ -12,7 +12,8 @@
 			<!-- vue à utiliser par défaut -->
             <name>default-view</name>
             <!-- apres: <value>/home.jsp</value> -->
-			<value>/homeContextUser.jsp</value>
+			<!--<value>/homeContextUser.jsp</value>-->
+			<value>/homeEditUser.jsp</value>
 			
         </init-param>
         <supports>

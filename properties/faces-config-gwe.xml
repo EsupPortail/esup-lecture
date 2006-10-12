@@ -60,6 +60,34 @@
 
     </managed-bean>
 	
+		<managed-bean>
+		<!-- nom du bean utilisée par la vue -->
+        <managed-bean-name>homeEditUserBean</managed-bean-name>
+		<!-- classe correspondant au bean manipulé --> 
+        <managed-bean-class>org.esupportail.lecture.web.HomeEditUserBean</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+		<managed-property>
+			<!-- attribut du bean : nom -->
+			<property-name>facadeService</property-name>
+			<!-- classe de l'attribut -->
+			<property-class>org.esupportail.lecture.domain.service.FacadeService</property-class>
+			<!-- valeur de l'attribut : cf fichier Spring -->
+			<value>#{facadeService}</value>
+		</managed-property>
+ 		<managed-property>
+			<property-name>virtualSession</property-name>
+			<property-class>org.esupportail.lecture.web.VirtualSession</property-class>
+			<value>#{virtualSession}</value>
+		</managed-property>
+ 		<managed-property>
+			<property-name>portletService</property-name>
+			<property-class>org.esupportail.lecture.domain.service.PortletService</property-class>
+			<value>#{portletService}</value>
+		</managed-property>
+
+    </managed-bean>
+	
+	
 	
 
 	<managed-bean>

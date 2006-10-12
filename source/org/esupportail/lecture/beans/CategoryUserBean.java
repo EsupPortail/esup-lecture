@@ -21,7 +21,7 @@ public class CategoryUserBean {
 	/**
 	 * Log instance
 	 */
-	protected static final Log log = LogFactory.getLog(ContextUserBean.class);
+	protected static final Log log = LogFactory.getLog(CategoryUserBean.class);
 
 
 	/**

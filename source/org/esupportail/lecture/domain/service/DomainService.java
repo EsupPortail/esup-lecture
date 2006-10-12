@@ -17,6 +17,7 @@ import org.esupportail.lecture.domain.model.Category;
 //import org.esupportail.lecture.domain.model.tmp.SourceRB;
 import org.esupportail.lecture.utils.exception.*;
 import org.esupportail.lecture.beans.ContextUserBean;
+import org.esupportail.lecture.beans.EditUserBean;
 import org.esupportail.lecture.beans.UserBean;
 
 
@@ -72,5 +73,7 @@ public interface DomainService {
 		 * @see org.esupportail.lecture.beans.ContextUserBean
 		 */
 		public ContextUserBean getContextUserBean(String userId,String contextId) throws ErrorException;
+
+		public EditUserBean getEditUserBean(String currentUserId,String contextId);
 
 }
