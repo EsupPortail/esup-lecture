@@ -15,9 +15,6 @@
 			</t:htmlTag>
 			<!-- Categories -->
 			<t:htmlTag value="ul">
-			<!-- 
-				<t:dataList value="#{homeBean.categories}" var="cat" layout="simple">
-			 -->
 				<t:dataList value="#{homeBean.context.categories}" var="cat" layout="simple">
 					<!-- 
 					<t:htmlTag value="li"
