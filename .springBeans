@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beansProjectDescription>
+	<configExtensions>
+		<configExtension>xml</configExtension>
+	</configExtensions>
+	<configs>
+		<config>properties/smtp/smtp.xml</config>
+		<config>properties/misc/abstractBeans.xml</config>
+		<config>properties/web/controllers.xml</config>
+		<config>properties/web/converters.xml</config>
+		<config>properties/exceptionHandling/exceptionHandling.xml</config>
+		<config>properties/domain/domain.xml</config>
+		<config>properties/auth/auth.xml</config>
+		<config>properties/cache/cache.xml</config>
+		<config>properties/misc/application.xml</config>
+		<config>properties/init/init.xml</config>
+		<config>properties/i18n/i18n.xml</config>
+		<config>properties/applicationContext.xml</config>
+		<config>properties/tags/tags.xml</config>
+		<config>properties/dao/dao.xml</config>
+		<config>properties/ldap/ldap.xml</config>
+	</configs>
+	<configSets>
+		<configSet>
+			<name>all</name>
+			<allowBeanDefinitionOverriding>false</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+				<config>properties/applicationContext.xml</config>
+				<config>properties/cache/cache.xml</config>
+				<config>properties/dao/dao.xml</config>
+				<config>properties/domain/domain.xml</config>
+				<config>properties/exceptionHandling/exceptionHandling.xml</config>
+				<config>properties/i18n/i18n.xml</config>
+				<config>properties/init/init.xml</config>
+				<config>properties/ldap/ldap.xml</config>
+				<config>properties/misc/abstractBeans.xml</config>
+				<config>properties/misc/application.xml</config>
+				<config>properties/smtp/smtp.xml</config>
+				<config>properties/tags/tags.xml</config>
+				<config>properties/web/controllers.xml</config>
+				<config>properties/web/converters.xml</config>
+				<config>properties/auth/auth.xml</config>
+			</configs>
+		</configSet>
+	</configSets>
+</beansProjectDescription>

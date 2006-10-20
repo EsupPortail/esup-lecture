@@ -1,0 +1,70 @@
+<project name="esup-lecture" default="compile" basedir=".">
+
+	<property name="recover.previous-versions" value="0.9.0" />
+	<property name="app.recover.files" value="
+		properties/init/init.xml
+		properties/domain/domain.xml
+		properties/i18n/bundles/Custom_*.properties
+		" />
+	<property name="batch-class" value="org.esupportail.lecture.batch.Batch" />
+	<import file="${basedir}/build-commons.xml" />
+	
+	<target name="check-domain-config" >
+		<property name="domain.config" value="${props.dir}/domain/domain.xml"/>
+		<if>
+			<not>
+				<available file="${domain.config}"/>
+			</not>
+			<then>
+				<fail message="${domain.config} not found." />	
+			</then>
+		</if>
+	</target>
+	
+	<target name="check-init-config" >
+		<property name="init.config" value="${props.dir}/init/init.xml"/>
+		<if>
+			<not>
+				<available file="${init.config}"/>
+			</not>
+			<then>
+				<fail message="${init.config} not found." />	
+			</then>
+		</if>
+	</target>
+		
+	<target name="check-shared-config" depends="check-commons-shared-config,check-domain-config,check-init-config" />
+
+	<target name="check-web-config" depends="check-commons-web-config,check-shared-config" />
+
+	<target name="check-batch-config" depends="check-commons-batch-config,check-shared-config" />
+
+	<target name="test-config" depends="check-batch-config,check-web-config,compile" description="test the configuration" >
+		<java fork="true" dir="${build.dir}" classname="org.esupportail.lecture.batch.Batch">
+			<classpath refid="batch.classpath" />
+			<sysproperty key="log4j.configuration" value="file:${log4j.batch-config}" />
+			<arg value="test-beans"/>
+	    </java>
+	</target>
+
+	<target name="compile" depends="commons-compile" description="compile the project" />
+
+	<target name="deploy" depends="commons-deploy" description="deploy the application" />
+
+	<target name="clean" depends="commons-clean" description="clean the project" />
+
+	<target name="recover-config" depends="commons-recover-config" description="recover confiuration files from an older version" />
+
+	<target name="init" depends="compile,check-batch-config,commons-init" description="initialize the database" />
+
+	<target name="upgrade" depends="compile,check-batch-config,commons-upgrade" description="upgrade the database" /> 
+	
+	<target name="check-version" depends="compile,check-batch-config,commons-check-version" description="check the database version" /> 
+
+	<target name="start" depends="deploy,check-web-config,commons-start-tomcat" description="Start the application" />
+
+	<target name="stop" depends="commons-stop-tomcat" description="Stop the application" />
+
+</project>
+
+

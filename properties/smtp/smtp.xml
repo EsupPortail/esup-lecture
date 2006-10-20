@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+	>
+
+    <bean 
+    	id="smtpService" 
+    	class="org.esupportail.commons.services.smtp.AsynchronousSmtpServiceImpl" 
+    	>
+    	<description>
+    		This bean is used to send emails. It must implement interface 
+    		org.esupportail.commons.services.smtp.SmtpService.
+    	</description>
+        <property name="servers">
+        	<description>
+        		The SMTP servers to try. 
+        	</description>
+			<list>
+				<ref bean="smtpServer1" />
+<!-- 
+				<ref bean="smtpServer2" />
+-->
+			</list>
+		</property>
+		<property name="fromAddress" ref="smtpFromAddress" >
+			<description>
+				The 'from' address to use when sending emails.
+			</description>
+		</property>
+		<property name="interceptAddress" ref="smtpInterceptAddress" >
+			<description>
+				The address to which _all_ the emails should be sent. This tag is particularly
+				useful when setting up the application to prevent from spam effects. When no tag 
+				is used, then all the emails are normally sent to their recipients.
+			</description>
+		</property>
+		<property name="testAddress" ref="smtpInterceptAddress" >
+			<description>
+				The address to which test emails (sent by ant target tets-smtp) will be sent.
+			</description>
+		</property>
+    </bean>
+
+    <bean 
+    	id="smtpFromAddress" 
+    	class="javax.mail.internet.InternetAddress"
+    	>
+    	<description>
+    		see above.
+    	</description>
+        <property name="address" value="Raymond.Bourges@univ-rennes1.fr" />
+        <property name="personal" value="ESUP-Portail" />
+    </bean>
+    
+    <bean 
+    	id="smtpInterceptAddress" 
+    	class="javax.mail.internet.InternetAddress"
+    	>
+    	<description>
+    		see above.
+    	</description>
+        <property name="address" value="Raymond.Bourges@univ-rennes1.fr" />
+        <property name="personal" value="My Name" />
+    </bean>
+    
+    <bean 
+    	id="smtpServer1" 
+    	class="org.esupportail.commons.services.smtp.SmtpServer" 
+    	>
+    	<description>
+    		This beans describes a SMTP server.
+    	</description>
+        <property name="host" value="smtp.univ-rennes1.fr" >
+			<description>
+				The host name or IP number of the server, defaults to localhost.
+			</description>
+        </property>
+        <property name="port" value="25" >
+			<description>
+				The port number the SMTP server is running on (defaults to 25).
+			</description>
+        </property>
+		<property name="user" value="" >
+			<description>
+				The SMTP user (comment or leave empty for an anonymous connection).
+			</description>
+        </property>
+		<property name="password" value="" >
+			<description>
+				The SMTP password (ignored for an anonymous connection).
+			</description>
+        </property>
+    </bean>
+    
+    <bean 
+    	id="smtpServer2" 
+    	class="org.esupportail.commons.services.smtp.SmtpServer" 
+    	>
+        <property name="host" value="smtp2.esup-portail.org" />
+        <property name="port" value="25" />
+		<property name="user" value="paubry" />
+		<property name="password" value="secret" />
+    </bean>
+    
+</beans>

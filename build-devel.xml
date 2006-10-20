@@ -1,0 +1,81 @@
+<project name="esup-lecture-devel" default="_compile" basedir=".">
+
+	<property name="app.zip-files.shared.include" value="
+    	build.xml 
+		version.properties
+		src/**/*.java src/**/*.html 
+    	webapp/media/**/*
+		webapp/META-INF/MANIFEST.MF
+		webapp/stylesheets/**/*
+		webapp/WEB-INF/**/*example*
+		webapp/WEB-INF/lib/*
+		properties/**/*example*
+		properties/dao/hibernate/mapping/*
+		properties/dao/dao.xml
+		properties/i18n/bundles/*.properties
+		properties/misc/abstractBeans.xml
+		properties/misc/application.xml
+		properties/web/controllers.xml
+		properties/web/converters.xml
+		properties/applicationContext.xml
+		properties/jsf/application.xml
+		properties/jsf/managed-beans.xml
+		properties/jsf/navigation-rules.xml
+	" />
+	<property name="app.zip-files.servlet.include" value="
+		${app.zip-files.shared.include}
+	" />
+	<property name="app.zip-files.quick-start.include" value="
+		${app.zip-files.shared.include}
+	" />
+	<property name="app.zip-files.exclude" value="
+		build/**/* 
+		website/**/*
+		properties/i18n/bundles/Custom_*.properties
+	" />
+
+	<property name="commons.basedir" value="${basedir}/../esup-commons"/>
+	
+	<import file="${commons.basedir}/build-commons-devel.xml"/>
+
+	<target name="_clean" depends="_commons-clean" description="clean everything" />
+	
+	<target name="_prepare" depends="commons-prepare" description="prepare the application" />
+	
+	<target name="_compile" depends="_commons-compile" description="compile the application" />
+	
+	<target name="_deploy" depends="_commons-deploy" description="deploy the application" />
+	
+	<target name="_start" depends="_commons-start" description="deploy and start Tomcat" />
+		
+	<target name="_restart" depends="_commons-restart" description="deploy and restart Tomcat" />
+
+	<target name="_dist" depends="_commons-dist" description="build ZIP archives" />
+
+	<target name="_doc" depends="_commons-doc" description="build the web site" />
+
+	<target name="_upload-doc" depends="_doc,_commons-upload-doc" description="update the web site" />
+
+	<target name="_upload-doc-nodep" depends="_commons-print-application-properties,_commons-upload-doc" description="update the web site" />
+	
+	<property name="rename-application.config" value="${basedir}/renameApplication.properties" />	
+	<target name="_rename-application" description="rename the application" >
+		<if>
+			<not>
+				<available file="${rename-application.config}" />
+			</not>
+			<then>
+				<fail>file ${rename-application.config} not found.</fail>
+			</then>
+		</if>
+		<replace 
+			dir="${basedir}" 
+			replaceFilterFile="${rename-application.config}" 
+			excludes="renameApplication*.properties build-commons.xml build-commons-devel.xml version.properties" />
+		<property file="${rename-application.config}" />
+		<move file="${src.dir}/org/esupportail/lecture" tofile="${src.dir}/${org/esupportail/lecture}" />
+	</target>
+
+</project>
+
+

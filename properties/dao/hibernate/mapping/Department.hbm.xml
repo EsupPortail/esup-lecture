@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+      "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+          
+<hibernate-mapping package="org.esupportail.lecture.domain.beans">
+
+	
+	<class name="Department" table="d_depa" lazy="false">
+		<cache usage="nonstrict-read-write"/>
+		<id name="id">
+			<generator class="native"/>
+		</id>
+		<property name="label" column="labe" />
+		<property name="xlabel" column="xlab"/>
+		<property name="ldapFilter" column="ldap_filt"/>
+	</class>
+
+</hibernate-mapping>
+
+

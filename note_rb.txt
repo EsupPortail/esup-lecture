@@ -1,0 +1,6 @@
+fichier de conf spécifique à esup-lecture
+ehcache.xml
+domain.xml
+exceptionHandling.xml
+i18n.xml
+ldap.xml

@@ -1,0 +1,16 @@
+.column {
+	width: 20%;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+.colLeft {
+	text-align: left;
+	white-space: nowrap;
+}
+
+.colRight {
+	text-align: right;
+	white-space: nowrap;
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE faces-config PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.1//EN"
+                              "http://java.sun.com/dtd/web-facesconfig_1_1.dtd">
+<!-- 
+	/properties/jsf/application.xml
+	The configuration file of Java Server Faces that gives 
+	the main configuration of the application .
+	This file is referenced by /webapp/WEB-INF/web.xml. 
+	It should not be modified but by the developers. 
+-->
+
+<faces-config>
+
+	<application>
+		<!--
+			The class in charge of resolving the variables in view. This resolver
+			tries to find the variables not managed by JSF in the Spring beans.
+		-->
+		<!--variable-resolver>
+			org.springframework.web.jsf.DelegatingVariableResolver
+		</variable-resolver-->
+		<variable-resolver>
+			org.esupportail.commons.web.jsf.ScopeAwareDelegatingVariableResolver
+		</variable-resolver>
+		<!--
+			The locales supported by the application. Please note that the bean i18nService relies
+			on these values.
+		-->
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>fr</supported-locale>
+		</locale-config>
+	</application>
+
+</faces-config>

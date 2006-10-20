@@ -1,0 +1,283 @@
+<html><!-- InstanceBegin template="/Templates/template.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>esup-lecture developers area: setup a development environment</title>
+<!-- InstanceEndEditable --> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"/>
+<meta name="keywords" content="esup-lecture esup-portail commons jsf spring hibernate free open source application web">
+<link rel="stylesheet" type="text/css" href="../style.css"/>
+<!-- InstanceBeginEditable name="navigation" -->
+
+<script language="JavaScript1.2">
+navigationItem = 'devel';
+sidebarItem = 'de_setup';
+</script>
+
+<!-- InstanceEndEditable -->
+
+<script language="JavaScript1.2">
+
+var menu_list = new Array("main", "user", "admin", "devel");
+
+function hide_menus(menu_to_display) {
+	for (i = 0; i < menu_list.length ; i++) {
+		if (menu_list[i] ==  menu_to_display) {
+		    setStyleById(menu_list[i] + '_menu', 'display', 'block');
+		}
+	}	
+}
+
+function show_current_part(part){
+	setStyleById(part + '_button', 'background', 'transparent url(../pictures/button_current2.gif) repeat-x top left');
+	setStyleById(part + '_button', 'color', 'Black');
+}
+
+function show_current_section(current_section){
+        document.getElementById(current_section).className = "current";
+}
+
+function setStyleById(id, property, value) {
+	var element = document.getElementById(id);
+	element.style[property] = value;
+}
+
+function init(){
+	if (navigationItem != '') hide_menus(navigationItem);
+	if (navigationItem != '') show_current_part(navigationItem);
+	if (sidebarItem != '') show_current_section(sidebarItem);
+}
+
+</script>
+</head>
+<body>
+<table id="header" cellspacing="0">
+	<tr>
+		<td id="logo_app">
+			<a href="../main/index.html"><img src="../pictures/logo_lecture.jpg" alt="logo esup-lecture" width="255" height="65"/></a>
+		</td>
+		<td id="version_info" nowrap="true">
+		<p>
+			<span>latest release</span> v${app.version}-${app.release}<br>
+        	<span>last update</span> ${date}		</p>
+		</td>
+		<td id="logo_esup">
+			<a href="http://www.esup-portail.org/" target="_blank"><img src="../pictures/logo_esupportail.jpg" alt="logo esup-portail"/></a>
+		</td>
+	</tr>
+	<tr>
+		<td id="navbar" colspan="3">
+			<ul id="navigation">
+				<li><a id="main_button" href="../main/index.html">Overview</a></li>
+				<li><a id="user_button" href="../user/index.html">Users area</a></li>
+				<li><a id="admin_button" href="../admin/index.html">Administrors area</a></li>
+				<li><a id="devel_button" href="index.html">Developers area</a></li>
+			</ul>
+		</td>
+	</tr>
+	</table>
+	<table id="main" cellspacing="0">
+	<tr>
+		<td id="sidebar" nowrap="true">
+		<div class="top_separator">&nbsp;</div>
+		<div id="main_menu">
+			<h1>Overview</h1>
+			<ul>
+				<li><a id="ma_intro" href="../main/index.html">Introduction</a></li>
+				<li><a id="ma_news" href="../main/news.html">News</a></li>
+				<li><em><a href="http://sourcesup.cru.fr/esup-commons/main/contributors.html" target="commons">Contributors</a></em></li>
+				<li><em><a href="http://sourcesup.cru.fr/esup-commons/main/acknowledgements.html" target="commons">Acknowledgements</a></em></li>
+			</ul>
+		</div>
+		<div id="user_menu">
+			<h1>Users area</h1>
+			<ul>
+				<li><a id="us_intro" href="../user/index.html">Introduction</a></li>
+			</ul>
+		</div>
+		<div id="admin_menu">
+			<h1>Administrators area</h1>
+			<ul>
+				<li><a id="ad_intro" href="../admin/index.html">Install</a></li>
+				<li><a id="ad_changeLog" href="../admin/changeLog.html">ChangeLog</a></li>
+				<li><a id="ad_source" href="../api/index.html" target="source">Source doc</a></li>
+			  <li><hr/>
+				<b>Configure</b></li>
+		        <li><em><a href="http://sourcesup.cru.fr/esup-commons/admin/cache.html" target="commons">Cache/ehCache</a></em></li>
+		        <li><em><a href="http://sourcesup.cru.fr/esup-commons/admin/auth.html" target="commons">Authentication</a></em></li>
+		        <li><em><a href="http://sourcesup.cru.fr/esup-commons/admin/cache.html" target="commons">DAO/Hibernate</a></em></li>
+		        <li><em><a href="http://sourcesup.cru.fr/esup-commons/admin/exceptionHandling.html" target="commons">Exception
+		            handling</a></em></li>
+		        <li><em><a href="http://sourcesup.cru.fr/esup-commons/admin/i18n.html" target="commons">Internationalization</a></em></li>
+		        <li><em><a href="http://sourcesup.cru.fr/esup-commons/admin/ldap.html" target="commons">LDAP</a></em></li>
+		        <li><em><a href="http://sourcesup.cru.fr/esup-commons/admin/logging.html" target="commons">Logging</a></em></li>
+		        <li><em><a href="http://sourcesup.cru.fr/esup-commons/admin/smtp.html" target="commons">SMTP</a></em></li>
+		        <li><em><a href="http://sourcesup.cru.fr/esup-commons/admin/tags.html" target="commons">Taglib</a></em></li>
+				<li><a id="ad_domain" href="../admin/domain.html">Domain</a></li>
+				<li><a id="ad_init" href="../admin/init.html">Initialization</a></li>
+		        <li><em><a href="http://sourcesup.cru.fr/esup-commons/admin/custom.html" target="commons">Customization</a></em></li>
+			</ul>
+		</div>
+		<div id="devel_menu">
+			<h1>Developers area</h1>
+			<ul>
+				<li><a id="de_intro" href="index.html">Introduction</a></li>
+				<li><a id="de_layers" href="layers.html">Layers</a></li>
+				<li><a id="de_config" href="config.html">Config files</a></li>
+				<li><a id="de_naming" href="naming.html">Naming conventions</a></li>
+				<li><a id="de_setup" href="setup.html">Setup</a></li>
+				<li><a id="de_cvs" href="cvs.html">CVS Access</a></li>
+				<li><em><a id="de_checkstyle" href="http://sourcesup.cru.fr/esup-commons/devel/checkstyle.html" target="commons">Checkstyle</a></em></li>
+				<li><em><a id="de_compiler" href="http://sourcesup.cru.fr/esup-commons/devel/compiler.html" target="commons">Java compiler</a></em></li>
+				<li><em><a id="de_javadoc" href="http://sourcesup.cru.fr/esup-commons/devel/javadoc.html" target="commons">Javadoc</a></em></li>
+				<li><em><a id="de_rbe" href="http://sourcesup.cru.fr/esup-commons/devel/rbe.html" target="commons">RBE</a></em></li>
+			    <li><a id="de_doc" href="doc.html">Documentation</a></li>
+			    <li><a id="de_dist" href="dist.html">Distribution</a></li>
+			</ul>
+		</div>
+		<div class="bottom_separator">&nbsp;</div>
+		<p class="sidebar_lien_img">
+			${app.name}<br/>
+			is hosted by<br/>
+			<a href="http://sourcesup.cru.fr/projects/${app.name}" target="_blank">
+			<img src="../pictures/logo-cru-80x40.gif" width="80" height="38" border="0" alt="Sourcesup.cru.fr Logo" />
+			</a>
+		</p>
+		</td>
+<script language="JavaScript1.2">
+init();
+</script>
+    	<td id="content">		<!-- InstanceBeginEditable name="body" --> 
+        <h1>Setup a development environment</h1>
+        <p>This page is dedicated to people who develop esup-lecture, intend
+        to contribute, or want to use use-blank to start the development of a
+        new web application.</p>
+        <p>Reminder: the development of esup-lecture is done under the Eclipse
+          IDE, and obey quite strict rules (<a href="http://sourcesup.cru.fr/esup-commons/devel/checkstyle.html" target="commmons">Checkstyle</a>, <a href="http://sourcesup.cru.fr/esup-commons/devel/compiler.html" target="commmons">Java
+              compiler</a>, <a href="http://sourcesup.cru.fr/esup-commons/devel/javadoc.html" target="commmons">Javadoc</a>, <a href="http://sourcesup.cru.fr/esup-commons/devel/rbe.html" target="commmons">RBE</a>).
+              Make sure that your Eclipse environment is properly configured
+              before starting to code to keep the code as homogeneous as possible.</p>
+        <p>If you are a new developer of project esup-lecture or intend to contribute
+        to the project, you need to:</p>
+      <ul>
+        <li> create the project esup-commons</li>
+        <li>create the project esup-lecture</li>
+      </ul>
+      <p>If you want to start the development of a new application, you have
+        to:</p>
+      <ul>
+        <li>create the project esup-commons</li>
+        <li>create the project esup-lecture</li>
+        <li>disconnect esup-lecture from its SVN repository</li>
+        <li>rename esup-lecture to something else</li>
+        <li>maybe connect it to your CVS or SVN repository.</li>
+        </ul>
+      <p>All these operations are explained below.</p>
+      <h2>Create the project esup-commons</h2>
+      <p>Please refer to the explanations given on <a href="http://sourcesup.cru.fr/esup-commons/devel/index.html">this
+        page</a>.</p>
+      <h2>Create the project esup-lecture</h2>
+      <p>Screenshots given on this page give you the main guidelines for
+        the creation of the esup-lecture project.</p>
+      <p><img src="setup/create1.png" width="390" height="574" ></p>
+      <p>At first, check out from the SVN repository, the Java nature of the
+        project will be set later.</p>
+      <p><img src="setup/create2.png" width="500" height="500" ></p>
+      <p><img src="setup/create3.png" width="500" height="500" ></p>
+      <p><img src="setup/create4.png" width="500" height="500" ></p>
+      <p><img src="setup/create5.png" width="500" height="500" ></p>
+      <p><img src="setup/create6.png" width="500" height="286" ></p>
+      <p>Now let us start with a Java project.</p>
+      <p><img src="setup/create7.png" width="500" height="500" ></p>
+      <p><img src="setup/create8.png" width="500" height="593" ></p>
+      <p>Note: at this step, there is nothing in the project. The build path
+        will be configured later.</p>
+      <p><img src="setup/create9.png" width="500" height="593" ></p>
+      <p><img src="setup/create10.png" width="441" height="159" ></p>
+      <p>Checking out may take a little while.</p>
+      <p><img src="setup/create11.png" width="450" height="191" ></p>
+      <p>Now all the files have been copied from the SVN repository, it is time
+        to configure the project.</p>
+      <p><img src="setup/create12.png" width="498" height="591" ></p>
+      <p>At first set the source directory.</p>
+      <p><img src="setup/create13.png" width="593" height="520" ></p>
+      <p><img src="setup/create14.png" width="346" height="422" ></p>
+      <p>In a first step, lt Eclipse compile in <code>/bin</code>, this will be changed later.</p>
+      <p><img src="setup/create15.png" width="441" height="139" ></p>
+      <p><img src="setup/create16.png" width="593" height="520" ></p>
+      <p>Now link to project esup-commons (previously created).</p>
+      <p><img src="setup/create17.png" width="593" height="520" ></p>
+      <p><img src="setup/create18.png" width="344" height="422" ></p>
+      <p><img src="setup/create19.png" width="593" height="520" ></p>
+      <p><img src="setup/create20.png" width="441" height="139" ></p>
+      <p>Now drag 'n drop file <code>build-devel.xml</code> into the Ant view,</p>
+      <p><img src="setup/create21.png" width="344" height="293" ></p>
+      <p>And launch target <code>_prepare</code> to create output folder <code>/build/WEB-INF/classes</code>.
+        Please note that configuration files <code>build.properties</code> and <code>build-devel.properties</code>        must exist for the target <code>_prepare </code>to work; create them from the example
+        files provided.</p>
+      <p><img src="setup/create22.png" width="418" height="410" ></p>
+      <p>At least, refresh the project and set <code>/build/WEB-INF/classes</code> as
+        the output folder of the Java compiler.</p>
+      <p><img src="setup/create23.png" width="593" height="520" ></p>
+      <p>Your esup-lecture project is ready to be used. You can start the application
+        (ant target <code>_start</code>) and use it.</p>
+      <p>If you are a esup-lecture developer, you are now ready to contribute.</p>
+      <p>If you intended to start the development of a new web application from
+        esup-lecture, you have now to:</p>
+      <ul>
+        <li>disconnect esup-lecture from its SVN repository</li>
+        <li>rename esup-lecture to something else</li>
+        <li>maybe connect it to your CVS or SVN repository.</li>
+      </ul>
+      <h2>Disconnect esup-lecture from its SVN repository</h2>
+      <p><img src="setup/create24.png" width="444" height="1002"></p>
+      <p><img src="setup/create25.png" width="441" height="173"></p>
+      <p><img src="setup/create26.png" width="441" height="146"></p>
+      <h2>Rename esup-lecture to something else</h2>
+      <p>The target <code>rename-application </code>is provided to rename esup-lecture automatically
+        to a new name:</p>
+      <ul><li>copy <code>renameApplication-example.properties </code>to <code>renameApplication.properties</code> </li>
+        <li>edit <code>renameApplication.properties</code>:<br>
+          <code>        org/esupportail/lecture=org/esupportail/myapp<br>
+          org.esupportail.lecture=org.esupportail.myapp<br>
+          edu/domain/lecture=edu/domain/myapp<br>
+          lecture-bugs=myapp-bugs<br>
+          ESUP-Portail\ Blank\ Application=ESUP-Portail My Application<br>
+          Welcome\ to\ the\ blank\ application\ of\ consortium\ ESUP-Portail=Welcome
+          to my application<br>
+          Bienvenue\ dans\ l'application\ blanche\ du\ consortium\ ESUP-Portail=Bienvenue
+          dans mon application<br>
+          project\ name\=&quot;esup-lecture=project name=&quot;esup-myapp<br>
+          logo_lecture=logo_myapp<br>
+          esup-lecture=esup-myapp</code></li>
+        <li>run <code>ant rename-application</code></li>
+        <li>Refresh you project</li>
+      </ul>
+      <p><img src="setup/create27.png" width="282" height="294"></p>
+      <p>Rename the project:</p>
+      <p><img src="setup/create28.png" width="584" height="297"></p>
+      <p><img src="setup/create29.png" width="408" height="185"></p>
+      <p>Eventually rename the base directory from <code>c:/devel/esup-lecture</code> to whatever
+        you want (e.g. <code>c:/devel/esup-myapp</code>).</p>
+      <p>You may now connect your project to a new CVS or SVN repository and
+        go on with your own business ;-)</p>
+      <p>&nbsp;</p>
+    	<!-- InstanceEndEditable --> 
+    	</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<table width="100%">
+			<tr>
+				<td id="footer" align="left" nowrap="true">
+					Web design by Julien Le Thuaut
+				</td>
+				<td id="footer" align="right" width="100%" nowrap="true">
+					Copyright &copy; 2006 - ESUP-Portail consortium
+				</td>
+			</tr>
+		</table>
+		</td>
+	</tr>
+	</table>
+</body>
+<!-- InstanceEnd --></html>

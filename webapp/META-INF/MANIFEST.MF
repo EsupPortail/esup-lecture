@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Implementation-Title: esup-lecture
+Implementation-Version: 0.10.0
+Implementation-Vendor: ESUP-Portail consortium

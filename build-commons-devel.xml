@@ -1,0 +1,250 @@
+<project name="esup-commons-devel" default="_commons-compile" basedir=".">
+
+	<tstamp>
+		<format property="date" pattern="d-MMMM-yyyy HH:mma" locale="en"/>
+	</tstamp>
+
+	<property name="devel" value="true" />
+
+	<echo>property devel is true, actions will slightly differ.</echo>
+	<property name="commons.webapp.dir" value="${commons.basedir}/webapp"/>
+	<property name="commons.media.dir" value="${commons.webapp.dir}/media"/>
+	<property name="commons.src.dir" value="${commons.basedir}/src"/>
+	<property name="commons.lib.dir" value="${commons.webapp.dir}/WEB-INF/lib"/>
+	<property name="commons.props.dir" value="${commons.basedir}/properties"/>
+	<property name="utils.dir" value="${commons.basedir}/utils"/>
+	<property name="website.dir" value="${basedir}/website"/>
+	<property name="tmp.dir" value="${basedir}/tmp"/>
+
+	<echo>copying build-commons.xml locally to prevent from ant warnings in Eclipse...</echo>
+	<copy file="${commons.basedir}/build-commons.xml" todir="${basedir}" />
+
+	<echo>copying build-commons-devel.xml locally to prevent from ant warnings in Eclipse...</echo>
+	<copy file="${commons.basedir}/build-commons-devel.xml" todir="${basedir}" />
+
+	<import file="${basedir}/build.xml"/>
+	
+	<echo>copying esup-commons.tld locally to get the tag completion...</echo>
+	<copy file="${commons.webapp.dir}/WEB-INF/esup-commons.tld" todir="${webapp.dir}/WEB-INF" />
+
+	<if>
+		<not>
+			<available file="${basedir}/build-devel.properties"/>
+		</not>
+		<then>
+			<fail message="${basedir}/build-devel.properties not found." />	
+		</then>
+	</if>
+	<property file="${basedir}/build-devel.properties" />
+
+	<target name="_commons-clean" depends="clean" >
+		<ant dir="${commons.basedir}" target="_clean" />
+	    <delete dir="${basedir}/apache-tomcat-*"/>
+	    <delete dir="${website.dir}"/>
+	    <delete dir="${tmp.dir}"/>
+	</target>
+
+	<target name="_commons-print-application-properties" depends="check-log4j-batch-config,compile">
+		<java fork="true" dir="${build.dir}" classname="org.esupportail.commons.batch.PrintApplicationProperties">
+			<classpath refid="batch.classpath" />
+			<sysproperty key="log4j.configuration" value="file:${log4j.batch-config}" />
+			<arg value="${app.config}"/>
+	    </java>
+		<property file="${app.config}" />
+	</target>
+
+	<target name="_commons-print-manifest" depends="check-log4j-batch-config,compile">
+		<mkdir dir="${webapp.dir}/META-INF"/>
+		<java fork="true" dir="${build.dir}" classname="org.esupportail.commons.batch.PrintManifest">
+			<classpath refid="batch.classpath" />
+			<sysproperty key="log4j.configuration" value="file:${log4j.batch-config}" />
+			<arg value="${webapp.dir}/META-INF/MANIFEST.MF"/>
+	    </java>
+	</target>
+
+	<target name="_commons-compile" depends="_commons-print-application-properties,_commons-print-manifest" />
+
+	<target name="_commons-deploy" depends="_commons-compile,deploy" />
+
+	<target name="_commons-start" depends="start" />
+		
+	<target name="_commons-restart" depends="stop,start" />
+
+	<target name="_commons-javadoc" depends="_commons-compile" >
+		<delete failonerror="false" dir="${javadoc.dir}" />
+		<mkdir dir="${javadoc.dir}" />
+		<delete dir="${doc.dir}/examples" />
+		<mkdir dir="${doc.dir}/examples" />
+		<copy todir="${doc.dir}/examples" flatten="true">
+	    	<fileset dir="${commons.webapp.dir}/WEB-INF" includes="*.tld"/>
+	    	<fileset 
+	    		dir="${commons.props.dir}" 
+	    		excludes="**/application-example.xml **/i18n-example.xml **/navigation-example.xml **/ehcache-example.xml"
+	    		includes="esup-commons-faces-config.xml **/*example*"
+	    	/>
+	    	<fileset 
+	    		dir="${webapp.dir}" 
+	    		excludes="**/dao-example.xml"
+	    		includes="**/*example*"
+	    	/>
+		</copy>
+		<javadoc private="yes" author="yes" version="yes" 
+				linksource="yes" nodeprecated="yes"
+				windowtitle="${app.name} ${app.version} source documentation"
+				destdir="${javadoc.dir}"> 
+			<classpath refid="compile.classpath"/>
+			<fileset dir="${src.dir}" includes="**/*.java" />
+			<fileset dir="${commons.src.dir}" includes="**/*.java" />
+		</javadoc>
+	</target>
+
+	<target name="_commons-doc" depends="_commons-javadoc" >
+	    <delete dir="${website.dir}" />
+	    <copy todir="${website.dir}">
+	    	<fileset dir="${doc.dir}" excludes="**/*.psd **/*.ppt **/*.pps **/*.pdf **/*.html latestVersion.txt **/*.doc spec/** Templates/**/* **/Thumbs.db images/contributors/**"/>
+	    </copy>
+	    <copy todir="${website.dir}">
+	    	<fileset dir="${doc.dir}" includes="**/*.html latestVersion.txt"/>
+			<filterchain>
+				<expandproperties/>
+				<tokenfilter>
+					<replaceregex pattern="&lt;!--.*--&gt;" replace="&lt;!-- --&gt;" flags="g"/> 
+				</tokenfilter>
+			</filterchain>
+	    </copy>
+		<tar destfile="${dist.dir}/${app.name}-web-${app.version}-${app.release}.tar.gz" 
+			longfile="gnu" compression="gzip">
+			<tarfileset dir="${website.dir}" prefix=""/>
+	    </tar>
+	</target>
+
+	<target name="_commons-dist" depends="_commons-doc" >
+		<if>
+			<not>
+				<isset property="app.release" />
+			</not>
+			<then>
+				<fail message="properties app.release should be set in build-devel.properties" />
+			</then>
+		</if>
+		<delete dir="${tmp.dir}"/>
+		<mkdir dir="${tmp.dir}"/>
+		<mkdir dir="${tmp.dir}/servlet"/>
+		<copy file="build-servlet-example.properties" tofile="tmp/servlet/build-example.properties" />
+		<mkdir dir="${tmp.dir}/quick-start"/>
+		<copy file="build-quick-start-example.properties" tofile="tmp/quick-start/build-example.properties" />
+		<mkdir dir="${dist.dir}"/>
+		<property name="commons.zip-files.shared.include" value="
+			build-commons.xml
+			src/**/*.java src/**/*.html 
+	    	utils/ant/ant-contrib-*.jar
+	    	utils/cas/*.keystore
+	    	utils/lib/*.jar
+	    	webapp/media/**/*
+    		webapp/index.jsp
+    		webapp/stylesheets/**/*
+    		webapp/WEB-INF/*example*
+    		properties/**/*example*
+    		webapp/WEB-INF/esup-commons.tld
+    		webapp/WEB-INF/lib/*
+    		properties/i18n/bundles/*.properties
+    		properties/jsf/commons-render-kit.xml
+    	" />
+		<property name="commons.zip-files.servlet.include" value="
+			${commons.zip-files.shared.include}
+    	" />
+		<property name="commons.zip-files.quick-start.include" value="
+			${commons.zip-files.shared.include}
+    		utils/tomcat/apache-tomcat-${tomcat.version}.zip
+    		utils/tomcat/server.xml
+    	" />
+		<property name="commons.zip-files.exclude" value="
+			build/**/*
+			properties/cache/ehcache-example.xml
+			properties/dao/dao-example.xml
+			properties/exceptionHandling/exceptionHandling-example.xml
+			properties/i18n/i18n-example.xml
+			properties/misc/application-example.xml
+			properties/web/navigation-example.xml
+			properties/web/converters-example.xml
+    	" />
+	    <delete file="${dist.dir}/${app.name}-servlet-${app.version}-${app.release}.zip" />
+	    <zip destfile="${dist.dir}/${app.name}-servlet-${app.version}-${app.release}.zip">
+		    <zipfileset 
+		    	dir="${commons.basedir}" 
+		    	excludes="${commons.zip-files.exclude}" 
+		    	includes="${commons.zip-files.servlet.include}"
+		    	prefix="${app.name}-servlet-${app.version}"/>
+		    <zipfileset 
+		    	dir="${basedir}" 
+		    	excludes="${app.zip-files.exclude}" 
+		    	includes="${app.zip-files.servlet.include}"
+		    	prefix="${app.name}-servlet-${app.version}"/>
+		    <zipfileset 
+		    	dir="tmp/servlet" 
+		    	prefix="${app.name}-servlet-${app.version}"/>
+		    <zipfileset dir="${website.dir}"
+		    	prefix="${app.name}-servlet-${app.version}/docs"/>
+	    </zip>
+	    <delete file="${dist.dir}/${app.name}-quick-start-${app.version}-${app.release}.zip" />
+		    <zip destfile="${dist.dir}/${app.name}-quick-start-${app.version}-${app.release}.zip">
+		    <zipfileset 
+		    	dir="${commons.basedir}" 
+		    	excludes="${commons.zip-files.exclude}" 
+		    	includes="${commons.zip-files.quick-start.include}"
+		    	prefix="${app.name}-quick-start-${app.version}"/>
+		    <zipfileset 
+		    	dir="${basedir}" 
+		    	excludes="${app.zip-files.exclude}" 
+		    	includes="${app.zip-files.quick-start.include}"
+		    	prefix="${app.name}-quick-start-${app.version}"/>
+		    <zipfileset 
+		    	dir="tmp/quick-start" 
+		    	prefix="${app.name}-quick-start-${app.version}"/>
+		    <zipfileset dir="${website.dir}"
+		    	prefix="${app.name}-quick-start-${app.version}/docs"/>
+	    </zip>
+		<delete dir="${tmp.dir}"/>
+	</target>
+
+	<target name="_commons-upload-doc" >
+		<if>
+			<not>
+				<and>
+					<isset property="upload-doc.user" />
+					<isset property="upload-doc.password" />
+				</and>
+			</not>
+			<then>
+				<fail message="properties upload-doc.user and upload-doc.password should be set in build-devel.properties" />
+			</then>
+		</if>
+		<property name="upload-doc.host" value="sourcesup.cru.fr"/>
+		<property name="upload-doc.path" value="/var/www/SourceSup/webdir/${app.name}"/>
+		<echo>removing old files...</echo>
+		<sshexec trust="yes"
+			host="${upload-doc.host}"
+			username="${upload-doc.user}"
+			password="${upload-doc.password}"
+			command="cd ${upload-doc.path} &amp;&amp; touch file_exists &amp;&amp; rm -rf *"/>
+		<echo>uploading the doc archive to ${upload-doc.host}...</echo>
+		<scp trust="yes" 
+			file="${dist.dir}/${app.name}-web-${app.version}-${app.release}.tar.gz" 
+			todir="${upload-doc.user}:${upload-doc.password}@${upload-doc.host}:${upload-doc.path}"/>
+		<echo>uncompressing and installing the archive...</echo>
+		<sshexec trust="yes"
+		host="${upload-doc.host}"
+		username="${upload-doc.user}"
+		password="${upload-doc.password}"
+		command="cd ${upload-doc.path} &amp;&amp; tar zxf ${app.name}-web-${app.version}-${app.release}.tar.gz"/>
+		<echo>removing the doc archive...</echo>
+		<sshexec trust="yes"
+		host="${upload-doc.host}"
+		username="${upload-doc.user}"
+		password="${upload-doc.password}"
+		command="cd ${upload-doc.path} &amp;&amp; rm -f ${app.name}-web-*.tar.gz"/>
+	</target>
+
+</project>
+
+
