@@ -3,5 +3,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/esup-commons"/>
-	<classpathentry kind="output" path="build/WEB-INF/classes"/>
+	<classpathentry kind="output" path="build2/WEB-INF/classes"/>
 </classpath>
