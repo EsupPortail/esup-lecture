@@ -4,8 +4,8 @@
  */
 package org.esupportail.lecture.web.servlet;
 
-import org.esupportail.lecture.batch.VersionningService;
-import org.esupportail.lecture.batch.BatchUtils;
+//import org.esupportail.lecture.batch.VersionningService;
+//import org.esupportail.lecture.batch.BatchUtils;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.web.servlet.ExceptionHandlingFacesServlet;
 
@@ -26,8 +26,8 @@ public class Servlet extends ExceptionHandlingFacesServlet {
 	 */
 	@Override
 	protected void checkVersion() throws ConfigException {
-		VersionningService bean = BatchUtils.createVersionningService();
-		bean.checkVersion(true, false);
+//		VersionningService bean = BatchUtils.createVersionningService();
+//		bean.checkVersion(true, false);
 	}
 
 }

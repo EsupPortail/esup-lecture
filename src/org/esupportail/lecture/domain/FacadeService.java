@@ -14,29 +14,32 @@ import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 
 /**
- * The domain service.
+ * The facade service.
+ * implement as an abstract class extended by FacadeServiceImpl
  */
 abstract class FacadeService {
 	
 	/**
-	 * A logger.
+	 * external service used to access portlet or servlet information
 	 */
-	private final Logger logger = new LoggerImpl(getClass());
 	private ExternalService externalService;
+	/**
+	 * domain service used to access domain information
+	 */
 	private DomainService domainService;
 	
 
 	/**
 	 * @return the current connected user
 	 */
-	UserBean getConnectedUser() {
+	public UserBean getConnectedUser() {
 		return externalService.getConnectedUser();
 	}
 	
 	/**
 	 * @return the current context id (portlet preference with name "context")
 	 */
-	String getCurrentContextId() {
+	public String getCurrentContextId() {
 		return externalService.getCurrentContextId();
 	}
 	
@@ -44,7 +47,7 @@ abstract class FacadeService {
 	 * @param contextId id of context
 	 * @return ContextBean
 	 */
-	ContextBean getContext(String contextId) {
+	public ContextBean getContext(String contextId) {
 		return domainService.getContext(contextId);
 	}
 	
@@ -53,14 +56,18 @@ abstract class FacadeService {
 	 * @param uid user ID
 	 * @return List of CategoryBean obliged or subscribed by a user in a context
 	 */
-//	List<CategoryBean> getCategories(String contextId, String uid);
+	public List<CategoryBean> getCategories(String contextId, String uid) {
+		return domainService.getCategories(contextId, uid);
+	}
 	
 	/**
 	 * @param categoryId id of category
 	 * @param uid user ID
 	 * @return List of SourceBean obliged or subscribed by a user in a category
 	 */
-//	List<SourceBean> getSources(String categoryId, String uid);
+	public List<SourceBean> getSources(String categoryId, String uid) {
+		return domainService.getSources(categoryId, uid);
+	}
 	
 	/**
 	 * @param uid user ID
@@ -68,7 +75,9 @@ abstract class FacadeService {
 	 * @param sourceId source if
 	 * marck a Item form a source for a user as read
 	 */
-//	void marckItemasRead(String uid, String itemId, String sourceId);
+	public void marckItemasRead(String uid, String itemId, String sourceId) {
+		domainService.marckItemasRead(uid, itemId, sourceId);
+	}
 
 	/**
 	 * @param uid user ID
@@ -76,5 +85,21 @@ abstract class FacadeService {
 	 * @param sourceId source if
 	 * marck a Item form a source for a user as unread
 	 */
-//	void marckItemasUnread(String uid, String itemId, String sourceId);
+	public void marckItemasUnread(String uid, String itemId, String sourceId) {
+		domainService.marckItemasUnread(uid, itemId, sourceId);
+	}
+
+	/**
+	 * @param domainService
+	 */
+	public void setDomainService(DomainService domainService) {
+		this.domainService = domainService;
+	}
+
+	/**
+	 * @param externalService
+	 */
+	public void setExternalService(ExternalService externalService) {
+		this.externalService = externalService;
+	}
 }
