@@ -1,7 +1,5 @@
 package org.esupportail.lecture.domain.beans;
 
-import java.util.List;
-
 /**
  * @author bourges
  * used to store source informations
