@@ -6,8 +6,6 @@ package org.esupportail.lecture.domain;
 
 import java.util.List;
 
-import org.esupportail.commons.services.logging.Logger;
-import org.esupportail.commons.services.logging.LoggerImpl;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
@@ -17,7 +15,7 @@ import org.esupportail.lecture.domain.beans.UserBean;
  * The facade service.
  * implement as an abstract class extended by FacadeServiceImpl
  */
-abstract class FacadeService {
+public abstract class FacadeService {
 	
 	/**
 	 * external service used to access portlet or servlet information

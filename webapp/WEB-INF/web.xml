@@ -17,9 +17,7 @@
 			The location of the main configuration file of the Spring framework. 
 		</description>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			classpath:/properties/applicationContext.xml
-		</param-value>
+		<param-value>classpath:/properties/applicationContext.xml</param-value>
 	</context-param>
 
 	<context-param>
@@ -47,6 +45,7 @@
 			org.springframework.web.context.ContextLoaderListener
 		</listener-class>
 	</listener>
+<!-- -->	
 
 	<filter>
 		<description>
@@ -126,6 +125,7 @@
 		<servlet-name>Download Servlet</servlet-name>
 		<url-pattern>/download</url-pattern>
 	</servlet-mapping>
+ <!-- -->
 
 	<security-constraint>
 		<display-name>Protection of the raw JSP pages</display-name>

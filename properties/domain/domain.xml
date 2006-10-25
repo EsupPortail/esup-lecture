@@ -14,7 +14,7 @@
 
 	<bean
 		id="domainService"
-		class="org.esupportail.lecture.domain.DomainServiceImpl"
+		class="org.esupportail.lecture.domain.DomainServiceTest"
 		>
 		<description>
 			This bean provides the domain service of the application, used by the 
@@ -23,22 +23,6 @@
 			The only property that should be modified by users is displayNameLdapAttribute 
 			(see below).
 		</description>
-		<property name="daoService" ref="daoService" >
-			<description>
-				A reference to the DAO service, used to access the database.
-			</description>
-		</property>
-		<property name="ldapService" ref="ldapService" >
-			<description>
-				A reference to the LDAP service, used to access the LDAP directory.
-			</description>
-		</property>
-		<property name="displayNameLdapAttribute" value="displayName" >
-			<description>
-				The name of the LDAP attribute used to retrieve the display name 
-				of the users from the LDAP directory.
-			</description>
-		</property>
 	</bean>
 
 </beans>
