@@ -13,7 +13,7 @@
 		</portlet-class>
 		<init-param>
 			<name>default-view</name>
-			<value>/stylesheets/welcome.jsp</value>
+			<value>/stylesheets/home.jsp</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

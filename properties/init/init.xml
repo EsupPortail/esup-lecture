@@ -12,6 +12,7 @@
 		This file is referenced by /properties/applicationContext.xml.
 	-->
 
+<!-- 
 	<bean 
 		id="versionningService"
 		class="org.esupportail.lecture.batch.VersionningService"
@@ -29,5 +30,6 @@
 			</description>
 		</property>
 	</bean>
+ -->
 
 </beans>
