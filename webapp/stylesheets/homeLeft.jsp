@@ -11,7 +11,7 @@
 		<t:htmlTag value="div" id="left" forceId="true">
 			<!-- Title -->
 			<t:htmlTag value="p" styleClass="portlet-section-header">
-				<f:verbatim>!!Nom du contexte!!</f:verbatim>
+				<h:outputText value="#{homeController.contextName}"/>
 			</t:htmlTag>
 			<!-- Categories -->
 			<t:htmlTag value="ul">

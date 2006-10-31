@@ -14,18 +14,40 @@
 
 	<bean
 		id="domainService"
-		class="org.esupportail.lecture.domain.DomainServiceTest"
-		>
+		class="org.esupportail.lecture.domain.DomainServiceTest">
 		<description>
 			This bean provides the domain service of the application, used by the 
 			web interface and the command-line calls.
 			It must implement interface org.esupportail.lecture.domain.DomainService.
 		</description>
+		<constructor-arg ref="context"/>
+		<constructor-arg>
+			<list>
+				<ref bean="categorie1" />
+				<ref bean="categorie2" />
+				<ref bean="categorie3" />
+			</list>
+		</constructor-arg>
+		<constructor-arg>
+			<list>
+				<ref bean="source1" />
+				<ref bean="source2" />
+				<ref bean="source3" />
+				<ref bean="source4" />
+			</list>
+		</constructor-arg>
+		<constructor-arg>
+			<list>
+				<ref bean="item1" />
+				<ref bean="item2" />
+				<ref bean="item3" />
+			</list>
+		</constructor-arg>
 	</bean>
 
 	<bean
 		id="externalService"
-		class="org.esupportail.lecture.domain.ExternalServiceImpl"
+		class="org.esupportail.lecture.domain.ExternalServiceTest"
 		>
 		<description>
 			This bean provides the external (portlet and/or servlet) service of the application, used by the 
@@ -47,6 +69,84 @@
 		<property name="externalService" ref="externalService"/>
 	</bean>
 	
+	<!-- TEST DATA -->
+	<bean id="context" class="org.esupportail.lecture.domain.beans.ContextBean">
+		<property name="id" value="1" />
+		<property name="name" value="Test context" />
+	</bean>
+	<bean id="categorie1" class="org.esupportail.lecture.domain.beans.CategoryBean">
+		<property name="id" value="1" />
+		<property name="name" value="Bibliothèques" />
+	</bean>
+	<bean id="categorie2" class="org.esupportail.lecture.domain.beans.CategoryBean">
+		<property name="id" value="2" />
+		<property name="name" value="Vie culturelle" />
+	</bean>
+	<bean id="categorie3" class="org.esupportail.lecture.domain.beans.CategoryBean">
+		<property name="id" value="3" />
+		<property name="name" value="Vie de l'ENT" />
+	</bean>
+	
+	<bean id="source1"
+		class="org.esupportail.lecture.domain.beans.SourceBean">
+		<property name="id" value="1" />
+		<property name="name" value="Cinéma" />
+	</bean>
+	<bean id="source2"
+		class="org.esupportail.lecture.domain.beans.SourceBean">
+		<property name="id" value="2" />
+		<property name="name" value="Théatre" />
+	</bean>
+	<bean id="source3"
+		class="org.esupportail.lecture.domain.beans.SourceBean">
+		<property name="id" value="3" />
+		<property name="name" value="Concert" />
+	</bean>
+	<bean id="source4"
+		class="org.esupportail.lecture.domain.beans.SourceBean">
+		<property name="id" value="4" />
+		<property name="name" value="Danse" />
+	</bean>
+
+	<bean id="item1"
+		class="org.esupportail.lecture.domain.beans.ItemBean">
+		<property name="id" value="1" />
+		<property name="htmlContent">
+			<value>
+				<![CDATA[<p>Du 5 juillet au 30 août : toute réinscription doit se faire obligatoirement en ligne.</p>
+<img src="http://portail0.univ-rennes1.fr/html/htmlStatique/images/carte_etudiant_mini.png" />
+Du 5 juillet au 30 août 2006 : ouverture des inscriptions universitaires par internet, à partir de votre <b>Espace numérique de travail </b>onglet<b> Me réinscrire</b>
+<br /><p>Cas particuliersé:<br />
+- Les étudiants de <b>l'IUT de Saint-Malo</b> doivent se réinscrire avant le <b>31 juillet.</b> <br />
+- Les étudiants qui passent la <b>2ème session en septembre</b>, ne sont pas concernés par la limite du 30 août <br />
+Durant cette période, réalisez votre inscription pour l'année universitaire 2006-2007 en quelques clics avec paiement des droits d'inscription et de sécurité sociale par carte bancaire.<br />
+Cette inscription officialise votre statut d'étudiant avec l'envoi	de votre carte d'étudiant.</p>
+]]>
+			</value>
+		</property>
+	</bean>
+	<bean id="item2"
+		class="org.esupportail.lecture.domain.beans.ItemBean">
+		<property name="id" value="2" />
+		<property name="htmlContent">
+			<value>
+				<![CDATA[
+				 <p>Article2</p>
+			]]>
+			</value>
+		</property>
+	</bean>
+	<bean id="item3"
+		class="org.esupportail.lecture.domain.beans.ItemBean">
+		<property name="id" value="3" />
+		<property name="htmlContent">
+			<value>
+				<![CDATA[
+				 <p>Article3</p>
+			]]>
+			</value>
+		</property>
+	</bean>
 	
 
 </beans>

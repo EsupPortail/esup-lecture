@@ -70,7 +70,7 @@ public class HomeController extends AbstractContextAwareController {
 	
 	/*
 	 * **************** Action and listener method ****************
-	 */		
+	 */	
 	/**
 	 * JSF action : change treesize
 	 * @param e JSF ActionEvent used to know which button is used 
@@ -323,6 +323,17 @@ public class HomeController extends AbstractContextAwareController {
 	 */
 	public void setFacadeService(FacadeService facadeService) {
 		this.facadeService = facadeService;
+	}
+	
+	/**
+	 * @return the name of the current context
+	 */
+	public String getContextName() {
+		String ret = null;
+		String contextId = facadeService.getCurrentContextId(); 
+		ContextBean contextBean = facadeService.getContext(contextId);
+		ret = contextBean.getName();
+		return ret;
 	}
 	
 	public boolean isTreeVisible() {
