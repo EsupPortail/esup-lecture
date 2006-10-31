@@ -18,7 +18,7 @@ public class CategoryWebBean {
 	/**
 	 * store if category is folded or not
 	 */
-	private boolean folded;
+	private boolean folded=false;
 	/**
 	 * selected source of category
 	 */

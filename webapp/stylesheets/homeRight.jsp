@@ -11,51 +11,54 @@
 		<t:htmlTag value="div" id="menuRight" forceId="true">
 			<t:htmlTag value="div" styleClass="menuTitle">
 				<t:htmlTag value="span" styleClass="portlet-section-header">
-					<h:outputText value="#{homeBean.currentCategoryName}" />
+					<h:outputText value="#{homeController.currentCategoryName}" />
 				</t:htmlTag>
 			</t:htmlTag>
+			<!-- 
 			<t:htmlTag value="div" styleClass="menuButton">
 				<t:htmlTag value="ul">
 					<t:htmlTag value="li">
 						<h:outputText value="#{messages.selectorLabel}" />
-						<h:selectOneMenu value="#{homeBean.itemDisplayMode}">
+						<h:selectOneMenu value="#{homeController.itemDisplayMode}">
 							<f:selectItem itemValue="all" itemLabel="#{messages.all}" />
 							<f:selectItem itemValue="notRead" itemLabel="#{messages.notRead}" />
 							<f:selectItem itemValue="unreadFirst"
 								itemLabel="#{messages.unreadFirst}" />
 						</h:selectOneMenu>
-						<h:commandButton id="submit" value="#{messages.changeItemDisplayModeButtonLabel}" action="#{homeBean.changeItemDisplayMode}"/>
+						<h:commandButton id="submit" value="#{messages.changeItemDisplayModeButtonLabel}" action="#{homeController.changeItemDisplayMode}"/>
 					</t:htmlTag>
-					<t:htmlTag id="menuAndXML" value="li" rendered="#{!homeBean.treeVisible}">
-						<h:commandButton action="#{homeBean.toggleTreeVisibility}"
-							image="/images/menuAndXML.gif" alt="#{messages.showTree}" title="#{messages.showTree}"/>
+					<t:htmlTag id="menuAndXML" value="li" rendered="#{!homeController.treeVisible}">
+						<h:commandButton action="#{homeController.toggleTreeVisibility}"
+							image="/media/menuAndXML.gif" alt="#{messages.showTree}" title="#{messages.showTree}"/>
 					</t:htmlTag>
-					<t:htmlTag id="XMLWithoutMenu" value="li" rendered="#{homeBean.treeVisible}">
-						<h:commandButton action="#{homeBean.toggleTreeVisibility}"
-							image="/images/XMLWithoutMenu.gif" alt="#{messages.hideTree}" title="#{messages.hideTree}"/>
+					<t:htmlTag id="XMLWithoutMenu" value="li" rendered="#{homeController.treeVisible}">
+						<h:commandButton action="#{homeController.toggleTreeVisibility}"
+							image="/media/XMLWithoutMenu.gif" alt="#{messages.hideTree}" title="#{messages.hideTree}"/>
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>
+			 -->
 		</t:htmlTag>
 		<!-- Items display -->
+		<!-- 
 		<t:htmlTag value="div" id="right">
-			<t:dataList value="#{homeBean.items}" var="item" layout="simple">
-				<!-- Read/Unread Button -->
+			<t:dataList value="#{homeController.items}" var="item" layout="simple">
+				<- Read/Unread Button ->
 				<t:htmlTag value="div" styleClass="toggleButton">
-					<h:commandButton action="#{homeBean.toggleItemReadState}"
-						image="/images/unread.gif" alt="#{messages.markAsRead}"
+					<h:commandButton action="#{homeController.toggleItemReadState}"
+						image="/media/unread.gif" alt="#{messages.markAsRead}"
 						title="#{messages.markAsRead}" rendered="#{!item.read}">
-						<t:updateActionListener property="#{homeBean.itemID}"
+						<t:updateActionListener property="#{homeController.itemID}"
 							value="#{item.id}" />
 					</h:commandButton>
-					<h:commandButton action="#{homeBean.toggleItemReadState}"
-						image="/images/read.gif" alt="#{messages.markAsUnread}"
+					<h:commandButton action="#{homeController.toggleItemReadState}"
+						image="/media/read.gif" alt="#{messages.markAsUnread}"
 						title="#{messages.markAsUnread}" rendered="#{item.read}">
-						<t:updateActionListener property="#{homeBean.itemID}"
+						<t:updateActionListener property="#{homeController.itemID}"
 							value="#{item.id}" />
 					</h:commandButton>
 				</t:htmlTag>
-				<!-- Item Display -->
+				<- Item Display ->
 				<t:htmlTag value="div"
 					styleClass="#{item.read ? 'readArticle' : 'unreadArticle'}">
 					<f:verbatim>
@@ -64,5 +67,6 @@
 				</t:htmlTag>
 			</t:dataList>
 		</t:htmlTag>
+		 -->
 	</f:subview>
 </jsp:root>

@@ -27,8 +27,8 @@
 			on these values.
 		-->
 		<locale-config>
-			<default-locale>en</default-locale>
-			<supported-locale>fr</supported-locale>
+			<default-locale>fr</default-locale>
+			<supported-locale>en</supported-locale>
 		</locale-config>
 	</application>
 

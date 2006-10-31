@@ -20,9 +20,33 @@
 			This bean provides the domain service of the application, used by the 
 			web interface and the command-line calls.
 			It must implement interface org.esupportail.lecture.domain.DomainService.
-			The only property that should be modified by users is displayNameLdapAttribute 
-			(see below).
 		</description>
 	</bean>
+
+	<bean
+		id="externalService"
+		class="org.esupportail.lecture.domain.ExternalServiceImpl"
+		>
+		<description>
+			This bean provides the external (portlet and/or servlet) service of the application, used by the 
+			web interface and the command-line calls.
+			It must implement interface org.esupportail.lecture.domain.ExternalService.
+		</description>
+	</bean>
+	
+	<bean
+		id="facadeService"
+		class="org.esupportail.lecture.domain.FacadeServiceImpl"
+		>
+		<description>
+			This bean provides the facade service (domain and external) of the application, used by the 
+			web interface and the command-line calls.
+			It must extend abstract org.esupportail.lecture.domain.FacadeService.
+		</description>
+		<property name="domainService" ref="domainService"/>
+		<property name="externalService" ref="externalService"/>
+	</bean>
+	
+	
 
 </beans>

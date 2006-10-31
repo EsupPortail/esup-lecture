@@ -18,6 +18,7 @@
 		parent="abstractContextAwareController"
     	>
 		<description>A bean to manage the home page.</description>
+		<property name="facadeService" ref="facadeService"/>
 	</bean>
 
 

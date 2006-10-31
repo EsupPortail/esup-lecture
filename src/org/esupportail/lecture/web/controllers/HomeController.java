@@ -17,20 +17,14 @@ import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
-import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
-import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
 import org.esupportail.lecture.domain.FacadeService;
+import org.springframework.util.Assert;
 
 
 /**
  * @author : Raymond 
- * Classe de tests
- */
-/**
- * @author bourges
- *
  */
 public class HomeController extends AbstractContextAwareController {
 	/**
@@ -177,6 +171,16 @@ public class HomeController extends AbstractContextAwareController {
 	public String changeItemDisplayMode() {
 		return "OK";
 	}	
+
+	/**
+	 * @see org.esupportail.lecture.web.controllers.AbstractContextAwareController#afterPropertiesSet()
+	 */
+	@Override
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+		Assert.notNull(facadeService, 
+				"property facadeService of class " + this.getClass().getName() + " can not be null");
+	}
 	
 	/*
 	 * **************** internal  method ****************
@@ -216,7 +220,12 @@ public class HomeController extends AbstractContextAwareController {
 		}
 		List<CategoryBean> categories = facadeService.getCategories(ContextId, userId);
 		// TODO conver CategoryBean to CategoryWebBean
-		return null;
+		CategoryWebBean tmp =  new CategoryWebBean();
+		tmp.setId("1");
+		tmp.setName("test");
+		List<CategoryWebBean> ret = new ArrayList<CategoryWebBean>();
+		ret.add(tmp);
+		return ret;
 	}
 	
 	//TODO : RB temporary ?

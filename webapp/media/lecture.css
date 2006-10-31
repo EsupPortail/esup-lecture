@@ -1,0 +1,96 @@
+@CHARSET "ISO-8859-1";
+
+/* main divs style */
+#left {
+	padding: 0px 10px;
+	overflow: auto;
+}
+
+#right {
+	padding: 0px;
+	margin: 0px;
+	clear: both;
+}
+
+#menuRight {
+	margin: 0px;
+}
+
+/* menu style */
+.menuTitle {
+	float: left;
+	margin-left: 5px;
+/*	vertical-align: middle; */
+}
+.menuButton{
+	text-align: right;
+	padding-right: 5px;
+	vertical-align: bottom;
+}
+.menuButton ul {
+ 	list-style-type:none;
+	display:block;
+} 
+.menuButton li {
+	display:inline;
+	margin: 0 0 0 3px;
+	padding:0%;
+}
+
+/* Tree Style */
+li.collapsed {
+/*	list-style-image: url("http://localhost:8080/esup-lecture/images/plus.gif"); */
+list-style: none;
+}
+li.expanded {
+/*	list-style-image: url("http://localhost:8080/esup-lecture/images/moins.gif"); */
+list-style: none;
+}
+li ul li {
+/*	list-style-image: none;
+	list-style-type: square; */
+list-style: none;	
+}
+
+/* Articles Style */
+div.toggleButton {
+	float: left;
+	margin: 0px 0px 10px 5px; 
+	padding: 5px;
+}
+div.unreadArticle {
+	margin: 0px 0px 10px 5px; 
+	padding: 5px;
+	background-color: #FEC98D;
+	border-style: dotted;
+	border-width: 1px;
+	border-color: black;
+}
+div.readArticle {
+	margin: 0px 0px 10px 5px; 
+	padding: 5px;
+	background-color: #CACACA;
+/*	filter:alpha(opacity=70); 
+	-moz-opacity:0.7;
+	opacity: 0.7;	*/
+	border-style: dotted;
+	border-width: 1px;
+	border-color: black;
+}
+
+/* other */
+#TDLeft  {
+	vertical-align: top;
+	border-right-style: solid;
+	border-right-color: black;
+	border-right-width: 1px;
+}
+#TDRight {
+	vertical-align: top;
+}
+a img { 
+	border: none; 
+}
+img {
+	border: none;
+}

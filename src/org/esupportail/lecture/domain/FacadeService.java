@@ -10,12 +10,14 @@ import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.Assert;
 
 /**
  * The facade service.
  * implement as an abstract class extended by FacadeServiceImpl
  */
-public abstract class FacadeService {
+public abstract class FacadeService implements InitializingBean {
 	
 	/**
 	 * external service used to access portlet or servlet information
@@ -100,4 +102,15 @@ public abstract class FacadeService {
 	public void setExternalService(ExternalService externalService) {
 		this.externalService = externalService;
 	}
+
+	/**
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+	 */
+	public void afterPropertiesSet() throws Exception {
+		Assert.notNull(domainService, 
+		"property domainService can not be null");
+		Assert.notNull(externalService, 
+		"property externalService can not be null");
+	}
+	
 }

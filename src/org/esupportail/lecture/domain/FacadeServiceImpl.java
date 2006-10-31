@@ -4,17 +4,11 @@
  */
 package org.esupportail.lecture.domain;
 
-import org.springframework.beans.factory.InitializingBean;
-
 /**
- * The basic implementation of DomainService.
+ * The basic implementation of FacadeService.
  * 
  * See /properties/domain/domain-example.xml
  */
-public class FacadeServiceImpl extends FacadeService implements InitializingBean  {
-
-	public void afterPropertiesSet() throws Exception {
-		// TODO Auto-generated method stub	
-	}
+public class FacadeServiceImpl extends FacadeService {
 
 }

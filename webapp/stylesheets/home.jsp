@@ -30,11 +30,42 @@ toggleButton: read/unread toggle button
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" />
 	<link rel="stylesheet"
-		href="http://localhost:8080/esup-lecture/stylesheets/lecture.css"
+		href="http://localhost:8080/esup-lecture/media/lecture.css"
 		media="screen" />
 	<e:page stringsVar="msgs" menuItem="welcome" locale="#{homeController.locale}">
-		<h:outputText value="#{msgs['HOME.TEST']}" />
-		<t:htmlTag value="h1">TEST</t:htmlTag>
+		<h:form id="home">
+			<!-- ********* homeRight and homeLeft fisrt for just one jsp:include/page ********* -->
+			<t:buffer into="#{homeRight}">
+				<!--<jsp:include page="homeRight.jsp" />-->
+			</t:buffer>
+			<t:buffer into="#{homeLeft}">
+				<jsp:include page="homeLeft.jsp" />
+			</t:buffer>
+			<!-- ********* With Tree View ********* -->
+			<t:buffer into="#{withTree}">
+				<t:htmlTag value="table" styleClass="portlet-table-body" style="width: 100%">
+					<t:htmlTag value="tr">
+						<t:htmlTag value="td" id="TDLeft" forceId="true"
+							style="width: #{homeBean.treeSize}%">
+							<h:outputText value="#{homeLeft}" escape="false"/>
+						</t:htmlTag>
+						<t:htmlTag value="td" id="TDRight" forceId="true"
+							style="width: #{100 - homeBean.treeSize}%">
+							<h:outputText value="#{homeRight}" escape="false"/>
+						</t:htmlTag>
+					</t:htmlTag>
+				</t:htmlTag>
+			</t:buffer>
+			<!-- ********* Without Tree View ********* -->
+			<t:buffer into="#{withoutTree}">
+				<h:outputText value="#{homeRight}" escape="false"/>
+			</t:buffer>
+			<!-- ********* Rendering ********* -->
+			<h:outputText id="left" value="#{withTree}" escape="false"
+				rendered="#{homeBean.treeVisible}" />
+			<h:outputText id="right" value="#{withoutTree}" escape="false"
+					rendered="#{!homeBean.treeVisible}" />
+		</h:form>
 	</e:page>
 </jsp:root>
 

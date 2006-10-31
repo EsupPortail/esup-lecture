@@ -15,37 +15,37 @@
 			</t:htmlTag>
 			<!-- Categories -->
 			<t:htmlTag value="ul">
-				<t:dataList value="#{homeBean.categories}" var="cat" layout="simple">
+				<t:dataList value="#{homeController.categories}" var="cat" layout="simple">
 					<t:htmlTag value="li"
-						styleClass="#{cat.expanded ? 'expanded' : 'collapsed'}">
-						<h:commandButton action="#{homeBean.selectElement2}"
-							image="/images/moins.gif" alt="#{messages.colapseCategory}"
-							title="#{messages.colapseCategory}" rendered="#{cat.expanded}">
-							<t:updateActionListener property="#{homeBean.sourceID}" value="0" />
-							<t:updateActionListener property="#{homeBean.categoryID}"
+						styleClass="#{cat.folded ? 'collapsed' : 'expanded' }">
+						<h:commandButton action="#{homeController.selectElement2}"
+							image="/media/moins.gif" alt="#{messages.colapseCategory}"
+							title="#{messages.colapseCategory}" rendered="#{!cat.folded}">
+							<t:updateActionListener property="#{homeController.sourceID}" value="0" />
+							<t:updateActionListener property="#{homeController.categoryID}"
 								value="#{cat.id}" />
 						</h:commandButton>
-						<h:commandButton action="#{homeBean.selectElement2}"
-							image="/images/plus.gif" alt="#{messages.expandCategory}"
-							title="#{messages.expandCategory}" rendered="#{!cat.expanded}">
-							<t:updateActionListener property="#{homeBean.sourceID}" value="0" />
-							<t:updateActionListener property="#{homeBean.categoryID}"
+						<h:commandButton action="#{homeController.selectElement2}"
+							image="/media/plus.gif" alt="#{messages.expandCategory}"
+							title="#{messages.expandCategory}" rendered="#{cat.folded}">
+							<t:updateActionListener property="#{homeController.sourceID}" value="0" />
+							<t:updateActionListener property="#{homeController.categoryID}"
 								value="#{cat.id}" />
 						</h:commandButton>
 						<h:outputText value="#{cat.name}" />
-						<t:htmlTag value="ul" rendered="#{cat.expanded}">
+						<t:htmlTag value="ul" rendered="#{!cat.folded}">
 							<!-- Souces -->
 							<t:dataList value="#{cat.sources}" var="src" layout="simple">
 								<t:htmlTag value="li">
-									<h:commandButton action="#{homeBean.selectElement2}"
-										image="/images/puce.gif" alt="#{messages.selectSource}" title="#{messages.selectSource}"
+									<h:commandButton action="#{homeController.selectElement2}"
+										image="/media/puce.gif" alt="#{messages.selectSource}" title="#{messages.selectSource}"
 										rendered="#{!src.selected or !cat.selected}">
-										<t:updateActionListener property="#{homeBean.sourceID}"
+										<t:updateActionListener property="#{homeController.sourceID}"
 											value="#{src.id}" />
-										<t:updateActionListener property="#{homeBean.categoryID}"
+										<t:updateActionListener property="#{homeController.categoryID}"
 											value="#{cat.id}" />
 									</h:commandButton>
-									<h:graphicImage url="/images/puce.gif"
+									<h:graphicImage url="/media/puce.gif"
 										alt="#{messages.currentSource}" title="#{messages.currentSource}"
 										rendered="#{src.selected and cat.selected}" />
 									<t:htmlTag value="span" styleClass="portlet-section-alternate"
@@ -68,13 +68,13 @@
 				<t:htmlTag value="ul">
 					<t:htmlTag value="li">
 						<h:commandButton id="treeSmallerButton"
-							actionListener="#{homeBean.adjustTreeSize}"
-							image="/images/retract.gif" alt="#{messages.treeSmaller}" title="#{messages.treeSmaller}"/>
+							actionListener="#{homeController.adjustTreeSize}"
+							image="/media/retract.gif" alt="#{messages.treeSmaller}" title="#{messages.treeSmaller}"/>
 					</t:htmlTag>
 					<t:htmlTag value="li">
 						<h:commandButton id="treeLargerButton"
-							actionListener="#{homeBean.adjustTreeSize}"
-							image="/images/extand.gif" alt="#{messages.treeLarger}" title="#{messages.treeLarger}"/>
+							actionListener="#{homeController.adjustTreeSize}"
+							image="/media/extand.gif" alt="#{messages.treeLarger}" title="#{messages.treeLarger}"/>
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>
