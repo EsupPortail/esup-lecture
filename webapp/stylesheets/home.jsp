@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!-- 
-TODO : 
-- gestion des actions dans un bean
-=== en cours mais passer tous les bouton en commandbutton
- -->
-<!-- 
 CSS Class :
 Portlet :
 portlet-table-body: table body
@@ -46,11 +41,11 @@ toggleButton: read/unread toggle button
 				<t:htmlTag value="table" styleClass="portlet-table-body" style="width: 100%">
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td" id="TDLeft" forceId="true"
-							style="width: #{homeBean.treeSize}%">
+							style="width: #{homeController.treeSize}%">
 							<h:outputText value="#{homeLeft}" escape="false"/>
 						</t:htmlTag>
 						<t:htmlTag value="td" id="TDRight" forceId="true"
-							style="width: #{100 - homeBean.treeSize}%">
+							style="width: #{100 - homeController.treeSize}%">
 							<h:outputText value="#{homeRight}" escape="false"/>
 						</t:htmlTag>
 					</t:htmlTag>
