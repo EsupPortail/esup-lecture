@@ -3,7 +3,8 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:t="http://myfaces.apache.org/tomahawk">
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:e="http://commons.esup-portail.org">
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" />
 	<f:subview id="leftSubview">
@@ -11,16 +12,16 @@
 		<t:htmlTag value="div" id="left" forceId="true">
 			<!-- Title -->
 			<t:htmlTag value="p" styleClass="portlet-section-header">
-				<h:outputText value="#{homeController.contextName}"/>
+				<h:outputText value="#{homeController.context.name}"/>
 			</t:htmlTag>
 			<!-- Categories -->
 			<t:htmlTag value="ul">
-				<t:dataList value="#{homeController.categories}" var="cat" layout="simple">
+				<t:dataList value="#{homeController.context.categories}" var="cat" layout="simple">
 					<t:htmlTag value="li"
 						styleClass="#{cat.folded ? 'collapsed' : 'expanded' }">
 						<h:commandButton action="#{homeController.selectElement2}"
-							image="/media/moins.gif" alt="#{messages.colapseCategory}"
-							title="#{messages.colapseCategory}" rendered="#{!cat.folded}">
+							image="/media/moins.gif" alt="#{msgs['colapseCategory']}"
+							title="#{msgs['colapseCategory']}" rendered="#{!cat.folded}">
 							<t:updateActionListener property="#{homeController.sourceID}" value="0" />
 							<t:updateActionListener property="#{homeController.categoryID}"
 								value="#{cat.id}" />
@@ -37,22 +38,36 @@
 							<!-- Souces -->
 							<t:dataList value="#{cat.sources}" var="src" layout="simple">
 								<t:htmlTag value="li">
+								<!-- TODO
 									<h:commandButton action="#{homeController.selectElement2}"
 										image="/media/puce.gif" alt="#{messages.selectSource}" title="#{messages.selectSource}"
 										rendered="#{!src.selected or !cat.selected}">
+								 -->
+									<h:commandButton action="#{homeController.selectElement2}"
+										image="/media/puce.gif" alt="#{messages.selectSource}" title="#{messages.selectSource}">
 										<t:updateActionListener property="#{homeController.sourceID}"
 											value="#{src.id}" />
 										<t:updateActionListener property="#{homeController.categoryID}"
 											value="#{cat.id}" />
 									</h:commandButton>
+									<!-- TODO
 									<h:graphicImage url="/media/puce.gif"
 										alt="#{messages.currentSource}" title="#{messages.currentSource}"
 										rendered="#{src.selected and cat.selected}" />
+									 -->
+									<h:graphicImage url="/media/puce.gif"
+										alt="#{messages.currentSource}" title="#{messages.currentSource}"/>
+									<!-- TODO
 									<t:htmlTag value="span" styleClass="portlet-section-alternate"
 										rendered="#{src.withUnread}">
+									 -->
 										<h:outputText value="#{src.name}" />
+									<!-- 
 									</t:htmlTag>
+									 -->
+									 <!-- TODO
 									<h:outputText value="#{src.name}" rendered="#{!src.withUnread}" />
+									  -->
 								</t:htmlTag>
 							</t:dataList>
 						</t:htmlTag>

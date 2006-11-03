@@ -79,7 +79,7 @@ public class VirtualSession {
 	/**
 	 * @return the current context id of the channel
 	 */
-	public String getCurrentContextId() {
+	private String getCurrentContextId() {
 		// TODO while uportal bug not fixed
 		String currentContextId = "c1";
 		// String currentContextId = portletService.getPreferences(UserAttributes.CONTEXT);
@@ -89,13 +89,6 @@ public class VirtualSession {
 	/*
 	 ************************** ACCESSORS ***********************************/
 	
-	/**
-	 * @return Returns the portletService.
-	 */
-	public FacadeService getFacadeService() {
-		return facadeService;
-	}
-
 	/**
 	 * @param facadeService The portletService to set.
 	 */

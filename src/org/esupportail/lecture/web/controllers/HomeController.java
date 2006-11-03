@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 //import org.esupportail.lecture.beans.ContextUserBean;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
+import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
@@ -68,6 +69,13 @@ public class HomeController extends AbstractContextAwareController {
 	private String userId="bourges";
 	
 	
+	public HomeController() {
+		super();
+		//instatiate a virtual session
+		virtualSession = new VirtualSession();
+		
+	}
+
 	/*
 	 * **************** Action and listener method ****************
 	 */	
@@ -143,8 +151,8 @@ public class HomeController extends AbstractContextAwareController {
 	public String selectElement2() {
 		String catID = this.categoryID;
 		String srcId = this.sourceID;
-		CategoryWebBean cat = getCategorieByID(catID);
-		CategoryWebBean current = getCurrentCategory();
+//		CategoryWebBean cat = getCategorieByID(catID);
+//		CategoryWebBean current = getCurrentCategory();
 //		if (srcId == 0) {
 //			//toggle expanded status
 //			cat.setExpanded(!cat.isExpanded());
@@ -187,17 +195,17 @@ public class HomeController extends AbstractContextAwareController {
 	 */
 	
 	//TODO : RB temporary ?
-	private CategoryWebBean getCategorieByID(String id) {
-		CategoryWebBean ret = null;
-		Iterator<CategoryWebBean> iter = getCategories().iterator();
-		while (iter.hasNext()) {
-			CategoryWebBean cat = iter.next();
-			if (cat.getId() == id) {
-				ret = cat;
-			}
-		}
-		return ret;
-	}
+//	private CategoryWebBean getCategorieByID(String id) {
+//		CategoryWebBean ret = null;
+//		Iterator<CategoryWebBean> iter = getCategories().iterator();
+//		while (iter.hasNext()) {
+//			CategoryWebBean cat = iter.next();
+//			if (cat.getId() == id) {
+//				ret = cat;
+//			}
+//		}
+//		return ret;
+//	}
 	
 	//TODO : RB temporary ?
 //	private SourceRB getSourceByID(CategoryRB cat, int sourceID) {
@@ -214,19 +222,25 @@ public class HomeController extends AbstractContextAwareController {
 //		return null;
 //	}
 	
-	public List<CategoryWebBean> getCategories() {
-		if (log.isDebugEnabled()) {
-			log.debug("In getCategories");
-		}
-		List<CategoryBean> categories = facadeService.getCategories(ContextId, userId);
-		// TODO conver CategoryBean to CategoryWebBean
-		CategoryWebBean tmp =  new CategoryWebBean();
-		tmp.setId("1");
-		tmp.setName("test");
-		List<CategoryWebBean> ret = new ArrayList<CategoryWebBean>();
-		ret.add(tmp);
-		return ret;
-	}
+//	public List<CategoryWebBean> getCategories() {
+//		if (log.isDebugEnabled()) {
+//			log.debug("In getCategories");
+//		}
+//		List<CategoryBean> categories = facadeService.getCategories(ContextId, userId);
+//		// TODO conver CategoryBean to CategoryWebBean
+//		List<CategoryWebBean> ret = new ArrayList<CategoryWebBean>();
+//		if (categories != null) {
+//			Iterator<CategoryBean> iter = categories.iterator();
+//			while (iter.hasNext()) {
+//				CategoryBean element = iter.next();
+//				CategoryWebBean tmp =  new CategoryWebBean();
+//				tmp.setId(element.getId());
+//				tmp.setName(element.getName());
+//				ret.add(tmp);
+//			}
+//		}
+//		return ret;
+//	}
 	
 	//TODO : RB temporary ?
 //	private SourceBean getSelectedSourceFromCategory(CategoryBean cat) {
@@ -246,21 +260,21 @@ public class HomeController extends AbstractContextAwareController {
 //		return ret;
 //	}
 	
-	private CategoryWebBean getCurrentCategory() {
-		CategoryWebBean ret = null;
-		List<CategoryWebBean> cats = getCategories();
-		//TODO use	context.selectedcat
-//		if (cats != null) {
-//			Iterator<CategoryWebBean> iter = cats.iterator();
-//			while (iter.hasNext()) {
-//				CategoryWebBean cat = iter.next();
-//				if (cat.isSelected()) {
-//					ret = cat;
-//				}
-//			}			
-//		}
-		return ret;
-	}
+//	private CategoryWebBean getCurrentCategory() {
+//		CategoryWebBean ret = null;
+//		List<CategoryWebBean> cats = getCategories();
+//		//TODO use	context.selectedcat
+////		if (cats != null) {
+////			Iterator<CategoryWebBean> iter = cats.iterator();
+////			while (iter.hasNext()) {
+////				CategoryWebBean cat = iter.next();
+////				if (cat.isSelected()) {
+////					ret = cat;
+////				}
+////			}			
+////		}
+//		return ret;
+//	}
 	
 	/**
 	 * sort items list in function of itemDisplayMode
@@ -328,13 +342,13 @@ public class HomeController extends AbstractContextAwareController {
 	/**
 	 * @return the name of the current context
 	 */
-	public String getContextName() {
-		String ret = null;
-		String contextId = facadeService.getCurrentContextId(); 
-		ContextBean contextBean = facadeService.getContext(contextId);
-		ret = contextBean.getName();
-		return ret;
-	}
+//	public String getContextName() {
+//		String ret = null;
+//		String contextId = facadeService.getCurrentContextId(); 
+//		ContextBean contextBean = facadeService.getContext(contextId);
+//		ret = contextBean.getName();
+//		return ret;
+//	}
 	
 	public boolean isTreeVisible() {
 		return treeVisible;
@@ -371,19 +385,19 @@ public class HomeController extends AbstractContextAwareController {
 		this.itemDisplayMode = itemDisplayMode;
 	}
 	
-	public String getCurrentCategoryName() {
-		String ret = null;
-		CategoryWebBean cat = getCurrentCategory();
-		if (cat != null) {
-			//SourceWebBean src = getSelectedSourceFromCategory(cat);
-			//TODO use category.selectedsource
-			SourceWebBean src = null;
-			if (src != null) {
-				return src.getName();
-			}
-		}
-		return ret;
-	}
+//	public String getCurrentCategoryName() {
+//		String ret = null;
+//		CategoryWebBean cat = getCurrentCategory();
+//		if (cat != null) {
+//			//SourceWebBean src = getSelectedSourceFromCategory(cat);
+//			//TODO use category.selectedsource
+//			SourceWebBean src = null;
+//			if (src != null) {
+//				return src.getName();
+//			}
+//		}
+//		return ret;
+//	}
 	
 	public void setCategoryID(String categoryID) {
 		this.categoryID = categoryID;
@@ -400,37 +414,50 @@ public class HomeController extends AbstractContextAwareController {
 	/**
 	 * To display information about the custom Context of the connected user
 	 * @return Returns the context.
-	 * @throws ErrorException
 	 */
 	public ContextWebBean getContext() {
-	
 		ContextWebBean context = (ContextWebBean) virtualSession.get("Context");
-		String contextId = virtualSession.getCurrentContextId();
-		
 		if (context == null){
-			log.debug ("getContext() : ContextUserBean is null");
+			if (log.isDebugEnabled()) 
+				log.debug ("getContext() :  Context not yet loaded : loading...");
+			//We evalute the context and we put it in the virtual session
+			context = new ContextWebBean();
+			String contextId = facadeService.getCurrentContextId(); 
 			ContextBean contextBean = facadeService.getContext(contextId);
-			//TODO convert ContextBean to ContextWebBean
-			log.debug("getContext() : CurrentContextId : "+ contextId);
+			context.setName(contextBean.getName());
+			//find categories in this context
+			List<CategoryBean> categories = facadeService.getCategories(ContextId, userId);
+			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
+			if (categories != null) {
+				Iterator<CategoryBean> iter = categories.iterator();
+				while (iter.hasNext()) {
+					CategoryBean categoryBean = iter.next();
+					CategoryWebBean categoryWebBean =  new CategoryWebBean();
+					categoryWebBean.setId(categoryBean.getId());
+					categoryWebBean.setName(categoryBean.getName());
+					//find sources in this category
+					List<SourceBean> sources = facadeService.getSources(categoryBean.getId(), userId);
+					List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
+					if (sources != null) {
+						Iterator<SourceBean> iter2 = sources.iterator();
+						while (iter2.hasNext()) {
+							SourceBean sourceBean = iter2.next();
+							SourceWebBean sourceWebBean = new SourceWebBean();
+							sourceWebBean.setName(sourceBean.getName());
+							sourcesWeb.add(sourceWebBean);
+						}
+					}
+					categoryWebBean.setSources(sourcesWeb);
+					categoriesWeb.add(categoryWebBean);
+				}
+			}
+			context.setCategories(categoriesWeb);
 			virtualSession.put("ContextUserBean",context);
 		}else{
-			log.debug ("getContext() :  Context already loaded : "+context.getId());
+			if (log.isDebugEnabled()) 
+				log.debug ("getContext() :  Context already loaded : " + context.getId());
 		}
 		return context;
-	}
-
-	/**
-	 * @return Returns the virtualSession.
-	 */
-	public VirtualSession getVirtualSession() {
-		return virtualSession;
-	}
-
-	/**
-	 * @param virtualSession The virtualSession to set.
-	 */
-	public void setVirtualSession(VirtualSession virtualSession) {
-		this.virtualSession = virtualSession;
 	}
 
 	/**
