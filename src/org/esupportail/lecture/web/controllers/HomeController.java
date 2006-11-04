@@ -16,6 +16,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
+import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
@@ -66,7 +67,6 @@ public class HomeController extends AbstractContextAwareController {
 	private VirtualSession virtualSession;
 	//TODO no static values !!!!
 	private String ContextId = "c1";
-	private String userId="bourges";
 	
 	
 	public HomeController() {
@@ -148,17 +148,18 @@ public class HomeController extends AbstractContextAwareController {
 	 * JSF action : select a category or a source from the tree, use categoryID and sourceID valued by t:updateActionListener
 	 * @return JSF from-outcome
 	 */
-	public String selectElement2() {
+	public String selectElement() {
 		String catID = this.categoryID;
 		String srcId = this.sourceID;
-//		CategoryWebBean cat = getCategorieByID(catID);
-//		CategoryWebBean current = getCurrentCategory();
-//		if (srcId == 0) {
-//			//toggle expanded status
-//			cat.setExpanded(!cat.isExpanded());
-//		} 
-//		else {
-//			//unselect current selected source
+		CategoryWebBean cat = getCategorieByID(catID);
+		CategoryWebBean current = getSelectedCategory();
+		if (srcId.endsWith("0")) {
+			//toggle expanded status
+			cat.setFolded(!cat.isFolded());
+		} 
+		else {
+			//unselect current selected source
+			//TODO
 //			SourceRB src2 = getSelectedSourceFromCategory(cat);
 //			if (src2 != null) {
 //				src2.setSelected(false);
@@ -166,9 +167,10 @@ public class HomeController extends AbstractContextAwareController {
 //			SourceRB src = getSourceByID(cat, srcId);
 //			//select new source
 //			src.setSelected(true);
-//		}
-//		if (current != null) current.setSelected(false);
-//		cat.setSelected(true);
+		}
+		// set category focused by user as selected categori in the context
+		ContextWebBean ctx = getContext();
+		ctx.setSelectedCategory(cat);
 		return "OK";
 	}
 	
@@ -194,18 +196,22 @@ public class HomeController extends AbstractContextAwareController {
 	 * **************** internal  method ****************
 	 */
 	
-	//TODO : RB temporary ?
-//	private CategoryWebBean getCategorieByID(String id) {
-//		CategoryWebBean ret = null;
-//		Iterator<CategoryWebBean> iter = getCategories().iterator();
-//		while (iter.hasNext()) {
-//			CategoryWebBean cat = iter.next();
-//			if (cat.getId() == id) {
-//				ret = cat;
-//			}
-//		}
-//		return ret;
-//	}
+	/**
+	 * @param id of catogory to find in the context
+	 * @return the finded category
+	 */
+	private CategoryWebBean getCategorieByID(String id) {
+		CategoryWebBean ret = null;
+		ContextWebBean ctx = getContext();
+		Iterator<CategoryWebBean> iter = ctx.getCategories().iterator();
+		while (iter.hasNext()) {
+			CategoryWebBean cat = iter.next();
+			if (cat.getId() == id) {
+				ret = cat;
+			}
+		}
+		return ret;
+	}
 	
 	//TODO : RB temporary ?
 //	private SourceRB getSourceByID(CategoryRB cat, int sourceID) {
@@ -260,21 +266,15 @@ public class HomeController extends AbstractContextAwareController {
 //		return ret;
 //	}
 	
-//	private CategoryWebBean getCurrentCategory() {
-//		CategoryWebBean ret = null;
-//		List<CategoryWebBean> cats = getCategories();
-//		//TODO use	context.selectedcat
-////		if (cats != null) {
-////			Iterator<CategoryWebBean> iter = cats.iterator();
-////			while (iter.hasNext()) {
-////				CategoryWebBean cat = iter.next();
-////				if (cat.isSelected()) {
-////					ret = cat;
-////				}
-////			}			
-////		}
-//		return ret;
-//	}
+	/**
+	 * @return the selected category from the context
+	 */
+	private CategoryWebBean getSelectedCategory() {
+		CategoryWebBean ret = null;
+		ContextWebBean ctx = getContext();
+		ret = ctx.getSelectedCategory();
+		return ret;
+	}
 	
 	/**
 	 * sort items list in function of itemDisplayMode
@@ -426,7 +426,8 @@ public class HomeController extends AbstractContextAwareController {
 			ContextBean contextBean = facadeService.getContext(contextId);
 			context.setName(contextBean.getName());
 			//find categories in this context
-			List<CategoryBean> categories = facadeService.getCategories(ContextId, userId);
+			UserBean user = facadeService.getConnectedUser();
+			List<CategoryBean> categories = facadeService.getCategories(ContextId, user.getUid());
 			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
 			if (categories != null) {
 				Iterator<CategoryBean> iter = categories.iterator();
@@ -436,7 +437,7 @@ public class HomeController extends AbstractContextAwareController {
 					categoryWebBean.setId(categoryBean.getId());
 					categoryWebBean.setName(categoryBean.getName());
 					//find sources in this category
-					List<SourceBean> sources = facadeService.getSources(categoryBean.getId(), userId);
+					List<SourceBean> sources = facadeService.getSources(categoryBean.getId(), user.getUid());
 					List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
 					if (sources != null) {
 						Iterator<SourceBean> iter2 = sources.iterator();
@@ -452,7 +453,7 @@ public class HomeController extends AbstractContextAwareController {
 				}
 			}
 			context.setCategories(categoriesWeb);
-			virtualSession.put("ContextUserBean",context);
+			virtualSession.put("Context",context);
 		}else{
 			if (log.isDebugEnabled()) 
 				log.debug ("getContext() :  Context already loaded : " + context.getId());
@@ -460,17 +461,9 @@ public class HomeController extends AbstractContextAwareController {
 		return context;
 	}
 
-	/**
-	 * @return id of the current user of the session
-	 */
-	private String getCurrentUserId() {
-		String userId = facadeService.getConnectedUser().getUid(); 
-		return userId;
-	}
-
 	public void reset() {
 		// TODO Auto-generated method stub
 		
 	}
-	
+
 }

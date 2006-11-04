@@ -19,16 +19,16 @@
 				<t:dataList value="#{homeController.context.categories}" var="cat" layout="simple">
 					<t:htmlTag value="li"
 						styleClass="#{cat.folded ? 'collapsed' : 'expanded' }">
-						<h:commandButton action="#{homeController.selectElement2}"
+						<h:commandButton action="#{homeController.selectElement}"
 							image="/media/moins.gif" alt="#{msgs['colapseCategory']}"
 							title="#{msgs['colapseCategory']}" rendered="#{!cat.folded}">
 							<t:updateActionListener property="#{homeController.sourceID}" value="0" />
 							<t:updateActionListener property="#{homeController.categoryID}"
 								value="#{cat.id}" />
 						</h:commandButton>
-						<h:commandButton action="#{homeController.selectElement2}"
-							image="/media/plus.gif" alt="#{messages.expandCategory}"
-							title="#{messages.expandCategory}" rendered="#{cat.folded}">
+						<h:commandButton action="#{homeController.selectElement}"
+							image="/media/plus.gif" alt="#{msgs['expandCategory']}"
+							title="#{msgs['expandCategory']}" rendered="#{cat.folded}">
 							<t:updateActionListener property="#{homeController.sourceID}" value="0" />
 							<t:updateActionListener property="#{homeController.categoryID}"
 								value="#{cat.id}" />
@@ -39,12 +39,12 @@
 							<t:dataList value="#{cat.sources}" var="src" layout="simple">
 								<t:htmlTag value="li">
 								<!-- TODO
-									<h:commandButton action="#{homeController.selectElement2}"
-										image="/media/puce.gif" alt="#{messages.selectSource}" title="#{messages.selectSource}"
+									<h:commandButton action="#{homeController.selectElement}"
+										image="/media/puce.gif" alt="#{msgs['selectSource']}" title="#{msgs['selectSource']}"
 										rendered="#{!src.selected or !cat.selected}">
 								 -->
-									<h:commandButton action="#{homeController.selectElement2}"
-										image="/media/puce.gif" alt="#{messages.selectSource}" title="#{messages.selectSource}">
+									<h:commandButton action="#{homeController.selectElement}"
+										image="/media/puce.gif" alt="#{msgs['selectSource']}" title="#{msgs['selectSource']}">
 										<t:updateActionListener property="#{homeController.sourceID}"
 											value="#{src.id}" />
 										<t:updateActionListener property="#{homeController.categoryID}"
@@ -52,11 +52,11 @@
 									</h:commandButton>
 									<!-- TODO
 									<h:graphicImage url="/media/puce.gif"
-										alt="#{messages.currentSource}" title="#{messages.currentSource}"
+										alt="#{msgs['currentSource']}" title="#{msgs['currentSource']}"
 										rendered="#{src.selected and cat.selected}" />
 									 -->
 									<h:graphicImage url="/media/puce.gif"
-										alt="#{messages.currentSource}" title="#{messages.currentSource}"/>
+										alt="#{msgs['currentSource']}" title="#{msgs['currentSource']}"/>
 									<!-- TODO
 									<t:htmlTag value="span" styleClass="portlet-section-alternate"
 										rendered="#{src.withUnread}">
@@ -84,12 +84,12 @@
 					<t:htmlTag value="li">
 						<h:commandButton id="treeSmallerButton"
 							actionListener="#{homeController.adjustTreeSize}"
-							image="/media/retract.gif" alt="#{messages.treeSmaller}" title="#{messages.treeSmaller}"/>
+							image="/media/retract.gif" alt="#{msgs['treeSmaller']}" title="#{msgs['treeSmaller']}"/>
 					</t:htmlTag>
 					<t:htmlTag value="li">
 						<h:commandButton id="treeLargerButton"
 							actionListener="#{homeController.adjustTreeSize}"
-							image="/media/extand.gif" alt="#{messages.treeLarger}" title="#{messages.treeLarger}"/>
+							image="/media/extand.gif" alt="#{msgs['treeLarger']}" title="#{msgs['treeLarger']}"/>
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>
