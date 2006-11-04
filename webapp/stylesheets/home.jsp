@@ -31,7 +31,7 @@ toggleButton: read/unread toggle button
 		<h:form id="home">
 			<!-- ********* homeRight and homeLeft fisrt for just one jsp:include/page ********* -->
 			<t:buffer into="#{homeRight}">
-				<!--<jsp:include page="homeRight.jsp" />-->
+				<jsp:include page="homeRight.jsp" />
 			</t:buffer>
 			<t:buffer into="#{homeLeft}">
 				<jsp:include page="homeLeft.jsp" />
@@ -57,9 +57,9 @@ toggleButton: read/unread toggle button
 			</t:buffer>
 			<!-- ********* Rendering ********* -->
 			<h:outputText id="left" value="#{withTree}" escape="false"
-				rendered="#{homeBean.treeVisible}" />
+				rendered="#{homeController.treeVisible}" />
 			<h:outputText id="right" value="#{withoutTree}" escape="false"
-					rendered="#{!homeBean.treeVisible}" />
+				rendered="#{!homeController.treeVisible}" />
 		</h:form>
 	</e:page>
 </jsp:root>
