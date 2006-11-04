@@ -38,25 +38,17 @@
 							<!-- Souces -->
 							<t:dataList value="#{cat.sources}" var="src" layout="simple">
 								<t:htmlTag value="li">
-								<!-- TODO
 									<h:commandButton action="#{homeController.selectElement}"
 										image="/media/puce.gif" alt="#{msgs['selectSource']}" title="#{msgs['selectSource']}"
-										rendered="#{!src.selected or !cat.selected}">
-								 -->
-									<h:commandButton action="#{homeController.selectElement}"
-										image="/media/puce.gif" alt="#{msgs['selectSource']}" title="#{msgs['selectSource']}">
+										rendered="#{!((homeController.context.selectedCategory.id == cat.id) and (cat.selectedSource.id == src.id))}">
 										<t:updateActionListener property="#{homeController.sourceID}"
 											value="#{src.id}" />
 										<t:updateActionListener property="#{homeController.categoryID}"
 											value="#{cat.id}" />
 									</h:commandButton>
-									<!-- TODO
 									<h:graphicImage url="/media/puce.gif"
 										alt="#{msgs['currentSource']}" title="#{msgs['currentSource']}"
-										rendered="#{src.selected and cat.selected}" />
-									 -->
-									<h:graphicImage url="/media/puce.gif"
-										alt="#{msgs['currentSource']}" title="#{msgs['currentSource']}"/>
+										rendered="#{((homeController.context.selectedCategory.id == cat.id) and (cat.selectedSource.id == src.id))}" />
 									<!-- TODO
 									<t:htmlTag value="span" styleClass="portlet-section-alternate"
 										rendered="#{src.withUnread}">

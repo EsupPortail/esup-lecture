@@ -153,22 +153,16 @@ public class HomeController extends AbstractContextAwareController {
 		String srcId = this.sourceID;
 		CategoryWebBean cat = getCategorieByID(catID);
 		CategoryWebBean current = getSelectedCategory();
-		if (srcId.endsWith("0")) {
+		if (srcId.equals("0")) {
 			//toggle expanded status
 			cat.setFolded(!cat.isFolded());
 		} 
 		else {
-			//unselect current selected source
-			//TODO
-//			SourceRB src2 = getSelectedSourceFromCategory(cat);
-//			if (src2 != null) {
-//				src2.setSelected(false);
-//			}
-//			SourceRB src = getSourceByID(cat, srcId);
-//			//select new source
-//			src.setSelected(true);
+			//set source focused by user as selected source in the category
+			SourceWebBean src = getSourceByID(cat, srcId);
+			cat.setSelectedSource(src);
 		}
-		// set category focused by user as selected categori in the context
+		// set category focused by user as selected category in the context
 		ContextWebBean ctx = getContext();
 		ctx.setSelectedCategory(cat);
 		return "OK";
@@ -213,20 +207,22 @@ public class HomeController extends AbstractContextAwareController {
 		return ret;
 	}
 	
-	//TODO : RB temporary ?
-//	private SourceRB getSourceByID(CategoryRB cat, int sourceID) {
-//		List<SourceRB> sources = cat.getSources();
-//		if (sources != null) {
-//			Iterator<SourceRB> iter = sources.iterator();
-//			while (iter.hasNext()) {
-//				SourceRB src = (SourceRB) iter.next();
-//				if (src.getId() == sourceID) {
-//					return src; 
-//				}
-//			}
-//		}
-//		return null;
-//	}
+	/**
+	 * @param cat where to find source
+	 * @param id of source to find
+	 * @return the finded source
+	 */
+	private SourceWebBean getSourceByID(CategoryWebBean cat, String id) {
+		SourceWebBean ret = null;
+		Iterator<SourceWebBean> iter = cat.getSources().iterator();
+		while (iter.hasNext()) {
+			SourceWebBean src = iter.next();
+			if (src.getId() == id) {
+				ret = src;
+			}
+		}
+		return ret;
+	}
 	
 //	public List<CategoryWebBean> getCategories() {
 //		if (log.isDebugEnabled()) {
@@ -444,6 +440,7 @@ public class HomeController extends AbstractContextAwareController {
 						while (iter2.hasNext()) {
 							SourceBean sourceBean = iter2.next();
 							SourceWebBean sourceWebBean = new SourceWebBean();
+							sourceWebBean.setId(sourceBean.getId());
 							sourceWebBean.setName(sourceBean.getName());
 							sourcesWeb.add(sourceWebBean);
 						}
