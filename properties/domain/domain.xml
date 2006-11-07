@@ -13,9 +13,10 @@
 	-->
 
 
-	<!----------------------------------------------------
+	<!-- 
+	***************************************************
 				FACADE SERVICE 
-	------------------------------------------------------>
+	***************************************************-->
 	<bean
 		id="facadeService"
 		class="org.esupportail.lecture.domain.service.FacadeServiceImpl"
@@ -25,24 +26,44 @@
 			web interface and the command-line calls.
 			It must extend abstract org.esupportail.lecture.domain.FacadeService.
 		</description>
+		<!-- Pour RAYMOND --> <!-- 
 		<property name="domainService" ref="domainServiceTest"/>
 		<property name="externalService" ref="externalServiceTest"/>
+		-->
+		<!-- Pour GWENAELLE --> <!-- 
+		<property name="domainService" ref="domainServiceImpl"/>
+		<property name="externalService" ref="externalServiceTest"/>
+		-->
+		<!-- A TERME 
+		<property name="domainService" ref="domainServiceImpl"/>
+		<property name="externalService" ref="externalServiceImpl"/>
+		-->
 	</bean>
 	 
 	 
-	<!----------------------------------------------------
+	<!-- 
+	***************************************************
 				DOMAIN SERVICE 
-	------------------------------------------------------>
+	***************************************************-->
 	<bean 
-		id="domainService"
+		id="domainServiceImpl"
 		class="org.esupportail.lecture.domain.service.DomainServiceImpl">
 		<description>
 			This bean provides the domain service of the application, used by the 
 			web interface and the command-line calls.
 			It must implement interface org.esupportail.lecture.domain.DomainService.
 		</description>
-		
+		<!-- 		
+		<property name="myChannel">
+			<ref bean="channel"/>
+		</property>
+		 -->
 	</bean> 
+
+	<!-- Main domain model class -->
+	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
+	</bean>
+	
 
 	<bean
 		id="domainServiceTest"
@@ -78,11 +99,12 @@
 	</bean>
 
 
-	<!----------------------------------------------------
+	<!-- 
+	***************************************************
 				EXTERNAL SERVICE 
-	------------------------------------------------------>
+	***************************************************-->
 	<bean
-		id="externalService"
+		id="externalServiceImpl"
 		class="org.esupportail.lecture.domain.service.ExternalServiceImpl"
 		>
 		<description>
@@ -102,9 +124,11 @@
 		</description>
 	</bean>
 
-	<!----------------------------------------------------
-				DOMAIN TEST
-	------------------------------------------------------>
+
+	<!-- 
+	***************************************************
+				DOMAIN TEST 
+	***************************************************-->
 		<bean
 		id="domainTest"
 		class="org.esupportail.lecture.domain.DomainTest"
