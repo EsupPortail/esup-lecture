@@ -19,55 +19,62 @@
 	***************************************************-->
 	<bean
 		id="facadeService"
-		class="org.esupportail.lecture.domain.service.FacadeServiceImpl"
+		class="org.esupportail.lecture.domain.FacadeServiceImpl"
 		>
 		<description>
 			This bean provides the facade service (domain and external) of the application, used by the 
 			web interface and the command-line calls.
 			It must extend abstract org.esupportail.lecture.domain.FacadeService.
 		</description>
-		<!-- Pour RAYMOND --> <!-- 
+		<!-- for RAYMOND --> 
+		<!-- -->
 		<property name="domainService" ref="domainServiceTest"/>
 		<property name="externalService" ref="externalServiceTest"/>
-		-->
-		<!-- Pour GWENAELLE --> <!-- 
+		<!-- -->
+		<!-- for GWENAELLE --> 
+		<!-- 
 		<property name="domainService" ref="domainServiceImpl"/>
 		<property name="externalService" ref="externalServiceTest"/>
 		-->
-		<!-- A TERME 
+		<!-- at the end 
 		<property name="domainService" ref="domainServiceImpl"/>
 		<property name="externalService" ref="externalServiceImpl"/>
 		-->
 	</bean>
+	
+	<!-- USED BY dao.xml. Need to see Pascal !!!  -->
+	<alias name="domainServiceTest" alias="domainService"/>
 	 
 	 
 	<!-- 
 	***************************************************
 				DOMAIN SERVICE 
 	***************************************************-->
+	<!-- not yet implemented
 	<bean 
 		id="domainServiceImpl"
-		class="org.esupportail.lecture.domain.service.DomainServiceImpl">
+		class="org.esupportail.lecture.domain.DomainServiceImpl">
 		<description>
 			This bean provides the domain service of the application, used by the 
 			web interface and the command-line calls.
 			It must implement interface org.esupportail.lecture.domain.DomainService.
 		</description>
-		<!-- 		
 		<property name="myChannel">
 			<ref bean="channel"/>
 		</property>
-		 -->
 	</bean> 
+	 -->
 
 	<!-- Main domain model class -->
+	<!-- not yet implemented
 	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
 	</bean>
+	-->
 	
 
 	<bean
 		id="domainServiceTest"
-		class="org.esupportail.lecture.domain.service.DomainServiceTest">
+		class="org.esupportail.lecture.domain.DomainServiceTest">
 		<description>
 			This bean provides the domain service of the application, used by the 
 			web interface and the command-line calls.
@@ -105,7 +112,7 @@
 	***************************************************-->
 	<bean
 		id="externalServiceImpl"
-		class="org.esupportail.lecture.domain.service.ExternalServiceImpl"
+		class="org.esupportail.lecture.domain.ExternalServiceImpl"
 		>
 		<description>
 			This bean provides the external (portlet and/or servlet) service of the application, used by the 
@@ -115,7 +122,7 @@
 	</bean>
 	<bean
 		id="externalServiceTest"
-		class="org.esupportail.lecture.domain.service.ExternalServiceTest"
+		class="org.esupportail.lecture.domain.ExternalServiceTest"
 		>
 		<description>
 			This bean provides the external (portlet and/or servlet) service of the application, used by the 
@@ -129,7 +136,8 @@
 	***************************************************
 				DOMAIN TEST 
 	***************************************************-->
-		<bean
+	<!-- not yet implemented
+	<bean
 		id="domainTest"
 		class="org.esupportail.lecture.domain.DomainTest"
 		>
@@ -137,7 +145,6 @@
 			This bean calls FacadeService instead of web interface and the command-line calls.
 		</description>
 	</bean>
+	-->
 	
-	
-
 </beans>

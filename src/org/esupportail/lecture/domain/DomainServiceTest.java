@@ -29,6 +29,22 @@ public class DomainServiceTest implements DomainService {
 	 */
 	private List<ItemBean> items;
 	
+
+	/**
+	 * constructor used by Spring to instantiate this Test Class
+	 * @param context
+	 * @param categories
+	 * @param sources
+	 * @param items
+	 */
+	public DomainServiceTest(ContextBean context, List<CategoryBean> categories, List<SourceBean> sources, List<ItemBean> items) {
+		super();
+		this.context = context;
+		this.categories = categories;
+		this.sources = sources;
+		this.items = items;
+	}
+
 	/** 
 	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String)
 	 */
@@ -59,6 +75,13 @@ public class DomainServiceTest implements DomainService {
 	}
 
 	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String)
+	 */
+	public List<ItemBean> getItems(String sourceId, String uid) {
+		return items;
+	}
+
+	/**
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemasRead(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void marckItemasRead(String uid, String itemId, String sourceId) {
@@ -72,21 +95,6 @@ public class DomainServiceTest implements DomainService {
 	public void marckItemasUnread(String uid, String itemId, String sourceId) {
 		// TODO Auto-generated method stub
 
-	}
-
-	/**
-	 * constructor used by Spring to instantiate this Test Class
-	 * @param context
-	 * @param categories
-	 * @param sources
-	 * @param items
-	 */
-	public DomainServiceTest(ContextBean context, List<CategoryBean> categories, List<SourceBean> sources, List<ItemBean> items) {
-		super();
-		this.context = context;
-		this.categories = categories;
-		this.sources = sources;
-		this.items = items;
 	}
 
 }

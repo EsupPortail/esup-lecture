@@ -45,21 +45,21 @@
 					<h:commandButton action="#{homeController.toggleItemReadState}"
 						image="/media/unread.gif" alt="#{msgs['markAsRead']}"
 						title="#{msgs['markAsRead']}" rendered="#{!item.read}">
-						<t:updateActionListener property="#{homeController.itemID}"
-							value="#{item.id}" />
+						<t:updateActionListener property="#{homeController.item}"
+							value="#{item}" />
 					</h:commandButton>
 					<h:commandButton action="#{homeController.toggleItemReadState}"
 						image="/media/read.gif" alt="#{msgs['markAsUnread']}"
 						title="#{msgs['markAsUnread']}" rendered="#{item.read}">
-						<t:updateActionListener property="#{homeController.itemID}"
-							value="#{item.id}" />
+						<t:updateActionListener property="#{homeController.item}"
+							value="#{item}" />
 					</h:commandButton>
 				</t:htmlTag>
 				<!-- Item Display -->
 				<t:htmlTag value="div"
 					styleClass="#{item.read ? 'readArticle' : 'unreadArticle'}">
 					<f:verbatim>
-						<h:outputText value="#{item.body}" escape="false" />
+						<h:outputText value="#{item.htmlContent}" escape="false" />
 					</f:verbatim>
 				</t:htmlTag>
 			</t:dataList>

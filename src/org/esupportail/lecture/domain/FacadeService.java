@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
+import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -68,6 +69,16 @@ public abstract class FacadeService implements InitializingBean {
 	public List<SourceBean> getSources(String categoryId, String uid) {
 		return domainService.getSources(categoryId, uid);
 	}
+	
+	/**
+	 * @param sourceId id of source
+	 * @param uid user ID
+	 * @return List of ItemBean in a source
+	 */
+	public List<ItemBean> getItems(String sourceId, String uid) {
+		return domainService.getItems(sourceId, uid);
+	}
+
 	
 	/**
 	 * @param uid user ID

@@ -22,15 +22,15 @@
 						<h:commandButton action="#{homeController.selectElement}"
 							image="/media/moins.gif" alt="#{msgs['colapseCategory']}"
 							title="#{msgs['colapseCategory']}" rendered="#{!cat.folded}">
-							<t:updateActionListener property="#{homeController.sourceID}" value="0" />
-							<t:updateActionListener property="#{homeController.categoryID}"
+							<t:updateActionListener property="#{homeController.sourceId}" value="0" />
+							<t:updateActionListener property="#{homeController.categoryId}"
 								value="#{cat.id}" />
 						</h:commandButton>
 						<h:commandButton action="#{homeController.selectElement}"
 							image="/media/plus.gif" alt="#{msgs['expandCategory']}"
 							title="#{msgs['expandCategory']}" rendered="#{cat.folded}">
-							<t:updateActionListener property="#{homeController.sourceID}" value="0" />
-							<t:updateActionListener property="#{homeController.categoryID}"
+							<t:updateActionListener property="#{homeController.sourceId}" value="0" />
+							<t:updateActionListener property="#{homeController.categoryId}"
 								value="#{cat.id}" />
 						</h:commandButton>
 						<h:outputText value="#{cat.name}" />
@@ -41,9 +41,9 @@
 									<h:commandButton action="#{homeController.selectElement}"
 										image="/media/puce.gif" alt="#{msgs['selectSource']}" title="#{msgs['selectSource']}"
 										rendered="#{!((homeController.context.selectedCategory.id == cat.id) and (cat.selectedSource.id == src.id))}">
-										<t:updateActionListener property="#{homeController.sourceID}"
+										<t:updateActionListener property="#{homeController.sourceId}"
 											value="#{src.id}" />
-										<t:updateActionListener property="#{homeController.categoryID}"
+										<t:updateActionListener property="#{homeController.categoryId}"
 											value="#{cat.id}" />
 									</h:commandButton>
 									<h:graphicImage url="/media/puce.gif"

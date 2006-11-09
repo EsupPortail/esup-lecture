@@ -38,6 +38,6 @@
 	<import resource="tags/tags.xml" /> 
 	<import resource="web/controllers.xml" />
 	<import resource="web/converters.xml" />
-	<import resource="test/tests.xml" />
+	<import resource="tests/tests.xml" />
 
 </beans>

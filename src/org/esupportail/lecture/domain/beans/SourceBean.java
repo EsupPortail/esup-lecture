@@ -26,6 +26,7 @@ public class SourceBean {
 	public String getName() {
 		return name;
 	}
+	
 	/**
 	 * @param name
 	 */

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
+import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 
 /**
@@ -34,6 +35,14 @@ public interface DomainService {
 	 * @see FacadeService#getSources(String, String)
 	 */
 	List<SourceBean> getSources(String categoryId, String uid);
+
+	/**
+	 * @param sourceId 
+	 * @param uid 
+	 * @return List<ItemBean>
+	 * @see FacadeService#getItems(String, String)
+	 */
+	List<ItemBean> getItems(String sourceId, String uid);
 
 	/**
 	 * @param uid 

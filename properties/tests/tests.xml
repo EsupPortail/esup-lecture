@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <beans 
@@ -16,7 +15,7 @@
 	<!-- TEST DATA -->
 	<bean id="context" class="org.esupportail.lecture.domain.beans.ContextBean">
 		<property name="id" value="1" />
-		<property name="name" value="Test context" />
+		<property name="name" value="Test context !" />
 	</bean>
 	<bean id="categorie1" class="org.esupportail.lecture.domain.beans.CategoryBean">
 		<property name="id" value="1" />
