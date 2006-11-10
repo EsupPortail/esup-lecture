@@ -1,5 +1,7 @@
 package org.esupportail.lecture.domain;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.DomainTools;
 
@@ -8,15 +10,13 @@ import org.esupportail.lecture.domain.DomainTools;
  * an implementation of ExternalService for tests
  */
 public class ExternalServiceTest implements ExternalService {
+	protected static final Log log = LogFactory.getLog(ExternalServiceTest.class); 
 
 	/**
-	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUser()
+	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
 	 */
-	public UserBean getConnectedUser() {
-		String uid = getUserAttribute(DomainTools.USER_ID);
-		UserBean ret = new UserBean();
-		ret.setUid(uid);
-		return ret;
+	public String getConnectedUserId() {
+		return getUserAttribute(DomainTools.USER_ID);
 	}
 
 	/**
@@ -31,7 +31,7 @@ public class ExternalServiceTest implements ExternalService {
 	 */
 	public String getPreferences(String name) {
 		if (name.equalsIgnoreCase(DomainTools.CONTEXT)){
-			return "C1";
+			return "1";
 		}else {
 			return null;
 		}

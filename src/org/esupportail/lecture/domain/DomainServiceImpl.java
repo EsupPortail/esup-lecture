@@ -8,7 +8,10 @@ import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
+import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
+import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.FatalException;
 
 /**
@@ -30,49 +33,34 @@ public class DomainServiceImpl implements DomainService {
 	/*
 	 ************************** Initialization ************************************/
 	
-	/** 
-	 * @see org.esupportail.lecture.domain.service.DomainService#loadChannel()
-	 */
-	public void initialize(){
-		channel.startup();
-	}
 
+	
 	/*
 	 ************************** Méthodes ************************************/
 
-	public ContextBean getContext(String contextId) {
-		// TODO Auto-generated method stub
-		return null;
+
+	public UserBean getConnectedUser(String userId) {
+		/* User profile creation */
+		//UserProfile userProfile = channel.getUserProfile(userId);
+		
+		/* userBean creation */
+		UserBean user = new UserBean();
+		user.setUid(userId);
+		
+		return user;
 	}
 
 	
-	public List<CategoryBean> getCategories(String contextId, String uid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public List<SourceBean> getSources(String categoryId, String uid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-	public void marckItemasRead(String uid, String itemId, String sourceId) {
-		// TODO Auto-generated method stub
+	
+	public ContextBean getContext(String userId,String contextId) {
 		
-	}
-
-
-
-	public void marckItemasUnread(String uid, String itemId, String sourceId) {
-		// TODO Auto-generated method stub
+		/* Get current user profile and customContext */
+		UserProfile userProfile = channel.getUserProfile(userId);
+		CustomContext customContext = userProfile.getCustomContext(contextId);
 		
-	}
-	public List<ItemBean> getItems(String sourceId, String uid) {
-		// TODO Auto-generated method stub
 		return null;
 	}
+
 	
 	/*
 	 ************************** Accessors ************************************/
@@ -85,6 +73,31 @@ public class DomainServiceImpl implements DomainService {
 	public void setChannel(Channel channel) {
 		// J'ai retiré le caractère static de la méthode pour la config spring
 		DomainServiceImpl.channel = channel;
+	}
+
+	public List<CategoryBean> getCategories(String uid, String contextId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<ItemBean> getItems(String uid, String sourceId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<SourceBean> getSources(String uid, String categoryId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void marckItemasRead(String uid, String sourceId, String itemId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void marckItemasUnread(String uid, String sourceId, String itemId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

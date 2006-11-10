@@ -6,6 +6,7 @@ import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
+import org.esupportail.lecture.domain.beans.UserBean;
 
 /**
  * @author bourges
@@ -45,16 +46,21 @@ public class DomainServiceTest implements DomainService {
 		this.items = items;
 	}
 
-	/** 
-	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String)
-	 */
-	public ContextBean getContext(String contextId) {
-		ContextBean ret = null;
-		if (context.getId().equals(contextId)) {
-			ret = context;
-		}
-		return ret;
+	public UserBean getConnectedUser(String userId){
+		UserBean user = new UserBean();
+		user.setUid(userId);
+		return user;
 	}
+	
+
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String)
+	 */
+	public ContextBean getContext(String uid, String contextId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getCategories(java.lang.String, java.lang.String)
@@ -97,9 +103,6 @@ public class DomainServiceTest implements DomainService {
 
 	}
 
-	public void initialize() {
-		// TODO Auto-generated method stub : appelée au démarrage de la portlet
-		
-	}
+
 
 }

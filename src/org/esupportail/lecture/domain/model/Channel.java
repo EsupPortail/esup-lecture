@@ -14,11 +14,12 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.*;
+import org.springframework.beans.factory.InitializingBean;
 /**
  * The "lecture" channel : main domain model class
  * @author gbouteil
  */
-public class Channel  {
+public class Channel implements InitializingBean {
 
 	/*
 	 ************************** PROPERTIES *********************************/	
@@ -85,10 +86,25 @@ public class Channel  {
 	 */
 	private boolean mappingsLoaded = false;
 	
-	
+	/**
+	 * access to dao services
+	 */
+	private DaoService daoService;
 	
 	/*
 	 ************************** Initialization ************************************/
+	
+
+	/**
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+	 */
+	public void afterPropertiesSet() throws Exception {
+		startup();
+		DomainTools.setChannel(this);
+		DomainTools.setDaoService(daoService);
+		
+	}
+
 	
 	/**
 	 * Methods call to load the config and mapping file 
@@ -492,6 +508,16 @@ public class Channel  {
 
 	protected Mapping getMappingByRootElement(String rootElement){
 		return mappingHashByRootElement.get(rootElement);
+	}
+
+
+	public DaoService getDaoService() {
+		return daoService;
+	}
+
+
+	public void setDaoService(DaoService daoService) {
+		this.daoService = daoService;
 	}
 
 

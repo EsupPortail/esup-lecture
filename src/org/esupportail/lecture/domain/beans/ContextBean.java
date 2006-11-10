@@ -42,4 +42,10 @@ public class ContextBean {
 		this.name = name;
 	}
 
+	public String toString(){
+		String string = "";
+		string += " Id = " + id.toString() + "\n";
+		string += " Name = " + name.toString() + "\n\n";
+		return string;
+	}
 }

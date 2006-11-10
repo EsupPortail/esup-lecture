@@ -14,7 +14,7 @@
 	-->
 
 	<!-- Session factories -->
-
+<!-- 
 	<bean 
 		id="abstractHibernateSessionFactory" 
 		abstract="true" 
@@ -91,9 +91,9 @@
 			</props>
 		</property>
 	</bean>
-
+-->
 	<!-- end of the session factories -->
-
+<!-- 
 	<bean 
 		id="hibernateSessionFactoryContainer" 
 		abstract="true" 
@@ -125,14 +125,14 @@
 		<property name="jdbcExceptionTranslator" ref="jdbcExceptionTranslator" />
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
-
+-->
 	<!-- 
 	***************************************************
 				DAO SERVICE
 	***************************************************-->
 	<!--  Je ne me suis occupée que du DAO SERVICE TEST 
 	Je laisse Raymond revoir le fichier dans sa globalité -->
-	<bean id="daoServiceTest" class="org.esupportail.lecture.dao.DaoServiceStub">
+	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceStub">
 		<description>
 			This bean provides the dao service of the application, used by the 
 			domain.model.
@@ -158,15 +158,15 @@
         <property name="cacheName">
             <value>org.esupportail.lecture.dao.impl.REMOTE_XML</value>
         </property>
-    </bean>   
-<!--  Déja déclaré
+    </bean>  
+    
     <bean id="cacheManager"
         class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
         <property name="configLocation">
             <value>classpath:ehcache.xml</value>
         </property>
     </bean>
--->    
+ 
     <!--  Fin de mes ajouts -->
 <!-- Non encore importé 	
 	<bean 
@@ -180,7 +180,7 @@
 		</description>
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-		-->
+		
 	<bean 
 		id="transactionManager" 
 		parent="hibernateSessionFactoryContainer"
@@ -206,5 +206,5 @@
 			</props>
 		</property>
 	</bean>
-
+-->
 </beans>

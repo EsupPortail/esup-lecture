@@ -9,9 +9,9 @@ import org.esupportail.lecture.domain.beans.UserBean;
 public class ExternalServiceImpl implements ExternalService {
 
 	/**
-	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUser()
+	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
 	 */
-	public UserBean getConnectedUser() {
+	public String getConnectedUserId() {
 		// TODO Auto-generated method stub
 		return null;
 	}

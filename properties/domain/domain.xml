@@ -19,37 +19,24 @@
 	***************************************************-->
 	<bean
 		id="facadeService"
-		class="org.esupportail.lecture.domain.FacadeServiceImpl"
-		>
+		class="org.esupportail.lecture.domain.FacadeService">
 		<description>
 			This bean provides the facade service (domain and external) of the application, used by the 
 			web interface and the command-line calls.
 			It must extend abstract org.esupportail.lecture.domain.FacadeService.
 		</description>
-		<!-- for RAYMOND 
-		<property name="domainService" ref="domainServiceTest"/>
-		<property name="externalService" ref="externalServiceTest"/>
-		-->
-		<!-- for GWENAELLE --> 
-		<property name="domainService" ref="domainServiceImpl"/>
-		<property name="externalService" ref="externalServiceTest"/>
-		<!-- at the end 
-		<property name="domainService" ref="domainServiceImpl"/>
-		<property name="externalService" ref="externalServiceImpl"/>
-		-->
+		<property name="domainService" ref="domainService"/>
+		<property name="externalService" ref="externalService"/>
 	</bean>
-	
-	<!-- USED BY dao.xml. Need to see Pascal !!!  -->
-	<alias name="domainServiceTest" alias="domainService"/>
-	 
+ 
 	 
 	<!-- 
 	***************************************************
 				DOMAIN SERVICE 
 	***************************************************-->
-	<!-- not yet implemented -->
+	<!-- For Gwenaelle  -->
 	<bean 
-		id="domainServiceImpl"
+		id="domainService"
 		class="org.esupportail.lecture.domain.DomainServiceImpl">
 		<description>
 			This bean provides the domain service of the application, used by the 
@@ -59,18 +46,23 @@
 		<property name="channel">
 			<ref bean="channel"/>
 		</property>
-		
 	</bean> 
 
 
 	<!-- Main domain model class -->
 	<!-- not yet implemented -->
 	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
+		<description>
+			This bean is the main domain model class, used by the domainService.
+		</description>
+		<property name="daoService">
+			<ref bean="daoService"/>
+		</property>	
 	</bean>
 	
-
+	<!-- For Raymond
 	<bean
-		id="domainServiceTest"
+		id="domainService"
 		class="org.esupportail.lecture.domain.DomainServiceTest">
 		<description>
 			This bean provides the domain service of the application, used by the 
@@ -101,14 +93,15 @@
 			</list>
 		</constructor-arg>
 	</bean>
-
-
+	-->
+	
 	<!-- 
 	***************************************************
 				EXTERNAL SERVICE 
 	***************************************************-->
+	<!-- For later
 	<bean
-		id="externalServiceImpl"
+		id="externalService"
 		class="org.esupportail.lecture.domain.ExternalServiceImpl"
 		>
 		<description>
@@ -117,8 +110,9 @@
 			It must implement interface org.esupportail.lecture.domain.ExternalService.
 		</description>
 	</bean>
+	-->
 	<bean
-		id="externalServiceTest"
+		id="externalService"
 		class="org.esupportail.lecture.domain.ExternalServiceTest">
 		<description>
 			This bean provides the external (portlet and/or servlet) service of the application, used by the 
@@ -132,7 +126,7 @@
 	***************************************************
 				DOMAIN TEST 
 	***************************************************-->
-	<!-- not yet implemented -->
+	<!-- For Gwenaelle -->
 	<bean
 		id="domainTest"
 		class="org.esupportail.lecture.domain.DomainTest">

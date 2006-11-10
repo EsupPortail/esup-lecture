@@ -9,10 +9,10 @@ import org.esupportail.lecture.domain.beans.UserBean;
 public interface ExternalService {
 
 	/**
-	 * @return UserBean
+	 * @return String
 	 * @see FacadeService#getConnectedUser()
 	 */
-	public UserBean getConnectedUser();
+	public String getConnectedUserId();
 
 	/**
 	 * @return string

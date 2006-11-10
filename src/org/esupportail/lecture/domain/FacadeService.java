@@ -18,7 +18,7 @@ import org.springframework.util.Assert;
  * The facade service.
  * implement as an abstract class extended by FacadeServiceImpl
  */
-public abstract class FacadeService implements InitializingBean {
+public class FacadeService implements InitializingBean {
 
 
 	/*
@@ -40,11 +40,19 @@ public abstract class FacadeService implements InitializingBean {
 	/**
 	 * @return the current connected user
 	 */
-	public UserBean getConnectedUser() {
-		return externalService.getConnectedUser();
+	public String getConnectedUserId() {
+		return externalService.getConnectedUserId();
 	}
 	
+	/**	
+	 * @param userId id of connected user
+	 * @return the current connected user
+	 */
+	public UserBean getConnectedUser(String userId) {
+		return domainService.getConnectedUser(userId);
+	}	
 	/**
+	 * 
 	 * @return the current context id (portlet preference with name "context")
 	 */
 	public String getCurrentContextId() {
@@ -56,8 +64,8 @@ public abstract class FacadeService implements InitializingBean {
 	 * @return ContextBean
 	 */
 	// TODO tester
-	public ContextBean getContext(String contextId) {
-		return domainService.getContext(contextId);
+	public ContextBean getContext(String uid,String contextId) {
+		return domainService.getContext(uid,contextId);
 	}
 	
 	/**
@@ -66,8 +74,8 @@ public abstract class FacadeService implements InitializingBean {
 	 * @return List of CategoryBean obliged or subscribed by a user in a context
 	 */
 	// TODO tester
-	public List<CategoryBean> getCategories(String contextId, String uid) {
-		return domainService.getCategories(contextId, uid);
+	public List<CategoryBean> getCategories(String uid,String contextId) {
+		return domainService.getCategories(uid,contextId);
 	}
 	
 	/**
@@ -76,8 +84,8 @@ public abstract class FacadeService implements InitializingBean {
 	 * @return List of SourceBean obliged or subscribed by a user in a category
 	 */
 	// TODO tester
-	public List<SourceBean> getSources(String categoryId, String uid) {
-		return domainService.getSources(categoryId, uid);
+	public List<SourceBean> getSources(String uid,String categoryId) {
+		return domainService.getSources(uid, categoryId);
 	}
 	
 	/**
@@ -85,8 +93,8 @@ public abstract class FacadeService implements InitializingBean {
 	 * @param uid user ID
 	 * @return List of ItemBean in a source
 	 */
-	public List<ItemBean> getItems(String sourceId, String uid) {
-		return domainService.getItems(sourceId, uid);
+	public List<ItemBean> getItems(String sourceId,String uid) {
+		return domainService.getItems(uid,sourceId);
 	}
 
 	
@@ -96,9 +104,8 @@ public abstract class FacadeService implements InitializingBean {
 	 * @param sourceId source if
 	 * marck a Item form a source for a user as read
 	 */
-	// TODO tester
-	public void marckItemasRead(String uid, String itemId, String sourceId) {
-		domainService.marckItemasRead(uid, itemId, sourceId);
+	public void marckItemasRead(String uid, String sourceId,String itemId) {
+		domainService.marckItemasRead(uid, sourceId, itemId);
 	}
 
 	/**
@@ -107,17 +114,11 @@ public abstract class FacadeService implements InitializingBean {
 	 * @param sourceId source if
 	 * marck a Item form a source for a user as unread
 	 */
-	// TODO tester
-	public void marckItemasUnread(String uid, String itemId, String sourceId) {
+	public void marckItemasUnread(String uid, String sourceId, String itemId) {
 		domainService.marckItemasUnread(uid, itemId, sourceId);
 	}
 
-	/**
-	 * initialize domain application
-	 */
-	public void initialize(){
-		domainService.initialize();
-	}
+
 	
 	/* 
 	 ************************** ACCESSORS **********************************/

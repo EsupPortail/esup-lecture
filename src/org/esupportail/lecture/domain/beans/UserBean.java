@@ -22,4 +22,13 @@ public class UserBean {
 		this.uid = id;
 	}
 	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString(){
+		String string = "";
+		string +=" uid = " + uid.toString();
+		return string;
+	}
+	
 }
