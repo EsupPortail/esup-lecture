@@ -26,16 +26,13 @@
 			web interface and the command-line calls.
 			It must extend abstract org.esupportail.lecture.domain.FacadeService.
 		</description>
-		<!-- for RAYMOND --> 
-		<!-- -->
+		<!-- for RAYMOND 
 		<property name="domainService" ref="domainServiceTest"/>
 		<property name="externalService" ref="externalServiceTest"/>
-		<!-- -->
+		-->
 		<!-- for GWENAELLE --> 
-		<!-- 
 		<property name="domainService" ref="domainServiceImpl"/>
 		<property name="externalService" ref="externalServiceTest"/>
-		-->
 		<!-- at the end 
 		<property name="domainService" ref="domainServiceImpl"/>
 		<property name="externalService" ref="externalServiceImpl"/>
@@ -50,7 +47,7 @@
 	***************************************************
 				DOMAIN SERVICE 
 	***************************************************-->
-	<!-- not yet implemented
+	<!-- not yet implemented -->
 	<bean 
 		id="domainServiceImpl"
 		class="org.esupportail.lecture.domain.DomainServiceImpl">
@@ -59,17 +56,17 @@
 			web interface and the command-line calls.
 			It must implement interface org.esupportail.lecture.domain.DomainService.
 		</description>
-		<property name="myChannel">
+		<property name="channel">
 			<ref bean="channel"/>
 		</property>
+		
 	</bean> 
-	 -->
+
 
 	<!-- Main domain model class -->
-	<!-- not yet implemented
+	<!-- not yet implemented -->
 	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
 	</bean>
-	-->
 	
 
 	<bean
@@ -122,8 +119,7 @@
 	</bean>
 	<bean
 		id="externalServiceTest"
-		class="org.esupportail.lecture.domain.ExternalServiceTest"
-		>
+		class="org.esupportail.lecture.domain.ExternalServiceTest">
 		<description>
 			This bean provides the external (portlet and/or servlet) service of the application, used by the 
 			web interface and the command-line calls.
@@ -136,15 +132,16 @@
 	***************************************************
 				DOMAIN TEST 
 	***************************************************-->
-	<!-- not yet implemented
+	<!-- not yet implemented -->
 	<bean
 		id="domainTest"
-		class="org.esupportail.lecture.domain.DomainTest"
-		>
+		class="org.esupportail.lecture.domain.DomainTest">
 		<description>
 			This bean calls FacadeService instead of web interface and the command-line calls.
 		</description>
 	</bean>
-	-->
+
 	
+	
+
 </beans>

@@ -17,10 +17,20 @@
 		<config>properties/i18n/i18n.xml</config>
 		<config>properties/applicationContext.xml</config>
 		<config>properties/tags/tags.xml</config>
-		<config>properties/dao/dao.xml</config>
 		<config>properties/ldap/ldap.xml</config>
+		<config>properties/dao/dao.xml</config>
 	</configs>
 	<configSets>
+		<configSet>
+			<name>gwe</name>
+			<allowBeanDefinitionOverriding>false</allowBeanDefinitionOverriding>
+			<incomplete>false</incomplete>
+			<configs>
+				<config>properties/applicationContext.xml</config>
+				<config>properties/domain/domain.xml</config>
+				<config>properties/web/controllers.xml</config>
+			</configs>
+		</configSet>
 		<configSet>
 			<name>all</name>
 			<allowBeanDefinitionOverriding>false</allowBeanDefinitionOverriding>

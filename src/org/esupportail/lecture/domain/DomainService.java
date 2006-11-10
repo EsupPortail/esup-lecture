@@ -6,6 +6,7 @@ import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
+import org.esupportail.lecture.exceptions.FatalException;
 
 /**
  * @author bourges
@@ -59,5 +60,10 @@ public interface DomainService {
 	 * @see FacadeService#marckItemasUnread(String, String, String)
 	 */
 	void marckItemasUnread(String uid, String itemId, String sourceId);
+
+	/**
+	 *@see FacadeService#initialize() 
+	 */
+	void initialize();
 
 }

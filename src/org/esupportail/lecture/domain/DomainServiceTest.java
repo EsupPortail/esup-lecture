@@ -97,4 +97,9 @@ public class DomainServiceTest implements DomainService {
 
 	}
 
+	public void initialize() {
+		// TODO Auto-generated method stub : appelée au démarrage de la portlet
+		
+	}
+
 }

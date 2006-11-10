@@ -1,6 +1,7 @@
 package org.esupportail.lecture.domain;
 
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.domain.DomainTools;
 
 /**
  * @author bourges
@@ -12,8 +13,9 @@ public class ExternalServiceTest implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUser()
 	 */
 	public UserBean getConnectedUser() {
+		String uid = getUserAttribute(DomainTools.USER_ID);
 		UserBean ret = new UserBean();
-		ret.setUid("bourges");
+		ret.setUid(uid);
 		return ret;
 	}
 
@@ -21,7 +23,42 @@ public class ExternalServiceTest implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getCurrentContextId()
 	 */
 	public String getCurrentContextId() {
-		return "1";
+		return getPreferences(DomainTools.CONTEXT);
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.ExternalService#getPreferences(java.lang.String)
+	 */
+	public String getPreferences(String name) {
+		if (name.equalsIgnoreCase(DomainTools.CONTEXT)){
+			return "C1";
+		}else {
+			return null;
+		}
+	}
+
+	public String getUserAttribute(String attribute) {
+		if (attribute.equalsIgnoreCase(DomainTools.USER_ID)){
+			return "bourges";
+		}else if (attribute.equalsIgnoreCase("")){
+			return null;
+			// TODO compléter avec des attributs définis dans les groupes de visibilité
+		}
+		return null;
+	}
+
+	public String getUserProxyTicketCAS() {
+		// non encore utilisée
+		return null;
+	}
+
+	public boolean isUserInRole(String group) {
+		if(group.equalsIgnoreCase("")){
+			return true;
+			// TODO compléter avec des attributs définis dans les groupes de visibilité
+		}else {
+			return false;
+		}
 	}
 
 }

@@ -19,7 +19,11 @@ import org.springframework.util.Assert;
  * implement as an abstract class extended by FacadeServiceImpl
  */
 public abstract class FacadeService implements InitializingBean {
-	
+
+
+	/*
+	 ************************** PROPERTIES *********************************/	
+
 	/**
 	 * external service used to access portlet or servlet information
 	 */
@@ -29,6 +33,9 @@ public abstract class FacadeService implements InitializingBean {
 	 */
 	private DomainService domainService;
 	
+
+	/* 
+	 ************************** SERVICES **********************************/
 
 	/**
 	 * @return the current connected user
@@ -48,6 +55,7 @@ public abstract class FacadeService implements InitializingBean {
 	 * @param contextId id of context
 	 * @return ContextBean
 	 */
+	// TODO tester
 	public ContextBean getContext(String contextId) {
 		return domainService.getContext(contextId);
 	}
@@ -57,6 +65,7 @@ public abstract class FacadeService implements InitializingBean {
 	 * @param uid user ID
 	 * @return List of CategoryBean obliged or subscribed by a user in a context
 	 */
+	// TODO tester
 	public List<CategoryBean> getCategories(String contextId, String uid) {
 		return domainService.getCategories(contextId, uid);
 	}
@@ -66,6 +75,7 @@ public abstract class FacadeService implements InitializingBean {
 	 * @param uid user ID
 	 * @return List of SourceBean obliged or subscribed by a user in a category
 	 */
+	// TODO tester
 	public List<SourceBean> getSources(String categoryId, String uid) {
 		return domainService.getSources(categoryId, uid);
 	}
@@ -86,6 +96,7 @@ public abstract class FacadeService implements InitializingBean {
 	 * @param sourceId source if
 	 * marck a Item form a source for a user as read
 	 */
+	// TODO tester
 	public void marckItemasRead(String uid, String itemId, String sourceId) {
 		domainService.marckItemasRead(uid, itemId, sourceId);
 	}
@@ -96,9 +107,20 @@ public abstract class FacadeService implements InitializingBean {
 	 * @param sourceId source if
 	 * marck a Item form a source for a user as unread
 	 */
+	// TODO tester
 	public void marckItemasUnread(String uid, String itemId, String sourceId) {
 		domainService.marckItemasUnread(uid, itemId, sourceId);
 	}
+
+	/**
+	 * initialize domain application
+	 */
+	public void initialize(){
+		domainService.initialize();
+	}
+	
+	/* 
+	 ************************** ACCESSORS **********************************/
 
 	/**
 	 * @param domainService
@@ -113,6 +135,9 @@ public abstract class FacadeService implements InitializingBean {
 	public void setExternalService(ExternalService externalService) {
 		this.externalService = externalService;
 	}
+
+	/* 
+	 ************************** INIT **********************************/
 
 	/**
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()

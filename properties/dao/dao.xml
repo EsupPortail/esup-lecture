@@ -126,10 +126,53 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
+	<!-- 
+	***************************************************
+				DAO SERVICE
+	***************************************************-->
+	<!--  Je ne me suis occupée que du DAO SERVICE TEST 
+	Je laisse Raymond revoir le fichier dans sa globalité -->
+	<bean id="daoServiceTest" class="org.esupportail.lecture.dao.DaoServiceStub">
+		<description>
+			This bean provides the dao service of the application, used by the 
+			domain.model.
+			It must implement interface org.esupportail.lecture.domain.DAOService.
+		</description>
+		<property name="remoteXMLService">
+			<ref bean="daoServiceRemoteXML" />
+		</property>
+		
+	</bean>
+	   <bean id="daoServiceRemoteXML"
+        class="org.esupportail.lecture.dao.DaoServiceRemoteXML">
+        <property name="cacheProviderFacade" ref="cacheProviderFacade" />
+        <property name="cachingModel" ref="cachingModel" />
+    </bean>
+
+    <bean id="cacheProviderFacade"
+        class="org.springmodules.cache.provider.ehcache.EhCacheFacade">
+        <property name="cacheManager" ref="cacheManager" />
+    </bean>
+   
+    <bean id="cachingModel" class="org.springmodules.cache.provider.ehcache.EhCacheCachingModel">
+        <property name="cacheName">
+            <value>org.esupportail.lecture.dao.impl.REMOTE_XML</value>
+        </property>
+    </bean>   
+<!--  Déja déclaré
+    <bean id="cacheManager"
+        class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+        <property name="configLocation">
+            <value>classpath:ehcache.xml</value>
+        </property>
+    </bean>
+-->    
+    <!--  Fin de mes ajouts -->
+<!-- Non encore importé 	
 	<bean 
-		id="daoService" 
+		id="daoServiceImpl" 
 		parent="hibernateSessionFactoryContainer"
-		class="org.esupportail.lecture.dao.HibernateDaoService" 
+		class="org.esupportail.lecture.dao.DaoServiceHibernate" 
 		>
 		<description>
 			This bean is the DAO service, the interface used by the domain service to access 
@@ -137,7 +180,7 @@
 		</description>
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
-		
+		-->
 	<bean 
 		id="transactionManager" 
 		parent="hibernateSessionFactoryContainer"
