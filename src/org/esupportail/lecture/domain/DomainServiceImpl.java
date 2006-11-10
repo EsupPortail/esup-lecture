@@ -39,19 +39,17 @@ public class DomainServiceImpl implements DomainService {
 
 	/*
 	 ************************** Méthodes ************************************/
-	public List<CategoryBean> getCategories(String contextId, String uid) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 
 	public ContextBean getContext(String contextId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
+	
+	public List<CategoryBean> getCategories(String contextId, String uid) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	public List<SourceBean> getSources(String categoryId, String uid) {
 		// TODO Auto-generated method stub

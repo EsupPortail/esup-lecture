@@ -22,11 +22,13 @@ public class DomainTest {
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		
 		facadeService = (FacadeService)factory.getBean("facadeService");
+
 		System.out.println("Initialisation .......................");
 		facadeService.initialize();
 		System.out.println("Initialisation terminée.......................");
 		// TODO compléter pour chaque méthode à tester
 
+		
 		
 	}
 
