@@ -35,6 +35,7 @@
 				DOMAIN SERVICE 
 	***************************************************-->
 	<!-- For Gwenaelle  -->
+	<!-- 
 	<bean 
 		id="domainService"
 		class="org.esupportail.lecture.domain.DomainServiceImpl">
@@ -47,7 +48,7 @@
 			<ref bean="channel"/>
 		</property>
 	</bean> 
-
+	 -->
 
 	<!-- Main domain model class -->
 	<!-- not yet implemented -->
@@ -60,7 +61,7 @@
 		</property>	
 	</bean>
 	
-	<!-- For Raymond
+	<!-- For Raymond -->
 	<bean
 		id="domainService"
 		class="org.esupportail.lecture.domain.DomainServiceTest">
@@ -93,7 +94,6 @@
 			</list>
 		</constructor-arg>
 	</bean>
-	-->
 	
 	<!-- 
 	***************************************************

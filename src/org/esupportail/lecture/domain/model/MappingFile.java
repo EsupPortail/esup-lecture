@@ -44,7 +44,8 @@ public class MappingFile {
 	/**
 	 *  classpath relative path of the mapping file
 	 */
-	private static String mappingFilePath = "/mappings.xml";
+	private static String mappingFilePath = "/properties/mappings.xml";
+	//TODO externaliser mappingFilePath
 	
 	/**
 	 *  Base path of the mapping file

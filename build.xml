@@ -49,7 +49,7 @@
 
 	<target name="compile" depends="commons-compile" description="compile the project" />
 
-	<target name="deploy" depends="commons-deploy" description="deploy the application" />
+	<target name="deploy" depends="commons-deploy" description="deploy the application"/>
 
 	<target name="clean" depends="commons-clean" description="clean the project" />
 

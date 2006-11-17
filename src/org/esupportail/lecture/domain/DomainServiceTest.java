@@ -57,8 +57,11 @@ public class DomainServiceTest implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String)
 	 */
 	public ContextBean getContext(String uid, String contextId) {
-		// TODO Auto-generated method stub
-		return null;
+		ContextBean ret = null;
+		if (context.getId().equals(contextId)) {
+			ret = context;
+		}
+		return ret;
 	}
 
 

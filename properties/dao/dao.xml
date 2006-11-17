@@ -14,7 +14,6 @@
 	-->
 
 	<!-- Session factories -->
-<!-- 
 	<bean 
 		id="abstractHibernateSessionFactory" 
 		abstract="true" 
@@ -91,9 +90,7 @@
 			</props>
 		</property>
 	</bean>
--->
 	<!-- end of the session factories -->
-<!-- 
 	<bean 
 		id="hibernateSessionFactoryContainer" 
 		abstract="true" 
@@ -125,7 +122,7 @@
 		<property name="jdbcExceptionTranslator" ref="jdbcExceptionTranslator" />
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
--->
+
 	<!-- 
 	***************************************************
 				DAO SERVICE
@@ -159,20 +156,13 @@
             <value>org.esupportail.lecture.dao.impl.REMOTE_XML</value>
         </property>
     </bean>  
-    
-    <bean id="cacheManager"
-        class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-        <property name="configLocation">
-            <value>classpath:ehcache.xml</value>
-        </property>
-    </bean>
- 
+     
     <!--  Fin de mes ajouts -->
-<!-- Non encore importé 	
+    <!-- 
 	<bean 
 		id="daoServiceImpl" 
 		parent="hibernateSessionFactoryContainer"
-		class="org.esupportail.lecture.dao.DaoServiceHibernate" 
+		class="org.esupportail.lecture.dao.HibernateDaoService" 
 		>
 		<description>
 			This bean is the DAO service, the interface used by the domain service to access 
@@ -180,6 +170,7 @@
 		</description>
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
+     -->
 		
 	<bean 
 		id="transactionManager" 
@@ -206,5 +197,4 @@
 			</props>
 		</property>
 	</bean>
--->
 </beans>

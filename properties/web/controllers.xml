@@ -15,12 +15,10 @@
 
 	<bean id="homeController"
 		class="org.esupportail.lecture.web.controllers.HomeController"
-		parent="abstractContextAwareController"
-    	>
+		parent="abstractContextAwareController">
 		<description>A bean to manage the home page.</description>
 		<property name="facadeService" ref="facadeService"/>
 	</bean>
-
 
 	<bean id="abstractContextAwareController" 
 		abstract="true"
@@ -37,8 +35,7 @@
 
 	<bean id="sessionController"
 		class="org.esupportail.lecture.web.controllers.SessionController"
-		parent="abstractDomainAwareBean"
-		>
+		parent="abstractDomainAwareBean">
 		<description>
 			A bean to store the context of the application.
 		</description>
@@ -62,6 +59,7 @@
 				interface Resettable.
 			</description>
 			<list>
+			<!-- 
 				<value>sessionController</value>
 				<value>administratorsController</value>
 				<value>departmentsController</value>
@@ -70,6 +68,7 @@
 				<value>preferencesController</value>
 				<value>welcomeController</value>
 				<value>ldapSearchController</value>
+			 -->
 			</list>
 		</property>
 	</bean>

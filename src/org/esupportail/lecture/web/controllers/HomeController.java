@@ -141,10 +141,10 @@ public class HomeController extends AbstractContextAwareController {
 		}
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		if (item.isRead()) {
-			facadeService.marckItemasUnread(user.getUid(), item.getId(), selectedCategory.getId());
+			facadeService.marckItemasUnread(user.getUid(), selectedCategory.getId(), item.getId());
 		}
 		else {
-			facadeService.marckItemasRead(user.getUid(), item.getId(), selectedCategory.getId());			
+			facadeService.marckItemasRead(user.getUid(), selectedCategory.getId(), item.getId());			
 		}
 		item.setRead(!item.isRead());
 		return "OK";
@@ -191,7 +191,8 @@ public class HomeController extends AbstractContextAwareController {
 		Assert.notNull(facadeService, 
 				"property facadeService of class " + this.getClass().getName() + " can not be null");
 		//init the user
-		user = facadeService.getConnectedUser();
+		String userId = facadeService.getConnectedUserId();
+		user = facadeService.getConnectedUser(userId);
 		//init the contextId
 		ContextId = facadeService.getCurrentContextId();
 	}
@@ -406,10 +407,10 @@ public class HomeController extends AbstractContextAwareController {
 			//We evalute the context and we put it in the virtual session
 			context = new ContextWebBean();
 			String contextId = facadeService.getCurrentContextId(); 
-			ContextBean contextBean = facadeService.getContext(contextId);
+			ContextBean contextBean = facadeService.getContext(user.getUid(), contextId);
 			context.setName(contextBean.getName());
 			context.setId(contextBean.getId());
-			List<CategoryBean> categories = facadeService.getCategories(ContextId, user.getUid());
+			List<CategoryBean> categories = facadeService.getCategories(user.getUid(), ContextId);
 			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
 			if (categories != null) {
 				Iterator<CategoryBean> iter = categories.iterator();
@@ -419,7 +420,7 @@ public class HomeController extends AbstractContextAwareController {
 					categoryWebBean.setId(categoryBean.getId());
 					categoryWebBean.setName(categoryBean.getName());
 					//find sources in this category
-					List<SourceBean> sources = facadeService.getSources(categoryBean.getId(), user.getUid());
+					List<SourceBean> sources = facadeService.getSources(user.getUid(), categoryBean.getId());
 					List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
 					if (sources != null) {
 						Iterator<SourceBean> iter2 = sources.iterator();
