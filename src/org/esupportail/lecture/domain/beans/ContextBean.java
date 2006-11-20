@@ -1,5 +1,8 @@
 package org.esupportail.lecture.domain.beans;
 
+import org.esupportail.lecture.domain.model.Context;
+import org.esupportail.lecture.domain.model.CustomContext;
+
 /**
  * @author bourges
  * used to store context informations
@@ -13,6 +16,23 @@ public class ContextBean {
 	 * name of context
 	 */
 	private String name;
+	/**
+	 * description of the context
+	 */
+	private String description;
+
+
+	/**
+	 * @param customContext
+	 */
+	public ContextBean(CustomContext customContext){
+		Context context = customContext.getContext();
+
+		setName(context.getName());
+		setDescription(context.getDescription());
+		setId(context.getId());
+	}
+	
 	/**
 	 * get the id of the context
 	 * @return id of context
@@ -42,6 +62,20 @@ public class ContextBean {
 		this.name = name;
 	}
 
+	/**
+	 * @return description of context
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description description of the context
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 	public String toString(){
 		String string = "";
 		string += " Id = " + id.toString() + "\n";

@@ -38,12 +38,6 @@ public class CustomContext implements CustomElement {
 	protected static final Log log = LogFactory.getLog(CustomContext.class);
 	
 	/**
-	 * Used for tests
-	 */
-	public String test = "CustomCharge";
-	
-	
-	/**
 	 * The context Id of this customization refered to
 	 */
 	private String contextId;
@@ -69,12 +63,7 @@ public class CustomContext implements CustomElement {
 	 */
 	private UserProfile userProfile;
 	
-	/**
-	 * Selected element to be display on right part window
-	 */
-	// TODO mettre dans la BDD ?
-	private CustomElement selectedElement;
-	
+
 	
 	/*
 	 ************************** INIT *********************************/	
@@ -85,7 +74,6 @@ public class CustomContext implements CustomElement {
 	 */
 	public CustomContext() {
 		subscriptions = new Hashtable<String,CustomManagedCategory>();
-		selectedElement = this;
 	}
 	
 	/**
@@ -93,7 +81,6 @@ public class CustomContext implements CustomElement {
 	 */
 	public CustomContext(String contextId, UserProfile user) {
 		subscriptions = new Hashtable<String,CustomManagedCategory>();
-		selectedElement = this;
 		this.contextId = contextId;
 		this.userProfile = user;
 	}
@@ -101,6 +88,34 @@ public class CustomContext implements CustomElement {
 	/*
 	 *************************** METHODS ************************************/
 
+	/** 
+	 * Update data contained in this customContext by visibilty evaluation
+	 * on managedCategories, in order to update list of customManagedCategories
+	 * @param externalService
+	 */
+	protected void update(ExternalService externalService) {
+		
+		getContext().updateCustomContext(this,externalService);
+		// later :  Personnal Categories
+		
+		Iterator<CustomManagedCategory> iterator = subscriptions.values().iterator();
+		while(iterator.hasNext()){
+			CustomManagedCategory customManagedCategory = iterator.next();
+			customManagedCategory.update(externalService);
+		}	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public List<ManagedCategoryProfile> getVisibleManagedCategoryProfile(ExternalService externalService) {
 		
 		return getContext().updateCustomContext(this,externalService);
@@ -110,21 +125,7 @@ public class CustomContext implements CustomElement {
 	
 	
 	
-	/** Update data contains in this customContext :
-	 *  - evaluation visibilty on managedCategories to update list of customManagedCategories
-	 * @param portletService
-	 */
-	public void updateData(ExternalService externalService) {
-		
-		getContext().updateCustomContext(this,externalService);
-		// later :  Personnal Categories
-		
-		Iterator iterator = subscriptions.values().iterator();
-		while(iterator.hasNext()){
-			CustomManagedCategory customManagedCategory = (CustomManagedCategory)iterator.next();
-			customManagedCategory.updateData(externalService);
-		}	
-	}
+
 	
 	
 	/**
@@ -225,19 +226,7 @@ public class CustomContext implements CustomElement {
 		this.userProfile = userprofile;
 	}
 
-	/**
-	 * @return Returns the selectedElement.
-	 */
-	public CustomElement getSelectedElement() {
-		return selectedElement;
-	}
 
-	/**
-	 * @param selectedElement The selectedElement to set.
-	 */
-	public void setSelectedElement(CustomElement selectedElement) {
-		this.selectedElement = selectedElement;
-	}
 
 	public String getName() {
 		return getContext().getName();

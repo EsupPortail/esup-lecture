@@ -98,20 +98,21 @@ public class Context {
 	
 
 	/**
-	 * Load managedCategories of thsi context,
+	 * Load managedCategories of this context,
 	 * Evaluate user visibility on managed categories of the context 
 	 * And update customContext according to visibilities
 	 * @param customContext customContext to upadte
-	 * @param portletService access to portlet service
+	 * @param externalService access to portlet service
+	 * @return list of ManagedCategoryProfiles defined in this context
 	 */
 	public List<ManagedCategoryProfile> updateCustomContext(CustomContext customContext, ExternalService externalService) {
 		//TODO optimiser le nombre de fois où on évalue tout ça !!!
 		//     (trustCategory + reel chargement)
 		
-		Iterator iterator = managedCategoryProfilesSet.iterator();
-		List<ManagedCategoryProfile> visibleCategories = new Vector();
+		Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
+		List<ManagedCategoryProfile> visibleCategories = new Vector<ManagedCategoryProfile>();
 		while (iterator.hasNext()) {
-			ManagedCategoryProfile mcp = (ManagedCategoryProfile) iterator.next();
+			ManagedCategoryProfile mcp = iterator.next();
 			mcp.loadCategory(externalService);
 			if(mcp.evaluateVisibilityAndUpdateCustomContext(externalService,customContext)) {
 				visibleCategories.add(mcp);

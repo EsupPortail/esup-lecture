@@ -16,21 +16,23 @@ import org.esupportail.lecture.exceptions.FatalException;
 public interface DomainService {
 
 	/**
-	 * @param userId
+	 * @param uid
 	 * @return UserBean
-	 * @see FacadeService#getConnectedUser()
+	 * @see FacadeService#getConnectedUser(String)
 	 */
-	UserBean getConnectedUser(String userId);
+	UserBean getConnectedUser(String uid);
 	/**
+	 * @param uid
 	 * @param contextId
+	 * @param externalService access to external service
 	 * @return ContextBean
-	 * @see FacadeService#getContext(String)
+	 * @see FacadeService#getContext(String,String)
 	 */
-	ContextBean getContext(String uid,String contextId);
+	ContextBean getContext(String uid,String contextId,ExternalService externalService);
 
 	/**
+	 * @param uid
 	 * @param contextId 
-	 * @param uid 
 	 * @return List<CategoryBean>
 	 * @see FacadeService#getCategories(String, String)
 	 */

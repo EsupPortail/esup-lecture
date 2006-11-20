@@ -29,7 +29,7 @@ public class DomainTest {
 		facadeService = (FacadeService)factory.getBean("facadeService");
 
 		testGetConnectedUser();
-		//testGetContext();
+		testGetContext();
 		// TODO compléter pour chaque méthode à tester
 	
 		
@@ -43,6 +43,7 @@ public class DomainTest {
 	 * Test of servide "getConnectedUser"
 	 */
 	private static void testGetConnectedUser() {
+		System.out.println("******************************************************");
 		System.out.println("Test du service getConnectedUser() : ");
 		userId = facadeService.getConnectedUserId();
 		UserBean user = facadeService.getConnectedUser(userId);
@@ -51,13 +52,13 @@ public class DomainTest {
 	}
 	
 	/**
-	 * Test of servide "getContext"
+	 * Test of service "getContext"
 	 */
 	private static void testGetContext() {
+		System.out.println("******************************************************");
 		System.out.println("Test du service getContext() : ");
 		contextId = facadeService.getCurrentContextId();
 		ContextBean context = facadeService.getContext(userId,contextId);
-
 		System.out.println(context.toString());
 		System.out.println("\n");
 	}

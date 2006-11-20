@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.ExternalService;
 
 
 
@@ -50,6 +51,13 @@ public class UserProfile {
 		customContexts = new Hashtable<String,CustomContext>();
 	}
 	
+	/**
+	 * Constructor
+	 */
+	public UserProfile(String userId){
+		customContexts = new Hashtable<String,CustomContext>();
+		this.setUserId(userId);
+	}
 	/*
 	 *************************** METHODS ************************************/
 
@@ -60,13 +68,15 @@ public class UserProfile {
 	 * @param contextId identifier of the context refered by the customContext
 	 * @return customContext (or null)
 	 */
-	public CustomContext getCustomContext(String contextId){
+	public CustomContext getCustomContext(String contextId,ExternalService externalService){
 		CustomContext customContext = 
 				customContexts.get(contextId);
 		if (customContext == null){
 			customContext = new CustomContext(contextId,this);
 			addCustomContext(customContext);
 		}
+//		customContext.update(externalService);
+		
 		return customContext;
 	}
 	

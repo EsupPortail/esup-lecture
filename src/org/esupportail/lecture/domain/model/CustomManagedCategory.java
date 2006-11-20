@@ -47,6 +47,18 @@ public class CustomManagedCategory extends CustomCategory {
 	 ************************** METHODS *********************************/	
 	
 	/**
+	 * Update data contained in this customManagedCategory by visibilty evaluation
+	 * on managedCategories, in order to update list of customManagedCategories
+	 * @param externalService
+	 */
+	public void update(ExternalService externalService) {	
+		ManagedCategoryProfile managedCategory = (ManagedCategoryProfile)getCategoryProfile();
+		managedCategory.updateCustomCategory(this,externalService);
+		// later : Personnal Sources;
+		
+	}
+	
+	/**
 	 * Add a custom source to this custom category if no exists after creating it.
 	 * @param profile the managed source profile associated to the customManagedSource
 	 */
@@ -72,12 +84,7 @@ public class CustomManagedCategory extends CustomCategory {
 		return DomainTools.getChannel().getManagedCategoryProfile(this.categoryProfileID);
 	}
 	
-	public void updateData(ExternalService externalService) {	
-		ManagedCategoryProfile managedCategory = (ManagedCategoryProfile)getCategoryProfile();
-		managedCategory.updateCustomCategory(this,externalService);
-		// later : Personnal Sources;
-		
-	}
+
 	
 	
 	/*

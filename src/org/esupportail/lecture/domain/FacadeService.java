@@ -18,6 +18,10 @@ import org.springframework.util.Assert;
  * The facade service.
  * implement as an abstract class extended by FacadeServiceImpl
  */
+/**
+ * @author gbouteil
+ *
+ */
 public class FacadeService implements InitializingBean {
 
 
@@ -45,11 +49,11 @@ public class FacadeService implements InitializingBean {
 	}
 	
 	/**	
-	 * @param userId id of connected user
-	 * @return the current connected user
+	 * @param uid id of connected user
+	 * @return a UserBean of the current connected user
 	 */
-	public UserBean getConnectedUser(String userId) {
-		return domainService.getConnectedUser(userId);
+	public UserBean getConnectedUser(String uid) {
+		return domainService.getConnectedUser(uid);
 	}	
 	/**
 	 * 
@@ -59,13 +63,14 @@ public class FacadeService implements InitializingBean {
 		return externalService.getCurrentContextId();
 	}
 	
+
 	/**
-	 * @param contextId id of context
-	 * @return ContextBean
+	 * @param uid id of the connected user
+	 * @param contextId id of the current context
+	 * @return a ContextBean of the current context of the connected user
 	 */
-	// TODO tester
 	public ContextBean getContext(String uid,String contextId) {
-		return domainService.getContext(uid,contextId);
+		return domainService.getContext(uid,contextId,externalService);
 	}
 	
 	/**

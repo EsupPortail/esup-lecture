@@ -31,7 +31,7 @@ public class ExternalServiceTest implements ExternalService {
 	 */
 	public String getPreferences(String name) {
 		if (name.equalsIgnoreCase(DomainTools.CONTEXT)){
-			return "1";
+			return "c1";
 		}else {
 			return null;
 		}

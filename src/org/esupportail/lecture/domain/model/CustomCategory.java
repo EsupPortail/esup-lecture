@@ -64,11 +64,12 @@ public abstract class CustomCategory implements CustomElement {
 	
 	public abstract List<CustomSource> getSortedCustomSources();
 	
-	/** Update data contains in this customCategory :
-	 *  - evaluation visibilty on managedSources to update list of customManagedSources
-	 * @param portletService
+	/** 
+	 * Update data contained in this customCategory by visibilty evaluation
+	 * on managedSources, in order to update list of customManagedSources
+	 * @param externalService
 	 */
-	public abstract void updateData(ExternalService externalService); 
+	public abstract void update(ExternalService externalService); 
 	
 	
 }
