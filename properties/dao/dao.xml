@@ -27,6 +27,7 @@
 			value="classpath:/properties/dao/hibernate/hibernate.cfg.xml" />
 		<property name="mappingLocations">
 			<list>
+			<!-- 
 				<value>
 					classpath:/properties/dao/hibernate/mapping/User.hbm.xml
 				</value>
@@ -42,6 +43,7 @@
 				<value>
 					classpath:/properties/dao/hibernate/mapping/VersionManager.hbm.xml
 				</value>
+			 -->
 			</list>
 		</property>
 	</bean>
