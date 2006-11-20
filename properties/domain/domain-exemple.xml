@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+	>
+
+	<!-- 
+		/properties/domain/domain.xml
+		The configuration file for domain services.
+		This file is referenced by /properties/applicationContext.xml.
+	-->
+
+
+	<!-- 
+	***************************************************
+				FACADE SERVICE 
+	***************************************************-->
+	<bean
+		id="facadeService"
+		class="org.esupportail.lecture.domain.FacadeService">
+		<description>
+			This bean provides the facade service (domain and external) of the application, used by the 
+			web interface and the command-line calls.
+			It must extend abstract org.esupportail.lecture.domain.FacadeService.
+		</description>
+		<property name="domainService" ref="domainService"/>
+		<property name="externalService" ref="externalService"/>
+	</bean>
+ 
+	 
+	<!-- 
+	***************************************************
+				DOMAIN SERVICE 
+	***************************************************-->
+	<!-- For Gwenaelle  -->
+	<!-- 
+	<bean 
+		id="domainService"
+		class="org.esupportail.lecture.domain.DomainServiceImpl">
+		<description>
+			This bean provides the domain service of the application, used by the 
+			web interface and the command-line calls.
+			It must implement interface org.esupportail.lecture.domain.DomainService.
+		</description>
+		<property name="channel">
+			<ref bean="channel"/>
+		</property>
+	</bean> 
+	 -->
+
+	<!-- Main domain model class -->
+	<!-- not yet implemented -->
+	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
+		<description>
+			This bean is the main domain model class, used by the domainService.
+		</description>
+		<property name="daoService">
+			<ref bean="daoService"/>
+		</property>	
+	</bean>
+	
+	<!-- For Raymond -->
+	<bean
+		id="domainService"
+		class="org.esupportail.lecture.domain.DomainServiceTest">
+		<description>
+			This bean provides the domain service of the application, used by the 
+			web interface and the command-line calls.
+			It must implement interface org.esupportail.lecture.domain.DomainService.
+		</description>
+		<constructor-arg ref="context"/>
+		<constructor-arg>
+			<list>
+				<ref bean="categorie1" />
+				<ref bean="categorie2" />
+				<ref bean="categorie3" />
+			</list>
+		</constructor-arg>
+		<constructor-arg>
+			<list>
+				<ref bean="source1" />
+				<ref bean="source2" />
+				<ref bean="source3" />
+				<ref bean="source4" />
+			</list>
+		</constructor-arg>
+		<constructor-arg>
+			<list>
+				<ref bean="item1" />
+				<ref bean="item2" />
+				<ref bean="item3" />
+			</list>
+		</constructor-arg>
+	</bean>
+	
+	<!-- 
+	***************************************************
+				EXTERNAL SERVICE 
+	***************************************************-->
+	<!-- For later
+	<bean
+		id="externalService"
+		class="org.esupportail.lecture.domain.ExternalServiceImpl"
+		>
+		<description>
+			This bean provides the external (portlet and/or servlet) service of the application, used by the 
+			web interface and the command-line calls.
+			It must implement interface org.esupportail.lecture.domain.ExternalService.
+		</description>
+	</bean>
+	-->
+	<bean
+		id="externalService"
+		class="org.esupportail.lecture.domain.ExternalServiceTest">
+		<description>
+			This bean provides the external (portlet and/or servlet) service of the application, used by the 
+			web interface and the command-line calls.
+			It must implement interface org.esupportail.lecture.domain.ExternalService.
+		</description>
+	</bean>
+
+
+	<!-- 
+	***************************************************
+				DOMAIN TEST 
+	***************************************************-->
+	<!-- For Gwenaelle -->
+	<bean
+		id="domainTest"
+		class="org.esupportail.lecture.domain.DomainTest">
+		<description>
+			This bean calls FacadeService instead of web interface and the command-line calls.
+		</description>
+	</bean>
+
+	
+	
+
+</beans>
