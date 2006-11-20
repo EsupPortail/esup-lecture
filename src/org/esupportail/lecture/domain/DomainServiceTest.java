@@ -108,7 +108,7 @@ public class DomainServiceTest implements DomainService {
 
 	public ContextBean getContext(String uid, String contextId, ExternalService externalService) {
 		// TODO Auto-generated method stub
-		return null;
+		return getContext(uid, contextId);
 	}
 
 	public List<CategoryBean> getCategories(String uid, String contextId, ExternalService externalService) {

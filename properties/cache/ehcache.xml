@@ -12,6 +12,10 @@
     	Note: EhCache is disabled by default in hibernate.cfg.xml.
     -->
 
+	<cache name="org.esupportail.lecture.dao.DaoServiceRemoteXML"
+		maxElementsInMemory="300" eternal="false" timeToIdleSeconds="500"
+		timeToLiveSeconds="500" overflowToDisk="true" />
+
     <cache 
     	name="org.esupportail.lecture.domain.beans.User"
     	maxElementsInMemory="1000" 

@@ -140,13 +140,13 @@
 		<property name="remoteXMLService">
 			<ref bean="daoServiceRemoteXML" />
 		</property>
-		
 	</bean>
-	   <bean id="daoServiceRemoteXML"
+
+	<bean id="daoServiceRemoteXML"
         class="org.esupportail.lecture.dao.DaoServiceRemoteXML">
         <property name="cacheProviderFacade" ref="cacheProviderFacade" />
-        <property name="cachingModel" ref="cachingModel" />
-    </bean>
+		<property name="cachingModel" ref="cachingModel" />
+	</bean>
 
     <bean id="cacheProviderFacade"
         class="org.springmodules.cache.provider.ehcache.EhCacheFacade">
@@ -155,7 +155,7 @@
    
     <bean id="cachingModel" class="org.springmodules.cache.provider.ehcache.EhCacheCachingModel">
         <property name="cacheName">
-            <value>org.esupportail.lecture.dao.impl.REMOTE_XML</value>
+            <value>org.esupportail.lecture.dao.DaoServiceRemoteXML</value>
         </property>
     </bean>  
      

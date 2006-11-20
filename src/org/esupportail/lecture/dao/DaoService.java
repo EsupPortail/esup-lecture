@@ -38,9 +38,7 @@ public interface DaoService {
 
 	/**
 	 * Get a managed category from a remote place
-	 * @param urlCategory url of the remote category
-	 * @param ttl ttl of the category
-	 * @param profileId identifier of the managed category profile referer
+	 * @param profile of the category to get
 	 * @return the managedCategory
 	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile);
@@ -53,8 +51,19 @@ public interface DaoService {
 
 	public Category getManagedCategory(ManagedCategoryProfile profile, String ptCas);
 
+	/**
+	 * get a source from a remote place
+	 * @param profile of the source to get
+	 * @param ptCas proxy ticket CAS used in case of CAS protected source
+	 * @return the source
+	 */
 	public Source getSource(ManagedSourceProfile profile, String ptCas);
 
+	/**
+	 * get a source from a remote place
+	 * @param profile of the source to get
+	 * @return the source
+	 */
 	public Source getSource(ManagedSourceProfile profile);
 
 	public void updateCustomContext(CustomContext customContext);

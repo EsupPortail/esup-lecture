@@ -13,7 +13,7 @@
 
 	<!-- TEST DATA -->
 	<bean id="context" class="org.esupportail.lecture.domain.beans.ContextBean">
-		<property name="id" value="1" />
+		<property name="id" value="c1" />
 		<property name="name" value="Test context !" />
 	</bean>
 	<bean id="categorie1" class="org.esupportail.lecture.domain.beans.CategoryBean">

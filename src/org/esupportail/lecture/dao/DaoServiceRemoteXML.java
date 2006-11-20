@@ -2,8 +2,6 @@ package org.esupportail.lecture.dao;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Date;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
 import org.apache.commons.configuration.Configuration;
@@ -30,6 +28,10 @@ import org.esupportail.lecture.exceptions.ErrorException;
 import org.springmodules.cache.CachingModel;
 import org.springmodules.cache.provider.CacheProviderFacade;
 
+/**
+ * @author bourges
+ * this class is used to get remote XML contents (category, source) and manage cache on this contents
+ */
 public class DaoServiceRemoteXML {
 	/**
 	 * Log instance 
@@ -51,8 +53,6 @@ public class DaoServiceRemoteXML {
 	 * hash of last last Access in milliseconds by url of Source
 	 */
 	private Hashtable<String, Long> sourceLastAccess = new Hashtable<String, Long>();
-	
-	
 	
 	/**
 	 * @throws ErrorException 
@@ -114,7 +114,7 @@ public class DaoServiceRemoteXML {
 		return ret;
 	}
 	
-		/**
+	/**
 	 * get a managed category from the web without cache
 	 * @param profile ManagedCategoryProfile of Managed category to get
 	 * @return Managed category
@@ -183,6 +183,9 @@ public class DaoServiceRemoteXML {
 		return ret;
 	}
 	
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getSource(ManagedSourceProfile)
+	 */
 	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
 		Source ret = new GlobalSource();
 		try {
@@ -232,22 +235,18 @@ public class DaoServiceRemoteXML {
 		return ret;
 	}
 
-
-	public CacheProviderFacade getCacheProviderFacade() {
-		return cacheProviderFacade;
-	}
-
-
+	/**
+	 * used by Spring at init
+	 * @param cacheProviderFacade to set
+	 */
 	public void setCacheProviderFacade(CacheProviderFacade cacheProviderFacade) {
 		this.cacheProviderFacade = cacheProviderFacade;
 	}
 
-
-	public CachingModel getCachingModel() {
-		return cachingModel;
-	}
-
-
+	/**
+	 * used by Spring at init
+	 * @param cachingModel to set
+	 */
 	public void setCachingModel(CachingModel cachingModel) {
 		this.cachingModel = cachingModel;
 	}

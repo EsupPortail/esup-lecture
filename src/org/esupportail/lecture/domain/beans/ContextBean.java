@@ -23,6 +23,13 @@ public class ContextBean {
 
 
 	/**
+	 * default contructor
+	 */
+	public ContextBean(){
+		super();
+	}
+	
+	/**
 	 * @param customContext
 	 */
 	public ContextBean(CustomContext customContext){

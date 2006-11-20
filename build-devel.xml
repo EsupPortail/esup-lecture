@@ -84,6 +84,14 @@
 	    </java>
 	</target>	
 	
+	<target name="test-dao" depends="commons-compile,check-commons-batch-config" description="test the domain application of esup-lecture"> 
+		<java fork="true" dir="${build.dir}" classname="org.esupportail.lecture.test.drivers.TestDAORemoteXMLRaymond">
+			<classpath refid="batch.classpath" />
+			<sysproperty key="log4j.configuration" value="file:${log4j.batch-config}" />
+			<arg value="test-domain"/>
+	    </java>
+	</target>	
+
 	
 </project>
 
