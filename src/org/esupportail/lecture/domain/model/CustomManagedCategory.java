@@ -58,6 +58,9 @@ public class CustomManagedCategory extends CustomCategory {
 		
 	}
 	
+	/* see later */
+	
+	
 	/**
 	 * Add a custom source to this custom category if no exists after creating it.
 	 * @param profile the managed source profile associated to the customManagedSource

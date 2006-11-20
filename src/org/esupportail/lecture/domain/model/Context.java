@@ -121,7 +121,7 @@ public class Context {
 		return visibleCategories;
 	}
 
-	
+	/* see later */
 	
 	/** 
 	 * Return the string containing context content : 

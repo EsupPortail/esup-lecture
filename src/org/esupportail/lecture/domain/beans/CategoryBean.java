@@ -1,5 +1,8 @@
 package org.esupportail.lecture.domain.beans;
 
+import org.esupportail.lecture.domain.model.CategoryProfile;
+import org.esupportail.lecture.domain.model.CustomCategory;
+
 /**
  * @author bourges
  * used to store category informations
@@ -14,9 +17,39 @@ public class CategoryBean {
 	 */
 	private String name;
 	/**
+	 * description of the category
+	 */
+	private String description;
+	/**
 	 * store if category is folded or not
 	 */
 	private boolean folded;
+	
+	/**
+	 * Constructor
+	 */
+	public CategoryBean(){}
+	
+	public CategoryBean(CustomCategory customCategory){
+		CategoryProfile profile = customCategory.getCategoryProfile();
+		
+		setName(profile.getName());
+		setDescription(profile.getDescription());
+		setId(profile.getId());
+	}
+	
+	/**
+	 * @return description of the category
+	 */
+	public String getDescription() {
+		return description;
+	}
+	/**
+	 * @param description description of the category
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	/**
 	 * @return if category is folded or not
 	 */
@@ -54,4 +87,18 @@ public class CategoryBean {
 		this.name = name;
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString(){
+		String string = "";
+		string += "     Id = " + id.toString() + "\n";
+		string += "     Name = " + name.toString() + "\n";
+		if (description != null){
+			string += "     Desc = " + description.toString() + "\n\n";
+		}
+		return string;
+	}
+	
 }

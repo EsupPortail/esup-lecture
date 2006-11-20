@@ -111,6 +111,11 @@ public class DomainServiceTest implements DomainService {
 		return null;
 	}
 
+	public List<CategoryBean> getCategories(String uid, String contextId, ExternalService externalService) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

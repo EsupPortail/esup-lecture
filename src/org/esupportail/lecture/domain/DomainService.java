@@ -24,19 +24,19 @@ public interface DomainService {
 	/**
 	 * @param uid
 	 * @param contextId
-	 * @param externalService access to external service
 	 * @return ContextBean
 	 * @see FacadeService#getContext(String,String)
 	 */
-	ContextBean getContext(String uid,String contextId,ExternalService externalService);
+	ContextBean getContext(String uid,String contextId);
 
 	/**
 	 * @param uid
-	 * @param contextId 
+	 * @param contextId
+	 * @param externalService access to external service 
 	 * @return List<CategoryBean>
 	 * @see FacadeService#getCategories(String, String)
 	 */
-	List<CategoryBean> getCategories(String uid,String contextId);
+	List<CategoryBean> getCategories(String uid,String contextId,ExternalService externalService);
 
 	/**
 	 * @param categoryId 

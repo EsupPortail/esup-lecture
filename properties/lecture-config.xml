@@ -9,11 +9,11 @@
 	  <description>C'est le context 1 ZZZZZZZZZZZZZZZ</description> 
 	  <refCategoryProfile refId="cp1"/>
   	  <refCategoryProfile refId="cp2"/>
-  <!--	  <refCategoryProfile refId="cp3"/>
+  	  <refCategoryProfile refId="cp3"/>
   	  <refCategoryProfile refId="cp4"/>
-	  -->
+	
 	</context>
-<!--	<context 
+	<context 
 	  name = "context2"
 	  id = "c2">
 	  <description>C'est le context 2</description> 
@@ -28,8 +28,7 @@
   	  <refCategoryProfile refId="cp3"/>
   	  <refCategoryProfile refId="cp4"/>  
 	</context>
-	-->
-	<!-- JE VOIS -->
+
 	<categoryProfile 
 		name="categorie1"
 		
@@ -107,7 +106,7 @@
 			</obliged>	
 		</visibility>
 	</categoryProfile>
-	<!--
+	
 		<categoryProfile 
 		name="categorie3"
 		id="cp3"
@@ -123,9 +122,9 @@
 				<group
 					name="group31"/>
 			</allowed>	
-		-->
+	
 			<!-- autoSubscribed not yet supported -->	
-	<!--		<autoSubscribed/>
+			<autoSubscribed/>
 			<obliged/>
 		</visibility>
 	</categoryProfile>
@@ -144,9 +143,9 @@
 				<group
 					name="group41"/>
 			</allowed>
-		-->
+		
 			<!-- autoSubscribed not yet supported -->
-	<!--		<autoSubscribed>
+			<autoSubscribed>
 				<regular
 					attribute="attr42"
 					value="val42"/>
@@ -162,5 +161,5 @@
 			</obliged>
 		</visibility>
 	</categoryProfile>
-		-->
+		
 </channelConfig>

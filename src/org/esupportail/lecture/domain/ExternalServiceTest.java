@@ -43,8 +43,20 @@ public class ExternalServiceTest implements ExternalService {
 		}else if (attribute.equalsIgnoreCase("")){
 			return null;
 			// TODO compléter avec des attributs définis dans les groupes de visibilité
+		}else if(attribute.equalsIgnoreCase("attr21")){
+			return "";//"val21";
+		}else if(attribute.equalsIgnoreCase("sn")){
+			return "User";
+		}else if(attribute.equalsIgnoreCase("attr41")){
+			return "val41";
+		}else if(attribute.equalsIgnoreCase("attr43")){
+			return "val43";
+		}else if(attribute.equalsIgnoreCase("attr11")){
+			return "";//"val11";
+		}else if(attribute.equalsIgnoreCase("attr112")){
+			return "";//"val112";
 		}
-		return null;
+		return "";
 	}
 
 	public String getUserProxyTicketCAS() {
@@ -55,10 +67,15 @@ public class ExternalServiceTest implements ExternalService {
 	public boolean isUserInRole(String group) {
 		if(group.equalsIgnoreCase("")){
 			return true;
-			// TODO compléter avec des attributs définis dans les groupes de visibilité
-		}else {
-			return false;
+		}else if(group.equalsIgnoreCase("local.4")){
+			return true;
+		}else if(group.equalsIgnoreCase("local.0")){
+			return true;
+		}else if (group.equalsIgnoreCase("group41")){
+			return true;
 		}
+		return false;
+		
 	}
 
 }

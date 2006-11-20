@@ -68,18 +68,18 @@ public class UserProfile {
 	 * @param contextId identifier of the context refered by the customContext
 	 * @return customContext (or null)
 	 */
-	public CustomContext getCustomContext(String contextId,ExternalService externalService){
+	public CustomContext getCustomContext(String contextId){
 		CustomContext customContext = 
 				customContexts.get(contextId);
 		if (customContext == null){
 			customContext = new CustomContext(contextId,this);
 			addCustomContext(customContext);
 		}
-//		customContext.update(externalService);
 		
 		return customContext;
 	}
 	
+	/* see later */
 
 	
 	/* ************************** ACCESSORS ********************************* */

@@ -88,12 +88,34 @@ public class CustomContext implements CustomElement {
 	/*
 	 *************************** METHODS ************************************/
 
+	/**
+	 * @param externalService access to externalService
+	 * @return list of customCategories defined in this customContext
+	 */
+	public List<CustomCategory> getSortedCustomCategories(ExternalService externalService){
+		// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
+	
+		/* update categories in this customContext */
+		getContext().updateCustomContext(this,externalService);
+		
+		List<CustomCategory> listCustomCategories = new Vector<CustomCategory>();
+		for(CustomManagedCategory customCat : subscriptions.values()){
+			// plus tard, il faudra ajouter les autres custom (imported et personal)
+			listCustomCategories.add(customCat);
+		}
+		return listCustomCategories;
+	}
+	
+	
+	/* see later */
+	
+	
 	/** 
 	 * Update data contained in this customContext by visibilty evaluation
 	 * on managedCategories, in order to update list of customManagedCategories
 	 * @param externalService
 	 */
-	protected void update(ExternalService externalService) {
+	private void update(ExternalService externalService) {
 		
 		getContext().updateCustomContext(this,externalService);
 		// later :  Personnal Categories
@@ -127,25 +149,6 @@ public class CustomContext implements CustomElement {
 	
 
 	
-	
-	/**
-	 * Returns the customCategories of this customContext
-	 * @return an Enumeration of the customCategories
-	 */
-	public List<CustomCategory> getSortedCustomCategories(){
-		// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
-		
-		List<CustomCategory> listCategories = new Vector<CustomCategory>();
-		Iterator iterator = subscriptions.values().iterator();
-		
-		while(iterator.hasNext()){
-			CustomCategory customCategory = (CustomCategory)iterator.next();
-			log.debug("CUSTOMCONTEXT CAST PB :"+ customCategory.getClass()+ "Nom : "+customCategory.getId());
-			listCategories.add(customCategory);
-		}
-		
-		return listCategories;
-	}
 	
 	
 	/**

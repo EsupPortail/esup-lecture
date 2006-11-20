@@ -70,7 +70,7 @@ public class FacadeService implements InitializingBean {
 	 * @return a ContextBean of the current context of the connected user
 	 */
 	public ContextBean getContext(String uid,String contextId) {
-		return domainService.getContext(uid,contextId,externalService);
+		return domainService.getContext(uid,contextId);
 	}
 	
 	/**
@@ -80,7 +80,7 @@ public class FacadeService implements InitializingBean {
 	 */
 	// TODO tester
 	public List<CategoryBean> getCategories(String uid,String contextId) {
-		return domainService.getCategories(uid,contextId);
+		return domainService.getCategories(uid,contextId,externalService);
 	}
 	
 	/**

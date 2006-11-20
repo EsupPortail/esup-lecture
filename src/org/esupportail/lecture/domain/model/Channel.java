@@ -109,7 +109,6 @@ public class Channel implements InitializingBean {
 	/**
 	 * Methods call to load the config and mapping file 
 	 * if needed (when files are modified from last loading)
-	 * @throws MyException
 	 * @throws FatalException
 	 */
 	public void startup() {
@@ -278,7 +277,7 @@ public class Channel implements InitializingBean {
 		return context;
 	}
 	
-	/* miscellaneous */
+	/* see later */
 	
 //	/**
 //	 * Return a string containing channel content : mapping file, contexts, managed category profiles,

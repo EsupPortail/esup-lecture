@@ -76,10 +76,14 @@ public class ContextBean {
 		this.description = description;
 	}
 	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString(){
 		String string = "";
 		string += " Id = " + id.toString() + "\n";
-		string += " Name = " + name.toString() + "\n\n";
+		string += " Name = " + name.toString() + "\n";
+		string += " Desc = " + description.toString() + "\n\n";
 		return string;
 	}
 }

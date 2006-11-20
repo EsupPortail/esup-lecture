@@ -1,5 +1,6 @@
 package org.esupportail.lecture.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -10,6 +11,7 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
+import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.UserProfile;
 
@@ -64,11 +66,12 @@ public class DomainServiceImpl implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public ContextBean getContext(String userId,String contextId,ExternalService externalService) {
+	public ContextBean getContext(String userId,String contextId) {
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(userId);
-		CustomContext customContext = userProfile.getCustomContext(contextId,externalService);
+		CustomContext customContext = userProfile.getCustomContext(contextId);
+		//TODO mettre le customContext dans un hash (faire un petit cache)
 		
 		// TODO mise à jour du DAO ?
 //		DomainTools.getDaoService().updateCustomContext(customContext);
@@ -87,11 +90,26 @@ public class DomainServiceImpl implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getCategories(java.lang.String, java.lang.String)
 	 */
-	public List<CategoryBean> getCategories(String uid, String contextId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CategoryBean> getCategories(String userId, String contextId,ExternalService externalService) {
+		
+		/* Get current user profile and customContext */
+		UserProfile userProfile = channel.getUserProfile(userId);
+		CustomContext customContext = userProfile.getCustomContext(contextId);
+		//TODO prendre le customContext dans un hash qui sert de cache
+		
+		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
+		
+		List<CustomCategory> customCategories = customContext.getSortedCustomCategories(externalService);
+		for(CustomCategory customCategory : customCategories){
+			CategoryBean category = new CategoryBean(customCategory);
+			listCategoryBean.add(category);
+		}
+		
+		return listCategoryBean;
 	}
 
+	/* see later */
+	
 	public List<ItemBean> getItems(String uid, String sourceId) {
 		// TODO Auto-generated method stub
 		return null;
