@@ -3,7 +3,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/esup-commons"/>
-	<classpathentry kind="lib" path="lib/commons-configuration-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/spring-modules-cache.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/commons-configuration-1.2.jar"/>
+	<classpathentry kind="lib" path="webapp/WEB-INF/lib/spring-modules-cache.jar"/>
 	<classpathentry kind="output" path="build/WEB-INF/classes"/>
 </classpath>

@@ -24,7 +24,7 @@ public class DomainTest {
 	 * @param args non argumet needed
 	 */
 	public static void main(String[] args) {
-		ClassPathResource res = new ClassPathResource("applicationContext.xml");
+		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		facadeService = (FacadeService)factory.getBean("facadeService");
 
@@ -35,7 +35,9 @@ public class DomainTest {
 		
 	}
 
-
+/*
+ * Méthodes de Test
+ */
 
 	/**
 	 * Test of servide "getConnectedUser"

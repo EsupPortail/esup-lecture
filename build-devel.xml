@@ -76,6 +76,15 @@
 		<move file="${src.dir}/org/esupportail/lecture" tofile="${src.dir}/${org/esupportail/lecture}" />
 	</target>
 
+	<target name="test-domain" depends="commons-compile,check-commons-batch-config" description="test the domain application of esup-lecture"> 
+		<java fork="true" dir="${build.dir}" classname="org.esupportail.lecture.domain.DomainTest">
+			<classpath refid="batch.classpath" />
+			<sysproperty key="log4j.configuration" value="file:${log4j.batch-config}" />
+			<arg value="test-domain"/>
+	    </java>
+	</target>	
+	
+	
 </project>
 
 

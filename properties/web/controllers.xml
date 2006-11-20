@@ -22,8 +22,7 @@
 
 	<bean id="abstractContextAwareController" 
 		abstract="true"
-		parent="abstractDomainAwareBean"
-		>
+		parent="abstractDomainAwareBean">
 		<description>
 			An abstract bean to factorize the declaration of beans of
 			which class inherits from AbstractContextAwareController.
