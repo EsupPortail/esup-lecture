@@ -184,9 +184,56 @@ public class DaoServiceRemoteXML {
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#getSource(ManagedSourceProfile)
+	 * get a source form cache
+	 * @param urlSource url of the source
+	 * @param ttl ttl of the source
+	 * @param profileId 
+	 * @param specificUserContent : is the content is specific to current user. If yes never use cache
+	 * @return
 	 */
 	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
+		Source ret = new GlobalSource();
+		if (specificUserContent) { 
+			ret = getFreshSource(urlSource, ttl, profileId, specificUserContent);
+		}
+		else {
+			System.currentTimeMillis();
+			Long lastSrcAccess = sourceLastAccess.get(urlSource);
+			Long currentTimeMillis = System.currentTimeMillis();
+			if (lastSrcAccess != null) {
+				if (lastSrcAccess + (ttl * 1000) > currentTimeMillis) {
+					ret = (Source)cacheProviderFacade.getFromCache(urlSource, cachingModel);
+					if (ret == null) { // not in cache !
+						ret = getFreshSource(urlSource, ttl, profileId, specificUserContent);
+						cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
+						sourceLastAccess.put(urlSource, currentTimeMillis);
+						if (log.isWarnEnabled()) {
+							log.warn("Source from url "+urlSource+" can't be found in cahe --> change cache size ?");
+						}
+					}				
+				}
+				else{
+					ret = getFreshSource(urlSource, ttl, profileId, specificUserContent);
+					cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
+					sourceLastAccess.put(urlSource, currentTimeMillis);
+				}
+			}
+			else {
+				ret = getFreshSource(urlSource, ttl, profileId, specificUserContent);
+				cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
+				sourceLastAccess.put(urlSource, currentTimeMillis);
+			}
+		}
+		return ret;
+
+	}
+
+	/**
+	 * get a source from the web without Web
+	 * @see DaoServiceRemoteXML#getSource(String, int, String, boolean)
+	 * @return the source
+	 */
+	public Source getFreshSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
 		Source ret = new GlobalSource();
 		try {
 			String dtd = null;

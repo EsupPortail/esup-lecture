@@ -34,6 +34,7 @@ public class TestDAORemoteXMLSource {
 		
 		//TODO : RB test with DaoService and not DaoServiceImpl
 		//DaoService dao = (DaoService)factory.getBean("daoServiceImpl");
+		Channel channel = (Channel)factory.getBean("channel");
 		DaoService dao = (DaoService)factory.getBean("daoService");
 		Source src = null;
 		ManagedCategoryProfile managedCategoryProfile = new ManagedCategoryProfile();
@@ -65,6 +66,7 @@ public class TestDAORemoteXMLSource {
 		System.out.println(" xmlns --> "+src.getXmlns());
 		System.out.println(" xmlType --> "+src.getXmlType());
 		//System.out.println(" xmlStream --> "+src.getXmlStream());
-		
+		System.out.println(" xsltURL --> "+src.getXsltURL());
+		System.out.println(" itemXPath --> "+src.getItemXPath());	
 	}
 }

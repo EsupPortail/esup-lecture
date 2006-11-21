@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
@@ -18,19 +20,23 @@ import org.esupportail.lecture.domain.DomainTools;
  * @author gbouteil
  *
  */
-public abstract class Source {
+public abstract class Source implements Serializable {
 ///* ************************** PROPERTIES ******************************** */	
 
+	/**
+	 * xmlStream (XML content) of the source
+	 */
 	private String xmlStream = "";
 
+	/**
+	 * profile Id of the source
+	 */
 	private int profileId;
-	
 
 	/**
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(Source.class); 
-	
 
 	/**
 	 * Opitionnal : DTD of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement)
@@ -41,15 +47,16 @@ public abstract class Source {
 	 * Optionnal : xmlType of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement)
 	 */
 	private String xmlType;
+	
 	/**
 	 * Optionnal : xmlns of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement)
 	 */
 	private String xmlns;
+	
 	/**
 	 * Optionnal : rootElement of the xmlStream (one of these parameter is required : xmlns, xmlType, dtd,rootElement)
 	 */
 	private String rootElement;
-	
 	
 	/**
 	 * URL of the xslt file to display remote source
@@ -61,10 +68,22 @@ public abstract class Source {
 	 */
 	private String itemXPath;
 	
+	/**
+	 * flag used to know if computeXslt() used one time or not  
+	 */
 	private boolean isXsltComputed = false;
+
+	/**
+	 * flag used to know if computeItems() used one time or not  
+	 */
+	private boolean isItemComputed = false;
 	
 /* ************************** METHODS ******************************** */	
 	
+	/**
+	 * find item XPath and url of Xslt file, in Mapping file, in fonction of dtd, xmlType, 
+	 * xmlns or XML root element of the source XML content
+	 */
 	protected void computeXslt(){
 		// TODO revoir cette fonction : à adapter, 
 		//voir si on n'a pas aussi ici un computedFeatures 
@@ -130,11 +149,18 @@ public abstract class Source {
 /* ************************** ACCESSORS ******************************** */	
 
 
+	/**
+	 * @return the dtd of source XML content
+	 */
 	public String getDtd() {
 		return dtd;
 	}
 
 
+	/**
+	 * set the dtd of source XML content
+	 * @param dtd
+	 */
 	public void setDtd(String dtd) {
 		this.dtd = dtd;
 	}
@@ -188,11 +214,18 @@ public abstract class Source {
 	}
 
 
+	/**
+	 * @return XML Stream (XML content) of the source
+	 */
 	public String getXmlStream() {
 		return xmlStream;
 	}
 
 
+	/**
+	 * set XML Stream (XML content) of the source
+	 * @param xmlStream
+	 */
 	public void setXmlStream(String xmlStream) {
 		this.xmlStream = xmlStream;
 	}
@@ -200,7 +233,8 @@ public abstract class Source {
 	/**
 	 * @return Returns the itemXPath.
 	 */
-	protected String getItemXPath() {
+	public String getItemXPath() {
+		//TODO public for test class
 		if (!isXsltComputed){
 			computeXslt();
 		}
@@ -218,7 +252,8 @@ public abstract class Source {
 	/**
 	 * @return Returns the xsltURL.
 	 */
-	protected String getXsltURL() {
+	public String getXsltURL() {
+		//TODO public for test class
 		if (!isXsltComputed){
 			computeXslt();
 		}
@@ -233,8 +268,9 @@ public abstract class Source {
 		isXsltComputed = false;
 	}
 
-
-
+	/**
+	 * @return the Content of source
+	 */
 	public String getContent() {
 //		 TODO : normalemùent, c'est un html qu'on passe : xml transformé avec son xslt + itemXpath ...
 		// pour l'instant, on simplilfie :
