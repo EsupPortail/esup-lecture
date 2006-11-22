@@ -159,9 +159,7 @@ public class CustomContext implements CustomElement {
 		String profileId = profile.getId();
 		
 		if (!subscriptions.containsKey(profileId)){
-			CustomManagedCategory customManagedCategory = new CustomManagedCategory();
-			//customManagedCategory.setCategoryProfile(profile);
-			customManagedCategory.setCategoryProfileID(profileId);
+			CustomManagedCategory customManagedCategory = new CustomManagedCategory(profileId);
 			subscriptions.put(profileId,customManagedCategory);
 		}
 	}

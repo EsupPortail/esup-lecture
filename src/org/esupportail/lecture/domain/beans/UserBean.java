@@ -27,7 +27,7 @@ public class UserBean {
 	 */
 	public String toString(){
 		String string = "";
-		string +=" uid = " + uid.toString();
+		string +=" uid = " + uid.toString()+"\n";
 		return string;
 	}
 	

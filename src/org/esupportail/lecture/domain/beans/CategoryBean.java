@@ -95,9 +95,11 @@ public class CategoryBean {
 		String string = "";
 		string += "     Id = " + id.toString() + "\n";
 		string += "     Name = " + name.toString() + "\n";
+		string += "     Desc = "; 
 		if (description != null){
-			string += "     Desc = " + description.toString() + "\n\n";
+			string += description.toString() + "\n";
 		}
+		
 		return string;
 	}
 	

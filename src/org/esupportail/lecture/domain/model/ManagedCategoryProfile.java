@@ -113,13 +113,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	}
 	
 	
-	/**
-	 * Load the managedCategory of this managedCategoryProfile
-	 */
-	public void loadCategory(ExternalService externalService) {
-				
-	
-	}
+
 	
 	
 	

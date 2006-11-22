@@ -116,6 +116,11 @@ public class DomainServiceTest implements DomainService {
 		return null;
 	}
 
+	public List<SourceBean> getSources(String uid, String categoryId, ExternalService externalService) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

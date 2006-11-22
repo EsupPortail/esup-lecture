@@ -13,6 +13,7 @@ import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.UserProfile;
 
 /**
@@ -107,6 +108,29 @@ public class DomainServiceImpl implements DomainService {
 		
 		return listCategoryBean;
 	}
+	
+	/*
+	 * Sources of the current category
+	 */
+	public List<SourceBean> getSources(String uid, String categoryId,ExternalService externalService) {
+		
+		/* Get current user profile and customContext */
+		UserProfile userProfile = channel.getUserProfile(uid);
+		CustomCategory customCategory = userProfile.getCustomManagedCategory(categoryId);
+		//TODO prendre le customCategory dans un hash qui sert de cache
+		
+		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
+		
+		List<CustomSource> customSources = customCategory.getSortedCustomSources(externalService);
+		for(CustomSource customSource : customSources){
+			SourceBean source = new SourceBean(customSource);
+			listSourceBean.add(source);
+		}
+ 		
+		return listSourceBean;
+	}
+	
+	
 
 	/* see later */
 	
@@ -115,10 +139,7 @@ public class DomainServiceImpl implements DomainService {
 		return null;
 	}
 
-	public List<SourceBean> getSources(String uid, String categoryId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	public void marckItemasRead(String uid, String sourceId, String itemId) {
 		// TODO Auto-generated method stub

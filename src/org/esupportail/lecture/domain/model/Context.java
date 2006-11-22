@@ -113,10 +113,12 @@ public class Context {
 		List<ManagedCategoryProfile> visibleCategories = new Vector<ManagedCategoryProfile>();
 		while (iterator.hasNext()) {
 			ManagedCategoryProfile mcp = iterator.next();
-			mcp.loadCategory(externalService);
-			if(mcp.evaluateVisibilityAndUpdateCustomContext(externalService,customContext)) {
+			if(mcp.updateCustomContext(customContext, externalService)){
 				visibleCategories.add(mcp);
 			}
+//			mcp.loadCategory(externalService);
+//			mcp.evaluateVisibilityAndUpdateCustomContext(externalService, customContext);
+	
 		}
 		return visibleCategories;
 	}

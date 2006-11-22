@@ -43,6 +43,11 @@ public class CustomManagedCategory extends CustomCategory {
 		subscriptions = new Hashtable<String,CustomManagedSource>();
 	}
 	
+	public CustomManagedCategory(String catId){
+		subscriptions = new Hashtable<String,CustomManagedSource>();
+		setCategoryProfileID(catId);
+	}
+	
 	/*
 	 ************************** METHODS *********************************/	
 	
@@ -56,6 +61,22 @@ public class CustomManagedCategory extends CustomCategory {
 		managedCategory.updateCustomCategory(this,externalService);
 		// later : Personnal Sources;
 		
+	}
+
+	public List<CustomSource> getSortedCustomSources(ExternalService externalService){
+	// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
+		
+		ManagedCategoryProfile profile = getCategoryProfile();
+		
+		update(externalService);
+		
+		List<CustomSource> listSources = new Vector<CustomSource>();
+		for(CustomSource customSource : subscriptions.values()){
+			listSources.add(customSource);
+		}
+	
+		
+		return listSources;
 	}
 	
 	/* see later */
@@ -84,7 +105,8 @@ public class CustomManagedCategory extends CustomCategory {
 	}
 	
 	public ManagedCategoryProfile getCategoryProfile() {
-		return DomainTools.getChannel().getManagedCategoryProfile(this.categoryProfileID);
+		Channel channel = DomainTools.getChannel();
+		return channel.getManagedCategoryProfile(this.categoryProfileID);
 	}
 	
 
@@ -120,19 +142,6 @@ public class CustomManagedCategory extends CustomCategory {
 	
 
 	
-	public List<CustomSource> getSortedCustomSources(){
-	// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
-		
-		List<CustomSource> listSources = new Vector<CustomSource>();
-		Iterator iterator = subscriptions.values().iterator();
-		
-		while(iterator.hasNext()){
-			CustomSource customSource = (CustomSource)iterator.next();
-			listSources.add(customSource);
-		}
-		
-		return listSources;
-	}
 
 	public String getName() {
 		return getCategoryProfile().getName();

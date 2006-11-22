@@ -78,7 +78,6 @@ public class FacadeService implements InitializingBean {
 	 * @param uid user ID
 	 * @return List of CategoryBean obliged or subscribed by a user in a context
 	 */
-	// TODO tester
 	public List<CategoryBean> getCategories(String uid,String contextId) {
 		return domainService.getCategories(uid,contextId,externalService);
 	}
@@ -90,7 +89,7 @@ public class FacadeService implements InitializingBean {
 	 */
 	// TODO tester
 	public List<SourceBean> getSources(String uid,String categoryId) {
-		return domainService.getSources(uid, categoryId);
+		return domainService.getSources(uid, categoryId,externalService);
 	}
 	
 	/**

@@ -33,7 +33,7 @@
 		name="categorie1"
 		
 		id="cp1"
-		urlCategory="http://perso.univ-rennes1.fr:8080/raymond.bourges/categoryTest.xml"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
@@ -77,7 +77,7 @@
 		name="categorie2"
 		
 		id="cp2"
-		urlCategory="http://perso.univ-rennes1.fr:8080/raymond.bourges/categoryTest.xml"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
@@ -110,7 +110,7 @@
 		<categoryProfile 
 		name="categorie3"
 		id="cp3"
-		urlCategory="http://perso.univ-rennes1.fr:8080/raymond.bourges/categoryTest.xml"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
@@ -131,7 +131,7 @@
 		<categoryProfile 
 		name="categorie4"
 		id="cp4"
-		urlCategory="http://perso.univ-rennes1.fr:8080/raymond.bourges/categoryTest.xml"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" > 

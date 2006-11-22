@@ -44,7 +44,7 @@ public interface DomainService {
 	 * @return List<SourceBean>
 	 * @see FacadeService#getSources(String, String)
 	 */
-	List<SourceBean> getSources(String uid,String categoryId);
+	List<SourceBean> getSources(String uid,String categoryId,ExternalService externalService);
 
 	/**
 	 * @param sourceId 

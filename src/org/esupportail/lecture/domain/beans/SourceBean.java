@@ -1,5 +1,8 @@
 package org.esupportail.lecture.domain.beans;
 
+import org.esupportail.lecture.domain.model.CustomSource;
+import org.esupportail.lecture.domain.model.SourceProfile;
+
 /**
  * @author bourges
  * used to store source informations
@@ -19,7 +22,23 @@ public class SourceBean {
 	 * "notSubscribed" --> The source is alloweb and not yet subscribed by the user (used in edit mode)
 	 * "obliged" --> The source is obliged: user can't subscribe or unsubscribe this source
 	 */
+	//TODO utiliser des constantes définies dans DomainTools pour ça.
 	private String type;
+	// TODO revoir comment concevoir cela : il faut aussi tenir compte des personnalSources qui n'ont pas de type
+	
+	public SourceBean(){}
+	
+	public SourceBean(CustomSource customSource){
+		SourceProfile profile = customSource.getSourceProfile();
+		
+		setName(profile.getName());
+		setId(profile.getId());
+		
+	}
+	
+	
+	
+	
 	/**
 	 * @return name of source
 	 */
@@ -57,5 +76,22 @@ public class SourceBean {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString(){
+		String string = "";
+		string += "     Id = " + id.toString() + "\n";
+		string += "     Name = " + name.toString() + "\n";
+		string += "     Type = "; 
+		if (type != null){
+			string += type + "\n";
+		}
+		
+		return string;
+	}
+	
 	
 }

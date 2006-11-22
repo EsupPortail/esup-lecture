@@ -90,7 +90,7 @@ public class ContextBean {
 		String string = "";
 		string += " Id = " + id.toString() + "\n";
 		string += " Name = " + name.toString() + "\n";
-		string += " Desc = " + description.toString() + "\n\n";
+		string += " Desc = " + description.toString() + "\n";
 		return string;
 	}
 }

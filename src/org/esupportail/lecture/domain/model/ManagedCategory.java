@@ -74,8 +74,7 @@ public class ManagedCategory extends Category {
 		
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
-			msp.loadSource(externalService);
-			msp.evaluateVisibilityAndUpdateCustomCategory(externalService,customManagedCategory);
+			msp.updateCustomCategory(customManagedCategory,externalService);
 		}
 	}
 	

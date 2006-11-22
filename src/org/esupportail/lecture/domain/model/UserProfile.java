@@ -39,7 +39,8 @@ public class UserProfile {
 	/**
 	 * Hashtable of CustomManagedCategory defined for the user, indexed by ManagedCategoryProfilID.
 	 */
-	private Map<String,CustomManagedCategory> customMabagedCategories;
+	// TODO pourquoi pas customCategories ?
+	private Map<String,CustomManagedCategory> customManagedCategories;
 
 	/*
 	 ************************** Initialization ************************************/
@@ -49,6 +50,7 @@ public class UserProfile {
 	 */
 	public UserProfile(){
 		customContexts = new Hashtable<String,CustomContext>();
+		customManagedCategories = new Hashtable<String, CustomManagedCategory>();
 	}
 	
 	/**
@@ -56,6 +58,7 @@ public class UserProfile {
 	 */
 	public UserProfile(String userId){
 		customContexts = new Hashtable<String,CustomContext>();
+		customManagedCategories = new Hashtable<String, CustomManagedCategory>();
 		this.setUserId(userId);
 	}
 	/*
@@ -79,6 +82,20 @@ public class UserProfile {
 		return customContext;
 	}
 	
+	public CustomManagedCategory getCustomManagedCategory(String categoryId){
+		// TODO revoir avec customCategory et customManagedCategory
+		CustomManagedCategory customCategory = 
+			customManagedCategories.get(categoryId);
+		if(customCategory == null){
+			customCategory = new CustomManagedCategory(categoryId);
+			addCustomCategory(customCategory);
+		}
+		return customCategory;
+	}
+	
+	
+	
+	
 	/* see later */
 
 	
@@ -86,6 +103,10 @@ public class UserProfile {
 
 		public void addCustomContext(CustomContext customContext){
 			customContexts.put(customContext.getContextId(),customContext);
+		}
+		
+		public void addCustomCategory(CustomManagedCategory customCategory){
+			customManagedCategories.put(customCategory.getCategoryProfileID(),customCategory);
 		}
 
 
@@ -125,13 +146,13 @@ public class UserProfile {
 		this.customContexts = customContexts;
 	}
 
-	public Map<String, CustomManagedCategory> getCustomMabagedCategories() {
-		return customMabagedCategories;
+	public Map<String, CustomManagedCategory> getCustomManagedCategories() {
+		return customManagedCategories;
 	}
 
 	public void setCustomMabagedCategories(
-			Map<String, CustomManagedCategory> customMabagedCategories) {
-		this.customMabagedCategories = customMabagedCategories;
+			Map<String, CustomManagedCategory> customManagedCategories) {
+		this.customManagedCategories = customManagedCategories;
 	}
 
 //	/**

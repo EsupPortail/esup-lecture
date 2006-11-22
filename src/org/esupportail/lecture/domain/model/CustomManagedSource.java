@@ -4,6 +4,8 @@ public class CustomManagedSource extends CustomSource{
 
 	protected CustomManagedSource(ManagedSourceProfile profile) {
 		super(profile);
+		profileId = profile.getId();
+		
 	}
 
 

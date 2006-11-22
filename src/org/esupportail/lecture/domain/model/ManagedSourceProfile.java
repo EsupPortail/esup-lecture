@@ -92,6 +92,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	/*
 	 *************************** METHODS ******************************** */	
 	
+	public void updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService externalService) {
+		//loadSource(externalService);
+		evaluateVisibilityAndUpdateCustomCategory(externalService,customManagedCategory);
+		
+	}
 	
 	@Override
 	public String getContent() {
@@ -133,7 +138,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 		computedFeatures.update(setVisib,setTtl,setAccess);
 		
 	}
-	public void loadSource(ExternalService externalService) {
+
+	private void loadSource(ExternalService externalService) {
 		
 		if(getAccess() == Accessibility.PUBLIC) {
 			// managed SOurce Profile => single or globalSource
@@ -372,6 +378,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 		itemXPath = string;
 		
 	}
+
+
+	
 
 
 	

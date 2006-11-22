@@ -161,7 +161,7 @@ public class DaoServiceRemoteXML {
 				// foreach (allowed / autoSubscribed / Obliged
 				visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).allowed(0)"));
 				visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).obliged(0)"));
-				visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).autoSubscribed(0)"));
+				visibilitySets.setAutoSubscribed(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).autoSubscribed(0)"));
 				sp.setVisibility(visibilitySets);
 				sourceProfiles.put(sp.getId(),sp);
 			}
@@ -171,7 +171,7 @@ public class DaoServiceRemoteXML {
 			// foreach (allowed / autoSubscribed / Obliged
 			visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(xml, "visibility(0).allowed(0)"));
 			visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "visibility(0).obliged(0)"));
-			visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "visibility(0).autoSubscribed(0)"));
+			visibilitySets.setAutoSubscribed(XMLUtil.loadDefAndContentSets(xml, "visibility(0).autoSubscribed(0)"));
 			ret.setVisibility(visibilitySets);
 		} catch (MalformedURLException e) {
 			log.error("DaoServiceRemoteXML :: getFreshManagedCategory, "+e.getMessage());
