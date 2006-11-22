@@ -5,9 +5,12 @@
 */
 package org.esupportail.lecture.test.drivers;
 
+import java.util.Iterator;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
+import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
@@ -67,6 +70,12 @@ public class TestDAORemoteXMLSource {
 		System.out.println(" xmlType --> "+src.getXmlType());
 		//System.out.println(" xmlStream --> "+src.getXmlStream());
 		System.out.println(" xsltURL --> "+src.getXsltURL());
-		System.out.println(" itemXPath --> "+src.getItemXPath());	
+		System.out.println(" itemXPath --> "+src.getItemXPath());
+		List<ItemBean> Items = src.getItems();
+		Iterator<ItemBean> iter = Items.iterator();
+		while (iter.hasNext()) {
+			ItemBean itemBean = (ItemBean) iter.next();
+			System.out.println(" item avec Id "+itemBean.getId()+" --> "+itemBean.getHtmlContent());
+		}
 	}
 }

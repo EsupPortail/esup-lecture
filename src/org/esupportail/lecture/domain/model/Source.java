@@ -6,10 +6,17 @@
 package org.esupportail.lecture.domain.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
+import org.dom4j.DocumentException;
+import org.dom4j.io.SAXReader;
 import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.beans.ItemBean;
+import org.esupportail.lecture.exceptions.ErrorException;
 
 /**
  * Source element : a source can be a managed or personal one.
@@ -78,6 +85,11 @@ public abstract class Source implements Serializable {
 	 */
 	private boolean isItemComputed = false;
 	
+	/**
+	 * Items List of this source
+	 */
+	private List<ItemBean> Items = new ArrayList<ItemBean>();
+	
 /* ************************** METHODS ******************************** */	
 	
 	/**
@@ -137,7 +149,29 @@ public abstract class Source implements Serializable {
 		isXsltComputed = true;
 	}
 	
-	
+	/**
+	 * find Items objects in fonction of itemXPath, xsltURL, xmlStream
+	 */
+	protected void computeItems() {
+		if (!isXsltComputed){
+			computeXslt();
+		}
+//		SAXReader reader = new SAXReader();
+//		try {
+//			Document document = reader.read(xmlStream);
+//			List list = document.selectNodes();
+//
+//	        for (Iterator iter = list.iterator(); iter.hasNext(); ) {
+//	            Attribute attribute = (Attribute) iter.next();
+//	            String url = attribute.getValue();
+//	        }			
+//		} catch (DocumentException e) {
+//			if (log.isErrorEnabled()) {
+//				log.error("Error parsing XML content of the source");
+//			}
+//			throw new ErrorException("Error parsing XML content of the source");
+//		}
+	}
 	
 //	public void update(String setItemXPath, String setXsltURL) {
 //	//TODO  A mettre dans le computed feature de la ssource ?	
@@ -277,5 +311,16 @@ public abstract class Source implements Serializable {
 		return xmlStream;
 		
 		
+	}
+
+	/**
+	 * get Items list of this source
+	 * @return the items lits
+	 */
+	public List<ItemBean> getItems() {
+		if (!isItemComputed){
+			computeItems();
+		}
+		return Items;
 	}
 }
