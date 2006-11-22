@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mappings SYSTEM "mappings.dtd" >
 <mappings>
-
 	<mapping xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
 		xmlType="RDF" xsltFile="mon_xsltFile1 test"
-		itemXPath="/RDF/item" />
+		itemXPath="/rdf:RDF/default:item" />
 	<mapping dtd="ma_dtd2" xmlns="ma_xmlns2" xmlType="ma_xmlType2"
 		xsltFile="mon_xsltFile2" itemXPath="mon_itemXpath2" />
 	<mapping dtd="ma_dtd3" xmlns="ma_xmlns3" xmlType="ma_xmlType3"

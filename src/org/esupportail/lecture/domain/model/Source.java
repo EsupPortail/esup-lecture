@@ -6,16 +6,24 @@
 package org.esupportail.lecture.domain.model;
 
 import java.io.Serializable;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.beanutils.converters.StringConverter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Namespace;
+import org.dom4j.Node;
+import org.dom4j.XPath;
 import org.dom4j.io.SAXReader;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.exceptions.ErrorException;
 
 /**
@@ -88,7 +96,7 @@ public abstract class Source implements Serializable {
 	/**
 	 * Items List of this source
 	 */
-	private List<ItemBean> Items = new ArrayList<ItemBean>();
+	private List<Item> Items = new ArrayList<Item>();
 	
 /* ************************** METHODS ******************************** */	
 	
@@ -156,21 +164,56 @@ public abstract class Source implements Serializable {
 		if (!isXsltComputed){
 			computeXslt();
 		}
-//		SAXReader reader = new SAXReader();
-//		try {
-//			Document document = reader.read(xmlStream);
-//			List list = document.selectNodes();
-//
-//	        for (Iterator iter = list.iterator(); iter.hasNext(); ) {
-//	            Attribute attribute = (Attribute) iter.next();
-//	            String url = attribute.getValue();
-//	        }			
-//		} catch (DocumentException e) {
-//			if (log.isErrorEnabled()) {
-//				log.error("Error parsing XML content of the source");
-//			}
-//			throw new ErrorException("Error parsing XML content of the source");
-//		}
+		SAXReader reader = new SAXReader();
+		try {
+			//create dom4j document
+			Document document = DocumentHelper.parseText(xmlStream);
+			//generate map of namespaces
+			HashMap nameSpaces = new HashMap();
+			//find all namaspace in document
+			//TODO not hardcode --> find naspaces in document 
+			// faire un xpath sur tous les attributs qui commencent par xmlns pour remplir la hastable nameSpaces !!!!
+			nameSpaces.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+			nameSpaces.put("default", "http://purl.org/rss/1.0/");
+			//lauch Xpath find
+			XPath xpath = document.createXPath(itemXPath);
+			xpath.setNamespaceURIs(nameSpaces);
+			List<Node> list = xpath.selectNodes(document);
+			//List<Node> list = document.selectNodes(itemXPath);
+			Iterator<Node> iter = list.iterator();
+			while (iter.hasNext()) {
+				Node node = iter.next();
+				Item item = new Item();
+				String XML = node.asXML();
+				//TODO use xslt to have real htmlcontent!!!
+				item.setHtmlContent(XML);
+				//find MD5 of item content for his ID
+				byte[] hash = MessageDigest.getInstance("MD5").digest(XML.getBytes());
+				StringBuffer hashString = new StringBuffer();
+				for ( int i = 0; i < hash.length; ++i ) {
+					String hex = Integer.toHexString(hash[i]);
+					if ( hex.length() == 1 ) {
+						hashString.append('0');
+						hashString.append(hex.charAt(hex.length()-1));
+					} 
+					else {
+						hashString.append(hex.substring(hex.length()-2));
+					}
+				}
+				item.setId(hashString.toString());
+				Items.add(item);
+			}
+		} catch (DocumentException e) {
+			if (log.isErrorEnabled()) {
+				log.error("Error parsing XML content of the source");
+			}
+			throw new ErrorException("Error parsing XML content of the source");
+		} catch (NoSuchAlgorithmException e) {
+			if (log.isErrorEnabled()) {
+				log.error("MD5 algorithm not supported");
+			}
+			throw new ErrorException("MD5 algorithm not supported");
+		}
 	}
 	
 //	public void update(String setItemXPath, String setXsltURL) {
@@ -317,7 +360,7 @@ public abstract class Source implements Serializable {
 	 * get Items list of this source
 	 * @return the items lits
 	 */
-	public List<ItemBean> getItems() {
+	public List<Item> getItems() {
 		if (!isItemComputed){
 			computeItems();
 		}

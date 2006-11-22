@@ -258,6 +258,7 @@ public class DaoServiceRemoteXML {
 			if (!ns.getURI().equals("")) {
 				rootNamespace = ns.getURI();				
 			}
+			//find XML Schema URL
 			Namespace xmlSchemaNameSpace = rootElement.getNamespaceForURI("http://www.w3.org/2001/XMLSchema-instance");
 			if (xmlSchemaNameSpace != null) {
 				String xmlSchemaNameSpacePrefix = xmlSchemaNameSpace.getPrefix();
