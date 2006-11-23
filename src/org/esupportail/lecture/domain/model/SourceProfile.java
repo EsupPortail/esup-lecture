@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import org.esupportail.lecture.domain.ExternalService;
+
 /**
  * Source profile element : a source profile can be a managed or personal one.
  * @author gbouteil
@@ -24,6 +26,8 @@ public abstract class SourceProfile {
 
 
 /* ************************** METHODS ******************************** */	
+	
+	public abstract Item getItems(ExternalService externalService) ;
 
 /* ************************** ACCESSORS ******************************** */	
 
@@ -92,5 +96,7 @@ public abstract class SourceProfile {
 	protected void setSource(Source source) {
 		this.source = source;
 	}
+
+
 
 }
