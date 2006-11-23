@@ -16,6 +16,7 @@ import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
+import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.UserProfile;
 
 /**
@@ -84,7 +85,6 @@ public class DomainServiceImpl implements DomainService {
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(userId);
 		CustomContext customContext = userProfile.getCustomContext(contextId);
-		//TODO prendre le customContext dans un hash qui sert de cache
 		
 		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
 		
@@ -108,10 +108,10 @@ public class DomainServiceImpl implements DomainService {
 	// TODO getVisibleSource
 	public List<SourceBean> getSources(String uid, String categoryId,ExternalService externalService) {
 		
-		/* Get current user profile and customContext */
+		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
+		// TODO why not customCategories ?
 		CustomCategory customCategory = userProfile.getCustomManagedCategory(categoryId);
-		//TODO prendre le customCategory dans un hash qui sert de cache
 		
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
 		
@@ -134,8 +134,25 @@ public class DomainServiceImpl implements DomainService {
 	/* see later */
 	
 	public List<ItemBean> getItems(String uid, String sourceId) {
-		// TODO Auto-generated method stub
-		return null;
+		/* Get current user profile and customCoategory */
+		UserProfile userProfile = channel.getUserProfile(uid);
+		// TODO why not customCategories ?
+		CustomSource customSource = userProfile.getCustomSource(sourceId);
+		
+		List<ItemBean> listItemBean = new ArrayList<ItemBean>();
+		
+		List<Item> items = customSource.getItems();
+		for(Item item : items){
+			ItemBean itemBean = new ItemBean(item);
+			listItemBean.add(itemBean);
+			// TODO mise à jour du DAO ?
+//			DomainTools.getDaoService().updateCustomSource(customSource);
+			
+		}
+		// TODO mise à jour du DAO ?
+//		DomainTools.getDaoService().updateUserProfile(userProfile);
+//		DomainTools.getDaoService().updateCustomCategory(customCategory);		
+		return listItemBean;
 	}
 
 
