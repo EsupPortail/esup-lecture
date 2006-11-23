@@ -97,6 +97,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 		setUpCustomCategoryVisibility(externalService,customManagedCategory);
 		
 	}
+
+	@Override
+	public Item getItems(ExternalService externalService) {
+		loadSource(externalService);
+		getSource().getItems();
+		return null;
+	}
 	
 	@Override
 	public String getContent() {
@@ -140,9 +147,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	}
 
 	private void loadSource(ExternalService externalService) {
-		
+			
 		if(getAccess() == Accessibility.PUBLIC) {
 			// managed SOurce Profile => single or globalSource
+			// TODO le getSource est il "source" ou "managedSource" ?
 			Source source = DomainTools.getDaoService().getSource(this);
 			setSource(source);
 			
@@ -378,6 +386,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 		itemXPath = string;
 		
 	}
+
+
 
 
 	
