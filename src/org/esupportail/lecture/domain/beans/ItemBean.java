@@ -1,5 +1,7 @@
 package org.esupportail.lecture.domain.beans;
 
+import org.esupportail.lecture.domain.model.Item;
+
 /**
  * @author bourges
  * used to store item informations
@@ -17,6 +19,12 @@ public class ItemBean {
 	 * store if item is read or not
 	 */
 	private boolean read;
+	
+	public ItemBean(Item i){
+		id = i.getId();
+		htmlContent = i.getHtmlContent();
+		read = i.isRead();
+	}
 	/**
 	 * @return html content of item
 	 */
