@@ -31,7 +31,7 @@ public class CategoryBean {
 	public CategoryBean(){}
 	
 	public CategoryBean(CustomCategory customCategory){
-		CategoryProfile profile = customCategory.getCategoryProfile();
+		CategoryProfile profile = customCategory.getProfile();
 		
 		setName(profile.getName());
 		setDescription(profile.getDescription());

@@ -149,7 +149,7 @@ public class CustomContext implements CustomElement {
 	/**
 	 * @return context refered by this
 	 */
-	private Context getContext() {
+	public Context getContext() {
 		if (context == null) {
 			context = DomainTools.getChannel().getContext(contextId);
 			if (context == null) {
