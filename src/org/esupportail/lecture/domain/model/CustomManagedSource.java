@@ -2,9 +2,8 @@ package org.esupportail.lecture.domain.model;
 
 public class CustomManagedSource extends CustomSource{
 
-	protected CustomManagedSource(ManagedSourceProfile profile) {
-		super(profile);
-		profileId = profile.getId();
+	protected CustomManagedSource(String profileId ) {
+		super(profileId);
 		
 	}
 
@@ -29,13 +28,13 @@ public class CustomManagedSource extends CustomSource{
 
 
 	public String getName() {
-		return getSourceProfile().getName();
+		return getProfile().getName();
 	}
 
 
 
 	public String getContent() {
-		return getSourceProfile().getContent();
+		return getProfile().getContent();
 	}
 
 	
