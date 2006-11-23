@@ -29,13 +29,8 @@ public class Channel implements InitializingBean {
 	 */
 	protected static final Log log = LogFactory.getLog(Channel.class); 
 
-// 	A retirer si inutile
-//	/**
-//	 * Channel configuration from xml file.
-//	 */
-//	private ChannelConfig config; 
+	/* channel's elements */
 	
-
 	/**
      * Hashtable of contexts defined in the channel, indexed by their ids.
      */
@@ -46,10 +41,7 @@ public class Channel implements InitializingBean {
 	 */
 	private Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash;
 	
-	/**
-	 * The mapping File from xml file.
-	 */
-	private MappingFile mappingFile;
+	/* mappings */
 	
 	/**
 	 * List of mappings defined by the mapping file.
@@ -80,6 +72,8 @@ public class Channel implements InitializingBean {
 	 * Hash to access mappings by sourceURL.
 	 */	
 	private Hashtable<String,Mapping> mappingHashBySourceURL;
+
+	/* config and mapping files */
 	
 	/**
 	 * configLoaded = true if channel config has ever been loaded in channel
@@ -92,13 +86,24 @@ public class Channel implements InitializingBean {
 	private boolean mappingsLoaded = false;
 	
 	/**
+	 * The mapping File from xml file.
+	 */
+	private MappingFile mappingFile;
+	
+//	/**
+//	 * Channel configuration from xml file.
+//	 */
+//	private ChannelConfig config; 
+	
+	/**
 	 * access to dao services
 	 */
 	private DaoService daoService;
 	
+
+	
 	/*
 	 ************************** Initialization ************************************/
-	
 
 	/**
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
@@ -109,14 +114,13 @@ public class Channel implements InitializingBean {
 		DomainTools.setDaoService(daoService);
 		
 	}
-
 	
 	/**
 	 * Methods call to load the config and mapping file 
 	 * if needed (when files are modified from last loading)
 	 * @throws FatalException
 	 */
-	public void startup() {
+	private void startup() {
 		if (log.isDebugEnabled()){
 			log.debug("startup()");
 		}
@@ -130,7 +134,7 @@ public class Channel implements InitializingBean {
 	 * @see org.esupportail.lecture.domain.model.ChannelConfig#getInstance()
 	 * @exception FatalException
 	 */
-	public void loadConfig()throws FatalException {
+	private void loadConfig()throws FatalException {
 		if (log.isDebugEnabled()){
 			log.debug("loadConfig()");
 		}
@@ -195,7 +199,7 @@ public class Channel implements InitializingBean {
 	 * @see org.esupportail.lecture.domain.model.MappingFile#getInstance()
 	 * @exception FatalException
 	 */	
-	public void loadMappingFile() throws FatalException {
+	private void loadMappingFile() throws FatalException {
 		if (log.isDebugEnabled()){
 			log.debug("loadMappingFile()");
 		}
@@ -229,8 +233,6 @@ public class Channel implements InitializingBean {
 		if (!configLoaded){
 			configLoaded = true;
 		}
-		
-		
 	}
 
 	/**
@@ -252,8 +254,6 @@ public class Channel implements InitializingBean {
 	/*
 	 *************************** METHODS ************************************/
 
-	/* user profiles */
-	
 	/**
 	 * return the user profile identified by "userId". 
 	 * It take it from the dao if exists, else, it create a user profile
@@ -271,8 +271,6 @@ public class Channel implements InitializingBean {
 		return userProfile;
 	}
 	
-	/* Contexts */
-	
 	/**
 	 * return the context identified by "contextId".
 	 * The context is defiend in channel config if exists
@@ -283,8 +281,6 @@ public class Channel implements InitializingBean {
 		Context context = getContextById(contextId);
 		return context;
 	}
-	
-	/* see later */
 	
 //	/**
 //	 * Return a string containing channel content : mapping file, contexts, managed category profiles,
@@ -339,16 +335,13 @@ public class Channel implements InitializingBean {
 //	}		
 
 	/* ************************** ACCESSORS ********************************* */
-	 
-//  A retirer si inutile
+
 //	public ChannelConfig getChannelConfig(){
 //		return config;
 //	}
 //	public void setChannelConfig (ChannelConfig config){
 //		this.config = config;
 //	}
-	
-	/* contextsHash */
 	
 	/**
 	 * Returns a hashtable of contexts, indexed by their ids
@@ -376,8 +369,6 @@ public class Channel implements InitializingBean {
 	protected Context getContextById(String id){
 		return contextsHash.get(id);
 	}
-	
-	/* ManagedCategoryProfilesHash */
 	
 	/**
 	 * Returns a hashtable of ManagedCategoryProfile, indexed by their ids
@@ -416,9 +407,6 @@ public class Channel implements InitializingBean {
 		this.managedCategoryProfilesHash.put(m.getId(),m);
 	}
 
-	/* Mappings */
-	
-//  A retirer si inutile	
 //	public void setMappingFile(MappingFile m){
 //		this.mappingFile = m;
 //	}
@@ -452,7 +440,6 @@ public class Channel implements InitializingBean {
 		this.mappingList.add(m);
 	}
 	
-//  A retirer si inutile	
 //	public Hashtable<String,Mapping> getMappingHashByDtd() {
 //		return mappingHashByDtd;
 //	}
@@ -476,7 +463,6 @@ public class Channel implements InitializingBean {
 	protected Mapping getMappingByDtd(String dtd){
 		return mappingHashByDtd.get(dtd);
 	}
-	
 
 	/**
 	 * Add a mapping to the hash of mappings indexed by its xmlns, defined in the channel
@@ -494,7 +480,6 @@ public class Channel implements InitializingBean {
 		return mappingHashByXmlns.get(xmlns);
 	}
 	
-
 	/**
 	 * Add a mapping to the hash of mappings indexed by its xmlType, defined in the channel
 	 * @param m the mapping to add
@@ -503,7 +488,6 @@ public class Channel implements InitializingBean {
 	protected void addMappingByXmlType(Mapping m) {
 		this.mappingHashByXmlType.put(m.getXmlType(),m);
 	}	
-	
 
 	/**
 	 * @param xmlType
@@ -553,7 +537,6 @@ public class Channel implements InitializingBean {
 	public DaoService getDaoService() {
 		return daoService;
 	}
-
 
 	/**
 	 * set DaoService

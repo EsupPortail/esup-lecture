@@ -24,7 +24,6 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	public String test = "CustomCAtegoryCharge";
 	
-	
 	/**
 	 * The ID of related profilCategory
 	 */
@@ -51,24 +50,13 @@ public class CustomManagedCategory extends CustomCategory {
 	/*
 	 ************************** METHODS *********************************/	
 	
-	/**
-	 * Update data contained in this customManagedCategory by visibilty evaluation
-	 * on managedCategories, in order to update list of customManagedCategories
-	 * @param externalService
-	 */
-	public void update(ExternalService externalService) {	
-		ManagedCategoryProfile managedCategory = (ManagedCategoryProfile)getCategoryProfile();
-		managedCategory.updateCustomCategory(this,externalService);
-		// later : Personnal Sources;
-		
-	}
+
 
 	public List<CustomSource> getSortedCustomSources(ExternalService externalService){
 	// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
 		
-		ManagedCategoryProfile profile = getCategoryProfile();
-		
-		update(externalService);
+		ManagedCategoryProfile profile = getProfile();
+		profile.updateCustom(this,externalService);
 		
 		List<CustomSource> listSources = new Vector<CustomSource>();
 		for(CustomSource customSource : subscriptions.values()){
@@ -79,8 +67,7 @@ public class CustomManagedCategory extends CustomCategory {
 		return listSources;
 	}
 	
-	/* see later */
-	
+
 	
 	/**
 	 * Add a custom source to this custom category if no exists after creating it.
@@ -104,7 +91,7 @@ public class CustomManagedCategory extends CustomCategory {
 		
 	}
 	
-	public ManagedCategoryProfile getCategoryProfile() {
+	public ManagedCategoryProfile getProfile() {
 		Channel channel = DomainTools.getChannel();
 		return channel.getManagedCategoryProfile(this.categoryProfileID);
 	}
@@ -144,11 +131,11 @@ public class CustomManagedCategory extends CustomCategory {
 	
 
 	public String getName() {
-		return getCategoryProfile().getName();
+		return getProfile().getName();
 	}
 
 	public String getContent() {
-		return getCategoryProfile().getDescription();
+		return getProfile().getDescription();
 	}
 
 

@@ -1,14 +1,8 @@
 package org.esupportail.lecture.domain.model;
 
-import java.util.Collection;
-import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
@@ -17,10 +11,6 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.ErrorException;
 
-
-//import java.util.Collection;
-//import java.util.Set;
-//import java.util.SortedSet;
 
 /**
  * Customizations on a context for a user profile 
@@ -48,26 +38,23 @@ public class CustomContext implements CustomElement {
 	private Context context;
 	
 	/**
-	 * The Id of this CustomContext : for Database
-	 */
-	private int Id;
-
-	/**
 	 * The map of subscribed CustomManagedCategory
 	 */
 	private Map<String,CustomManagedCategory> subscriptions;
-	// TODO mettre autre chose qu'une map ?
 	
 	/**
 	 * The userprofile parent (used by hibernate)
 	 */
 	private UserProfile userProfile;
 	
+	/**
+	 * The Id of this CustomContext : for Database
+	 */
+	private int Id;
 
 	
 	/*
 	 ************************** INIT *********************************/	
-
 	
 	/**
 	 * Constructor
@@ -78,6 +65,8 @@ public class CustomContext implements CustomElement {
 	
 	/**
 	 * Constructor
+	 * @param contextId id of the context refered by this
+	 * @param user owner of this
 	 */
 	public CustomContext(String contextId, UserProfile user) {
 		subscriptions = new Hashtable<String,CustomManagedCategory>();
@@ -93,14 +82,14 @@ public class CustomContext implements CustomElement {
 	 * @return list of customCategories defined in this customContext
 	 */
 	public List<CustomCategory> getSortedCustomCategories(ExternalService externalService){
-		// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
+		// TODO rewrite with custom personnal category (+ sorted display)
 	
 		/* update categories in this customContext */
-		getContext().updateCustomContext(this,externalService);
+		getContext().updateCustom(this,externalService);
 		
 		List<CustomCategory> listCustomCategories = new Vector<CustomCategory>();
 		for(CustomManagedCategory customCat : subscriptions.values()){
-			// plus tard, il faudra ajouter les autres custom (imported et personal)
+			// later : add other custom elements (imported et personal)
 			listCustomCategories.add(customCat);
 		}
 		return listCustomCategories;
@@ -109,47 +98,30 @@ public class CustomContext implements CustomElement {
 	
 	/* see later */
 	
+// TODO retirer	
+//	/** 
+//	 * Update data contained in this customContext by visibilty evaluation
+//	 * on managedCategories, in order to update list of customManagedCategories
+//	 * @param externalService
+//	 */
+//	private void update(ExternalService externalService) {
+//		
+//		getContext().updateCustomContext(this,externalService);
+//		// later :  Personnal Categories
+//		
+//		Iterator<CustomManagedCategory> iterator = subscriptions.values().iterator();
+//		while(iterator.hasNext()){
+//			CustomManagedCategory customManagedCategory = iterator.next();
+//			customManagedCategory.update(externalService);
+//		}	
+//	}
 	
-	/** 
-	 * Update data contained in this customContext by visibilty evaluation
-	 * on managedCategories, in order to update list of customManagedCategories
-	 * @param externalService
-	 */
-	private void update(ExternalService externalService) {
-		
-		getContext().updateCustomContext(this,externalService);
-		// later :  Personnal Categories
-		
-		Iterator<CustomManagedCategory> iterator = subscriptions.values().iterator();
-		while(iterator.hasNext()){
-			CustomManagedCategory customManagedCategory = iterator.next();
-			customManagedCategory.update(externalService);
-		}	
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public List<ManagedCategoryProfile> getVisibleManagedCategoryProfile(ExternalService externalService) {
-		
-		return getContext().updateCustomContext(this,externalService);
-		
-	}
-
-	
-	
-	
-
-	
-	
+// TODO retirer	
+//	public List<ManagedCategoryProfile> getVisibleManagedCategoryProfile(ExternalService externalService) {
+//		
+//		return getContext().updateCustomContext(this,externalService);
+//		
+//	}
 	
 	/**
 	 * Add a custom category to this custom context if no exists after creating it.
@@ -164,7 +136,6 @@ public class CustomContext implements CustomElement {
 		}
 	}
 	
-	
 	/**
 	 * Remove the managedCategoryProfile from the customContext
 	 * @param profile managedCategoryProfile to remove
@@ -175,9 +146,30 @@ public class CustomContext implements CustomElement {
 		
 	}
 	
-	public String getContent() {
-		return getContext().getDescription();
+	/**
+	 * @return context refered by this
+	 */
+	private Context getContext() {
+		if (context == null) {
+			context = DomainTools.getChannel().getContext(contextId);
+			if (context == null) {
+				throw new ErrorException("Context "+contextId+" is not defined in this channel");
+			}
+		}
+		return context;
 	}
+	
+	/**
+	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
+	 */
+	public String getName() {
+		return getContext().getName();
+	}
+//	TODO retirer
+//	public String getContent() {
+//		return getContext().getDescription();
+//	}
+
 	
 	/* 
 	 ************************** ACCESSORS **********************************/
@@ -198,53 +190,33 @@ public class CustomContext implements CustomElement {
 		this.contextId = contextId;
 	}
 
-
-
-	public Context getContext() {
-		if (context == null) {
-			context = DomainTools.getChannel().getContext(contextId);
-			if (context == null) {
-				throw new ErrorException("Context "+contextId+" is not defined in this channel");
-			}
-		}
-		return context;
-	}
-	
-	
+	/**
+	 * @return id
+	 */
 	public int getId() {
 		return Id;
 	}
 
+	/**
+	 * @param id
+	 */
 	public void setId(int id) {
 		Id = id;
 	}
 
+	/**
+	 * @return userProfile
+	 */
 	public UserProfile getUserProfile() {
 		return userProfile;
 	}
 
+	/**
+	 * @param userprofile
+	 */
 	public void setUserProfile(UserProfile userprofile) {
 		this.userProfile = userprofile;
 	}
-
-
-
-	public String getName() {
-		return getContext().getName();
-	}
-
-	
-	
-
-	
-
-
-
-	
-
-
-
-
 
 //	public Collection getSubscriptions() {
 //		return subscriptions;
@@ -253,8 +225,6 @@ public class CustomContext implements CustomElement {
 //	public void setSubscriptions(Collection subscriptions) {
 //		this.subscriptions = subscriptions;
 //	}
-
-
 
 //
 //	

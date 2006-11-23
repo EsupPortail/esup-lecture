@@ -55,11 +55,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 */
 	private ComputedManagedCategoryFeatures computedFeatures;
 		
-	/**
-	 * Remote managed category edit mode : not used for the moment
-	 * Using depends on trustCategory parameter
-	 */	
-	private Editability edit;
+	// Later
+//	/**
+//	 * Remote managed category edit mode : not used for the moment
+//	 * Using depends on trustCategory parameter
+//	 */	
+//	private Editability edit;
 	
 	/**
 	 * Visibility rights for groups on the remote managed category
@@ -97,8 +98,20 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 ************************** METHODS ******************************** */	
 	
 	
-	
+//	TODO
+//	/**
+//	 * @param customContext
+//	 * @param externalService
+//	 * @return
+//	 */
 	public boolean updateCustomContext(CustomContext customContext,ExternalService externalService){
+		
+		loadCategory(externalService);
+		return setUpCustomContextVisibility(externalService, customContext);
+		
+	}
+
+	private void loadCategory(ExternalService externalService) {
 		if(getAccess() == Accessibility.PUBLIC) {
 			setCategory(DomainTools.getDaoService().getManagedCategory(this)); 
 			
@@ -107,15 +120,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 			setCategory(DomainTools.getDaoService().getManagedCategory(this,ptCas));
 		}
 		computedFeatures.compute();
-		//computedFeatures.setIsComputed(false); // TODO à optimiser
-		return evaluateVisibilityAndUpdateCustomContext(externalService, customContext);
-		
 	}
-	
-	
-
-	
-	
 	
 	/**
 	 * Evaluate visibility of current user for this managed category.
@@ -125,7 +130,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @param customContext
 	 * @return true if the mcp is visible by the user of the customContext, else return false
 	 */
-	boolean evaluateVisibilityAndUpdateCustomContext(ExternalService externalService, CustomContext customContext) {
+	private boolean setUpCustomContextVisibility(ExternalService externalService, CustomContext customContext) {
 		/*
 		 * Algo pour gerer les customCategories :
 		 * ------------------------------------
@@ -150,8 +155,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		} else {
 	/* ---AUTOSUBSCRIBED SET--- */	
 			// TODO isInAutoSubscribed =  getVisibilityAutoSubscribed().evaluateVisibility(portletService);
-			// en attendant : isInAutoSubscribed = false 
-			
+			// en attendant : isInAutoSubscribed = false 			
 			if(isInAutoSubscribed) {
 				// TODO l'ajouter dans le custom context si c'est la preniere fois
 				// customContext.addCustomCategory(mcp);
@@ -173,10 +177,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		return true;
 	}
 	
-	
-	
-	/*
-	 *********************** METHOD **************************************/ 
 		
 	/**
 	 * Evaluate user visibility on managed source profiles of this managed category 
@@ -185,9 +185,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @param customManagedCategory customManagedCAtegory to update
 	 * @param portletService Access to portlet service
 	 */
-	public void updateCustomCategory(CustomManagedCategory customManagedCategory,ExternalService externalService) {
-		ManagedCategory category = (ManagedCategory) super.getCategory();
-		category.updateCustomCategory(customManagedCategory, externalService);
+	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) {
+		ManagedCategory category = (ManagedCategory) getCategory();
+		category.updateCustom(customManagedCategory, externalService);
 	}
 	
 	

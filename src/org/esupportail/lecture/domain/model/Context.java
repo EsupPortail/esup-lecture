@@ -44,10 +44,11 @@ public class Context {
 	 */
 	private String id;
 
-	/**
-	 * The context edit mode : not used for the moment
-	 */
-	private Editability edit;
+	// later 
+//	/**
+//	 * The context edit mode : not used for the moment
+//	 */
+//	private Editability edit;
 
 	/**
 	 * Managed category profiles available in this context.
@@ -94,9 +95,6 @@ public class Context {
 	/* 
 	 *************************** METHODS ******************************** */
 
-	
-	
-
 	/**
 	 * Load managedCategories of this context,
 	 * Evaluate user visibility on managed categories of the context 
@@ -105,14 +103,12 @@ public class Context {
 	 * @param externalService access to portlet service
 	 * @return list of ManagedCategoryProfiles defined in this context
 	 */
-	public List<ManagedCategoryProfile> updateCustomContext(CustomContext customContext, ExternalService externalService) {
-		//TODO optimiser le nombre de fois où on évalue tout ça !!!
-		//     (trustCategory + reel chargement)
+	public List<ManagedCategoryProfile> updateCustom(CustomContext customContext, ExternalService externalService) {
+		//TODO optimise evaluation process (trustCategory + real loadding)
 		
-		Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
 		List<ManagedCategoryProfile> visibleCategories = new Vector<ManagedCategoryProfile>();
-		while (iterator.hasNext()) {
-			ManagedCategoryProfile mcp = iterator.next();
+		
+		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet){
 			if(mcp.updateCustomContext(customContext, externalService)){
 				visibleCategories.add(mcp);
 			}
@@ -120,6 +116,7 @@ public class Context {
 //			mcp.evaluateVisibilityAndUpdateCustomContext(externalService, customContext);
 	
 		}
+		// TODO faire une autre methode pour le mode edit, celle ci ne doit pas rendre de visibleCategorie
 		return visibleCategories;
 	}
 
@@ -130,6 +127,10 @@ public class Context {
 	 * name, description, id, id category profiles set, managed category profiles available in this context
 	 * @see java.lang.Object#toString()
 	 */
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
 	public String toString() {
 
 		String string = "";
@@ -217,7 +218,7 @@ public class Context {
 		this.id = id;
 	}
 	
-// utile plus tard
+// later
 //	protected Editability getEdit() {
 //		return edit;
 //	}
@@ -253,10 +254,6 @@ public class Context {
 		refIdManagedCategoryProfilesSet.add(s);
 	}
 
-
-
-	
-//	a retirer si inutile	
 //	protected void setSetRefIdManagedCategoryProfiles(Set<String> s) {
 //		refIdManagedCategoryProfilesSet = s;
 //	}

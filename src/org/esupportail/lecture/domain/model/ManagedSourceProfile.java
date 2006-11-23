@@ -93,8 +93,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	 *************************** METHODS ******************************** */	
 	
 	public void updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService externalService) {
-		//loadSource(externalService);
-		evaluateVisibilityAndUpdateCustomCategory(externalService,customManagedCategory);
+		// no loadSource(externalService) is needed here
+		setUpCustomCategoryVisibility(externalService,customManagedCategory);
 		
 	}
 	
@@ -161,11 +161,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	 * Evaluate visibility of current user for this managed source profile.
 	 * Update customManagedCategory (belongs to user) if needed :
 	 * add or remove customManagedSources associated with
-	 * @param portletService
+	 * @param externalService
 	 * @param customManagedCategory
 	 */
 	
-	public void evaluateVisibilityAndUpdateCustomCategory(ExternalService externalService, CustomManagedCategory customManagedCategory) {
+	private void setUpCustomCategoryVisibility(ExternalService externalService, CustomManagedCategory customManagedCategory) {
 			/*
 			 * Algo pour gerer les customSourceProfiles :
 			 * ------------------------------------

@@ -69,7 +69,7 @@ public class ManagedCategory extends Category {
 	 * @param customManagedCategory customManagedCAtegory to update
 	 * @param portletService Access to portlet service
 	 */
-	public void updateCustomCategory(CustomManagedCategory customManagedCategory,ExternalService externalService) {
+	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) {
 		Iterator iterator = getSourceProfilesHash().values().iterator();
 		
 		while (iterator.hasNext()) {

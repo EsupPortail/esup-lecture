@@ -26,7 +26,7 @@ public class UserProfile {
 	
 	/**
 	 * Id of the user, get from portlet request by USER_ID, defined in the channel config
-	 * @see LectureTools#USER_ID
+	 * @see DomainTools#USER_ID
 	 * @see ChannelConfig#loadUserId()
 	 */
 	private String userId;
@@ -39,7 +39,7 @@ public class UserProfile {
 	/**
 	 * Hashtable of CustomManagedCategory defined for the user, indexed by ManagedCategoryProfilID.
 	 */
-	// TODO pourquoi pas customCategories ?
+	// TODO why not customCategories ?
 	private Map<String,CustomManagedCategory> customManagedCategories;
 
 	/*
@@ -55,6 +55,7 @@ public class UserProfile {
 	
 	/**
 	 * Constructor
+	 * @param userId
 	 */
 	public UserProfile(String userId){
 		customContexts = new Hashtable<String,CustomContext>();
@@ -66,7 +67,7 @@ public class UserProfile {
 
 	
 	/**
-	 * Return the customContext identified by the id of the context (contextId)id" 
+	 * Return the customContext identified by the context id" 
 	 * if exists, else create it.
 	 * @param contextId identifier of the context refered by the customContext
 	 * @return customContext (or null)
@@ -82,6 +83,12 @@ public class UserProfile {
 		return customContext;
 	}
 	
+	/**
+	 * Return the customCategory identifed by the category id
+	 * if exist,else,create it.
+	 * @param categoryId identifier of the category refered by the customCategory
+	 * @return customCategory (or null)
+	 */
 	public CustomManagedCategory getCustomManagedCategory(String categoryId){
 		// TODO revoir avec customCategory et customManagedCategory
 		CustomManagedCategory customCategory = 
@@ -93,22 +100,21 @@ public class UserProfile {
 		return customCategory;
 	}
 	
+	/**
+	 * @param customContext
+	 */
+	public void addCustomContext(CustomContext customContext){
+		customContexts.put(customContext.getContextId(),customContext);
+	}
 	
-	
-	
-	/* see later */
-
-	
-	/* ************************** ACCESSORS ********************************* */
-
-		public void addCustomContext(CustomContext customContext){
-			customContexts.put(customContext.getContextId(),customContext);
-		}
+	/**
+	 * @param customCategory
+	 */
+	public void addCustomCategory(CustomManagedCategory customCategory){
+		customManagedCategories.put(customCategory.getCategoryProfileID(),customCategory);
+	}
 		
-		public void addCustomCategory(CustomManagedCategory customCategory){
-			customManagedCategories.put(customCategory.getCategoryProfileID(),customCategory);
-		}
-
+	/* ************************** ACCESSORS ********************************* */
 
 //	/**
 //	 * @return Returns the customContexts.
@@ -138,35 +144,33 @@ public class UserProfile {
 		this.userId = userId;
 	}
 
+	/**
+	 * @return customContexts
+	 */
 	public Map<String, CustomContext> getCustomContexts() {
 		return customContexts;
 	}
 
+	/**
+	 * @param customContexts
+	 */
 	public void setCustomContexts(Map<String, CustomContext> customContexts) {
 		this.customContexts = customContexts;
 	}
 
+	/**
+	 * @return customManagedCategories
+	 */
 	public Map<String, CustomManagedCategory> getCustomManagedCategories() {
 		return customManagedCategories;
 	}
 
+	/**
+	 * @param customManagedCategories
+	 */
 	public void setCustomMabagedCategories(
 			Map<String, CustomManagedCategory> customManagedCategories) {
 		this.customManagedCategories = customManagedCategories;
 	}
-
-//	/**
-//	 * @uml.property  name="customManagedCategories"
-//	 * @uml.associationEnd  multiplicity="(0 -1)" aggregation="composite" inverse="userProfile:org.esupportail.lecture.domain.model.CustomManagedCategory"
-//	 */
-//	private Collection customManagedCategories;
-//
-//	/**
-//	 * @uml.property  name="customManagedSources"
-//	 * @uml.associationEnd  multiplicity="(0 -1)" aggregation="composite" inverse="userProfile:org.esupportail.lecture.domain.model.CustomManagedSource"
-//	 */
-//	private Collection customManagedSources;
-
-	
 
 }

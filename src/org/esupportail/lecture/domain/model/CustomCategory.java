@@ -60,16 +60,10 @@ public abstract class CustomCategory implements CustomElement {
 	/**
 	 * @return the categoryProfile associated with this customCategory
 	 */
-	public abstract CategoryProfile getCategoryProfile() ;
+	public abstract CategoryProfile getProfile() ;
 	
 	public abstract List<CustomSource> getSortedCustomSources(ExternalService externalService);
 	
-	/** 
-	 * Update data contained in this customCategory by visibilty evaluation
-	 * on managedSources, in order to update list of customManagedSources
-	 * @param externalService
-	 */
-	public abstract void update(ExternalService externalService); 
 	
 	
 }

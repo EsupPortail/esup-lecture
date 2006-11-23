@@ -1,6 +1,7 @@
 package org.esupportail.lecture.domain;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -11,6 +12,7 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
+import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
@@ -30,19 +32,15 @@ public class DomainServiceImpl implements DomainService {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(DomainServiceImpl.class); 
-	
+	protected static final Log log = LogFactory.getLog(DomainServiceImpl.class);
+
 	/*
 	 ************************** Initialization ************************************/
 	
 
 	
 	/*
-	 ************************** Methodes ************************************/
-
-	/*
-	 * User Connected
-	 */
+	 ************************** Methodes - services  ************************************/
 
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getConnectedUser(java.lang.String)
@@ -58,12 +56,6 @@ public class DomainServiceImpl implements DomainService {
 		return user;
 	}
 
-	
-	
-	/*
-	 * Current Context
-	 */
-	
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
@@ -72,25 +64,21 @@ public class DomainServiceImpl implements DomainService {
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(userId);
 		CustomContext customContext = userProfile.getCustomContext(contextId);
-		//TODO mettre le customContext dans un hash (faire un petit cache)
+		
+		/* Make the contextUserBean to display */
+		ContextBean contextBean = new ContextBean(customContext);
 		
 		// TODO mise à jour du DAO ?
 //		DomainTools.getDaoService().updateCustomContext(customContext);
 //		DomainTools.getDaoService().updateUserProfile(userProfile);
 		
-		/* Make the contextUserBean to display */
-		ContextBean contextBean = new ContextBean(customContext);
-		
 		return contextBean;		
 	}
 
-	/*
-	 * Categories of the current context
-	 */
-	
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getCategories(java.lang.String, java.lang.String)
 	 */
+	// TODO getVisibleCategories ?
 	public List<CategoryBean> getCategories(String userId, String contextId,ExternalService externalService) {
 		
 		/* Get current user profile and customContext */
@@ -104,14 +92,20 @@ public class DomainServiceImpl implements DomainService {
 		for(CustomCategory customCategory : customCategories){
 			CategoryBean category = new CategoryBean(customCategory);
 			listCategoryBean.add(category);
+			// TODO mise à jour du DAO ?
+//			DomainTools.getDaoService().updateCustomCategory(customCategory);
 		}
 		
+		// TODO mise à jour du DAO ?
+//		DomainTools.getDaoService().updateCustomContext(customContext);
+//		DomainTools.getDaoService().updateUserProfile(userProfile);
 		return listCategoryBean;
 	}
 	
-	/*
-	 * Sources of the current category
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
+	// TODO getVisibleSource
 	public List<SourceBean> getSources(String uid, String categoryId,ExternalService externalService) {
 		
 		/* Get current user profile and customContext */
@@ -125,8 +119,13 @@ public class DomainServiceImpl implements DomainService {
 		for(CustomSource customSource : customSources){
 			SourceBean source = new SourceBean(customSource);
 			listSourceBean.add(source);
+			// TODO mise à jour du DAO ?
+//			DomainTools.getDaoService().updateCustomSource(customSource);
+			
 		}
- 		
+		// TODO mise à jour du DAO ?
+//		DomainTools.getDaoService().updateUserProfile(userProfile);
+//		DomainTools.getDaoService().updateCustomCategory(customCategory);		
 		return listSourceBean;
 	}
 	
@@ -146,32 +145,29 @@ public class DomainServiceImpl implements DomainService {
 		
 	}
 	
-
-
-
-	/*
-	 ************************** Accessors ************************************/
-
-	public Channel getChannel() {
-		// J'ai retiré le caractère static de la méthode pour la config spring
-		return channel;
-	}
-
-	public void setChannel(Channel channel) {
-		// J'ai retiré le caractère static de la méthode pour la config spring
-		DomainServiceImpl.channel = channel;
-	}
-
-
-
 	public void marckItemasUnread(String uid, String sourceId, String itemId) {
 		// TODO Auto-generated method stub
 		
 	}
 
 
+	/*
+	 ************************** Accessors ************************************/
+	
+	/**
+	 * @return channel
+	 */
+	public Channel getChannel() {
+		// It could be static without spring 
+		return channel;
+	}
 
-
-
+	/**
+	 * @param channel
+	 */
+	public void setChannel(Channel channel) {
+		// It could be static without spring 
+		DomainServiceImpl.channel = channel;
+	}
 	
 }
