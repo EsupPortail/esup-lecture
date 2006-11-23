@@ -22,6 +22,7 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Namespace;
 import org.dom4j.Node;
 import org.dom4j.XPath;
+import org.dom4j.XPathException;
 import org.dom4j.io.SAXReader;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.ErrorException;
@@ -42,6 +43,11 @@ public abstract class Source implements Serializable {
 	 * xmlStream (XML content) of the source
 	 */
 	private String xmlStream = "";
+	
+	/**
+	 * URL of the source (used by mapping to find ItemXpath and Xslt File)
+	 */
+	private String URL = "";
 
 	/**
 	 * profile Id of the source
@@ -94,6 +100,11 @@ public abstract class Source implements Serializable {
 	private boolean isItemComputed = false;
 	
 	/**
+	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI)
+	 */
+	private HashMap<String, String> XPathNameSpaces;
+
+	/**
 	 * Items List of this source
 	 */
 	private List<Item> Items = new ArrayList<Item>();
@@ -112,19 +123,33 @@ public abstract class Source implements Serializable {
 		String setXsltURL = xsltURL;
 		String setItemXPath = itemXPath;
 			
-		log.debug("Source::computeXslt() : "+profileId);
+		if (log.isDebugEnabled()) {
+			log.debug("Source::computeXslt() : "+profileId);			
+		}
 		String dtd = getDtd();
-		log.debug("DTD : "+dtd);
+		if (log.isDebugEnabled()) {
+			log.debug("DTD : "+dtd);
+		}
 		String xmlType = getXmlType();
-		log.debug("xmlType : "+xmlType);
+		if (log.isDebugEnabled()) {
+			log.debug("xmlType : "+xmlType);		
+		}
 		String xmlns = getXmlns();
-		log.debug("xmlns : "+xmlns);
+		if (log.isDebugEnabled()) {
+			log.debug("xmlns : "+xmlns);		
+		}
 		String rootElement = getRootElement();
-		log.debug("rootElement : "+rootElement);
+		if (log.isDebugEnabled()) {
+			log.debug("rootElement : "+rootElement);			
+		}
 			
 		Mapping m = new Mapping();
 		
 		if (setXsltURL == null || setItemXPath == null) {
+			//TODO introduire le mapping par source URL
+			if (URL != null) {
+				m = channel.getMappingBySourceURL(URL);
+			} else {
 			if (dtd != null) {
 				m = channel.getMappingByDtd(dtd);
 			} else {
@@ -137,18 +162,21 @@ public abstract class Source implements Serializable {
 			if (rootElement != null) {
 				m = channel.getMappingByRootElement(rootElement);
 			} else {
-				log.warn("Source "+profileId+" does not have any xslt information : no dtd, xmlType, xmlns, rootElement");
-			}}}}
+				log.warn("Source "+profileId+" does not have any xslt information : no sourceURL, dtd, xmlType, xmlns, rootElement");
+			}}}}}
 		
 			if (m == null) {
 				log.warn("Source "+profileId+" does not find xslt in mapping file ");
 			} else {
-		
 				if (setXsltURL == null) {
 					setXsltURL = m.getXsltUrl();
 				}
 				if (setItemXPath == null) {
 					setItemXPath = m.getItemXPath();
+				}
+				if (XPathNameSpaces == null) {
+					//TODO RB : peut-être définir un XPathNameSpaces au niveau de la définition de la source dans la CategoryProfile !!!
+					XPathNameSpaces = m.getXPathNameSpaces();
 				}
 			}
 		}
@@ -170,14 +198,9 @@ public abstract class Source implements Serializable {
 			Document document = DocumentHelper.parseText(xmlStream);
 			//generate map of namespaces
 			HashMap nameSpaces = new HashMap();
-			//find all namaspace in document
-			//TODO not hardcode --> find naspaces in document 
-			// faire un xpath sur tous les attributs qui commencent par xmlns pour remplir la hastable nameSpaces !!!!
-			nameSpaces.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-			nameSpaces.put("default", "http://purl.org/rss/1.0/");
 			//lauch Xpath find
 			XPath xpath = document.createXPath(itemXPath);
-			xpath.setNamespaceURIs(nameSpaces);
+			xpath.setNamespaceURIs(XPathNameSpaces);
 			List<Node> list = xpath.selectNodes(document);
 			//List<Node> list = document.selectNodes(itemXPath);
 			Iterator<Node> iter = list.iterator();
@@ -213,6 +236,11 @@ public abstract class Source implements Serializable {
 				log.error("MD5 algorithm not supported");
 			}
 			throw new ErrorException("MD5 algorithm not supported");
+		} catch (XPathException e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage());
+			}
+			throw new ErrorException("Xpath with NamaSpace not specified in mappings.xml");
 		}
 	}
 	
@@ -365,5 +393,13 @@ public abstract class Source implements Serializable {
 			computeItems();
 		}
 		return Items;
+	}
+
+	/**
+	 * set the Source URL
+	 * @param url
+	 */
+	public void setURL(String url) {
+		URL = url;
 	}
 }

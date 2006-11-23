@@ -1,0 +1,5 @@
+TODO
+
+1) Ajouter dans la doc les modfis sur mappings.dtd
+-- Ajout de SourceURL pour faire un mapping directement avec l'URL de la source
+-- Ajout de XPathNameSpace pour renseigner les nameSpaces éventuellement utilisés dans le XPath

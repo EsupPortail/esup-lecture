@@ -7,6 +7,7 @@ package org.esupportail.lecture.domain.model;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -149,13 +150,20 @@ public class MappingFile {
 		for(int i = 0; i<nbMappings;i++ ){
 			String pathMapping = "mapping(" + i + ")";
 			Mapping m = new Mapping();
+			String sourceURL = xmlFile.getString(pathMapping+ "[@sourceURL]");
 			String dtd = xmlFile.getString(pathMapping+ "[@dtd]");
 			String xmlns = xmlFile.getString(pathMapping+ "[@xmlns]");
 			String xmlType = xmlFile.getString(pathMapping+ "[@xmlType]");
 			String rootElement = xmlFile.getString(pathMapping+ "[@rootElement]");
 			
-			if (dtd == null && xmlns == null && xmlType == null && rootElement == null){
-				throw new ErrorException("loadMappings :: you must declare dtd or xmlns or xmltype or rootElement in a mapping.");
+			if (sourceURL == null && dtd == null && xmlns == null && xmlType == null && rootElement == null){
+				throw new ErrorException("loadMappings :: you must declare sourceURL or dtd or xmlns or xmltype or rootElement in a mapping.");
+			}
+			
+			if (sourceURL == null){
+				m.setSourceURL("");
+			}else{
+				m.setSourceURL(sourceURL);
 			}
 			
 			if (dtd == null){
@@ -184,6 +192,18 @@ public class MappingFile {
 			
 			m.setXsltUrl(xmlFile.getString(pathMapping+ "[@xsltFile]"));
 			m.setItemXPath(xmlFile.getString(pathMapping+ "[@itemXPath]"));
+			
+			//loop on XPathNameSpace
+			int nbXPathNameSpaces = xmlFile.getMaxIndex(pathMapping+ ".XPathNameSpace") + 1;
+			HashMap<String, String> XPathNameSpaces = new HashMap<String, String>();
+			for(int j = 0; j < nbXPathNameSpaces; j++) {
+				String pathXPathNameSpace = pathMapping+ ".XPathNameSpace("+j+")";
+				String prefix = xmlFile.getString(pathXPathNameSpace+"[@prefix]");
+				String uri = xmlFile.getString(pathXPathNameSpace+"[@uri]");
+				XPathNameSpaces.put(prefix, uri);
+			}
+			m.setXPathNameSpaces(XPathNameSpaces);
+
 			mappingList.add(m);
 		}
 	}
@@ -211,11 +231,15 @@ public class MappingFile {
 		Iterator iterator = channel.getMappingList().iterator();
 		for(Mapping m = null; iterator.hasNext();){
 			m = (Mapping)iterator.next();
+			String sourceURL = m.getSourceURL();
 			String dtd = m.getDtd();
 			String xmlns = m.getXmlns();
 			String xmlType = m.getXmlType();
 			String rootElement = m.getRootElement();
 			
+			if (!sourceURL.equals("")) {
+				channel.addMappingBySourceURL(m);
+			}
 			if (!dtd.equals("")) {
 				channel.addMappingByDtd(m);
 			}

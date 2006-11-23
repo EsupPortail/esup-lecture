@@ -75,6 +75,11 @@ public class Channel implements InitializingBean {
 	 * Hash to access mappings by root element.
 	 */	
 	private Hashtable<String,Mapping> mappingHashByRootElement;
+
+	/**
+	 * Hash to access mappings by sourceURL.
+	 */	
+	private Hashtable<String,Mapping> mappingHashBySourceURL;
 	
 	/**
 	 * configLoaded = true if channel config has ever been loaded in channel
@@ -239,6 +244,8 @@ public class Channel implements InitializingBean {
 		mappingHashByDtd = new Hashtable<String,Mapping>();
 		mappingHashByXmlns = new Hashtable<String,Mapping>();
 		mappingHashByXmlType = new Hashtable<String,Mapping>();
+		mappingHashByRootElement = new Hashtable<String,Mapping>();
+		mappingHashBySourceURL= new Hashtable<String,Mapping>();
 	}
 
 	
@@ -462,6 +469,10 @@ public class Channel implements InitializingBean {
 		this.mappingHashByDtd.put(m.getDtd(),m);
 	}
 	
+	/**
+	 * @param dtd
+	 * @return mapping for this dtd
+	 */
 	protected Mapping getMappingByDtd(String dtd){
 		return mappingHashByDtd.get(dtd);
 	}
@@ -475,6 +486,10 @@ public class Channel implements InitializingBean {
 	protected void addMappingByXmlns(Mapping m) {
 		this.mappingHashByXmlns.put(m.getXmlns(),m);
 	}	
+	/**
+	 * @param xmlns
+	 * @return mapping for this xmlns
+	 */
 	protected Mapping getMappingByXmlns(String xmlns){
 		return mappingHashByXmlns.get(xmlns);
 	}
@@ -490,6 +505,10 @@ public class Channel implements InitializingBean {
 	}	
 	
 
+	/**
+	 * @param xmlType
+	 * @return mapping for this xmlType
+	 */
 	protected Mapping getMappingByXmlType(String xmlType){
 		return mappingHashByXmlType.get(xmlType);
 	}
@@ -503,19 +522,47 @@ public class Channel implements InitializingBean {
 		this.mappingHashByRootElement.put(m.getRootElement(), m);
 	}
 
+	/**
+	 * @param rootElement
+	 * @return mapping for this rootElement
+	 */
 	protected Mapping getMappingByRootElement(String rootElement){
 		return mappingHashByRootElement.get(rootElement);
 	}
 
+	/**
+	 * Add a mapping to the hash of mappings indexed by its sourceURL, defined in the channel
+	 * @param m
+	 * @see Channel#mappingHashBySourceURL
+	 */
+	public void addMappingBySourceURL(Mapping m) {
+		this.mappingHashBySourceURL.put(m.getSourceURL(), m);
+	}
 
+	/**
+	 * @param sourceURL
+	 * @return mapping for this sourceURL
+	 */
+	protected Mapping getMappingBySourceURL(String sourceURL){
+		return mappingHashBySourceURL.get(sourceURL);
+	}
+
+	/**
+	 * @return dosService
+	 */
 	public DaoService getDaoService() {
 		return daoService;
 	}
 
 
+	/**
+	 * set DaoService
+	 * @param daoService
+	 */
 	public void setDaoService(DaoService daoService) {
 		this.daoService = daoService;
 	}
+
 
 
 }

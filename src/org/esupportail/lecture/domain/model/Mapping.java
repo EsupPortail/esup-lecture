@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.HashMap;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -23,6 +25,11 @@ public class Mapping {
 	 */
 	protected static final Log log = LogFactory.getLog(Mapping.class);
 
+	
+	/**
+	 * Source URL
+	 */
+	private String sourceURL = "";
 	
 	/**
 	 * Name of the dtd
@@ -49,11 +56,15 @@ public class Mapping {
 	 */
 	private String itemXPath = "";
 
-
 	/**
-	 * Optionnal : rootElement of the xmlStream (one of these parameter is required : xmlns, xmlType, dtd,rootElement)
+	 * Optionnal : rootElement of the xmlStream (one of these parameter is required : sourceURL, xmlns, xmlType, dtd, rootElement)
 	 */
 	private String rootElement;
+	
+	/**
+	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI)
+	 */
+	private HashMap<String, String> XPathNameSpaces = new HashMap<String, String>();
 	
 	/*
 	 ************************** Methods ******************************** */	
@@ -115,7 +126,7 @@ public class Mapping {
 	
 	/**
 	 * Sets the xsltFile
-	 * @param xsltFile
+	 * @param xsltUrl xsltFile URL
 	 * @see Mapping#xsltFile
 	 */
 	protected void setXsltUrl(String xsltUrl) {
@@ -185,10 +196,40 @@ public class Mapping {
 
 	/**
 	 * Sets the root element of the XML
-	 * @param root element
+	 * @param rootElement root element
 	 */
 	protected void setRootElement(String rootElement) {
 		this.rootElement = rootElement;
+	}
+	
+	/**
+	 * @return source URL
+	 */
+	protected String getSourceURL() {
+		return sourceURL;
+	}
+	
+	/**
+	 * set source URL
+	 * @param sourceURL
+	 */
+	protected void setSourceURL(String sourceURL) {
+		this.sourceURL = sourceURL;
+	}
+	
+	/**
+	 * @return map of XPathNameSpaces
+	 */
+	protected HashMap<String, String> getXPathNameSpaces() {
+		return XPathNameSpaces;
+	}
+	
+	/**
+	 * set map of XPathNameSpaces
+	 * @param pathNameSpace
+	 */
+	protected void setXPathNameSpaces(HashMap<String, String> pathNameSpace) {
+		XPathNameSpaces = pathNameSpace;
 	}
 	
 	

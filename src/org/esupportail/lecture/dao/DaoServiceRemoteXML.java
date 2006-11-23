@@ -276,6 +276,7 @@ public class DaoServiceRemoteXML {
 			ret.setXmlns(rootNamespace);
 			ret.setXmlStream(xml);
 			ret.setXmlType(xmltype);
+			ret.setURL(urlSource);
 		} catch (DocumentException e) {
 			log.error("DaoServiceRemoteXML :: getSource, "+e.getMessage());
 			throw new ErrorException();
