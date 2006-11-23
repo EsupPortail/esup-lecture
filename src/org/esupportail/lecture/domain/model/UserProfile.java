@@ -42,6 +42,12 @@ public class UserProfile {
 	// TODO why not customCategories ?
 	private Map<String,CustomManagedCategory> customManagedCategories;
 
+	/**
+	 * Hashtable of CustomSource defined for the user, indexed by SourceProfilID.
+	 */
+	private Map<String,CustomSource> customSources;
+
+	
 	/*
 	 ************************** Initialization ************************************/
 	
@@ -60,6 +66,7 @@ public class UserProfile {
 	public UserProfile(String userId){
 		customContexts = new Hashtable<String,CustomContext>();
 		customManagedCategories = new Hashtable<String, CustomManagedCategory>();
+		customSources = new Hashtable<String,CustomSource>();
 		this.setUserId(userId);
 	}
 	/*
@@ -100,6 +107,17 @@ public class UserProfile {
 		return customCategory;
 	}
 	
+	public CustomSource getCustomMSource(String sourceId) {
+		CustomSource customSource = 
+			customSources.get(sourceId);
+		if(customSource == null){
+			customSource = new CustomManagedSource(sourceId);
+			addCustomCategory(customSource);
+		}
+		return customCategory;
+	}
+
+	
 	/**
 	 * @param customContext
 	 */
@@ -112,6 +130,13 @@ public class UserProfile {
 	 */
 	public void addCustomCategory(CustomManagedCategory customCategory){
 		customManagedCategories.put(customCategory.getCategoryProfileID(),customCategory);
+	}
+	
+	/**
+	 * @param customCategory
+	 */
+	public void addCustomSource(CustomSource customCategory){
+		customSources.put(customCategory.getSourceProfileId(),customCategory);
 	}
 		
 	/* ************************** ACCESSORS ********************************* */
@@ -168,9 +193,10 @@ public class UserProfile {
 	/**
 	 * @param customManagedCategories
 	 */
-	public void setCustomMabagedCategories(
+	public void setCustomManagedCategories(
 			Map<String, CustomManagedCategory> customManagedCategories) {
 		this.customManagedCategories = customManagedCategories;
 	}
 
+	
 }
