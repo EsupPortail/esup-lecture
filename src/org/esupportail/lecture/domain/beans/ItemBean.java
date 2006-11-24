@@ -20,10 +20,21 @@ public class ItemBean {
 	 */
 	private boolean read;
 	
+	/**
+	 * Create a ItemBean from a Item
+	 * @param i
+	 */
 	public ItemBean(Item i){
 		id = i.getId();
 		htmlContent = i.getHtmlContent();
 		read = i.isRead();
+	}
+
+	/**
+	 * default constructor
+	 */
+	public ItemBean(){
+		super();
 	}
 	/**
 	 * @return html content of item
@@ -62,6 +73,9 @@ public class ItemBean {
 		this.read = read;
 	}
 	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
 	public String toString(){
 		String string = "";
 		string += "     Id = " + id + "\n";
