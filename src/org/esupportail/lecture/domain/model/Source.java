@@ -7,13 +7,7 @@ package org.esupportail.lecture.domain.model;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.net.URL;
 import java.security.MessageDigest;
@@ -32,14 +26,12 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.taglibs.standard.tag.common.core.OutSupport;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Node;
 import org.dom4j.XPath;
 import org.dom4j.XPathException;
-import org.dom4j.io.SAXReader;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.ErrorException;
 
@@ -132,8 +124,6 @@ public abstract class Source implements Serializable {
 	 * xmlns or XML root element of the source XML content
 	 */
 	protected void computeXslt(){
-		// TODO revoir cette fonction : à adapter, 
-		//voir si on n'a pas aussi ici un computedFeatures 
 
 		Channel channel = DomainTools.getChannel();
 		String setXsltURL = xsltURL;
@@ -142,19 +132,15 @@ public abstract class Source implements Serializable {
 		if (log.isDebugEnabled()) {
 			log.debug("Source::computeXslt() : "+profileId);			
 		}
-		String dtd = getDtd();
 		if (log.isDebugEnabled()) {
 			log.debug("DTD : "+dtd);
 		}
-		String xmlType = getXmlType();
 		if (log.isDebugEnabled()) {
 			log.debug("xmlType : "+xmlType);		
 		}
-		String xmlns = getXmlns();
 		if (log.isDebugEnabled()) {
 			log.debug("xmlns : "+xmlns);		
 		}
-		String rootElement = getRootElement();
 		if (log.isDebugEnabled()) {
 			log.debug("rootElement : "+rootElement);			
 		}
@@ -190,7 +176,6 @@ public abstract class Source implements Serializable {
 					setItemXPath = m.getItemXPath();
 				}
 				if (XPathNameSpaces == null) {
-					//TODO RB : peut-être définir un XPathNameSpaces au niveau de la définition de la source dans la CategoryProfile !!!
 					XPathNameSpaces = m.getXPathNameSpaces();
 				}
 			}
@@ -203,18 +188,16 @@ public abstract class Source implements Serializable {
 	/**
 	 * find Items objects in fonction of itemXPath, xsltURL, xmlStream
 	 */
+	@SuppressWarnings("unchecked")
 	protected void computeItems() {
 		if (!isXsltComputed){
 			computeXslt();
 		}
-		SAXReader reader = new SAXReader();
 		try {
 			//create dom4j document
 			Document document = DocumentHelper.parseText(xmlStream);
 			//get encoding
 			String encoding = document.getXMLEncoding();
-			//generate map of namespaces
-			HashMap nameSpaces = new HashMap();
 			//lauch Xpath find
 			XPath xpath = document.createXPath(itemXPath);
 			xpath.setNamespaceURIs(XPathNameSpaces);
@@ -268,10 +251,10 @@ public abstract class Source implements Serializable {
 	/**
 	 * transform a xml String in a html String with an XSLT
 	 * @param xml to transform
-	 * @param xsltURL URL of XSLT file
+	 * @param xsltFileURL URL of XSLT file
 	 * @return html content
 	 */
-	private String xml2html(String xml, String xsltURL) {
+	private String xml2html(String xml, String xsltFileURL) {
 		String ret = null;
 		try {
 			//		 1. Instantiate a TransformerFactory.
@@ -279,7 +262,7 @@ public abstract class Source implements Serializable {
 			//		2. Use the TransformerFactory to process the stylesheet Source and
 			//		generate a Transformer.
 			Transformer transformer;
-			URL url = new URL(xsltURL);
+			URL url = new URL(xsltFileURL);
 			StreamSource streamSource = new StreamSource(url.openStream());
 			transformer = tFactory.newTransformer(streamSource);
 			//		3. Use the Transformer to transform an XML Source and send the
@@ -309,15 +292,7 @@ public abstract class Source implements Serializable {
 		return ret;
 	}
 
-//	public void update(String setItemXPath, String setXsltURL) {
-//	//TODO  A mettre dans le computed feature de la ssource ?	
-//		itemXPath = setItemXPath;
-//		xsltUrl = setXsltURL;
-//	}
-
-
 /* ************************** ACCESSORS ******************************** */	
-
 
 	/**
 	 * @return the dtd of source XML content
@@ -442,11 +417,7 @@ public abstract class Source implements Serializable {
 	 * @return the Content of source
 	 */
 	public String getContent() {
-//		 TODO : normalemùent, c'est un html qu'on passe : xml transformé avec son xslt + itemXpath ...
-		// pour l'instant, on simplilfie :
 		return xmlStream;
-		
-		
 	}
 
 	/**
