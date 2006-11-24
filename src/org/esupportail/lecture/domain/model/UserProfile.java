@@ -107,14 +107,11 @@ public class UserProfile {
 		return customCategory;
 	}
 	
-	public CustomSource getCustomMSource(String sourceId) {
+	public CustomSource getCustomSource(String sourceId) {
 		CustomSource customSource = 
 			customSources.get(sourceId);
-		if(customSource == null){
-			customSource = new CustomManagedSource(sourceId);
-			addCustomCategory(customSource);
-		}
-		return customCategory;
+		
+		return customSource;
 	}
 
 	
@@ -135,8 +132,8 @@ public class UserProfile {
 	/**
 	 * @param customCategory
 	 */
-	public void addCustomSource(CustomSource customCategory){
-		customSources.put(customCategory.getSourceProfileId(),customCategory);
+	public void addCustomSource(CustomSource customSource){
+		customSources.put(customSource.getSourceProfileId(),customSource);
 	}
 		
 	/* ************************** ACCESSORS ********************************* */

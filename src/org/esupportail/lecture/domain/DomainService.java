@@ -49,10 +49,11 @@ public interface DomainService {
 	/**
 	 * @param sourceId 
 	 * @param uid 
+	 * @param externalService access to external service 
 	 * @return List<ItemBean>
 	 * @see FacadeService#getItems(String, String)
 	 */
-	List<ItemBean> getItems( String uid,String sourceId);
+	List<ItemBean> getItems( String uid,String sourceId,ExternalService externalService);
 
 	/**
 	 * @param uid 

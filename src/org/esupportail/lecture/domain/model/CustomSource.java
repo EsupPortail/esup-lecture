@@ -6,45 +6,38 @@ import org.esupportail.lecture.domain.ExternalService;
 
 public abstract class CustomSource implements CustomElement {
 
-	
-	/**
-	 * The ID of related profilSource
-	 */
-	private String sourceProfileId;
+	private SourceProfile sourceProfile;
 	
 	
-	protected CustomSource(String sourceProfileId){
-		this.sourceProfileId = sourceProfileId;
+	protected CustomSource(SourceProfile profile){
+		sourceProfile = profile;
 	}
 	/**
 	 * @param sourceProfile The sourceProfile to set.
 	 */
-	protected void setProfile(String sourceProfileId) {
-		this.sourceProfileId = sourceProfileId;
+	protected void setSourceProfile(SourceProfile sourceProfile) {
+		this.sourceProfile = sourceProfile;
 	}
 
-	public abstract SourceProfile getProfile();
-
+	public SourceProfile getSourceProfile(){
+		return sourceProfile;
+	}
+	
+	public String getSourceProfileId(){
+		return sourceProfile.getId();
+	}
+	
 //	 TODO : à retirer : pour les tests	
 	public String getItemXPath() {
-		return getProfile().getSource().getItemXPath();
+		return sourceProfile.getSource().getItemXPath();
 	}
 //	 TODO : à retirer : pour les tests	
 	public String getXslt() {
-		return getProfile().getSource().getXsltURL();
+		return sourceProfile.getSource().getXsltURL();
 	}
+	
 	public List<Item> getItems(ExternalService externalService) {
-		SourceProfile profile = getProfile();
-		getProfile().getItems(externalService);
-		return null;
+		return sourceProfile.getItems(externalService);
 	}
-	public String getSourceProfileId() {
-		return sourceProfileId;
-	}
-	public void setSourceProfileID(String sourceProfileId) {
-		this.sourceProfileId = sourceProfileId;
-	}
-	
-	
 
 }

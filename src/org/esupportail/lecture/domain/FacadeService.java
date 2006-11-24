@@ -98,7 +98,7 @@ public class FacadeService implements InitializingBean {
 	 * @return List of ItemBean in a source
 	 */
 	public List<ItemBean> getItems(String sourceId,String uid) {
-		return domainService.getItems(uid,sourceId);
+		return domainService.getItems(uid,sourceId,externalService);
 	}
 
 	

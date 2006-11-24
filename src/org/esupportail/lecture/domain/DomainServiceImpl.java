@@ -133,7 +133,7 @@ public class DomainServiceImpl implements DomainService {
 
 	/* see later */
 	
-	public List<ItemBean> getItems(String uid, String sourceId) {
+	public List<ItemBean> getItems(String uid, String sourceId,ExternalService externalService) {
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		// TODO why not customCategories ?
@@ -141,7 +141,7 @@ public class DomainServiceImpl implements DomainService {
 		
 		List<ItemBean> listItemBean = new ArrayList<ItemBean>();
 		
-		List<Item> items = customSource.getItems();
+		List<Item> items = customSource.getItems(externalService);
 		for(Item item : items){
 			ItemBean itemBean = new ItemBean(item);
 			listItemBean.add(itemBean);

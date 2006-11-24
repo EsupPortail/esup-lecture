@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.List;
+
 import org.esupportail.lecture.domain.ExternalService;
 
 /**
@@ -27,7 +29,7 @@ public abstract class SourceProfile {
 
 /* ************************** METHODS ******************************** */	
 	
-	public abstract Item getItems(ExternalService externalService) ;
+	public abstract List<Item> getItems(ExternalService externalService) ;
 
 /* ************************** ACCESSORS ******************************** */	
 

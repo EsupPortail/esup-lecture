@@ -80,6 +80,7 @@ public class CustomManagedCategory extends CustomCategory {
 			CustomManagedSource customManagedSource = new CustomManagedSource(managedSourceProfile);
 			customManagedSource.setManagedCategoryProfileId(this.getCategoryProfileID());
 			subscriptions.put(profileId,customManagedSource);
+			getUserProfile().addCustomSource(customManagedSource);
 		}
 	}
 	
@@ -115,21 +116,12 @@ public class CustomManagedCategory extends CustomCategory {
 		this.test = test;
 	}
 
-
 	public String getCategoryProfileID() {
 		return categoryProfileID;
 	}
 	public void setCategoryProfileID(String profilID) {
 		this.categoryProfileID = profilID;
 	}
-
-	
-
-	
-	
-
-	
-
 	public String getName() {
 		return getProfile().getName();
 	}

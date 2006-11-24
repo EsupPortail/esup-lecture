@@ -86,7 +86,7 @@ public class DomainServiceTest implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String)
 	 */
-	public List<ItemBean> getItems(String sourceId, String uid) {
+	public List<ItemBean> getItems(String sourceId, String uid,ExternalService externalService) {
 		return items;
 	}
 

@@ -6,6 +6,7 @@
 package org.esupportail.lecture.domain.model;
 
 import java.beans.FeatureDescriptor;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -99,10 +100,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	}
 
 	@Override
-	public Item getItems(ExternalService externalService) {
+	public List<Item> getItems(ExternalService externalService) {
 		loadSource(externalService);
-		getSource().getItems();
-		return null;
+		
+		return getSource().getItems();
 	}
 	
 	@Override
