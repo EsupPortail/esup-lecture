@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
+import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
@@ -40,6 +41,7 @@ public class DomainTest {
 		testGetContext();
 		testGetCategories();
 		testGetSources();
+		testGetItems();
 		// TODO compléter pour chaque méthode à tester
 	
 		
@@ -48,6 +50,7 @@ public class DomainTest {
 /*
  * Méthodes de Test
  */
+
 
 	/**
 	 * Test of servide "getConnectedUser"
@@ -101,6 +104,15 @@ public class DomainTest {
 	}
 
 
+	private static void testGetItems() {
+		printIntro("getItems");
+		System.out.println(" **** source 'un' **********");
+		List<ItemBean> items = facadeService.getItems("un",userId);
+		for(ItemBean it : items){
+			System.out.println("  **** item ****");
+			System.out.println(it.toString());
+		}
+	}
 
 	/**
 	 * Affichage du service à tester

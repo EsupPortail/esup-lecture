@@ -30,7 +30,7 @@
 	</context>
 
 	<categoryProfile 
-		name="categorie1"
+		name="categorie1 : no trust cat"
 		
 		id="cp1"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
@@ -38,43 +38,19 @@
 		access="public"
 		ttl = "3600" >
 		<visibility>
-			<allowed>
-				<regular
-					attribute="attr11"
-					value="val11"/>
-				<regular
-					attribute="attr112"
-					value="val112"/>
-				<group
-					name="group11"/>
-				<group
-					name="group112"/>
-				<group
-					name="group113"/>
-				<group
-					name="local.4"/>
-			</allowed>
+			<allowed/>
 			<!-- autoSubscribed not yet supported -->
-			<autoSubscribed>
-				<regular
-					attribute="attr12"
-					value="val12"/>
-				<group
-					name="group12"/>
-				<group
-					name="group122"/>
-			</autoSubscribed>
+			<autoSubscribed/>
 			<obliged>
 				<regular
 					attribute="sn"
-					value="User"/>	
-				
+					value="User"/>					
 			</obliged>
 		</visibility>
 	</categoryProfile>
 	 <!-- JE VOIS -->
  	<categoryProfile 
-		name="categorie2"
+		name="categorie2 : no trust cat"
 		
 		id="cp2"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
@@ -82,83 +58,49 @@
 		access="public"
 		ttl = "3600" >
 	 	<visibility>
-	 		<allowed>
-				<regular
-					attribute="attr21"
-					value="val21"/>
-				<group
-					name="group21"/>
-			</allowed>			 
+	 		<allowed/>
 			<!-- autoSubscribed not yet supported -->
-			<autoSubscribed>
-				<regular
-					attribute="attr22"
-					value="val22"/>
-				<group
-					name="group22"/>
-				<group
-					name="group222"/>
-			</autoSubscribed>
+			<autoSubscribed/>
 			<obliged>	
 				<group
 					name="local.0"/>
-				
 			</obliged>	
 		</visibility>
 	</categoryProfile>
 	
 		<categoryProfile 
-		name="categorie3"
+		name="categorie3 : trust cat"
 		id="cp3"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
 		<visibility>
-			<allowed>
-				<regular
-					attribute="attr31"
-					value="val31"/>
-				<group
-					name="group31"/>
-			</allowed>	
-	
-			<!-- autoSubscribed not yet supported -->	
+			<allowed/>
+			<!-- autoSubscribed not yet supported -->
 			<autoSubscribed/>
-			<obliged/>
+			<obliged>
+				<regular
+					attribute="sn"
+					value="User"/>					
+			</obliged>
 		</visibility>
 	</categoryProfile>
 		<categoryProfile 
-		name="categorie4"
+		name="categorie4  : trust cat"
 		id="cp4"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" > 
 		<visibility>
-			<allowed>
-				<regular
-					attribute="attr41"
-					value="val41"/>
-				<group
-					name="group41"/>
-			</allowed>
-		
+			<allowed/>
 			<!-- autoSubscribed not yet supported -->
-			<autoSubscribed>
-				<regular
-					attribute="attr42"
-					value="val42"/>
+			<autoSubscribed/>
+			<obliged>	
 				<group
-					name="group42"/>
-				<group
-					name="group422"/>
-			</autoSubscribed>
-			<obliged>
-				<regular
-					attribute="attr43"
-					value="val43"/>	
-			</obliged>
+					name="local.0"/>
+			</obliged>	
 		</visibility>
 	</categoryProfile>
 		

@@ -183,16 +183,18 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 			 * user app.allowed => rien à faire + sortir
 			 * user n'app. rien => effacer la custom source .
 			 */
+		log.info("setUp");
 
 			boolean isInObliged = false;
 			boolean isInAutoSubscribed = false;
 			boolean isInAllowed = false;
 						
 		/* ---OBLIGED SET--- */
-			log.debug("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+this.getName());
+			log.info("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+this.getName());
 			isInObliged = getVisibilityObliged().evaluateVisibility(externalService);
-			log.debug("IsInObliged : "+isInObliged);
+			log.info("IsInObliged : "+isInObliged);
 			if (isInObliged) {
+				log.info("Is in obliged");
 				customManagedCategory.addManagedCustomSource(this);
 			
 			} else {

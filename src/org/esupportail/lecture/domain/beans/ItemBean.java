@@ -62,5 +62,13 @@ public class ItemBean {
 		this.read = read;
 	}
 	
+	public String toString(){
+		String string = "";
+		string += "     Id = " + id + "\n";
+		string += "     Html = " + htmlContent + "\n";
+		string += "     read = " + read + "\n";
+		
+		return string;
+	}
 
 }

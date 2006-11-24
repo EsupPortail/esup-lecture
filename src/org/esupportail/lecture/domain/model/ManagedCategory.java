@@ -10,6 +10,9 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.ExternalService;
 
 
@@ -25,6 +28,12 @@ public class ManagedCategory extends Category {
 	/*
 	 *********************** PROPERTIES**************************************/ 
 
+	/**
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(DomainServiceImpl.class);
+
+	
 	/**
 	 * Visibility sets of this category (if defined)
 	 * Using depends on trustCategory parameter in 
@@ -74,6 +83,7 @@ public class ManagedCategory extends Category {
 		
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
+			log.info("Managed Source profile ok");
 			msp.updateCustomCategory(customManagedCategory,externalService);
 		}
 	}

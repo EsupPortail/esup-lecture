@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 
@@ -18,7 +21,9 @@ public class CustomManagedCategory extends CustomCategory {
 
 	/*
 	 ************************** PROPERTIES *********************************/	
+	protected static final Log log = LogFactory.getLog(CustomManagedCategory.class);
 
+	
 	/**
 	 * Used for tests
 	 */
@@ -42,9 +47,11 @@ public class CustomManagedCategory extends CustomCategory {
 		subscriptions = new Hashtable<String,CustomManagedSource>();
 	}
 	
-	public CustomManagedCategory(String catId){
+	public CustomManagedCategory(String catId,UserProfile user){
 		subscriptions = new Hashtable<String,CustomManagedSource>();
 		setCategoryProfileID(catId);
+		setUserProfile(user);
+		
 	}
 	
 	/*
@@ -61,6 +68,7 @@ public class CustomManagedCategory extends CustomCategory {
 		List<CustomSource> listSources = new Vector<CustomSource>();
 		for(CustomSource customSource : subscriptions.values()){
 			listSources.add(customSource);
+			log.info("Add source");
 		}
 	
 		

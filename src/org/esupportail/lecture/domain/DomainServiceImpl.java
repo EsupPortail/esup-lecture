@@ -116,6 +116,8 @@ public class DomainServiceImpl implements DomainService {
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
 		
 		List<CustomSource> customSources = customCategory.getSortedCustomSources(externalService);
+		int nbSources = customSources.size();
+		log.info("NB sources : "+nbSources);
 		for(CustomSource customSource : customSources){
 			SourceBean source = new SourceBean(customSource);
 			listSourceBean.add(source);
@@ -139,20 +141,25 @@ public class DomainServiceImpl implements DomainService {
 		// TODO why not customCategories ?
 		CustomSource customSource = userProfile.getCustomSource(sourceId);
 		
-		List<ItemBean> listItemBean = new ArrayList<ItemBean>();
+		if(customSource!=null){
+			List<ItemBean> listItemBean = new ArrayList<ItemBean>();
 		
-		List<Item> items = customSource.getItems(externalService);
-		for(Item item : items){
-			ItemBean itemBean = new ItemBean(item);
-			listItemBean.add(itemBean);
-			// TODO mise à jour du DAO ?
-//			DomainTools.getDaoService().updateCustomSource(customSource);
+			List<Item> items = customSource.getItems(externalService);
+			for(Item item : items){
+				ItemBean itemBean = new ItemBean(item);
+				listItemBean.add(itemBean);
+			// 	TODO mise à jour du DAO ?
+//				DomainTools.getDaoService().updateCustomSource(customSource);
 			
+			}
+		// 	TODO mise à jour du DAO ?
+//			DomainTools.getDaoService().updateUserProfile(userProfile);
+//			DomainTools.getDaoService().updateCustomCategory(customCategory);		
+			return listItemBean;
 		}
-		// TODO mise à jour du DAO ?
-//		DomainTools.getDaoService().updateUserProfile(userProfile);
-//		DomainTools.getDaoService().updateCustomCategory(customCategory);		
-		return listItemBean;
+		log.error("CustomSource of source "+sourceId+" is null");
+		return null;
+		
 	}
 
 

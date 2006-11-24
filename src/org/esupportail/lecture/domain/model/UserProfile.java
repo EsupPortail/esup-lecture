@@ -101,7 +101,7 @@ public class UserProfile {
 		CustomManagedCategory customCategory = 
 			customManagedCategories.get(categoryId);
 		if(customCategory == null){
-			customCategory = new CustomManagedCategory(categoryId);
+			customCategory = new CustomManagedCategory(categoryId,this );
 			addCustomCategory(customCategory);
 		}
 		return customCategory;
