@@ -5,7 +5,17 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
+import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -13,13 +23,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.beanutils.converters.StringConverter;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.taglibs.standard.tag.common.core.OutSupport;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
-import org.dom4j.Namespace;
 import org.dom4j.Node;
 import org.dom4j.XPath;
 import org.dom4j.XPathException;
@@ -146,7 +162,6 @@ public abstract class Source implements Serializable {
 		Mapping m = new Mapping();
 		
 		if (setXsltURL == null || setItemXPath == null) {
-			//TODO introduire le mapping par source URL
 			if (URL != null) {
 				m = channel.getMappingBySourceURL(URL);
 			} else {
@@ -196,6 +211,8 @@ public abstract class Source implements Serializable {
 		try {
 			//create dom4j document
 			Document document = DocumentHelper.parseText(xmlStream);
+			//get encoding
+			String encoding = document.getXMLEncoding();
 			//generate map of namespaces
 			HashMap nameSpaces = new HashMap();
 			//lauch Xpath find
@@ -207,11 +224,15 @@ public abstract class Source implements Serializable {
 			while (iter.hasNext()) {
 				Node node = iter.next();
 				Item item = new Item();
-				String XML = node.asXML();
-				//TODO use xslt to have real htmlcontent!!!
-				item.setHtmlContent(XML);
+				StringBuffer XML = new StringBuffer("<?xml version=\"1.0\" encoding=\"");
+				XML.append(encoding);
+				XML.append("\" ?>");
+				XML.append(node.asXML());
+				String XMLasString = XML.toString();
+				String htmlContent = xml2html(XMLasString, xsltURL);
+				item.setHtmlContent(htmlContent);
 				//find MD5 of item content for his ID
-				byte[] hash = MessageDigest.getInstance("MD5").digest(XML.getBytes());
+				byte[] hash = MessageDigest.getInstance("MD5").digest(XMLasString.getBytes());
 				StringBuffer hashString = new StringBuffer();
 				for ( int i = 0; i < hash.length; ++i ) {
 					String hex = Integer.toHexString(hash[i]);
@@ -228,12 +249,12 @@ public abstract class Source implements Serializable {
 			}
 		} catch (DocumentException e) {
 			if (log.isErrorEnabled()) {
-				log.error("Error parsing XML content of the source");
+				log.error(e.getMessage());
 			}
 			throw new ErrorException("Error parsing XML content of the source");
 		} catch (NoSuchAlgorithmException e) {
 			if (log.isErrorEnabled()) {
-				log.error("MD5 algorithm not supported");
+				log.error(e.getMessage());
 			}
 			throw new ErrorException("MD5 algorithm not supported");
 		} catch (XPathException e) {
@@ -244,6 +265,50 @@ public abstract class Source implements Serializable {
 		}
 	}
 	
+	/**
+	 * transform a xml String in a html String with an XSLT
+	 * @param xml to transform
+	 * @param xsltURL URL of XSLT file
+	 * @return html content
+	 */
+	private String xml2html(String xml, String xsltURL) {
+		String ret = null;
+		try {
+			//		 1. Instantiate a TransformerFactory.
+			TransformerFactory tFactory = TransformerFactory.newInstance();
+			//		2. Use the TransformerFactory to process the stylesheet Source and
+			//		generate a Transformer.
+			Transformer transformer;
+			URL url = new URL(xsltURL);
+			StreamSource streamSource = new StreamSource(url.openStream());
+			transformer = tFactory.newTransformer(streamSource);
+			//		3. Use the Transformer to transform an XML Source and send the
+			//		output to a Result object.
+			ByteArrayInputStream inputStream = new ByteArrayInputStream(xml.getBytes());
+			StreamSource source = new StreamSource(inputStream);
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+			StreamResult result = new StreamResult(outputStream);
+			transformer.transform(source, result);
+			ret = outputStream.toString("UTF-8"); //"ISO-8859-1"
+		} catch (TransformerConfigurationException e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage());
+			}
+			throw new ErrorException("Error in XSTL Transformation configuration");
+		} catch (TransformerException e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage());
+			}
+			throw new ErrorException("Error in XSTL Transformation");
+		} catch (IOException e) {
+			if (log.isErrorEnabled()) {
+				log.error(e.getMessage());
+			}
+			throw new ErrorException("IO Error in xml2html");
+		}
+		return ret;
+	}
+
 //	public void update(String setItemXPath, String setXsltURL) {
 //	//TODO  A mettre dans le computed feature de la ssource ?	
 //		itemXPath = setItemXPath;
