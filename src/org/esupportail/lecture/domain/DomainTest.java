@@ -42,7 +42,6 @@ public class DomainTest {
 		testGetCategories();
 		testGetSources();
 		testGetItems();
-		// TODO compléter pour chaque méthode à tester
 	
 		
 	}

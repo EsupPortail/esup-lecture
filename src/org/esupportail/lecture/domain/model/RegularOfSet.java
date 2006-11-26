@@ -65,7 +65,7 @@ public class RegularOfSet {
 	   	if (log.isDebugEnabled()){
     		log.debug("checkNamesExistence()");
     	}
-		// TODO vérification de l'existence de l'attribut dans le portail :impossible
+		// TODO (later) vérification de l'existence de l'attribut dans le portail :impossible
 	   	// on ne peut verifier que sa declaration dans le portlet.xml ? + log.warn si pb
 	}
 	

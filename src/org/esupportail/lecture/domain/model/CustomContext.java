@@ -82,7 +82,7 @@ public class CustomContext implements CustomElement {
 	 * @return list of customCategories defined in this customContext
 	 */
 	public List<CustomCategory> getSortedCustomCategories(ExternalService externalService){
-		// TODO rewrite with custom personnal category (+ sorted display)
+		// TODO (later) rewrite with custom personnal category (+ sorted display)
 	
 		/* update categories in this customContext */
 		getContext().updateCustom(this,externalService);
@@ -96,9 +96,6 @@ public class CustomContext implements CustomElement {
 	}
 	
 	
-	/* see later */
-	
-// TODO retirer	
 //	/** 
 //	 * Update data contained in this customContext by visibilty evaluation
 //	 * on managedCategories, in order to update list of customManagedCategories
@@ -116,7 +113,6 @@ public class CustomContext implements CustomElement {
 //		}	
 //	}
 	
-// TODO retirer	
 //	public List<ManagedCategoryProfile> getVisibleManagedCategoryProfile(ExternalService externalService) {
 //		
 //		return getContext().updateCustomContext(this,externalService);
@@ -165,7 +161,7 @@ public class CustomContext implements CustomElement {
 	public String getName() {
 		return getContext().getName();
 	}
-//	TODO retirer
+	
 //	public String getContent() {
 //		return getContext().getDescription();
 //	}

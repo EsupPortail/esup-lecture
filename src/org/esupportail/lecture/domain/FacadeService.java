@@ -87,7 +87,6 @@ public class FacadeService implements InitializingBean {
 	 * @param uid user ID
 	 * @return List of SourceBean obliged or subscribed by a user in a category
 	 */
-	// TODO tester
 	public List<SourceBean> getSources(String uid,String categoryId) {
 		return domainService.getSources(uid, categoryId,externalService);
 	}

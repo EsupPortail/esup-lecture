@@ -60,7 +60,7 @@ public class CustomManagedCategory extends CustomCategory {
 
 
 	public List<CustomSource> getSortedCustomSources(ExternalService externalService){
-	// TODO à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
+	// TODO (later) à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
 		
 		ManagedCategoryProfile profile = getProfile();
 		profile.updateCustom(this,externalService);

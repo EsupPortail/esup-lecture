@@ -27,11 +27,11 @@ public abstract class CustomSource implements CustomElement {
 		return sourceProfile.getId();
 	}
 	
-//	 TODO : à retirer : pour les tests	
+//	 TODO à retirer : pour les tests	
 	public String getItemXPath() {
 		return sourceProfile.getSource().getItemXPath();
 	}
-//	 TODO : à retirer : pour les tests	
+//	 TODO à retirer : pour les tests	
 	public String getXslt() {
 		return sourceProfile.getSource().getXsltURL();
 	}

@@ -42,7 +42,6 @@ public class ExternalServiceTest implements ExternalService {
 			return "bourges";
 		}else if (attribute.equalsIgnoreCase("")){
 			return "";
-			// TODO compléter avec des attributs définis dans les groupes de visibilité
 		}else if(attribute.equalsIgnoreCase("sn")){
 			return "User";
 		}

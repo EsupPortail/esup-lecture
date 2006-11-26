@@ -98,7 +98,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 ************************** METHODS ******************************** */	
 	
 	
-//	TODO
+
 //	/**
 //	 * @param customContext
 //	 * @param externalService
@@ -154,10 +154,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		
 		} else {
 	/* ---AUTOSUBSCRIBED SET--- */	
-			// TODO isInAutoSubscribed =  getVisibilityAutoSubscribed().evaluateVisibility(portletService);
+			// TODO (later) isInAutoSubscribed =  getVisibilityAutoSubscribed().evaluateVisibility(portletService);
 			// en attendant : isInAutoSubscribed = false 			
 			if(isInAutoSubscribed) {
-				// TODO l'ajouter dans le custom context si c'est la preniere fois
+				// TODO (later) l'ajouter dans le custom context si c'est la preniere fois
 				// customContext.addCustomCategory(mcp);
 			
 			} else {
@@ -172,7 +172,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 				}			
 			}	
 		}
-		// TODO retirer les customCat du user profile qui correspondent à des profiles 
+		// TODO (later) retirer les customCat du user profile qui correspondent à des profiles 
 		// de catégories  disparus
 		return true;
 	}

@@ -162,7 +162,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 			
 		}
 		computedFeatures.compute();
-		//computedFeatures.setIsComputed(false); // TODO à optimiser
+		//computedFeatures.setIsComputed(false); // TODO (later) à optimiser
 	}
 
 	
@@ -199,11 +199,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 			
 			} else {
 		/* ---AUTOSUBSCRIBED SET--- */	
-				// TODO isInAutoSubscribed =  getVisibilitySubscribed().evaluateVisibility(portletService);
+				// TODO (later) isInAutoSubscribed =  getVisibilitySubscribed().evaluateVisibility(portletService);
 				// en attendant : isInAutoSubscribed = false 
 				
 				if(isInAutoSubscribed) {
-					// TODO l'ajouter dans le custom category si c'est la preniere fois
+					// TODO (later) l'ajouter dans le custom category si c'est la preniere fois
 					// customManagedCategory.addManagedCustomSource(this);
 				
 				} else {
@@ -218,7 +218,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 					
 				}	
 			}
-			// TODO retirer les customSource du user profile qui correspondent à des profiles 
+			// TODO (later) retirer les customSource du user profile qui correspondent à des profiles 
 			// de sources  disparus	
 		}
 

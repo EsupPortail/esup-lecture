@@ -80,9 +80,9 @@ public class VirtualSession {
 	 * @return the current context id of the channel
 	 */
 	private String getCurrentContextId() {
-		// TODO while uportal bug not fixed
+		// while uportal bug not fixed
 		String currentContextId = "c1";
-		// String currentContextId = portletService.getPreferences(UserAttributes.CONTEXT);
+		// TODO (later) String currentContextId = portletService.getPreferences(UserAttributes.CONTEXT);
 		return currentContextId;
 	}
 	

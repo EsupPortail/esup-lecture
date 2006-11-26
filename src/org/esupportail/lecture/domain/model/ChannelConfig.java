@@ -48,7 +48,7 @@ public class ChannelConfig  {
 	 *  classpath relative path of the file to load
 	 */
 	private static String filePath ="/properties/lecture-config.xml";
-	//TODO externaliser filePath
+	//TODO (later) externaliser filePath
 	
 	/**
 	 *  Base path of the file  to load
@@ -158,7 +158,7 @@ public class ChannelConfig  {
 			log.warn("checkXmlConfig :: No managed category profile declared in channel config");
 		}
 	
-		// TODO groupes visibility :
+		// TODO (later) groupes visibility :
 		// - vérifier l'existances des noms d'attributs (et de groupes) dans le portletContext (portlet.xml) : WARNING
 		// - vérifier qu'il y ait au moins un groupe de visibilité pour chq cat (au moins un des trois et non vide) : WARNING	
 		//  (vérifier que les attributs portail référencés dans la config
@@ -205,7 +205,7 @@ public class ChannelConfig  {
 			mcp.setId(xmlFile.getString(pathCategoryProfile+ "[@id]"));
 			mcp.setName(xmlFile.getString(pathCategoryProfile+ "[@name]"));
 			mcp.setUrlCategory(xmlFile.getString(pathCategoryProfile+ "[@urlCategory]"));
-			//TODO : c.setEdit(...) le param edit plus tard
+			//TODO (later) c.setEdit(...) param edit
 			mcp.setTrustCategory(xmlFile.getBoolean(pathCategoryProfile+ "[@trustCategory]"));
 			mcp.setTtl(xmlFile.getInt(pathCategoryProfile+ "[@ttl]"));
 			
@@ -295,7 +295,7 @@ public class ChannelConfig  {
 			c.setId(xmlFile.getString(pathContext+ "[@id]"));
 			c.setName(xmlFile.getString(pathContext+ "[@name]"));
 			c.setDescription(xmlFile.getString(pathContext+".description"));
-			//TODO : c.setEdit(...) le param edit plus tard
+			//TODO (later) c.setEdit(...) param edit 
 			List refIdList = xmlFile.getList(pathContext+ ".refCategoryProfile[@refId]");
 			Iterator iterator = refIdList.iterator();
 			for (String s = null; iterator.hasNext();){

@@ -140,7 +140,7 @@ public class Channel implements InitializingBean {
 		}
 		try {
 			ChannelConfig config = (ChannelConfig)ChannelConfig.getInstance();
-			// TODO plus tard 
+			// TODO (later)
 			// - utiliser l'objet config pour appeler les méthodes après (reset ...)
 			// 		et faire une classe FileToLoad avec ces méthodes en non static
 			// - charger la config via un DAO ?
@@ -188,7 +188,7 @@ public class Channel implements InitializingBean {
 			log.debug("resetChannelConfigProperties()");
 		}
 		
-		// TODO UserAttributes.init();
+		// TODO (later) UserAttributes.init();
 		contextsHash = new Hashtable<String,Context>();
 		managedCategoryProfilesHash = new Hashtable<String,ManagedCategoryProfile>();
 	}

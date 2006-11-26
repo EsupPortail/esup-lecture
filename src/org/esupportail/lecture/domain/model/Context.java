@@ -104,7 +104,7 @@ public class Context {
 	 * @return list of ManagedCategoryProfiles defined in this context
 	 */
 	public List<ManagedCategoryProfile> updateCustom(CustomContext customContext, ExternalService externalService) {
-		//TODO optimise evaluation process (trustCategory + real loadding)
+		//TODO (later) optimise evaluation process (trustCategory + real loadding)
 		
 		List<ManagedCategoryProfile> visibleCategories = new Vector<ManagedCategoryProfile>();
 		

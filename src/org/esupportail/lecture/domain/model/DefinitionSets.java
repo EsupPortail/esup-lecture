@@ -56,7 +56,7 @@ public class DefinitionSets {
 		iterator = groups.iterator();
 		for(String group = null; iterator.hasNext();){
 			group = (String)iterator.next();
-//			 TODO vérification de l'existence du groupe dans le portail
+//			 TODO (later) vérification de l'existence du groupe dans le portail
 			// si PB : log.warn();
 			// PAs sure que c'est par là qu'on le fasse 
 		}
