@@ -410,7 +410,7 @@ public class HomeController extends AbstractContextAwareController {
 			ContextBean contextBean = facadeService.getContext(user.getUid(), contextId);
 			context.setName(contextBean.getName());
 			context.setId(contextBean.getId());
-			List<CategoryBean> categories = facadeService.getCategories(user.getUid(), ContextId);
+			List<CategoryBean> categories = facadeService.getVisibleCategories(user.getUid(), ContextId);
 			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
 			if (categories != null) {
 				Iterator<CategoryBean> iter = categories.iterator();
@@ -420,7 +420,7 @@ public class HomeController extends AbstractContextAwareController {
 					categoryWebBean.setId(categoryBean.getId());
 					categoryWebBean.setName(categoryBean.getName());
 					//find sources in this category
-					List<SourceBean> sources = facadeService.getSources(user.getUid(), categoryBean.getId());
+					List<SourceBean> sources = facadeService.getVisibleSources(user.getUid(), categoryBean.getId());
 					List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
 					if (sources != null) {
 						Iterator<SourceBean> iter2 = sources.iterator();

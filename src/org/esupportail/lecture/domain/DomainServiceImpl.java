@@ -20,7 +20,7 @@ import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.UserProfile;
 
 /**
- * Implémentation des services offerts par la couche métier
+ * Service implementation offered by domain layer
  * @author gbouteil
  *
  */
@@ -77,10 +77,10 @@ public class DomainServiceImpl implements DomainService {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getCategories(java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String)
 	 */
 	// TODO getVisibleCategories ?
-	public List<CategoryBean> getCategories(String userId, String contextId,ExternalService externalService) {
+	public List<CategoryBean> getVisibleCategories(String userId, String contextId,ExternalService externalService) {
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(userId);
@@ -106,7 +106,7 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	// TODO getVisibleSource
-	public List<SourceBean> getSources(String uid, String categoryId,ExternalService externalService) {
+	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService externalService) {
 		
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
@@ -135,6 +135,9 @@ public class DomainServiceImpl implements DomainService {
 
 	/* see later */
 	
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 */
 	public List<ItemBean> getItems(String uid, String sourceId,ExternalService externalService) {
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
@@ -164,11 +167,17 @@ public class DomainServiceImpl implements DomainService {
 
 
 
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#marckItemasRead(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public void marckItemasRead(String uid, String sourceId, String itemId) {
 		// TODO Auto-generated method stub
 		
 	}
 	
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#marckItemasUnread(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public void marckItemasUnread(String uid, String sourceId, String itemId) {
 		// TODO Auto-generated method stub
 		

@@ -127,9 +127,6 @@ public class Context {
 	 * name, description, id, id category profiles set, managed category profiles available in this context
 	 * @see java.lang.Object#toString()
 	 */
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 

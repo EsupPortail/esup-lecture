@@ -76,19 +76,19 @@ public class FacadeService implements InitializingBean {
 	/**
 	 * @param contextId id of context
 	 * @param uid user ID
-	 * @return List of CategoryBean obliged or subscribed by a user in a context
+	 * @return List of CategoryBean, bean of a visible category (obliged or subscribed by a user) in a context
 	 */
-	public List<CategoryBean> getCategories(String uid,String contextId) {
-		return domainService.getCategories(uid,contextId,externalService);
+	public List<CategoryBean> getVisibleCategories(String uid,String contextId) {
+		return domainService.getVisibleCategories(uid,contextId,externalService);
 	}
 	
 	/**
 	 * @param categoryId id of category
 	 * @param uid user ID
-	 * @return List of SourceBean obliged or subscribed by a user in a category
+	 * @return List of SourceBean, bean of a visible source (obliged or subscribed by a user) in a category
 	 */
-	public List<SourceBean> getSources(String uid,String categoryId) {
-		return domainService.getSources(uid, categoryId,externalService);
+	public List<SourceBean> getVisibleSources(String uid,String categoryId) {
+		return domainService.getVisibleSources(uid, categoryId,externalService);
 	}
 	
 	/**

@@ -76,7 +76,7 @@ public class DomainTest {
 	 */
 	private static void testGetCategories() {
 		printIntro("getCategories");
-		List<CategoryBean> categories = facadeService.getCategories(userId, contextId);
+		List<CategoryBean> categories = facadeService.getVisibleCategories(userId, contextId);
 		categoryIds = new ArrayList<String>();
 		for(CategoryBean cat : categories){
 			categoryIds.add(cat.getId());
@@ -93,7 +93,7 @@ public class DomainTest {
 		printIntro("getSources");
 		for(String catId : categoryIds){
 			System.out.println(" **** cat "+catId+" **********");
-			List<SourceBean> sources = facadeService.getSources(userId, catId);
+			List<SourceBean> sources = facadeService.getVisibleSources(userId, catId);
 			for(SourceBean so : sources){
 				System.out.println("  **** source ****");
 				System.out.println(so.toString());

@@ -26,7 +26,7 @@ public class UserProfile {
 	
 	/**
 	 * Id of the user, get from portlet request by USER_ID, defined in the channel config
-	 * @see DomainTools#USER_ID
+	 * @see org.esupportail.lecture.domain.DomainTools#USER_ID
 	 * @see ChannelConfig#loadUserId()
 	 */
 	private String userId;
@@ -107,13 +107,17 @@ public class UserProfile {
 		return customCategory;
 	}
 	
+	/**
+	 * Return the customSource identified by the source Id
+	 * @param sourceId identifier of the source refered by the customSource
+	 * @return customSource
+	 */
 	public CustomSource getCustomSource(String sourceId) {
 		CustomSource customSource = 
 			customSources.get(sourceId);
 		
 		return customSource;
 	}
-
 	
 	/**
 	 * @param customContext
@@ -130,7 +134,7 @@ public class UserProfile {
 	}
 	
 	/**
-	 * @param customCategory
+	 * @param customSource
 	 */
 	public void addCustomSource(CustomSource customSource){
 		customSources.put(customSource.getSourceProfileId(),customSource);

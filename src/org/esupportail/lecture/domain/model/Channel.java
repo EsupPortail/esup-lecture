@@ -95,6 +95,8 @@ public class Channel implements InitializingBean {
 //	 */
 //	private ChannelConfig config; 
 	
+	/* DAO */
+	
 	/**
 	 * access to dao services
 	 */
@@ -335,13 +337,6 @@ public class Channel implements InitializingBean {
 //	}		
 
 	/* ************************** ACCESSORS ********************************* */
-
-//	public ChannelConfig getChannelConfig(){
-//		return config;
-//	}
-//	public void setChannelConfig (ChannelConfig config){
-//		this.config = config;
-//	}
 	
 	/**
 	 * Returns a hashtable of contexts, indexed by their ids
@@ -546,6 +541,12 @@ public class Channel implements InitializingBean {
 		this.daoService = daoService;
 	}
 
+//	public ChannelConfig getChannelConfig(){
+//	return config;
+//}
+//public void setChannelConfig (ChannelConfig config){
+//	this.config = config;
+//}
 
 
 }

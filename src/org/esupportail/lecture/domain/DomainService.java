@@ -34,17 +34,17 @@ public interface DomainService {
 	 * @param contextId
 	 * @param externalService access to external service 
 	 * @return List<CategoryBean>
-	 * @see FacadeService#getCategories(String, String)
+	 * @see FacadeService#getVisibleCategories(String, String)
 	 */
-	List<CategoryBean> getCategories(String uid,String contextId,ExternalService externalService);
+	List<CategoryBean> getVisibleCategories(String uid,String contextId,ExternalService externalService);
 
 	/**
 	 * @param categoryId 
 	 * @param uid 
 	 * @return List<SourceBean>
-	 * @see FacadeService#getSources(String, String)
+	 * @see FacadeService#getVisibleSources(String, String)
 	 */
-	List<SourceBean> getSources(String uid,String categoryId,ExternalService externalService);
+	List<SourceBean> getVisibleSources(String uid,String categoryId,ExternalService externalService);
 
 	/**
 	 * @param sourceId 
