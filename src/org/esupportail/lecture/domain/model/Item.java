@@ -13,10 +13,7 @@ public class Item {
 	 * html content of item
 	 */
 	private String htmlContent;
-	/**
-	 * store if item is read or not
-	 */
-	private boolean read;
+
 	/**
 	 * @return html content of item
 	 */
@@ -41,18 +38,7 @@ public class Item {
 	public void setId(String id) {
 		this.id = id;
 	}
-	/**
-	 * @return if item is read or not
-	 */
-	public boolean isRead() {
-		return read;
-	}
-	/**
-	 * @param read
-	 */
-	public void setRead(boolean read) {
-		this.read = read;
-	}
+
 	
 
 }

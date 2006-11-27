@@ -1,5 +1,6 @@
 package org.esupportail.lecture.domain.beans;
 
+import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 
 /**
@@ -20,22 +21,13 @@ public class ItemBean {
 	 */
 	private boolean read;
 	
-	/**
-	 * Create a ItemBean from a Item
-	 * @param i
-	 */
-	public ItemBean(Item i){
-		id = i.getId();
-		htmlContent = i.getHtmlContent();
-		read = i.isRead();
+
+	public ItemBean(Item it, CustomSource customSource) {
+		id = it.getId();
+		htmlContent = it.getHtmlContent();
+		read = customSource.isItemRead(id);
 	}
 
-	/**
-	 * default constructor
-	 */
-	public ItemBean(){
-		super();
-	}
 	/**
 	 * @return html content of item
 	 */

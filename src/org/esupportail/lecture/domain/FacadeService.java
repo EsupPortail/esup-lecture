@@ -108,8 +108,8 @@ public class FacadeService implements InitializingBean {
 	 * @param sourceId source if
 	 * marck a Item form a source for a user as read
 	 */
-	public void marckItemasRead(String uid, String sourceId,String itemId) {
-		domainService.marckItemasRead(uid, sourceId, itemId);
+	public void marckItemAsRead(String uid, String sourceId,String itemId) {
+		domainService.marckItemAsRead(uid, sourceId, itemId);
 	}
 
 	/**
@@ -118,8 +118,8 @@ public class FacadeService implements InitializingBean {
 	 * @param sourceId source if
 	 * marck a Item form a source for a user as unread
 	 */
-	public void marckItemasUnread(String uid, String sourceId, String itemId) {
-		domainService.marckItemasUnread(uid, itemId, sourceId);
+	public void marckItemAsUnread(String uid, String sourceId, String itemId) {
+		domainService.marckItemAsUnread(uid, sourceId, itemId);
 	}
 
 

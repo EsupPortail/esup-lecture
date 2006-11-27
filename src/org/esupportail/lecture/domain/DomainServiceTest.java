@@ -93,7 +93,7 @@ public class DomainServiceTest implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemasRead(java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void marckItemasRead(String uid, String itemId, String sourceId) {
+	public void marckItemAsRead(String uid, String itemId, String sourceId) {
 		// TODO Auto-generated method stub
 
 	}
@@ -101,7 +101,7 @@ public class DomainServiceTest implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemasUnread(java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void marckItemasUnread(String uid, String itemId, String sourceId) {
+	public void marckItemAsUnread(String uid, String itemId, String sourceId) {
 		// TODO Auto-generated method stub
 
 	}

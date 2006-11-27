@@ -61,16 +61,16 @@ public interface DomainService {
 	 * @param uid 
 	 * @param itemId 
 	 * @param sourceId 
-	 * @see FacadeService#marckItemasRead(String, String, String)
+	 * @see FacadeService#marckItemAsRead(String, String, String)
 	 */
-	void marckItemasRead(String uid, String sourceId,String itemId);
+	void marckItemAsRead(String uid, String sourceId,String itemId);
 
 	/**
 	 * @param uid 
 	 * @param itemId 
 	 * @param sourceId 
-	 * @see FacadeService#marckItemasUnread(String, String, String)
+	 * @see FacadeService#marckItemAsUnread(String, String, String)
 	 */
-	void marckItemasUnread(String uid, String sourceId,String itemId);
+	void marckItemAsUnread(String uid, String sourceId,String itemId);
 
 }

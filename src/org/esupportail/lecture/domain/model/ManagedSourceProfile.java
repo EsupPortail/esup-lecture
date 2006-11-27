@@ -37,13 +37,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	protected static final Log log = LogFactory.getLog(ManagedSourceProfile.class); 
 	
 	/**
-	 * Remote source loaded : a managed source profile has a global or a single source
-	 * Thats depends on "specificUserContent" parameter.
-	 * @see ManagedSourceProfile#specificUserContent
-	 */
-	
-	
-	/**
 	 * Access mode on the remote source
 	 */
 	private Accessibility access;

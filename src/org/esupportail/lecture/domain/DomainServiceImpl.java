@@ -190,8 +190,7 @@ public class DomainServiceImpl implements DomainService {
 			log.error("CustomSource is not found for service 'getItems(user "+uid+", source "+sourceId+ ")'");
 			throw new ServiceException(e);
 		}
-		
-		
+	
 			List<ItemBean> listItemBean = new ArrayList<ItemBean>();
 		
 			List<Item> items;
@@ -205,7 +204,7 @@ public class DomainServiceImpl implements DomainService {
 				throw new ServiceException(e);
 			}
 			for(Item item : items){
-				ItemBean itemBean = new ItemBean(item);
+				ItemBean itemBean = new ItemBean(item,customSource);
 				listItemBean.add(itemBean);
 			// 	TODO (GB) mise à jour du DAO ?
 //				DomainTools.getDaoService().updateCustomSource(customSource);
@@ -222,17 +221,35 @@ public class DomainServiceImpl implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemasRead(java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void marckItemasRead(String uid, String sourceId, String itemId) {
-		// TODO Auto-generated method stub
-		
+	public void marckItemAsRead(String uid, String sourceId, String itemId) {
+		/* Get current user profile and customCoategory */
+		UserProfile userProfile = channel.getUserProfile(uid);
+		// TODO (GB) why not customCategories ?
+		CustomSource customSource;
+		try {
+			customSource = userProfile.getCustomSource(sourceId);
+			customSource.setItemAsRead(itemId);
+		} catch (CustomSourceNotFoundException e) {
+			log.error("CustomSource is not found for service 'getItems(user "+uid+", source "+sourceId+ ")'");
+			throw new ServiceException(e);
+		}
 	}
 	
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemasUnread(java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void marckItemasUnread(String uid, String sourceId, String itemId) {
-		// TODO Auto-generated method stub
-		
+	public void marckItemAsUnread(String uid, String sourceId, String itemId) {
+		/* Get current user profile and customCoategory */
+		UserProfile userProfile = channel.getUserProfile(uid);
+		// TODO (GB) why not customCategories ?
+		CustomSource customSource;
+		try {
+			customSource = userProfile.getCustomSource(sourceId);
+			customSource.setItemAsUnRead(itemId);
+		} catch (CustomSourceNotFoundException e) {
+			log.error("CustomSource is not found for service 'getItems(user "+uid+", source "+sourceId+ ")'");
+			throw new ServiceException(e);
+		}
 	}
 
 

@@ -29,6 +29,7 @@ public class DomainTest {
 	private static String userId;
 	private static String contextId;
 	private static List<String> categoryIds;
+	private static String itemId;
 	/**
 	 * @param args non argumet needed
 	 */
@@ -42,8 +43,11 @@ public class DomainTest {
 		testGetCategories();
 		testGetSources();
 		testGetItems();
+		testMarkItemAsRead();
 	
 	}
+
+
 
 /*
  * Méthodes de Test
@@ -109,7 +113,21 @@ public class DomainTest {
 		for(ItemBean it : items){
 			System.out.println("  **** item ****");
 			System.out.println(it.toString());
+			itemId = it.getId();
 		}
+		
+	}
+	
+	private static void testMarkItemAsRead() {
+		printIntro("markItemAsRead");
+		System.out.println("Marquage de l'item "+itemId+" comme lu");
+		facadeService.marckItemAsRead(userId, "un", itemId);
+		testGetItems();
+		System.out.println("Marquage de l'item "+itemId+" comme non lu");
+		facadeService.marckItemAsUnread(userId, "un", itemId);
+		testGetItems();
+		
+		
 	}
 
 	/**

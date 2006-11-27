@@ -141,10 +141,10 @@ public class HomeController extends AbstractContextAwareController {
 		}
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		if (item.isRead()) {
-			facadeService.marckItemasUnread(user.getUid(), selectedCategory.getId(), item.getId());
+			facadeService.marckItemAsUnread(user.getUid(), selectedCategory.getId(), item.getId());
 		}
 		else {
-			facadeService.marckItemasRead(user.getUid(), selectedCategory.getId(), item.getId());			
+			facadeService.marckItemAsRead(user.getUid(), selectedCategory.getId(), item.getId());			
 		}
 		item.setRead(!item.isRead());
 		return "OK";
