@@ -11,6 +11,7 @@ import java.util.*;
 //import org.springframework.beans.factory.InitializingBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.*;
@@ -141,7 +142,7 @@ public class Channel implements InitializingBean {
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws ContextNotFoundException 
 	 */
-	private void loadConfig()throws FatalException, ContextNotFoundException, ManagedCategoryProfileNotFoundException {
+	private void loadConfig()throws ConfigException, ContextNotFoundException, ManagedCategoryProfileNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("loadConfig()");
 		}
@@ -154,7 +155,7 @@ public class Channel implements InitializingBean {
 		} catch (WarningException w) {
 			log.warn(w.getMessage());
 			
-		} catch (ErrorException e) {
+		} catch (ConfigException e) {
 			if (configLoaded) {
 				log.error("loadConfig :: unable to load new config : "+e.getMessage());
 			} else {
@@ -172,15 +173,12 @@ public class Channel implements InitializingBean {
 			
 			/* Loading managed category profiles */
 			ChannelConfig.loadManagedCategoryProfiles(this);
-		
-			
-			
+				
 			/* Loading Contexts */
 			ChannelConfig.loadContexts(this);
 		
 			/* Initialize Contexts and ManagedCategoryProfiles links */
 			ChannelConfig.initContextManagedCategoryProfilesLinks(this);
-			
 		}
 		if (!configLoaded){
 			configLoaded = true;
@@ -217,7 +215,7 @@ public class Channel implements InitializingBean {
 		} catch (WarningException w) {
 			log.warn(w.getMessage());
 			
-		} catch (ErrorException e) {
+		} catch (ConfigException e) {
 			if (mappingsLoaded) {
 				log.error("loadMappingFile :: unable to load new mappings : "+e.getMessage());
 			} else {

@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
+import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.*;
 //import org.apache.commons.configuration.HierarchicalConfiguration; version 1.3
@@ -88,7 +89,7 @@ public class ChannelConfig  {
 	 * @throws WarningException
 	 * @see ChannelConfig#singleton
 	 */
-	synchronized protected static ChannelConfig getInstance()throws ErrorException,WarningException {
+	synchronized protected static ChannelConfig getInstance()throws ConfigException {
 		if (log.isDebugEnabled()){
 			log.debug("getInstance()");
 		}
@@ -124,14 +125,11 @@ public class ChannelConfig  {
 	
 	/**
 	 * Private Constructor: load xml config file
-	 * @throws ErrorException
-	 * @throws WarningException
 	 */
-	private ChannelConfig() throws ErrorException,WarningException {
+	private ChannelConfig() throws ConfigException {
 		if (log.isDebugEnabled()){
 			log.debug("ChannelConfig()");
 		}
-		
 		try {
 			xmlFile = new XMLConfiguration();
 			xmlFile.setFileName(fileBasePath);
@@ -139,10 +137,9 @@ public class ChannelConfig  {
 			xmlFile.load();
 			checkXmlFile();
 			modified = true;
-
 		} catch (ConfigurationException e) {
 			log.error("ChannelConfig :: ConfigurationException, "+e.getMessage());
-			throw new ErrorException();
+			throw new ConfigException("Error to load channel config",e);
 		} 
 	}
 	
@@ -151,7 +148,7 @@ public class ChannelConfig  {
 	 * @throws ErrorException
 	 * @throws WarningException
 	 */
-	private void checkXmlFile() throws ErrorException,WarningException{
+	private void checkXmlFile() throws WarningException{
 		
 		nbProfiles = xmlFile.getMaxIndex("categoryProfile") + 1;
 		if (nbProfiles == 0) {

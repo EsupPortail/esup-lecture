@@ -26,13 +26,7 @@ public class CustomManagedCategory extends CustomCategory {
 	 ************************** PROPERTIES *********************************/	
 	protected static final Log log = LogFactory.getLog(CustomManagedCategory.class);
 
-	
-	/**
-	 * Used for tests
-	 */
-	public String test = "CustomCAtegoryCharge";
 
-	
 	/**
 	 * The map of subscribed CustomManagedSource
 	 */
@@ -66,7 +60,6 @@ public class CustomManagedCategory extends CustomCategory {
 			log.debug("Add source");
 		}
 	
-		
 		return listSources;
 	}
 	
@@ -81,12 +74,10 @@ public class CustomManagedCategory extends CustomCategory {
 		
 		if (!subscriptions.containsKey(profileId)){
 			CustomManagedSource customManagedSource = new CustomManagedSource(managedSourceProfile);
-			customManagedSource.setManagedCategoryProfileId(super.getId());
 			subscriptions.put(profileId,customManagedSource);
 			getUserProfile().addCustomSource(customManagedSource);
 		}
 	}
-	
 	
 
 	public void removeManagedCustomSource(ManagedSourceProfile profile) {
@@ -107,18 +98,6 @@ public class CustomManagedCategory extends CustomCategory {
 	/*
 	 ************************** ACCESSORS *********************************/	
 
-	/**
-	 * @return Returns the test.
-	 */
-	public String getTest() {
-		return test;
-	}
-	/**
-	 * @param test The test to set.
-	 */
-	public void setTest(String test) {
-		this.test = test;
-	}
 
 	public String getName() throws ManagedCategoryProfileNotFoundException, CategoryNotLoadedException {
 		return getProfile().getName();

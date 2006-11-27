@@ -119,7 +119,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 			String ptCas = externalService.getUserProxyTicketCAS();
 			setCategory(DomainTools.getDaoService().getManagedCategory(this,ptCas));
 		}
-		computedFeatures.compute();
+		//computedFeatures.compute();
 	}
 	
 	/**

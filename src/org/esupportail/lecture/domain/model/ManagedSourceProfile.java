@@ -146,7 +146,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 			setSource(source);
 			
 		}
-		computedFeatures.compute();
+		//computedFeatures.compute();
 		//computedFeatures.setIsComputed(false); // TODO (GB later) à optimiser
 	}
 

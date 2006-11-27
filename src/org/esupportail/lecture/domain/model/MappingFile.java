@@ -15,6 +15,7 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.lecture.exceptions.*;
 
 
@@ -81,7 +82,7 @@ public class MappingFile {
 	 * @throws WarningException
 	 * @see MappingFile#singleton
 	 */
-	synchronized protected static MappingFile getInstance() throws ErrorException,WarningException  {
+	synchronized protected static MappingFile getInstance() throws ConfigException  {
 		if (log.isDebugEnabled()){
 			log.debug("getInstance()");
 		}
@@ -118,7 +119,7 @@ public class MappingFile {
 	 * @throws ErrorException
 	 * @throws WarningException
 	 */
-	protected MappingFile() throws ErrorException,WarningException {
+	protected MappingFile() throws ConfigException {
 		if (log.isDebugEnabled()){
 			log.debug("MappingFile()");
 		}
@@ -133,7 +134,7 @@ public class MappingFile {
 
 		} catch (ConfigurationException e) {
 			log.error("MappingFile :: ConfigurationException, "+e.getMessage());
-			throw new ErrorException(e.getMessage());	
+			throw new ConfigException(e.getMessage());	
 		} 
 	}	
 
@@ -142,7 +143,7 @@ public class MappingFile {
 	 * @throws ErrorException
 	 * @throws WarningException
 	 */
-	private static void checkXmlFile() throws ErrorException,WarningException{
+	private static void checkXmlFile() {
 	
 		int nbMappings = xmlFile.getMaxIndex("mapping") + 1;
 		mappingList = new ArrayList<Mapping>();
