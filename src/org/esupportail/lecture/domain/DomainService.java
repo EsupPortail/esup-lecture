@@ -8,6 +8,7 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.exceptions.FatalException;
+import org.esupportail.lecture.exceptions.ServiceException;
 
 /**
  * @author bourges
@@ -34,9 +35,10 @@ public interface DomainService {
 	 * @param contextId
 	 * @param externalService access to external service 
 	 * @return List<CategoryBean>
+	 * @throws ServiceException 
 	 * @see FacadeService#getVisibleCategories(String, String)
 	 */
-	List<CategoryBean> getVisibleCategories(String uid,String contextId,ExternalService externalService);
+	List<CategoryBean> getVisibleCategories(String uid,String contextId,ExternalService externalService) throws ServiceException;
 
 	/**
 	 * @param categoryId 

@@ -278,119 +278,40 @@ public class Channel implements InitializingBean {
 	 * The context is defiend in channel config if exists
 	 * @param contextId
 	 * @return  the context identified by "contextId"
+	 * @throws ContextNotFoundException 
 	 */
-	public Context getContext(String contextId) {
-		Context context = getContextById(contextId);
+	public Context getContext(String contextId) throws ContextNotFoundException {
+		Context context = contextsHash.get(contextId);
+		if (context == null) {
+			throw new ContextNotFoundException("Context "+contextId+" is not defined in channel");
+		}
 		return context;
 	}
 	
-//	/**
-//	 * Return a string containing channel content : mapping file, contexts, managed category profiles,
-//	 * xslt mappings, hash mappings by dtd, Hash mappings by xmlns,Hash mappings by xmlType
-//	 * 
-//	 * @see java.lang.Object#toString()
-//	 */
-//	public String toString() {
-//		String string = "";
-//			
-//		/* mappingFile */
-//		string += "***************** Mapping File : \n\n";
-//		string += mappingFile.toString();
-//		string += "\n";
-//		
-////		/* Contexts */ 
-//		string += "***************** Contexts : \n\n";
-//		string += contextsHash.toString();
-//	    string += "\n";
-////				
-////		/* Managed categories profiles */
-//		string += "***************** Managed categories profiles : \n\n";
-//		string += managedCategoryProfilesHash.toString();
-//	    string += "\n";
-////		
-//		/* Xslt mappings*/
-//		string += "***************** Xslt mappings : \n\n";
-//		string += mappingList.toString();
-//		string += "\n";
-//		
-//		/* Hash to access mappings by dtd */
-//		string += "***************** Hash mappings by dtd : \n\n";
-//		string += mappingHashByDtd.toString();
-//		string += "\n";
-//				
-//		/* Hash to access mappings by xmlns */
-//		string += "***************** Hash mappings by xmlns : \n\n";
-//		string += mappingHashByXmlns.toString();      
-//	    string += "\n";
-//		
-//		/* Hash to access mappings by xmlType */
-//		string += "***************** Hash mappings by xmlType : \n\n";
-//		string += mappingHashByXmlType.toString();      
-//	    string += "\n";
-//		
-////		/* User Profiles connected to the chanel */
-////		string += "***************** User profiles : \n\n";
-////		string += " later ...";
-////        string += "\n";
-//		
-//        return string;
-//	}		
-
-	/* ************************** ACCESSORS ********************************* */
-	
-	/**
-	 * Returns a hashtable of contexts, indexed by their ids
-	 * @return contextsHash
-	 * @see Channel#contextsHash
-	 */
-	public Hashtable<String,Context> getContextsHash() {
-		return contextsHash;
-	}
-  
 	/**
 	 * Add a context to the hashtable of contexts, indexed by its id
 	 * @param c context to add
 	 * @see Channel#contextsHash
 	 */
+	
 	protected void addContext(Context c) {
 		this.contextsHash.put(c.getId(),c);
 	}	
 
-	/**
-	 * Return the context identified "id"
-	 * @param id 
-	 * @return a context
-	 */
-	protected Context getContextById(String id){
-		return contextsHash.get(id);
-	}
-	
-	/**
-	 * Returns a hashtable of ManagedCategoryProfile, indexed by their ids
-	 * @return managedCategoryProfilesHash
-	 * @see Channel#managedCategoryProfilesHash
-	 */
-	public Hashtable<String,ManagedCategoryProfile> getManagedCategoryProfilesHash() {
-		return managedCategoryProfilesHash;
-	}
-	
-	/**
-	 * Set Hashtable of managedCategoryProfiles, indexed by their ids
-	 * @param managedCategoryProfilesHash
-	 * @see Channel#managedCategoryProfilesHash
-	 */
-	public void setManagedCategoryProfilesHash(Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash) {
-		this.managedCategoryProfilesHash = managedCategoryProfilesHash;
-	}
 
 	/**
 	 * Returns the managed category profile by giving its Id.
 	 * @param s the managed category profile Id
 	 * @return managedCategoryProfilesHash
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @see Channel#managedCategoryProfilesHash
 	 */
-	protected ManagedCategoryProfile getManagedCategoryProfile(String s){
-		return managedCategoryProfilesHash.get(s);
+	protected ManagedCategoryProfile getManagedCategoryProfile(String id) throws ManagedCategoryProfileNotFoundException{
+		ManagedCategoryProfile mcp = managedCategoryProfilesHash.get(id);
+		if (mcp == null) {
+			throw new ManagedCategoryProfileNotFoundException("ManagedCategoryProfile "+id+" is not defined in channel");
+		}
+		return mcp;
 	}
 	
 	/**
@@ -401,30 +322,7 @@ public class Channel implements InitializingBean {
 	public void addManagedCategoryProfile(ManagedCategoryProfile m) {
 		this.managedCategoryProfilesHash.put(m.getId(),m);
 	}
-
-//	public void setMappingFile(MappingFile m){
-//		this.mappingFile = m;
-//	}
-//	public MappingFile getMappingFile(){
-//		return this.mappingFile;
-//	}
 	
-	/**
-	 * Returns the list of mappings defined in the channel.
-	 * @return mappingList
-	 * @see Channel#mappingList
-	 */
-	protected List<Mapping> getMappingList() {
-		return mappingList;
-	}
-	
-	/**
-	 * Sets a mappings list in the channel
-	 * @param mappingList
-	 */
-	public void setMappingList(List<Mapping> mappingList) {
-		this.mappingList = mappingList;
-	}
 	
 	/**
 	 * Add a mapping to the list of mappings defined in the channel.
@@ -525,9 +423,117 @@ public class Channel implements InitializingBean {
 	protected Mapping getMappingBySourceURL(String sourceURL){
 		return mappingHashBySourceURL.get(sourceURL);
 	}
+//	/**
+//	 * Return a string containing channel content : mapping file, contexts, managed category profiles,
+//	 * xslt mappings, hash mappings by dtd, Hash mappings by xmlns,Hash mappings by xmlType
+//	 * 
+//	 * @see java.lang.Object#toString()
+//	 */
+//	public String toString() {
+//		String string = "";
+//			
+//		/* mappingFile */
+//		string += "***************** Mapping File : \n\n";
+//		string += mappingFile.toString();
+//		string += "\n";
+//		
+////		/* Contexts */ 
+//		string += "***************** Contexts : \n\n";
+//		string += contextsHash.toString();
+//	    string += "\n";
+////				
+////		/* Managed categories profiles */
+//		string += "***************** Managed categories profiles : \n\n";
+//		string += managedCategoryProfilesHash.toString();
+//	    string += "\n";
+////		
+//		/* Xslt mappings*/
+//		string += "***************** Xslt mappings : \n\n";
+//		string += mappingList.toString();
+//		string += "\n";
+//		
+//		/* Hash to access mappings by dtd */
+//		string += "***************** Hash mappings by dtd : \n\n";
+//		string += mappingHashByDtd.toString();
+//		string += "\n";
+//				
+//		/* Hash to access mappings by xmlns */
+//		string += "***************** Hash mappings by xmlns : \n\n";
+//		string += mappingHashByXmlns.toString();      
+//	    string += "\n";
+//		
+//		/* Hash to access mappings by xmlType */
+//		string += "***************** Hash mappings by xmlType : \n\n";
+//		string += mappingHashByXmlType.toString();      
+//	    string += "\n";
+//		
+////		/* User Profiles connected to the chanel */
+////		string += "***************** User profiles : \n\n";
+////		string += " later ...";
+////        string += "\n";
+//		
+//        return string;
+//	}		
+
+	/* ************************** ACCESSORS ********************************* */
+	
+	/**
+	 * Returns a hashtable of contexts, indexed by their ids
+	 * @return contextsHash
+	 * @see Channel#contextsHash
+	 */
+	public Hashtable<String,Context> getContextsHash() {
+		return contextsHash;
+	}
+  
+
+	
+	/**
+	 * Returns a hashtable of ManagedCategoryProfile, indexed by their ids
+	 * @return managedCategoryProfilesHash
+	 * @see Channel#managedCategoryProfilesHash
+	 */
+	public Hashtable<String,ManagedCategoryProfile> getManagedCategoryProfilesHash() {
+		return managedCategoryProfilesHash;
+	}
+	
+	/**
+	 * Set Hashtable of managedCategoryProfiles, indexed by their ids
+	 * @param managedCategoryProfilesHash
+	 * @see Channel#managedCategoryProfilesHash
+	 */
+	public void setManagedCategoryProfilesHash(Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash) {
+		this.managedCategoryProfilesHash = managedCategoryProfilesHash;
+	}
+
+
+//	public void setMappingFile(MappingFile m){
+//		this.mappingFile = m;
+//	}
+//	public MappingFile getMappingFile(){
+//		return this.mappingFile;
+//	}
+	
+	/**
+	 * Returns the list of mappings defined in the channel.
+	 * @return mappingList
+	 * @see Channel#mappingList
+	 */
+	protected List<Mapping> getMappingList() {
+		return mappingList;
+	}
+	
+	/**
+	 * Sets a mappings list in the channel
+	 * @param mappingList
+	 */
+	public void setMappingList(List<Mapping> mappingList) {
+		this.mappingList = mappingList;
+	}
+
 
 	/**
-	 * @return dosService
+	 * @return daoService
 	 */
 	public DaoService getDaoService() {
 		return daoService;

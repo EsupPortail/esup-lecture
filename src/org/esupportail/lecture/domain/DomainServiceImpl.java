@@ -18,6 +18,11 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.UserProfile;
+import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.ContextNotFoundException;
+import org.esupportail.lecture.exceptions.CustomCategoryNotFoundException;
+import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.ServiceException;
 
 /**
  * Service implementation offered by domain layer
@@ -38,6 +43,7 @@ public class DomainServiceImpl implements DomainService {
 	/*
 	 ************************** Initialization ************************************/
 	
+	//TODO setAfterProperties
 
 	
 	/*
@@ -77,23 +83,29 @@ public class DomainServiceImpl implements DomainService {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String)
+	 * @throws ServiceException 
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, ExternalService)
 	 */
-	// TODO getVisibleCategories ?
-	public List<CategoryBean> getVisibleCategories(String userId, String contextId,ExternalService externalService) {
+	public List<CategoryBean> getVisibleCategories(String userId, String contextId,ExternalService externalService) throws ServiceException {
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(userId);
 		CustomContext customContext = userProfile.getCustomContext(contextId);
-		
+
 		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
-		
-		List<CustomCategory> customCategories = customContext.getSortedCustomCategories(externalService);
-		for(CustomCategory customCategory : customCategories){
-			CategoryBean category = new CategoryBean(customCategory);
-			listCategoryBean.add(category);
-			// TODO mise à jour du DAO ?
-//			DomainTools.getDaoService().updateCustomCategory(customCategory);
+		try {
+			List<CustomCategory> customCategories = customContext.getSortedCustomCategories(externalService);
+
+			for(CustomCategory customCategory : customCategories){
+				CategoryBean category = new CategoryBean(customCategory);
+				listCategoryBean.add(category);
+				// TODO mise à jour du DAO ?
+//				DomainTools.getDaoService().updateCustomCategory(customCategory);
+			}
+		} catch (ContextNotFoundException e){
+			log.error("Context not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
+			// TODO throw une autre exception pour la vue 
+			throw new ServiceException();
 		}
 		
 		// TODO mise à jour du DAO ?
@@ -103,31 +115,46 @@ public class DomainServiceImpl implements DomainService {
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 * @throws CustomCategoryNotFoundException 
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	// TODO getVisibleSource
-	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService externalService) {
+	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService externalService) throws ServiceException {
 		
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
-		// TODO why not customCategories ?
-		CustomCategory customCategory = userProfile.getCustomManagedCategory(categoryId);
-		
+		CustomCategory customCategory;
+
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
-		
-		List<CustomSource> customSources = customCategory.getSortedCustomSources(externalService);
-		int nbSources = customSources.size();
-		log.info("NB sources : "+nbSources);
-		for(CustomSource customSource : customSources){
-			SourceBean source = new SourceBean(customSource);
-			listSourceBean.add(source);
+		try {
+			customCategory = userProfile.getCustomCategory(categoryId);
+			List<CustomSource> customSources = customCategory.getSortedCustomSources(externalService);
+			int nbSources = customSources.size();
+			log.debug("NB sources : "+nbSources);
+			for(CustomSource customSource : customSources){
+				SourceBean source = new SourceBean(customSource);
+				listSourceBean.add(source);
+				// TODO mise à jour du DAO ?
+//				DomainTools.getDaoService().updateCustomSource(customSource);
+			}	
+
 			// TODO mise à jour du DAO ?
-//			DomainTools.getDaoService().updateCustomSource(customSource);
-			
+//			DomainTools.getDaoService().updateUserProfile(userProfile);
+//			DomainTools.getDaoService().updateCustomCategory(customCategory);		
+		
+		
+		}catch(CustomCategoryNotFoundException e){
+			log.error("CustomCategory not found for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
+			// TODO throw une autre exception pour la vue 
+			throw new ServiceException();
+		} catch (ManagedCategoryProfileNotFoundException e){
+			log.error("ManagedCategoryProfile not found for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
+//			 TODO throw une autre exception pour la vue 
+			throw new ServiceException();
+		} catch (CategoryNotLoadedException e) {	
+			log.error("Category is not loaded for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
+//		 	TODO throw une autre exception pour la vue 
+			throw new ServiceException();
 		}
-		// TODO mise à jour du DAO ?
-//		DomainTools.getDaoService().updateUserProfile(userProfile);
-//		DomainTools.getDaoService().updateCustomCategory(customCategory);		
 		return listSourceBean;
 	}
 	

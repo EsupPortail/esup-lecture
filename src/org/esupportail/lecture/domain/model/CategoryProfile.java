@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Vector;
 
 import org.esupportail.lecture.dao.DaoService;
+import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 
 /**
  * Category profile element : a category profile can be a managed or personal one.
@@ -59,10 +61,11 @@ public abstract class CategoryProfile {
 	 ************************** ACCESSORS *********************************/	
 	/**
 	 * @return name
+	 * @throws CategoryNotLoadedException 
 	 * @see CategoryProfile#name
 	 * @see ComposantProfile#getName()
 	 */
-	public String getName() {
+	public String getName() throws CategoryNotLoadedException {
 		
 		if (category == null ){
 			return name;
@@ -73,7 +76,7 @@ public abstract class CategoryProfile {
 	}
 	
 	
-	public String getDescription() {
+	public String getDescription() throws CategoryNotLoadedException {
 		if (category == null){
 			return null;
 		}else {
@@ -113,8 +116,12 @@ public abstract class CategoryProfile {
 
 	/**
 	 * @return Returns the category.
+	 * @throws CategoryNotLoadedException 
 	 */
-	public Category getCategory() {
+	public Category getCategory() throws CategoryNotLoadedException {
+		if (category==null){
+			throw new CategoryNotLoadedException("Category "+id+" is not loaded in profile");
+		}
 		return category;
 	}
 

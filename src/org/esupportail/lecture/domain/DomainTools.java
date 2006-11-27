@@ -40,6 +40,7 @@ import org.esupportail.lecture.domain.model.Channel;
 	 */
 	public static final String CONTEXT = "context";
 	
+	
 	/*
 	 ************************** ACCESSORS *********************************/	
 	/**

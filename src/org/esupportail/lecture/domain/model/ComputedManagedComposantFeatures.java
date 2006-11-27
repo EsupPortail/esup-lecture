@@ -1,5 +1,7 @@
 package org.esupportail.lecture.domain.model;
 
+import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+
 /**
  * Class that contains computed features of a composant :
  * It merges features (visibility,tll) between managedComposantProfile
@@ -54,8 +56,9 @@ public abstract class ComputedManagedComposantFeatures {
 	 *********************** METHODS **************************************/
 	/**
 	 * Compute features
+	 * @throws ComposantNotLoadedException 
 	 */
-	protected void compute() {
+	protected void compute() throws ComposantNotLoadedException {
 		mcp.computeFeatures();
 		isComputed = true;
 	}
@@ -93,8 +96,9 @@ public abstract class ComputedManagedComposantFeatures {
 	
 	/**
 	 * @return the ttl
+	 * @throws ComposantNotLoadedException 
 	 */
-	protected int getTtl() {
+	protected int getTtl() throws ComposantNotLoadedException {
 		if (!isComputed){
 			compute();
 		}
@@ -105,8 +109,9 @@ public abstract class ComputedManagedComposantFeatures {
 	
 	/**
 	 * @return Returns the visibility.
+	 * @throws ComposantNotLoadedException 
 	 */
-	protected VisibilitySets getVisibility() {
+	protected VisibilitySets getVisibility() throws ComposantNotLoadedException {
 		if (!isComputed){
 			compute();
 		}

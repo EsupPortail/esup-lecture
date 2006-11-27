@@ -12,6 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
 
 
 /**
@@ -93,14 +94,14 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	/*
 	 *************************** METHODS ******************************** */	
 	
-	public void updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService externalService) {
+	public void updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService externalService) throws ComposantNotLoadedException {
 		// no loadSource(externalService) is needed here
 		setUpCustomCategoryVisibility(externalService,customManagedCategory);
 		
 	}
 
 	@Override
-	public List<Item> getItems(ExternalService externalService) {
+	public List<Item> getItems(ExternalService externalService) throws ComposantNotLoadedException {
 		loadSource(externalService);
 		
 		return getSource().getItems();
@@ -113,10 +114,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	}
 
 	/**
+	 * @throws ComposantNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#computeFeatures()
 	 * Can be called only when source has been realy get. (Not at the instantiation of the object)
 	 */
-	public void computeFeatures() {
+	public void computeFeatures() throws ComposantNotLoadedException {
 	
 		/* Features that can be herited by the managedCategoryProfile */
 		Accessibility setAccess;
@@ -147,7 +149,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 		
 	}
 
-	private void loadSource(ExternalService externalService) {
+	private void loadSource(ExternalService externalService) throws ComposantNotLoadedException {
 			
 		if(getAccess() == Accessibility.PUBLIC) {
 			// managed SOurce Profile => single or globalSource
@@ -172,9 +174,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	 * add or remove customManagedSources associated with
 	 * @param externalService
 	 * @param customManagedCategory
+	 * @throws ComposantNotLoadedException 
 	 */
 	
-	private void setUpCustomCategoryVisibility(ExternalService externalService, CustomManagedCategory customManagedCategory) {
+	private void setUpCustomCategoryVisibility(ExternalService externalService, CustomManagedCategory customManagedCategory) throws ComposantNotLoadedException {
 			/*
 			 * Algo pour gerer les customSourceProfiles :
 			 * ------------------------------------
@@ -183,18 +186,18 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 			 * user app.allowed => rien à faire + sortir
 			 * user n'app. rien => effacer la custom source .
 			 */
-		log.info("setUp");
+		log.debug("setUpCustomCategoryVisibility");
 
 			boolean isInObliged = false;
 			boolean isInAutoSubscribed = false;
 			boolean isInAllowed = false;
 						
 		/* ---OBLIGED SET--- */
-			log.info("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+this.getName());
+			log.debug("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+this.getName());
 			isInObliged = getVisibilityObliged().evaluateVisibility(externalService);
-			log.info("IsInObliged : "+isInObliged);
+			log.debug("IsInObliged : "+isInObliged);
 			if (isInObliged) {
-				log.info("Is in obliged");
+				log.debug("Is in obliged");
 				customManagedCategory.addManagedCustomSource(this);
 			
 			} else {
@@ -251,10 +254,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 
 	/**
 	 * @return visibility
+	 * @throws ComposantNotLoadedException 
 	 * @see ManagedSourceProfile#visibility
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibility()
 	 */
-	public VisibilitySets getVisibility() {
+	public VisibilitySets getVisibility() throws ComposantNotLoadedException {
 		return computedFeatures.getVisibility();
 	}
 
@@ -270,10 +274,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	
 	/**
 	 * Returns ttl
+	 * @throws ComposantNotLoadedException 
 	 * @see ManagedSourceProfile#ttl
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getTtl()
 	 */
-	public int getTtl() {
+	public int getTtl() throws ComposantNotLoadedException {
 		return computedFeatures.getTtl();
 	}
 
@@ -335,9 +340,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	}
 
 	/**
+	 * @throws ComposantNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAllowed()
 	 */
-	public DefinitionSets getVisibilityAllowed() {
+	public DefinitionSets getVisibilityAllowed() throws ComposantNotLoadedException {
 		return computedFeatures.getVisibility().getAllowed();
 	}
 
@@ -350,9 +356,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	}
 
 	/**
+	 * @throws ComposantNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAutoSubscribed()
 	 */
-	public DefinitionSets getVisibilityAutoSubscribed() {
+	public DefinitionSets getVisibilityAutoSubscribed() throws ComposantNotLoadedException {
 		return computedFeatures.getVisibility().getAutoSubscribed();
 	}
 
@@ -366,9 +373,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	}
 
 	/**
+	 * @throws ComposantNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityObliged()
 	 */
-	public DefinitionSets getVisibilityObliged() {
+	public DefinitionSets getVisibilityObliged() throws ComposantNotLoadedException {
 		return computedFeatures.getVisibility().getObliged();
 	}
 

@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.ErrorException;
 
 
@@ -80,11 +81,12 @@ public class CustomContext implements CustomElement {
 	/**
 	 * @param externalService access to externalService
 	 * @return list of customCategories defined in this customContext
+	 * @throws ContextNotFoundException 
 	 */
-	public List<CustomCategory> getSortedCustomCategories(ExternalService externalService){
+	public List<CustomCategory> getSortedCustomCategories(ExternalService externalService) throws ContextNotFoundException{
 		// TODO (later) rewrite with custom personnal category (+ sorted display)
 	
-		/* update categories in this customContext */
+		/* update this customContext with context */
 		getContext().updateCustom(this,externalService);
 		
 		List<CustomCategory> listCustomCategories = new Vector<CustomCategory>();
@@ -123,12 +125,13 @@ public class CustomContext implements CustomElement {
 	 * Add a custom category to this custom context if no exists after creating it.
 	 * @param profile the managed category profile associated to the customCategory
 	 */
-	public void addManagedCustomCategory(ManagedCategoryProfile profile) {
+	public void addCustomManagedCategory(ManagedCategoryProfile profile) {
 		String profileId = profile.getId();
 		
 		if (!subscriptions.containsKey(profileId)){
 			CustomManagedCategory customManagedCategory = new CustomManagedCategory(profileId,userProfile);
 			subscriptions.put(profileId,customManagedCategory);
+			userProfile.addCustomManagedCategory(customManagedCategory);
 		}
 	}
 	
@@ -136,29 +139,29 @@ public class CustomContext implements CustomElement {
 	 * Remove the managedCategoryProfile from the customContext
 	 * @param profile managedCategoryProfile to remove
 	 */
-	public void removeManagedCustomCategory(ManagedCategoryProfile profile) {
+	public void removeCustomManagedCategory(ManagedCategoryProfile profile) {
 		// TODO tester avec la BDD
 		subscriptions.remove(profile.getId());
+		userProfile.removeCustomManagedCategory(profile.getId());
 		
 	}
 	
 	/**
 	 * @return context refered by this
+	 * @throws ContextNotFoundException 
 	 */
-	public Context getContext() {
+	public Context getContext() throws ContextNotFoundException {
 		if (context == null) {
 			context = DomainTools.getChannel().getContext(contextId);
-			if (context == null) {
-				throw new ErrorException("Context "+contextId+" is not defined in this channel");
-			}
 		}
 		return context;
 	}
 	
 	/**
+	 * @throws ContextNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
-	public String getName() {
+	public String getName() throws ContextNotFoundException {
 		return getContext().getName();
 	}
 	

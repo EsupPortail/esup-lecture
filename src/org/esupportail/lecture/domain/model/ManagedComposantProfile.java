@@ -5,6 +5,9 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+
 
 /**
  * Managed composant profile element
@@ -31,8 +34,9 @@ interface ManagedComposantProfile extends ComposantProfile {
 	/**
 	 * Returns visibility sets of the composant
 	 * @return visibility 
+	 * @throws ComposantNotLoadedException 
 	 */
-	public VisibilitySets getVisibility();
+	public VisibilitySets getVisibility() throws ComposantNotLoadedException;
 	/**
 	 * Sets visibility sets of the composant
 	 * @param visibility
@@ -42,8 +46,9 @@ interface ManagedComposantProfile extends ComposantProfile {
 	/**
 	 * Returns ttl of the composant
 	 * @return ttl 
+	 * @throws ComposantNotLoadedException 
 	 */
-	public int getTtl();
+	public int getTtl() throws ComposantNotLoadedException;
 	/**
 	 * Sets ttl of the composant
 	 * @param ttl
@@ -58,8 +63,9 @@ interface ManagedComposantProfile extends ComposantProfile {
 	/**
 	 * Returns allowed visibility group of the composant
 	 * @return allowed 
+	 * @throws ComposantNotLoadedException 
 	 */
-	public DefinitionSets getVisibilityAllowed();
+	public DefinitionSets getVisibilityAllowed() throws ComposantNotLoadedException;
 	/**
 	 * Sets autoSubscribed visibility group of the composant
 	 * @param d subscribed group
@@ -68,8 +74,9 @@ interface ManagedComposantProfile extends ComposantProfile {
 	/**
 	 * Returns autoSubscribed visibility group of the composant
 	 * @return autoSubscribed 
+	 * @throws ComposantNotLoadedException 
 	 */
-	public DefinitionSets getVisibilityAutoSubscribed();
+	public DefinitionSets getVisibilityAutoSubscribed() throws ComposantNotLoadedException;
 	/**
 	 * Sets obliged visibility group of the composant
 	 * @param d obliged group
@@ -78,13 +85,15 @@ interface ManagedComposantProfile extends ComposantProfile {
 	/**
 	 * Returns obliged visibility group of the composant
 	 * @return d obliged group
+	 * @throws ComposantNotLoadedException 
 	 */
-	public DefinitionSets getVisibilityObliged();
+	public DefinitionSets getVisibilityObliged() throws ComposantNotLoadedException;
 	/**
 	 * Computes rights on parameters shared between a ManagedComposantProfile and its
 	 * ManagedComposant (edit, visibility)
+	 * @throws ComposantNotLoadedException 
 	 */
-	public void computeFeatures();
+	public void computeFeatures() throws ComposantNotLoadedException;
 	
 
 }

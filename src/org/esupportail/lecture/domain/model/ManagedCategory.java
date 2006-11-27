@@ -14,6 +14,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
 
 
 
@@ -31,7 +32,7 @@ public class ManagedCategory extends Category {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(DomainServiceImpl.class);
+	protected static final Log log = LogFactory.getLog(ManagedCategory.class);
 
 	
 	/**
@@ -77,13 +78,14 @@ public class ManagedCategory extends Category {
 	 * But there is not any loading of source at this time
 	 * @param customManagedCategory customManagedCAtegory to update
 	 * @param portletService Access to portlet service
+	 * @throws ComposantNotLoadedException 
 	 */
-	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) {
+	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) throws ComposantNotLoadedException {
 		Iterator iterator = getSourceProfilesHash().values().iterator();
 		
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
-			log.info("Managed Source profile ok");
+			log.debug("Managed Source profile ok");
 			msp.updateCustomCategory(customManagedCategory,externalService);
 		}
 	}

@@ -4,6 +4,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 
 
 
@@ -59,10 +62,11 @@ public abstract class CustomCategory implements CustomElement {
 	
 	/**
 	 * @return the categoryProfile associated with this customCategory
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	public abstract CategoryProfile getProfile() ;
+	public abstract CategoryProfile getProfile() throws ManagedCategoryProfileNotFoundException ;
 	
-	public abstract List<CustomSource> getSortedCustomSources(ExternalService externalService);
+	public abstract List<CustomSource> getSortedCustomSources(ExternalService externalService) throws ManagedCategoryProfileNotFoundException, ComposantNotLoadedException;
 	
 	
 	

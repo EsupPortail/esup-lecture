@@ -8,6 +8,7 @@ package org.esupportail.lecture.domain.model;
 import java.util.List;
 
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
 
 /**
  * Source profile element : a source profile can be a managed or personal one.
@@ -29,7 +30,7 @@ public abstract class SourceProfile {
 
 /* ************************** METHODS ******************************** */	
 	
-	public abstract List<Item> getItems(ExternalService externalService) ;
+	public abstract List<Item> getItems(ExternalService externalService) throws ComposantNotLoadedException ;
 
 /* ************************** ACCESSORS ******************************** */	
 

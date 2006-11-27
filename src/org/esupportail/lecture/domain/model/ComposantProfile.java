@@ -5,6 +5,9 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+
 
 /**
  * Composant profile element
@@ -29,7 +32,7 @@ public interface ComposantProfile {
 	 * Returns the name of the composant profile (should be the same as the correcponding composant)
 	 * @return String name
 	 */
-	public String getName();
+	public String getName()throws ComposantNotLoadedException;
 	/**
 	 * Sets the name of the composant profile (should be the same as the correcponding composant)
 	 * @param name

@@ -14,6 +14,7 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 
 /**
  * Context element.
@@ -76,8 +77,9 @@ public class Context {
 	 * Initilizes associations to managed category profiles linked to this context.
 	 * The channel is given because it contains managed cateories profiles objects to link with
 	 * @param channel channel where the context is defined 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	protected void initManagedCategoryProfiles(Channel channel) {
+	protected void initManagedCategoryProfiles(Channel channel) throws ManagedCategoryProfileNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("initManagedCategoryProfiles()");
 		}
@@ -101,23 +103,13 @@ public class Context {
 	 * And update customContext according to visibilities
 	 * @param customContext customContext to upadte
 	 * @param externalService access to portlet service
-	 * @return list of ManagedCategoryProfiles defined in this context
 	 */
-	public List<ManagedCategoryProfile> updateCustom(CustomContext customContext, ExternalService externalService) {
+	public void updateCustom(CustomContext customContext, ExternalService externalService) {
 		//TODO (later) optimise evaluation process (trustCategory + real loadding)
 		
-		List<ManagedCategoryProfile> visibleCategories = new Vector<ManagedCategoryProfile>();
-		
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet){
-			if(mcp.updateCustomContext(customContext, externalService)){
-				visibleCategories.add(mcp);
-			}
-//			mcp.loadCategory(externalService);
-//			mcp.evaluateVisibilityAndUpdateCustomContext(externalService, customContext);
-	
+			mcp.updateCustomContext(customContext, externalService);	
 		}
-		// TODO faire une autre methode pour le mode edit, celle ci ne doit pas rendre de visibleCategorie
-		return visibleCategories;
 	}
 
 	/* see later */

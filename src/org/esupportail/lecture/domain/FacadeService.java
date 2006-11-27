@@ -11,6 +11,7 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.exceptions.ServiceException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
@@ -77,8 +78,9 @@ public class FacadeService implements InitializingBean {
 	 * @param contextId id of context
 	 * @param uid user ID
 	 * @return List of CategoryBean, bean of a visible category (obliged or subscribed by a user) in a context
+	 * @throws ServiceException 
 	 */
-	public List<CategoryBean> getVisibleCategories(String uid,String contextId) {
+	public List<CategoryBean> getVisibleCategories(String uid,String contextId) throws ServiceException {
 		return domainService.getVisibleCategories(uid,contextId,externalService);
 	}
 	
