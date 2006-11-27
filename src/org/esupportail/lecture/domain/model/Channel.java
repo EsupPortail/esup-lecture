@@ -108,9 +108,11 @@ public class Channel implements InitializingBean {
 	 ************************** Initialization ************************************/
 
 	/**
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws ContextNotFoundException 
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() throws ContextNotFoundException, ManagedCategoryProfileNotFoundException  {
 		startup();
 		DomainTools.setChannel(this);
 		DomainTools.setDaoService(daoService);
@@ -120,9 +122,10 @@ public class Channel implements InitializingBean {
 	/**
 	 * Methods call to load the config and mapping file 
 	 * if needed (when files are modified from last loading)
-	 * @throws FatalException
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws ContextNotFoundException 
 	 */
-	private void startup() {
+	private void startup() throws ContextNotFoundException, ManagedCategoryProfileNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("startup()");
 		}
@@ -135,14 +138,16 @@ public class Channel implements InitializingBean {
 	 * Initialize these elements.
 	 * @see org.esupportail.lecture.domain.model.ChannelConfig#getInstance()
 	 * @exception FatalException
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws ContextNotFoundException 
 	 */
-	private void loadConfig()throws FatalException {
+	private void loadConfig()throws FatalException, ContextNotFoundException, ManagedCategoryProfileNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("loadConfig()");
 		}
 		try {
 			ChannelConfig config = (ChannelConfig)ChannelConfig.getInstance();
-			// TODO (later)
+			// TODO (GB later)
 			// - utiliser l'objet config pour appeler les méthodes après (reset ...)
 			// 		et faire une classe FileToLoad avec ces méthodes en non static
 			// - charger la config via un DAO ?
@@ -190,7 +195,7 @@ public class Channel implements InitializingBean {
 			log.debug("resetChannelConfigProperties()");
 		}
 		
-		// TODO (later) UserAttributes.init();
+		// TODO (GB later) UserAttributes.init();
 		contextsHash = new Hashtable<String,Context>();
 		managedCategoryProfilesHash = new Hashtable<String,ManagedCategoryProfile>();
 	}

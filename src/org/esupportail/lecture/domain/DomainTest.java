@@ -43,7 +43,6 @@ public class DomainTest {
 		testGetSources();
 		testGetItems();
 	
-		
 	}
 
 /*

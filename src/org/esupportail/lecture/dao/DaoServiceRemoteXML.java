@@ -131,7 +131,7 @@ public class DaoServiceRemoteXML {
 			ret.setName(xml.getString("[@name]"));
 			ret.setDescription(xml.getString("description"));
 			ret.setProfilId(profile.getId());
-			ret.setTtl(profile.getTtl());
+			//ret.setTtl(profile.getTtl());
 			// SourceProfiles loop
 
 			Hashtable<String, SourceProfile> sourceProfiles = new Hashtable<String,SourceProfile>();
@@ -234,6 +234,7 @@ public class DaoServiceRemoteXML {
 	 * @return the source
 	 */
 	public Source getFreshSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
+		//log.debug("URL de la source : "+urlSource);
 		Source ret = new GlobalSource();
 		try {
 			String dtd = null;

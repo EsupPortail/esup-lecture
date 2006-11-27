@@ -14,6 +14,8 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
 import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 
 /**
@@ -103,9 +105,10 @@ public class Context {
 	 * And update customContext according to visibilities
 	 * @param customContext customContext to upadte
 	 * @param externalService access to portlet service
+	 * @throws ComposantNotLoadedException 
 	 */
-	public void updateCustom(CustomContext customContext, ExternalService externalService) {
-		//TODO (later) optimise evaluation process (trustCategory + real loadding)
+	public void updateCustom(CustomContext customContext, ExternalService externalService) throws ComposantNotLoadedException {
+		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet){
 			mcp.updateCustomContext(customContext, externalService);	
@@ -145,7 +148,12 @@ public class Context {
 		Iterator iterator = managedCategoryProfilesSet.iterator();
 		for (ManagedCategoryProfile m = null; iterator.hasNext();) {
 			m = (ManagedCategoryProfile) iterator.next();
-			string += "         (" + m.getId() + "," + m.getName() + ")\n";
+			try {
+				string += "         (" + m.getId() + "," + m.getName() + ")\n";
+			} catch (CategoryNotLoadedException e) {
+				log.error("Category is not loaded");
+				e.printStackTrace();
+			}
 		}
 
 		return string;

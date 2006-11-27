@@ -82,7 +82,7 @@
 			<obliged>
 				<regular
 					attribute="sn"
-					value="User"/>					
+					value="Useppr"/>					
 			</obliged>
 		</visibility>
 	</categoryProfile>
@@ -99,7 +99,7 @@
 			<autoSubscribed/>
 			<obliged>	
 				<group
-					name="local.0"/>
+					name="local.10"/>
 			</obliged>	
 		</visibility>
 	</categoryProfile>

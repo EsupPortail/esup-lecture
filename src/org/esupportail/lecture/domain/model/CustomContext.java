@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
 import org.esupportail.lecture.exceptions.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.ErrorException;
 
@@ -59,13 +60,6 @@ public class CustomContext implements CustomElement {
 	
 	/**
 	 * Constructor
-	 */
-	public CustomContext() {
-		subscriptions = new Hashtable<String,CustomManagedCategory>();
-	}
-	
-	/**
-	 * Constructor
 	 * @param contextId id of the context refered by this
 	 * @param user owner of this
 	 */
@@ -82,9 +76,10 @@ public class CustomContext implements CustomElement {
 	 * @param externalService access to externalService
 	 * @return list of customCategories defined in this customContext
 	 * @throws ContextNotFoundException 
+	 * @throws ComposantNotLoadedException 
 	 */
-	public List<CustomCategory> getSortedCustomCategories(ExternalService externalService) throws ContextNotFoundException{
-		// TODO (later) rewrite with custom personnal category (+ sorted display)
+	public List<CustomCategory> getSortedCustomCategories(ExternalService externalService) throws ContextNotFoundException, ComposantNotLoadedException{
+		// TODO (GB later) rewrite with custom personnal category (+ sorted display)
 	
 		/* update this customContext with context */
 		getContext().updateCustom(this,externalService);
@@ -140,7 +135,7 @@ public class CustomContext implements CustomElement {
 	 * @param profile managedCategoryProfile to remove
 	 */
 	public void removeCustomManagedCategory(ManagedCategoryProfile profile) {
-		// TODO tester avec la BDD
+		// TODO (GB) tester avec la BDD
 		subscriptions.remove(profile.getId());
 		userProfile.removeCustomManagedCategory(profile.getId());
 		

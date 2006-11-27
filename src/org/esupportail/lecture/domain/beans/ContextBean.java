@@ -2,6 +2,7 @@ package org.esupportail.lecture.domain.beans;
 
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.exceptions.ContextNotFoundException;
 
 /**
  * @author bourges
@@ -31,8 +32,9 @@ public class ContextBean {
 	
 	/**
 	 * @param customContext
+	 * @throws ContextNotFoundException 
 	 */
-	public ContextBean(CustomContext customContext){
+	public ContextBean(CustomContext customContext) throws ContextNotFoundException{
 		Context context = customContext.getContext();
 
 		setName(context.getName());

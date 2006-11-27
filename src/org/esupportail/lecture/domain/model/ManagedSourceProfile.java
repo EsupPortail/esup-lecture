@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.SourceNotLoadedException;
 
 
 /**
@@ -101,16 +102,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	}
 
 	@Override
-	public List<Item> getItems(ExternalService externalService) throws ComposantNotLoadedException {
+	public List<Item> getItems(ExternalService externalService) throws ComposantNotLoadedException, SourceNotLoadedException {
 		loadSource(externalService);
-		
-		return getSource().getItems();
-	}
-	
-	@Override
-	public String getContent() {
-		
-		return getSource().getContent();
+		Source source = getSource();
+		return source.getItems();
 	}
 
 	/**
@@ -123,12 +118,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 		/* Features that can be herited by the managedCategoryProfile */
 		Accessibility setAccess;
 		VisibilitySets setVisib;
-		int setTtl;
 		
 		if (managedCategoryProfile.getTrustCategory()) {		
 			setAccess = access;
 			setVisib = visibility;
-			setTtl = ttl;
 			
 			if (setAccess == null) {
 				setAccess = managedCategoryProfile.getAccess();
@@ -136,16 +129,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 			if (setVisib == null) {
 				setVisib = managedCategoryProfile.getVisibility();
 			}
-			if (setTtl == -1) {
-				setTtl = managedCategoryProfile.getTtl();
-			}	
+
 		}else {
 			setAccess = managedCategoryProfile.getAccess();
 			setVisib = managedCategoryProfile.getVisibility();
-			setTtl = managedCategoryProfile.getTtl();
 		}
 				
-		computedFeatures.update(setVisib,setTtl,setAccess);
+		computedFeatures.update(setVisib,setAccess);
 		
 	}
 
@@ -153,7 +143,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 			
 		if(getAccess() == Accessibility.PUBLIC) {
 			// managed SOurce Profile => single or globalSource
-			// TODO le getSource est il "source" ou "managedSource" ?
+			// TODO (GB) le getSource est il "source" ou "managedSource" ?
 			Source source = DomainTools.getDaoService().getSource(this);
 			setSource(source);
 			
@@ -164,7 +154,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 			
 		}
 		computedFeatures.compute();
-		//computedFeatures.setIsComputed(false); // TODO (later) à optimiser
+		//computedFeatures.setIsComputed(false); // TODO (GB later) à optimiser
 	}
 
 	
@@ -202,11 +192,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 			
 			} else {
 		/* ---AUTOSUBSCRIBED SET--- */	
-				// TODO (later) isInAutoSubscribed =  getVisibilitySubscribed().evaluateVisibility(portletService);
+				// TODO (GB later) isInAutoSubscribed =  getVisibilitySubscribed().evaluateVisibility(portletService);
 				// en attendant : isInAutoSubscribed = false 
 				
 				if(isInAutoSubscribed) {
-					// TODO (later) l'ajouter dans le custom category si c'est la preniere fois
+					// TODO (GB later) l'ajouter dans le custom category si c'est la preniere fois
 					// customManagedCategory.addManagedCustomSource(this);
 				
 				} else {
@@ -221,7 +211,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 					
 				}	
 			}
-			// TODO (later) retirer les customSource du user profile qui correspondent à des profiles 
+			// TODO (GB later) retirer les customSource du user profile qui correspondent à des profiles 
 			// de sources  disparus	
 		}
 
@@ -236,10 +226,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 
 	/**	 
 	 * @return access
+	 * @throws ComposantNotLoadedException 
 	 * @see ManagedSourceProfile#access
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getAccess()
 	 */
-	public Accessibility getAccess() {
+	public Accessibility getAccess() throws ComposantNotLoadedException {
 		return computedFeatures.getAccess();
 	}
 
@@ -278,8 +269,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	 * @see ManagedSourceProfile#ttl
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getTtl()
 	 */
-	public int getTtl() throws ComposantNotLoadedException {
-		return computedFeatures.getTtl();
+	public int getTtl()  {
+		return ttl;
 	}
 
 	/**
@@ -288,7 +279,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	 */
 	public void setTtl(int ttl) {
 		this.ttl = ttl;
-		computedFeatures.setIsComputed(false);
 	}
 
 	/**
@@ -396,6 +386,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedCompos
 	public void setItemXPath(String string) {
 		itemXPath = string;
 		
+	}
+
+
+	@Override
+	public String getContent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

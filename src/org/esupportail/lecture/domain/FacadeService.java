@@ -78,9 +78,8 @@ public class FacadeService implements InitializingBean {
 	 * @param contextId id of context
 	 * @param uid user ID
 	 * @return List of CategoryBean, bean of a visible category (obliged or subscribed by a user) in a context
-	 * @throws ServiceException 
 	 */
-	public List<CategoryBean> getVisibleCategories(String uid,String contextId) throws ServiceException {
+	public List<CategoryBean> getVisibleCategories(String uid,String contextId) {
 		return domainService.getVisibleCategories(uid,contextId,externalService);
 	}
 	

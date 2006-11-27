@@ -46,10 +46,9 @@ public class ComputedManagedCategoryFeatures extends ComputedManagedComposantFea
 	 * Update features simply
 	 * It is called by the associated managed category profile when it has concretly computed features
 	 * @param visibility
-	 * @param ttl
 	 */
-	protected void update(/*Editability edit, */ VisibilitySets visibility, int ttl) {
-		super.update(visibility,ttl);
+	protected void update(/*Editability edit, */ VisibilitySets visibility) {
+		super.update(visibility);
 		//this.edit = edit;
 		
 	}

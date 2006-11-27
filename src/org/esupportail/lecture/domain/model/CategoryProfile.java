@@ -120,6 +120,7 @@ public abstract class CategoryProfile {
 	 */
 	public Category getCategory() throws CategoryNotLoadedException {
 		if (category==null){
+			// TODO (GB) on pourrait faire un loadCategory ?
 			throw new CategoryNotLoadedException("Category "+id+" is not loaded in profile");
 		}
 		return category;

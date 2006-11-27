@@ -22,9 +22,9 @@ public class SourceBean {
 	 * "notSubscribed" --> The source is alloweb and not yet subscribed by the user (used in edit mode)
 	 * "obliged" --> The source is obliged: user can't subscribe or unsubscribe this source
 	 */
-	//TODO utiliser des constantes définies dans DomainTools pour ça.
+	//TODO (GB) utiliser des constantes définies dans DomainTools pour ça.
 	private String type;
-	// TODO revoir comment concevoir cela : il faut aussi tenir compte des personnalSources qui n'ont pas de type
+	// TODO (GB) revoir comment concevoir cela : il faut aussi tenir compte des personnalSources qui n'ont pas de type
 	
 	public SourceBean(){}
 	

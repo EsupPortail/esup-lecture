@@ -82,7 +82,7 @@ public class VirtualSession {
 	private String getCurrentContextId() {
 		// while uportal bug not fixed
 		String currentContextId = "c1";
-		// TODO (later) String currentContextId = portletService.getPreferences(UserAttributes.CONTEXT);
+		// TODO (GB later) String currentContextId = portletService.getPreferences(UserAttributes.CONTEXT);
 		return currentContextId;
 	}
 	

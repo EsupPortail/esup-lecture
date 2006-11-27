@@ -43,13 +43,6 @@ public class ManagedCategory extends Category {
 	private VisibilitySets visibility;
 
 	/**
-	 * Ttl of this object reloading from remote definition (if defined)
-	 * Using depends on trustCategory parameter in 
-	 * ManagedCategoryProfile corresponding
-	 */
-	private int ttl;
-
-	/**
 	 * Managed category edit mode : not used for the moment (if defined)
 	 * Using depends on trustCategory parameter in 
 	 * ManagedCategoryProfile corresponding
@@ -111,24 +104,6 @@ public class ManagedCategory extends Category {
 	 */
 	public void setVisibility(VisibilitySets visibility) {
 		this.visibility = visibility;
-	}
-
-
-	/**
-	 * Returns ttl of this managed category (if defined)
-	 * @return ttl
-	 */
-	protected int getTtl() {
-		return ttl;
-	}
-
-
-	/**
-	 * Sets ttl of this managed category
-	 * @param ttl
-	 */
-	public void setTtl(int ttl) {
-		this.ttl = ttl;
 	}
 
 	/**

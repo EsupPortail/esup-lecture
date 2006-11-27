@@ -31,29 +31,21 @@ public class CustomManagedCategory extends CustomCategory {
 	 * Used for tests
 	 */
 	public String test = "CustomCAtegoryCharge";
-	
-	/**
-	 * The ID of related profilCategory
-	 */
-	private String categoryProfileID;
+
 	
 	/**
 	 * The map of subscribed CustomManagedSource
 	 */
 	private Map<String,CustomManagedSource> subscriptions;
-	// TODO mettre autre chose qu'une map ?
+	// TODO (GB) mettre autre chose qu'une map ?
 	
 	/*
 	 ************************** INIT *********************************/	
 
-	public CustomManagedCategory(){
-		subscriptions = new Hashtable<String,CustomManagedSource>();
-	}
-	
+
 	public CustomManagedCategory(String catId,UserProfile user){
+		super(catId,user);
 		subscriptions = new Hashtable<String,CustomManagedSource>();
-		setCategoryProfileID(catId);
-		setUserProfile(user);
 		
 	}
 	
@@ -63,7 +55,7 @@ public class CustomManagedCategory extends CustomCategory {
 
 
 	public List<CustomSource> getSortedCustomSources(ExternalService externalService) throws ManagedCategoryProfileNotFoundException, ComposantNotLoadedException{
-	// TODO (later) à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
+	// TODO (GB later) à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
 		
 		ManagedCategoryProfile profile = getProfile();
 		profile.updateCustom(this,externalService);
@@ -89,7 +81,7 @@ public class CustomManagedCategory extends CustomCategory {
 		
 		if (!subscriptions.containsKey(profileId)){
 			CustomManagedSource customManagedSource = new CustomManagedSource(managedSourceProfile);
-			customManagedSource.setManagedCategoryProfileId(this.getCategoryProfileID());
+			customManagedSource.setManagedCategoryProfileId(super.getId());
 			subscriptions.put(profileId,customManagedSource);
 			getUserProfile().addCustomSource(customManagedSource);
 		}
@@ -98,14 +90,15 @@ public class CustomManagedCategory extends CustomCategory {
 	
 
 	public void removeManagedCustomSource(ManagedSourceProfile profile) {
-		//		 TODO tester avec la BDD
+		//		 TODO (GB) tester avec la BDD
 		subscriptions.remove(profile.getId());
+		getUserProfile().removeCustomSource(profile.getId());
 		
 	}
 	
 	public ManagedCategoryProfile getProfile() throws ManagedCategoryProfileNotFoundException {
 		Channel channel = DomainTools.getChannel();
-		return channel.getManagedCategoryProfile(this.categoryProfileID);
+		return channel.getManagedCategoryProfile(this.categoryId);
 	}
 	
 
@@ -127,12 +120,6 @@ public class CustomManagedCategory extends CustomCategory {
 		this.test = test;
 	}
 
-	public String getCategoryProfileID() {
-		return categoryProfileID;
-	}
-	public void setCategoryProfileID(String profilID) {
-		this.categoryProfileID = profilID;
-	}
 	public String getName() throws ManagedCategoryProfileNotFoundException, CategoryNotLoadedException {
 		return getProfile().getName();
 	}

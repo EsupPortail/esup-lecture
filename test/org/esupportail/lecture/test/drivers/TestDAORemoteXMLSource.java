@@ -35,7 +35,7 @@ public class TestDAORemoteXMLSource {
 		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		
-		//TODO : RB test with DaoService and not DaoServiceImpl
+		//TODO (RB) test with DaoService and not DaoServiceImpl
 		//DaoService dao = (DaoService)factory.getBean("daoServiceImpl");
 		Channel channel = (Channel)factory.getBean("channel");
 		DaoService dao = (DaoService)factory.getBean("daoService");

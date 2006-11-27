@@ -22,8 +22,9 @@ interface ManagedComposantProfile extends ComposantProfile {
 	/**
 	 * Returns access mode of the composant
 	 * @return access 
+	 * @throws ComposantNotLoadedException 
 	 */
-	public Accessibility getAccess(); 
+	public Accessibility getAccess() throws ComposantNotLoadedException; 
 	
 	/**
 	 * Sets access mode of the composant

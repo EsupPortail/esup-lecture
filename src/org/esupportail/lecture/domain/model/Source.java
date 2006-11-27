@@ -149,6 +149,7 @@ public abstract class Source implements Serializable {
 		
 		if (setXsltURL == null || setItemXPath == null) {
 			if (URL != null) {
+				// TODO prendre l'URL dans le sourceProfile
 				m = channel.getMappingBySourceURL(URL);
 			} else {
 			if (dtd != null) {
@@ -199,7 +200,7 @@ public abstract class Source implements Serializable {
 			//get encoding
 			String encoding = document.getXMLEncoding();
 			//lauch Xpath find
-			XPath xpath = document.createXPath(itemXPath);
+			XPath xpath = document.createXPath(getItemXPath());
 			xpath.setNamespaceURIs(XPathNameSpaces);
 			List<Node> list = xpath.selectNodes(document);
 			//List<Node> list = document.selectNodes(itemXPath);
@@ -212,7 +213,7 @@ public abstract class Source implements Serializable {
 				XML.append("\" ?>");
 				XML.append(node.asXML());
 				String XMLasString = XML.toString();
-				String htmlContent = xml2html(XMLasString, xsltURL);
+				String htmlContent = xml2html(XMLasString, getXsltURL());
 				item.setHtmlContent(htmlContent);
 				//find MD5 of item content for his ID
 				byte[] hash = MessageDigest.getInstance("MD5").digest(XMLasString.getBytes());
@@ -255,6 +256,7 @@ public abstract class Source implements Serializable {
 	 * @return html content
 	 */
 	private String xml2html(String xml, String xsltFileURL) {
+		log.debug("voici le xsltFileUrl : "+xsltFileURL);
 		String ret = null;
 		try {
 			//		 1. Instantiate a TransformerFactory.
@@ -379,7 +381,7 @@ public abstract class Source implements Serializable {
 	 * @return Returns the itemXPath.
 	 */
 	public String getItemXPath() {
-		//TODO public for test class
+		//TODO (GB) public for test class
 		if (!isXsltComputed){
 			computeXslt();
 		}
@@ -398,7 +400,7 @@ public abstract class Source implements Serializable {
 	 * @return Returns the xsltURL.
 	 */
 	public String getXsltURL() {
-		//TODO public for test class
+		//TODO (GB) public for test class
 		if (!isXsltComputed){
 			computeXslt();
 		}

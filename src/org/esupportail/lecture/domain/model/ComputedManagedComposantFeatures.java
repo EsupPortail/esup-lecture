@@ -21,12 +21,6 @@ public abstract class ComputedManagedComposantFeatures {
 	private VisibilitySets visibility;
 
 	/**
-	 * Ttl of the remote managed category reloading
-	 * Using depends on trustCategory parameter
-	 */
-	private int ttl;
-	
-	/**
 	 * Indicates if activeFeatures can be used or not :
 	 *  - false : features are not computed, they can't be used
 	 *  - true : features are computed, they can be used
@@ -68,11 +62,9 @@ public abstract class ComputedManagedComposantFeatures {
 	 * Update features simply
 	 * It is called by the associated managed composant profile when it concretly computes features
 	 * @param visibility
-	 * @param ttl
 	 */
-	protected void update( VisibilitySets visibility, int ttl) {
+	protected void update( VisibilitySets visibility) {
 		this.visibility = visibility;
-		this.ttl = ttl;
 	}
 	
 	/*
@@ -93,20 +85,7 @@ public abstract class ComputedManagedComposantFeatures {
 		isComputed = b;
 	}
 
-	
-	/**
-	 * @return the ttl
-	 * @throws ComposantNotLoadedException 
-	 */
-	protected int getTtl() throws ComposantNotLoadedException {
-		if (!isComputed){
-			compute();
-		}
-		return ttl;
-	}
-
-
-	
+		
 	/**
 	 * @return Returns the visibility.
 	 * @throws ComposantNotLoadedException 

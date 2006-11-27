@@ -45,7 +45,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * trustCategory parameter : indicates between managed category and category profile, which one to trust
 	 * True : category is trusted. 
 	 * False : category is not trusted, only parameters profile are good 
-	 * parameters (edit, visibility, ttl)
+	 * parameters (edit, visibility)
 	 */
 	private boolean trustCategory;
 	
@@ -72,7 +72,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 
 	/**
 	 * Ttl of the remote managed category reloading
-	 * Using depends on trustCategory parameter
 	 */
 	private int ttl;
 	
@@ -156,10 +155,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		
 		} else {
 	/* ---AUTOSUBSCRIBED SET--- */	
-			// TODO (later) isInAutoSubscribed =  getVisibilityAutoSubscribed().evaluateVisibility(portletService);
+			// TODO (GB later) isInAutoSubscribed =  getVisibilityAutoSubscribed().evaluateVisibility(portletService);
 			// en attendant : isInAutoSubscribed = false 			
 			if(isInAutoSubscribed) {
-				// TODO (later) l'ajouter dans le custom context si c'est la preniere fois
+				// TODO (GB later) l'ajouter dans le custom context si c'est la preniere fois
 				// customContext.addCustomCategory(mcp);
 			
 			} else {
@@ -174,7 +173,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 				}			
 			}	
 		}
-		// TODO (later) retirer les customCat du user profile qui correspondent à des profiles 
+		// TODO (GB later) retirer les customCat du user profile qui correspondent à des profiles 
 		// de catégories  disparus
 		return true;
 	}
@@ -203,12 +202,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 		ManagedCategory managedCategory = (ManagedCategory)super.getCategory();
 		//Editability setEdit;
 		VisibilitySets setVisib = visibility;
-		int setTtl = ttl;
 		
 		if (trustCategory) {		
 			//setEdit = managedCategory.getEdit();
 			setVisib = managedCategory.getVisibility();
-			setTtl = managedCategory.getTtl();
 			
 //			if (setEdit == null) {
 //				setEdit = this.edit;
@@ -216,14 +213,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 			if (setVisib == null) {
 				setVisib = this.visibility;
 			}
-			if (setTtl == -1) {
-				setTtl = this.ttl;
-			}	
+
 			
 		}/* else {
 				Already done during channel config loading 
 		} */
-		computedFeatures.update(setVisib,setTtl);
+		computedFeatures.update(setVisib);
 	}
 	
 
@@ -372,8 +367,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @see ManagedCategoryProfile#ttl
 	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getTtl()
 	 */
-	public int getTtl() throws ComposantNotLoadedException {
-		return computedFeatures.getTtl();
+	public int getTtl(){
+		return ttl;
 	}
 	
 	/**
@@ -382,7 +377,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 */
 	public void setTtl(int ttl) {
 		this.ttl = ttl;
-		computedFeatures.setIsComputed(false);
 	}
 
 

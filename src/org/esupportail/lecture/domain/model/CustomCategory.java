@@ -28,7 +28,7 @@ public abstract class CustomCategory implements CustomElement {
 	/**
 	 * The Id of this CustomCategory
 	 */
-	int Id;
+	String categoryId;
 	
 	/**
 	 * Flag : store if CustomCategory is folded or not
@@ -38,17 +38,21 @@ public abstract class CustomCategory implements CustomElement {
 	/* 
 	 ************************** ACCESSORS **********************************/
 	
+	public CustomCategory(String catId, UserProfile user) {
+		setId(catId);
+		setUserProfile(user);
+	}
 	public UserProfile getUserProfile() {
 		return userProfile;
 	}
 	public void setUserProfile(UserProfile userProfile) {
 		this.userProfile = userProfile;
 	}
-	public int getId() {
-		return Id;
+	public String getId() {
+		return categoryId;
 	}
-	public void setId(int id) {
-		Id = id;
+	public void setId(String id) {
+		categoryId = id;
 	}
 	public boolean isFolded() {
 		return folded;

@@ -46,7 +46,7 @@ public class RegularOfSet {
 	public boolean evaluate(ExternalService externalService) {
 		
 		String userAttributeValue = externalService.getUserAttribute(attribute);
-		// TODO voir le cas ou il y est mais que le portail ne connait pas
+		// TODO (GB) voir le cas ou il y est mais que le portail ne connait pas
 		if (userAttributeValue == null) {
 			log.warn("No value for user attribute '"+ attribute +"'");
 			return false;
@@ -65,7 +65,7 @@ public class RegularOfSet {
 	   	if (log.isDebugEnabled()){
     		log.debug("checkNamesExistence()");
     	}
-		// TODO (later) vérification de l'existence de l'attribut dans le portail :impossible
+		// TODO (GB later) vérification de l'existence de l'attribut dans le portail :impossible
 	   	// on ne peut verifier que sa declaration dans le portlet.xml ? + log.warn si pb
 	}
 	

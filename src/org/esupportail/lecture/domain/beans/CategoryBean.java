@@ -2,6 +2,8 @@ package org.esupportail.lecture.domain.beans;
 
 import org.esupportail.lecture.domain.model.CategoryProfile;
 import org.esupportail.lecture.domain.model.CustomCategory;
+import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 
 /**
  * @author bourges
@@ -30,7 +32,7 @@ public class CategoryBean {
 	 */
 	public CategoryBean(){}
 	
-	public CategoryBean(CustomCategory customCategory){
+	public CategoryBean(CustomCategory customCategory) throws ManagedCategoryProfileNotFoundException, CategoryNotLoadedException{
 		CategoryProfile profile = customCategory.getProfile();
 		
 		setName(profile.getName());

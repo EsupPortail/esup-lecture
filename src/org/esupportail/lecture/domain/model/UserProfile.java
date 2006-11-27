@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CustomCategoryNotFoundException;
+import org.esupportail.lecture.exceptions.CustomSourceNotFoundException;
 
 
 
@@ -44,7 +45,7 @@ public class UserProfile {
 	/**
 	 * Hashtable of CustomManagedCategory defined for the user, indexed by ManagedCategoryProfilID.
 	 */
-	// TODO why not customCategories ?
+	// TODO (GB)  why not customCategories ?
 	private Map<String,CustomManagedCategory> customManagedCategories;
 
 	/**
@@ -62,6 +63,7 @@ public class UserProfile {
 	public UserProfile(){
 		customContexts = new Hashtable<String,CustomContext>();
 		customManagedCategories = new Hashtable<String, CustomManagedCategory>();
+		customSources = new Hashtable<String,CustomSource>();
 	}
 	
 	/**
@@ -103,7 +105,7 @@ public class UserProfile {
 	 * @throws CustomCategoryNotFoundException 
 	 */
 	public CustomCategory getCustomCategory(String categoryId) throws CustomCategoryNotFoundException{
-		// TODO (later) avec customManagedCategory et customPersonalCategory
+		// TODO (GB later) avec customManagedCategory et customPersonalCategory
 		CustomManagedCategory customCategory = 
 			customManagedCategories.get(categoryId);
 		if(customCategory == null){
@@ -116,12 +118,13 @@ public class UserProfile {
 	 * Return the customSource identified by the source Id
 	 * @param sourceId identifier of the source refered by the customSource
 	 * @return customSource
+	 * @throws CustomSourceNotFoundException 
 	 */
-	public CustomSource getCustomSource(String sourceId) {
+	public CustomSource getCustomSource(String sourceId) throws CustomSourceNotFoundException {
 		CustomSource customSource = 
 			customSources.get(sourceId);
 		if(customSource == null){
-			log.warn("Requested customSource "+sourceId+"is not found in UserProfile "+this.userId);
+			throw new CustomSourceNotFoundException ("CustomSource "+sourceId+" is not found in userProfile "+this.userId);
 		}
 		
 		return customSource;
@@ -138,7 +141,8 @@ public class UserProfile {
 	 * @param customCategory
 	 */
 	public void addCustomManagedCategory(CustomManagedCategory customCategory){
-		customManagedCategories.put(customCategory.getCategoryProfileID(),customCategory);
+		String id = customCategory.getId();
+		customManagedCategories.put(id,customCategory);
 	}
 	
 
@@ -159,7 +163,7 @@ public class UserProfile {
 	/**
 	 * @param sourceId
 	 */
-	public void removeCustomSource(CustomSource sourceId){
+	public void removeCustomSource(String sourceId){
 		customSources.remove(sourceId);
 	}
 		

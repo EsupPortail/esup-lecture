@@ -8,7 +8,9 @@ package org.esupportail.lecture.domain.model;
 import java.util.List;
 
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.SourceNotLoadedException;
 
 /**
  * Source profile element : a source profile can be a managed or personal one.
@@ -30,7 +32,7 @@ public abstract class SourceProfile {
 
 /* ************************** METHODS ******************************** */	
 	
-	public abstract List<Item> getItems(ExternalService externalService) throws ComposantNotLoadedException ;
+	public abstract List<Item> getItems(ExternalService externalService) throws ComposantNotLoadedException, SourceNotLoadedException ;
 
 /* ************************** ACCESSORS ******************************** */	
 
@@ -87,8 +89,13 @@ public abstract class SourceProfile {
 	/**
 	 * Returns source of this managed source profile (if loaded)
 	 * @return source
+	 * @throws SourceNotLoadedException 
 	 */
-	protected Source getSource() {
+	protected Source getSource() throws SourceNotLoadedException {
+		if (source == null){
+			// TODO (GB) on pourrait faire un loadSource ?
+			throw new SourceNotLoadedException("Category "+id+" is not loaded in profile");
+		}
 		return source;
 	}
 	
