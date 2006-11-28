@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -6,7 +6,7 @@
 	xmlns:t="http://myfaces.apache.org/tomahawk"
 	xmlns:e="http://commons.esup-portail.org">
 	<jsp:directive.page language="java"
-		contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" />
+		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
 	<link rel="stylesheet"
 		href="http://localhost:8080/esup-lecture/media/lecture.css"
 		media="screen" />
