@@ -29,7 +29,7 @@ public class SourceBean {
 	public SourceBean(){}
 	
 	public SourceBean(CustomSource customSource){
-		SourceProfile profile = customSource.getSourceProfile();
+		SourceProfile profile = customSource.getProfile();
 		
 		setName(profile.getName());
 		setId(profile.getId());

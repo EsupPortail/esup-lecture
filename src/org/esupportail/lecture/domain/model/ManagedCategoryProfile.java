@@ -186,6 +186,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param customManagedCategory customManagedCAtegory to update
 	 * @param portletService Access to portlet service
 	 * @throws ElementNotLoadedException 
+	 * @throws ElementNotLoadedException 
 	 */
 	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) throws ElementNotLoadedException {
 		ManagedCategory category = (ManagedCategory) getCategory();

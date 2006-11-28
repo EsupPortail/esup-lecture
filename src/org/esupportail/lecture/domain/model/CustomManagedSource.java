@@ -1,24 +1,40 @@
 package org.esupportail.lecture.domain.model;
 
+
+/**
+ * Customizations on a managedSource for a user Profile
+ * @author gbouteil
+ *
+ */
 public class CustomManagedSource extends CustomSource{
+	
+	/**
+	 * managedSourcePRofile refered by this
+	 */
+	ManagedSourceProfile sourceProfile;
 
-	private String profileId;
-	
-	protected CustomManagedSource(ManagedSourceProfile profile) {
-		super(profile);
-		profileId = profile.getId();
-		
+	/**
+	 * Constructor
+	 * @param profile profile of eleemnt refered by this
+	 * @param user owner of this custom element
+	 */
+	public CustomManagedSource(ManagedSourceProfile profile, UserProfile user) {
+		super(profile, user);
+		sourceProfile = profile;
 	}
 
-	
-	public void setSourceProfileID(String profileId) {
-		this.profileId = profileId;
-		
+	/**
+	 * @see org.esupportail.lecture.domain.model.CustomSource#getProfile()
+	 */
+	@Override
+	public SourceProfile getProfile() {
+		return sourceProfile;
 	}
-	
-	
-	public String getName() {
-		return getSourceProfile().getName();
-	}
+
 	
 }
+
+	
+
+	
+

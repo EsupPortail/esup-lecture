@@ -134,14 +134,14 @@ public class UserProfile {
 	 * @param customContext
 	 */
 	public void addCustomContext(CustomContext customContext){
-		customContexts.put(customContext.getContextId(),customContext);
+		customContexts.put(customContext.getElementId(),customContext);
 	}
 	
 	/**
 	 * @param customCategory
 	 */
 	public void addCustomManagedCategory(CustomManagedCategory customCategory){
-		String id = customCategory.getId();
+		String id = customCategory.getElementId();
 		customManagedCategories.put(id,customCategory);
 	}
 	
@@ -157,7 +157,7 @@ public class UserProfile {
 	 * @param customSource
 	 */
 	public void addCustomSource(CustomSource customSource){
-		customSources.put(customSource.getSourceProfileId(),customSource);
+		customSources.put(customSource.getElementId(),customSource);
 	}
 	
 	/**

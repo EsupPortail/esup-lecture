@@ -14,6 +14,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 
 
@@ -71,6 +72,7 @@ public class ManagedCategory extends Category {
 	 * But there is not any loading of source at this time
 	 * @param customManagedCategory customManagedCAtegory to update
 	 * @param portletService Access to portlet service
+	 * @throws ElementNotLoadedException 
 	 * @throws ElementNotLoadedException 
 	 */
 	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) throws ElementNotLoadedException {

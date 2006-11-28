@@ -12,11 +12,12 @@ import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 
 /**
- * Customizations on a managedCategory for a customContext
+ * Customizations on a managedCategory for a user Profile
  * @author gbouteil
  *
  */
@@ -30,13 +31,17 @@ public class CustomManagedCategory extends CustomCategory {
 	/**
 	 * The map of subscribed CustomManagedSource
 	 */
-	private Map<String,CustomManagedSource> subscriptions;
+	private Hashtable<String,CustomManagedSource> subscriptions;
 	// TODO (GB) mettre autre chose qu'une map ?
 	
 	/*
 	 ************************** INIT *********************************/	
 
 
+	/**
+	 * @param catId
+	 * @param user
+	 */
 	public CustomManagedCategory(String catId,UserProfile user){
 		super(catId,user);
 		subscriptions = new Hashtable<String,CustomManagedSource>();
@@ -45,10 +50,12 @@ public class CustomManagedCategory extends CustomCategory {
 	
 	/*
 	 ************************** METHODS *********************************/	
-	
 
-
-	public List<CustomSource> getSortedCustomSources(ExternalService externalService) throws ManagedCategoryProfileNotFoundException, ElementNotLoadedException{
+	/**
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources(org.esupportail.lecture.domain.ExternalService)
+	 */
+	@Override
+	public List<CustomSource> getSortedCustomSources(ExternalService externalService) throws CategoryProfileNotFoundException, ElementNotLoadedException{
 	// TODO (GB later) à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
 		
 		ManagedCategoryProfile profile = getProfile();
@@ -64,30 +71,38 @@ public class CustomManagedCategory extends CustomCategory {
 	}
 	
 
-	
 	/**
-	 * Add a custom source to this custom category if no exists after creating it.
-	 * @param profile the managed source profile associated to the customManagedSource
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#addManagedCustomSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
 	 */
+	@Override
 	public void addManagedCustomSource(ManagedSourceProfile managedSourceProfile) {
 		String profileId = managedSourceProfile.getId();
 		
 		if (!subscriptions.containsKey(profileId)){
-			CustomManagedSource customManagedSource = new CustomManagedSource(managedSourceProfile);
+			CustomManagedSource customManagedSource = new CustomManagedSource(managedSourceProfile, getUserProfile());
 			subscriptions.put(profileId,customManagedSource);
 			getUserProfile().addCustomSource(customManagedSource);
 		}
 	}
 	
 
+	/**
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#removeManagedCustomSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
+	 */
+	@Override
 	public void removeManagedCustomSource(ManagedSourceProfile profile) {
 		//		 TODO (GB) tester avec la BDD
 		subscriptions.remove(profile.getId());
 		getUserProfile().removeCustomSource(profile.getId());
+		// TODO (GB later) on purrait aussi le laisser dans le user profile
 		
 	}
 	
-	public ManagedCategoryProfile getProfile() throws ManagedCategoryProfileNotFoundException {
+	/**
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#getProfile()
+	 */
+	@Override
+	public ManagedCategoryProfile getProfile() throws CategoryProfileNotFoundException {
 		Channel channel = DomainTools.getChannel();
 		return channel.getManagedCategoryProfile(this.categoryId);
 	}
@@ -99,13 +114,6 @@ public class CustomManagedCategory extends CustomCategory {
 	 ************************** ACCESSORS *********************************/	
 
 
-	public String getName() throws ManagedCategoryProfileNotFoundException, CategoryNotLoadedException {
-		return getProfile().getName();
-	}
-
-	public String getContent() throws ManagedCategoryProfileNotFoundException, CategoryNotLoadedException {
-		return getProfile().getDescription();
-	}
 
 
 

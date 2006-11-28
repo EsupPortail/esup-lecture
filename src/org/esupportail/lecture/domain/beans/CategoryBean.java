@@ -3,6 +3,7 @@ package org.esupportail.lecture.domain.beans;
 import org.esupportail.lecture.domain.model.CategoryProfile;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 
 /**
@@ -32,7 +33,7 @@ public class CategoryBean {
 	 */
 	public CategoryBean(){}
 	
-	public CategoryBean(CustomCategory customCategory) throws ManagedCategoryProfileNotFoundException, CategoryNotLoadedException{
+	public CategoryBean(CustomCategory customCategory) throws CategoryProfileNotFoundException, CategoryNotLoadedException{
 		CategoryProfile profile = customCategory.getProfile();
 		
 		setName(profile.getName());

@@ -1,17 +1,15 @@
 package org.esupportail.lecture.domain.model;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
-import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
-
 
 
 /**
- * Customizations on a managedCategory for a customContext
+ * Customizations on a Category for a customContext
  * @author gbouteil
  *
  */
@@ -21,7 +19,7 @@ public abstract class CustomCategory implements CustomElement {
 	 ************************** PROPERTIES *********************************/	
 
 	/**
-	 * The userprofile parent (used by hibernate)
+	 * The userprofile parent 
 	 */
 	private UserProfile userProfile;
 
@@ -35,43 +33,108 @@ public abstract class CustomCategory implements CustomElement {
 	 */
 	boolean folded;
 	
+	/**
+	 * id used by database
+	 */
+	int id;
+	
+	/* 
+	 ************************** INIT **********************************/
+	
+	/**
+	 * Constructor
+	 * @param catId id of the category refered by this
+	 * @param user owner of this 
+	 */
+	public CustomCategory(String catId, UserProfile user) {
+		this.categoryId = catId;
+		this.userProfile = user;
+	}
+
+	/* 
+	 ************************** METHODS **********************************/
+
+
+	
+	/**
+	 * @param externalService
+	 * @return a list of customSource associated to this CustomCategory
+	 * @throws CategoryProfileNotFoundException
+	 * @throws CategoryNotLoadedException
+	 * @throws ElementNotLoadedException 
+	 */
+	public abstract List<CustomSource> getSortedCustomSources(ExternalService externalService) throws CategoryProfileNotFoundException, ElementNotLoadedException;
+
+	
+	/**
+	 * Add a ManagedCustomSource 
+	 * @param managedSourceProfile
+	 */
+	public abstract void addManagedCustomSource (ManagedSourceProfile managedSourceProfile) ;
+
+	/**
+	 * remove a ManagedCustomSource
+	 * @param managedSourceProfile
+	 */
+	public abstract void removeManagedCustomSource (ManagedSourceProfile managedSourceProfile) ;
+
+	/**
+	 * @return the categoryProfile associated with this customCategory
+	 * @throws CategoryProfileNotFoundException 
+	 */
+	public abstract CategoryProfile getProfile() throws CategoryProfileNotFoundException ;
+	
+	/**
+	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
+	 */
+	public String getName() throws CategoryProfileNotFoundException, CategoryNotLoadedException {
+		return getProfile().getName();
+	}
+	
+	
 	/* 
 	 ************************** ACCESSORS **********************************/
 	
-	public CustomCategory(String catId, UserProfile user) {
-		setId(catId);
-		setUserProfile(user);
-	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.model.CustomElement#getUserProfile()
+	 */
 	public UserProfile getUserProfile() {
 		return userProfile;
 	}
-	public void setUserProfile(UserProfile userProfile) {
-		this.userProfile = userProfile;
+	/**
+	 * @see org.esupportail.lecture.domain.model.CustomElement#getId()
+	 */
+	public int getId() {
+		return id;
 	}
-	public String getId() {
-		return categoryId;
+	/**
+	 * @see org.esupportail.lecture.domain.model.CustomElement#setId(int)
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
-	public void setId(String id) {
-		categoryId = id;
-	}
+	/**
+	 * @return true is the category is folded
+	 */
 	public boolean isFolded() {
 		return folded;
 	}
+	/** set if the categoryis folded or not
+	 * @param folded
+	 */
 	public void setFolded(boolean folded) {
 		this.folded = folded;
 	}
 	
-	
-	
-	
 	/**
-	 * @return the categoryProfile associated with this customCategory
-	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @see org.esupportail.lecture.domain.model.CustomElement#getElementId()
 	 */
-	public abstract CategoryProfile getProfile() throws ManagedCategoryProfileNotFoundException ;
+	public String getElementId() {
+		return categoryId;
+	}
 	
-	public abstract List<CustomSource> getSortedCustomSources(ExternalService externalService) throws ManagedCategoryProfileNotFoundException, ElementNotLoadedException;
-	
+
 	
 	
 }

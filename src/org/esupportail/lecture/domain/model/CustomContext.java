@@ -11,7 +11,6 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.ContextNotFoundException;
-import org.esupportail.lecture.exceptions.ErrorException;
 
 
 /**
@@ -92,30 +91,7 @@ public class CustomContext implements CustomElement {
 		return listCustomCategories;
 	}
 	
-	
-//	/** 
-//	 * Update data contained in this customContext by visibilty evaluation
-//	 * on managedCategories, in order to update list of customManagedCategories
-//	 * @param externalService
-//	 */
-//	private void update(ExternalService externalService) {
-//		
-//		getContext().updateCustomContext(this,externalService);
-//		// later :  Personnal Categories
-//		
-//		Iterator<CustomManagedCategory> iterator = subscriptions.values().iterator();
-//		while(iterator.hasNext()){
-//			CustomManagedCategory customManagedCategory = iterator.next();
-//			customManagedCategory.update(externalService);
-//		}	
-//	}
-	
-//	public List<ManagedCategoryProfile> getVisibleManagedCategoryProfile(ExternalService externalService) {
-//		
-//		return getContext().updateCustomContext(this,externalService);
-//		
-//	}
-	
+
 	/**
 	 * Add a custom category to this custom context if no exists after creating it.
 	 * @param profile the managed category profile associated to the customCategory
@@ -160,19 +136,14 @@ public class CustomContext implements CustomElement {
 		return getContext().getName();
 	}
 	
-//	public String getContent() {
-//		return getContext().getDescription();
-//	}
-
-	
 	/* 
 	 ************************** ACCESSORS **********************************/
 
 	/**
-	 * @return context
+	 * @return contextId
 	 * @see CustomContext#contextId
 	 */
-	public String getContextId() {
+	public String getElementId() {
 		return contextId;
 	}
 
@@ -211,6 +182,7 @@ public class CustomContext implements CustomElement {
 	public void setUserProfile(UserProfile userprofile) {
 		this.userProfile = userprofile;
 	}
+
 
 //	public Collection getSubscriptions() {
 //		return subscriptions;

@@ -19,6 +19,7 @@ import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.CustomCategoryNotFoundException;
@@ -117,10 +118,10 @@ public class DomainServiceImpl implements DomainService {
 		} catch (ElementNotLoadedException e) {
 			log.error("Context not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
 			throw new ServiceException(e);
-		} catch (ManagedCategoryProfileNotFoundException e) {
+		} catch (CategoryProfileNotFoundException e) {
 			log.error("ManagedCategoryProfile not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
 			throw new ServiceException(e);
-		}
+		} 
 		
 		// TODO (GB) mise à jour du DAO ?
 //		DomainTools.getDaoService().updateCustomContext(customContext);
@@ -159,7 +160,7 @@ public class DomainServiceImpl implements DomainService {
 		}catch(CustomCategoryNotFoundException e){
 			log.error("CustomCategory not found for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
 			throw new ServiceException(e);
-		} catch (ManagedCategoryProfileNotFoundException e){
+		} catch (CategoryProfileNotFoundException e){
 			log.error("ManagedCategoryProfile not found for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
 			throw new ServiceException(e);
 		} catch (CategoryNotLoadedException e) {	
