@@ -8,8 +8,7 @@ package org.esupportail.lecture.web.controllers;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.CategoryBean;
@@ -21,30 +20,16 @@ import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
-import org.esupportail.lecture.domain.FacadeService;
 import org.springframework.util.Assert;
-
 
 /**
  * @author : Raymond 
  */
-public class HomeController extends AbstractContextAwareController {
+public class HomeController extends twoPanesController {
 	/**
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(HomeController.class);
-	/**
-	 * Access to facade services (init by Spring)
-	 */
-	private FacadeService facadeService;
-	/**
-	 * default tree size 
-	 */
-	private int treeSize=20;
-	/**
-	 * is tree is visible or not
-	 */
-	private boolean treeVisible=true;
 	/**
 	 * Display mode for item (all | unread | unreadfirst)
 	 */
@@ -87,47 +72,6 @@ public class HomeController extends AbstractContextAwareController {
 		virtualSession = new VirtualSession();
 	}
 
-	/*
-	 * **************** Action and listener method ****************
-	 */	
-	/**
-	 * JSF action : change treesize
-	 * @param e JSF ActionEvent used to know which button is used 
-	 */
-	public void adjustTreeSize(ActionEvent e) {
-		if (log.isDebugEnabled()) {
-			log.debug("In adjustTreeSize");
-		}
-		FacesContext ctx = FacesContext.getCurrentInstance();
-		String id = e.getComponent().getClientId(ctx);
-		if (id.equals("home:leftSubview:treeSmallerButton")) {
-			if (treeSize > 10) {
-				treeSize-=5;
-			}
-		}
-		if (id.equals("home:leftSubview:treeLargerButton")) {
-			if (treeSize < 90) {
-				treeSize+=5;
-			}
-		}
-	}
-	
-	/**
-	 * JSF action : toogle from tree visible to not visible and not visible to visible
-	 * @return JSF from-outcome
-	 */
-	public String toggleTreeVisibility() {
-		if (log.isDebugEnabled()) {
-			log.debug("In toggleTreeVisibility");
-		}
-		if (isTreeVisible()) {
-			setTreeVisible(false);
-		} else {
-			setTreeVisible(true);
-		}
-		return "OK";
-	}
-	
 	/**
 	 * JSF action : toogle item from read to unread and unread to read
 	 * @return JSF from-outcome
@@ -141,10 +85,10 @@ public class HomeController extends AbstractContextAwareController {
 		}
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		if (item.isRead()) {
-			facadeService.marckItemAsUnread(user.getUid(), selectedCategory.getId(), item.getId());
+			getFacadeService().marckItemAsUnread(user.getUid(), selectedCategory.getId(), item.getId());
 		}
 		else {
-			facadeService.marckItemAsRead(user.getUid(), selectedCategory.getId(), item.getId());			
+			getFacadeService().marckItemAsRead(user.getUid(), selectedCategory.getId(), item.getId());			
 		}
 		item.setRead(!item.isRead());
 		return "OK";
@@ -188,13 +132,13 @@ public class HomeController extends AbstractContextAwareController {
 	@Override
 	public void afterPropertiesSet() {
 		super.afterPropertiesSet();
-		Assert.notNull(facadeService, 
+		Assert.notNull(getFacadeService(), 
 				"property facadeService of class " + this.getClass().getName() + " can not be null");
 		//init the user
-		String userId = facadeService.getConnectedUserId();
-		user = facadeService.getConnectedUser(userId);
+		String userId = getFacadeService().getConnectedUserId();
+		user = getFacadeService().getConnectedUser(userId);
 		//init the contextId
-		ContextId = facadeService.getCurrentContextId();
+		ContextId = getFacadeService().getCurrentContextId();
 	}
 	
 	/*
@@ -290,36 +234,6 @@ public class HomeController extends AbstractContextAwareController {
 	 */
 	
 	/**
-	 * For Spring injection of Service Class
-	 * @param facadeService facade og Spring Service Class
-	 */
-	public void setFacadeService(FacadeService facadeService) {
-		this.facadeService = facadeService;
-	}
-	
-	/**
-	 * @return if tree is visible or not
-	 */
-	public boolean isTreeVisible() {
-		return treeVisible;
-	}
-	
-	/**
-	 * set tree visibility to yes or no
-	 * @param treeVisible boolean value for tree visibility
-	 */
-	public void setTreeVisible(boolean treeVisible) {
-		this.treeVisible = treeVisible;
-	}
-	
-	/**
-	 * @return the size of left tree
-	 */
-	public int getTreeSize() {
-		return treeSize;
-	}
-	
-	/**
 	 * @return the list of items to dysplay for current selection (category/source) and displayMode
 	 */
 	public List<ItemWebBean> getItems() {
@@ -335,7 +249,7 @@ public class HomeController extends AbstractContextAwareController {
 				}
 				else{
 					if (log.isDebugEnabled()) log.debug("Put items in selected source");
-					List<ItemBean> items = facadeService.getItems(selectedSource.getId(), user.getUid());
+					List<ItemBean> items = getFacadeService().getItems(selectedSource.getId(), user.getUid());
 					ret = new ArrayList<ItemWebBean>();
 					if (items != null) {
 						Iterator<ItemBean> iter = items.iterator();
@@ -406,11 +320,11 @@ public class HomeController extends AbstractContextAwareController {
 				log.debug ("getContext() :  Context not yet loaded : loading...");
 			//We evalute the context and we put it in the virtual session
 			context = new ContextWebBean();
-			String contextId = facadeService.getCurrentContextId(); 
-			ContextBean contextBean = facadeService.getContext(user.getUid(), contextId);
+			String contextId = getFacadeService().getCurrentContextId(); 
+			ContextBean contextBean = getFacadeService().getContext(user.getUid(), contextId);
 			context.setName(contextBean.getName());
 			context.setId(contextBean.getId());
-			List<CategoryBean> categories = facadeService.getVisibleCategories(user.getUid(), ContextId);
+			List<CategoryBean> categories = getFacadeService().getVisibleCategories(user.getUid(), ContextId);
 			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
 			if (categories != null) {
 				Iterator<CategoryBean> iter = categories.iterator();
@@ -420,7 +334,7 @@ public class HomeController extends AbstractContextAwareController {
 					categoryWebBean.setId(categoryBean.getId());
 					categoryWebBean.setName(categoryBean.getName());
 					//find sources in this category
-					List<SourceBean> sources = facadeService.getVisibleSources(user.getUid(), categoryBean.getId());
+					List<SourceBean> sources = getFacadeService().getVisibleSources(user.getUid(), categoryBean.getId());
 					List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
 					if (sources != null) {
 						Iterator<SourceBean> iter2 = sources.iterator();

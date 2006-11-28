@@ -7,7 +7,6 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
-import org.esupportail.lecture.exceptions.FatalException;
 import org.esupportail.lecture.exceptions.ServiceException;
 
 /**
@@ -43,6 +42,7 @@ public interface DomainService {
 	/**
 	 * @param categoryId 
 	 * @param uid 
+	 * @param externalService 
 	 * @return List<SourceBean>
 	 * @see FacadeService#getVisibleSources(String, String)
 	 */
@@ -72,5 +72,14 @@ public interface DomainService {
 	 * @see FacadeService#marckItemAsUnread(String, String, String)
 	 */
 	void marckItemAsUnread(String uid, String sourceId,String itemId);
+	
+	/**
+	 * @param categoryId 
+	 * @param uid 
+	 * @param externalService 
+	 * @return List<SourceBean>
+	 * @see FacadeService#getAvailableSources(String, String)
+	 */
+	List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService externalService);
 
 }

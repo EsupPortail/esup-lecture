@@ -33,21 +33,25 @@
 		class="org.esupportail.lecture.domain.beans.SourceBean">
 		<property name="id" value="1" />
 		<property name="name" value="Cinéma" />
+		<property name="type" value="obliged" />
 	</bean>
 	<bean id="source2"
 		class="org.esupportail.lecture.domain.beans.SourceBean">
 		<property name="id" value="2" />
 		<property name="name" value="Théatre" />
+		<property name="type" value="obliged" />
 	</bean>
 	<bean id="source3"
 		class="org.esupportail.lecture.domain.beans.SourceBean">
 		<property name="id" value="3" />
 		<property name="name" value="Concert" />
+		<property name="type" value="subscribed" />
 	</bean>
 	<bean id="source4"
 		class="org.esupportail.lecture.domain.beans.SourceBean">
 		<property name="id" value="4" />
 		<property name="name" value="Danse" />
+		<property name="type" value="notSubscribed" />
 	</bean>
 
 	<bean id="item1"

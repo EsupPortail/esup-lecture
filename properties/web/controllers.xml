@@ -13,6 +13,13 @@
 		This file is referenced by /properties/applicationContext.xml.
 	-->
 
+	<bean id="editController"
+		class="org.esupportail.lecture.web.controllers.EditController"
+		parent="abstractContextAwareController">
+		<description>A bean to manage the edit page.</description>
+		<property name="facadeService" ref="facadeService"/>
+	</bean>
+
 	<bean id="homeController"
 		class="org.esupportail.lecture.web.controllers.HomeController"
 		parent="abstractContextAwareController">

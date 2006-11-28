@@ -93,6 +93,15 @@ public class FacadeService implements InitializingBean {
 	}
 	
 	/**
+	 * @param categoryId id of category
+	 * @param uid user ID
+	 * @return List of SourceBean, bean of a available source (obliged, subscribed or notSubscribed by a user) in a category
+	 */
+	public List<SourceBean> getAvailableSources(String uid,String categoryId) {
+		return domainService.getAvailableSources(uid, categoryId,externalService);
+	}
+	
+	/**
 	 * @param sourceId id of source
 	 * @param uid user ID
 	 * @return List of ItemBean in a source

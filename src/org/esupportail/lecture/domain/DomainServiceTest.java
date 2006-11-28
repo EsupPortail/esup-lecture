@@ -118,6 +118,12 @@ public class DomainServiceTest implements DomainService {
 		return getVisibleSources(categoryId, uid);
 	}
 
+	public List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService externalService) {
+		List<SourceBean> ret = null;
+		ret = sources;
+		return ret;
+	}
+
 
 
 }

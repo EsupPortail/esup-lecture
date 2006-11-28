@@ -22,6 +22,13 @@ public class ItemBean {
 	private boolean read;
 	
 
+	/**
+	 * Default constructor
+	 */
+	public ItemBean() {
+		super();
+	}
+
 	public ItemBean(Item it, CustomSource customSource) {
 		id = it.getId();
 		htmlContent = it.getHtmlContent();

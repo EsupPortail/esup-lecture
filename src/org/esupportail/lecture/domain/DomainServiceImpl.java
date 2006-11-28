@@ -272,5 +272,10 @@ public class DomainServiceImpl implements DomainService {
 		// It could be static without spring 
 		DomainServiceImpl.channel = channel;
 	}
+
+	public List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService externalService) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

@@ -12,25 +12,25 @@
 		<t:htmlTag value="div" id="left" forceId="true">
 			<!-- Title -->
 			<t:htmlTag value="p" styleClass="portlet-section-header">
-				<h:outputText value="#{homeController.context.name}"/>
+				<h:outputText value="#{editController.context.name} (EDIT)"/>
 			</t:htmlTag>
 			<!-- Categories -->
 			<t:htmlTag value="ul">
-				<t:dataList value="#{homeController.context.categories}" var="cat" layout="simple">
+				<t:dataList value="#{editController.context.categories}" var="cat" layout="simple">
 					<t:htmlTag value="li"
 						styleClass="#{cat.folded ? 'collapsed' : 'expanded' }">
-						<h:commandButton action="#{homeController.selectElement}"
+						<h:commandButton action="#{editController.selectElement}"
 							image="/media/moins.gif" alt="#{msgs['colapseCategory']}"
 							title="#{msgs['colapseCategory']}" rendered="#{!cat.folded}">
-							<t:updateActionListener property="#{homeController.sourceId}" value="0" />
-							<t:updateActionListener property="#{homeController.categoryId}"
+							<t:updateActionListener property="#{editController.sourceId}" value="0" />
+							<t:updateActionListener property="#{editController.categoryId}"
 								value="#{cat.id}" />
 						</h:commandButton>
-						<h:commandButton action="#{homeController.selectElement}"
+						<h:commandButton action="#{editController.selectElement}"
 							image="/media/plus.gif" alt="#{msgs['expandCategory']}"
 							title="#{msgs['expandCategory']}" rendered="#{cat.folded}">
-							<t:updateActionListener property="#{homeController.sourceId}" value="0" />
-							<t:updateActionListener property="#{homeController.categoryId}"
+							<t:updateActionListener property="#{editController.sourceId}" value="0" />
+							<t:updateActionListener property="#{editController.categoryId}"
 								value="#{cat.id}" />
 						</h:commandButton>
 						<h:outputText value="#{cat.name}" />
@@ -38,17 +38,17 @@
 							<!-- Souces -->
 							<t:dataList value="#{cat.sources}" var="src" layout="simple">
 								<t:htmlTag value="li">
-									<h:commandButton action="#{homeController.selectElement}"
+									<h:commandButton action="#{editController.selectElement}"
 										image="/media/puce.gif" alt="#{msgs['selectSource']}" title="#{msgs['selectSource']}"
-										rendered="#{!((homeController.context.selectedCategory.id == cat.id) and (cat.selectedSource.id == src.id))}">
-										<t:updateActionListener property="#{homeController.sourceId}"
+										rendered="#{!((editController.context.selectedCategory.id == cat.id) and (cat.selectedSource.id == src.id))}">
+										<t:updateActionListener property="#{editController.sourceId}"
 											value="#{src.id}" />
-										<t:updateActionListener property="#{homeController.categoryId}"
+										<t:updateActionListener property="#{editController.categoryId}"
 											value="#{cat.id}" />
 									</h:commandButton>
 									<h:graphicImage url="/media/puce.gif"
 										alt="#{msgs['currentSource']}" title="#{msgs['currentSource']}"
-										rendered="#{((homeController.context.selectedCategory.id == cat.id) and (cat.selectedSource.id == src.id))}" />
+										rendered="#{((editController.context.selectedCategory.id == cat.id) and (cat.selectedSource.id == src.id))}" />
 									<!-- TODO
 									<t:htmlTag value="span" styleClass="portlet-section-alternate"
 										rendered="#{src.withUnread}">
@@ -71,21 +71,21 @@
 		<t:htmlTag value="hr" />
 		<t:htmlTag value="div" id="menuLeft" forceId="true">
 			<t:htmlTag value="div" styleClass="menuTitle">
-				<h:commandButton id="editButton"
-					action="navigationEdit"
-					image="/media/edit.png" alt="#{msgs['edit']}"
-					title="#{msgs['edit']}" />
+				<h:commandButton id="homeButton"
+					action="navigationHome"
+					image="/media/go-home.png" alt="#{msgs['home']}"
+					title="#{msgs['home']}" />
 			</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuButton">
 				<t:htmlTag value="ul">
 					<t:htmlTag value="li">
 						<h:commandButton id="treeSmallerButton"
-							actionListener="#{homeController.adjustTreeSize}"
+							actionListener="#{editController.adjustTreeSize}"
 							image="/media/retract.gif" alt="#{msgs['treeSmaller']}" title="#{msgs['treeSmaller']}"/>
 					</t:htmlTag>
 					<t:htmlTag value="li">
 						<h:commandButton id="treeLargerButton"
-							actionListener="#{homeController.adjustTreeSize}"
+							actionListener="#{editController.adjustTreeSize}"
 							image="/media/extand.gif" alt="#{msgs['treeLarger']}" title="#{msgs['treeLarger']}"/>
 					</t:htmlTag>
 				</t:htmlTag>
