@@ -1,6 +1,6 @@
 package org.esupportail.lecture.domain.model;
 
-import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 
 /**
  * Class that contains computed features of a source :
@@ -9,7 +9,7 @@ import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
  * @author gbouteil
  *
  */
-public class ComputedManagedSourceFeatures extends ComputedManagedComposantFeatures {
+public class ComputedManagedSourceFeatures extends ComputedManagedElementFeatures {
 
 	/*
 	 *********************** PROPERTIES**************************************/ 
@@ -46,9 +46,9 @@ public class ComputedManagedSourceFeatures extends ComputedManagedComposantFeatu
 	 *********************** ACCESSORS **************************************/ 
 	/**
 	 * @return Returns the access.
-	 * @throws ComposantNotLoadedException 
+	 * @throws ElementNotLoadedException 
 	 */
-	protected Accessibility getAccess() throws ComposantNotLoadedException {
+	protected Accessibility getAccess() throws ElementNotLoadedException {
 		if (!super.isComputed()){
 			super.compute();
 		}

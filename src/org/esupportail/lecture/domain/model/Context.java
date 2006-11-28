@@ -15,7 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 
 /**
@@ -105,9 +105,9 @@ public class Context {
 	 * And update customContext according to visibilities
 	 * @param customContext customContext to upadte
 	 * @param externalService access to portlet service
-	 * @throws ComposantNotLoadedException 
+	 * @throws ElementNotLoadedException 
 	 */
-	public void updateCustom(CustomContext customContext, ExternalService externalService) throws ComposantNotLoadedException {
+	public void updateCustom(CustomContext customContext, ExternalService externalService) throws ElementNotLoadedException {
 		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet){

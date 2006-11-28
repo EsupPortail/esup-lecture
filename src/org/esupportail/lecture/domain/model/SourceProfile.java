@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.SourceNotLoadedException;
 
 /**
@@ -32,7 +32,7 @@ public abstract class SourceProfile {
 
 /* ************************** METHODS ******************************** */	
 	
-	public abstract List<Item> getItems(ExternalService externalService) throws ComposantNotLoadedException, SourceNotLoadedException ;
+	public abstract List<Item> getItems(ExternalService externalService) throws ElementNotLoadedException, SourceNotLoadedException ;
 
 /* ************************** ACCESSORS ******************************** */	
 

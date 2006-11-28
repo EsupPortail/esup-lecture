@@ -1,15 +1,15 @@
 package org.esupportail.lecture.domain.model;
 
-import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 
 /**
- * Class that contains computed features of a composant :
- * It merges features (visibility,tll) between managedComposantProfile
- * and its managedComposant
+ * Class that contains computed features of a element :
+ * It merges features (visibility,tll) between managedElementProfile
+ * and its managedElement
  * @author gbouteil
  *
  */
-public abstract class ComputedManagedComposantFeatures {
+public abstract class ComputedManagedElementFeatures {
 
 	/*
 	 *********************** PROPERTIES**************************************/ 
@@ -28,9 +28,9 @@ public abstract class ComputedManagedComposantFeatures {
 	private boolean isComputed = false;
 	
 	/**
-	 * Managed composant profile concerned by these features
+	 * Managed element profile concerned by these features
 	 */
-	private ManagedComposantProfile mcp;
+	private ManagedElementProfile mcp;
 	
 	
 	/*
@@ -40,7 +40,7 @@ public abstract class ComputedManagedComposantFeatures {
 	 * Constructor
 	 * @param mcp Managed category profile concerned by these features
 	 */
-	protected ComputedManagedComposantFeatures(ManagedComposantProfile mcp){
+	protected ComputedManagedElementFeatures(ManagedElementProfile mcp){
 		this.mcp = mcp;
 	}
 	
@@ -50,9 +50,9 @@ public abstract class ComputedManagedComposantFeatures {
 	 *********************** METHODS **************************************/
 	/**
 	 * Compute features
-	 * @throws ComposantNotLoadedException 
+	 * @throws ElementNotLoadedException 
 	 */
-	protected void compute() throws ComposantNotLoadedException {
+	protected void compute() throws ElementNotLoadedException {
 		mcp.computeFeatures();
 		isComputed = true;
 	}
@@ -60,7 +60,7 @@ public abstract class ComputedManagedComposantFeatures {
 	
 	/**
 	 * Update features simply
-	 * It is called by the associated managed composant profile when it concretly computes features
+	 * It is called by the associated managed element profile when it concretly computes features
 	 * @param visibility
 	 */
 	protected void update( VisibilitySets visibility) {
@@ -88,9 +88,9 @@ public abstract class ComputedManagedComposantFeatures {
 		
 	/**
 	 * @return Returns the visibility.
-	 * @throws ComposantNotLoadedException 
+	 * @throws ElementNotLoadedException 
 	 */
-	protected VisibilitySets getVisibility() throws ComposantNotLoadedException {
+	protected VisibilitySets getVisibility() throws ElementNotLoadedException {
 		if (!isComputed){
 			compute();
 		}

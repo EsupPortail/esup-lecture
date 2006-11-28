@@ -7,7 +7,7 @@ package org.esupportail.lecture.domain.model;
  * @author gbouteil
  *
  */
-public class ComputedManagedCategoryFeatures extends ComputedManagedComposantFeatures {
+public class ComputedManagedCategoryFeatures extends ComputedManagedElementFeatures {
 	
 	/*
 	 *********************** PROPERTIES**************************************/ 

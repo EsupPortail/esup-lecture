@@ -14,7 +14,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 
 
 
@@ -71,9 +71,9 @@ public class ManagedCategory extends Category {
 	 * But there is not any loading of source at this time
 	 * @param customManagedCategory customManagedCAtegory to update
 	 * @param portletService Access to portlet service
-	 * @throws ComposantNotLoadedException 
+	 * @throws ElementNotLoadedException 
 	 */
-	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) throws ComposantNotLoadedException {
+	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) throws ElementNotLoadedException {
 		Iterator iterator = getSourceProfilesHash().values().iterator();
 		
 		while (iterator.hasNext()) {
@@ -145,26 +145,26 @@ public class ManagedCategory extends Category {
 
 //	/** 
 //	 * @uml.property name="managedChildren"
-//	 * @uml.associationEnd multiplicity="(0 -1)" aggregation="composite" inverse="managedCategory:org.esupportail.lecture.domain.model.ManagedComposantProfile"
+//	 * @uml.associationEnd multiplicity="(0 -1)" aggregation="composite" inverse="managedCategory:org.esupportail.lecture.domain.model.ManagedElementProfile"
 //	 */
-//	private Collection managedComposantProfile;
+//	private Collection managedElementProfile;
 //
 //	/** 
 //	 * Getter of the property <tt>managedChildren</tt>
-//	 * @return  Returns the managedComposantProfile.
+//	 * @return  Returns the managedElementProfile.
 //	 * @uml.property  name="managedChildren"
 //	 */
 //	protected Collection getManagedChildren() {
-//		return managedComposantProfile;
+//		return managedElementProfile;
 //	}
 //
 //	/** 
 //	 * Setter of the property <tt>managedChildren</tt>
-//	 * @param managedChildren  The managedComposantProfile to set.
+//	 * @param managedChildren  The managedElementProfile to set.
 //	 * @uml.property  name="managedChildren"
 //	 */
 //	protected void setManagedChildren(Collection managedChildren) {
-//		managedComposantProfile = managedChildren;
+//		managedElementProfile = managedChildren;
 //	}
 
 		

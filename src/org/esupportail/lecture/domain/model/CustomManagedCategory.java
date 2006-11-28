@@ -12,7 +12,7 @@ import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 
 /**
@@ -48,7 +48,7 @@ public class CustomManagedCategory extends CustomCategory {
 	
 
 
-	public List<CustomSource> getSortedCustomSources(ExternalService externalService) throws ManagedCategoryProfileNotFoundException, ComposantNotLoadedException{
+	public List<CustomSource> getSortedCustomSources(ExternalService externalService) throws ManagedCategoryProfileNotFoundException, ElementNotLoadedException{
 	// TODO (GB later) à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
 		
 		ManagedCategoryProfile profile = getProfile();

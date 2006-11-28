@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.SourceNotLoadedException;
 
 public abstract class CustomSource implements CustomElement {
@@ -42,7 +42,7 @@ public abstract class CustomSource implements CustomElement {
 		return sourceProfile.getSource().getXsltURL();
 	}
 	
-	public List<Item> getItems(ExternalService externalService) throws ComposantNotLoadedException, SourceNotLoadedException {
+	public List<Item> getItems(ExternalService externalService) throws ElementNotLoadedException, SourceNotLoadedException {
 		return sourceProfile.getItems(externalService);
 	}
 	public void setItemAsRead(String itemId) {

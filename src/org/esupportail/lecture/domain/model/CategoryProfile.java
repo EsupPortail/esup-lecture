@@ -63,7 +63,7 @@ public abstract class CategoryProfile {
 	 * @return name
 	 * @throws CategoryNotLoadedException 
 	 * @see CategoryProfile#name
-	 * @see ComposantProfile#getName()
+	 * @see ElementProfile#getName()
 	 */
 	public String getName() throws CategoryNotLoadedException {
 		
@@ -90,7 +90,7 @@ public abstract class CategoryProfile {
 	/**
 	 * @param name
 	 * @see CategoryProfile#name
-	 * @see ComposantProfile#setName(String)
+	 * @see ElementProfile#setName(String)
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -99,7 +99,7 @@ public abstract class CategoryProfile {
 	/**
 	 * @return id
 	 * @see CategoryProfile#id
-	 * @see ComposantProfile#getId()
+	 * @see ElementProfile#getId()
 	 */
 	public String getId() {
 		return id;
@@ -108,7 +108,7 @@ public abstract class CategoryProfile {
 	/**
 	 * @param id
 	 * @see CategoryProfile#id
-	 * @see ComposantProfile#setId(String)
+	 * @see ElementProfile#setId(String)
 	 */
 	public void setId(String id) {
 		this.id = id;

@@ -243,7 +243,7 @@ public class Channel implements InitializingBean {
 	/**
 	 * Initialize every channel properties that are set up by loading mapping file
 	 */
-	protected void resetMappingFileProperties(){
+	private void resetMappingFileProperties(){
 		if (log.isDebugEnabled()){
 			log.debug("resetMappingFileProperties()");
 		}
@@ -322,10 +322,9 @@ public class Channel implements InitializingBean {
 	 * @param m the managed category profile
 	 * @see Channel#managedCategoryProfilesHash
 	 */
-	public void addManagedCategoryProfile(ManagedCategoryProfile m) {
+	protected void addManagedCategoryProfile(ManagedCategoryProfile m) {
 		this.managedCategoryProfilesHash.put(m.getId(),m);
 	}
-	
 	
 	/**
 	 * Add a mapping to the list of mappings defined in the channel.
@@ -335,13 +334,6 @@ public class Channel implements InitializingBean {
 	protected void addMapping(Mapping m){
 		this.mappingList.add(m);
 	}
-	
-//	public Hashtable<String,Mapping> getMappingHashByDtd() {
-//		return mappingHashByDtd;
-//	}
-//	public void setMappingHashByDtd(Hashtable<String,Mapping> mappingHashByDtd) {
-//		this.mappingHashByDtd = mappingHashByDtd;
-//	}
 	
 	/**
 	 * Add a mapping to the hash of mappings indexed by its dtd, defined in the channel
@@ -415,7 +407,7 @@ public class Channel implements InitializingBean {
 	 * @param m
 	 * @see Channel#mappingHashBySourceURL
 	 */
-	public void addMappingBySourceURL(Mapping m) {
+	protected void addMappingBySourceURL(Mapping m) {
 		this.mappingHashBySourceURL.put(m.getSourceURL(), m);
 	}
 

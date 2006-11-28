@@ -415,6 +415,18 @@ public abstract class Source implements Serializable {
 		isXsltComputed = false;
 	}
 
+	public HashMap<String, String> getXPathNameSpaces() {
+		if (!isXsltComputed){
+			computeXslt();
+		}
+		return XPathNameSpaces;
+	}
+
+	public void setXPathNameSpaces(HashMap<String, String> pathNameSpaces) {
+		XPathNameSpaces = pathNameSpaces;
+		isXsltComputed = false;
+	}
+	
 	/**
 	 * @return the Content of source
 	 */
@@ -440,4 +452,6 @@ public abstract class Source implements Serializable {
 	public void setURL(String url) {
 		URL = url;
 	}
+
+
 }

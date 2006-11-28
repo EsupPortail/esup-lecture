@@ -13,16 +13,16 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 
 /**
  * Managed category profile element.
  * @author gbouteil
  * @see org.esupportail.lecture.domain.model.CategoryProfile
- * @see org.esupportail.lecture.domain.model.ManagedComposantProfile
+ * @see org.esupportail.lecture.domain.model.ManagedElementProfile
  *
  */
-public class ManagedCategoryProfile extends CategoryProfile implements ManagedComposantProfile {
+public class ManagedCategoryProfile extends CategoryProfile implements ManagedElementProfile {
 
 	/*
 	 ************************** PROPERTIES ******************************** */	
@@ -105,13 +105,13 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 //	 * @param externalService
 //	 * @return
 //	 */
-	public void updateCustomContext(CustomContext customContext,ExternalService externalService) throws ComposantNotLoadedException{
+	public void updateCustomContext(CustomContext customContext,ExternalService externalService) throws ElementNotLoadedException{
 		loadCategory(externalService);
 		setUpCustomContextVisibility(customContext, externalService);
 		
 	}
 
-	private void loadCategory(ExternalService externalService) throws ComposantNotLoadedException {
+	private void loadCategory(ExternalService externalService) throws ElementNotLoadedException {
 		if(getAccess() == Accessibility.PUBLIC) {
 			setCategory(DomainTools.getDaoService().getManagedCategory(this)); 
 			
@@ -129,9 +129,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * @param externalService
 	 * @param customContext
 	 * @return true if the mcp is visible by the user of the customContext, else return false
-	 * @throws ComposantNotLoadedException 
+	 * @throws ElementNotLoadedException 
 	 */
-	private boolean setUpCustomContextVisibility(CustomContext customContext, ExternalService externalService) throws ComposantNotLoadedException {
+	private boolean setUpCustomContextVisibility(CustomContext customContext, ExternalService externalService) throws ElementNotLoadedException {
 		/*
 		 * Algo pour gerer les customCategories :
 		 * ------------------------------------
@@ -185,9 +185,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	 * But there is not any loading of source at this time
 	 * @param customManagedCategory customManagedCAtegory to update
 	 * @param portletService Access to portlet service
-	 * @throws ComposantNotLoadedException 
+	 * @throws ElementNotLoadedException 
 	 */
-	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) throws ComposantNotLoadedException {
+	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) throws ElementNotLoadedException {
 		ManagedCategory category = (ManagedCategory) getCategory();
 		category.updateCustom(customManagedCategory, externalService);
 	}
@@ -195,7 +195,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	
 	/**
 	 * @throws CategoryNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#computeActiveFeatures()
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#computeActiveFeatures()
 	 */
 	public void computeFeatures() throws CategoryNotLoadedException {
 		
@@ -266,7 +266,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	/**
 	 * @return access
 	 * @see ManagedCategoryProfile#access
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getAccess()
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getAccess()
 	 */
 	public Accessibility getAccess() {
 		return access;
@@ -274,7 +274,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	
 	/**
 	 * @see ManagedCategoryProfile#access
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setAccess(org.esupportail.lecture.domain.model.Accessibility)
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setAccess(org.esupportail.lecture.domain.model.Accessibility)
 	 */
 	public void setAccess(Accessibility access) {
 		this.access = access;
@@ -292,17 +292,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	
 	/**
 	 * @return Visibility
-	 * @throws ComposantNotLoadedException 
+	 * @throws ElementNotLoadedException 
 	 * @see ManagedCategoryProfile#visibility
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibility()
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
 	 */
-	public VisibilitySets getVisibility() throws ComposantNotLoadedException {
+	public VisibilitySets getVisibility() throws ElementNotLoadedException {
 		return computedFeatures.getVisibility();
 	}
 	
 	/**
 	 * @see ManagedCategoryProfile#visibility
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibility(org.esupportail.lecture.domain.model.VisibilitySets)
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibility(org.esupportail.lecture.domain.model.VisibilitySets)
 	 */
 	public void setVisibility(VisibilitySets visibility) {
 		this.visibility = visibility;
@@ -311,15 +311,15 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 
 	/**
 	 * @return allowed visibility group 
-	 * @throws ComposantNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAllowed()
+	 * @throws ElementNotLoadedException 
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAllowed()
 	 */
-	public DefinitionSets getVisibilityAllowed() throws ComposantNotLoadedException {
+	public DefinitionSets getVisibilityAllowed() throws ElementNotLoadedException {
 		return getVisibility().getAllowed();
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
 	public void setVisibilityAllowed(DefinitionSets d) {
 		this.visibility.setAllowed(d);
@@ -328,15 +328,15 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 
 	/** 
 	 * @return autoSubscribed group visibility
-	 * @throws ComposantNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityAutoSubscribed()
+	 * @throws ElementNotLoadedException 
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAutoSubscribed()
 	 */
-	public DefinitionSets getVisibilityAutoSubscribed() throws ComposantNotLoadedException {
+	public DefinitionSets getVisibilityAutoSubscribed() throws ElementNotLoadedException {
 		return getVisibility().getAutoSubscribed();
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
 	public void setVisibilityAutoSubcribed(DefinitionSets d) {
 		this.visibility.setAutoSubscribed(d);
@@ -345,16 +345,16 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	
 	/**
 	 * @return obliged group visibility
-	 * @throws ComposantNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getVisibilityObliged()
+	 * @throws ElementNotLoadedException 
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityObliged()
 	 */
-	public DefinitionSets getVisibilityObliged() throws ComposantNotLoadedException {
+	public DefinitionSets getVisibilityObliged() throws ElementNotLoadedException {
 		return getVisibility().getObliged();
 		
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
 	public void setVisibilityObliged(DefinitionSets d) {
 		this.visibility.setObliged(d);
@@ -363,9 +363,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	
 	/**
 	 * Returns ttl
-	 * @throws ComposantNotLoadedException 
+	 * @throws ElementNotLoadedException 
 	 * @see ManagedCategoryProfile#ttl
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#getTtl()
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getTtl()
 	 */
 	public int getTtl(){
 		return ttl;
@@ -373,7 +373,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedCo
 	
 	/**
 	 * @see ManagedCategoryProfile#ttl
-	 * @see org.esupportail.lecture.domain.model.ManagedComposantProfile#setTtl(int)
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setTtl(int)
 	 */
 	public void setTtl(int ttl) {
 		this.ttl = ttl;

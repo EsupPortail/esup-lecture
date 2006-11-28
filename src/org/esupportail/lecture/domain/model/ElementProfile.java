@@ -6,35 +6,35 @@
 package org.esupportail.lecture.domain.model;
 
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 
 
 /**
- * Composant profile element
- * A composant profile can be a source or a category profile.
+ * Element profile 
+ * An element profile can be a source or a category profile.
  * @author gbouteil
  *
  */
-public interface ComposantProfile {
+public interface ElementProfile {
 
 /* ************************** ACCESSORS ******************************** */	
 	/**
-	 * Returns the id of the composant profile (same id as the corresponding composant)
+	 * Returns the id of the element profile (same id as the corresponding element)
 	 * @return String id
 	 */
 	public String getId();
 	/**
-	 * Sets the id of the composant profile (same id as the corresponding composant)
+	 * Sets the id of the element profile (same id as the corresponding element)
 	 * @param id
 	 */
 	public void setId(String id);
 	/**
-	 * Returns the name of the composant profile (should be the same as the correcponding composant)
+	 * Returns the name of the element profile (should be the same as the correcponding element)
 	 * @return String name
 	 */
-	public String getName()throws ComposantNotLoadedException;
+	public String getName()throws ElementNotLoadedException;
 	/**
-	 * Sets the name of the composant profile (should be the same as the correcponding composant)
+	 * Sets the name of the element profile (should be the same as the correcponding element)
 	 * @param name
 	 */
 	public void setName(String name);

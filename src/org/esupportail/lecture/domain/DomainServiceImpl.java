@@ -19,7 +19,7 @@ import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.CustomSourceNotFoundException;
@@ -114,7 +114,7 @@ public class DomainServiceImpl implements DomainService {
 		} catch (ContextNotFoundException e){
 			log.error("Context not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
 			throw new ServiceException(e);
-		} catch (ComposantNotLoadedException e) {
+		} catch (ElementNotLoadedException e) {
 			log.error("Context not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
 			throw new ServiceException(e);
 		} catch (ManagedCategoryProfileNotFoundException e) {
@@ -165,7 +165,7 @@ public class DomainServiceImpl implements DomainService {
 		} catch (CategoryNotLoadedException e) {	
 			log.error("Category is not loaded for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
 			throw new ServiceException(e);
-		} catch (ComposantNotLoadedException e) {
+		} catch (ElementNotLoadedException e) {
 			log.error("Composant is not loaded for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
 			throw new ServiceException(e);
 		}
@@ -196,7 +196,7 @@ public class DomainServiceImpl implements DomainService {
 			List<Item> items;
 			try {
 				items = customSource.getItems(externalService);
-			} catch (ComposantNotLoadedException e) {
+			} catch (ElementNotLoadedException e) {
 				log.error("Composant is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
 				throw new ServiceException(e);
 			} catch (SourceNotLoadedException e) {

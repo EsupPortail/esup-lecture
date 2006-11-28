@@ -9,7 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.ComposantNotLoadedException;
+import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.ErrorException;
 
@@ -76,9 +76,9 @@ public class CustomContext implements CustomElement {
 	 * @param externalService access to externalService
 	 * @return list of customCategories defined in this customContext
 	 * @throws ContextNotFoundException 
-	 * @throws ComposantNotLoadedException 
+	 * @throws ElementNotLoadedException 
 	 */
-	public List<CustomCategory> getSortedCustomCategories(ExternalService externalService) throws ContextNotFoundException, ComposantNotLoadedException{
+	public List<CustomCategory> getSortedCustomCategories(ExternalService externalService) throws ContextNotFoundException, ElementNotLoadedException{
 		// TODO (GB later) rewrite with custom personnal category (+ sorted display)
 	
 		/* update this customContext with context */
