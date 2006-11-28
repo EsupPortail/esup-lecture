@@ -166,7 +166,7 @@ public class DomainServiceImpl implements DomainService {
 			log.error("Category is not loaded for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
 			throw new ServiceException(e);
 		} catch (ElementNotLoadedException e) {
-			log.error("Composant is not loaded for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
+			log.error("Element is not loaded for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
 			throw new ServiceException(e);
 		}
 		return listSourceBean;
