@@ -11,7 +11,7 @@ public class CustomManagedSource extends CustomSource{
 	/**
 	 * managedSourcePRofile refered by this
 	 */
-	ManagedSourceProfile sourceProfile;
+	private ManagedSourceProfile sourceProfile;
 
 	/**
 	 * Constructor

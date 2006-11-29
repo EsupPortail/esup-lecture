@@ -13,7 +13,7 @@ package org.esupportail.lecture.domain.model;
  * @author gbouteil
  *
  */ 
-public class GlobalSource extends org.esupportail.lecture.domain.model.Source {
+public class GlobalSource extends Source {
 
 /* ************************** PROPERTIES ******************************** */	
 

@@ -26,17 +26,17 @@ public abstract class CustomCategory implements CustomElement {
 	/**
 	 * The Id of this CustomCategory
 	 */
-	String categoryId;
+	private String categoryId;
 	
 	/**
 	 * Flag : store if CustomCategory is folded or not
 	 */
-	boolean folded;
+	private boolean folded;
 	
 	/**
 	 * id used by database
 	 */
-	int id;
+	private int id;
 	
 	/* 
 	 ************************** INIT **********************************/

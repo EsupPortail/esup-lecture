@@ -104,7 +104,7 @@ public class CustomManagedCategory extends CustomCategory {
 	@Override
 	public ManagedCategoryProfile getProfile() throws CategoryProfileNotFoundException {
 		Channel channel = DomainTools.getChannel();
-		return channel.getManagedCategoryProfile(this.categoryId);
+		return channel.getManagedCategoryProfile(getElementId());
 	}
 	
 

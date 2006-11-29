@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<slime:DocumentModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:slime="http://de.mvmsoft.slimeuml.model.slimemodel">
+  <children xsi:type="slime:ClassModel" x="534" y="665" width="188" height="411" incomingConnections="//@children.1/@outgoingConnections.1" name="ManagedCategoryProfile" classText="ManagedCategoryProfile" methodText="+ ManagedCategoryProfile()&#xA;+ updateCustomContext()&#xA;- loadCategory()&#xA;- setUpCustomContextVisibility()&#xA;+ updateCustom()&#xA;+ computeFeatures()&#xA;+ getUrlCategory()&#xA;+ setUrlCategory()&#xA;# getTrustCategory()&#xA;# setTrustCategory()&#xA;+ getAccess()&#xA;+ setAccess()&#xA;+ getVisibility()&#xA;+ setVisibility()&#xA;+ getVisibilityAllowed()&#xA;+ setVisibilityAllowed()&#xA;+ getVisibilityAutoSubscribed()&#xA;+ setVisibilityAutoSubcribed()&#xA;+ getVisibilityObliged()&#xA;+ setVisibilityObliged()&#xA;+ getTtl()&#xA;+ setTtl()&#xA;# addContext()" qualifiedClassName="org.esupportail.lecture.domain.model.ManagedCategoryProfile" javaProjectName="esup-lecture" type="=esup-lecture/src&lt;org.esupportail.lecture.domain.model{ManagedCategoryProfile.java[ManagedCategoryProfile">
+    <methodFilters>+ void ManagedCategoryProfile()</methodFilters>
+    <methodFilters>+ void updateCustomContext(CustomContext customContext, ExternalService externalService)</methodFilters>
+    <methodFilters>- void loadCategory(ExternalService externalService)</methodFilters>
+    <methodFilters>- boolean setUpCustomContextVisibility(CustomContext customContext, ExternalService externalService)</methodFilters>
+    <methodFilters>+ void updateCustom(CustomManagedCategory customManagedCategory, ExternalService externalService)</methodFilters>
+    <methodFilters>+ void computeFeatures()</methodFilters>
+    <methodFilters>+ String getUrlCategory()</methodFilters>
+    <methodFilters>+ void setUrlCategory(String urlCategory)</methodFilters>
+    <methodFilters># boolean getTrustCategory()</methodFilters>
+    <methodFilters># void setTrustCategory(boolean trustCategory)</methodFilters>
+    <methodFilters>+ Accessibility getAccess()</methodFilters>
+    <methodFilters>+ void setAccess(Accessibility access)</methodFilters>
+    <methodFilters>+ VisibilitySets getVisibility()</methodFilters>
+    <methodFilters>+ void setVisibility(VisibilitySets visibility)</methodFilters>
+    <methodFilters>+ DefinitionSets getVisibilityAllowed()</methodFilters>
+    <methodFilters>+ void setVisibilityAllowed(DefinitionSets d)</methodFilters>
+    <methodFilters>+ DefinitionSets getVisibilityAutoSubscribed()</methodFilters>
+    <methodFilters>+ void setVisibilityAutoSubcribed(DefinitionSets d)</methodFilters>
+    <methodFilters>+ DefinitionSets getVisibilityObliged()</methodFilters>
+    <methodFilters>+ void setVisibilityObliged(DefinitionSets d)</methodFilters>
+    <methodFilters>+ int getTtl()</methodFilters>
+    <methodFilters>+ void setTtl(int ttl)</methodFilters>
+    <methodFilters># void addContext(Context c)</methodFilters>
+    <attributeFilters># Log log</attributeFilters>
+    <attributeFilters>- String urlCategory</attributeFilters>
+    <attributeFilters>- Accessibility access</attributeFilters>
+    <attributeFilters>- boolean trustCategory</attributeFilters>
+    <attributeFilters>- ComputedManagedCategoryFeatures computedFeatures</attributeFilters>
+    <attributeFilters>- VisibilitySets visibility</attributeFilters>
+    <attributeFilters>- int ttl</attributeFilters>
+    <attributeFilters>- Set&lt;Context> contextsSet</attributeFilters>
+  </children>
+  <children xsi:type="slime:ClassModel" x="39" y="616" width="450" height="156" name="CustomManagedCategory" classText="CustomManagedCategory" methodText="+ void CustomManagedCategory(String catId, UserProfile user)&#xA;+ List&lt;CustomSource> getSortedCustomSources(ExternalService externalService)&#xA;+ void addManagedCustomSource(ManagedSourceProfile managedSourceProfile)&#xA;+ void removeManagedCustomSource(ManagedSourceProfile profile)&#xA;+ ManagedCategoryProfile getProfile()" attributeText="# Log log&#xA;- Hashtable&lt;String,CustomManagedSource> subscriptions" qualifiedClassName="org.esupportail.lecture.domain.model.CustomManagedCategory" javaProjectName="esup-lecture" style="2023" type="=esup-lecture/src&lt;org.esupportail.lecture.domain.model{CustomManagedCategory.java[CustomManagedCategory">
+    <outgoingConnections xsi:type="slime:ClassConnectionModel" target="//@children.2" type="GENERALIZATION" toNavigable="true"/>
+    <outgoingConnections xsi:type="slime:ClassConnectionModel" target="//@children.0" type="DEPENDENCY" toNavigable="true"/>
+  </children>
+  <children xsi:type="slime:ClassModel" x="15" y="248" width="469" height="291" incomingConnections="//@children.1/@outgoingConnections.0" name="CustomCategory" classText="CustomCategory" methodText="+ void CustomCategory(String catId, UserProfile user)&#xA;+ List&lt;CustomSource> getSortedCustomSources(ExternalService externalService)&#xA;+ void addManagedCustomSource(ManagedSourceProfile managedSourceProfile)&#xA;+ void removeManagedCustomSource(ManagedSourceProfile managedSourceProfile)&#xA;+ CategoryProfile getProfile()&#xA;+ String getName()&#xA;+ UserProfile getUserProfile()&#xA;+ int getId()&#xA;+ void setId(int id)&#xA;+ boolean isFolded()&#xA;+ void setFolded(boolean folded)&#xA;+ String getElementId()" attributeText="- UserProfile userProfile&#xA;- String categoryId&#xA;- boolean folded&#xA;- int id" qualifiedClassName="org.esupportail.lecture.domain.model.CustomCategory" javaProjectName="esup-lecture" style="2023" type="=esup-lecture/src&lt;org.esupportail.lecture.domain.model{CustomCategory.java[CustomCategory">
+    <outgoingConnections xsi:type="slime:ClassConnectionModel" target="//@children.4" type="REALIZATION" toNavigable="true"/>
+  </children>
+  <children xsi:type="slime:ClassModel" x="515" y="248" width="471" height="291" name="CustomContext" classText="CustomContext" methodText="+ void CustomContext(String contextId, UserProfile user)&#xA;+ List&lt;CustomCategory> getSortedCustomCategories(ExternalService externalService)&#xA;+ void addCustomManagedCategory(ManagedCategoryProfile profile)&#xA;+ void removeCustomManagedCategory(ManagedCategoryProfile profile)&#xA;+ Context getContext()&#xA;+ String getName()&#xA;+ String getElementId()&#xA;+ int getId()&#xA;+ void setId(int id)&#xA;+ UserProfile getUserProfile()" attributeText="# Log log&#xA;- String contextId&#xA;- Context context&#xA;- Map&lt;String,CustomManagedCategory> subscriptions&#xA;- UserProfile userProfile&#xA;- int Id" qualifiedClassName="org.esupportail.lecture.domain.model.CustomContext" javaProjectName="esup-lecture" style="2023" type="=esup-lecture/src&lt;org.esupportail.lecture.domain.model{CustomContext.java[CustomContext">
+    <outgoingConnections xsi:type="slime:ClassConnectionModel" target="//@children.4" type="REALIZATION" toNavigable="true"/>
+  </children>
+  <children xsi:type="slime:ClassModel" x="682" y="38" width="106" height="141" incomingConnections="//@children.2/@outgoingConnections.0 //@children.3/@outgoingConnections.0 //@children.5/@outgoingConnections.0" name="CustomElement" classText="CustomElement" methodText="+ getName()&#xA;+ getUserProfile()&#xA;+ getElementId()&#xA;+ getId()&#xA;+ setId()" qualifiedClassName="org.esupportail.lecture.domain.model.CustomElement" javaProjectName="esup-lecture" style="2023" type="=esup-lecture/src&lt;org.esupportail.lecture.domain.model{CustomElement.java[CustomElement"/>
+  <children xsi:type="slime:ClassModel" x="1033" y="245" width="334" height="306" incomingConnections="//@children.6/@outgoingConnections.0" name="CustomSource" classText="CustomSource" methodText="+ void CustomSource(SourceProfile profile, UserProfile user)&#xA;+ SourceProfile getProfile()&#xA;+ String getName()&#xA;+ UserProfile getUserProfile()&#xA;+ String getElementId()&#xA;+ String getItemXPath()&#xA;+ String getXslt()&#xA;+ List&lt;Item> getItems(ExternalService externalService)&#xA;+ void setItemAsRead(String itemId)&#xA;+ void setItemAsUnRead(String itemId)&#xA;+ boolean isItemRead(String itemId)&#xA;+ int getId()&#xA;+ void setId(int id)" attributeText="- String sourceId&#xA;- UserProfile userProfile&#xA;- Set&lt;String> readItems&#xA;- int id" qualifiedClassName="org.esupportail.lecture.domain.model.CustomSource" javaProjectName="esup-lecture" style="2039" type="=esup-lecture/src&lt;org.esupportail.lecture.domain.model{CustomSource.java[CustomSource">
+    <outgoingConnections xsi:type="slime:ClassConnectionModel" target="//@children.4" type="REALIZATION" toNavigable="true"/>
+  </children>
+  <children xsi:type="slime:ClassModel" x="921" y="668" width="436" height="96" incomingConnections="//@children.7/@outgoingConnections.0" name="CustomManagedSource" classText="CustomManagedSource" methodText="+ void CustomManagedSource(ManagedSourceProfile profile, UserProfile user)&#xA;+ SourceProfile getProfile()" attributeText="- ManagedSourceProfile sourceProfile" qualifiedClassName="org.esupportail.lecture.domain.model.CustomManagedSource" javaProjectName="esup-lecture" style="2023" type="=esup-lecture/src&lt;org.esupportail.lecture.domain.model{CustomManagedSource.java[CustomManagedSource">
+    <outgoingConnections xsi:type="slime:ClassConnectionModel" target="//@children.5" type="GENERALIZATION" toNavigable="true"/>
+  </children>
+  <children xsi:type="slime:ClassModel" x="722" y="666" width="196" height="456" name="ManagedSourceProfile" classText="ManagedSourceProfile" methodText="+ ManagedSourceProfile()&#xA;+ updateCustomCategory()&#xA;+ getItems()&#xA;+ computeFeatures()&#xA;- loadSource()&#xA;- setUpCustomCategoryVisibility()&#xA;+ getAccess()&#xA;+ setAccess()&#xA;+ getVisibility()&#xA;+ setVisibility()&#xA;+ getTtl()&#xA;+ setTtl()&#xA;+ isSpecificUserContent()&#xA;+ setSpecificUserContent()&#xA;# getDtd()&#xA;# setDtd()&#xA;+ setVisibilityAllowed()&#xA;+ getVisibilityAllowed()&#xA;+ setVisibilityAutoSubcribed()&#xA;+ getVisibilityAutoSubscribed()&#xA;+ setVisibilityObliged()&#xA;+ getVisibilityObliged()&#xA;+ setManagedCategoryProfile()&#xA;+ setXsltURL()&#xA;+ setItemXPath()&#xA;+ getContent()" qualifiedClassName="org.esupportail.lecture.domain.model.ManagedSourceProfile" javaProjectName="esup-lecture" style="2023" type="=esup-lecture/src&lt;org.esupportail.lecture.domain.model{ManagedSourceProfile.java[ManagedSourceProfile">
+    <outgoingConnections xsi:type="slime:ClassConnectionModel" target="//@children.6" type="AGGREGATION" toNavigable="true"/>
+    <methodFilters>+ void ManagedSourceProfile(ManagedCategoryProfile mcp)</methodFilters>
+    <methodFilters>+ void updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService externalService)</methodFilters>
+    <methodFilters>+ List&lt;Item> getItems(ExternalService externalService)</methodFilters>
+    <methodFilters>+ void computeFeatures()</methodFilters>
+    <methodFilters>- void loadSource(ExternalService externalService)</methodFilters>
+    <methodFilters>- void setUpCustomCategoryVisibility(ExternalService externalService, CustomManagedCategory customManagedCategory)</methodFilters>
+    <methodFilters>+ Accessibility getAccess()</methodFilters>
+    <methodFilters>+ void setAccess(Accessibility access)</methodFilters>
+    <methodFilters>+ VisibilitySets getVisibility()</methodFilters>
+    <methodFilters>+ void setVisibility(VisibilitySets visibility)</methodFilters>
+    <methodFilters>+ int getTtl()</methodFilters>
+    <methodFilters>+ void setTtl(int ttl)</methodFilters>
+    <methodFilters>+ boolean isSpecificUserContent()</methodFilters>
+    <methodFilters>+ void setSpecificUserContent(boolean specificUserContent)</methodFilters>
+    <methodFilters># String getDtd()</methodFilters>
+    <methodFilters># void setDtd(String dtd)</methodFilters>
+    <methodFilters>+ void setVisibilityAllowed(DefinitionSets d)</methodFilters>
+    <methodFilters>+ DefinitionSets getVisibilityAllowed()</methodFilters>
+    <methodFilters>+ void setVisibilityAutoSubcribed(DefinitionSets d)</methodFilters>
+    <methodFilters>+ DefinitionSets getVisibilityAutoSubscribed()</methodFilters>
+    <methodFilters>+ void setVisibilityObliged(DefinitionSets d)</methodFilters>
+    <methodFilters>+ DefinitionSets getVisibilityObliged()</methodFilters>
+    <methodFilters>+ void setManagedCategoryProfile(ManagedCategoryProfile categoryProfile)</methodFilters>
+    <methodFilters>+ void setXsltURL(String string)</methodFilters>
+    <methodFilters>+ void setItemXPath(String string)</methodFilters>
+    <methodFilters>+ String getContent()</methodFilters>
+    <attributeFilters># Log log</attributeFilters>
+    <attributeFilters>- Accessibility access</attributeFilters>
+    <attributeFilters>- VisibilitySets visibility</attributeFilters>
+    <attributeFilters>- int ttl</attributeFilters>
+    <attributeFilters>- boolean specificUserContent</attributeFilters>
+    <attributeFilters>- ComputedManagedSourceFeatures computedFeatures</attributeFilters>
+    <attributeFilters>- ManagedCategoryProfile managedCategoryProfile</attributeFilters>
+    <attributeFilters>- String xsltURL</attributeFilters>
+    <attributeFilters>- String itemXPath</attributeFilters>
+  </children>
+</slime:DocumentModel>

@@ -18,7 +18,7 @@ import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundExceptio
  * @author gbouteil
  *
  */
-public abstract class CategoryProfile {
+public abstract class CategoryProfile implements ElementProfile {
 	
 	/* 
 	 *************************** PROPERTIES *********************************/	

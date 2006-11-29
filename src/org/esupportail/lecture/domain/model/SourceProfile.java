@@ -17,7 +17,7 @@ import org.esupportail.lecture.exceptions.SourceNotLoadedException;
  * @author gbouteil
  *
  */
-public abstract class SourceProfile {
+public abstract class SourceProfile implements ElementProfile {
 
 /* ************************** PROPERTIES ******************************** */	
 

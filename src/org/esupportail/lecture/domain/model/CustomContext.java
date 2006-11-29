@@ -41,7 +41,7 @@ public class CustomContext implements CustomElement {
 	/**
 	 * The map of subscribed CustomManagedCategory
 	 */
-	private Map<String,CustomManagedCategory> subscriptions;
+	private Hashtable<String,CustomManagedCategory> subscriptions;
 	
 	/**
 	 * The userprofile parent (used by hibernate)
@@ -147,13 +147,13 @@ public class CustomContext implements CustomElement {
 		return contextId;
 	}
 
-	/**
-	 * @param contextId : the contextId to set
-	 * @see CustomContext#contextId
-	 */
-	public void setContextId(String contextId) {
-		this.contextId = contextId;
-	}
+//	/**
+//	 * @param contextId : the contextId to set
+//	 * @see CustomContext#contextId
+//	 */
+//	public void setContextId(String contextId) {
+//		this.contextId = contextId;
+//	}
 
 	/**
 	 * @return id
@@ -176,12 +176,12 @@ public class CustomContext implements CustomElement {
 		return userProfile;
 	}
 
-	/**
-	 * @param userprofile
-	 */
-	public void setUserProfile(UserProfile userprofile) {
-		this.userProfile = userprofile;
-	}
+//	/**
+//	 * @param userprofile
+//	 */
+//	public void setUserProfile(UserProfile userprofile) {
+//		this.userProfile = userprofile;
+//	}
 
 
 //	public Collection getSubscriptions() {
