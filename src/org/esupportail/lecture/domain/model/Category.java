@@ -40,6 +40,15 @@ public abstract class Category implements Element,Serializable{
 	
 	private Hashtable<String,SourceProfile> sourceProfilesHash;
 	
+	/*
+	 *************************** INIT *********************************/
+	
+	/**
+	 * Constructor
+	 */
+	public Category() {
+		sourceProfilesHash = new Hashtable<String,SourceProfile>();
+	}
 	
 	/*
 	 *************************** METHODS *********************************/

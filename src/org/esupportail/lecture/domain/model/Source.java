@@ -426,13 +426,6 @@ public abstract class Source implements Element,Serializable {
 		XPathNameSpaces = pathNameSpaces;
 		isXsltComputed = false;
 	}
-	
-	/**
-	 * @return the Content of source
-	 */
-	public String getContent() {
-		return xmlStream;
-	}
 
 	/**
 	 * get Items list of this source
@@ -453,9 +446,6 @@ public abstract class Source implements Element,Serializable {
 		URL = url;
 	}
 
-	public String getName(){
-		// TODO (GB)
-		return null;
-	}
+
 
 }

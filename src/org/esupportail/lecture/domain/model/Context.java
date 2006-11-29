@@ -170,7 +170,7 @@ public class Context {
 	 * @param name the name to set
 	 * @see Context#name
 	 */
-	protected void setName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

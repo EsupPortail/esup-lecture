@@ -56,12 +56,7 @@ public class ManagedCategory extends Category {
 	/*
 	 *********************** INIT **************************************/ 
 
-	/**
-	 * Constructor
-	 */
-	public ManagedCategory() {
-		super.setSourceProfilesHash(new Hashtable<String,SourceProfile>());
-	}
+
 	
 	/*
 	 *********************** METHOD **************************************/ 
