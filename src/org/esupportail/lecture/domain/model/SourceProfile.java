@@ -7,6 +7,7 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.List;
 
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
@@ -21,18 +22,44 @@ public abstract class SourceProfile implements ElementProfile {
 
 /* ************************** PROPERTIES ******************************** */	
 
+	/**
+	 * Id of the source profile 
+	 */
 	private String id;
 
+	/**
+	 * Name of the source 
+	 */
 	private String name = "";
 
+	/**
+	 * URL of the source 
+	 */
 	private String sourceURL = "";
 
+	/**
+	 * Source associated to this profile
+	 */
 	private Source source;
+	
+	private String xsltURL;
+
+	private String itemXPath;
+	
 
 
 /* ************************** METHODS ******************************** */	
 	
-	public abstract List<Item> getItems(ExternalService externalService) throws ElementNotLoadedException, SourceNotLoadedException ;
+	
+	
+	protected abstract void loadSource(ExternalService externalService) throws ElementNotLoadedException; 
+	
+	
+	public List<Item> getItems(ExternalService externalService) throws ElementNotLoadedException {
+		loadSource(externalService);
+		Source source = getElement();
+		return source.getItems();
+	}
 
 /* ************************** ACCESSORS ******************************** */	
 
@@ -84,17 +111,15 @@ public abstract class SourceProfile implements ElementProfile {
 		this.sourceURL = sourceURL;
 	}
 
-	public abstract String getContent(); 
-
 	/**
 	 * Returns source of this managed source profile (if loaded)
 	 * @return source
 	 * @throws SourceNotLoadedException 
 	 */
-	protected Source getSource() throws SourceNotLoadedException {
+	public Source getElement() throws SourceNotLoadedException {
 		if (source == null){
 			// TODO (GB) on pourrait faire un loadSource ?
-			throw new SourceNotLoadedException("Category "+id+" is not loaded in profile");
+			throw new SourceNotLoadedException("Source "+id+" is not loaded in profile");
 		}
 		return source;
 	}
@@ -103,10 +128,21 @@ public abstract class SourceProfile implements ElementProfile {
 	 * Sets source on the profile
 	 * @param source
 	 */
-	protected void setSource(Source source) {
+	public void setElement(Source source) {
 		this.source = source;
 	}
 
+
+	public void setXsltURL(String string) {
+		xsltURL = string;
+		
+	}
+
+
+	public void setItemXPath(String string) {
+		itemXPath = string;
+		
+	}
 
 
 }

@@ -148,12 +148,7 @@ public class Context {
 		Iterator iterator = managedCategoryProfilesSet.iterator();
 		for (ManagedCategoryProfile m = null; iterator.hasNext();) {
 			m = (ManagedCategoryProfile) iterator.next();
-			try {
-				string += "         (" + m.getId() + "," + m.getName() + ")\n";
-			} catch (CategoryNotLoadedException e) {
-				log.error("Category is not loaded");
-				e.printStackTrace();
-			}
+			string += "         (" + m.getId() + "," + m.getName() + ")\n";
 		}
 
 		return string;

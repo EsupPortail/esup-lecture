@@ -5,8 +5,6 @@
 */
 package org.esupportail.lecture.domain.model;
 
-import java.beans.FeatureDescriptor;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -67,12 +65,12 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	private ComputedManagedSourceFeatures computedFeatures;
 
-	private ManagedCategoryProfile managedCategoryProfile;
+	/**
+	 * 
+	 */
+	private ManagedCategoryProfile ownerProfile;
 	
-	private String xsltURL;
 
-	private String itemXPath;
-	
 	/*
 	 ************************** PROPERTIES ******************************** */	
 	
@@ -80,7 +78,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * Constructor
 	 */
 	public ManagedSourceProfile(ManagedCategoryProfile mcp) {
-		managedCategoryProfile = mcp;
+		ownerProfile = mcp;
 		computedFeatures = new ComputedManagedSourceFeatures(this);
 	}
 
@@ -94,12 +92,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		
 	}
 
-	@Override
-	public List<Item> getItems(ExternalService externalService) throws ElementNotLoadedException, SourceNotLoadedException {
-		loadSource(externalService);
-		Source source = getSource();
-		return source.getItems();
-	}
+	
 
 	/**
 	 * @throws ElementNotLoadedException 
@@ -112,38 +105,38 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		Accessibility setAccess;
 		VisibilitySets setVisib;
 		
-		if (managedCategoryProfile.getTrustCategory()) {		
+		if (ownerProfile.getTrustCategory()) {		
 			setAccess = access;
 			setVisib = visibility;
 			
 			if (setAccess == null) {
-				setAccess = managedCategoryProfile.getAccess();
+				setAccess = ownerProfile.getAccess();
 			}
 			if (setVisib == null) {
-				setVisib = managedCategoryProfile.getVisibility();
+				setVisib = ownerProfile.getVisibility();
 			}
 
 		}else {
-			setAccess = managedCategoryProfile.getAccess();
-			setVisib = managedCategoryProfile.getVisibility();
+			setAccess = ownerProfile.getAccess();
+			setVisib = ownerProfile.getVisibility();
 		}
 				
 		computedFeatures.update(setVisib,setAccess);
 		
 	}
 
-	private void loadSource(ExternalService externalService) throws ElementNotLoadedException {
+	protected void loadSource(ExternalService externalService) throws ElementNotLoadedException {
 			
 		if(getAccess() == Accessibility.PUBLIC) {
 			// managed SOurce Profile => single or globalSource
 			// TODO (GB) le getSource est il "source" ou "managedSource" ?
 			Source source = DomainTools.getDaoService().getSource(this);
-			setSource(source);
+			setElement(source);
 			
 		} else if (getAccess() == Accessibility.CAS) {
 			String ptCas = externalService.getUserProxyTicketCAS();
 			Source source = DomainTools.getDaoService().getSource(this,ptCas);
-			setSource(source);
+			setElement(source);
 			
 		}
 		//computedFeatures.compute();
@@ -158,9 +151,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @param externalService
 	 * @param customManagedCategory
 	 * @throws ElementNotLoadedException 
+	 * @return true if sourceProfile is visible by user (in Obliged or in autoSubscribed, or in Allowed)
 	 */
 	
-	private void setUpCustomCategoryVisibility(ExternalService externalService, CustomManagedCategory customManagedCategory) throws ElementNotLoadedException {
+	private boolean setUpCustomCategoryVisibility(ExternalService externalService, CustomManagedCategory customManagedCategory) throws ElementNotLoadedException {
 			/*
 			 * Algo pour gerer les customSourceProfiles :
 			 * ------------------------------------
@@ -200,12 +194,14 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 					if (!isInAllowed) { // If isInAllowed : nothing to do
 		/* ---CATEGORY NOT VISIBLE FOR USER--- */
 						customManagedCategory.removeManagedCustomSource(this);
+						return false;
 					}
 					
 				}	
 			}
 			// TODO (GB later) retirer les customSource du user profile qui correspondent à des profiles 
 			// de sources  disparus	
+			return true;
 		}
 
 	
@@ -263,6 +259,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getTtl()
 	 */
 	public int getTtl()  {
+		// TODO (GB) retirer le ttl de la dtd de la source
 		return ttl;
 	}
 
@@ -291,27 +288,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	public void setSpecificUserContent(boolean specificUserContent) {
 		this.specificUserContent = specificUserContent;
 	}
-
-
-	/**
-	 * Returns the dtd.
-	 * @return dtd
-	 * @see ManagedSourceProfile#dtd
-	 */
-	protected String getDtd() {
-		return getDtd();
-	}
-
-	/**
-	 * Sets dtd
-	 * @param dtd 
-	 * @see ManagedSourceProfile#dtd
-	 */
-	protected void setDtd(String dtd) {
-		setDtd(dtd);
-	}
-
-
 
 	/** 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
@@ -364,29 +340,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	}
 
 
-	public void setManagedCategoryProfile(ManagedCategoryProfile categoryProfile) {
-		this.managedCategoryProfile = categoryProfile;
-		
-	}
 
 
-	public void setXsltURL(String string) {
-		xsltURL = string;
-		
-	}
 
-
-	public void setItemXPath(String string) {
-		itemXPath = string;
-		
-	}
-
-
-	@Override
-	public String getContent() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 

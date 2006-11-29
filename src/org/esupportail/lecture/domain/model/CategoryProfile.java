@@ -9,7 +9,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
+import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 
@@ -22,6 +25,10 @@ public abstract class CategoryProfile implements ElementProfile {
 	
 	/* 
 	 *************************** PROPERTIES *********************************/	
+	/**
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(ManagedCategoryProfile.class); 
 	/**
 	 *  Category profile name
 	 */
@@ -65,22 +72,29 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @see CategoryProfile#name
 	 * @see ElementProfile#getName()
 	 */
-	public String getName() throws CategoryNotLoadedException {
+	public String getName(){
+		String name ;
 		
-		if (category == null ){
-			return name;
-		}else {
-			return getCategory().getName();
+		try {
+			name = getElement().getName();
+		}catch (CategoryNotLoadedException e) {
+			log.error("getName : Category "+id+" is not loaded");
+			name = this.name;
 		}
-			
+		return name;
 	}
 	
 	
+	/**
+	 * @return description of the category
+	 * @throws CategoryNotLoadedException
+	 */
 	public String getDescription() throws CategoryNotLoadedException {
+		Category category = (Category) getElement();
 		if (category == null){
 			return null;
 		}else {
-			return getCategory().getDescription();
+			return category.getDescription();
 		}
 	}
 	
@@ -118,18 +132,19 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @return Returns the category.
 	 * @throws CategoryNotLoadedException 
 	 */
-	public Category getCategory() throws CategoryNotLoadedException {
+	public Category getElement() throws CategoryNotLoadedException {
 		if (category==null){
-			// TODO (GB) on pourrait faire un loadCategory ?
 			throw new CategoryNotLoadedException("Category "+id+" is not loaded in profile");
 		}
 		return category;
 	}
 
+	protected abstract void loadCategory(ExternalService externalService) throws CategoryNotLoadedException;
+	
 	/**
 	 * @param category The category to set.
 	 */
-	public void setCategory(Category category) {
+	public void setElement(Category category) {
 		this.category = category;
 	}
 

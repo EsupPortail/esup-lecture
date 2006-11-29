@@ -34,7 +34,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * URL of the remote managed category
 	 */
-	private String urlCategory;
+	private String categoryURL;
 	
 	/**
 	 * Access mode on the remote managed category
@@ -111,13 +111,14 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		
 	}
 
-	private void loadCategory(ExternalService externalService) throws ElementNotLoadedException {
+	@Override
+	protected void loadCategory(ExternalService externalService) throws CategoryNotLoadedException {
 		if(getAccess() == Accessibility.PUBLIC) {
-			setCategory(DomainTools.getDaoService().getManagedCategory(this)); 
+			setElement(DomainTools.getDaoService().getManagedCategory(this)); 
 			
 		} else if (getAccess() == Accessibility.CAS) {
 			String ptCas = externalService.getUserProxyTicketCAS();
-			setCategory(DomainTools.getDaoService().getManagedCategory(this,ptCas));
+			setElement(DomainTools.getDaoService().getManagedCategory(this,ptCas));
 		}
 		//computedFeatures.compute();
 	}
@@ -189,7 +190,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @throws ElementNotLoadedException 
 	 */
 	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) throws ElementNotLoadedException {
-		ManagedCategory category = (ManagedCategory) getCategory();
+		ManagedCategory category = (ManagedCategory) getElement();
 		category.updateCustom(customManagedCategory, externalService);
 	}
 	
@@ -200,7 +201,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	public void computeFeatures() throws CategoryNotLoadedException {
 		
-		ManagedCategory managedCategory = (ManagedCategory)super.getCategory();
+		ManagedCategory managedCategory = (ManagedCategory)getElement();
 		//Editability setEdit;
 		VisibilitySets setVisib = visibility;
 		
@@ -233,7 +234,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @see ManagedCategoryProfile#urlCategory
 	 */
 	public String getUrlCategory() {
-		return urlCategory;
+		return categoryURL;
 	}
 	
 	/** 
@@ -241,8 +242,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param urlCategory the URL to set
 	 * @see ManagedCategoryProfile#urlCategory
 	 */
-	public void setUrlCategory(String urlCategory) {
-		this.urlCategory = urlCategory;
+	public void setUrlCategory(String categoryURL) {
+		this.categoryURL = categoryURL;
 	}
 
 	/**
@@ -369,6 +370,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getTtl()
 	 */
 	public int getTtl(){
+		// TODO (GB) retirer le ttl de la dtd de la category
 		return ttl;
 	}
 	

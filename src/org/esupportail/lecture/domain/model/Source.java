@@ -44,7 +44,7 @@ import org.esupportail.lecture.exceptions.ErrorException;
  * @author gbouteil
  *
  */
-public abstract class Source implements Serializable {
+public abstract class Source implements Element,Serializable {
 ///* ************************** PROPERTIES ******************************** */	
 
 	/**
@@ -453,5 +453,9 @@ public abstract class Source implements Serializable {
 		URL = url;
 	}
 
+	public String getName(){
+		// TODO (GB)
+		return null;
+	}
 
 }

@@ -39,4 +39,5 @@ public interface CustomElement {
 	 * @param id set id used by database
 	 */
 	public void setId(int id);
+	
 }

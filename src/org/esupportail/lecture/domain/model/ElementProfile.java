@@ -32,12 +32,20 @@ public interface ElementProfile {
 	 * Returns the name of the element profile (should be the same as the correcponding element)
 	 * @return String name
 	 */
-	public String getName()throws ElementNotLoadedException;
+	public String getName();
 	/**
 	 * Sets the name of the element profile (should be the same as the correcponding element)
 	 * @param name
 	 */
 	public void setName(String name);
+	
+	/**
+	 * @return the element associated to this profile
+	 * @throws ElementNotLoadedException
+	 */
+	public Element getElement() throws ElementNotLoadedException;
+	
+	
 
 //	/**
 //	 * Getter of the property <tt>refreshTimer</tt>

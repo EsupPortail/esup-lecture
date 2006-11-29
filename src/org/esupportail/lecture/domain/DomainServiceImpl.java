@@ -197,11 +197,11 @@ public class DomainServiceImpl implements DomainService {
 			List<Item> items;
 			try {
 				items = customSource.getItems(externalService);
-			} catch (ElementNotLoadedException e) {
-				log.error("Composant is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
-				throw new ServiceException(e);
 			} catch (SourceNotLoadedException e) {
 				log.error("Source is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
+				throw new ServiceException(e);
+			} catch (ElementNotLoadedException e) {
+				log.error("Composant is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
 				throw new ServiceException(e);
 			}
 			for(Item item : items){
