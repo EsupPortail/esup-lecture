@@ -21,6 +21,11 @@ public class ContextBean {
 	 * description of the context
 	 */
 	private String description;
+	
+	/**
+	 * size of tree window 
+	 */
+	private int treeSize;
 
 
 	/**
@@ -37,9 +42,12 @@ public class ContextBean {
 	public ContextBean(CustomContext customContext) throws ContextNotFoundException{
 		Context context = customContext.getContext();
 
+		setTreeSize(customContext.getTreeSize());
+		
 		setName(context.getName());
 		setDescription(context.getDescription());
 		setId(context.getId());
+		
 	}
 	
 	/**
@@ -94,5 +102,13 @@ public class ContextBean {
 		string += " Name = " + name.toString() + "\n";
 		string += " Desc = " + description.toString() + "\n";
 		return string;
+	}
+
+	public int getTreeSize() {
+		return treeSize;
+	}
+
+	public void setTreeSize(int treeSize) {
+		this.treeSize = treeSize;
 	}
 }

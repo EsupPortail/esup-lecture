@@ -194,6 +194,10 @@ public class CustomContext implements CustomElement {
 		
 	}
 
+	public int getTreeSize() {
+		return treeSize;
+	}
+
 //	/**
 //	 * @param userprofile
 //	 */

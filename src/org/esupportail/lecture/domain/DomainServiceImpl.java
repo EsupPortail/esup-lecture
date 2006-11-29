@@ -62,8 +62,7 @@ public class DomainServiceImpl implements DomainService {
 		UserProfile userProfile = channel.getUserProfile(userId);
 		
 		/* userBean creation */
-		UserBean user = new UserBean();
-		user.setUid(userProfile.getUserId());
+		UserBean user = new UserBean(userProfile);
 		
 		return user;
 	}
@@ -105,6 +104,7 @@ public class DomainServiceImpl implements DomainService {
 
 		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
 		try {
+			// TODO (GB) appel via le userProfile ?
 			List<CustomCategory> customCategories = customContext.getSortedCustomCategories(externalService);
 
 			for(CustomCategory customCategory : customCategories){
@@ -142,6 +142,7 @@ public class DomainServiceImpl implements DomainService {
 
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
 		try {
+			// TODO (GB) appel via le userProfile ?
 			customCategory = userProfile.getCustomCategory(categoryId);
 			List<CustomSource> customSources = customCategory.getSortedCustomSources(externalService);
 			int nbSources = customSources.size();
@@ -197,6 +198,8 @@ public class DomainServiceImpl implements DomainService {
 		
 			List<Item> items;
 			try {
+
+				// TODO (GB) appel via le userProfile ?
 				items = customSource.getItems(externalService);
 			} catch (SourceNotLoadedException e) {
 				log.error("Source is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
@@ -229,6 +232,7 @@ public class DomainServiceImpl implements DomainService {
 		// TODO (GB) why not customCategories ?
 		CustomSource customSource;
 		try {
+			// TODO (GB) appel via le userProfile ?
 			customSource = userProfile.getCustomSource(sourceId);
 			customSource.setItemAsRead(itemId);
 		} catch (CustomSourceNotFoundException e) {
@@ -246,6 +250,7 @@ public class DomainServiceImpl implements DomainService {
 		// TODO (GB) why not customCategories ?
 		CustomSource customSource;
 		try {
+			// TODO (GB) appel via le userProfile ?
 			customSource = userProfile.getCustomSource(sourceId);
 			customSource.setItemAsUnRead(itemId);
 		} catch (CustomSourceNotFoundException e) {
@@ -258,6 +263,7 @@ public class DomainServiceImpl implements DomainService {
 	public void setTreeSize(String uid, String contextId, int size) throws TreeSizeErrorException {
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
+		// TODO (GB) appel via le userProfile ?
 		CustomContext customContext = userProfile.getCustomContext(contextId);
 		customContext.setTreeSize(size);
 		

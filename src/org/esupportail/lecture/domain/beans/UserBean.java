@@ -1,5 +1,7 @@
 package org.esupportail.lecture.domain.beans;
 
+import org.esupportail.lecture.domain.model.UserProfile;
+
 /**
  * @author bourges
  * used to store user informations
@@ -9,6 +11,13 @@ public class UserBean {
 	 * id of source
 	 */
 	private String uid;
+	
+	public UserBean(String uid) {
+		this.uid = uid;
+	}
+	public UserBean(UserProfile userProfile) {
+		uid = userProfile.getUserId();
+	}
 	/**
 	 * @return id of source
 	 */

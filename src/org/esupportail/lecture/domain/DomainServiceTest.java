@@ -47,8 +47,7 @@ public class DomainServiceTest implements DomainService {
 	}
 
 	public UserBean getConnectedUser(String userId){
-		UserBean user = new UserBean();
-		user.setUid(userId);
+		UserBean user = new UserBean(userId);
 		return user;
 	}
 	
