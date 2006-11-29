@@ -124,6 +124,11 @@ public class DomainServiceTest implements DomainService {
 		return ret;
 	}
 
+	public void setTreeSize(String uid, String contextId, int size) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

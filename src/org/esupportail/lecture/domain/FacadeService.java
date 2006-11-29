@@ -12,6 +12,7 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.exceptions.ServiceException;
+import org.esupportail.lecture.exceptions.TreeSizeErrorException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
@@ -131,6 +132,15 @@ public class FacadeService implements InitializingBean {
 		domainService.marckItemAsUnread(uid, sourceId, itemId);
 	}
 
+	/**
+	 * @param uid user ID
+	 * @param contextId contextID refered by the customContext
+	 * @param size size of the tree between 0 - 100
+	 * set tree size of the customContext refered by contextId 
+	 */
+	public void setTreeSize(String uid,String contextId,int size) throws TreeSizeErrorException {
+		domainService.setTreeSize(uid,contextId, size);
+	}
 
 	
 	/* 

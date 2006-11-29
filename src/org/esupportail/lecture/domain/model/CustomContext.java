@@ -12,6 +12,7 @@ import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.ElementProfileNotFoundException;
+import org.esupportail.lecture.exceptions.TreeSizeErrorException;
 
 
 /**
@@ -53,6 +54,11 @@ public class CustomContext implements CustomElement {
 	 * The Id of this CustomContext : for Database
 	 */
 	private int Id;
+	
+	/**
+	 * Tree size of the customContext
+	 */
+	private int treeSize;
 
 	
 	/*
@@ -67,6 +73,7 @@ public class CustomContext implements CustomElement {
 		subscriptions = new Hashtable<String,CustomManagedCategory>();
 		this.contextId = contextId;
 		this.userProfile = user;
+		treeSize = 20;
 	}
 	
 	/*
@@ -175,6 +182,16 @@ public class CustomContext implements CustomElement {
 	 */
 	public UserProfile getUserProfile() {
 		return userProfile;
+	}
+
+	public void setTreeSize(int size)throws TreeSizeErrorException {
+		// TODO (GB) externaliser les bornes
+		if ((size >=0) && (size <=100)){
+			treeSize = size;
+		}else {
+			throw new TreeSizeErrorException("TreeSize must be into 0 and 100");
+		}
+		
 	}
 
 //	/**

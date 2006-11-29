@@ -8,6 +8,7 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.exceptions.ServiceException;
+import org.esupportail.lecture.exceptions.TreeSizeErrorException;
 
 /**
  * @author bourges
@@ -81,5 +82,13 @@ public interface DomainService {
 	 * @see FacadeService#getAvailableSources(String, String)
 	 */
 	List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService externalService);
+	
+	/**
+	 * @param uid
+	 * @param contextId
+	 * @param size
+	 * @see FacadeService#setTreeSize(String, String, int)
+	 */
+	void setTreeSize(String uid, String contextId, int size) throws TreeSizeErrorException;
 
 }

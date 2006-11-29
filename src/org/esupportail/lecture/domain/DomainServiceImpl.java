@@ -27,6 +27,7 @@ import org.esupportail.lecture.exceptions.CustomSourceNotFoundException;
 import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.ServiceException;
 import org.esupportail.lecture.exceptions.SourceNotLoadedException;
+import org.esupportail.lecture.exceptions.TreeSizeErrorException;
 
 /**
  * Service implementation offered by domain layer
@@ -240,7 +241,7 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemasUnread(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void marckItemAsUnread(String uid, String sourceId, String itemId) {
-		/* Get current user profile and customCoategory */
+		/* Get current user profile and customCategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		// TODO (GB) why not customCategories ?
 		CustomSource customSource;
@@ -253,6 +254,14 @@ public class DomainServiceImpl implements DomainService {
 		}
 	}
 
+
+	public void setTreeSize(String uid, String contextId, int size) throws TreeSizeErrorException {
+		/* Get current user profile and customContext */
+		UserProfile userProfile = channel.getUserProfile(uid);
+		CustomContext customContext = userProfile.getCustomContext(contextId);
+		customContext.setTreeSize(size);
+		
+	}
 
 	/*
 	 ************************** Accessors ************************************/
@@ -277,5 +286,6 @@ public class DomainServiceImpl implements DomainService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 	
 }
