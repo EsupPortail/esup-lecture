@@ -47,7 +47,11 @@
       <listitem>
         <para>Download LecturePortlet.war from <ulink
         url="https://sourcesup.cru.fr/frs/?group_id=251">the project
-        site</ulink></para>
+        site</ulink><note>
+            <para>Because war name impact configuration it doesn’t include any
+            version information. You have version information in
+            META-INF/MANIFEST.MF file inside the war file.</para>
+          </note></para>
       </listitem>
 
       <listitem>

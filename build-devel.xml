@@ -50,8 +50,14 @@
 		
 	<target name="_restart" depends="_commons-restart" description="deploy and restart Tomcat" />
 
-	<target name="_dist" depends="_commons-dist" description="build ZIP archives" />
+	<target name="_dist" depends="_commons-dist,_dist-portlet-war" description="build ZIP archives">
+	</target>	 
 
+	<target name="_dist-portlet-war">
+		<zip destfile="${dist.dir}/LecturePortlet.war"
+			basedir="${build.dir}"/>
+	</target>
+	
 	<target name="_doc" depends="_commons-doc" description="build the web site" />
 
 	<target name="_upload-doc" depends="_doc,_commons-upload-doc" description="update the web site" />
