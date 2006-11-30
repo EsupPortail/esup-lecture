@@ -121,7 +121,8 @@
     <section>
       <title>Content configuration</title>
 
-      <screen>TO COMPLETE !!!</screen>
+      <screen>TO COMPLETE !!! //TODO : lecture-config.xml/userId &lt;--&gt;
+      portlet.xml/user-attribute/name &lt;--&gt; uPortal attribute</screen>
 
       <para>Adapt to your environment these configuration files of
       WEB-INF/classes/properties:</para>

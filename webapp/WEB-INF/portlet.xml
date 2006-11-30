@@ -25,8 +25,14 @@
 			<keywords>esup blank</keywords>
 		</portlet-info>
 	</portlet>
+	
 	<user-attribute>
 		<description>the uid of the portal user</description>
-		<name>uid</name>
+		<name>username</name>
+	</user-attribute>
+	
+	<user-attribute>
+		<description>the uid of the portal user</description>
+		<name>displayName</name>
 	</user-attribute>
 </portlet-app>

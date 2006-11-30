@@ -42,13 +42,9 @@ public class EditController extends twoPanesController {
 	 */
 	private VirtualSession virtualSession;
 	/**
-	 * UserBean of the connected user
+	 * UID of the connected user
 	 */
-	private UserBean user;
-	/**
-	 * ContextId not yet find in external context
-	 */
-	private String ContextId;
+	private String UID = null;
 
 	/**
 	 * @see org.esupportail.commons.web.controllers.Resettable#reset()
@@ -69,10 +65,10 @@ public class EditController extends twoPanesController {
 			//We evalute the context and we put it in the virtual session
 			context = new ContextWebBean();
 			String contextId = getFacadeService().getCurrentContextId(); 
-			ContextBean contextBean = getFacadeService().getContext(user.getUid(), contextId);
+			ContextBean contextBean = getFacadeService().getContext(getUID(), contextId);
 			context.setName(contextBean.getName());
 			context.setId(contextBean.getId());
-			List<CategoryBean> categories = getFacadeService().getVisibleCategories(user.getUid(), ContextId);
+			List<CategoryBean> categories = getFacadeService().getVisibleCategories(getUID(), contextId);
 			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
 			if (categories != null) {
 				Iterator<CategoryBean> iter = categories.iterator();
@@ -82,7 +78,7 @@ public class EditController extends twoPanesController {
 					categoryWebBean.setId(categoryBean.getId());
 					categoryWebBean.setName(categoryBean.getName());
 					//find sources in this category
-					List<SourceBean> sources = getFacadeService().getAvailableSources(user.getUid(), categoryBean.getId());
+					List<SourceBean> sources = getFacadeService().getAvailableSources(getUID(), categoryBean.getId());
 					List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
 					if (sources != null) {
 						Iterator<SourceBean> iter2 = sources.iterator();
@@ -112,11 +108,19 @@ public class EditController extends twoPanesController {
 		super.afterPropertiesSet();
 		Assert.notNull(getFacadeService(), 
 				"property facadeService of class " + this.getClass().getName() + " can not be null");
-		//init the user
-		String userId = getFacadeService().getConnectedUserId();
-		user = getFacadeService().getConnectedUser(userId);
-		//init the contextId
-		ContextId = getFacadeService().getCurrentContextId();
+	}
+
+	/**
+	 * @return the connected user UID
+	 */
+	private String getUID() {
+		if (UID == null) {
+			//init the user
+			String userId = getFacadeService().getConnectedUserId();
+			UserBean userBean = getFacadeService().getConnectedUser(userId);
+			UID = userBean.getUid();
+		}
+		return UID;
 	}
 
 	/**

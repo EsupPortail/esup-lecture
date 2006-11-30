@@ -11,7 +11,6 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
-import org.esupportail.lecture.exceptions.ServiceException;
 import org.esupportail.lecture.exceptions.TreeSizeErrorException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
@@ -137,6 +136,7 @@ public class FacadeService implements InitializingBean {
 	 * @param contextId context ID 
 	 * @param size size of the tree between 0 - 100
 	 * set tree size of the customContext refered by contextId 
+	 * @throws TreeSizeErrorException 
 	 */
 	public void setTreeSize(String uid,String contextId,int size) throws TreeSizeErrorException {
 		domainService.setTreeSize(uid,contextId, size);

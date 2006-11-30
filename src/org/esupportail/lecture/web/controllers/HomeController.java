@@ -11,11 +11,13 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.exceptions.ErrorException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
@@ -51,17 +53,13 @@ public class HomeController extends twoPanesController {
 	 */
 	private VirtualSession virtualSession;
 	/**
-	 * ContextId not yet find in external context
-	 */
-	private String ContextId;
-	/**
 	 * Key used to store the context in virtual session
 	 */
 	static final String CONTEXT = "context";
 	/**
-	 * UserBean of the connected user
+	 * UID of the connected user
 	 */
-	private UserBean user;	
+	private String UID = null;	
 	
 	/**
 	 * Controller constructor
@@ -85,10 +83,10 @@ public class HomeController extends twoPanesController {
 		}
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		if (item.isRead()) {
-			getFacadeService().marckItemAsUnread(user.getUid(), selectedCategory.getId(), item.getId());
+			getFacadeService().marckItemAsUnread(getUID(), selectedCategory.getId(), item.getId());
 		}
 		else {
-			getFacadeService().marckItemAsRead(user.getUid(), selectedCategory.getId(), item.getId());			
+			getFacadeService().marckItemAsRead(getUID(), selectedCategory.getId(), item.getId());			
 		}
 		item.setRead(!item.isRead());
 		return "OK";
@@ -134,11 +132,6 @@ public class HomeController extends twoPanesController {
 		super.afterPropertiesSet();
 		Assert.notNull(getFacadeService(), 
 				"property facadeService of class " + this.getClass().getName() + " can not be null");
-		//init the user
-		String userId = getFacadeService().getConnectedUserId();
-		user = getFacadeService().getConnectedUser(userId);
-		//init the contextId
-		ContextId = getFacadeService().getCurrentContextId();
 	}
 	
 	/*
@@ -249,7 +242,7 @@ public class HomeController extends twoPanesController {
 				}
 				else{
 					if (log.isDebugEnabled()) log.debug("Put items in selected source");
-					List<ItemBean> items = getFacadeService().getItems(selectedSource.getId(), user.getUid());
+					List<ItemBean> items = getFacadeService().getItems(selectedSource.getId(), getUID());
 					ret = new ArrayList<ItemWebBean>();
 					if (items != null) {
 						Iterator<ItemBean> iter = items.iterator();
@@ -321,10 +314,13 @@ public class HomeController extends twoPanesController {
 			//We evalute the context and we put it in the virtual session
 			context = new ContextWebBean();
 			String contextId = getFacadeService().getCurrentContextId(); 
-			ContextBean contextBean = getFacadeService().getContext(user.getUid(), contextId);
+			ContextBean contextBean = getFacadeService().getContext(getUID(), contextId);
+			if (contextBean == null) {
+				throw new ErrorException("No context with ID \""+contextId+"\" found in lecture-config.xml file. See this file or portlet preference with name \""+DomainTools.CONTEXT+"\".");
+			}
 			context.setName(contextBean.getName());
 			context.setId(contextBean.getId());
-			List<CategoryBean> categories = getFacadeService().getVisibleCategories(user.getUid(), ContextId);
+			List<CategoryBean> categories = getFacadeService().getVisibleCategories(getUID(), contextId);
 			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
 			if (categories != null) {
 				Iterator<CategoryBean> iter = categories.iterator();
@@ -334,7 +330,7 @@ public class HomeController extends twoPanesController {
 					categoryWebBean.setId(categoryBean.getId());
 					categoryWebBean.setName(categoryBean.getName());
 					//find sources in this category
-					List<SourceBean> sources = getFacadeService().getVisibleSources(user.getUid(), categoryBean.getId());
+					List<SourceBean> sources = getFacadeService().getVisibleSources(getUID(), categoryBean.getId());
 					List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
 					if (sources != null) {
 						Iterator<SourceBean> iter2 = sources.iterator();
@@ -361,7 +357,19 @@ public class HomeController extends twoPanesController {
 	 */
 	public void reset() {
 		// TODO Auto-generated method stub
-		
+	}
+	
+	/**
+	 * @return the connected user UID
+	 */
+	private String getUID() {
+		if (UID == null) {
+			//init the user
+			String userId = getFacadeService().getConnectedUserId();
+			UserBean userBean = getFacadeService().getConnectedUser(userId);
+			UID = userBean.getUid();
+		}
+		return UID;
 	}
 
 }

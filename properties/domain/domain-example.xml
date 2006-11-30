@@ -113,7 +113,7 @@
 	-->
 	<bean
 		id="externalService"
-		class="org.esupportail.lecture.domain.ExternalServiceTest">
+		class="org.esupportail.lecture.domain.ExternalServiceImpl">
 		<description>
 			This bean provides the external (portlet and/or servlet) service of the application, used by the 
 			web interface and the command-line calls.
