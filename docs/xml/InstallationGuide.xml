@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//UR1//DTD docbookAllegeEsup//FR"
+"http://www.esup-portail.org/consortium/espace/docbook/xxe/dtd/docbook_allege_esup.dtd">
+<article lang="FR">
+  <title>Esup Lecture Portlet - Installation Guide</title>
+
+  <articleinfo>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="media/logoCLectureV1.jpg"></imagedata>
+      </imageobject>
+    </mediaobject>
+
+    <abstract>
+      <para>XML aggregation portlet. Use French word “Lecture” in his
+      name.</para>
+    </abstract>
+
+    <author>
+      <firstname>Bourges</firstname>
+
+      <surname>Raymond</surname>
+
+      <affiliation>
+        <orgname><ulink url="http://www.univ-rennes1.fr">University of Rennes
+        1</ulink></orgname>
+      </affiliation>
+    </author>
+
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+
+        <date>29/11/2006</date>
+
+        <revdescription>
+          <para>First version of the installation Guide</para>
+        </revdescription>
+      </revision>
+    </revhistory>
+  </articleinfo>
+
+  <section>
+    <title>Installation</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>Download LecturePortlet.war from <ulink
+        url="https://sourcesup.cru.fr/frs/?group_id=251">the project
+        site</ulink></para>
+      </listitem>
+
+      <listitem>
+        <para>Deploy the portlet in your application server. For example with
+        uPortal use this command:</para>
+
+        <para><screen>ant deployPortletApp
+        -DportletApp=/chemin/CLecture.war</screen></para>
+
+        <para><note>
+            <para>Web application is deployed in the same directory structure
+            of uPortal</para>
+          </note></para>
+      </listitem>
+
+      <listitem>
+        <para>Configure a new context in your application server. For example
+        with Tomcat create a LecturePortlet.xml file in the Toncat
+        conf/Catalina/localhost subfolder with content like this:</para>
+
+        <para><screen>&lt;Context path="/LecturePortlet"
+        docBase="D:/esupdev/esupdev-2.5-esup-2/uPortal-quick-start/webapps/LecturePortlet"&gt;
+        &lt;/Context&gt;</screen></para>
+      </listitem>
+
+      <listitem>
+        <para>Configure your portal to reference this portlet. For example
+        with uPortal you can use cannel manager as shown here:</para>
+
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="media/channelManager.gif"></imagedata>
+          </imageobject>
+        </mediaobject>
+
+        <para><note>
+            <para>Portlet definition ID is very important. Here it is
+            <emphasis>LecturePortlet.esup-lecture.</emphasis> LecturePortlet
+            must be equal to the appliation server context name and
+            esup-lecture must be equal to the portlet-name of the
+            WEB-INF/portlet.xml file.</para>
+          </note></para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>Configuration</title>
+
+    <section>
+      <title>Technical configuration</title>
+
+      <para><screen>TO COMPLETE !!!</screen> Adapt to your environment these
+      configuration files of WEB-INF/classes/properties:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>ldap/ldap.xml</para>
+        </listitem>
+
+        <listitem>
+          <para>smtp/smtp.xml</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+
+    <section>
+      <title>Content configuration</title>
+
+      <screen>TO COMPLETE !!!</screen>
+
+      <para>Adapt to your environment these configuration files of
+      WEB-INF/classes/properties:</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>lecture-config.xml</para>
+        </listitem>
+
+        <listitem>
+          <para>mappings.xml</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
+</article>

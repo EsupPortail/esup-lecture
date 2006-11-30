@@ -2,7 +2,7 @@
 <!DOCTYPE article PUBLIC "-//UR1//DTD docbookAllegeEsup//FR"
 "http://www.esup-portail.org/consortium/espace/docbook/xxe/dtd/docbook_allege_esup.dtd">
 <article lang="FR">
-  <title>Canal Lecture</title>
+  <title>Esup Lecture Portlet - Home Page</title>
 
   <articleinfo>
     <mediaobject>
@@ -12,7 +12,8 @@
     </mediaobject>
 
     <abstract>
-      <para>Outil, intégré au portail, d’agrégation de flux XML</para>
+      <para>XML aggregation portlet. Use French word “Lecture” in his
+      name.</para>
     </abstract>
 
     <author>
@@ -21,7 +22,7 @@
       <surname>Raymond</surname>
 
       <affiliation>
-        <orgname><ulink url="http://www.univ-rennes1.fr">Université de Rennes
+        <orgname><ulink url="http://www.univ-rennes1.fr">University of Rennes
         1</ulink></orgname>
       </affiliation>
     </author>
@@ -33,8 +34,8 @@
         <date>29/11/2006</date>
 
         <revdescription>
-          <para>Première version de la page d'accueil du site web du canal
-          lecture</para>
+          <para>First version of the home page of Esup Lecture Portlet project
+          web site</para>
         </revdescription>
       </revision>
     </revhistory>
@@ -45,18 +46,17 @@
 
     <para><itemizedlist>
         <listitem>
-          <para><ulink
-          url="PresentationClecture.html">Présentation</ulink></para>
+          <para><ulink url="PresentationPlecture.html">Portlet
+          presentation</ulink> (French)</para>
         </listitem>
 
         <listitem>
-          <para><ulink
-          url="InstallationClecture.html">Installation</ulink></para>
+          <para><ulink url="InstallationGuide.html">Installation
+          guide</ulink></para>
         </listitem>
 
         <listitem>
-          <para><ulink
-          url="UtilisateurClecture.html">Utilisateur</ulink></para>
+          <para><ulink url="UserGuide.html">User guide</ulink></para>
         </listitem>
       </itemizedlist></para>
   </section>
