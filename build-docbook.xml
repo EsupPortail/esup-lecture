@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="Documentation ESUP" default="docbook.to.html" basedir=".">
+
+
+<!-- ==================== Properties =================================== -->
+
+	<property name="pages.root.dir" value="docs"/>
+	<property name="pages.xml" value="${pages.root.dir}/xml"/>
+	<property name="pages.html" value="${pages.root.dir}/main"/>
+	<property name="media.xml" value="${pages.xml}/media"/>
+	<property name="media.html" value="${pages.html}/media"/>
+
+	<property name="lib.dir" value="lib-docbook"/>
+
+	<property name="xsl.dir" value="xsl-docbook"/>
+	<property name="xsl.file" value="docbookEsup.xsl"/>
+	<property name="url.xsl" value="http://www.esup-portail.org/consortium/espace/docbook/xsl"/>
+
+	<property name="url.lib" value="http://www.esup-portail.org/consortium/espace/docbook/lib"/>
+	<property name="lib.file.1" value="saxon.jar"/>
+	<property name="lib.file.2" value="saxon-jdom.jar"/>
+
+
+
+
+
+
+<!-- ==================== Prepare Target ================================== -->
+   <target name="prepare">
+<!-- Creation l'arborescence standart du package -->
+      
+      <mkdir dir="${pages.root.dir}"/>
+	  <mkdir dir="${pages.xml}"/>
+	  <mkdir dir="${media.xml}"/>
+
+      <mkdir dir="${lib.dir}"/>      
+      <mkdir dir="${xsl.dir}"/> 
+      
+   </target>
+
+
+
+
+
+
+<!-- ==================== depends-lib Target =================================== -->
+<target name="depends-lib">
+	<available property="docbook.lib.1" file="${lib.dir}/${lib.file.1}"/>
+	<available property="docbook.lib.2" file="${lib.dir}/${lib.file.2}"/>
+</target>
+
+
+<!-- ==================== download-jar-1 Target =================================== -->
+<target name="download-lib-1" unless="docbook.lib.1">
+	<echo message="${lib.file.1} non trouve, je telecharge..."/>
+	<get dest="${lib.dir}/${lib.file.1}" src="${url.lib}/${lib.file.1}"/>
+	<echo message="${lib.file.1} copie dans ${lib.dir}"/>
+</target>
+
+<!-- ==================== download-jar-2 Target =================================== -->
+<target name="download-lib-2" unless="docbook.lib.2">
+	<echo message="${lib.file.2} non trouve, je telecharge..."/>
+	<get dest="${lib.dir}/${lib.file.2}" src="${url.lib}/${lib.file.2}"/>
+	<echo message="${lib.file.2} copie dans ${lib.dir}"/>
+</target>
+
+
+
+
+<!-- ==================== depends-xsl Target =================================== -->
+<target name="depends-xsl">
+	<available property="docbook.xsl" file="${xsl.dir}/${xsl.file}"/>
+</target>
+
+
+<!-- ==================== download-xsl Target =================================== -->
+<target name="download-xsl" unless="docbook.xsl">
+	<echo message="${xsl.file} non trouve, je telecharge..."/>
+	<get dest="${xsl.dir}/${xsl.file}" src="${url.xsl}/${xsl.file}"/>
+	<echo message="${xsl.file} copie dans ${xsl.dir}"/>
+</target>
+
+
+
+
+
+<!-- ==================== xslt Target with index =================================== -->
+<target name="docbook.to.html" depends="depends-lib,download-lib-1,download-lib-2,depends-xsl,download-xsl" description="genere les fichiers HTML">
+	<delete dir="${pages.html}"/>
+	<mkdir dir="${pages.html}"/>
+	
+	<xslt basedir="${pages.xml}" includes="**/*.xml" destdir="${pages.html}" style="${xsl.dir}/${xsl.file}" force="true">
+		<classpath>
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</classpath>
+	</xslt>
+
+	<copy todir="${media.html}">
+		<fileset dir="${media.xml}" includes="**/*"/>
+	</copy>
+</target>
+
+
+<!-- ==================== xslt Target without index =================================== -->
+<target name="docbook.to.html.noindex" depends="depends-lib,download-lib-1,download-lib-2,depends-xsl,download-xsl" description="genere les fichiers HTML sans la table des matières">
+	<delete dir="${pages.html}"/>
+	<mkdir dir="${pages.html}"/>
+	
+	<xslt basedir="${pages.xml}" includes="**/*.xml" destdir="${pages.html}" style="${xsl.dir}/${xsl.file}" force="true">
+		<classpath>
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+		</classpath>
+		<param name="withindex" expression="false"/>
+	</xslt>
+
+	<copy todir="${media.html}">
+		<fileset dir="${media.xml}" includes="**/*"/>
+	</copy>
+</target>
+
+
+	 
+</project>
