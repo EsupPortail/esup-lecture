@@ -134,7 +134,7 @@ public class FacadeService implements InitializingBean {
 
 	/**
 	 * @param uid user ID
-	 * @param contextId contextID refered by the customContext
+	 * @param contextId context ID 
 	 * @param size size of the tree between 0 - 100
 	 * set tree size of the customContext refered by contextId 
 	 */
@@ -142,6 +142,25 @@ public class FacadeService implements InitializingBean {
 		domainService.setTreeSize(uid,contextId, size);
 	}
 
+	/**
+	 * @param uid  user ID
+	 * @param cxtId context ID 
+	 * @param catId catId
+	 * set category catId folded in customContext cxtId
+	 */
+	public void foldCategory(String uid,String cxtId, String catId){
+		domainService.foldCategory(uid,cxtId,catId);
+	}
+	
+	/**
+	 * @param uid  user ID
+	 * @param cxtId context ID 
+	 * @param catId catId
+	 * set category catId unfolded in customContext cxtId
+	 */
+	public void unFoldCategory(String uid,String cxtId, String catId){
+		domainService.unfoldCategory(uid,cxtId,catId);
+	}
 	
 	/* 
 	 ************************** ACCESSORS **********************************/

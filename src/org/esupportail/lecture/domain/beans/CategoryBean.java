@@ -2,6 +2,7 @@ package org.esupportail.lecture.domain.beans;
 
 import org.esupportail.lecture.domain.model.CategoryProfile;
 import org.esupportail.lecture.domain.model.CustomCategory;
+import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
@@ -26,19 +27,20 @@ public class CategoryBean {
 	/**
 	 * store if category is folded or not
 	 */
-	private boolean folded;
+	private boolean folded = true;
 	
 	/**
 	 * Constructor
 	 */
 	public CategoryBean(){}
 	
-	public CategoryBean(CustomCategory customCategory) throws CategoryProfileNotFoundException, CategoryNotLoadedException{
+	public CategoryBean(CustomCategory customCategory,CustomContext customContext) throws CategoryProfileNotFoundException, CategoryNotLoadedException{
 		CategoryProfile profile = customCategory.getProfile();
 		
 		setName(profile.getName());
 		setDescription(profile.getDescription());
 		setId(profile.getId());
+		folded = customContext.isCategoryFolded(id);
 	}
 	
 	/**
@@ -102,6 +104,7 @@ public class CategoryBean {
 		if (description != null){
 			string += description.toString() + "\n";
 		}
+		string += "     Folded = "+ folded + "\n";
 		
 		return string;
 	}

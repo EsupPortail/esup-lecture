@@ -6,6 +6,8 @@
 package org.esupportail.lecture.domain.model;
 
 
+import javax.swing.text.DefaultEditorKit.CutAction;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
@@ -78,6 +80,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * Constructor
 	 */
 	public ManagedSourceProfile(ManagedCategoryProfile mcp) {
+		log.debug("new ManagedSourceProfile(), ownerProfile = "+mcp.getId());
 		ownerProfile = mcp;
 		computedFeatures = new ComputedManagedSourceFeatures(this);
 	}
@@ -170,7 +173,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			boolean isInAllowed = false;
 						
 		/* ---OBLIGED SET--- */
-			log.debug("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+this.getName());
+			log.debug("Evaluation DefinitionSets(obliged) de la source profile : "+this.getId()+" pour la cat : "+customManagedCategory.getElementId());
 			isInObliged = getVisibilityObliged().evaluateVisibility(externalService);
 			log.debug("IsInObliged : "+isInObliged);
 			if (isInObliged) {
@@ -188,7 +191,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				
 				} else {
 		/* ---ALLOWED SET--- */
-					log.debug("Appel de evaluate sur DefenitionSets(allowed) de la source profile : "+this.getName());
+					log.debug("Evaluation DefinitionSets(allowed) de la source profile : "+this.getId()+" pour la cat : "+customManagedCategory.getElementId());
 					isInAllowed = getVisibilityAllowed().evaluateVisibility(externalService);
 					
 					if (!isInAllowed) { // If isInAllowed : nothing to do

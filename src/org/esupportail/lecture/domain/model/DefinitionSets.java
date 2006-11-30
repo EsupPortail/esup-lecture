@@ -79,7 +79,7 @@ public class DefinitionSets {
 		Iterator iteratorGroups = groups.iterator();
 		while (iteratorGroups.hasNext()){
 			String group = (String) iteratorGroups.next();
-			log.debug("DefinionSets, group evalue : "+group);
+			log.debug("DefinionSets, evaluation on group : "+group);
 			if (externalService.isUserInRole(group)){
 				return true;
 			}
@@ -89,6 +89,7 @@ public class DefinitionSets {
 		Iterator iteratorReg = regulars.iterator();
 		while (iteratorReg.hasNext()){
 			RegularOfSet reg = (RegularOfSet) iteratorReg.next();
+			log.debug("DefinionSets, evaluation regular : attr("+ reg.getAttribute() +") val("+ reg.getValue()+")");
 			if (reg.evaluate(externalService)){
 				return true;
 			}

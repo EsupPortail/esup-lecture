@@ -20,8 +20,8 @@ public class ComputedManagedSourceFeatures extends ComputedManagedElementFeature
 	
 	/*
 	 ********************* INITIALIZATION **************************************/
-	protected ComputedManagedSourceFeatures(ManagedSourceProfile mcp) {
-		super(mcp);
+	protected ComputedManagedSourceFeatures(ManagedSourceProfile msp) {
+		super(msp);
 	}
 	
 

@@ -128,6 +128,16 @@ public class DomainServiceTest implements DomainService {
 		
 	}
 
+	public void foldCategory(String uid, String cxtId, String catId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void unfoldCategory(String uid, String cxtId, String catId) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 }

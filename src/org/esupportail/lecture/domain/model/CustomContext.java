@@ -1,8 +1,10 @@
 package org.esupportail.lecture.domain.model;
 
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
@@ -59,6 +61,11 @@ public class CustomContext implements CustomElement {
 	 * Tree size of the customContext
 	 */
 	private int treeSize;
+	
+	/**
+	 * Set of id corresponding to unfolded categories
+	 */
+	private Set<String> unfoldedCategories; 
 
 	
 	/*
@@ -71,6 +78,7 @@ public class CustomContext implements CustomElement {
 	 */
 	public CustomContext(String contextId, UserProfile user) {
 		subscriptions = new Hashtable<String,CustomManagedCategory>();
+		unfoldedCategories = new HashSet<String>();
 		this.contextId = contextId;
 		this.userProfile = user;
 		treeSize = 20;
@@ -155,13 +163,6 @@ public class CustomContext implements CustomElement {
 		return contextId;
 	}
 
-//	/**
-//	 * @param contextId : the contextId to set
-//	 * @see CustomContext#contextId
-//	 */
-//	public void setContextId(String contextId) {
-//		this.contextId = contextId;
-//	}
 
 	/**
 	 * @return id
@@ -198,21 +199,26 @@ public class CustomContext implements CustomElement {
 		return treeSize;
 	}
 
-//	/**
-//	 * @param userprofile
-//	 */
-//	public void setUserProfile(UserProfile userprofile) {
-//		this.userProfile = userprofile;
-//	}
+	public void foldCategory(String catId) {
+		if (!unfoldedCategories.remove(catId)){
+			log.warn("foldCategory("+catId+") is called in customContext "+contextId+" but this category is yet folded");
+		}
+	}
+	
+	public void unfoldCategory(String catId) {
+		if(!unfoldedCategories.add(catId)){
+			log.warn("unfoldCategory("+catId+") is called in customContext "+contextId+" but this category is yet unfolded");
+		}
+	
+	}
 
-
-//	public Collection getSubscriptions() {
-//		return subscriptions;
-//	}
-//
-//	public void setSubscriptions(Collection subscriptions) {
-//		this.subscriptions = subscriptions;
-//	}
+	public boolean isCategoryFolded(String catId) {
+		if(unfoldedCategories.contains(catId)){
+			return false;
+		}else {
+			return true;
+		}
+	}
 
 //
 //	
@@ -225,16 +231,6 @@ public class CustomContext implements CustomElement {
 //	}
 
 	
-
-//
-//	public Set getFoldedCategories() {
-//		return foldedCategories;
-//	}
-//
-//	
-//	public void setFoldedCategories(Set foldedCategories) {
-//		this.foldedCategories = foldedCategories;
-//	}
 
 
 //	

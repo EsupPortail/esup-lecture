@@ -30,6 +30,7 @@ public class DomainTest {
 	private static String contextId;
 	private static List<String> categoryIds;
 	private static String itemId;
+	private static String sourceId;
 	/**
 	 * @param args non argumet needed
 	 */
@@ -40,12 +41,17 @@ public class DomainTest {
 
 		testGetConnectedUser();
 		testGetContext();
-		testGetCategories();
-		testGetSources();
-		testGetItems();
-		testMarkItemAsRead();
+		testGetVisibleCategories();
+		testGetVisibleSources();
+		//testGetItems();
+		//testMarkItemAsRead();
+		//testSetTreeSize();
+		testFoldCategory();
 	
 	}
+
+
+
 
 
 
@@ -77,8 +83,8 @@ public class DomainTest {
 	/**
 	 * Test of service "getCategories"
 	 */
-	private static void testGetCategories() {
-		printIntro("getCategories");
+	private static void testGetVisibleCategories() {
+		printIntro("getVisibleCategories");
 		List<CategoryBean> categories = facadeService.getVisibleCategories(userId, contextId);
 		categoryIds = new ArrayList<String>();
 		for(CategoryBean cat : categories){
@@ -92,24 +98,28 @@ public class DomainTest {
 	/**
 	 * Test of service "getSources"
 	 */
-	private static void testGetSources() {
-		printIntro("getSources");
+	private static void testGetVisibleSources() {
+		printIntro("getVisibleSources");
 		for(String catId : categoryIds){
 			System.out.println(" **** cat "+catId+" **********");
 			List<SourceBean> sources = facadeService.getVisibleSources(userId, catId);
 			for(SourceBean so : sources){
 				System.out.println("  **** source ****");
 				System.out.println(so.toString());
+				sourceId = so.getId();
 			}
 		}
 		
 	}
 
 
+	/**
+	 * Test of service "getItems"
+	 */
 	private static void testGetItems() {
 		printIntro("getItems");
-		System.out.println(" **** source 'un' **********");
-		List<ItemBean> items = facadeService.getItems("un",userId);
+		System.out.println(" **** source "+sourceId+" **********");
+		List<ItemBean> items = facadeService.getItems(sourceId,userId);
 		for(ItemBean it : items){
 			System.out.println("  **** item ****");
 			System.out.println(it.toString());
@@ -118,6 +128,9 @@ public class DomainTest {
 		
 	}
 	
+	/**
+	 * Test of service markItemAsRead and markItemAsUnread
+	 */
 	private static void testMarkItemAsRead() {
 		printIntro("markItemAsRead");
 		System.out.println("Marquage de l'item "+itemId+" comme lu");
@@ -130,6 +143,43 @@ public class DomainTest {
 		
 	}
 
+
+	/**
+	 * Test of service setTreeSize
+	 */
+	private static void testSetTreeSize() {
+		printIntro("setTreeSize");
+		int newTreeSize = 10;
+		System.out.println("Set tree size to "+newTreeSize);
+		facadeService.setTreeSize(userId,contextId,newTreeSize);
+		testGetContext();	
+	}
+	
+
+	/**
+	 * Test of service foldCategory and unfoldCategory
+	 */
+	private static void testFoldCategory() {
+		printIntro("foldCategory");
+		System.out.println("Pliage de la categorie cp1 (deja pliée) => WARN");
+		facadeService.foldCategory(userId, contextId, "cp1");
+		System.out.println("Depliage de la categorie cp1 \n");
+		facadeService.unFoldCategory(userId, contextId, "cp1");
+		testGetVisibleCategories();
+		System.out.println("Pliage de la categorie cp1 \n");
+		facadeService.foldCategory(userId, contextId, "cp1");
+		testGetVisibleCategories();
+		
+		
+	}
+
+
+
+
+
+
+	
+	
 	/**
 	 * Affichage du service à tester
 	 * @param nomService nom du service à tester

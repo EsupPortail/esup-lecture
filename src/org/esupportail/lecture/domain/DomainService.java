@@ -90,5 +90,21 @@ public interface DomainService {
 	 * @see FacadeService#setTreeSize(String, String, int)
 	 */
 	void setTreeSize(String uid, String contextId, int size) throws TreeSizeErrorException;
+	
+	/**
+	 * @param uid
+	 * @param cxtId
+	 * @param catId
+	 * @see FacadeService#foldCategory(String, String, String)
+	 */
+	void foldCategory(String uid, String cxtId, String catId);
+	
+	/**
+	 * @param uid
+	 * @param cxtId
+	 * @param catId
+	 * @see FacadeService#unfoldCategory(String, String, String)
+	 */
+	void unfoldCategory(String uid, String cxtId, String catId);
 
 }

@@ -108,7 +108,8 @@ public class DomainServiceImpl implements DomainService {
 			List<CustomCategory> customCategories = customContext.getSortedCustomCategories(externalService);
 
 			for(CustomCategory customCategory : customCategories){
-				CategoryBean category = new CategoryBean(customCategory);
+				
+				CategoryBean category = new CategoryBean(customCategory,customContext);
 				listCategoryBean.add(category);
 				// TODO (GB) mise à jour du DAO ?
 //				DomainTools.getDaoService().updateCustomCategory(customCategory);
@@ -135,7 +136,7 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService externalService) throws ServiceException {
-		
+		// TODO : getCategories doit etre appelé avant pour charger la category : est ce bien ?
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomCategory customCategory;
@@ -260,6 +261,9 @@ public class DomainServiceImpl implements DomainService {
 	}
 
 
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(java.lang.String, java.lang.String, int)
+	 */
 	public void setTreeSize(String uid, String contextId, int size) throws TreeSizeErrorException {
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
@@ -269,6 +273,22 @@ public class DomainServiceImpl implements DomainService {
 		
 	}
 
+
+	public void foldCategory(String uid, String cxtId, String catId) {
+		/* Get current user profile and customContext */
+		UserProfile userProfile = channel.getUserProfile(uid);
+		// TODO (GB) appel via le userProfile ?
+		CustomContext customContext = userProfile.getCustomContext(cxtId);
+		customContext.foldCategory(catId);
+	}
+	
+	public void unfoldCategory(String uid, String cxtId, String catId) {
+		/* Get current user profile and customContext */
+		UserProfile userProfile = channel.getUserProfile(uid);
+		// TODO (GB) appel via le userProfile ?
+		CustomContext customContext = userProfile.getCustomContext(cxtId);
+		customContext.unfoldCategory(catId);
+	}
 	/*
 	 ************************** Accessors ************************************/
 	
@@ -292,6 +312,7 @@ public class DomainServiceImpl implements DomainService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 	
 }

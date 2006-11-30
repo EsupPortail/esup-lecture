@@ -101,6 +101,7 @@ public class ContextBean {
 		string += " Id = " + id.toString() + "\n";
 		string += " Name = " + name.toString() + "\n";
 		string += " Desc = " + description.toString() + "\n";
+		string += " TreeSize = " + treeSize +  "\n";
 		return string;
 	}
 

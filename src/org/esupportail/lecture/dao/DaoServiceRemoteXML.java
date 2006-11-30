@@ -83,22 +83,18 @@ public class DaoServiceRemoteXML {
 		 * fi 
 		 * *************************************
 		 */		
-		if (log.isDebugEnabled()) {
-			log.debug("in getManagedCategory");
-		}
 		ManagedCategory ret = new ManagedCategory();
 		String url = profile.getUrlCategory();
-		String cacheKey = "CAT:"+profile.getId()+url;
 		System.currentTimeMillis();
-		Long lastcatAccess = managedCategoryLastAccess.get(cacheKey);
+		Long lastcatAccess = managedCategoryLastAccess.get(url);
 		Long currentTimeMillis = System.currentTimeMillis();
 		if (lastcatAccess != null) {
 			if (lastcatAccess + (profile.getTtl() * 1000) > currentTimeMillis) {
-				ret = (ManagedCategory)cacheProviderFacade.getFromCache(cacheKey, cachingModel);
+				ret = (ManagedCategory)cacheProviderFacade.getFromCache(url, cachingModel);
 				if (ret == null) { // not in cache !
 					ret = getFreshManagedCategory(profile);
-					cacheProviderFacade.putInCache(cacheKey, cachingModel, ret);
-					managedCategoryLastAccess.put(cacheKey, currentTimeMillis);
+					cacheProviderFacade.putInCache(url, cachingModel, ret);
+					managedCategoryLastAccess.put(url, currentTimeMillis);
 					if (log.isWarnEnabled()) {
 						log.warn("ManagedCategory from url "+url+" can't be found in cahe --> change cache size ?");
 					}
@@ -106,14 +102,14 @@ public class DaoServiceRemoteXML {
 			}
 			else{
 				ret = getFreshManagedCategory(profile);
-				cacheProviderFacade.putInCache(cacheKey, cachingModel, ret);
-				managedCategoryLastAccess.put(cacheKey, currentTimeMillis);
+				cacheProviderFacade.putInCache(url, cachingModel, ret);
+				managedCategoryLastAccess.put(url, currentTimeMillis);
 			}
 		}
 		else {
 			ret = getFreshManagedCategory(profile);
-			cacheProviderFacade.putInCache(cacheKey, cachingModel, ret);
-			managedCategoryLastAccess.put(cacheKey, currentTimeMillis);
+			cacheProviderFacade.putInCache(url, cachingModel, ret);
+			managedCategoryLastAccess.put(url, currentTimeMillis);
 		}
 		return ret;
 	}
@@ -199,12 +195,9 @@ public class DaoServiceRemoteXML {
 	 * @return
 	 */
 	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
-		if (log.isDebugEnabled()) {
-			log.debug("in getSource");
-		}
 		Source ret = new GlobalSource();
 		if (specificUserContent) { 
-			ret = getFreshSource(urlSource);
+			ret = getFreshSource(urlSource, ttl, profileId, specificUserContent);
 		}
 		else {
 			System.currentTimeMillis();
@@ -214,7 +207,7 @@ public class DaoServiceRemoteXML {
 				if (lastSrcAccess + (ttl * 1000) > currentTimeMillis) {
 					ret = (Source)cacheProviderFacade.getFromCache(urlSource, cachingModel);
 					if (ret == null) { // not in cache !
-						ret = getFreshSource(urlSource);
+						ret = getFreshSource(urlSource, ttl, profileId, specificUserContent);
 						cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
 						sourceLastAccess.put(urlSource, currentTimeMillis);
 						if (log.isWarnEnabled()) {
@@ -223,13 +216,13 @@ public class DaoServiceRemoteXML {
 					}				
 				}
 				else{
-					ret = getFreshSource(urlSource);
+					ret = getFreshSource(urlSource, ttl, profileId, specificUserContent);
 					cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
 					sourceLastAccess.put(urlSource, currentTimeMillis);
 				}
 			}
 			else {
-				ret = getFreshSource(urlSource);
+				ret = getFreshSource(urlSource, ttl, profileId, specificUserContent);
 				cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
 				sourceLastAccess.put(urlSource, currentTimeMillis);
 			}
@@ -243,10 +236,7 @@ public class DaoServiceRemoteXML {
 	 * @see DaoServiceRemoteXML#getSource(String, int, String, boolean)
 	 * @return the source
 	 */
-	private Source getFreshSource(String urlSource) {
-		if (log.isDebugEnabled()) {
-			log.debug("in getFreshSource");
-		}
+	public Source getFreshSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
 		//log.debug("URL de la source : "+urlSource);
 		Source ret = new GlobalSource();
 		try {

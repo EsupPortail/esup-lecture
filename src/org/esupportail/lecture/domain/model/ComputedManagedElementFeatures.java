@@ -30,7 +30,7 @@ public abstract class ComputedManagedElementFeatures {
 	/**
 	 * Managed element profile concerned by these features
 	 */
-	private ManagedElementProfile mcp;
+	private ManagedElementProfile mep;
 	
 	
 	/*
@@ -40,8 +40,8 @@ public abstract class ComputedManagedElementFeatures {
 	 * Constructor
 	 * @param mcp Managed category profile concerned by these features
 	 */
-	protected ComputedManagedElementFeatures(ManagedElementProfile mcp){
-		this.mcp = mcp;
+	protected ComputedManagedElementFeatures(ManagedElementProfile mep){
+		this.mep = mep;
 	}
 	
 
@@ -53,7 +53,7 @@ public abstract class ComputedManagedElementFeatures {
 	 * @throws ElementNotLoadedException 
 	 */
 	protected void compute() throws ElementNotLoadedException {
-		mcp.computeFeatures();
+		mep.computeFeatures();
 		isComputed = true;
 	}
 	
