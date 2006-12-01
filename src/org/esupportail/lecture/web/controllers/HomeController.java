@@ -83,10 +83,10 @@ public class HomeController extends twoPanesController {
 		}
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		if (item.isRead()) {
-			getFacadeService().marckItemAsUnread(getUID(), selectedCategory.getId(), item.getId());
+			getFacadeService().marckItemAsUnread(getUID(), selectedCategory.getSelectedSource().getId(), item.getId());
 		}
 		else {
-			getFacadeService().marckItemAsRead(getUID(), selectedCategory.getId(), item.getId());			
+			getFacadeService().marckItemAsRead(getUID(), selectedCategory.getSelectedSource().getId(), item.getId());			
 		}
 		item.setRead(!item.isRead());
 		return "OK";
@@ -242,7 +242,7 @@ public class HomeController extends twoPanesController {
 				}
 				else{
 					if (log.isDebugEnabled()) log.debug("Put items in selected source");
-					List<ItemBean> items = getFacadeService().getItems(selectedSource.getId(), getUID());
+					List<ItemBean> items = getFacadeService().getItems(getUID(), selectedSource.getId());
 					ret = new ArrayList<ItemWebBean>();
 					if (items != null) {
 						Iterator<ItemBean> iter = items.iterator();
