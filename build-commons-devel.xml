@@ -4,6 +4,9 @@
 		<format property="date" pattern="d-MMMM-yyyy HH:mma" locale="en"/>
 	</tstamp>
 
+	<!-- imported to prevent from eclipse warnings -->
+	<import file="${basedir}/build-commons-devel-missing-targets.xml" optional="true" />
+
 	<property name="devel" value="true" />
 
 	<echo>property devel is true, actions will slightly differ.</echo>
@@ -26,16 +29,6 @@
 	
 	<echo>copying esup-commons.tld locally to get the tag completion...</echo>
 	<copy file="${commons.webapp.dir}/WEB-INF/esup-commons.tld" todir="${webapp.dir}/WEB-INF" />
-
-	<if>
-		<not>
-			<available file="${basedir}/build-devel.properties"/>
-		</not>
-		<then>
-			<fail message="${basedir}/build-devel.properties not found." />	
-		</then>
-	</if>
-	<property file="${basedir}/build-devel.properties" />
 
 	<target name="_commons-clean" depends="clean" >
 		<ant dir="${commons.basedir}" target="_clean" />
@@ -112,6 +105,7 @@
 				</tokenfilter>
 			</filterchain>
 	    </copy>
+		<mkdir dir="${dist.dir}"/>
 		<tar destfile="${dist.dir}/${app.name}-web-${app.version}-${app.release}.tar.gz" 
 			longfile="gnu" compression="gzip">
 			<tarfileset dir="${website.dir}" prefix=""/>
@@ -127,12 +121,6 @@
 				<fail message="properties app.release should be set in build-devel.properties" />
 			</then>
 		</if>
-		<delete dir="${tmp.dir}"/>
-		<mkdir dir="${tmp.dir}"/>
-		<mkdir dir="${tmp.dir}/servlet"/>
-		<copy file="build-servlet-example.properties" tofile="tmp/servlet/build-example.properties" />
-		<mkdir dir="${tmp.dir}/quick-start"/>
-		<copy file="build-quick-start-example.properties" tofile="tmp/quick-start/build-example.properties" />
 		<mkdir dir="${dist.dir}"/>
 		<property name="commons.zip-files.shared.include" value="
 			build-commons.xml
@@ -150,7 +138,7 @@
     		properties/i18n/bundles/*.properties
     		properties/jsf/commons-render-kit.xml
     	" />
-		<property name="commons.zip-files.servlet.include" value="
+		<property name="commons.zip-files.include" value="
 			${commons.zip-files.shared.include}
     	" />
 		<property name="commons.zip-files.quick-start.include" value="
@@ -167,27 +155,25 @@
 			properties/misc/application-example.xml
 			properties/web/navigation-example.xml
 			properties/web/converters-example.xml
+			properties/deepLinking/deepLinking-example.xml
     	" />
-	    <delete file="${dist.dir}/${app.name}-servlet-${app.version}-${app.release}.zip" />
-	    <zip destfile="${dist.dir}/${app.name}-servlet-${app.version}-${app.release}.zip">
+	    <delete file="${dist.dir}/${app.name}-${app.version}-${app.release}.zip" failonerror="false" />
+	    <zip destfile="${dist.dir}/${app.name}-${app.version}-${app.release}.zip">
 		    <zipfileset 
 		    	dir="${commons.basedir}" 
 		    	excludes="${commons.zip-files.exclude}" 
-		    	includes="${commons.zip-files.servlet.include}"
-		    	prefix="${app.name}-servlet-${app.version}"/>
+		    	includes="${commons.zip-files.include}"
+		    	prefix="${app.name}-${app.version}"/>
 		    <zipfileset 
 		    	dir="${basedir}" 
 		    	excludes="${app.zip-files.exclude}" 
-		    	includes="${app.zip-files.servlet.include}"
-		    	prefix="${app.name}-servlet-${app.version}"/>
-		    <zipfileset 
-		    	dir="tmp/servlet" 
-		    	prefix="${app.name}-servlet-${app.version}"/>
+		    	includes="${app.zip-files.include}"
+		    	prefix="${app.name}-${app.version}"/>
 		    <zipfileset dir="${website.dir}"
-		    	prefix="${app.name}-servlet-${app.version}/docs"/>
+		    	prefix="${app.name}-${app.version}/docs"/>
 	    </zip>
-	    <delete file="${dist.dir}/${app.name}-quick-start-${app.version}-${app.release}.zip" />
-		    <zip destfile="${dist.dir}/${app.name}-quick-start-${app.version}-${app.release}.zip">
+	    <delete file="${dist.dir}/${app.name}-quick-start-${app.version}-${app.release}.zip" failonerror="false" />
+		<zip destfile="${dist.dir}/${app.name}-quick-start-${app.version}-${app.release}.zip">
 		    <zipfileset 
 		    	dir="${commons.basedir}" 
 		    	excludes="${commons.zip-files.exclude}" 
@@ -197,9 +183,6 @@
 		    	dir="${basedir}" 
 		    	excludes="${app.zip-files.exclude}" 
 		    	includes="${app.zip-files.quick-start.include}"
-		    	prefix="${app.name}-quick-start-${app.version}"/>
-		    <zipfileset 
-		    	dir="tmp/quick-start" 
 		    	prefix="${app.name}-quick-start-${app.version}"/>
 		    <zipfileset dir="${website.dir}"
 		    	prefix="${app.name}-quick-start-${app.version}/docs"/>
