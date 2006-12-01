@@ -5,28 +5,35 @@
 package org.esupportail.lecture.web.controllers;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
+
 import org.apache.myfaces.portlet.PortletUtil;
+import org.esupportail.lecture.domain.beans.User;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.authentication.AuthenticationService;
+import org.esupportail.commons.utils.Assert;
+import org.esupportail.commons.utils.ExternalContextUtils;
+import org.esupportail.commons.utils.strings.StringUtils;
 import org.esupportail.commons.web.controllers.ExceptionController;
-import org.esupportail.commons.web.jsf.ScopeAware;
-import org.springframework.util.Assert;
 
 /**
  * A bean to memorize the context of the application.
  */
-public class SessionController extends AbstractDomainAwareBean implements ScopeAware {
+public class SessionController extends AbstractDomainAwareBean {
 
 	/**
 	 * The name of the parameter that gives the logout URL.
 	 */
 	private static final String LOGOUT_URL_PARAM = "edu.yale.its.tp.cas.client.logoutUrl";
 
+	/**
+	 * The name of the request attribute that holds the current user.
+	 */
+	private static final String CURRENT_USER_ATTRIBUTE = SessionController.class.getName() + ".currentUser";
+	
 	/**
 	 * The exception controller (called when logging in/out).
 	 */
@@ -42,30 +49,40 @@ public class SessionController extends AbstractDomainAwareBean implements ScopeA
 	 */
 	public SessionController() {
 		super();
-		reset();
 	}
 
 	/**
-	 * @see AbstractDomainAwareBean#afterPropertiesSet()
+	 * @see org.esupportail.blank.web.controllers.AbstractDomainAwareBean#afterPropertiesSetInternal()
 	 */
 	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-		Assert.notNull(this.exceptionController, 
-				"property exceptionController of class " + this.getClass().getName() + " can not be null");
-		Assert.notNull(this.authenticationService, 
-				"property authenticationService of class " + this.getClass().getName() + " can not be null");
+	public void afterPropertiesSetInternal() {
+		Assert.notNull(this.exceptionController, "property exceptionController of class " 
+				+ this.getClass().getName() + " can not be null");
+		Assert.notNull(this.authenticationService, "property authenticationService of class " 
+				+ this.getClass().getName() + " can not be null");
 	}
 
 	/**
-	 * @see org.esupportail.commons.web.controllers.Resettable#reset()
+	 * @return the current user, or null if guest.
 	 */
-	public void reset() {
-		// nothing
+	@Override
+	public User getCurrentUser() {
+//		if (ExternalContextUtils.getRequestVar(CURRENT_USER_ATTRIBUTE) == null) {
+//			String currentUserId = authenticationService.getCurrentUserId();
+//			if (currentUserId == null) {
+//				return null;
+//			}
+//			User user = getDomainService().getUser(currentUserId);
+//			// update the information
+//			getDomainService().updateUserInfo(user);
+//			ExternalContextUtils.setRequestVar(CURRENT_USER_ATTRIBUTE, user);
+//		}
+//		return (User) ExternalContextUtils.getRequestVar(CURRENT_USER_ATTRIBUTE);
+		return null;
 	}
-	
+
 	/**
-	 * @return boolean true if running as a portlet. 
+	 * @return true if running as a portlet. 
 	 */
 	public static boolean isPortlet() {
         return PortletUtil.isPortletRequest(FacesContext.getCurrentInstance());
@@ -76,6 +93,20 @@ public class SessionController extends AbstractDomainAwareBean implements ScopeA
 	 */
 	public boolean isServlet() {
         return !isPortlet();
+	}
+	
+	/**
+	 * @return true if the login button should be printed. 
+	 */
+	public boolean isPrintLogin() {
+		return isServlet() && getCurrentUser() == null;
+	}
+	
+	/**
+	 * @return true if the logout button should be printed. 
+	 */
+	public boolean isPrintLogout() {
+		return isServlet() && getCurrentUser() != null;
 	}
 	
 	/**
@@ -90,7 +121,7 @@ public class SessionController extends AbstractDomainAwareBean implements ScopeA
 	 */
 	@Override
 	public String toString() {
-		return "SessionController#";
+		return "SessionController#" + hashCode();
 	}
 
 	/**
@@ -99,20 +130,6 @@ public class SessionController extends AbstractDomainAwareBean implements ScopeA
 	public void setAuthenticationService(final AuthenticationService authenticationService) {
 		this.authenticationService = authenticationService;
 	}
-
-	/**
-	 * @see org.esupportail.commons.web.jsf.ScopeAware#getScope()
-	 */
-	public String getScope() {
-		return ScopeAware.SESSION_SCOPE;
-	}
-	
-//	private void debug(final HttpServletRequest request) throws IOException {
-//		System.err.println(request);
-//		System.err.println(request.getSession());
-//		System.err.println("user = [" + HttpUtils.getSessionAttribute(request, CASFilter.CAS_FILTER_USER) + "]");
-//		System.err.println(HttpUtils.getSessionAttributesStrings(request));
-//	}
 
 	/**
 	 * JSF callback.
@@ -131,7 +148,7 @@ public class SessionController extends AbstractDomainAwareBean implements ScopeA
 			throw new ConfigException("context parameter '" + LOGOUT_URL_PARAM + "' not found");
 		}
 		String returnUrl = request.getRequestURL().toString().replaceFirst("/stylesheets/[^/]*$", "");
-		String forwardUrl = String.format(logoutUrl, URLEncoder.encode(returnUrl, "UTF-8"));
+		String forwardUrl = String.format(logoutUrl, StringUtils.utf8UrlEncode(returnUrl));
 		// note: the session beans will be kept event when invalidating 
 		// the session so they have to be reset (by the exception controller).
 		// We invalidate the session however for the other attributes.

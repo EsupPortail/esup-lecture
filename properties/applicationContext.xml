@@ -34,7 +34,7 @@
 	<import resource="misc/abstractBeans.xml" />
 	<import resource="misc/application.xml" />
 	<import resource="smtp/smtp.xml" />
-	<!-- <import resource="init/init.xml" />  -->
+	<import resource="init/init.xml" />
 	<import resource="tags/tags.xml" /> 
 	<import resource="web/controllers.xml" />
 	<import resource="web/converters.xml" />

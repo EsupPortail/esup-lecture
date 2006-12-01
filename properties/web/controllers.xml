@@ -22,7 +22,7 @@
 
 	<bean id="homeController"
 		class="org.esupportail.lecture.web.controllers.HomeController"
-		parent="abstractContextAwareController">
+		parent="abstractContextAwareController" scope="session">
 		<description>A bean to manage the home page.</description>
 		<property name="facadeService" ref="facadeService"/>
 	</bean>

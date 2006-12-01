@@ -8,11 +8,12 @@ import java.util.Locale;
 
 import org.esupportail.lecture.domain.DomainService;
 import org.esupportail.lecture.domain.beans.User;
-import org.esupportail.commons.domain.beans.AbstractApplicationAwareBean;
+import org.esupportail.commons.beans.AbstractApplicationAwareBean;
 import org.esupportail.commons.services.logging.Logger;
 import org.esupportail.commons.services.logging.LoggerImpl;
+import org.esupportail.commons.services.urlGeneration.UrlGenerator;
+import org.esupportail.commons.utils.Assert;
 import org.esupportail.commons.web.controllers.Resettable;
-import org.springframework.util.Assert;
 
 /**
  * An abstract class inherited by all the beans for them to get:
@@ -31,13 +32,17 @@ public abstract class AbstractDomainAwareBean extends AbstractApplicationAwareBe
 	 * see {@link DomainService}.
 	 */
 	private DomainService domainService;
+	
+	/**
+	 * The URL generator.
+	 */
+	private UrlGenerator urlGenerator;
 
 	/**
 	 * Constructor.
 	 */
 	protected AbstractDomainAwareBean() {
 		super();
-		reset();
 	}
 
 	/**
@@ -48,6 +53,25 @@ public abstract class AbstractDomainAwareBean extends AbstractApplicationAwareBe
 		super.afterPropertiesSet(); 
 		Assert.notNull(this.domainService, 
 				"property domainService of class " + this.getClass().getName() + " can not be null");
+//		Assert.notNull(this.urlGenerator, 
+//				"property urlGenerator of class " + this.getClass().getName() + " can not be null");
+		afterPropertiesSetInternal();
+		reset();
+	}
+
+	/**
+	 * This method is run once the object has been initialized, just before reset().
+	 */
+	protected void afterPropertiesSetInternal() {
+		// override this method
+	}
+	
+	/**
+	 * @see org.esupportail.commons.web.controllers.Resettable#reset()
+	 */
+	public void reset() {
+		// nothing to reset
+		
 	}
 
 	/**
@@ -100,6 +124,20 @@ public abstract class AbstractDomainAwareBean extends AbstractApplicationAwareBe
 			logger.debug("language for user '" + currentUser.getId() + "' is '" + locale + "'");
 		}
 		return locale;
+	}
+
+	/**
+	 * @return the urlGenerator
+	 */
+	protected UrlGenerator getUrlGenerator() {
+		return urlGenerator;
+	}
+
+	/**
+	 * @param urlGenerator the urlGenerator to set
+	 */
+	public void setUrlGenerator(final UrlGenerator urlGenerator) {
+		this.urlGenerator = urlGenerator;
 	}
 
 }

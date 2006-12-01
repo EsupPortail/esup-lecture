@@ -5,8 +5,7 @@
 package org.esupportail.lecture.web.controllers;
 
 import org.esupportail.lecture.domain.beans.User;
-import org.esupportail.commons.web.jsf.ScopeAware;
-import org.springframework.util.Assert;
+import org.esupportail.commons.utils.Assert;
 
 
 /**
@@ -16,7 +15,7 @@ import org.springframework.util.Assert;
  * - the application service (applicationService).
  * - the i18n service (i18nService).
  */
-public abstract class AbstractContextAwareController extends AbstractDomainAwareBean implements ScopeAware {
+public abstract class AbstractContextAwareController extends AbstractDomainAwareBean {
 
 	/**
 	 * The SessionController.
@@ -31,13 +30,12 @@ public abstract class AbstractContextAwareController extends AbstractDomainAware
 	}
 
 	/**
-	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+	 * @see org.esupportail.blank.web.controllers.AbstractDomainAwareBean#afterPropertiesSetInternal()
 	 */
 	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-		Assert.notNull(this.sessionController, 
-				"property sessionController of class " + this.getClass().getName() + " can not be null");
+	public void afterPropertiesSetInternal() {
+		Assert.notNull(this.sessionController, "property sessionController of class " 
+				+ this.getClass().getName() + " can not be null");
 	}
 
 	/**
@@ -60,13 +58,6 @@ public abstract class AbstractContextAwareController extends AbstractDomainAware
 	@Override
 	protected User getCurrentUser() {
 		return sessionController.getCurrentUser();
-	}
-
-	/**
-	 * @see org.esupportail.commons.web.jsf.ScopeAware#getScope()
-	 */
-	public String getScope() {
-		return ScopeAware.SESSION_SCOPE;
 	}
 
 }

@@ -16,11 +16,8 @@
 			The class in charge of resolving the variables in view. This resolver
 			tries to find the variables not managed by JSF in the Spring beans.
 		-->
-		<!--variable-resolver>
-			org.springframework.web.jsf.DelegatingVariableResolver
-		</variable-resolver-->
 		<variable-resolver>
-			org.esupportail.commons.web.jsf.ScopeAwareDelegatingVariableResolver
+			org.springframework.web.jsf.DelegatingVariableResolver
 		</variable-resolver>
 		<!--
 			The locales supported by the application. Please note that the bean i18nService relies

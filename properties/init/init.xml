@@ -12,24 +12,15 @@
 		This file is referenced by /properties/applicationContext.xml.
 	-->
 
-<!-- 
 	<bean 
 		id="versionningService"
-		class="org.esupportail.lecture.batch.VersionningService"
+		class="org.esupportail.lecture.services.application.VersionningServiceImpl"
 		parent="abstractDomainAwareBean"
 		>
 		<description>
 			This bean is used to manage the initialization and the versionning 
 			of the application.
 		</description>
-		<property name="firstAdministratorId" value="bourges" >
-			<description>
-				The id of the first administrator of the application. This user will be 
-				created and set as administrator when the database is initialized with
-				'ant init'.
-			</description>
-		</property>
 	</bean>
- -->
 
 </beans>
