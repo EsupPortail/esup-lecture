@@ -27,12 +27,17 @@
 	</portlet>
 	
 	<user-attribute>
-		<description>the uid of the portal user</description>
+		<description>the username of the portal user</description>
 		<name>username</name>
 	</user-attribute>
 	
 	<user-attribute>
-		<description>the uid of the portal user</description>
+		<description>the displayName of the portal user</description>
 		<name>displayName</name>
+	</user-attribute>
+	
+	<user-attribute>
+		<description>the sn of the portal user</description>
+		<name>sn</name>
 	</user-attribute>
 </portlet-app>

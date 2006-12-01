@@ -178,10 +178,10 @@ public class DaoServiceRemoteXML {
 			ret.setVisibility(visibilitySets);
 		} catch (MalformedURLException e) {
 			log.error("DaoServiceRemoteXML :: getFreshManagedCategory, "+e.getMessage());
-			throw new ErrorException();
+			throw new ErrorException("DaoServiceRemoteXML :: getFreshManagedCategory, "+e.getMessage());
 		} catch (ConfigurationException e) {
 			log.error("DaoServiceRemoteXML :: getFreshManagedCategory, "+e.getMessage());
-			throw new ErrorException();
+			throw new ErrorException("DaoServiceRemoteXML :: getFreshManagedCategory, "+e.getMessage());
 		} 
 		return ret;
 	}
@@ -283,7 +283,7 @@ public class DaoServiceRemoteXML {
 			ret.setURL(urlSource);
 		} catch (DocumentException e) {
 			log.error("DaoServiceRemoteXML :: getSource, "+e.getMessage());
-			throw new ErrorException();
+			throw new ErrorException("DaoServiceRemoteXML :: getSource, url="+urlSource+", message="+e.getMessage());
 		}
 		return ret;
 	}

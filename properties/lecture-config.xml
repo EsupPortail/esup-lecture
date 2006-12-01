@@ -28,6 +28,12 @@
   	  <refCategoryProfile refId="cp3"/>
   	  <refCategoryProfile refId="cp4"/>  
 	</context>
+	<context 
+	  name = "Démonstration Esup-Lecture"
+	  id = "default">
+	  <description>Context de démo</description> 
+  	  <refCategoryProfile refId="demo1"/>
+	</context>
 
 	<categoryProfile 
 		name="categorie1 : no trust cat"
@@ -100,6 +106,24 @@
 			<obliged>	
 				<group
 					name="local.10"/>
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+	<categoryProfile 
+		name="Categorie de démo"
+		id="demo1"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo1.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600" > 
+		<visibility>
+			<allowed/>
+			<!-- autoSubscribed not yet supported -->
+			<autoSubscribed/>
+			<obliged>	
+				<group
+					name="local.0"/>
 			</obliged>	
 		</visibility>
 	</categoryProfile>

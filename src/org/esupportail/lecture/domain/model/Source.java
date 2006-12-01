@@ -149,23 +149,25 @@ public abstract class Source implements Element,Serializable {
 		
 		if (setXsltURL == null || setItemXPath == null) {
 			if (URL != null) {
-				// TODO prendre l'URL dans le sourceProfile
+				//Try to find a mapping from url
 				m = channel.getMappingBySourceURL(URL);
-			} else {
-			if (dtd != null) {
-				m = channel.getMappingByDtd(dtd);
-			} else {
-			if (xmlType != null) {
-				m = channel.getMappingByXmlType(xmlType);
-			} else {
-			if (xmlns != null) {
-				m = channel.getMappingByXmlns(xmlns);
-			} else {
-			if (rootElement != null) {
-				m = channel.getMappingByRootElement(rootElement);
-			} else {
-				log.warn("Source "+profileId+" does not have any xslt information : no sourceURL, dtd, xmlType, xmlns, rootElement");
-			}}}}}
+			}
+			if (m == null) {
+				//no mapping find from url so using XML content caracteristics
+				if (dtd != null) {
+					m = channel.getMappingByDtd(dtd);
+				} else {
+					if (xmlType != null) {
+						m = channel.getMappingByXmlType(xmlType);
+					} else {
+						if (xmlns != null) {
+							m = channel.getMappingByXmlns(xmlns);
+						} else {
+							if (rootElement != null) {
+								m = channel.getMappingByRootElement(rootElement);
+							} else {
+								log.warn("Source "+profileId+" does not have any xslt information : no sourceURL, dtd, xmlType, xmlns, rootElement");
+							}}}}}
 		
 			if (m == null) {
 				log.warn("Source "+profileId+" does not find xslt in mapping file ");

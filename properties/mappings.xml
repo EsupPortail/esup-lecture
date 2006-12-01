@@ -1,28 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mappings SYSTEM "mappings.dtd" >
 <mappings>
-	<mapping xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	<mapping 
 		sourceURL="http://info.cri.univ-rennes1.fr/rss/rss.php"
 		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/stylesheet01.xsl"
 		itemXPath="/rdf:RDF/default:item">
 		<XPathNameSpace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
 		<XPathNameSpace prefix="default" uri="http://purl.org/rss/1.0/" />
 	</mapping>
-	<mapping xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-		xmlType="RDF" xsltFile="mon_xsltFile1 test"
-		itemXPath="/rdf:RDF/default:item">
-		<!-- 
-		<XPathNameSpace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
-		<XPathNameSpace prefix="default" uri="http://purl.org/rss/1.0/" />
-		 -->
+	<mapping 
+		rootElement="rss"
+		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/stylesheet01.xsl"
+		itemXPath="/rss/channel/item">
 	</mapping>
-	<mapping dtd="ma_dtd2" xmlns="ma_xmlns2" xmlType="ma_xmlType2"
-		xsltFile="mon_xsltFile2" itemXPath="mon_itemXpath2" />
-	<mapping dtd="ma_dtd3" xmlns="ma_xmlns3" xmlType="ma_xmlType3"
-		xsltFile="mon_xsltFile3" itemXPath="mon_itemXpath3" />
-	<mapping dtd="ma_dtd4" xmlns="ma_xmlns4" xmlType="ma_xmlType4"
-		xsltFile="mon_xsltFile4" itemXPath="mon_itemXpath4" />
-	<mapping dtd="ma_dtd5" xmlns="ma_xmlns5" xmlType="ma_xmlType5"
-		xsltFile="mon_xsltFile5" itemXPath="mon_itemXpath5" />
 
 </mappings>
