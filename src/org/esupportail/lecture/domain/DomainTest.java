@@ -43,10 +43,10 @@ public class DomainTest {
 		testGetContext();
 		testGetVisibleCategories();
 		testGetVisibleSources();
-		//testGetItems();
+		testGetItems();
 		//testMarkItemAsRead();
 		//testSetTreeSize();
-		testFoldCategory();
+		//testFoldCategory();
 	
 	}
 
