@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE channelConfig SYSTEM "lecture-config.dtd" >
+<!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" >
 <channelConfig>
 	<!-- user attribute to define a user Id -->
 	<userId>displayName</userId>

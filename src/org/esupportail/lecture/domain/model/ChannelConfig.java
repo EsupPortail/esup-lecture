@@ -48,7 +48,7 @@ public class ChannelConfig  {
 	/**
 	 *  classpath relative path of the file to load
 	 */
-	private static String filePath ="/properties/lecture-config.xml";
+	private static String filePath ="/properties/esup-lecture.xml";
 	//TODO (GB later) externaliser filePath
 	
 	/**
