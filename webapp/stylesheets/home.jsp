@@ -27,39 +27,31 @@ toggleButton: read/unread toggle button
 	<link rel="stylesheet"
 		href="http://localhost:8080/esup-lecture/media/lecture.css"
 		media="screen" />
-	<e:page stringsVar="msgs" menuItem="welcome" locale="#{homeController.locale}">
+	<e:page stringsVar="msgs" menuItem="welcome"
+		locale="#{homeController.locale}">
 		<h:form id="home">
-			<!-- ********* homeRight and homeLeft fisrt for just one jsp:include/page ********* -->
-			<t:buffer into="#{homeRight}">
-				<jsp:include page="homeRight.jsp" />
-			</t:buffer>
-			<t:buffer into="#{homeLeft}">
-				<jsp:include page="homeLeft.jsp" />
-			</t:buffer>
-			<!-- ********* With Tree View ********* -->
-			<t:buffer into="#{withTree}">
-				<t:htmlTag value="table" styleClass="portlet-table-body" style="width: 100%">
+			<!-- ********* Rendering ********* -->
+			<h:outputText id="left" escape="false"
+				rendered="#{homeController.treeVisible}">
+				<t:htmlTag value="table" styleClass="portlet-table-body"
+					style="width: 100%">
 					<t:htmlTag value="tr">
 						<t:htmlTag value="td" id="TDLeft" forceId="true"
 							style="width: #{homeController.treeSize}%">
-							<h:outputText value="#{homeLeft}" escape="false"/>
+							<jsp:include page="homeLeft.jsp" />
 						</t:htmlTag>
 						<t:htmlTag value="td" id="TDRight" forceId="true"
 							style="width: #{100 - homeController.treeSize}%">
-							<h:outputText value="#{homeRight}" escape="false"/>
+							<jsp:include page="homeRight.jsp" />
 						</t:htmlTag>
 					</t:htmlTag>
 				</t:htmlTag>
-			</t:buffer>
-			<!-- ********* Without Tree View ********* -->
-			<t:buffer into="#{withoutTree}">
-				<h:outputText value="#{homeRight}" escape="false"/>
-			</t:buffer>
-			<!-- ********* Rendering ********* -->
-			<h:outputText id="left" value="#{withTree}" escape="false"
-				rendered="#{homeController.treeVisible}" />
-			<h:outputText id="right" value="#{withoutTree}" escape="false"
-				rendered="#{!homeController.treeVisible}" />
+			</h:outputText>
+			<h:outputText id="right" escape="false"
+				rendered="#{!homeController.treeVisible}">
+				<jsp:include page="homeRight.jsp" />
+			</h:outputText>
+
 		</h:form>
 	</e:page>
 </jsp:root>
