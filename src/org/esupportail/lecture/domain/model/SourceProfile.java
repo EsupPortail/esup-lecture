@@ -46,12 +46,18 @@ public abstract class SourceProfile implements ElementProfile {
 
 	private String itemXPath;
 	
+	private boolean specificUserContent = false; 
+	
+	private int ttl;
+	
 
 
 /* ************************** METHODS ******************************** */	
 	
 	
 	
+
+
 	protected abstract void loadSource(ExternalService externalService) throws ElementNotLoadedException; 
 	
 	
@@ -144,5 +150,33 @@ public abstract class SourceProfile implements ElementProfile {
 		
 	}
 
+
+	public String getItemXPath() {
+		return itemXPath;
+	}
+
+
+	public String getXsltURL() {
+		return xsltURL;
+	}
+
+
+	public int getTtl() {
+		return ttl;
+	}
+
+
+	public void setTtl(int ttl) {
+		this.ttl = ttl;
+	}
+
+	public boolean isSpecificUserContent() {
+		return specificUserContent;
+	}
+
+
+	public void setSpecificUserContent(boolean specificUserContent) {
+		this.specificUserContent = specificUserContent;
+	}
 
 }

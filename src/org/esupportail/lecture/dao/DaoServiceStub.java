@@ -110,7 +110,7 @@ public class DaoServiceStub  implements DaoService {
 	}
 
 	public Source getSource(ManagedSourceProfile profile) {
-		return this.remoteXMLService.getSource(profile.getSourceURL(), profile.getTtl(), profile.getId(), profile.isSpecificUserContent());
+		return this.remoteXMLService.getSource(profile);
 	}
 
 	public void updateCustomContext(CustomContext customContext) {

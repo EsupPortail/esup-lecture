@@ -124,18 +124,336 @@
       <screen>TO COMPLETE !!! //TODO : lecture-config.xml/userId &lt;--&gt;
       portlet.xml/user-attribute/name &lt;--&gt; uPortal attribute</screen>
 
-      <para>Adapt to your environment these configuration files of
+      <para>Adapt to your environment with these configuration files of
       WEB-INF/classes/properties:</para>
 
       <itemizedlist>
         <listitem>
-          <para>lecture-config.xml</para>
+          <para><command>lecture-config.xml</command> : it describes contexts,
+          category profiles and userId definition. Here is the structure of
+          this file (for more information, look at dtd
+          <command>lecture-config.dtd</command>) :</para>
+
+          <para><programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE channelConfig SYSTEM "lecture-config.dtd" &gt;
+&lt;channelConfig&gt;
+  
+  &lt;!-- user attribute to define a user Id --&gt;
+  &lt;userId&gt;displayName&lt;/userId&gt;
+  
+  &lt;!-- contexts definition --&gt;
+  &lt;context&gt; ... &lt;/context&gt;
+  &lt;context&gt; ... &lt;/context&gt;
+  ...
+
+  &lt;!-- category profile definition --&gt;
+  &lt;categoryProfile&gt; ... &lt;/categoryProfile&gt;
+  &lt;categoryProfile&gt; ... &lt;/categoryProfile&gt;
+  ...
+
+&lt;/channelConfig&gt; </programlisting></para>
+
+          <para><itemizedlist>
+              <listitem>
+                <para>element <command>userId</command> : it indicates which
+                portal user attribute is used to define userId in the channel
+                </para>
+              </listitem>
+
+              <listitem>
+                <para>element <command>context</command> : </para>
+
+                <para><programlisting>&lt;context 
+   name = "Démonstration Esup-Lecture"
+   id = "default"&gt;
+   &lt;description&gt;Context de démo&lt;/description&gt; 
+   &lt;refCategoryProfile refId="demo1"/&gt;
+   &lt;refCategoryProfile refId="demo2"/&gt;
+   ...
+&lt;/context&gt;</programlisting>Here are defined context
+                <emphasis>id</emphasis>, <emphasis>name</emphasis> (displayed
+                on interface), <emphasis>description</emphasis> (displayed on
+                interface), <emphasis>references on category
+                profile</emphasis> declared in this context (using category
+                profile id) . You can declare as many category profile as you
+                want in a context. These category profile must be defined in
+                an element <emphasis>categoryProfile</emphasis>. A same
+                categoryProfile can be declared in many contexts. </para>
+
+                <para>attribute </para>
+              </listitem>
+
+              <listitem>
+                <para>element <command>categoryProfile</command> : </para>
+
+                <para><programlisting>&lt;categoryProfile 
+   name="Categorie de démo"
+   id="demo1"
+   urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo1.xml"
+   trustCategory="no"
+   access="public"
+   ttl = "3600" &gt; 
+   &lt;visibility&gt; ... &lt;/visibility&gt;
+&lt;/categoryProfile&gt;</programlisting>Here are defined category profile
+                <emphasis>id</emphasis>, <emphasis>name</emphasis>, and</para>
+
+                <para><itemizedlist>
+                    <listitem>
+                      <para><emphasis>urlCategory</emphasis> : url to get back
+                      a xml category file on a remote server -see after for
+                      its description-</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>trustCategory</emphasis> ( yes | no ) :
+                      If it is <emphasis>"yes"</emphasis>, visibility rights
+                      used are those of fro visibility category and visibility
+                      sources. If it is <emphasis>"no"</emphasis>, visibility
+                      rights on category and sources used are those of this
+                      category profile, defined in
+                      <emphasis>visibility</emphasis> element.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>access</emphasis> ( public | cas ) :
+                      access of the category is <emphasis>public</emphasis> or
+                      <emphasis>cas</emphasis>.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>ttl</emphasis> (en seconde) : time to
+                      live of the remote category and its sources</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>visibility</emphasis> : define group
+                      visibility for category referenced by this category
+                      profile. It is used only if
+                      <emphasis>trustCategory</emphasis> is set to "no"</para>
+                    </listitem>
+                  </itemizedlist></para>
+              </listitem>
+
+              <listitem>
+                <para>element <command>visibility</command> : </para>
+
+                <para><programlisting>&lt;visibility&gt;
+   &lt;!-- allowed and autoSubscribed not yet supported --&gt;
+   &lt;allowed/&gt;
+   &lt;autoSubscribed/&gt;
+   &lt;obliged&gt;	
+      &lt;group name="local.0"/&gt;
+      &lt;group .../&gt; 
+      ...
+      &lt;regular attribute="sn" value="user" /&gt;
+      &lt;regular .../&gt;
+      ...
+   &lt;/obliged&gt;
+&lt;/visibility&gt;</programlisting>In this element, you define 3 groups of
+                visibility<itemizedlist>
+                    <listitem>
+                      <para><emphasis>allowed</emphasis> : user inside are
+                      "allowed" to subscribe to a category - not yet supported
+                      - </para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>autoSubscribed</emphasis> : user inside
+                      are auto subscribed to this category and is allowed to
+                      unsubscribe - not yet supported -</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>obliged</emphasis> : user inside are
+                      automatically subscribe to this category and can't
+                      unsubscribe - for the moment, it is the only way for
+                      users to see category -</para>
+                    </listitem>
+                  </itemizedlist></para>
+
+                <para>A user is in a visibility group by two ways :</para>
+
+                <para><itemizedlist>
+                    <listitem>
+                      <para><emphasis>group</emphasis> : user is in the portal
+                      group referenced by attribute <emphasis>name</emphasis>,
+                      in the example : user in in group "local.0"</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>regular</emphasis> : user check regular,
+                      in the example : user value of attribute "sn" is
+                      "user"</para>
+                    </listitem>
+                  </itemizedlist></para>
+              </listitem>
+
+              <listitem>
+                <para>element <command>category</command> in xml category file
+                (describe by dtd <command>category.dtd</command>), provided by
+                remote server, requested on <emphasis>urlCategory</emphasis>
+                :</para>
+
+                <para><programlisting>&lt;?xml version="1.0" encoding="ISO-8859-1"?&gt;
+&lt;!DOCTYPE category SYSTEM "category.dtd"&gt;
+&lt;category name="Différents RSS"&gt;
+  &lt;description&gt;Très belle description !&lt;/description&gt;
+  &lt;sourceProfiles&gt;
+    &lt;sourceProfile&gt; ... &lt;/sourceProfiles&gt;
+    &lt;sourceProfile&gt; ... &lt;/sourceProfiles&gt;
+    ...
+  &lt;/sourceProfiles&gt;
+  &lt;visibility&gt; ... &lt;/visibility&gt;
+&lt;/category&gt;</programlisting>A category has a <emphasis>name</emphasis>
+                and a <emphasis>description</emphasis> (displayed on
+                interface), and</para>
+
+                <para><itemizedlist>
+                    <listitem>
+                      <para>a list of <emphasis>source
+                      profiles</emphasis></para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>visibility</emphasis> : define group
+                      visibility for this category. It is used only if
+                      <emphasis>trustCategory</emphasis> attribute of
+                      referencing <emphasis>categoryProfile</emphasis> is set
+                      to "yes" else visibility category profile is used -
+                      optional -</para>
+                    </listitem>
+                  </itemizedlist></para>
+              </listitem>
+
+              <listitem>
+                <para>element <command>sourceProfile</command> in xml category
+                file : </para>
+
+                <para><programlisting>&lt;sourceProfile 
+  id="un" access="public" name="Incidents techniques Rennes 1" 
+  specificUserContent="no" url="http://info.cri.univ-rennes1.fr/rss/rss.php"&gt;
+  &lt;visibility&gt; ... &lt;/visibility&gt;
+&lt;/sourceProfile&gt;</programlisting>A source profile has an
+                <emphasis>id</emphasis>, a <emphasis>name</emphasis>
+                (displayed on interface) and <itemizedlist>
+                    <listitem>
+                      <para><emphasis>access</emphasis> ( public | cas ) :
+                      access of the source is <emphasis>public</emphasis> or
+                      <emphasis>cas</emphasis>.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>specificUserContent</emphasis> ( yes |
+                      no) : if it is "yes", source content is specific to
+                      user. If it is "no", source content is the same for
+                      every users</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>url</emphasis> : url to get xml stream
+                      of the source</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>xslt</emphasis> : A COMPLETER</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>xpath</emphasis> : A COMPLETER</para>
+                    </listitem>
+
+                    <listitem>
+                      <para><emphasis>visibility</emphasis> : define group
+                      visibility for source refered by this source profile. It
+                      is used only if <emphasis>trustCategory</emphasis>
+                      attribute of referencing
+                      <emphasis>categoryProfile</emphasis> is set to "yes"
+                      else visibility category profile is used - optional
+                      -</para>
+                    </listitem>
+                  </itemizedlist></para>
+              </listitem>
+            </itemizedlist>All of portal user attributes used by portlet must
+          be declared in the webapp/WEB-INF/portlet.xml, here is an example :
+          <programlisting>&lt;user-attribute&gt;
+  &lt;description&gt;the username of the portal user&lt;/description&gt;
+  &lt;name&gt;username&lt;/name&gt;
+&lt;/user-attribute&gt;
+&lt;user-attribute&gt;
+  &lt;description&gt;the displayName of the portal user&lt;/description&gt;
+  &lt;name&gt;displayName&lt;/name&gt;
+&lt;/user-attribute&gt;
+&lt;user-attribute&gt;
+  &lt;description&gt;the sn of the portal user&lt;/description&gt;
+  &lt;name&gt;sn&lt;/name&gt;
+&lt;/user-attribute&gt;</programlisting></para>
         </listitem>
 
         <listitem>
-          <para>mappings.xml</para>
+          <para>mappings.xml : it describes a list of mappings used to parse
+          xml stream of a source (see <command>mappings.dtd</command>
+          ):</para>
+
+          <para><programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE mappings SYSTEM "mappings.dtd" &gt;
+&lt;mappings&gt;
+  &lt;mapping&gt; ... &lt;/mapping&gt;
+  &lt;mapping&gt; ... &lt;/mapping&gt;
+  ...
+&lt;/mappings&gt;</programlisting>A mapping is used to define
+          <emphasis>xsltFile</emphasis> and <emphasis>itemXPath</emphasis> of
+          a stream xml source. A source is composed of a list of items that
+          will be parsed to be displayed on interface . Here is a mapping : A
+          COMPLETER</para>
+
+          <para><programlisting>&lt;mapping 
+  sourceURL="http://info.cri.univ-rennes1.fr/rss/rss.php"
+  xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/stylesheet01.xsl"
+  itemXPath="/rdf:RDF/default:item"&gt;
+  &lt;XPathNameSpace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/&gt;
+  &lt;XPathNameSpace prefix="default" uri="http://purl.org/rss/1.0/" /&gt;
+&lt;/mapping&gt;</programlisting><itemizedlist>
+              <listitem>
+                <para><emphasis>xsltFile</emphasis> : url of the xslt file
+                used to parse an item (uniquely parsing of an item)</para>
+              </listitem>
+
+              <listitem>
+                <para><emphasis>itemXPath</emphasis> : xpath expression to
+                locate an item in the xml stream source </para>
+              </listitem>
+
+              <listitem>
+                <para>sourceURL : url of the source that can be parsed by
+                using this mapping, entry key of the mapping</para>
+              </listitem>
+
+              <listitem>
+                <para>dtd ? A COMPLETER</para>
+              </listitem>
+
+              <listitem>
+                <para>xmlns ? A COMPLETER</para>
+              </listitem>
+
+              <listitem>
+                <para>xmlType ? A COMPLETER</para>
+              </listitem>
+
+              <listitem>
+                <para>rootElement ? A COMPLETER</para>
+              </listitem>
+
+              <listitem>
+                <para>XPathNameSpace ? A COMPLETER</para>
+              </listitem>
+            </itemizedlist></para>
         </listitem>
       </itemizedlist>
+
+      <para>Elements or attributes not explained here (but in dtd) implements
+      features that are not yet supported - like attribute
+      <emphasis>edit</emphasis>, </para>
     </section>
   </section>
 </article>

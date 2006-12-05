@@ -166,6 +166,7 @@ public class DaoServiceRemoteXML {
 				visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).obliged(0)"));
 				visibilitySets.setAutoSubscribed(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).autoSubscribed(0)"));
 				sp.setVisibility(visibilitySets);
+				sp.setTtl(profile.getTtl());
 				sourceProfiles.put(sp.getId(),sp);
 			}
 			ret.setSourceProfilesHash(sourceProfiles);
@@ -194,20 +195,21 @@ public class DaoServiceRemoteXML {
 	 * @param specificUserContent : is the content is specific to current user. If yes never use cache
 	 * @return
 	 */
-	public Source getSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
+	public Source getSource(SourceProfile sourceProfile) {
 		Source ret = new GlobalSource();
-		if (specificUserContent) { 
-			ret = getFreshSource(urlSource, ttl, profileId, specificUserContent);
+		if (sourceProfile.isSpecificUserContent()) { 
+			ret = getFreshSource(sourceProfile);
 		}
 		else {
 			System.currentTimeMillis();
+			String urlSource = sourceProfile.getSourceURL();
 			Long lastSrcAccess = sourceLastAccess.get(urlSource);
 			Long currentTimeMillis = System.currentTimeMillis();
 			if (lastSrcAccess != null) {
-				if (lastSrcAccess + (ttl * 1000) > currentTimeMillis) {
+				if (lastSrcAccess + (sourceProfile.getTtl() * 1000) > currentTimeMillis) {
 					ret = (Source)cacheProviderFacade.getFromCache(urlSource, cachingModel);
 					if (ret == null) { // not in cache !
-						ret = getFreshSource(urlSource, ttl, profileId, specificUserContent);
+						ret = getFreshSource(sourceProfile);
 						cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
 						sourceLastAccess.put(urlSource, currentTimeMillis);
 						if (log.isWarnEnabled()) {
@@ -216,13 +218,13 @@ public class DaoServiceRemoteXML {
 					}				
 				}
 				else{
-					ret = getFreshSource(urlSource, ttl, profileId, specificUserContent);
+					ret = getFreshSource(sourceProfile);
 					cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
 					sourceLastAccess.put(urlSource, currentTimeMillis);
 				}
 			}
 			else {
-				ret = getFreshSource(urlSource, ttl, profileId, specificUserContent);
+				ret = getFreshSource(sourceProfile);
 				cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
 				sourceLastAccess.put(urlSource, currentTimeMillis);
 			}
@@ -236,7 +238,7 @@ public class DaoServiceRemoteXML {
 	 * @see DaoServiceRemoteXML#getSource(String, int, String, boolean)
 	 * @return the source
 	 */
-	public Source getFreshSource(String urlSource, int ttl, String profileId, boolean specificUserContent) {
+	public Source getFreshSource(SourceProfile sourceProfile) {
 		//log.debug("URL de la source : "+urlSource);
 		Source ret = new GlobalSource();
 		try {
@@ -248,7 +250,8 @@ public class DaoServiceRemoteXML {
 			
 			//get the XML
 			SAXReader reader = new SAXReader();
-			Document document = reader.read(urlSource);
+			String sourceURL = sourceProfile.getSourceURL();
+			Document document = reader.read(sourceURL);
 			//find the dtd
 			DocumentType doctype = document.getDocType();
 			if (doctype != null) {
@@ -280,10 +283,12 @@ public class DaoServiceRemoteXML {
 			ret.setXmlns(rootNamespace);
 			ret.setXmlStream(xml);
 			ret.setXmlType(xmltype);
-			ret.setURL(urlSource);
+			ret.setURL(sourceURL);
+			ret.setItemXPath(sourceProfile.getItemXPath());
+			ret.setXsltURL(sourceProfile.getXsltURL());
 		} catch (DocumentException e) {
 			log.error("DaoServiceRemoteXML :: getSource, "+e.getMessage());
-			throw new ErrorException("DaoServiceRemoteXML :: getSource, url="+urlSource+", message="+e.getMessage());
+			throw new ErrorException("DaoServiceRemoteXML :: getSource, url="+sourceProfile.getSourceURL()+", message="+e.getMessage());
 		}
 		return ret;
 	}

@@ -237,7 +237,7 @@ public class DomainServiceImpl implements DomainService {
 			customSource = userProfile.getCustomSource(sourceId);
 			customSource.setItemAsRead(itemId);
 		} catch (CustomSourceNotFoundException e) {
-			log.error("CustomSource is not found for service 'getItems(user "+uid+", source "+sourceId+ ")'");
+			log.error("CustomSource is not found for service 'marckItemAsRead(user "+uid+", source "+sourceId+", item"+ itemId+")");
 			throw new ServiceException(e);
 		}
 	}
@@ -255,7 +255,7 @@ public class DomainServiceImpl implements DomainService {
 			customSource = userProfile.getCustomSource(sourceId);
 			customSource.setItemAsUnRead(itemId);
 		} catch (CustomSourceNotFoundException e) {
-			log.error("CustomSource is not found for service 'getItems(user "+uid+", source "+sourceId+ ")'");
+			log.error("CustomSource is not found for service 'marckItemAsUnread(user "+uid+", source "+sourceId+", item"+ itemId+")");
 			throw new ServiceException(e);
 		}
 	}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE channelConfig SYSTEM "clecture.dtd" >
+<!DOCTYPE channelConfig SYSTEM "lecture-config.dtd" >
 <channelConfig>
-	<!-- user attribute used to create a user profile -->
+	<!-- user attribute to define a user Id -->
 	<userId>displayName</userId>
 	<context 
 	  name = "Très beau context1"
@@ -44,8 +44,8 @@
 		access="public"
 		ttl = "3600" >
 		<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
-			<!-- autoSubscribed not yet supported -->
 			<autoSubscribed/>
 			<obliged>
 				<regular
@@ -64,8 +64,8 @@
 		access="public"
 		ttl = "3600" >
 	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
 	 		<allowed/>
-			<!-- autoSubscribed not yet supported -->
 			<autoSubscribed/>
 			<obliged>	
 				<group
@@ -82,8 +82,8 @@
 		access="public"
 		ttl = "3600" >
 		<visibility>
-			<allowed/>
-			<!-- autoSubscribed not yet supported -->
+	 	<!-- allowed and autoSubscribed not yet supported -->
+			<allowed/> 
 			<autoSubscribed/>
 			<obliged>
 				<regular
@@ -100,8 +100,8 @@
 		access="public"
 		ttl = "3600" > 
 		<visibility>
+		<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
-			<!-- autoSubscribed not yet supported -->
 			<autoSubscribed/>
 			<obliged>	
 				<group
@@ -118,8 +118,8 @@
 		access="public"
 		ttl = "3600" > 
 		<visibility>
+			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
-			<!-- autoSubscribed not yet supported -->
 			<autoSubscribed/>
 			<obliged>	
 				<group

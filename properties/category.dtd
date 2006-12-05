@@ -1,8 +1,7 @@
 <!ELEMENT category (description,sourceProfiles, visibility?)>
 <!ATTLIST category 
     name CDATA #REQUIRED
-    edit (all|personal|managed|no) #IMPLIED
-    ttl CDATA #IMPLIED>
+    edit (all|personal|managed|no) "no">
 <!ELEMENT description (#PCDATA)>     
 <!ELEMENT sourceProfiles (sourceProfile+)>
 
@@ -14,10 +13,9 @@
     xslt CDATA #IMPLIED
     xpath CDATA #IMPLIED
     access (public|cas) #IMPLIED
-    ttl CDATA #IMPLIED
     specificUserContent (yes|no) "no">
 
-<!ELEMENT visibility (allowed?,autoSubscribed?,obliged?)>
+<!ELEMENT visibility (allowed,autoSubscribed,obliged)>
 
 <!ELEMENT allowed (regular*, group*)>
 <!ELEMENT autoSubscribed (regular*, group*)>

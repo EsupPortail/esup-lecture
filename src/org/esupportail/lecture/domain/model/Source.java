@@ -110,7 +110,7 @@ public abstract class Source implements Element,Serializable {
 	/**
 	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI)
 	 */
-	private HashMap<String, String> XPathNameSpaces;
+	private HashMap<String, String> XPathNameSpaces = new HashMap<String, String>();
 
 	/**
 	 * Items List of this source
@@ -119,6 +119,9 @@ public abstract class Source implements Element,Serializable {
 	
 /* ************************** METHODS ******************************** */	
 	
+	
+	
+	
 	/**
 	 * find item XPath and url of Xslt file, in Mapping file, in fonction of dtd, xmlType, 
 	 * xmlns or XML root element of the source XML content
@@ -126,6 +129,7 @@ public abstract class Source implements Element,Serializable {
 	protected void computeXslt(){
 
 		Channel channel = DomainTools.getChannel();
+		
 		String setXsltURL = xsltURL;
 		String setItemXPath = itemXPath;
 			
@@ -178,7 +182,7 @@ public abstract class Source implements Element,Serializable {
 				if (setItemXPath == null) {
 					setItemXPath = m.getItemXPath();
 				}
-				if (XPathNameSpaces == null) {
+				if (XPathNameSpaces.size() == 0) {
 					XPathNameSpaces = m.getXPathNameSpaces();
 				}
 			}
@@ -393,7 +397,7 @@ public abstract class Source implements Element,Serializable {
 	/**
 	 * @param itemXPath The itemXPath to set.
 	 */
-	protected void setItemXPath(String itemXPath) {
+	public void setItemXPath(String itemXPath) {
 		this.itemXPath = itemXPath;
 		isXsltComputed = false;
 	}
@@ -412,7 +416,7 @@ public abstract class Source implements Element,Serializable {
 	/**
 	 * @param xsltURL The xsltURL to set.
 	 */
-	protected void setXsltURL(String xsltURL) {
+	public void setXsltURL(String xsltURL) {
 		this.xsltURL = xsltURL;
 		isXsltComputed = false;
 	}

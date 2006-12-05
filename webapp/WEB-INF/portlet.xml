@@ -9,7 +9,7 @@
 	<portlet>
 		<portlet-name>esup-lecture</portlet-name>
 		<portlet-class>
-			org.esupportail.blank.web.portlet.FacesPortlet
+			org.esupportail.commons.web.portlet.FacesPortlet
 		</portlet-class>
 		<init-param>
 			<name>default-view</name>
