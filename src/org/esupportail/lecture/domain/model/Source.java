@@ -134,18 +134,10 @@ public abstract class Source implements Element,Serializable {
 		String setItemXPath = itemXPath;
 			
 		if (log.isDebugEnabled()) {
-			log.debug("Source::computeXslt() : "+profileId);			
-		}
-		if (log.isDebugEnabled()) {
+			log.debug("Source::computeXslt() : "+profileId);
 			log.debug("DTD : "+dtd);
-		}
-		if (log.isDebugEnabled()) {
 			log.debug("xmlType : "+xmlType);		
-		}
-		if (log.isDebugEnabled()) {
-			log.debug("xmlns : "+xmlns);		
-		}
-		if (log.isDebugEnabled()) {
+			log.debug("xmlns : "+xmlns);
 			log.debug("rootElement : "+rootElement);			
 		}
 			

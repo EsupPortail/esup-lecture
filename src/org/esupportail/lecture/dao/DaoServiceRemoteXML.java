@@ -83,18 +83,22 @@ public class DaoServiceRemoteXML {
 		 * fi 
 		 * *************************************
 		 */		
+		if (log.isDebugEnabled()) {
+			log.debug("in getManagedCategory");
+		}
 		ManagedCategory ret = new ManagedCategory();
 		String url = profile.getUrlCategory();
+		String cacheKey = "CAT:"+profile.getId()+url;
 		System.currentTimeMillis();
-		Long lastcatAccess = managedCategoryLastAccess.get(url);
+		Long lastcatAccess = managedCategoryLastAccess.get(cacheKey);
 		Long currentTimeMillis = System.currentTimeMillis();
 		if (lastcatAccess != null) {
 			if (lastcatAccess + (profile.getTtl() * 1000) > currentTimeMillis) {
-				ret = (ManagedCategory)cacheProviderFacade.getFromCache(url, cachingModel);
+				ret = (ManagedCategory)cacheProviderFacade.getFromCache(cacheKey, cachingModel);
 				if (ret == null) { // not in cache !
 					ret = getFreshManagedCategory(profile);
-					cacheProviderFacade.putInCache(url, cachingModel, ret);
-					managedCategoryLastAccess.put(url, currentTimeMillis);
+					cacheProviderFacade.putInCache(cacheKey, cachingModel, ret);
+					managedCategoryLastAccess.put(cacheKey, currentTimeMillis);
 					if (log.isWarnEnabled()) {
 						log.warn("ManagedCategory from url "+url+" can't be found in cahe --> change cache size ?");
 					}
@@ -102,14 +106,14 @@ public class DaoServiceRemoteXML {
 			}
 			else{
 				ret = getFreshManagedCategory(profile);
-				cacheProviderFacade.putInCache(url, cachingModel, ret);
-				managedCategoryLastAccess.put(url, currentTimeMillis);
+				cacheProviderFacade.putInCache(cacheKey, cachingModel, ret);
+				managedCategoryLastAccess.put(cacheKey, currentTimeMillis);
 			}
 		}
 		else {
 			ret = getFreshManagedCategory(profile);
-			cacheProviderFacade.putInCache(url, cachingModel, ret);
-			managedCategoryLastAccess.put(url, currentTimeMillis);
+			cacheProviderFacade.putInCache(cacheKey, cachingModel, ret);
+			managedCategoryLastAccess.put(cacheKey, currentTimeMillis);
 		}
 		return ret;
 	}
@@ -151,8 +155,8 @@ public class DaoServiceRemoteXML {
 				sp.setSourceURL(subxml.getString("[@url]"));
 				sp.setTtl(subxml.getInt("[@ttl]"));
 				sp.setSpecificUserContent(subxml.getBoolean("[@specificUserContent]"));
-				sp.setXsltURL(subxml.getString("[@xslt]"));
-				sp.setItemXPath(subxml.getString("[@xpath]"));
+				sp.setXsltURL(subxml.getString("[@xsltFile]"));
+				sp.setItemXPath(subxml.getString("[@itemXPath]"));
 				String access = subxml.getString("[@access]");
 				if (access.equalsIgnoreCase("public")) {
 					sp.setAccess(Accessibility.PUBLIC);
@@ -238,7 +242,7 @@ public class DaoServiceRemoteXML {
 	 * @see DaoServiceRemoteXML#getSource(String, int, String, boolean)
 	 * @return the source
 	 */
-	public Source getFreshSource(SourceProfile sourceProfile) {
+	private Source getFreshSource(SourceProfile sourceProfile) {
 		//log.debug("URL de la source : "+urlSource);
 		Source ret = new GlobalSource();
 		try {

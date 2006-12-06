@@ -156,12 +156,12 @@
           <para><itemizedlist>
               <listitem>
                 <para>element <command>userId</command> : it indicates which
-                portal user attribute is used to define userId in the channel
-                </para>
+                portal user attribute is used to define userId in the
+                channel</para>
               </listitem>
 
               <listitem>
-                <para>element <command>context</command> : </para>
+                <para>element <command>context</command> :</para>
 
                 <para><programlisting>&lt;context 
    name = "Démonstration Esup-Lecture"
@@ -178,13 +178,13 @@
                 profile id) . You can declare as many category profile as you
                 want in a context. These category profile must be defined in
                 an element <emphasis>categoryProfile</emphasis>. A same
-                categoryProfile can be declared in many contexts. </para>
+                categoryProfile can be declared in many contexts.</para>
 
-                <para>attribute </para>
+                <para>attribute</para>
               </listitem>
 
               <listitem>
-                <para>element <command>categoryProfile</command> : </para>
+                <para>element <command>categoryProfile</command> :</para>
 
                 <para><programlisting>&lt;categoryProfile 
    name="Categorie de démo"
@@ -235,7 +235,7 @@
               </listitem>
 
               <listitem>
-                <para>element <command>visibility</command> : </para>
+                <para>element <command>visibility</command> :</para>
 
                 <para><programlisting>&lt;visibility&gt;
    &lt;!-- allowed and autoSubscribed not yet supported --&gt;
@@ -254,7 +254,7 @@
                     <listitem>
                       <para><emphasis>allowed</emphasis> : user inside are
                       "allowed" to subscribe to a category - not yet supported
-                      - </para>
+                      -</para>
                     </listitem>
 
                     <listitem>
@@ -327,12 +327,13 @@
 
               <listitem>
                 <para>element <command>sourceProfile</command> in xml category
-                file : </para>
+                file :</para>
 
                 <para><programlisting>&lt;sourceProfile 
   id="un" access="public" name="Incidents techniques Rennes 1" 
-  specificUserContent="no" url="http://info.cri.univ-rennes1.fr/rss/rss.php"&gt;
+  specificUserContent="no" url="http://info.cri.univ-rennes1.fr/rss/rss.php   "&gt;
   &lt;visibility&gt; ... &lt;/visibility&gt;
+
 &lt;/sourceProfile&gt;</programlisting>A source profile has an
                 <emphasis>id</emphasis>, a <emphasis>name</emphasis>
                 (displayed on interface) and <itemizedlist>
@@ -355,7 +356,8 @@
                     </listitem>
 
                     <listitem>
-                      <para><emphasis>xslt</emphasis> : A COMPLETER</para>
+                      <para><emphasis>xsltFile</emphasis> : A COMPLETER -
+                      modifier la dtd </para>
                     </listitem>
 
                     <listitem>
@@ -420,7 +422,7 @@
 
               <listitem>
                 <para><emphasis>itemXPath</emphasis> : xpath expression to
-                locate an item in the xml stream source </para>
+                locate an item in the xml stream source</para>
               </listitem>
 
               <listitem>
@@ -453,7 +455,7 @@
 
       <para>Elements or attributes not explained here (but in dtd) implements
       features that are not yet supported - like attribute
-      <emphasis>edit</emphasis>, </para>
+      <emphasis>edit</emphasis>,</para>
     </section>
   </section>
 </article>
