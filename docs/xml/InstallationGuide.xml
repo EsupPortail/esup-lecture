@@ -121,9 +121,6 @@
     <section>
       <title>Content configuration</title>
 
-      <screen>TO COMPLETE !!! //TODO : lecture-config.xml/userId &lt;--&gt;
-      portlet.xml/user-attribute/name &lt;--&gt; uPortal attribute</screen>
-
       <para>Adapt to your environment with these configuration files of
       WEB-INF/classes/properties:</para>
 
@@ -179,8 +176,6 @@
                 want in a context. These category profile must be defined in
                 an element <emphasis>categoryProfile</emphasis>. A same
                 categoryProfile can be declared in many contexts.</para>
-
-                <para>attribute</para>
               </listitem>
 
               <listitem>
@@ -221,8 +216,8 @@
                     </listitem>
 
                     <listitem>
-                      <para><emphasis>ttl</emphasis> (en seconde) : time to
-                      live of the remote category and its sources</para>
+                      <para><emphasis>ttl</emphasis> (second) : time to live
+                      of the remote category and its sources</para>
                     </listitem>
 
                     <listitem>
@@ -331,7 +326,7 @@
 
                 <para><programlisting>&lt;sourceProfile 
   id="un" access="public" name="Incidents techniques Rennes 1" 
-  specificUserContent="no" url="http://info.cri.univ-rennes1.fr/rss/rss.php   "&gt;
+  specificUserContent="no" url="http://info.cri.univ-rennes1.fr/rss/rss.php"&gt;
   &lt;visibility&gt; ... &lt;/visibility&gt;
 
 &lt;/sourceProfile&gt;</programlisting>A source profile has an
@@ -353,15 +348,6 @@
                     <listitem>
                       <para><emphasis>url</emphasis> : url to get xml stream
                       of the source</para>
-                    </listitem>
-
-                    <listitem>
-                      <para><emphasis>xsltFile</emphasis> : A COMPLETER -
-                      modifier la dtd </para>
-                    </listitem>
-
-                    <listitem>
-                      <para><emphasis>xpath</emphasis> : A COMPLETER</para>
                     </listitem>
 
                     <listitem>
@@ -392,9 +378,9 @@
         </listitem>
 
         <listitem>
-          <para>mappings.xml : it describes a list of mappings used to parse
-          xml stream of a source (see <command>mappings.dtd</command>
-          ):</para>
+          <para><command>mappings.xml</command> : it describes a list of
+          mappings used to parse xml stream of a source (see
+          <command>mappings.dtd</command> ):</para>
 
           <para><programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE mappings SYSTEM "mappings.dtd" &gt;
@@ -402,11 +388,13 @@
   &lt;mapping&gt; ... &lt;/mapping&gt;
   &lt;mapping&gt; ... &lt;/mapping&gt;
   ...
-&lt;/mappings&gt;</programlisting>A mapping is used to define
+&lt;/mappings&gt;</programlisting></para>
+
+          <para>A source is composed of a list of items that will be parsed to
+          be all displayed on interface . A mapping is used to define
           <emphasis>xsltFile</emphasis> and <emphasis>itemXPath</emphasis> of
-          a stream xml source. A source is composed of a list of items that
-          will be parsed to be displayed on interface . Here is a mapping : A
-          COMPLETER</para>
+          a stream xml source. Sometimes, to define itemXPath, namespaces
+          definition are required. Here is a mapping :</para>
 
           <para><programlisting>&lt;mapping 
   sourceURL="http://info.cri.univ-rennes1.fr/rss/rss.php"
@@ -417,7 +405,7 @@
 &lt;/mapping&gt;</programlisting><itemizedlist>
               <listitem>
                 <para><emphasis>xsltFile</emphasis> : url of the xslt file
-                used to parse an item (uniquely parsing of an item)</para>
+                used to parse an item</para>
               </listitem>
 
               <listitem>
@@ -426,36 +414,49 @@
               </listitem>
 
               <listitem>
-                <para>sourceURL : url of the source that can be parsed by
-                using this mapping, entry key of the mapping</para>
+                <para>element <emphasis>XPathNameSpace</emphasis> : used by
+                itemXPath definition - optionnal</para>
+
+                <para></para>
               </listitem>
 
               <listitem>
-                <para>dtd ? A COMPLETER</para>
+                <para><emphasis>sourceURL</emphasis> : url of the source, key
+                entry of this mapping</para>
               </listitem>
 
               <listitem>
-                <para>xmlns ? A COMPLETER</para>
+                <para><emphasis>dtd</emphasis> : dtd of the source, key entry
+                of this mapping</para>
               </listitem>
 
               <listitem>
-                <para>xmlType ? A COMPLETER</para>
+                <para><emphasis>xmlns</emphasis> : xml namespace of the
+                source, key entry of this mapping</para>
               </listitem>
 
               <listitem>
-                <para>rootElement ? A COMPLETER</para>
+                <para><emphasis>xmlType</emphasis> : xmlType of the source,
+                key entry of this mapping</para>
               </listitem>
 
               <listitem>
-                <para>XPathNameSpace ? A COMPLETER</para>
+                <para><emphasis>rootElement</emphasis> : rootElement of the
+                source,key entry of this mapping</para>
               </listitem>
             </itemizedlist></para>
+
+          <para>Priority to find xslt informations on key entry of a mapping
+          are : sourceURL, DTD, xmlType, xmlns and finally rootElement.</para>
+
+          <para></para>
         </listitem>
       </itemizedlist>
 
-      <para>Elements or attributes not explained here (but in dtd) implements
-      features that are not yet supported - like attribute
-      <emphasis>edit</emphasis>,</para>
+      <para></para>
+
+      <screen>Elements or attributes not explained here (but in dtd)
+      implements features that are not yet supported</screen>
     </section>
   </section>
 </article>
