@@ -59,7 +59,15 @@ public class HomeController extends twoPanesController {
 	/**
 	 * UID of the connected user
 	 */
-	private String UID = null;	
+	private String UID = null;
+	/**
+	 * Title used in right to display selected category > selected source
+	 */
+	private String selectionTitle = null;
+	/**
+	 * Store if a source is selected or not
+	 */
+	private boolean isSourceSelected = false;	
 	
 	/**
 	 * Controller constructor
@@ -104,11 +112,13 @@ public class HomeController extends twoPanesController {
 		if (srcId.equals("0")) {
 			//toggle expanded status
 			cat.setFolded(!cat.isFolded());
+			isSourceSelected = false;
 		} 
 		else {
 			//set source focused by user as selected source in the category
 			SourceWebBean src = getSourceByID(cat, srcId);
 			cat.setSelectedSource(src);
+			isSourceSelected = true;
 		}
 		// set category focused by user as selected category in the context
 		ContextWebBean ctx = getContext();
@@ -264,6 +274,21 @@ public class HomeController extends twoPanesController {
 	}
 	
 	/**
+	 * @return desciption of current selected element (category or source)
+	 */
+	public String getSelectedElementDescription(){
+		String ret = null;
+		ContextWebBean ctx = getContext();
+		ret = ctx.getDescription();
+		CategoryWebBean categoryWebBean = ctx.getSelectedCategory();
+		if (categoryWebBean != null) {
+			//TODO description not name
+			ret = categoryWebBean.getDescription();
+		}
+		return ret;
+	}
+	
+	/**
 	 * @return Display mode form items
 	 */
 	public String getItemDisplayMode() {
@@ -320,6 +345,7 @@ public class HomeController extends twoPanesController {
 			}
 			context.setName(contextBean.getName());
 			context.setId(contextBean.getId());
+			context.setDescription(contextBean.getDescription());
 			List<CategoryBean> categories = getFacadeService().getVisibleCategories(getUID(), contextId);
 			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
 			if (categories != null) {
@@ -329,6 +355,7 @@ public class HomeController extends twoPanesController {
 					CategoryWebBean categoryWebBean =  new CategoryWebBean();
 					categoryWebBean.setId(categoryBean.getId());
 					categoryWebBean.setName(categoryBean.getName());
+					categoryWebBean.setDescription(categoryBean.getDescription());
 					//find sources in this category
 					List<SourceBean> sources = getFacadeService().getVisibleSources(getUID(), categoryBean.getId());
 					List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
@@ -370,6 +397,33 @@ public class HomeController extends twoPanesController {
 			UID = userBean.getUid();
 		}
 		return UID;
+	}
+
+	/**
+	 * @return information of any source selected or not
+	 */
+	public boolean isSourceSelected() {
+		return isSourceSelected;
+	}
+
+	/**
+	 * @return Selection Title
+	 */
+	public String getSelectionTitle() {
+		String ret = null;
+		ContextWebBean ctx = getContext();
+		CategoryWebBean categoryWebBean = ctx.getSelectedCategory();
+		if (categoryWebBean != null) {
+			//TODO description not name
+			ret = categoryWebBean.getName();
+			if (isSourceSelected) {
+				SourceWebBean sourceWebBean = categoryWebBean.getSelectedSource();
+				if (sourceWebBean != null) {
+					ret += " > " + sourceWebBean.getName();
+				}
+			}
+		}
+		return ret;
 	}
 
 }

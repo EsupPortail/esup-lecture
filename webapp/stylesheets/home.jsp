@@ -51,7 +51,6 @@ toggleButton: read/unread toggle button
 				rendered="#{!homeController.treeVisible}">
 				<jsp:include page="homeRight.jsp" />
 			</h:outputText>
-
 		</h:form>
 	</e:page>
 </jsp:root>

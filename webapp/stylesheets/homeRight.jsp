@@ -11,7 +11,7 @@
 		<t:htmlTag value="div" id="menuRight" forceId="true">
 			<t:htmlTag value="div" styleClass="menuTitle">
 				<t:htmlTag value="span" styleClass="portlet-section-header">
-					<h:outputText value="#{homeController.context.selectedCategory.name}/#{homeController.context.selectedCategory.selectedSource.name}" />
+					<h:outputText value="#{homeController.selectionTitle}" />
 				</t:htmlTag>
 			</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuButton">
@@ -39,7 +39,9 @@
 		</t:htmlTag>
 		<!-- Items display -->
 		<t:htmlTag value="div" id="right">
-			<t:dataList value="#{homeController.items}" var="item" layout="simple">
+			<t:htmlTag value="hr"/>
+			<h:outputText value="#{homeController.selectedElementDescription}" escape="false" rendered="#{!homeController.sourceSelected}"/>
+			<t:dataList value="#{homeController.items}" var="item" layout="simple" rendered="#{homeController.sourceSelected}">
 				<!-- Read/Unread Button -->
 				<t:htmlTag value="div" styleClass="toggleButton">
 					<h:commandButton action="#{homeController.toggleItemReadState}"

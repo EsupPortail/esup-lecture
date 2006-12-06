@@ -14,55 +14,7 @@
 					<h:outputText value="#{homeController.context.selectedCategory.name}/#{homeController.context.selectedCategory.selectedSource.name}" />
 				</t:htmlTag>
 			</t:htmlTag>
-			<t:htmlTag value="div" styleClass="menuButton">
-				<t:htmlTag value="ul">
-					<t:htmlTag value="li">
-						<h:outputText value="#{msgs['selectorLabel']}" />
-						<h:selectOneMenu value="#{homeController.itemDisplayMode}">
-							<f:selectItem itemValue="all" itemLabel="#{msgs['all']}" />
-							<f:selectItem itemValue="notRead" itemLabel="#{msgs['notRead']}" />
-							<f:selectItem itemValue="unreadFirst"
-								itemLabel="#{msgs['unreadFirst']}" />
-						</h:selectOneMenu>
-						<h:commandButton id="submit" value="#{msgs['changeItemDisplayModeButtonLabel']}" action="#{homeController.changeItemDisplayMode}"/>
-					</t:htmlTag>
-					<t:htmlTag id="menuAndXML" value="li" rendered="#{!homeController.treeVisible}">
-						<h:commandButton action="#{homeController.toggleTreeVisibility}"
-							image="/media/menuAndXML.gif" alt="#{msgs['showTree']}" title="#{msgs['showTree']}"/>
-					</t:htmlTag>
-					<t:htmlTag id="XMLWithoutMenu" value="li" rendered="#{homeController.treeVisible}">
-						<h:commandButton action="#{homeController.toggleTreeVisibility}"
-							image="/media/XMLWithoutMenu.gif" alt="#{msgs['hideTree']}" title="#{msgs['hideTree']}"/>
-					</t:htmlTag>
-				</t:htmlTag>
-			</t:htmlTag>
 		</t:htmlTag>
 		<!-- Items display -->
-		<t:htmlTag value="div" id="right">
-			<t:dataList value="#{homeController.items}" var="item" layout="simple">
-				<!-- Read/Unread Button -->
-				<t:htmlTag value="div" styleClass="toggleButton">
-					<h:commandButton action="#{homeController.toggleItemReadState}"
-						image="/media/unread.gif" alt="#{msgs['markAsRead']}"
-						title="#{msgs['markAsRead']}" rendered="#{!item.read}">
-						<t:updateActionListener property="#{homeController.item}"
-							value="#{item}" />
-					</h:commandButton>
-					<h:commandButton action="#{homeController.toggleItemReadState}"
-						image="/media/read.gif" alt="#{msgs['markAsUnread']}"
-						title="#{msgs['markAsUnread']}" rendered="#{item.read}">
-						<t:updateActionListener property="#{homeController.item}"
-							value="#{item}" />
-					</h:commandButton>
-				</t:htmlTag>
-				<!-- Item Display -->
-				<t:htmlTag value="div"
-					styleClass="#{item.read ? 'readArticle' : 'unreadArticle'}">
-					<f:verbatim>
-						<h:outputText value="#{item.htmlContent}" escape="false" />
-					</f:verbatim>
-				</t:htmlTag>
-			</t:dataList>
-		</t:htmlTag>
 	</f:subview>
 </jsp:root>

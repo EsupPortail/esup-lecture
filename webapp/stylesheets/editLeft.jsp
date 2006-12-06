@@ -19,50 +19,7 @@
 				<t:dataList value="#{editController.context.categories}" var="cat" layout="simple">
 					<t:htmlTag value="li"
 						styleClass="#{cat.folded ? 'collapsed' : 'expanded' }">
-						<h:commandButton action="#{editController.selectElement}"
-							image="/media/moins.gif" alt="#{msgs['colapseCategory']}"
-							title="#{msgs['colapseCategory']}" rendered="#{!cat.folded}">
-							<t:updateActionListener property="#{editController.sourceId}" value="0" />
-							<t:updateActionListener property="#{editController.categoryId}"
-								value="#{cat.id}" />
-						</h:commandButton>
-						<h:commandButton action="#{editController.selectElement}"
-							image="/media/plus.gif" alt="#{msgs['expandCategory']}"
-							title="#{msgs['expandCategory']}" rendered="#{cat.folded}">
-							<t:updateActionListener property="#{editController.sourceId}" value="0" />
-							<t:updateActionListener property="#{editController.categoryId}"
-								value="#{cat.id}" />
-						</h:commandButton>
 						<h:outputText value="#{cat.name}" />
-						<t:htmlTag value="ul" rendered="#{!cat.folded}">
-							<!-- Souces -->
-							<t:dataList value="#{cat.sources}" var="src" layout="simple">
-								<t:htmlTag value="li">
-									<h:commandButton action="#{editController.selectElement}"
-										image="/media/puce.gif" alt="#{msgs['selectSource']}" title="#{msgs['selectSource']}"
-										rendered="#{!((editController.context.selectedCategory.id == cat.id) and (cat.selectedSource.id == src.id))}">
-										<t:updateActionListener property="#{editController.sourceId}"
-											value="#{src.id}" />
-										<t:updateActionListener property="#{editController.categoryId}"
-											value="#{cat.id}" />
-									</h:commandButton>
-									<h:graphicImage url="/media/puce.gif"
-										alt="#{msgs['currentSource']}" title="#{msgs['currentSource']}"
-										rendered="#{((editController.context.selectedCategory.id == cat.id) and (cat.selectedSource.id == src.id))}" />
-									<!-- TODO
-									<t:htmlTag value="span" styleClass="portlet-section-alternate"
-										rendered="#{src.withUnread}">
-									 -->
-										<h:outputText value="#{src.name}" />
-									<!-- 
-									</t:htmlTag>
-									 -->
-									 <!-- TODO
-									<h:outputText value="#{src.name}" rendered="#{!src.withUnread}" />
-									  -->
-								</t:htmlTag>
-							</t:dataList>
-						</t:htmlTag>
 					</t:htmlTag>
 				</t:dataList>
 			</t:htmlTag>

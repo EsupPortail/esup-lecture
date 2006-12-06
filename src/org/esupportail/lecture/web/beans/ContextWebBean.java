@@ -23,6 +23,10 @@ public class ContextWebBean {
 	 * List of categories of context
 	 */
 	private List<CategoryWebBean> categories;
+	/**
+	 * description of category
+	 */
+	private String description;
 	
 	/**
 	 * get the id of the context
@@ -77,6 +81,18 @@ public class ContextWebBean {
 	 */
 	public void setCategories(List<CategoryWebBean> categories) {
 		this.categories = categories;
+	}
+	/**
+	 * @return descrition
+	 */
+	public String getDescription() {
+		return description;
+	}
+	/**
+	 * @param description
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

@@ -16,6 +16,10 @@ public class CategoryWebBean {
 	 */
 	private String name;
 	/**
+	 * description of category
+	 */
+	private String description;
+	/**
 	 * store if category is folded or not
 	 */
 	private boolean folded=false;
@@ -86,6 +90,18 @@ public class CategoryWebBean {
 	 */
 	public void setSources(List<SourceWebBean> sources) {
 		this.sources = sources;
+	}
+	/**
+	 * @return descrition
+	 */
+	public String getDescription() {
+		return description;
+	}
+	/**
+	 * @param description
+	 */
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

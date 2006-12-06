@@ -39,16 +39,12 @@
 							<t:dataList value="#{cat.sources}" var="src" layout="simple">
 								<t:htmlTag value="li">
 									<h:commandButton action="#{homeController.selectElement}"
-										image="/media/puce.gif" alt="#{msgs['selectSource']}" title="#{msgs['selectSource']}"
-										rendered="#{!((homeController.context.selectedCategory.id == cat.id) and (cat.selectedSource.id == src.id))}">
+										image="/media/puce.gif" alt="#{msgs['selectSource']}" title="#{msgs['selectSource']}">
 										<t:updateActionListener property="#{homeController.sourceId}"
 											value="#{src.id}" />
 										<t:updateActionListener property="#{homeController.categoryId}"
 											value="#{cat.id}" />
 									</h:commandButton>
-									<h:graphicImage url="/media/puce.gif"
-										alt="#{msgs['currentSource']}" title="#{msgs['currentSource']}"
-										rendered="#{((homeController.context.selectedCategory.id == cat.id) and (cat.selectedSource.id == src.id))}" />
 									<!-- TODO
 									<t:htmlTag value="span" styleClass="portlet-section-alternate"
 										rendered="#{src.withUnread}">

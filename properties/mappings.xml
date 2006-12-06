@@ -10,8 +10,18 @@
 	</mapping>
 	<mapping 
 		rootElement="rss"
-		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/stylesheet01.xsl"
+		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/stylesheet02.xsl"
 		itemXPath="/rss/channel/item">
+	</mapping>
+	<mapping 
+		rootElement="flash"
+		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/flash.xsl"
+		itemXPath="/flash/object">
+	</mapping>
+	<mapping 
+		rootElement="java"
+		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/java.xsl"
+		itemXPath="/java/applet">
 	</mapping>
 
 </mappings>

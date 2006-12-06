@@ -31,8 +31,15 @@
 	<context 
 	  name = "Démonstration Esup-Lecture"
 	  id = "default">
-	  <description>Context de démo</description> 
+	  <description><![CDATA[
+<h1>Contexte de d&eacute;monstration</h1>
+D&eacute;monstration du canal Lecture.<br>
+<br>
+Pour plus d'informations voir le 
+<a target="_blank" href="http://sourcesup.cru.fr/projects/esup-lecture">site du projet</a>
+	  ]]></description> 
   	  <refCategoryProfile refId="demo1"/>
+  	  <refCategoryProfile refId="demo2"/>
 	</context>
 
 	<categoryProfile 
@@ -73,7 +80,7 @@
 		</visibility>
 	</categoryProfile>
 	
-		<categoryProfile 
+	<categoryProfile 
 		name="categorie3 : trust cat"
 		id="cp3"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
@@ -110,9 +117,27 @@
 	</categoryProfile>
 
 	<categoryProfile 
-		name="Categorie de démo"
+		name="Categorie de démo 1"
 		id="demo1"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo1.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600" > 
+		<visibility>
+			<!-- allowed and autoSubscribed not yet supported -->
+			<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group
+					name="local.0"/>
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+		
+	<categoryProfile 
+		name="Categorie de démo 2"
+		id="demo2"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo2.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" > 
