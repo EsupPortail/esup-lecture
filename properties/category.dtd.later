@@ -10,8 +10,6 @@
 	id ID #REQUIRED
     name CDATA #REQUIRED
     url CDATA #REQUIRED
-    xsltFile CDATA #REQUIRED
-    itemXPath CDATA #REQUIRED
     access (public|cas) #IMPLIED
     specificUserContent (yes|no) "no">
 
