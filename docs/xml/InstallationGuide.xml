@@ -43,29 +43,24 @@
   <section>
     <title>Installation</title>
 
+    <note>
+      <para>For this version 0.5 installation instructions are simplified
+      because we don't use esup-commons standard installation mode.</para>
+    </note>
+
     <itemizedlist>
       <listitem>
-        <para>Download LecturePortlet.war from <ulink
+        <para>Download LecturePortlet.zip from <ulink
         url="https://sourcesup.cru.fr/frs/?group_id=251">the project
-        site</ulink><note>
-            <para>Because war name impact configuration it doesn’t include any
-            version information. You have version information in
-            META-INF/MANIFEST.MF file inside the war file.</para>
-          </note></para>
+        site</ulink></para>
       </listitem>
 
       <listitem>
-        <para>Deploy the portlet in your application server. For example with
-        uPortal use this command:</para>
-
-        <para>TODO RB : verifier</para>
-
-        <para><screen>ant deployPortletApp
-        -DportletApp=/chemin/CLecture.war</screen></para>
+        <para>Unzip LecturePortlet.zip somewhere on your tomcat server</para>
 
         <para><note>
-            <para>Web application is deployed in the same directory structure
-            of uPortal</para>
+            <para>Do not use uPortal deployPortletApp ant target ! If you do
+            this you corrupt the web.xml file of the application.</para>
           </note></para>
       </listitem>
 
@@ -124,7 +119,7 @@
       <title>Content configuration</title>
 
       <para>To adapt to your environment, write these configuration files of
-      WEB-INF/classes/properties : </para>
+      WEB-INF/classes/properties :</para>
 
       <itemizedlist>
         <listitem>
@@ -199,15 +194,42 @@
    &lt;refCategoryProfile refId="demo2"/&gt;
    ...
 &lt;/context&gt;</programlisting>Here are defined context
-            <emphasis>id</emphasis> (TODO RB : ref pref portlet + Bug
-            uPortal), <emphasis>name</emphasis> (displayed on interface),
-            <emphasis>description</emphasis> (displayed on interface),
-            <emphasis>references on category profile</emphasis> declared in
-            this context (using category profile id) . You can declare as many
-            category profiles as you want in a context. Each category profile
-            must be defined in an element
-            <emphasis>categoryProfile</emphasis>. A same categoryProfile can
-            be declared in many contexts.</para>
+            <emphasis>with:</emphasis></para>
+
+            <para><itemizedlist>
+                <listitem>
+                  <para><emphasis>id</emphasis> (You can use a specific
+                  context by configuring your portlet with a portlet
+                  preference. This portlet preference must have a mane
+                  “context” and a value equals to the id you want for this
+                  portlet. If you don't define any context preference for your
+                  portlet then context with id “default” is used. With this
+                  mechanism you can define many channels with many contexts
+                  definitions in your portal environment with just one
+                  instance of the portlet. But in uPortal because of a bug
+                  (<ulink
+                  url="http://www.ja-sig.org/issues/browse/UP-1040">http://www.ja-sig.org/issues/browse/UP-1040</ulink>)
+                  you can't use this feature.)</para>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>name</emphasis> (displayed on
+                  interface)</para>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>description</emphasis> (displayed on
+                  interface)</para>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>eferences on category profile</emphasis>
+                  declared in this context (using category profile id)</para>
+                </listitem>
+              </itemizedlist>You can declare as many category profiles as you
+            want in a context. Each category profile must be defined in an
+            element <emphasis>categoryProfile</emphasis>. A same
+            categoryProfile can be declared in many contexts.</para>
           </listitem>
 
           <listitem>
@@ -373,8 +395,12 @@
                 <listitem>
                   <para><emphasis>specificUserContent</emphasis> ( yes | no) :
                   if it is "yes", source content is specific to user. If it is
-                  "no", source content is the same for every users (TODO RB
-                  remarque sur le cache)</para>
+                  "no", source content is the same for every users (If your
+                  configure with “yes” then application assumes that content
+                  can be deferent for each user (may be because of specific
+                  content due to profiling according to authentication). In
+                  this case application doesn't use any cache for the source.
+                  So be careful before use “yes” for this property.)</para>
                 </listitem>
 
                 <listitem>
@@ -393,9 +419,9 @@
               </itemizedlist></para>
 
             <para><note>
-                <para>Be carefull to manage unique id for every source profile
-                defined in categories : application does not yet manage
-                it.</para>
+                <para>Be carefull to manage unique id for every sources
+                profiles defined in categories : application does not yet
+                manage it.</para>
               </note></para>
           </listitem>
         </itemizedlist>

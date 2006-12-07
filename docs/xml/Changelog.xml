@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//UR1//DTD docbookAllegeEsup//FR"
+"http://www.esup-portail.org/consortium/espace/docbook/xxe/dtd/docbook_allege_esup.dtd">
+<article lang="FR">
+  <title>Esup Lecture Portlet - Changelog</title>
+
+  <articleinfo>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="media/logoCLectureV1.jpg"></imagedata>
+      </imageobject>
+    </mediaobject>
+
+    <abstract>
+      <para>XML aggregation portlet. Use French word “Lecture” in his
+      name.</para>
+    </abstract>
+
+    <author>
+      <firstname>Bourges</firstname>
+
+      <surname>Raymond</surname>
+
+      <affiliation>
+        <orgname><ulink url="http://www.univ-rennes1.fr">University of Rennes
+        1</ulink></orgname>
+      </affiliation>
+    </author>
+
+    <revhistory>
+      <revision>
+        <revnumber>1.0</revnumber>
+
+        <date>2006/12/06</date>
+
+        <revdescription>
+          <para>First version of Esup Lecture Portlet changelog (version
+          0.5)</para>
+        </revdescription>
+      </revision>
+    </revhistory>
+  </articleinfo>
+
+  <section>
+    <title>Version 0.5</title>
+
+    <para>First evaluation release for developers</para>
+
+    <itemizedlist>
+      <listitem>
+        <para>Implemented:</para>
+
+        <para><itemizedlist>
+            <listitem>
+              <para>Display of categories and sources according access defined
+              in configuration file</para>
+            </listitem>
+
+            <listitem>
+              <para>Display of XML content form sources (RSS for example but
+              application can used other XML structures)</para>
+            </listitem>
+
+            <listitem>
+              <para>Portlet application</para>
+            </listitem>
+
+            <listitem>
+              <para>Use of esup-commons from Pascal Aubry (<ulink
+              url="http://sourcesup.cru.fr/esup-commons/">http://sourcesup.cru.fr/esup-commons/</ulink>)</para>
+            </listitem>
+          </itemizedlist></para>
+      </listitem>
+
+      <listitem>
+        <para>Not yet full implemented:</para>
+
+        <para><itemizedlist>
+            <listitem>
+              <para>DAO for user preferences persistence</para>
+            </listitem>
+
+            <listitem>
+              <para>Edit mode</para>
+            </listitem>
+
+            <listitem>
+              <para>Exceptions on XML parsing, http error (timeout, not
+              found)</para>
+            </listitem>
+
+            <listitem>
+              <para>Log</para>
+            </listitem>
+          </itemizedlist></para>
+      </listitem>
+
+      <listitem>
+        <para>Known issues:</para>
+
+        <para><itemizedlist>
+            <listitem>
+              <para>SourceProfileID must be unique over all sources.</para>
+            </listitem>
+          </itemizedlist></para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</article>

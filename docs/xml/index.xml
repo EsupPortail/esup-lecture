@@ -60,4 +60,18 @@
         </listitem>
       </itemizedlist></para>
   </section>
+
+  <section>
+    <title>Developer informations</title>
+
+    <para><itemizedlist>
+        <listitem>
+          <para><ulink url="Changelog.html">Changelog</ulink></para>
+        </listitem>
+
+        <listitem>
+          <para><ulink url="../api/index.html">API</ulink></para>
+        </listitem>
+      </itemizedlist></para>
+  </section>
 </article>

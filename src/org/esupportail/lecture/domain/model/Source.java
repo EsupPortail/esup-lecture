@@ -248,6 +248,7 @@ public abstract class Source implements Element,Serializable {
 			}
 			throw new ErrorException("Xpath with NamaSpace not specified in mappings.xml");
 		}
+		isItemComputed = true;
 	}
 	
 	/**
