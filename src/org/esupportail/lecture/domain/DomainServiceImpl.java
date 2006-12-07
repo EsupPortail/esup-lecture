@@ -188,6 +188,7 @@ public class DomainServiceImpl implements DomainService {
 		UserProfile userProfile = channel.getUserProfile(uid);
 		// TODO (GB) why not customCategories ?
 		CustomSource customSource;
+		
 		try {
 			customSource = userProfile.getCustomSource(sourceId);
 		} catch (CustomSourceNotFoundException e) {
@@ -195,31 +196,30 @@ public class DomainServiceImpl implements DomainService {
 			throw new ServiceException(e);
 		}
 	
-			List<ItemBean> listItemBean = new ArrayList<ItemBean>();
+		List<ItemBean> listItemBean = new ArrayList<ItemBean>();
 		
-			List<Item> items;
-			try {
-
-				// TODO (GB) appel via le userProfile ?
-				items = customSource.getItems(externalService);
-			} catch (SourceNotLoadedException e) {
-				log.error("Source is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
-				throw new ServiceException(e);
-			} catch (ElementNotLoadedException e) {
-				log.error("Composant is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
-				throw new ServiceException(e);
-			}
-			for(Item item : items){
-				ItemBean itemBean = new ItemBean(item,customSource);
-				listItemBean.add(itemBean);
+		List<Item> listItems;
+		try {			
+			// TODO (GB) appel via le userProfile ?
+			listItems = customSource.getItems(externalService);
+		} catch (SourceNotLoadedException e) {
+			log.error("Source is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
+			throw new ServiceException(e);
+		} catch (ElementNotLoadedException e) {
+			log.error("Composant is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
+			throw new ServiceException(e);
+		}
+		for(Item item : listItems){
+			ItemBean itemBean = new ItemBean(item,customSource);
+			listItemBean.add(itemBean);
 			// 	TODO (GB) mise à jour du DAO ?
-//				DomainTools.getDaoService().updateCustomSource(customSource);
+//			DomainTools.getDaoService().updateCustomSource(customSource);
 			
-			}
+		}
 		// 	TODO (GB) mise à jour du DAO ?
-//			DomainTools.getDaoService().updateUserProfile(userProfile);
-//			DomainTools.getDaoService().updateCustomCategory(customCategory);		
-			return listItemBean;
+//		DomainTools.getDaoService().updateUserProfile(userProfile);
+//		DomainTools.getDaoService().updateCustomCategory(customCategory);		
+		return listItemBean;
 	}
 
 
