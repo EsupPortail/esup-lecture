@@ -53,7 +53,7 @@ public abstract class Source implements Element,Serializable {
 	private String xmlStream = "";
 	
 	/**
-	 * URL of the source (used by mapping to find ItemXpath and Xslt File)
+	 * URL of the source (also used by xslt mapping to find ItemXpath and Xslt File)
 	 */
 	private String URL = "";
 
@@ -127,7 +127,7 @@ public abstract class Source implements Element,Serializable {
 	 * xmlns or XML root element of the source XML content
 	 */
 	protected void computeXslt(){
-
+		// TODO (gb later) revoir cet algo
 		Channel channel = DomainTools.getChannel();
 		
 		String setXsltURL = xsltURL;
@@ -147,6 +147,9 @@ public abstract class Source implements Element,Serializable {
 			if (URL != null) {
 				//Try to find a mapping from url
 				m = channel.getMappingBySourceURL(URL);
+			}else {
+				log.error("Source "+this.profileId +"does not have any URL defined");
+				// TODO (gb) throw exception
 			}
 			if (m == null) {
 				//no mapping find from url so using XML content caracteristics
@@ -162,7 +165,7 @@ public abstract class Source implements Element,Serializable {
 							if (rootElement != null) {
 								m = channel.getMappingByRootElement(rootElement);
 							} else {
-								log.warn("Source "+profileId+" does not have any xslt information : no sourceURL, dtd, xmlType, xmlns, rootElement");
+								log.warn("Source "+profileId+" does not have any entry key to find xslt information : no dtd, xmlType, xmlns, rootElement");
 							}}}}}
 		
 			if (m == null) {

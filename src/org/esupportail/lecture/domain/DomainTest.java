@@ -119,7 +119,7 @@ public class DomainTest {
 	private static void testGetItems() {
 		printIntro("getItems");
 		System.out.println(" **** source "+sourceId+" **********");
-		List<ItemBean> items = facadeService.getItems(sourceId,userId);
+		List<ItemBean> items = facadeService.getItems(userId,sourceId);
 		for(ItemBean it : items){
 			System.out.println("  **** item ****");
 			System.out.println(it.toString());
