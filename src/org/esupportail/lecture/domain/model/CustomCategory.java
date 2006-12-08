@@ -70,13 +70,13 @@ public abstract class CustomCategory implements CustomElement {
 	 * Add a ManagedCustomSource 
 	 * @param managedSourceProfile
 	 */
-	public abstract void addManagedCustomSource (ManagedSourceProfile managedSourceProfile) ;
+	public abstract void addCustomManagedSource (ManagedSourceProfile managedSourceProfile) ;
 
 	/**
 	 * remove a ManagedCustomSource
 	 * @param managedSourceProfile
 	 */
-	public abstract void removeManagedCustomSource (ManagedSourceProfile managedSourceProfile) ;
+	public abstract void removeCustomManagedSource (ManagedSourceProfile managedSourceProfile) ;
 
 	/**
 	 * @return the categoryProfile associated with this customCategory

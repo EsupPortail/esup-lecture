@@ -178,7 +178,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			log.debug("IsInObliged : "+isInObliged);
 			if (isInObliged) {
 				log.debug("Is in obliged");
-				customManagedCategory.addManagedCustomSource(this);
+				customManagedCategory.addCustomManagedSource(this);
 			
 			} else {
 		/* ---AUTOSUBSCRIBED SET--- */	
@@ -196,7 +196,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 					
 					if (!isInAllowed) { // If isInAllowed : nothing to do
 		/* ---CATEGORY NOT VISIBLE FOR USER--- */
-						customManagedCategory.removeManagedCustomSource(this);
+						customManagedCategory.removeCustomManagedSource(this);
 						return false;
 					}
 					

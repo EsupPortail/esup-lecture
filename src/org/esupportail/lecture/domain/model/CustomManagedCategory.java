@@ -75,7 +75,7 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#addManagedCustomSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
 	 */
 	@Override
-	public void addManagedCustomSource(ManagedSourceProfile managedSourceProfile) {
+	public void addCustomManagedSource(ManagedSourceProfile managedSourceProfile) {
 		String profileId = managedSourceProfile.getId();
 		
 		if (!subscriptions.containsKey(profileId)){
@@ -90,7 +90,7 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#removeManagedCustomSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
 	 */
 	@Override
-	public void removeManagedCustomSource(ManagedSourceProfile profile) {
+	public void removeCustomManagedSource(ManagedSourceProfile profile) {
 		//		 TODO (GB) tester avec la BDD
 		subscriptions.remove(profile.getId());
 		getUserProfile().removeCustomSource(profile.getId());
