@@ -19,7 +19,7 @@
     <author>
       <firstname>Bourges</firstname>
 
-      <surname>Raymond</surname>
+      <surname>Raymond - Bouteille Gwénaëlle</surname>
 
       <affiliation>
         <orgname><ulink url="http://www.univ-rennes1.fr">University of Rennes
@@ -52,6 +52,36 @@
           <imagedata fileref="media/logo_esupportail.jpg"></imagedata>
         </imageobject>
       </mediaobject></para>
+
+    <section>
+      <title>Useful links</title>
+
+      <itemizedlist>
+        <listitem>
+          <para><ulink
+          url="https://sourcesup.cru.fr/projects/esup-lecture/">Project
+          site</ulink></para>
+        </listitem>
+
+        <listitem>
+          <para><ulink
+          url="https://sourcesup.cru.fr/tracker/?atid=1111&amp;group_id=251&amp;func=browse">Bug
+          tracker</ulink></para>
+        </listitem>
+
+        <listitem>
+          <para><ulink
+          url="https://sourcesup.cru.fr/tracker/?atid=1114&amp;group_id=251&amp;func=browse">Feature
+          requests</ulink></para>
+        </listitem>
+
+        <listitem>
+          <para><ulink
+          url="https://sourcesup.cru.fr/frs/?group_id=251">Download
+          page</ulink></para>
+        </listitem>
+      </itemizedlist>
+    </section>
   </section>
 
   <section>
