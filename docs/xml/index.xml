@@ -42,6 +42,19 @@
   </articleinfo>
 
   <section>
+    <title>Introduction</title>
+
+    <para>Esup Lecture Portlet is an <ulink
+    url="http://esup-portail.org">esup-portail.org</ulink> project.</para>
+
+    <para><mediaobject>
+        <imageobject>
+          <imagedata fileref="media/logo_esupportail.jpg"></imagedata>
+        </imageobject>
+      </mediaobject></para>
+  </section>
+
+  <section>
     <title>Documentation</title>
 
     <para><itemizedlist>
