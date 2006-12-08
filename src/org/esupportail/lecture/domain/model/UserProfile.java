@@ -92,6 +92,8 @@ public class UserProfile {
 		if (customContext == null){
 			customContext = new CustomContext(contextId,this);
 			addCustomContext(customContext);
+//			 TODO (GB) mise à jour du DAO ?
+			//DomainTools.getDaoService().addCustomCOntext(userProfile,customContext);
 		}
 		
 		return customContext;
