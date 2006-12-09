@@ -2,7 +2,7 @@
 <!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" >
 <channelConfig>
 	<!-- user attribute to define a user Id -->
-	<userId>displayName</userId>
+	<userId>username</userId>
 	<context 
 	  name = "Très beau context1"
 	  id = "c1">

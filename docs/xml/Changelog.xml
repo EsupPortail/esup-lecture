@@ -42,6 +42,21 @@
   </articleinfo>
 
   <section>
+    <title>Current</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>Fix localhost in jsp (bug #1390)</para>
+      </listitem>
+
+      <listitem>
+        <para>Change "userId" in <command>esup-lecture.xml</command> from
+        "DisplayNane" to "username" (bug #1389)</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
     <title>Version 0.5</title>
 
     <para>First evaluation release for developers</para>
