@@ -7,11 +7,9 @@
 	xmlns:e="http://commons.esup-portail.org">
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
-	<link rel="stylesheet"
-		href="http://localhost:8080/esup-lecture/media/lecture.css"
-		media="screen" />
 	<e:page stringsVar="msgs" menuItem="welcome"
 		locale="#{editController.locale}">
+		<t:stylesheet path="/media/lecture.css" media="screen"/>
 		<h:form id="edit">
 			<t:htmlTag value="table" styleClass="portlet-table-body"
 				style="width: 100%">

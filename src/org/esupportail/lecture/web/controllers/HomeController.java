@@ -61,14 +61,9 @@ public class HomeController extends twoPanesController {
 	 */
 	private String UID = null;
 	/**
-	 * Title used in right to display selected category > selected source
-	 */
-	private String selectionTitle = null;
-	/**
 	 * Store if a source is selected or not
 	 */
-	private boolean isSourceSelected = false;	
-	
+	private boolean isSourceSelected = false;
 	/**
 	 * Controller constructor
 	 */
