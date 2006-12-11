@@ -178,7 +178,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			log.debug("IsInObliged : "+isInObliged);
 			if (isInObliged) {
 				log.debug("Is in obliged");
-				customManagedCategory.addCustomManagedSource(this);
+				customManagedCategory.addSubscription(this);
 			
 			} else {
 		/* ---AUTOSUBSCRIBED SET--- */	
