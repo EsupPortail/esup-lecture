@@ -383,7 +383,6 @@ public abstract class Source implements Element,Serializable {
 	 * @return Returns the itemXPath.
 	 */
 	public String getItemXPath() {
-		//TODO (GB) public for test class
 		if (!isXsltComputed){
 			computeXslt();
 		}
@@ -402,7 +401,6 @@ public abstract class Source implements Element,Serializable {
 	 * @return Returns the xsltURL.
 	 */
 	public String getXsltURL() {
-		//TODO (GB) public for test class
 		if (!isXsltComputed){
 			computeXslt();
 		}

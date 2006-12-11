@@ -288,8 +288,8 @@ public class DaoServiceRemoteXML {
 			ret.setXmlStream(xml);
 			ret.setXmlType(xmltype);
 			ret.setURL(sourceURL);
-			ret.setItemXPath(sourceProfile.getItemXPath());
-			ret.setXsltURL(sourceProfile.getXsltURL());
+//			ret.setItemXPath(sourceProfile.getItemXPath());
+//			ret.setXsltURL(sourceProfile.getXsltURL());
 		} catch (DocumentException e) {
 			log.error("DaoServiceRemoteXML :: getSource, "+e.getMessage());
 			throw new ErrorException("DaoServiceRemoteXML :: getSource, url="+sourceProfile.getSourceURL()+", message="+e.getMessage());

@@ -32,7 +32,6 @@ public class CustomManagedCategory extends CustomCategory {
 	 * The map of subscribed CustomManagedSource
 	 */
 	private Hashtable<String,CustomManagedSource> subscriptions;
-	// TODO (GB) mettre autre chose qu'une map ?
 	
 	/*
 	 ************************** INIT *********************************/	

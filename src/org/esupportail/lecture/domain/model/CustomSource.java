@@ -76,14 +76,14 @@ public abstract class CustomSource implements CustomElement {
 		return sourceId;
 	}
 	
-//	 TODO (GB) à retirer : pour les tests	
-	public String getItemXPath() throws SourceNotLoadedException {
-		return getProfile().getElement().getItemXPath();
-	}
-//	 TODO (GB) à retirer : pour les tests	
-	public String getXslt() throws SourceNotLoadedException {
-		return getProfile().getElement().getXsltURL();
-	}
+//	
+//	public String getItemXPath() throws SourceNotLoadedException {
+//		return getProfile().getElement().getItemXPath();
+//	}
+//	
+//	public String getXslt() throws SourceNotLoadedException {
+//		return getProfile().getElement().getXsltURL();
+//	}
 	
 	/**
 	 * @param externalService

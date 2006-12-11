@@ -45,7 +45,6 @@ public class UserProfile {
 	/**
 	 * Hashtable of CustomManagedCategory defined for the user, indexed by ManagedCategoryProfilID.
 	 */
-	// TODO (GB)  why not customCategories ?
 	private Map<String,CustomCategory> customCategories;
 
 	/**

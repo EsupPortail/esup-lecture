@@ -136,7 +136,7 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService externalService) throws ServiceException {
-		// TODO : getCategories doit etre appelé avant pour charger la category : est ce bien ?
+		// TODO (gb): getVisibleCategories doit avoir été appelé avant pour charger la category : est ce bien ?
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomCategory customCategory;
@@ -186,7 +186,6 @@ public class DomainServiceImpl implements DomainService {
 	public List<ItemBean> getItems(String uid, String sourceId,ExternalService externalService) {
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
-		// TODO (GB) why not customCategories ?
 		CustomSource customSource;
 		
 		try {
@@ -230,7 +229,6 @@ public class DomainServiceImpl implements DomainService {
 	public void marckItemAsRead(String uid, String sourceId, String itemId) {
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
-		// TODO (GB) why not customCategories ?
 		CustomSource customSource;
 		try {
 			// TODO (GB) appel via le userProfile ?
@@ -248,7 +246,6 @@ public class DomainServiceImpl implements DomainService {
 	public void marckItemAsUnread(String uid, String sourceId, String itemId) {
 		/* Get current user profile and customCategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
-		// TODO (GB) why not customCategories ?
 		CustomSource customSource;
 		try {
 			// TODO (GB) appel via le userProfile ?

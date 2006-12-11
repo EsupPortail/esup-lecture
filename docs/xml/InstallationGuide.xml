@@ -200,7 +200,7 @@
                 <listitem>
                   <para><emphasis>id</emphasis> (You can use a specific
                   context by configuring your portlet with a portlet
-                  preference. This portlet preference must have a mane
+                  preference. This portlet preference must have a name
                   “context” and a value equals to the id you want for this
                   portlet. If you don't define any context preference for your
                   portlet then context with id “default” is used. With this
@@ -256,7 +256,7 @@
                 <listitem>
                   <para><emphasis>trustCategory</emphasis> ( yes | no ) : If
                   it is <emphasis>"yes"</emphasis>, visibility rights used are
-                  those of category and sources. If it is
+                  those of remote category and sources. If it is
                   <emphasis>"no"</emphasis>, visibility rights on category and
                   sources used are those of this category profile, defined in
                   <emphasis>visibility</emphasis> element.</para>

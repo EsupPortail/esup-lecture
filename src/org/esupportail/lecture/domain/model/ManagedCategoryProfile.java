@@ -370,7 +370,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getTtl()
 	 */
 	public int getTtl(){
-		// TODO (GB) retirer le ttl de la dtd de la category
 		return ttl;
 	}
 	

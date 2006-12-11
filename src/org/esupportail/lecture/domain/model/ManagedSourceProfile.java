@@ -131,8 +131,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	protected void loadSource(ExternalService externalService) throws ElementNotLoadedException {
 			
 		if(getAccess() == Accessibility.PUBLIC) {
-			// managed SOurce Profile => single or globalSource
-			// TODO (GB) le getSource est il "source" ou "managedSource" ?
+			// managed Source Profile => single or globalSource
 			Source source = DomainTools.getDaoService().getSource(this);
 			setElement(source);
 			
@@ -262,7 +261,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getTtl()
 	 */
 	public int getTtl()  {
-		// TODO (GB) retirer le ttl de la dtd de la source
 		return ttl;
 	}
 
