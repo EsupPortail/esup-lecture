@@ -74,7 +74,7 @@ public class CustomManagedCategory extends CustomCategory {
 	/**
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#addManagedCustomSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
 	 */
-	public void addCustomManagedSource(ManagedSourceProfile managedSourceProfile) {
+	public void addSubscription(ManagedSourceProfile managedSourceProfile) {
 		String profileId = managedSourceProfile.getId();
 		
 		if (!subscriptions.containsKey(profileId)){
