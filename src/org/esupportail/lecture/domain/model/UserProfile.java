@@ -46,7 +46,7 @@ public class UserProfile {
 	 * Hashtable of CustomManagedCategory defined for the user, indexed by ManagedCategoryProfilID.
 	 */
 	// TODO (GB)  why not customCategories ?
-	private Map<String,CustomManagedCategory> customManagedCategories;
+	private Map<String,CustomCategory> customCategories;
 
 	/**
 	 * Hashtable of CustomSource defined for the user, indexed by SourceProfilID.
@@ -62,7 +62,7 @@ public class UserProfile {
 	 */
 	public UserProfile(){
 		customContexts = new Hashtable<String,CustomContext>();
-		customManagedCategories = new Hashtable<String, CustomManagedCategory>();
+		customCategories = new Hashtable<String, CustomCategory>();
 		customSources = new Hashtable<String,CustomSource>();
 	}
 	
@@ -72,7 +72,7 @@ public class UserProfile {
 	 */
 	public UserProfile(String userId){
 		customContexts = new Hashtable<String,CustomContext>();
-		customManagedCategories = new Hashtable<String, CustomManagedCategory>();
+		customCategories = new Hashtable<String, CustomCategory>();
 		customSources = new Hashtable<String,CustomSource>();
 		this.setUserId(userId);
 	}
@@ -107,8 +107,8 @@ public class UserProfile {
 	 */
 	public CustomCategory getCustomCategory(String categoryId) throws CustomCategoryNotFoundException{
 		// TODO (GB later) avec customManagedCategory et customPersonalCategory
-		CustomManagedCategory customCategory = 
-			customManagedCategories.get(categoryId);
+		CustomCategory customCategory = 
+			customCategories.get(categoryId);
 		if(customCategory == null){
 			throw new CustomCategoryNotFoundException ("CustomCategory "+categoryId+" is not found in userProfile "+this.userId);
 		}
@@ -143,17 +143,17 @@ public class UserProfile {
 	/**
 	 * @param customCategory
 	 */
-	public void addCustomManagedCategory(CustomManagedCategory customCategory){
+	public void addCustomCategory(CustomCategory customCategory){
 		String id = customCategory.getElementId();
-		customManagedCategories.put(id,customCategory);
+		customCategories.put(id,customCategory);
 	}
 	
 
 	/**
 	 * @param categoryId
 	 */
-	public void removeCustomManagedCategory(String categoryId){
-		customManagedCategories.remove(categoryId);
+	public void removeCustomCategory(String categoryId){
+		customCategories.remove(categoryId);
 	}
 	
 	/**
@@ -217,16 +217,16 @@ public class UserProfile {
 	/**
 	 * @return customManagedCategories
 	 */
-	public Map<String, CustomManagedCategory> getCustomManagedCategories() {
-		return customManagedCategories;
+	public Map<String, CustomCategory> getCustomCategories() {
+		return customCategories;
 	}
 
 	/**
 	 * @param customManagedCategories
 	 */
-	public void setCustomManagedCategories(
-			Map<String, CustomManagedCategory> customManagedCategories) {
-		this.customManagedCategories = customManagedCategories;
+	public void setCustomCategories(
+			Map<String, CustomCategory> customCategories) {
+		this.customCategories = customCategories;
 	}
 
 	

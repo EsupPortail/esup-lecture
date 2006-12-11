@@ -118,7 +118,7 @@ public class CustomContext implements CustomElement {
 		if (!subscriptions.containsKey(profileId)){
 			CustomManagedCategory customManagedCategory = new CustomManagedCategory(profileId,userProfile);
 			subscriptions.put(profileId,customManagedCategory);
-			userProfile.addCustomManagedCategory(customManagedCategory);
+			userProfile.addCustomCategory(customManagedCategory);
 		}
 	}
 	// TODO (GB later : addImportation(), addCreation())
@@ -131,7 +131,7 @@ public class CustomContext implements CustomElement {
 	public void removeCustomManagedCategory(ManagedCategoryProfile profile) {
 		// TODO (GB) tester avec la BDD
 		subscriptions.remove(profile.getId());
-		userProfile.removeCustomManagedCategory(profile.getId());
+		userProfile.removeCustomCategory(profile.getId());
 		
 	}
 	// TODO (GB later : removeCustomPersonalCategory())
