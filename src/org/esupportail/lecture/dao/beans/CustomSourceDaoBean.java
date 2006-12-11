@@ -9,6 +9,6 @@ public class CustomSourceDaoBean {
 	
 	private String uid;
 	
-	private List<String> itemIds;
+	private List<String> readItemIds;
 	
 }

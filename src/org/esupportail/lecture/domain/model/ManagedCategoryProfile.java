@@ -152,7 +152,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		isInObliged =  getVisibilityObliged().evaluateVisibility(externalService);
 		log.debug("IsInObliged : "+isInObliged);
 		if (isInObliged) {
-			customContext.addCustomManagedCategory(this);
+			customContext.addSubscription(this);
 		
 		} else {
 	/* ---AUTOSUBSCRIBED SET--- */	

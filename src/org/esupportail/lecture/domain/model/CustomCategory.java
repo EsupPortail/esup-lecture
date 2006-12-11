@@ -28,10 +28,11 @@ public abstract class CustomCategory implements CustomElement {
 	 */
 	private String categoryId;
 	
-	/**
-	 * Flag : store if CustomCategory is folded or not
-	 */
-	private boolean folded;
+//  not here : in parent customContext	
+//	/**
+//	 * Flag : store if CustomCategory is folded or not
+//	 */
+//	private boolean folded;
 	
 	/**
 	 * id used by database
@@ -66,18 +67,21 @@ public abstract class CustomCategory implements CustomElement {
 	public abstract List<CustomSource> getSortedCustomSources(ExternalService externalService) throws CategoryProfileNotFoundException, ElementNotLoadedException;
 
 	
-	/**
-	 * Add a ManagedCustomSource 
-	 * @param managedSourceProfile
-	 */
-	public abstract void addCustomManagedSource (ManagedSourceProfile managedSourceProfile) ;
+//	Not here : it is only specific to CustomManagedCategories
+//	/**
+//	 * Add a ManagedCustomSource 
+//	 * @param managedSourceProfile
+//	 */
+//	public abstract void addSubscription (ManagedSourceProfile managedSourceProfile) ;
+// TODO (GB later : addImportation(), addCreation())
 
 	/**
-	 * remove a ManagedCustomSource
+	 * remove a ManagedCustomSource, indifferently an importation or a subscription
 	 * @param managedSourceProfile
 	 */
 	public abstract void removeCustomManagedSource (ManagedSourceProfile managedSourceProfile) ;
-
+	// TODO (GB later : removeCustomPersonalSource())
+	
 	/**
 	 * @return the categoryProfile associated with this customCategory
 	 * @throws CategoryProfileNotFoundException 
@@ -114,18 +118,18 @@ public abstract class CustomCategory implements CustomElement {
 	public void setId(int id) {
 		this.id = id;
 	}
-	/**
-	 * @return true is the category is folded
-	 */
-	public boolean isFolded() {
-		return folded;
-	}
-	/** set if the categoryis folded or not
-	 * @param folded
-	 */
-	public void setFolded(boolean folded) {
-		this.folded = folded;
-	}
+//	/**
+//	 * @return true is the category is folded
+//	 */
+//	public boolean isFolded() {
+//		return folded;
+//	}
+//	/** set if the categoryis folded or not
+//	 * @param folded
+//	 */
+//	public void setFolded(boolean folded) {
+//		this.folded = folded;
+//	}
 	
 	/**
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getElementId()

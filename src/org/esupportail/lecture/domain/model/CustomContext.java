@@ -112,7 +112,7 @@ public class CustomContext implements CustomElement {
 	 * Add a custom category to this custom context if no exists after creating it.
 	 * @param profile the managed category profile associated to the customCategory
 	 */
-	public void addCustomManagedCategory(ManagedCategoryProfile profile) {
+	public void addSubscription(ManagedCategoryProfile profile) {
 		String profileId = profile.getId();
 		
 		if (!subscriptions.containsKey(profileId)){
@@ -121,9 +121,11 @@ public class CustomContext implements CustomElement {
 			userProfile.addCustomManagedCategory(customManagedCategory);
 		}
 	}
+	// TODO (GB later : addImportation(), addCreation())
 	
 	/**
 	 * Remove the managedCategoryProfile from the customContext
+	 * Used to remove a subscription or an importation indifferently
 	 * @param profile managedCategoryProfile to remove
 	 */
 	public void removeCustomManagedCategory(ManagedCategoryProfile profile) {
@@ -132,6 +134,7 @@ public class CustomContext implements CustomElement {
 		userProfile.removeCustomManagedCategory(profile.getId());
 		
 	}
+	// TODO (GB later : removeCustomPersonalCategory())
 	
 	/**
 	 * @return context refered by this

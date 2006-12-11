@@ -19,5 +19,11 @@ public class CustomContextDaoBean {
 	
 	private List<String> unfoldedCategoriesId;
 	
+	// for later
+	private List<String> orderCategoryIds;
+	private List<String> importations;
+	private List<String> creations;
+	
+	
 	
 }
