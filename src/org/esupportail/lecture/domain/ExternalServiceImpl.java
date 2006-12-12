@@ -9,6 +9,7 @@ import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.myfaces.portlet.PortletUtil;
 import org.esupportail.lecture.exceptions.ErrorException;
 
 /**
@@ -39,33 +40,47 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getPreferences(java.lang.String)
 	 */
 	public String getPreferences(String name) {
+		String ret = null;
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-	    ExternalContext externalContext = facesContext.getExternalContext();
-        PortletRequest request = (PortletRequest) externalContext.getRequest();
-        PortletPreferences portletPreferences = request.getPreferences();
-        String value = portletPreferences.getValue(name, "default");
-        if (log.isDebugEnabled()) {
-			log.debug("getPreferences("+name+") return "+value);
+		if (PortletUtil.isPortletRequest(facesContext)) {
+		    ExternalContext externalContext = facesContext.getExternalContext();
+	        PortletRequest request = (PortletRequest) externalContext.getRequest();
+	        PortletPreferences portletPreferences = request.getPreferences();
+	        ret = portletPreferences.getValue(name, "default");			
 		}
-        return value;
+		else {
+			//default return value in case of serlvet use case (not normal mode)
+			ret = name;
+		}
+        if (log.isDebugEnabled()) {
+			log.debug("getPreferences("+name+") return "+ret);
+		}
+        return ret;
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserAttribute(java.lang.String)
 	 */
 	public String getUserAttribute(String attribute) {
+		String ret =  null;
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-	    ExternalContext externalContext = facesContext.getExternalContext();
-        PortletRequest request = (PortletRequest) externalContext.getRequest();
-		Map userInfo = (Map)request.getAttribute(PortletRequest.USER_INFO);
-		String attributeValue = (String)userInfo.get(attribute);
-		if (attributeValue == null) {
-			throw new ErrorException("User Attribute "+attribute+" not found ! See your portlet.xml file for user-attribute definition.");
+		if (PortletUtil.isPortletRequest(facesContext)) {
+			ExternalContext externalContext = facesContext.getExternalContext();
+			PortletRequest request = (PortletRequest) externalContext.getRequest();
+			Map userInfo = (Map)request.getAttribute(PortletRequest.USER_INFO);
+			ret = (String)userInfo.get(attribute);
+			if (ret == null) {
+				throw new ErrorException("User Attribute "+attribute+" not found ! See your portlet.xml file for user-attribute definition.");
+			}
 		}
-        if (log.isDebugEnabled()) {
-			log.debug("getUserAttribute("+attribute+") return "+attributeValue);
+		else {
+			//default return value in case of serlvet use case (not normal mode)
+			ret = attribute;
 		}
-		return attributeValue;
+		if (log.isDebugEnabled()) {
+			log.debug("getUserAttribute("+attribute+") return "+ret);
+		}
+		return ret;
 	}
 
 	/**
@@ -82,11 +97,13 @@ public class ExternalServiceImpl implements ExternalService {
 	public boolean isUserInRole(String group) {
 		boolean ret = Boolean.FALSE;
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-	    ExternalContext externalContext = facesContext.getExternalContext();
-		PortletRequest request = (PortletRequest) externalContext.getRequest();
-		if (request.isUserInRole(group)) {
-			ret = Boolean.TRUE;
-		} 
+		if (PortletUtil.isPortletRequest(facesContext)) {
+			ExternalContext externalContext = facesContext.getExternalContext();
+			PortletRequest request = (PortletRequest) externalContext.getRequest();
+			if (request.isUserInRole(group)) {
+				ret = Boolean.TRUE;
+			} 
+		}
         if (log.isDebugEnabled()) {
 			log.debug("isUserInRole("+group+") return "+ret);
 		}

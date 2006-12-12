@@ -64,6 +64,7 @@
 		</listener-class>
 	</listener>
 
+<!-- 
 	<filter>
 		<description>
 			This filter is in charge of managing the Hibernate sessions.
@@ -82,7 +83,9 @@
 		<filter-name>OpenSessionInViewFilter</filter-name>
 		<servlet-name>Faces Servlet</servlet-name>		
 	</filter-mapping>
+ -->
 
+<!-- 
 	<filter>
 		<description>
 			This filter is needed to use some Tomahawk extentions.
@@ -108,6 +111,25 @@
 		<filter-name>MyFacesExtensionsFilter</filter-name>
 		<url-pattern>/faces/myFacesExtensionResource/*</url-pattern>
 	</filter-mapping>
+ -->
+
+	<servlet>
+		<description>
+			The main servlet of the application. This class inherits from 
+			the MyFaces implementation and handles exceptions thrown for
+			specific exception handling.
+		</description>
+		<display-name>Faces Servlet</display-name>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>
+			org.esupportail.commons.web.servlet.FacesServlet
+		</servlet-class>
+		<!-- <load-on-startup>1</load-on-startup> -->
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<description>The esup-lecture portlet servlet</description>
@@ -132,6 +154,7 @@
 		<url-pattern>/foo/*</url-pattern>
 	</servlet-mapping>
 
+<!-- 
 	<servlet>
 		<servlet-name>Download Servlet</servlet-name>
 		<servlet-class>
@@ -142,6 +165,7 @@
 		<servlet-name>Download Servlet</servlet-name>
 		<url-pattern>/download</url-pattern>
 	</servlet-mapping>
+ -->
 
 	<security-constraint>
 		<display-name>Protection of the raw JSP pages</display-name>
