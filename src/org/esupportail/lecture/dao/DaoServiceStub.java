@@ -7,7 +7,9 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.dao.DaoServiceRemoteXML;
 import org.esupportail.lecture.domain.model.Category;
+import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
@@ -119,6 +121,31 @@ public class DaoServiceStub  implements DaoService {
 	}
 
 	public void updateUserProfile(UserProfile userProfile) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteCustomCategory(CustomCategory cca) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void deleteCustomSource(CustomSource cs) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void saveUserProfile(UserProfile userProfile) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateCustomCategory(CustomCategory cca) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateCustomSource(CustomSource source) {
 		// TODO Auto-generated method stub
 		
 	}

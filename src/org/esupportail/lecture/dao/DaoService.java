@@ -1,6 +1,9 @@
 package org.esupportail.lecture.dao;
 import org.esupportail.lecture.domain.model.Category;
+import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.CustomManagedCategory;
+import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
@@ -28,7 +31,7 @@ public interface DaoService {
 	 * Add a user profile to persistent data.
 	 * @param userProfile : user to add
 	 */
-	public void addUserProfile(UserProfile userProfile);
+	public void saveUserProfile(UserProfile userProfile);
 
 	/**
 	 * Add a customContext to persistent data.
@@ -69,6 +72,14 @@ public interface DaoService {
 	public void updateCustomContext(CustomContext customContext);
 
 	public void updateUserProfile(UserProfile userProfile);
+
+	public void deleteCustomCategory(CustomCategory cca);
+
+	public void updateCustomCategory(CustomCategory cca);
+
+	public void deleteCustomSource(CustomSource cs);
+
+	public void updateCustomSource(CustomSource source);
 
 	
 	

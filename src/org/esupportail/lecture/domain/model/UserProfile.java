@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.CustomSourceNotFoundException;
@@ -56,14 +57,7 @@ public class UserProfile {
 	/*
 	 ************************** Initialization ************************************/
 	
-	/**
-	 * Constructor
-	 */
-	public UserProfile(){
-		customContexts = new Hashtable<String,CustomContext>();
-		customCategories = new Hashtable<String, CustomCategory>();
-		customSources = new Hashtable<String,CustomSource>();
-	}
+
 	
 	/**
 	 * Constructor
@@ -74,6 +68,8 @@ public class UserProfile {
 		customCategories = new Hashtable<String, CustomCategory>();
 		customSources = new Hashtable<String,CustomSource>();
 		this.setUserId(userId);
+//		 TODO (gb) DAO save ici ou à l'appel ?
+		DomainTools.getDaoService().saveUserProfile(this);
 	}
 	/*
 	 *************************** METHODS ************************************/
@@ -135,8 +131,8 @@ public class UserProfile {
 	 */
 	public void addCustomContext(CustomContext customContext){
 		customContexts.put(customContext.getElementId(),customContext);
-//		 TODO (GB) mise à jour du DAO ?
-		//DomainTools.getDaoService().addCustomCOntext(userProfile,customContext);
+		DomainTools.getDaoService().updateUserProfile(this);
+		// TODO (gb) DAO quand fera t on le delete ?
 	}
 	
 	/**

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
@@ -95,12 +96,14 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	public void setItemAsRead(String itemId) {
 		readItems.add(itemId);	
+		DomainTools.getDaoService().updateCustomSource(this);
 	}
 	/**
 	 * @param itemId id to the item to set unread
 	 */
 	public void setItemAsUnRead(String itemId) {
 		readItems.remove(itemId);
+		DomainTools.getDaoService().updateCustomSource(this);
 	}
 	/**
 	 * @param itemId id of the item

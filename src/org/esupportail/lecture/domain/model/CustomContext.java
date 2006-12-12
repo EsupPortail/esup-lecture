@@ -94,6 +94,9 @@ public class CustomContext implements CustomElement {
 		/* update this customContext with context */
 		getContext().updateCustom(this,externalService);
 		
+		DomainTools.getDaoService().updateUserProfile(userProfile);
+		DomainTools.getDaoService().updateCustomContext(this);
+		
 		List<CustomCategory> listCustomCategories = new Vector<CustomCategory>();
 		for(CustomManagedCategory customCat : subscriptions.values()){
 			// later : add other custom elements (imported et personal)
@@ -125,8 +128,15 @@ public class CustomContext implements CustomElement {
 	 */
 	public void removeCustomManagedCategory(ManagedCategoryProfile profile) {
 		// TODO (GB) tester avec la BDD
-		subscriptions.remove(profile.getId());
-		userProfile.removeCustomCategory(profile.getId());
+		String profileId = profile.getId();
+		CustomManagedCategory cmc = subscriptions.get(profileId);
+		if (cmc != null) {
+			subscriptions.remove(profileId);
+			userProfile.removeCustomCategory(profile.getId());
+			DomainTools.getDaoService().deleteCustomCategory(cmc);
+		} else {
+			log.warn("CustomManagedCategory "+profileId+" to remove is not in subscriptions of CustomContext "+contextId);
+		}
 		
 	}
 	// TODO (GB later : removeCustomPersonalCategory())
@@ -172,6 +182,7 @@ public class CustomContext implements CustomElement {
 		// TODO (GB) externaliser les bornes
 		if ((size >=0) && (size <=100)){
 			treeSize = size;
+			DomainTools.getDaoService().updateCustomContext(this);
 		}else {
 			throw new TreeSizeErrorException("TreeSize must be into 0 and 100");
 		}
@@ -185,12 +196,16 @@ public class CustomContext implements CustomElement {
 	public void foldCategory(String catId) {
 		if (!unfoldedCategories.remove(catId)){
 			log.warn("foldCategory("+catId+") is called in customContext "+contextId+" but this category is yet folded");
+		} else {
+			DomainTools.getDaoService().updateCustomContext(this);
 		}
 	}
 	
 	public void unfoldCategory(String catId) {
 		if(!unfoldedCategories.add(catId)){
 			log.warn("unfoldCategory("+catId+") is called in customContext "+contextId+" but this category is yet unfolded");
+		} else {
+			DomainTools.getDaoService().updateCustomContext(this);
 		}
 	
 	}
