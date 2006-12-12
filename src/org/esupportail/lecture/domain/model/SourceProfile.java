@@ -24,6 +24,8 @@ public abstract class SourceProfile implements ElementProfile {
 
 	/**
 	 * Id of the source profile 
+	 * A source profile id is like :
+	 * <type>:<parentId>:<interneId>
 	 */
 	private String id;
 
@@ -67,6 +69,19 @@ public abstract class SourceProfile implements ElementProfile {
 		return source.getItems();
 	}
 
+	/**
+	 * Make the id of this  (<type>:<parentId>:<interneId>)
+	 * @param type = p | m  (persdonal or managed)
+	 * @param parentId = 0 for a personal (no parent owner) | CategoryProfileId for a managed
+	 * @param simpleId for a personal | fileId for a managed	  
+	 * @return ID made from the three parameters
+	 */
+	protected String makeId(String type,String parentId,String simpleId){
+		String id = type+":"+parentId+":"+simpleId;
+		return id;
+	}
+	
+	
 /* ************************** ACCESSORS ******************************** */	
 
 	/**
