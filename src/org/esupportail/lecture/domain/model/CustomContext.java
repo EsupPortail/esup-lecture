@@ -53,11 +53,6 @@ public class CustomContext implements CustomElement {
 	private UserProfile userProfile;
 	
 	/**
-	 * The Id of this CustomContext : for Database
-	 */
-	private int Id;
-	
-	/**
 	 * Tree size of the customContext
 	 */
 	private int treeSize;
@@ -164,21 +159,6 @@ public class CustomContext implements CustomElement {
 	 */
 	public String getElementId() {
 		return contextId;
-	}
-
-
-	/**
-	 * @return id
-	 */
-	public int getId() {
-		return Id;
-	}
-
-	/**
-	 * @param id
-	 */
-	public void setId(int id) {
-		Id = id;
 	}
 
 	/**

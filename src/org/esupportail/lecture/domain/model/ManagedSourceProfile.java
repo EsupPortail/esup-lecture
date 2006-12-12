@@ -68,10 +68,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	private ComputedManagedSourceFeatures computedFeatures;
 
 	/**
-	 * 
+	 * profile of the owner category of this managed source profile 
 	 */
-	private ManagedCategoryProfile ownerProfile;
+	private ManagedCategoryProfile categoryProfile;
 	
+	private String fileId;
 
 	/*
 	 ************************** PROPERTIES ******************************** */	
@@ -81,7 +82,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	public ManagedSourceProfile(ManagedCategoryProfile mcp) {
 		log.debug("new ManagedSourceProfile(), ownerProfile = "+mcp.getId());
-		ownerProfile = mcp;
+		categoryProfile = mcp;
 		computedFeatures = new ComputedManagedSourceFeatures(this);
 	}
 
@@ -108,20 +109,20 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		Accessibility setAccess;
 		VisibilitySets setVisib;
 		
-		if (ownerProfile.getTrustCategory()) {		
+		if (categoryProfile.getTrustCategory()) {		
 			setAccess = access;
 			setVisib = visibility;
 			
 			if (setAccess == null) {
-				setAccess = ownerProfile.getAccess();
+				setAccess = categoryProfile.getAccess();
 			}
 			if (setVisib == null) {
-				setVisib = ownerProfile.getVisibility();
+				setVisib = categoryProfile.getVisibility();
 			}
 
 		}else {
-			setAccess = ownerProfile.getAccess();
-			setVisib = ownerProfile.getVisibility();
+			setAccess = categoryProfile.getAccess();
+			setVisib = categoryProfile.getVisibility();
 		}
 				
 		computedFeatures.update(setVisib,setAccess);
@@ -338,6 +339,16 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	public DefinitionSets getVisibilityObliged() throws ElementNotLoadedException {
 		return computedFeatures.getVisibility().getObliged();
+	}
+
+
+	public String getFileId() {
+		return fileId;
+	}
+
+
+	public void setFileId(String fileId) {
+		this.fileId = fileId;
 	}
 
 

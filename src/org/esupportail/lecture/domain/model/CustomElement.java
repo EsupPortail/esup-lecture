@@ -30,14 +30,6 @@ public interface CustomElement {
 	 */
 	public String getElementId();
 	
-	/**
-	 * @return id of the custom element : used by database
-	 */
-	public int getId();
-	
-	/**
-	 * @param id set id used by database
-	 */
-	public void setId(int id);
+
 	
 }

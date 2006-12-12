@@ -36,7 +36,7 @@ public abstract class Category implements Element,Serializable{
 	/**
 	 * Id of the categoryProfil
 	 */
-	private String profilId;
+	private String profileId;
 	
 	private Hashtable<String,SourceProfile> sourceProfilesHash;
 	
@@ -122,8 +122,8 @@ public abstract class Category implements Element,Serializable{
 	 * @return id
 	 * @see Category#profilId
 	 */
-	public String getProfilId() {
-		return profilId;
+	public String getProfileId() {
+		return profileId;
 	}
 
 
@@ -132,8 +132,8 @@ public abstract class Category implements Element,Serializable{
 	 * @param profilId
 	 * @see Category#profilId
 	 */
-	public void setProfilId(String profilId) {
-		this.profilId = profilId;
+	public void setProfileId(String profileId) {
+		this.profileId = profileId;
 	}
 
 

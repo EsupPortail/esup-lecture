@@ -137,7 +137,7 @@ public class DaoServiceRemoteXML {
 			// Category properties
 			ret.setName(xml.getString("[@name]"));
 			ret.setDescription(xml.getString("description"));
-			ret.setProfilId(profile.getId());
+			ret.setProfileId(profile.getId());
 			//ret.setTtl(profile.getTtl());
 			// SourceProfiles loop
 
@@ -150,7 +150,7 @@ public class DaoServiceRemoteXML {
 
 				ManagedSourceProfile sp = new ManagedSourceProfile(profile);
 
-				sp.setId(subxml.getString("[@id]"));
+				sp.setFileId(subxml.getString("[@id]"));
 				sp.setName(subxml.getString("[@name]"));
 				sp.setSourceURL(subxml.getString("[@url]"));
 				sp.setTtl(subxml.getInt("[@ttl]"));

@@ -41,8 +41,8 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @param catId
 	 * @param user
 	 */
-	public CustomManagedCategory(String catId,UserProfile user){
-		super(catId,user);
+	public CustomManagedCategory(String profileId,UserProfile user){
+		super(profileId,user);
 		subscriptions = new Hashtable<String,CustomManagedSource>();
 		
 	}

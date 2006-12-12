@@ -26,7 +26,7 @@ public abstract class CustomCategory implements CustomElement {
 	/**
 	 * The Id of this CustomCategory
 	 */
-	private String categoryId;
+	private String profileId;
 	
 //  not here : in parent customContext	
 //	/**
@@ -34,11 +34,7 @@ public abstract class CustomCategory implements CustomElement {
 //	 */
 //	private boolean folded;
 	
-	/**
-	 * id used by database
-	 */
-	private int id;
-	
+
 	/* 
 	 ************************** INIT **********************************/
 	
@@ -47,8 +43,8 @@ public abstract class CustomCategory implements CustomElement {
 	 * @param catId id of the category refered by this
 	 * @param user owner of this 
 	 */
-	public CustomCategory(String catId, UserProfile user) {
-		this.categoryId = catId;
+	public CustomCategory(String profileId, UserProfile user) {
+		this.profileId = profileId;
 		this.userProfile = user;
 	}
 
@@ -106,18 +102,7 @@ public abstract class CustomCategory implements CustomElement {
 	public UserProfile getUserProfile() {
 		return userProfile;
 	}
-	/**
-	 * @see org.esupportail.lecture.domain.model.CustomElement#getId()
-	 */
-	public int getId() {
-		return id;
-	}
-	/**
-	 * @see org.esupportail.lecture.domain.model.CustomElement#setId(int)
-	 */
-	public void setId(int id) {
-		this.id = id;
-	}
+
 //	/**
 //	 * @return true is the category is folded
 //	 */
@@ -135,7 +120,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getElementId()
 	 */
 	public String getElementId() {
-		return categoryId;
+		return profileId;
 	}
 	
 

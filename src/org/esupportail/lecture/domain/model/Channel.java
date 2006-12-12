@@ -542,6 +542,8 @@ public class Channel implements InitializingBean {
 		this.daoService = daoService;
 	}
 
+
+
 //	public ChannelConfig getChannelConfig(){
 //	return config;
 //}

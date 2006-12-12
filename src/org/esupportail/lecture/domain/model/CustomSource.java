@@ -18,7 +18,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * Id of the source refered by this
 	 */
-	private String sourceId;
+	private String profileId;
 	/**
 	 * The userprofile parent 
 	 */
@@ -27,11 +27,6 @@ public abstract class CustomSource implements CustomElement {
 	 * Set of read item by User
 	 */
 	private Set<String> readItems;
-	
-	/**
-	 * id used by database
-	 */
-	private int id;
 	
 	/* 
 	 ************************** INIT **********************************/
@@ -43,7 +38,7 @@ public abstract class CustomSource implements CustomElement {
 	public CustomSource(SourceProfile profile,UserProfile user){
 		readItems = new HashSet<String>();
 		userProfile = user;
-		sourceId = profile.getId();
+		profileId = profile.getId();
 	}
 
 	/* 
@@ -73,7 +68,7 @@ public abstract class CustomSource implements CustomElement {
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getElementId()
 	 */
 	public String getElementId(){
-		return sourceId;
+		return profileId;
 	}
 	
 //	
@@ -115,18 +110,5 @@ public abstract class CustomSource implements CustomElement {
 		return readItems.contains(itemId);
 	}
 
-	/**
-	 * @see org.esupportail.lecture.domain.model.CustomElement#getId()
-	 */
-	public int getId(){
-		return id;
-	}
-	
-	/**
-	 * @see org.esupportail.lecture.domain.model.CustomElement#setId(int)
-	 */
-	public void setId(int id){
-		this.id = id;
-	}
 	
 }
