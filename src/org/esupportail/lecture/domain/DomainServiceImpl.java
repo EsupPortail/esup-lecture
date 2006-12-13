@@ -28,6 +28,7 @@ import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundExceptio
 import org.esupportail.lecture.exceptions.DomainServiceException;
 import org.esupportail.lecture.exceptions.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.TreeSizeErrorException;
+import org.springframework.util.Assert;
 
 /**
  * Service implementation offered by domain layer
@@ -49,6 +50,8 @@ public class DomainServiceImpl implements DomainService {
 	 ************************** Initialization ************************************/
 	
 	//TODO (GB) setAfterProperties
+//	Assert.notNull(channel, 
+//	"property channel can not be null");
 
 	
 	/*
@@ -58,6 +61,10 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getConnectedUser(java.lang.String)
 	 */
 	public UserBean getConnectedUser(String userId) {
+		if (log.isDebugEnabled()){
+			log.debug("getConnectedUser("+userId+")");
+		}
+		
 		/* User profile creation */
 		UserProfile userProfile = channel.getUserProfile(userId);
 		
@@ -71,6 +78,9 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public ContextBean getContext(String userId,String contextId) {
+		if (log.isDebugEnabled()){
+			log.debug("getContext("+userId+","+contextId+")");
+		}
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(userId);
@@ -97,6 +107,9 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, ExternalService)
 	 */
 	public List<CategoryBean> getVisibleCategories(String userId, String contextId,ExternalService externalService) throws DomainServiceException {
+		if (log.isDebugEnabled()){
+			log.debug("getVisibleCategories("+userId+","+contextId+",externalService)");
+		}
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(userId);
@@ -136,6 +149,10 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService externalService) throws DomainServiceException {
+		if (log.isDebugEnabled()){
+			log.debug("getVisibleSources("+uid+","+categoryId+",externalService)");
+		}
+		
 		// TODO (gb): getVisibleCategories doit avoir été appelé avant pour charger la category : est ce bien ?
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
@@ -184,6 +201,10 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<ItemBean> getItems(String uid, String sourceId,ExternalService externalService) {
+		if (log.isDebugEnabled()){
+			log.debug("getItems("+uid+","+sourceId+",externalService)");
+		}
+		
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomSource customSource;
@@ -227,6 +248,10 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemasRead(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void marckItemAsRead(String uid, String sourceId, String itemId) {
+		if (log.isDebugEnabled()){
+			log.debug("marckItemAsRead("+uid+","+sourceId+","+itemId+")");
+		}
+		
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomSource customSource;
@@ -244,6 +269,10 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemasUnread(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void marckItemAsUnread(String uid, String sourceId, String itemId) {
+		if (log.isDebugEnabled()){
+			log.debug("marckItemAsUnread("+uid+","+sourceId+","+itemId+")");
+		}
+		
 		/* Get current user profile and customCategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomSource customSource;
@@ -262,6 +291,10 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(java.lang.String, java.lang.String, int)
 	 */
 	public void setTreeSize(String uid, String contextId, int size) throws TreeSizeErrorException {
+		if (log.isDebugEnabled()){
+			log.debug("setTreeSize("+uid+","+contextId+","+size+")");
+		}
+		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		// TODO (GB) appel via le userProfile ?
@@ -272,6 +305,10 @@ public class DomainServiceImpl implements DomainService {
 
 
 	public void foldCategory(String uid, String cxtId, String catId) {
+		if (log.isDebugEnabled()){
+			log.debug("foldCategory("+uid+","+cxtId+","+catId+")");
+		}
+		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		// TODO (GB) appel via le userProfile ?
@@ -280,6 +317,10 @@ public class DomainServiceImpl implements DomainService {
 	}
 	
 	public void unfoldCategory(String uid, String cxtId, String catId) {
+		if (log.isDebugEnabled()){
+			log.debug("unfoldCategory("+uid+","+cxtId+","+catId+")");
+		}
+		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		// TODO (GB) appel via le userProfile ?

@@ -40,6 +40,9 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getPreferences(java.lang.String)
 	 */
 	public String getPreferences(String name) {
+	   if (log.isDebugEnabled()) {
+			log.debug("getPreferences("+name+")");
+		}
 		String ret = null;
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		if (PortletUtil.isPortletRequest(facesContext)) {
@@ -55,6 +58,7 @@ public class ExternalServiceImpl implements ExternalService {
         if (log.isDebugEnabled()) {
 			log.debug("getPreferences("+name+") return "+ret);
 		}
+ 
         return ret;
 	}
 
@@ -62,6 +66,9 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserAttribute(java.lang.String)
 	 */
 	public String getUserAttribute(String attribute) {
+	    if (log.isDebugEnabled()) {
+			log.debug("getUserAttribute("+attribute+")");
+		}
 		String ret =  null;
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		if (PortletUtil.isPortletRequest(facesContext)) {
@@ -87,6 +94,9 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserProxyTicketCAS()
 	 */
 	public String getUserProxyTicketCAS() {
+	    if (log.isDebugEnabled()) {
+			log.debug("getUserProxyTicketCAS() - not yet implemented");
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -95,6 +105,9 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#isUserInRole(java.lang.String)
 	 */
 	public boolean isUserInRole(String group) {
+	    if (log.isDebugEnabled()) {
+			log.debug("isUserInRole("+group+")");
+		}
 		boolean ret = Boolean.FALSE;
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		if (PortletUtil.isPortletRequest(facesContext)) {
