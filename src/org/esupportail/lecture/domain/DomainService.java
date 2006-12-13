@@ -7,7 +7,7 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
-import org.esupportail.lecture.exceptions.ServiceException;
+import org.esupportail.lecture.exceptions.DomainServiceException;
 import org.esupportail.lecture.exceptions.TreeSizeErrorException;
 
 /**
@@ -35,10 +35,10 @@ public interface DomainService {
 	 * @param contextId
 	 * @param externalService access to external service 
 	 * @return List<CategoryBean>
-	 * @throws ServiceException 
+	 * @throws DomainServiceException 
 	 * @see FacadeService#getVisibleCategories(String, String)
 	 */
-	List<CategoryBean> getVisibleCategories(String uid,String contextId,ExternalService externalService) throws ServiceException;
+	List<CategoryBean> getVisibleCategories(String uid,String contextId,ExternalService externalService) throws DomainServiceException;
 
 	/**
 	 * @param categoryId 

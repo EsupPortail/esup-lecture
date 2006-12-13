@@ -25,7 +25,7 @@ import org.esupportail.lecture.exceptions.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.CustomSourceNotFoundException;
 import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.ServiceException;
+import org.esupportail.lecture.exceptions.DomainServiceException;
 import org.esupportail.lecture.exceptions.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.TreeSizeErrorException;
 
@@ -82,7 +82,7 @@ public class DomainServiceImpl implements DomainService {
 			contextBean = new ContextBean(customContext);
 		} catch (ContextNotFoundException e) {
 			log.error("Context not found for service 'getContext(user "+userId+", context "+contextId);
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		}
 		
 		// TODO (GB) mise à jour du DAO ?
@@ -93,10 +93,10 @@ public class DomainServiceImpl implements DomainService {
 	}
 
 	/**
-	 * @throws ServiceException 
+	 * @throws DomainServiceException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, ExternalService)
 	 */
-	public List<CategoryBean> getVisibleCategories(String userId, String contextId,ExternalService externalService) throws ServiceException {
+	public List<CategoryBean> getVisibleCategories(String userId, String contextId,ExternalService externalService) throws DomainServiceException {
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(userId);
@@ -116,13 +116,13 @@ public class DomainServiceImpl implements DomainService {
 			}
 		} catch (ContextNotFoundException e){
 			log.error("Context not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		} catch (ElementNotLoadedException e) {
 			log.error("Context not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		} catch (CategoryProfileNotFoundException e) {
 			log.error("ManagedCategoryProfile not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		} 
 		
 		// TODO (GB) mise à jour du DAO ?
@@ -132,10 +132,10 @@ public class DomainServiceImpl implements DomainService {
 	}
 	
 	/**
-	 * @throws ServiceException 
+	 * @throws DomainServiceException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService externalService) throws ServiceException {
+	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService externalService) throws DomainServiceException {
 		// TODO (gb): getVisibleCategories doit avoir été appelé avant pour charger la category : est ce bien ?
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
@@ -162,16 +162,16 @@ public class DomainServiceImpl implements DomainService {
 		
 		}catch(CustomCategoryNotFoundException e){
 			log.error("CustomCategory not found for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		} catch (CategoryProfileNotFoundException e){
 			log.error("ManagedCategoryProfile not found for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		} catch (CategoryNotLoadedException e) {	
 			log.error("Category is not loaded for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		} catch (ElementNotLoadedException e) {
 			log.error("Element is not loaded for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		}
 		return listSourceBean;
 	}
@@ -192,7 +192,7 @@ public class DomainServiceImpl implements DomainService {
 			customSource = userProfile.getCustomSource(sourceId);
 		} catch (CustomSourceNotFoundException e) {
 			log.error("CustomSource is not found for service 'getItems(user "+uid+", source "+sourceId+ ")'");
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		}
 	
 		List<ItemBean> listItemBean = new ArrayList<ItemBean>();
@@ -203,10 +203,10 @@ public class DomainServiceImpl implements DomainService {
 			listItems = customSource.getItems(externalService);
 		} catch (SourceNotLoadedException e) {
 			log.error("Source is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		} catch (ElementNotLoadedException e) {
 			log.error("Composant is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		}
 		for(Item item : listItems){
 			ItemBean itemBean = new ItemBean(item,customSource);
@@ -236,7 +236,7 @@ public class DomainServiceImpl implements DomainService {
 			customSource.setItemAsRead(itemId);
 		} catch (CustomSourceNotFoundException e) {
 			log.error("CustomSource is not found for service 'marckItemAsRead(user "+uid+", source "+sourceId+", item"+ itemId+")");
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		}
 	}
 	
@@ -253,7 +253,7 @@ public class DomainServiceImpl implements DomainService {
 			customSource.setItemAsUnRead(itemId);
 		} catch (CustomSourceNotFoundException e) {
 			log.error("CustomSource is not found for service 'marckItemAsUnread(user "+uid+", source "+sourceId+", item"+ itemId+")");
-			throw new ServiceException(e);
+			throw new DomainServiceException(e);
 		}
 	}
 

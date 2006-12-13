@@ -19,6 +19,40 @@ import org.esupportail.lecture.domain.model.UserProfile;
  */
 public interface DaoService {
 	
+	/* Remote data */
+	
+	/**
+	 * Get a managed category from a remote place
+	 * @param profile of the category to get
+	 * @return the managedCategory
+	 */
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile);
+
+	/**
+	 * Get a managed category from a remote place
+	 * @param profile of the category to get
+	 * @param ptCas proxy ticket CAS used in case of CAS protected source
+	 * @return the managedCategory
+	 */
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile,String ptCas);
+
+	/**
+	 * get a source from a remote place
+	 * @param profile of the source to get
+	 * @return the source
+	 */
+	public Source getSource(ManagedSourceProfile profile);
+	
+	/**
+	 * get a source from a remote place
+	 * @param profile of the source to get
+	 * @param ptCas proxy ticket CAS used in case of CAS protected source
+	 * @return the source
+	 */
+	public Source getSource(ManagedSourceProfile profile, String ptCas);
+
+	/* User Profile */
+	
 	/**
 	 * Returns the userProfile that is identified with "userId" 
 	 * and null if no user profile exists with this userId 
@@ -34,46 +68,32 @@ public interface DaoService {
 	public void saveUserProfile(UserProfile userProfile);
 
 	/**
-	 * Get a managed category from a remote place
-	 * @param profile of the category to get
-	 * @return the managedCategory
-	 */
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile);
-
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile,String ptCas);
-
-	/**
 	 * Delete userProfile that is identified with "userId" 
 	 * @param userProfile : userProfile to delete
 	 */
 	public void deleteUserProfile(UserProfile userProfile);
 
-	/**
-	 * get a source from a remote place
-	 * @param profile of the source to get
-	 * @param ptCas proxy ticket CAS used in case of CAS protected source
-	 * @return the source
-	 */
-	public Source getSource(ManagedSourceProfile profile, String ptCas);
-
-	/**
-	 * get a source from a remote place
-	 * @param profile of the source to get
-	 * @return the source
-	 */
-	public Source getSource(ManagedSourceProfile profile);
+	public void updateUserProfile(UserProfile userProfile);
+	
+	/* CustomContext */
 
 	public void updateCustomContext(CustomContext customContext);
 
-	public void updateUserProfile(UserProfile userProfile);
-
+	// TODO (GB) creer un service pour supprimer définitivement un contexte par l'admin ?
+	public void deleteCustomContext(CustomContext cco);
+	
+	/* CustomCategory */
+	
 	public void deleteCustomCategory(CustomCategory cca);
 
 	public void updateCustomCategory(CustomCategory cca);
 
+	/* CustomSource */
+	
 	public void deleteCustomSource(CustomSource cs);
 
 	public void updateCustomSource(CustomSource source);
+
 
 	
 	

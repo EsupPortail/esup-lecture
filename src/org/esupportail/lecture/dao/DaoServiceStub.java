@@ -51,23 +51,111 @@ public class DaoServiceStub  implements DaoService {
 	}
 	
 	/* 
-	 *************************** ACCESSORS *********************************/	
+	 *************************** METHODS *********************************/	
+	
+	/* Remote XML */
+	
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
+		log.debug("getManagedCategory("+profile.getId()+")");
+		return remoteXMLService.getManagedCategory(profile);
+	}
+	
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile, String ptCas) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public Source getSource(ManagedSourceProfile profile) {
+		return this.remoteXMLService.getSource(profile);
+	}
 
+	public Source getSource(ManagedSourceProfile profile, String ptCas) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/* user Profiles */
+	
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#getUserProfile(java.lang.String)
 	 */
 	public UserProfile getUserProfile(String userId) {
+		if (log.isDebugEnabled()){
+			log.debug("getUserProfile("+userId+")");
+		}
 		return userProfiles.get(userId);
 	}
 
-	
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#addUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void saveUserProfile(UserProfile userProfile) {
+		if (log.isDebugEnabled()){
+			log.debug("saveUserProfile("+userProfile.getUserId()+")");
+		}
 		userProfiles.put(userProfile.getUserId(),userProfile);
 	}
+	
+	public void deleteUserProfile(UserProfile userProfile) {
+		if (log.isDebugEnabled()){
+			log.debug("deleteUserProfile("+userProfile.getUserId()+")");
+		}
+		userProfiles.remove(userProfile.getUserId());
+		
+	}
+	
+	public void updateUserProfile(UserProfile userProfile) {
+		if (log.isDebugEnabled()){
+			log.debug("updateUserProfile("+userProfile.getUserId()+")");
+		}
+	}
 
+	/* CustomContext */
+	
+	public void updateCustomContext(CustomContext customContext) {
+		if (log.isDebugEnabled()){
+			log.debug("updateCustomContext("+customContext.getElementId()+")");
+		}
+	}
+
+	public void deleteCustomContext(CustomContext cco) {
+		if (log.isDebugEnabled()){
+			log.debug("deleteCustomContext("+cco.getElementId()+")");
+		}
+	}
+
+	/* CustomCategory */
+	
+	public void updateCustomCategory(CustomCategory cca) {
+		if (log.isDebugEnabled()){
+			log.debug("updateCustomCategory("+cca.getElementId()+"");
+		}
+	}
+
+	public void deleteCustomCategory(CustomCategory cca) {
+		if (log.isDebugEnabled()){
+			log.debug("deleteCustomCategory("+cca.getElementId()+")");
+		}
+	}
+
+	/* CustomSource */
+	
+	public void deleteCustomSource(CustomSource cs) {
+		if (log.isDebugEnabled()){
+			log.debug("deleteCustomSource("+cs.getElementId()+")");
+		}
+	}
+
+	public void updateCustomSource(CustomSource source) {
+		if (log.isDebugEnabled()){
+			log.debug("deleteCustomSource("+source.getElementId()+")");
+		}
+	}
+
+	
+
+	/* 
+	 *************************** ACCESSORS *********************************/	
 	
 
 
@@ -77,18 +165,6 @@ public class DaoServiceStub  implements DaoService {
 	}
 	
 
-
-	public void deleteUserProfile(UserProfile userProfile) {
-		userProfiles.remove(userProfile.getUserId());
-		
-	}
-
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
-		log.debug("getManagedCategory("+profile.getId()+")");
-		return remoteXMLService.getManagedCategory(profile);
-		
-	}
-
 	/**
 	 * @return Returns the remoteXMLService.
 	 */
@@ -97,50 +173,6 @@ public class DaoServiceStub  implements DaoService {
 	}
 
 
-	public Source getSource(ManagedSourceProfile profile, String ptCas) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Source getSource(ManagedSourceProfile profile) {
-		return this.remoteXMLService.getSource(profile);
-	}
-
-	public void updateCustomContext(CustomContext customContext) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateUserProfile(UserProfile userProfile) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void deleteCustomCategory(CustomCategory cca) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void deleteCustomSource(CustomSource cs) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public void updateCustomCategory(CustomCategory cca) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void updateCustomSource(CustomSource source) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile, String ptCas) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 

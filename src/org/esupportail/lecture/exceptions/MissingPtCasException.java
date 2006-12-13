@@ -11,8 +11,14 @@ package org.esupportail.lecture.exceptions;
  * @author gbouteil
  *
  */
-public class MissingPtCasException extends java.lang.RuntimeException {
+public class MissingPtCasException extends InfoFacadeServiceException {
 
+	public MissingPtCasException(Exception cause) {
+		super(cause);
+	}
+	public MissingPtCasException(String message) {
+		super(message);
+	}
 
 	
 
