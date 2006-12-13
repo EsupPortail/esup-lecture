@@ -64,7 +64,7 @@ public class DaoServiceStub  implements DaoService {
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#addUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
-	public void addUserProfile(UserProfile userProfile) {
+	public void saveUserProfile(UserProfile userProfile) {
 		userProfiles.put(userProfile.getUserId(),userProfile);
 	}
 
@@ -77,14 +77,9 @@ public class DaoServiceStub  implements DaoService {
 	}
 	
 
-	public void addCustomContext(CustomContext customContext) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 
 	public void deleteUserProfile(UserProfile userProfile) {
-		// TODO Auto-generated method stub
+		userProfiles.remove(userProfile.getUserId());
 		
 	}
 
@@ -101,10 +96,6 @@ public class DaoServiceStub  implements DaoService {
 		return remoteXMLService;
 	}
 
-	public Category getManagedCategory(ManagedCategoryProfile profile, String ptCas) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	public Source getSource(ManagedSourceProfile profile, String ptCas) {
 		// TODO Auto-generated method stub
@@ -135,10 +126,6 @@ public class DaoServiceStub  implements DaoService {
 		
 	}
 
-	public void saveUserProfile(UserProfile userProfile) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public void updateCustomCategory(CustomCategory cca) {
 		// TODO Auto-generated method stub
@@ -148,6 +135,11 @@ public class DaoServiceStub  implements DaoService {
 	public void updateCustomSource(CustomSource source) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile, String ptCas) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

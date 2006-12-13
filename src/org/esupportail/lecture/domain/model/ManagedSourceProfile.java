@@ -73,7 +73,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	private ManagedCategoryProfile categoryProfile;
 	
 	/**
-	 * source profile Id defined in the xml file 
+	 * source profile Id defined in the xml file : interne Id of hte source Profile
 	 */
 	private String fileId;
 
@@ -87,7 +87,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		log.debug("new ManagedSourceProfile(), ownerProfile = "+mcp.getId());
 		categoryProfile = mcp;
 		computedFeatures = new ComputedManagedSourceFeatures(this);
-		super.setId(super.makeId("m",mcp.getId(),fileId));
 	}
 
 
@@ -353,6 +352,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 
 	public void setFileId(String fileId) {
 		this.fileId = fileId;
+		super.setId(super.makeId("m",categoryProfile.getId(),fileId));
 	}
 
 

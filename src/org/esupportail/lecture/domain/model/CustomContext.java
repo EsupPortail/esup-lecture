@@ -134,9 +134,7 @@ public class CustomContext implements CustomElement {
 			subscriptions.remove(profileId);
 			userProfile.removeCustomCategory(profile.getId());
 			DomainTools.getDaoService().deleteCustomCategory(cmc);
-		} else {
-			log.warn("CustomManagedCategory "+profileId+" to remove is not in subscriptions of CustomContext "+contextId);
-		}
+		} 
 		
 	}
 	// TODO (GB later : removeCustomPersonalCategory())

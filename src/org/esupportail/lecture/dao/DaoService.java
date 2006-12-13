@@ -34,25 +34,19 @@ public interface DaoService {
 	public void saveUserProfile(UserProfile userProfile);
 
 	/**
-	 * Add a customContext to persistent data.
-	 * @param customContext : customContext to add
-	 */
-	public void addCustomContext(CustomContext customContext);
-
-	/**
 	 * Get a managed category from a remote place
 	 * @param profile of the category to get
 	 * @return the managedCategory
 	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile);
 
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile,String ptCas);
+
 	/**
 	 * Delete userProfile that is identified with "userId" 
 	 * @param userProfile : userProfile to delete
 	 */
 	public void deleteUserProfile(UserProfile userProfile);
-
-	public Category getManagedCategory(ManagedCategoryProfile profile, String ptCas);
 
 	/**
 	 * get a source from a remote place

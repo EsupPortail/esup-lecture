@@ -76,8 +76,8 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @param simpleId for a personal | fileId for a managed	  
 	 * @return ID made from the three parameters
 	 */
-	protected String makeId(String type,String parentId,String simpleId){
-		String id = type+":"+parentId+":"+simpleId;
+	protected String makeId(String type,String parentId,String interneId){
+		String id = type+":"+parentId+":"+interneId;
 		return id;
 	}
 	
