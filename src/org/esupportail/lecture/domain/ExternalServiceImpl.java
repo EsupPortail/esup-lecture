@@ -1,16 +1,13 @@
 package org.esupportail.lecture.domain;
 
-import java.util.Map;
-
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.portlet.PortletPreferences;
-import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.myfaces.portlet.PortletUtil;
-import org.esupportail.lecture.exceptions.ErrorException;
+import org.esupportail.lecture.domain.utils.ModeService;
+import org.esupportail.lecture.domain.utils.PortletService;
+import org.esupportail.lecture.domain.utils.ServletService;
 
 /**
  * @author bourges
@@ -23,6 +20,26 @@ public class ExternalServiceImpl implements ExternalService {
 	 */
 	protected static final Log log = LogFactory.getLog(ExternalServiceImpl.class);
 
+	/** 
+	 * Composant for mode servlet or mode portlet
+	 */
+	private ModeService modeService;
+	
+	
+	/**
+	 * Constructor 
+	 */
+	public ExternalServiceImpl(){
+		// Dynamic instantiation for portlet/servlet context
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		if (PortletUtil.isPortletRequest(facesContext)) {
+			modeService = new PortletService();
+		} else {
+			// TODO make better
+			modeService = new ServletService();
+		}
+	}
+	
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
 	 */
@@ -43,20 +60,10 @@ public class ExternalServiceImpl implements ExternalService {
 	   if (log.isDebugEnabled()) {
 			log.debug("getPreferences("+name+")");
 		}
-		String ret = null;
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		if (PortletUtil.isPortletRequest(facesContext)) {
-		    ExternalContext externalContext = facesContext.getExternalContext();
-	        PortletRequest request = (PortletRequest) externalContext.getRequest();
-	        PortletPreferences portletPreferences = request.getPreferences();
-	        ret = portletPreferences.getValue(name, "default");			
-		}
-		else {
-			//default return value in case of serlvet use case (not normal mode)
-			ret = name;
-		}
-        if (log.isDebugEnabled()) {
-			log.debug("getPreferences("+name+") return "+ret);
+	    String ret = modeService.getPreference(name);
+	   
+        if (log.isTraceEnabled()) {
+			log.trace("getPreferences("+name+") return "+ret);
 		}
  
         return ret;
@@ -69,23 +76,10 @@ public class ExternalServiceImpl implements ExternalService {
 	    if (log.isDebugEnabled()) {
 			log.debug("getUserAttribute("+attribute+")");
 		}
-		String ret =  null;
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		if (PortletUtil.isPortletRequest(facesContext)) {
-			ExternalContext externalContext = facesContext.getExternalContext();
-			PortletRequest request = (PortletRequest) externalContext.getRequest();
-			Map userInfo = (Map)request.getAttribute(PortletRequest.USER_INFO);
-			ret = (String)userInfo.get(attribute);
-			if (ret == null) {
-				throw new ErrorException("User Attribute "+attribute+" not found ! See your portlet.xml file for user-attribute definition.");
-			}
-		}
-		else {
-			//default return value in case of serlvet use case (not normal mode)
-			ret = attribute;
-		}
-		if (log.isDebugEnabled()) {
-			log.debug("getUserAttribute("+attribute+") return "+ret);
+		String ret = modeService.getUserAttribute(attribute);
+		
+		if (log.isTraceEnabled()) {
+			log.trace("getUserAttribute("+attribute+") return "+ret);
 		}
 		return ret;
 	}
@@ -104,19 +98,13 @@ public class ExternalServiceImpl implements ExternalService {
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#isUserInRole(java.lang.String)
 	 */
-	public boolean isUserInRole(String group) {
+	public boolean isUserInGroup(String group) {
 	    if (log.isDebugEnabled()) {
 			log.debug("isUserInRole("+group+")");
 		}
-		boolean ret = Boolean.FALSE;
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		if (PortletUtil.isPortletRequest(facesContext)) {
-			ExternalContext externalContext = facesContext.getExternalContext();
-			PortletRequest request = (PortletRequest) externalContext.getRequest();
-			if (request.isUserInRole(group)) {
-				ret = Boolean.TRUE;
-			} 
-		}
+	    
+	    boolean ret = modeService.isUserInGroup(group);
+	   
         if (log.isDebugEnabled()) {
 			log.debug("isUserInRole("+group+") return "+ret);
 		}

@@ -53,7 +53,7 @@ public class ExternalServiceTest implements ExternalService {
 		return null;
 	}
 
-	public boolean isUserInRole(String group) {
+	public boolean isUserInGroup(String group) {
 		if(group.equalsIgnoreCase("")){
 			return false;
 		}else if(group.equalsIgnoreCase("local.0")){

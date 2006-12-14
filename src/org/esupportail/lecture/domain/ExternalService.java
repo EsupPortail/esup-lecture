@@ -26,15 +26,15 @@ public interface ExternalService {
 	public String getUserProxyTicketCAS();
 
 	/**
-	 * Return true if the current user of the is in "role" of the external service
-	 * @param role
+	 * Return true if the current user of the is in "group" of the external service
+	 * @param group
 	 * @return true or false
 	 */
-	public boolean isUserInRole(String group);
+	public boolean isUserInGroup(String group);
 
 	/**
 	 * Get attribute value from the external service
-	 * @param attributeName
+	 * @param attribute
 	 * @return the attribute value defined by "attributeNAme"
 	 */
 	public String getUserAttribute(String attribute);

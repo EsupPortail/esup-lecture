@@ -83,7 +83,7 @@ public class DefinitionSets {
 		while (iteratorGroups.hasNext()){
 			String group = (String) iteratorGroups.next();
 			log.debug("DefinionSets, evaluation on group : "+group);
-			if (externalService.isUserInRole(group)){
+			if (externalService.isUserInGroup(group)){
 				return true;
 			}
 		}
