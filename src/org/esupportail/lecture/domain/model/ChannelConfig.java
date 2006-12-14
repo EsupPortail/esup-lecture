@@ -149,6 +149,9 @@ public class ChannelConfig  {
 	 * @throws WarningException
 	 */
 	private void checkXmlFile() throws WarningException{
+		if (log.isDebugEnabled()){
+			log.debug("checkXmlFile()");
+		}
 		
 		nbProfiles = xmlFile.getMaxIndex("categoryProfile") + 1;
 		if (nbProfiles == 0) {

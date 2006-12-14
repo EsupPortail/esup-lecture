@@ -114,6 +114,9 @@ public class Channel implements InitializingBean {
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
 	public void afterPropertiesSet() throws ContextNotFoundException, ManagedCategoryProfileNotFoundException  {
+		if (log.isDebugEnabled()){
+			log.debug("afterPropertiesSet()");
+		}
 		startup();
 		DomainTools.setChannel(this);
 		DomainTools.setDaoService(daoService);
@@ -266,6 +269,9 @@ public class Channel implements InitializingBean {
 	 * @return the user profile
 	 */
 	public UserProfile getUserProfile(String userId){
+		if (log.isDebugEnabled()){
+			log.debug("getUserProfile("+userId+")");
+		}
 	
 		UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
 		
@@ -283,6 +289,9 @@ public class Channel implements InitializingBean {
 	 * @throws ContextNotFoundException 
 	 */
 	public Context getContext(String contextId) throws ContextNotFoundException {
+		if (log.isDebugEnabled()){
+			log.debug("getContext("+contextId+")");
+		}
 		Context context = contextsHash.get(contextId);
 		if (context == null) {
 			throw new ContextNotFoundException("Context "+contextId+" is not defined in channel");
@@ -297,6 +306,9 @@ public class Channel implements InitializingBean {
 	 */
 	
 	protected void addContext(Context c) {
+		if (log.isDebugEnabled()){
+			log.debug("addContext("+c.getId()+")");
+		}
 		this.contextsHash.put(c.getId(),c);
 	}	
 
@@ -309,6 +321,9 @@ public class Channel implements InitializingBean {
 	 * @see Channel#managedCategoryProfilesHash
 	 */
 	protected ManagedCategoryProfile getManagedCategoryProfile(String id) throws ManagedCategoryProfileNotFoundException{
+		if (log.isDebugEnabled()){
+			log.debug("getManagedCategoryProfile("+id+")");
+		}
 		ManagedCategoryProfile mcp = managedCategoryProfilesHash.get(id);
 		if (mcp == null) {
 			throw new ManagedCategoryProfileNotFoundException("ManagedCategoryProfile "+id+" is not defined in channel");
@@ -322,6 +337,9 @@ public class Channel implements InitializingBean {
 	 * @see Channel#managedCategoryProfilesHash
 	 */
 	protected void addManagedCategoryProfile(ManagedCategoryProfile m) {
+		if (log.isDebugEnabled()){
+			log.debug("addManagedCategoryProfile("+m.getId()+")");
+		}
 		this.managedCategoryProfilesHash.put(m.getId(),m);
 	}
 	
@@ -331,6 +349,9 @@ public class Channel implements InitializingBean {
 	 * @see Channel#mappingList
 	 */
 	protected void addMapping(Mapping m){
+		if (log.isDebugEnabled()){
+			log.debug("addMapping("+m.getRootElement()+")");
+		}
 		this.mappingList.add(m);
 	}
 	
@@ -340,6 +361,9 @@ public class Channel implements InitializingBean {
 	 * @see Channel#mappingHashByDtd
 	 */
 	protected void addMappingByDtd(Mapping m) {
+		if (log.isDebugEnabled()){
+			log.debug("addMappingByDtd("+m.getRootElement()+")");
+		}
 		this.mappingHashByDtd.put(m.getDtd(),m);
 	}
 	
@@ -348,6 +372,9 @@ public class Channel implements InitializingBean {
 	 * @return mapping for this dtd
 	 */
 	protected Mapping getMappingByDtd(String dtd){
+		if (log.isDebugEnabled()){
+			log.debug("getMappingByDtd("+dtd+")");
+		}
 		return mappingHashByDtd.get(dtd);
 	}
 
@@ -357,6 +384,9 @@ public class Channel implements InitializingBean {
 	 * @see Channel#mappingHashByXmlns
 	 */
 	protected void addMappingByXmlns(Mapping m) {
+		if (log.isDebugEnabled()){
+			log.debug("addMappingByXmlns("+m.getRootElement()+")");
+		}
 		this.mappingHashByXmlns.put(m.getXmlns(),m);
 	}	
 	/**
@@ -364,6 +394,9 @@ public class Channel implements InitializingBean {
 	 * @return mapping for this xmlns
 	 */
 	protected Mapping getMappingByXmlns(String xmlns){
+		if (log.isDebugEnabled()){
+			log.debug("getMappingByXmlns("+xmlns+")");
+		}
 		return mappingHashByXmlns.get(xmlns);
 	}
 	
@@ -373,6 +406,9 @@ public class Channel implements InitializingBean {
 	 * @see Channel#mappingHashByXmlType
 	 */
 	protected void addMappingByXmlType(Mapping m) {
+		if (log.isDebugEnabled()){
+			log.debug("addMappingByXmlType("+m.getRootElement()+")");
+		}
 		this.mappingHashByXmlType.put(m.getXmlType(),m);
 	}	
 
@@ -381,6 +417,9 @@ public class Channel implements InitializingBean {
 	 * @return mapping for this xmlType
 	 */
 	protected Mapping getMappingByXmlType(String xmlType){
+		if (log.isDebugEnabled()){
+			log.debug("getMappingByXmlType("+xmlType+")");
+		}
 		return mappingHashByXmlType.get(xmlType);
 	}
 
@@ -390,6 +429,9 @@ public class Channel implements InitializingBean {
 	 * @see Channel#mappingHashByRootElement
 	 */
 	protected void addMappingByRootElement(Mapping m) {
+		if (log.isDebugEnabled()){
+			log.debug("addMappingByRootElement("+m.getRootElement()+")");
+		}
 		this.mappingHashByRootElement.put(m.getRootElement(), m);
 	}
 
@@ -398,6 +440,9 @@ public class Channel implements InitializingBean {
 	 * @return mapping for this rootElement
 	 */
 	protected Mapping getMappingByRootElement(String rootElement){
+		if (log.isDebugEnabled()){
+			log.debug("getMappingByRootElement("+rootElement+")");
+		}
 		return mappingHashByRootElement.get(rootElement);
 	}
 
@@ -407,6 +452,9 @@ public class Channel implements InitializingBean {
 	 * @see Channel#mappingHashBySourceURL
 	 */
 	protected void addMappingBySourceURL(Mapping m) {
+		if (log.isDebugEnabled()){
+			log.debug("addMappingBySourceURL("+m.getRootElement()+")");
+		}
 		this.mappingHashBySourceURL.put(m.getSourceURL(), m);
 	}
 
@@ -415,6 +463,9 @@ public class Channel implements InitializingBean {
 	 * @return mapping for this sourceURL
 	 */
 	protected Mapping getMappingBySourceURL(String sourceURL){
+		if (log.isDebugEnabled()){
+			log.debug("getMappingBySourceURL("+sourceURL+")");
+		}
 		return mappingHashBySourceURL.get(sourceURL);
 	}
 //	/**

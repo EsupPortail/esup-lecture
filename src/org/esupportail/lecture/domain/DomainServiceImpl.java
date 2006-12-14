@@ -46,12 +46,15 @@ public class DomainServiceImpl implements DomainService {
 	 */
 	protected static final Log log = LogFactory.getLog(DomainServiceImpl.class);
 
-	/*
-	 ************************** Initialization ************************************/
-	
-	//TODO (GB) setAfterProperties
-//	Assert.notNull(channel, 
-//	"property channel can not be null");
+	/* 
+	 ************************** INIT **********************************/
+
+	/**
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+	 */
+	public void afterPropertiesSet() throws Exception {
+		Assert.notNull(channel,"property channel can not be null");
+	}
 
 	
 	/*

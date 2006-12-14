@@ -74,6 +74,9 @@ public class DefinitionSets {
 	 * @return true if the user is define in this DefinitionSets
 	 */
 	protected boolean evaluateVisibility(ExternalService externalService) {
+	   	if (log.isDebugEnabled()){
+    		log.debug("evaluateVisibility(externalService)");
+    	}
 			
 		/* group evaluation */
 		Iterator iteratorGroups = groups.iterator();
@@ -99,6 +102,29 @@ public class DefinitionSets {
 		return false;
 	}
 	
+	/**
+	 * Add a group in groups enumeration
+	 * @param group group to add
+	 * @see DefinitionSets#groups
+	 */
+	public void addGroup(String group) {
+	   	if (log.isDebugEnabled()){
+    		log.debug("addGroup("+group+")");
+    	}
+		this.groups.add(group);
+	}
+	
+	/**
+	 * Add a regulars in list of regulars of this object
+	 * @param regular
+	 * @see DefinitionSets#regulars
+	 */
+	public void addRegular(RegularOfSet regular) {
+	   	if (log.isDebugEnabled()){
+    		log.debug("addGroup(regular)");
+    	}
+		this.regulars.add(regular);
+	}
 	
 	
 	/**
@@ -133,14 +159,7 @@ public class DefinitionSets {
 	protected void setGroups(List<String> groups) {
 		this.groups = groups;
 	}
-	/**
-	 * Add a group in groups enumeration
-	 * @param group group to add
-	 * @see DefinitionSets#groups
-	 */
-	public void addGroup(String group) {
-		this.groups.add(group);
-	}
+
 	/**
 	 * Returns regulars of this object
 	 * @return regulars
@@ -157,15 +176,7 @@ public class DefinitionSets {
 	protected void setRegulars(List<RegularOfSet> regulars) {
 		this.regulars = regulars;
 	}
-	/**
-	 * Add a regulars in list of regulars of this object
-	 * @param regular
-	 * @see DefinitionSets#regulars
-	 */
-	public void addRegular(RegularOfSet regular) {
-		this.regulars.add(regular);
-	}
-	
+
 	
 
 

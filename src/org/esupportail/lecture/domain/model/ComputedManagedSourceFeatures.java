@@ -1,5 +1,7 @@
 package org.esupportail.lecture.domain.model;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 
 /**
@@ -13,6 +15,13 @@ public class ComputedManagedSourceFeatures extends ComputedManagedElementFeature
 
 	/*
 	 *********************** PROPERTIES**************************************/ 
+	
+	/**
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(ComputedManagedSourceFeatures.class);
+	
+	
 	private Accessibility access;
 	
 	
@@ -22,6 +31,9 @@ public class ComputedManagedSourceFeatures extends ComputedManagedElementFeature
 	 ********************* INITIALIZATION **************************************/
 	protected ComputedManagedSourceFeatures(ManagedSourceProfile msp) {
 		super(msp);
+		if (log.isDebugEnabled()){
+			log.debug("ComputedManagedSourceFeatures("+msp.getId()+")");
+		}
 	}
 	
 
@@ -35,25 +47,32 @@ public class ComputedManagedSourceFeatures extends ComputedManagedElementFeature
 	 * @param setAccess access
 	 */
 	public void update(VisibilitySets setVisib, Accessibility setAccess) {
+		if (log.isDebugEnabled()){
+			log.debug("update(setVisib,setAccess)");
+		}
 		super.update(setVisib);
+
 		access = setAccess;
 	}
 
-
-	
-
-	/*
-	 *********************** ACCESSORS **************************************/ 
 	/**
 	 * @return Returns the access.
 	 * @throws ElementNotLoadedException 
 	 */
 	protected Accessibility getAccess() throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("getAccess()");
+		}
 		if (!super.isComputed()){
 			super.compute();
 		}
 		return access;
 	}
+	
+
+	/*
+	 *********************** ACCESSORS **************************************/ 
+
 
 
 

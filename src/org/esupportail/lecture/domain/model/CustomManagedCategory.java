@@ -43,6 +43,9 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	public CustomManagedCategory(String profileId,UserProfile user){
 		super(profileId,user);
+		if (log.isDebugEnabled()){
+			log.debug("CustomManagedCategory("+profileId+","+user.getUserId()+")");
+		}
 		subscriptions = new Hashtable<String,CustomManagedSource>();
 		
 	}
@@ -54,7 +57,11 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	public List<CustomSource> getSortedCustomSources(ExternalService externalService) throws CategoryProfileNotFoundException, ElementNotLoadedException{
+	public List<CustomSource> getSortedCustomSources(ExternalService externalService) 
+		throws CategoryProfileNotFoundException, ElementNotLoadedException{
+		if (log.isDebugEnabled()){
+			log.debug("getSortedCustomSources(externalService)");
+		}
 	// TODO (GB later) à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
 		
 		ManagedCategoryProfile profile = getProfile();
@@ -77,6 +84,9 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#addManagedCustomSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
 	 */
 	public void addSubscription(ManagedSourceProfile managedSourceProfile) {
+		if (log.isDebugEnabled()){
+			log.debug("addSubscription("+managedSourceProfile.getId()+")");
+		}
 		String profileId = managedSourceProfile.getId();
 		
 		if (!subscriptions.containsKey(profileId)){
@@ -92,6 +102,9 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	@Override
 	public void removeCustomManagedSource(ManagedSourceProfile profile) {
+		if (log.isDebugEnabled()){
+			log.debug("removeCustomManagedSource("+profile.getId()+")");
+		}
 		//		 TODO (GB) tester avec la BDD
 		String profileId = profile.getId();
 		CustomSource cs = subscriptions.get(profileId);
@@ -111,6 +124,9 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	@Override
 	public ManagedCategoryProfile getProfile() throws CategoryProfileNotFoundException {
+		if (log.isDebugEnabled()){
+			log.debug("getProfile()");
+		}
 		Channel channel = DomainTools.getChannel();
 		return channel.getManagedCategoryProfile(getElementId());
 	}

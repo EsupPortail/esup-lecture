@@ -38,6 +38,19 @@ public class FacadeService implements InitializingBean {
 	 */
 	private DomainService domainService;
 	
+	/* 
+	 ************************** INIT **********************************/
+
+	/**
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+	 */
+	public void afterPropertiesSet() throws Exception {
+		Assert.notNull(domainService, 
+		"property domainService can not be null");
+		Assert.notNull(externalService, 
+		"property externalService can not be null");
+	}
+	
 
 	/* 
 	 ************************** SERVICES **********************************/
@@ -179,17 +192,6 @@ public class FacadeService implements InitializingBean {
 		this.externalService = externalService;
 	}
 
-	/* 
-	 ************************** INIT **********************************/
 
-	/**
-	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
-	 */
-	public void afterPropertiesSet() throws Exception {
-		Assert.notNull(domainService, 
-		"property domainService can not be null");
-		Assert.notNull(externalService, 
-		"property externalService can not be null");
-	}
 	
 }

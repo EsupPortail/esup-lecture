@@ -44,6 +44,9 @@ public class RegularOfSet {
 	 * @return boolean
 	 */
 	public boolean evaluate(ExternalService externalService) {
+		if (log.isDebugEnabled()){
+			log.debug("evaluate(externalService)");
+		}
 		
 		String userAttributeValue = externalService.getUserAttribute(attribute);
 		// TODO (GB) voir le cas ou il y est mais que le portail ne connait pas

@@ -72,6 +72,9 @@ public class CustomContext implements CustomElement {
 	 * @param user owner of this
 	 */
 	public CustomContext(String contextId, UserProfile user) {
+		if (log.isDebugEnabled()){
+			log.debug("CustomContext("+contextId+","+user.getUserId()+")");
+		}
 		subscriptions = new Hashtable<String,CustomManagedCategory>();
 		unfoldedCategories = new HashSet<String>();
 		this.contextId = contextId;
@@ -88,7 +91,11 @@ public class CustomContext implements CustomElement {
 	 * @throws ContextNotFoundException 
 	 * @throws ElementNotLoadedException 
 	 */
-	public List<CustomCategory> getSortedCustomCategories(ExternalService externalService) throws ContextNotFoundException, ElementNotLoadedException{
+	public List<CustomCategory> getSortedCustomCategories(ExternalService externalService) 
+		throws ContextNotFoundException, ElementNotLoadedException{
+		if (log.isDebugEnabled()){
+			log.debug("getSortedCustomCategories(externalService)");
+		}
 		// TODO (GB later) rewrite with custom personnal category (+ sorted display)
 	
 		/* update this customContext with context */
@@ -111,6 +118,9 @@ public class CustomContext implements CustomElement {
 	 * @param profile the managed category profile associated to the customCategory
 	 */
 	public void addSubscription(ManagedCategoryProfile profile) {
+		if (log.isDebugEnabled()){
+			log.debug("addSubscription("+profile.getId()+")");
+		}
 		String profileId = profile.getId();
 		
 		if (!subscriptions.containsKey(profileId)){
@@ -127,6 +137,9 @@ public class CustomContext implements CustomElement {
 	 * @param profile managedCategoryProfile to remove
 	 */
 	public void removeCustomManagedCategory(ManagedCategoryProfile profile) {
+		if (log.isDebugEnabled()){
+			log.debug("removeCustomManagedCategory("+profile.getId()+")");
+		}
 		// TODO (GB) tester avec la BDD
 		String profileId = profile.getId();
 		CustomManagedCategory cmc = subscriptions.get(profileId);
@@ -144,6 +157,9 @@ public class CustomContext implements CustomElement {
 	 * @throws ContextNotFoundException 
 	 */
 	public Context getContext() throws ContextNotFoundException {
+		if (log.isDebugEnabled()){
+			log.debug("getContext()");
+		}
 		if (context == null) {
 			context = DomainTools.getChannel().getContext(contextId);
 		}
@@ -155,6 +171,9 @@ public class CustomContext implements CustomElement {
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
 	public String getName() throws ContextNotFoundException {
+		if (log.isDebugEnabled()){
+			log.debug("getName()");
+		}
 		return getContext().getName();
 	}
 	

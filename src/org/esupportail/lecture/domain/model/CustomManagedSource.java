@@ -1,5 +1,8 @@
 package org.esupportail.lecture.domain.model;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 
 /**
  * Customizations on a managedSource for a user Profile
@@ -8,6 +11,7 @@ package org.esupportail.lecture.domain.model;
  */
 public class CustomManagedSource extends CustomSource{
 	
+	protected static final Log log = LogFactory.getLog(CustomManagedSource.class);
 	/**
 	 * managedSourcePRofile refered by this
 	 */
@@ -20,6 +24,9 @@ public class CustomManagedSource extends CustomSource{
 	 */
 	public CustomManagedSource(ManagedSourceProfile profile, UserProfile user) {
 		super(profile, user);
+		if (log.isDebugEnabled()){
+			log.debug("CustomManagedSource("+profile.getId()+","+user.getUserId()+")");
+		}
 		sourceProfile = profile;
 	}
 

@@ -13,6 +13,10 @@ import java.util.Set;
 
 import java.io.Serializable;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.dao.DaoServiceStub;
+
 /**
  * Category element : a category can be a managed or personal one.
  * @author gbouteil
@@ -22,6 +26,10 @@ public abstract class Category implements Element,Serializable{
 
 	/*
 	 *************************** PROPERTIES *********************************/	
+	/**
+	 * Log instance
+	 */
+	protected static final Log log = LogFactory.getLog(Category.class);
 	
 	/**
 	 * Name of the category : not used
@@ -55,6 +63,9 @@ public abstract class Category implements Element,Serializable{
 	
 	
 	protected SourceProfile getSourceProfileById(String id){
+		if (log.isDebugEnabled()){
+			log.debug("getSourceProfileById("+id+")");
+		}
 		return sourceProfilesHash.get(id);
 	}
 

@@ -70,7 +70,11 @@ public class ManagedCategory extends Category {
 	 * @throws ElementNotLoadedException 
 	 * @throws ElementNotLoadedException 
 	 */
-	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) throws ElementNotLoadedException {
+	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) 
+		throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("updateCustom("+customManagedCategory.getElementId()+",externalService)");
+		}
 		Iterator iterator = getSourceProfilesHash().values().iterator();
 		
 		while (iterator.hasNext()) {

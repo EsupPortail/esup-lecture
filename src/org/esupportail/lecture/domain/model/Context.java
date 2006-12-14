@@ -71,6 +71,9 @@ public class Context {
 	 * Constructor
 	 */
 	public Context() {
+		if (log.isDebugEnabled()){
+			log.debug("Context()");
+		}
 		managedCategoryProfilesSet = new HashSet<ManagedCategoryProfile>();
 		refIdManagedCategoryProfilesSet = new HashSet<String>();
 	}
@@ -83,7 +86,7 @@ public class Context {
 	 */
 	protected void initManagedCategoryProfiles(Channel channel) throws ManagedCategoryProfileNotFoundException {
 		if (log.isDebugEnabled()){
-			log.debug("initManagedCategoryProfiles()");
+			log.debug("initManagedCategoryProfiles(channel)");
 		}
 		/* Connecting Managed category profiles and contexts */
 		Iterator iterator = refIdManagedCategoryProfilesSet.iterator();
@@ -108,6 +111,9 @@ public class Context {
 	 * @throws ElementNotLoadedException 
 	 */
 	public void updateCustom(CustomContext customContext, ExternalService externalService) throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("updateCustom("+customContext.getElementId()+",externalService)");
+		}
 		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet){
@@ -115,7 +121,20 @@ public class Context {
 		}
 	}
 
-	/* see later */
+	/**
+	 * Add a managed category profile id to the set of id refered to in this context
+	 * @param s the id to add
+	 * @see Context#refIdManagedCategoryProfilesSet
+	 */
+	protected void addRefIdManagedCategoryProfile(String s) {
+		if (log.isDebugEnabled()){
+			log.debug("addRefIdManagedCategoryProfile("+s+")");
+		}
+		refIdManagedCategoryProfilesSet.add(s);
+	}
+
+	
+
 	
 	/** 
 	 * Return the string containing context content : 
@@ -237,14 +256,6 @@ public class Context {
 		this.managedCategoryProfilesSet = managedCategoryProfilesSet;
 	}
 
-	/**
-	 * Add a managed category profile id to the set of id refered to in this context
-	 * @param s the id to add
-	 * @see Context#refIdManagedCategoryProfilesSet
-	 */
-	protected void addRefIdManagedCategoryProfile(String s) {
-		refIdManagedCategoryProfilesSet.add(s);
-	}
 
 //	protected void setSetRefIdManagedCategoryProfiles(Set<String> s) {
 //		refIdManagedCategoryProfilesSet = s;

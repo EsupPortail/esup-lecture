@@ -144,6 +144,9 @@ public class MappingFile {
 	 * @throws WarningException
 	 */
 	private static void checkXmlFile() {
+		if (log.isDebugEnabled()){
+			log.debug("checkXmlFile()");
+		}
 	
 		int nbMappings = xmlFile.getMaxIndex("mapping") + 1;
 		mappingList = new ArrayList<Mapping>();
@@ -285,7 +288,9 @@ public class MappingFile {
 	 * @see MappingFile#mappingFilePath
 	 */
 	protected static void setMappingFilePath(String mappingFilePath) {
-		log.debug("setMappingFilePath("+mappingFilePath+")");
+		if(log.isDebugEnabled()){
+			log.debug("setMappingFilePath("+mappingFilePath+")");
+		}
 		MappingFile.mappingFilePath = mappingFilePath;
 	}
 

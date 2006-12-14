@@ -28,7 +28,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(ManagedCategoryProfile.class); 
+	protected static final Log log = LogFactory.getLog(CategoryProfile.class); 
 	/**
 	 *  Category profile name
 	 */
@@ -63,9 +63,9 @@ public abstract class CategoryProfile implements ElementProfile {
 		
 		return string;
 	}
-
 	/*
-	 ************************** ACCESSORS *********************************/	
+	 ************************** METHODS *********************************/	
+	
 	/**
 	 * @return name
 	 * @throws CategoryNotLoadedException 
@@ -73,6 +73,9 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @see ElementProfile#getName()
 	 */
 	public String getName(){
+		if (log.isDebugEnabled()){
+			log.debug("getName()");
+		}
 		String name ;
 		
 		try {
@@ -90,6 +93,9 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @throws CategoryNotLoadedException
 	 */
 	public String getDescription() throws CategoryNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("getDescription()");
+		}
 		Category category = (Category) getElement();
 		if (category == null){
 			return null;
@@ -97,6 +103,27 @@ public abstract class CategoryProfile implements ElementProfile {
 			return category.getDescription();
 		}
 	}
+
+	/**
+	 * @return Returns the category.
+	 * @throws CategoryNotLoadedException 
+	 */
+	public Category getElement() throws CategoryNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("getElement()");
+		}
+		if (category==null){
+			// TODO (GB) on pourrait faire un loadCategory ?
+			throw new CategoryNotLoadedException("Category "+id+" is not loaded in profile");
+		}
+		return category;
+	}
+
+	protected abstract void loadCategory(ExternalService externalService) throws CategoryNotLoadedException;
+	
+	/*
+	 ************************** ACCESSORS *********************************/	
+
 	
 
 	
@@ -128,20 +155,7 @@ public abstract class CategoryProfile implements ElementProfile {
 		this.id = id;
 	}
 
-	/**
-	 * @return Returns the category.
-	 * @throws CategoryNotLoadedException 
-	 */
-	public Category getElement() throws CategoryNotLoadedException {
-		if (category==null){
-			// TODO (GB) on pourrait faire un loadCategory ?
-			throw new CategoryNotLoadedException("Category "+id+" is not loaded in profile");
-		}
-		return category;
-	}
 
-	protected abstract void loadCategory(ExternalService externalService) throws CategoryNotLoadedException;
-	
 	/**
 	 * @param category The category to set.
 	 */

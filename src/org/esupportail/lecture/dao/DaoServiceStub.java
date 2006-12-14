@@ -53,7 +53,7 @@ public class DaoServiceStub  implements DaoService {
 	/* 
 	 *************************** METHODS *********************************/	
 	
-	/* Remote XML */
+	/* Remote Data */
 	
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
 		log.debug("getManagedCategory("+profile.getId()+")");

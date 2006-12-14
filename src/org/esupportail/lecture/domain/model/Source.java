@@ -127,6 +127,9 @@ public abstract class Source implements Element,Serializable {
 	 * xmlns or XML root element of the source XML content
 	 */
 	protected void computeXslt(){
+	   	if (log.isDebugEnabled()){
+    		log.debug("computeXslt()");
+    	}
 		// TODO (gb later) revoir cet algo
 		Channel channel = DomainTools.getChannel();
 		
@@ -192,6 +195,9 @@ public abstract class Source implements Element,Serializable {
 	 */
 	@SuppressWarnings("unchecked")
 	protected void computeItems() {
+	   	if (log.isDebugEnabled()){
+    		log.debug("computeItems()");
+    	}
 		if (!isXsltComputed){
 			computeXslt();
 		}
@@ -258,6 +264,9 @@ public abstract class Source implements Element,Serializable {
 	 * @return html content
 	 */
 	private String xml2html(String xml, String xsltFileURL) {
+	   	if (log.isDebugEnabled()){
+    		log.debug("xml2html(xml,xsltFileURL)");
+    	}
 		log.debug("voici le xsltFileUrl : "+xsltFileURL);
 		String ret = null;
 		try {
@@ -295,7 +304,86 @@ public abstract class Source implements Element,Serializable {
 		}
 		return ret;
 	}
+	
+	/**
+	 * @return Returns the itemXPath.
+	 */
+	public String getItemXPath() {
+	   	if (log.isDebugEnabled()){
+    		log.debug("getItemXPath()");
+    	}
+		if (!isXsltComputed){
+			computeXslt();
+		}
+		return itemXPath;
+	}
 
+	/**
+	 * @param itemXPath The itemXPath to set.
+	 */
+	public void setItemXPath(String itemXPath) {
+	   	if (log.isDebugEnabled()){
+    		log.debug("setItemXPath("+itemXPath+")");
+    	}
+		this.itemXPath = itemXPath;
+		isXsltComputed = false;
+	}
+
+	/**
+	 * @return Returns the xsltURL.
+	 */
+	public String getXsltURL() {
+	   	if (log.isDebugEnabled()){
+    		log.debug("getXsltURL()");
+    	}
+		if (!isXsltComputed){
+			computeXslt();
+		}
+		return xsltURL;
+	}
+
+	/**
+	 * @param xsltURL The xsltURL to set.
+	 */
+	public void setXsltURL(String xsltURL) {
+	   	if (log.isDebugEnabled()){
+    		log.debug("setXsltURL("+xsltURL+")");
+    	}
+		this.xsltURL = xsltURL;
+		isXsltComputed = false;
+	}
+
+	public HashMap<String, String> getXPathNameSpaces() {
+	   	if (log.isDebugEnabled()){
+    		log.debug("getXPathNameSpaces()");
+    	}
+		if (!isXsltComputed){
+			computeXslt();
+		}
+		return XPathNameSpaces;
+	}
+
+	public void setXPathNameSpaces(HashMap<String, String> pathNameSpaces) {
+	   	if (log.isDebugEnabled()){
+    		log.debug("setXPathNameSpaces("+pathNameSpaces+")");
+    	}
+		XPathNameSpaces = pathNameSpaces;
+		isXsltComputed = false;
+	}
+
+	/**
+	 * get Items list of this source
+	 * @return the items lits
+	 */
+	public List<Item> getItems() {
+	   	if (log.isDebugEnabled()){
+    		log.debug("getItems()");
+    	}
+		if (!isItemComputed){
+			computeItems();
+		}
+		return Items;
+	}
 /* ************************** ACCESSORS ******************************** */	
 
 	/**
@@ -378,65 +466,7 @@ public abstract class Source implements Element,Serializable {
 	public void setXmlStream(String xmlStream) {
 		this.xmlStream = xmlStream;
 	}
-	
-	/**
-	 * @return Returns the itemXPath.
-	 */
-	public String getItemXPath() {
-		if (!isXsltComputed){
-			computeXslt();
-		}
-		return itemXPath;
-	}
 
-	/**
-	 * @param itemXPath The itemXPath to set.
-	 */
-	public void setItemXPath(String itemXPath) {
-		this.itemXPath = itemXPath;
-		isXsltComputed = false;
-	}
-
-	/**
-	 * @return Returns the xsltURL.
-	 */
-	public String getXsltURL() {
-		if (!isXsltComputed){
-			computeXslt();
-		}
-		return xsltURL;
-	}
-
-	/**
-	 * @param xsltURL The xsltURL to set.
-	 */
-	public void setXsltURL(String xsltURL) {
-		this.xsltURL = xsltURL;
-		isXsltComputed = false;
-	}
-
-	public HashMap<String, String> getXPathNameSpaces() {
-		if (!isXsltComputed){
-			computeXslt();
-		}
-		return XPathNameSpaces;
-	}
-
-	public void setXPathNameSpaces(HashMap<String, String> pathNameSpaces) {
-		XPathNameSpaces = pathNameSpaces;
-		isXsltComputed = false;
-	}
-
-	/**
-	 * get Items list of this source
-	 * @return the items lits
-	 */
-	public List<Item> getItems() {
-		if (!isItemComputed){
-			computeItems();
-		}
-		return Items;
-	}
 
 	/**
 	 * set the Source URL

@@ -7,6 +7,8 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
@@ -20,7 +22,11 @@ import org.esupportail.lecture.exceptions.SourceNotLoadedException;
  */
 public abstract class SourceProfile implements ElementProfile {
 
-/* ************************** PROPERTIES ******************************** */	
+/* ************************** PROPERTIES ******************************** */
+	/**
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(SourceProfile.class);
 
 	/**
 	 * Id of the source profile 
@@ -64,6 +70,9 @@ public abstract class SourceProfile implements ElementProfile {
 	
 	
 	public List<Item> getItems(ExternalService externalService) throws ElementNotLoadedException {
+	   	if (log.isDebugEnabled()){
+    		log.debug("getItems(externalService)");
+    	}
 		loadSource(externalService);
 		Source source = getElement();
 		return source.getItems();
@@ -77,6 +86,9 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @return ID made from the three parameters
 	 */
 	protected String makeId(String type,String parentId,String interneId){
+	   	if (log.isDebugEnabled()){
+    		log.debug("makeId("+type+","+parentId+","+interneId+")");
+    	}
 		String id = type+":"+parentId+":"+interneId;
 		return id;
 	}

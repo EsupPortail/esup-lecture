@@ -92,6 +92,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * Constructor 
 	 */
 	public ManagedCategoryProfile() {
+		if (log.isDebugEnabled()){
+			log.debug("ManagedCategoryProfile()");
+		}
 		computedFeatures = new ComputedManagedCategoryFeatures(this);
 	}
 	
@@ -105,7 +108,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 //	 * @param externalService
 //	 * @return
 //	 */
-	public void updateCustomContext(CustomContext customContext,ExternalService externalService) throws ElementNotLoadedException{
+	public void updateCustomContext(CustomContext customContext,ExternalService externalService) 
+		throws ElementNotLoadedException{
+		if (log.isDebugEnabled()){
+			log.debug("updateCustomContext("+customContext.getElementId()+"externalService)");
+		}
 		loadCategory(externalService);
 		setUpCustomContextVisibility(customContext, externalService);
 		
@@ -113,6 +120,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 	@Override
 	protected void loadCategory(ExternalService externalService) throws CategoryNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("loadCategory(externalService)");
+		}
 		if(getAccess() == Accessibility.PUBLIC) {
 			setElement(DomainTools.getDaoService().getManagedCategory(this)); 
 			
@@ -132,7 +142,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @return true if the mcp is visible by the user of the customContext, else return false
 	 * @throws ElementNotLoadedException 
 	 */
-	private boolean setUpCustomContextVisibility(CustomContext customContext, ExternalService externalService) throws ElementNotLoadedException {
+	private boolean setUpCustomContextVisibility(CustomContext customContext, ExternalService externalService) 
+		throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("setUpCustomContextVisibility("+customContext.getElementId()+",externalService)");
+		}
 		/*
 		 * Algo pour gerer les customCategories :
 		 * ------------------------------------
@@ -195,7 +209,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @throws ElementNotLoadedException 
 	 * @throws ElementNotLoadedException 
 	 */
-	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) throws ElementNotLoadedException {
+	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) 
+		throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("updateCustom("+customManagedCategory.getElementId()+",externalService)");
+		}
 		ManagedCategory category = (ManagedCategory) getElement();
 		category.updateCustom(customManagedCategory, externalService);
 	}
@@ -206,6 +224,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#computeActiveFeatures()
 	 */
 	public void computeFeatures() throws CategoryNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("computeFeatures()");
+		}
 		
 		ManagedCategory managedCategory = (ManagedCategory)getElement();
 		//Editability setEdit;
@@ -228,8 +249,78 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		} */
 		computedFeatures.update(setVisib);
 	}
+
+	/**
+	 * @return Visibility
+	 * @throws ElementNotLoadedException 
+	 * @see ManagedCategoryProfile#visibility
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
+	 */
+	public VisibilitySets getVisibility() throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("getVisibility()");
+		}
+		return computedFeatures.getVisibility();
+	}
+	
+	/**
+	 * @see ManagedCategoryProfile#visibility
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibility(org.esupportail.lecture.domain.model.VisibilitySets)
+	 */
+	public void setVisibility(VisibilitySets visibility) {
+		if (log.isDebugEnabled()){
+			log.debug("setVisibility(visibility)");
+		}
+		this.visibility = visibility;
+		computedFeatures.setIsComputed(false);
+	}
+	
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
+	 */
+	public void setVisibilityAllowed(DefinitionSets d) {
+		if (log.isDebugEnabled()){
+			log.debug("setVisibilityAllowed(definitionSets)");
+		}
+		this.visibility.setAllowed(d);
+		computedFeatures.setIsComputed(false);
+	}
+	
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
+	 */
+	public void setVisibilityAutoSubcribed(DefinitionSets d) {
+		if (log.isDebugEnabled()){
+			log.debug("setVisibilityAutoSubcribed(definitionSets)");
+		}
+		this.visibility.setAutoSubscribed(d);
+		computedFeatures.setIsComputed(false);
+	}
+	
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
+	 */
+	public void setVisibilityObliged(DefinitionSets d) {
+		if (log.isDebugEnabled()){
+			log.debug("setVisibilityObliged(definitionSets)");
+		}
+		this.visibility.setObliged(d);
+		computedFeatures.setIsComputed(false);
+	}
 	
 
+	/**
+	 * Add a context to the set of context in this managed category profile
+	 * @param c context to add
+	 * @see ManagedCategoryProfile#contextsSet
+	 */
+	protected void addContext(Context c){
+		if (log.isDebugEnabled()){
+			log.debug("addContext("+c.getId()+")");
+		}
+		contextsSet.add(c);
+	}
+	
 	/*
 	 *************************** ACCESSORS ******************************** */	
 
@@ -298,24 +389,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 //	}
 	
 	
-	/**
-	 * @return Visibility
-	 * @throws ElementNotLoadedException 
-	 * @see ManagedCategoryProfile#visibility
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
-	 */
-	public VisibilitySets getVisibility() throws ElementNotLoadedException {
-		return computedFeatures.getVisibility();
-	}
-	
-	/**
-	 * @see ManagedCategoryProfile#visibility
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibility(org.esupportail.lecture.domain.model.VisibilitySets)
-	 */
-	public void setVisibility(VisibilitySets visibility) {
-		this.visibility = visibility;
-		computedFeatures.setIsComputed(false);
-	}
 
 	/**
 	 * @return allowed visibility group 
@@ -325,14 +398,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	public DefinitionSets getVisibilityAllowed() throws ElementNotLoadedException {
 		return getVisibility().getAllowed();
 	}
-	
-	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	public void setVisibilityAllowed(DefinitionSets d) {
-		this.visibility.setAllowed(d);
-		computedFeatures.setIsComputed(false);
-	}
+
 
 	/** 
 	 * @return autoSubscribed group visibility
@@ -342,14 +408,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	public DefinitionSets getVisibilityAutoSubscribed() throws ElementNotLoadedException {
 		return getVisibility().getAutoSubscribed();
 	}
-	
-	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	public void setVisibilityAutoSubcribed(DefinitionSets d) {
-		this.visibility.setAutoSubscribed(d);
-		computedFeatures.setIsComputed(false);
-	}
+
 	
 	/**
 	 * @return obliged group visibility
@@ -360,15 +419,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		return getVisibility().getObliged();
 		
 	}
-	
-	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	public void setVisibilityObliged(DefinitionSets d) {
-		this.visibility.setObliged(d);
-		computedFeatures.setIsComputed(false);
-	}
-	
+
 	/**
 	 * Returns ttl
 	 * @throws ElementNotLoadedException 
@@ -386,22 +437,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	public void setTtl(int ttl) {
 		this.ttl = ttl;
 	}
-
-
-	/**
-	 * Add a context to the set of context in this managed category profile
-	 * @param c context to add
-	 * @see ManagedCategoryProfile#contextsSet
-	 */
-	protected void addContext(Context c){
-		contextsSet.add(c);
-	}
-
-	
-
-
-	
-	
 
 
 

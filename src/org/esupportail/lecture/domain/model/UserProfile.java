@@ -64,6 +64,9 @@ public class UserProfile {
 	 * @param userId
 	 */
 	public UserProfile(String userId){
+	   	if (log.isDebugEnabled()){
+    		log.debug("UserProfile("+userId+")");
+    	}
 		customContexts = new Hashtable<String,CustomContext>();
 		customCategories = new Hashtable<String, CustomCategory>();
 		customSources = new Hashtable<String,CustomSource>();
@@ -82,6 +85,9 @@ public class UserProfile {
 	 * @return customContext (or null)
 	 */
 	public CustomContext getCustomContext(String contextId){
+	   	if (log.isDebugEnabled()){
+    		log.debug("getCustomContext("+contextId+")");
+    	}
 		CustomContext customContext = 
 				customContexts.get(contextId);
 		if (customContext == null){
@@ -101,6 +107,9 @@ public class UserProfile {
 	 * @throws CustomCategoryNotFoundException 
 	 */
 	public CustomCategory getCustomCategory(String categoryId) throws CustomCategoryNotFoundException{
+	   	if (log.isDebugEnabled()){
+    		log.debug("getCustomCategory("+categoryId+")");
+    	}
 		// TODO (GB later) avec customManagedCategory et customPersonalCategory
 		CustomCategory customCategory = 
 			customCategories.get(categoryId);
@@ -117,6 +126,9 @@ public class UserProfile {
 	 * @throws CustomSourceNotFoundException 
 	 */
 	public CustomSource getCustomSource(String sourceId) throws CustomSourceNotFoundException {
+	   	if (log.isDebugEnabled()){
+    		log.debug("getCustomSource("+sourceId+")");
+    	}
 		CustomSource customSource = 
 			customSources.get(sourceId);
 		if(customSource == null){
@@ -130,6 +142,9 @@ public class UserProfile {
 	 * @param customContext
 	 */
 	public void addCustomContext(CustomContext customContext){
+	   	if (log.isDebugEnabled()){
+    		log.debug("addCustomContext("+customContext.getElementId()+")");
+    	}
 		customContexts.put(customContext.getElementId(),customContext);
 		DomainTools.getDaoService().updateUserProfile(this);
 		// TODO (gb) DAO quand fera t on le delete ?
@@ -139,6 +154,9 @@ public class UserProfile {
 	 * @param customCategory
 	 */
 	public void addCustomCategory(CustomCategory customCategory){
+	   	if (log.isDebugEnabled()){
+    		log.debug("addCustomCategory("+customCategory.getElementId()+")");
+    	}
 		String id = customCategory.getElementId();
 		customCategories.put(id,customCategory);
 	}
@@ -148,6 +166,9 @@ public class UserProfile {
 	 * @param categoryId
 	 */
 	public void removeCustomCategory(String categoryId){
+	   	if (log.isDebugEnabled()){
+    		log.debug("removeCustomCategory("+categoryId+")");
+    	}
 		customCategories.remove(categoryId);
 	}
 	
@@ -155,6 +176,9 @@ public class UserProfile {
 	 * @param customSource
 	 */
 	public void addCustomSource(CustomSource customSource){
+	   	if (log.isDebugEnabled()){
+    		log.debug("addCustomSource("+customSource.getElementId()+")");
+    	}
 		customSources.put(customSource.getElementId(),customSource);
 	}
 	
@@ -162,6 +186,9 @@ public class UserProfile {
 	 * @param sourceId
 	 */
 	public void removeCustomSource(String sourceId){
+	   	if (log.isDebugEnabled()){
+    		log.debug("removeCustomSource("+sourceId+")");
+    	}
 		customSources.remove(sourceId);
 	}
 		

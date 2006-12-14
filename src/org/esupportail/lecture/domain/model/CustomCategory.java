@@ -2,6 +2,8 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
@@ -17,6 +19,11 @@ public abstract class CustomCategory implements CustomElement {
 
 	/*
 	 ************************** PROPERTIES *********************************/	
+	/**
+	 * Log instance
+	 */
+	protected static final Log log = LogFactory.getLog(CustomCategory.class);
+
 
 	/**
 	 * The userprofile parent 
@@ -44,6 +51,9 @@ public abstract class CustomCategory implements CustomElement {
 	 * @param user owner of this 
 	 */
 	public CustomCategory(String profileId, UserProfile user) {
+		if (log.isDebugEnabled()){
+			log.debug("CustomCategory("+profileId+","+user.getUserId()+")");
+		}
 		this.profileId = profileId;
 		this.userProfile = user;
 	}
@@ -88,6 +98,9 @@ public abstract class CustomCategory implements CustomElement {
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
 	public String getName() throws CategoryProfileNotFoundException, CategoryNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("getName()");
+		}
 		return getProfile().getName();
 	}
 	

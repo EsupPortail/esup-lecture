@@ -84,7 +84,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * Constructor
 	 */
 	public ManagedSourceProfile(ManagedCategoryProfile mcp) {
-		log.debug("new ManagedSourceProfile(), ownerProfile = "+mcp.getId());
+		if (log.isDebugEnabled()){
+			log.debug("ManagedSourceProfile("+mcp.getId()+")");
+		}
 		categoryProfile = mcp;
 		computedFeatures = new ComputedManagedSourceFeatures(this);
 	}
@@ -93,9 +95,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/*
 	 *************************** METHODS ******************************** */	
 	
-	public void updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService externalService) throws ElementNotLoadedException {
+	public void updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService externalService) 
+		throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("updateCustomCategory("+customManagedCategory.getElementId()+"externalService)");
+		}
 		// no loadSource(externalService) is needed here
-		setUpCustomCategoryVisibility(externalService,customManagedCategory);
+		setUpCustomCategoryVisibility(customManagedCategory,externalService);
 		
 	}
 
@@ -107,6 +113,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * Can be called only when source has been realy get. (Not at the instantiation of the object)
 	 */
 	public void computeFeatures() throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("computeFeatures()");
+		}
 	
 		/* Features that can be herited by the managedCategoryProfile */
 		Accessibility setAccess;
@@ -133,6 +142,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	}
 
 	protected void loadSource(ExternalService externalService) throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("loadSource(externalService)");
+		}
 			
 		if(getAccess() == Accessibility.PUBLIC) {
 			// managed Source Profile => single or globalSource
@@ -160,7 +172,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @return true if sourceProfile is visible by user (in Obliged or in autoSubscribed, or in Allowed)
 	 */
 	
-	private boolean setUpCustomCategoryVisibility(ExternalService externalService, CustomManagedCategory customManagedCategory) throws ElementNotLoadedException {
+	private boolean setUpCustomCategoryVisibility(CustomManagedCategory customManagedCategory,ExternalService externalService) 
+		throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("setUpCustomCategoryVisibility("+customManagedCategory.getElementId()+",externalService)");
+		}
 			/*
 			 * Algo pour gerer les customSourceProfiles :
 			 * ------------------------------------
@@ -209,14 +225,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			// de sources  disparus	
 			return true;
 		}
-
-	
-	
-	
-	
-/* ************************** ACCESSORS ******************************** */	
-
-
 	
 
 	/**	 
@@ -226,6 +234,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getAccess()
 	 */
 	public Accessibility getAccess() throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("getAccess()");
+		}
 		return computedFeatures.getAccess();
 	}
 
@@ -234,6 +245,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setAccess(org.esupportail.lecture.domain.model.Accessibility)
 	 */
 	public void setAccess(Accessibility access) {
+		if (log.isDebugEnabled()){
+			log.debug("setAccess()");
+		}
 		this.access = access;
 		computedFeatures.setIsComputed(false);
 	}
@@ -245,6 +259,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
 	 */
 	public VisibilitySets getVisibility() throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("getVisibility()");
+		}
 		return computedFeatures.getVisibility();
 	}
 
@@ -254,9 +271,84 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibility(org.esupportail.lecture.domain.model.VisibilitySets)
 	 */
 	public void setVisibility(VisibilitySets visibility) {
+		if (log.isDebugEnabled()){
+			log.debug("setVisibility(visibility)");
+		}
 		this.visibility = visibility;
 		computedFeatures.setIsComputed(false);
 	}
+	
+	/** 
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
+	 */
+	public void setVisibilityAllowed(DefinitionSets d) {
+		if (log.isDebugEnabled()){
+			log.debug("setVisibilityAllowed(definitionSets)");
+		}
+		visibility.setAllowed(d);
+		computedFeatures.setIsComputed(false);
+		
+	}
+
+	/**
+	 * @throws ElementNotLoadedException 
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAllowed()
+	 */
+	public DefinitionSets getVisibilityAllowed() throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("getVisibilityAllowed()");
+		}
+		return computedFeatures.getVisibility().getAllowed();
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
+	 */
+	public void setVisibilityAutoSubcribed(DefinitionSets d) {
+		if (log.isDebugEnabled()){
+			log.debug("setVisibilityAutoSubcribed(definitionSets)");
+		}
+		visibility.setAutoSubscribed(d);
+		computedFeatures.setIsComputed(false);	
+	}
+
+	/**
+	 * @throws ElementNotLoadedException 
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAutoSubscribed()
+	 */
+	public DefinitionSets getVisibilityAutoSubscribed() throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("getVisibilityAutoSubscribed()");
+		}
+		return computedFeatures.getVisibility().getAutoSubscribed();
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
+	 */
+	public void setVisibilityObliged(DefinitionSets d) {
+		if (log.isDebugEnabled()){
+			log.debug("setVisibilityObliged(definitionSets)");
+		}
+		visibility.setObliged(d);
+		computedFeatures.setIsComputed(false);	
+		
+	}
+
+	/**
+	 * @throws ElementNotLoadedException 
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityObliged()
+	 */
+	public DefinitionSets getVisibilityObliged() throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("getVisibilityObliged()");
+		}
+		return computedFeatures.getVisibility().getObliged();
+	}
+
+	
+	/* ************************** ACCESSORS ******************************** */	
+
 	
 	/**
 	 * Returns ttl
@@ -292,56 +384,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	public void setSpecificUserContent(boolean specificUserContent) {
 		this.specificUserContent = specificUserContent;
-	}
-
-	/** 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	public void setVisibilityAllowed(DefinitionSets d) {
-		visibility.setAllowed(d);
-		computedFeatures.setIsComputed(false);
-		
-	}
-
-	/**
-	 * @throws ElementNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAllowed()
-	 */
-	public DefinitionSets getVisibilityAllowed() throws ElementNotLoadedException {
-		return computedFeatures.getVisibility().getAllowed();
-	}
-
-	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	public void setVisibilityAutoSubcribed(DefinitionSets d) {
-		visibility.setAutoSubscribed(d);
-		computedFeatures.setIsComputed(false);	
-	}
-
-	/**
-	 * @throws ElementNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAutoSubscribed()
-	 */
-	public DefinitionSets getVisibilityAutoSubscribed() throws ElementNotLoadedException {
-		return computedFeatures.getVisibility().getAutoSubscribed();
-	}
-
-	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	public void setVisibilityObliged(DefinitionSets d) {
-		visibility.setObliged(d);
-		computedFeatures.setIsComputed(false);	
-		
-	}
-
-	/**
-	 * @throws ElementNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityObliged()
-	 */
-	public DefinitionSets getVisibilityObliged() throws ElementNotLoadedException {
-		return computedFeatures.getVisibility().getObliged();
 	}
 
 

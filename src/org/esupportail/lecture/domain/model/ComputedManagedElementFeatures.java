@@ -1,5 +1,7 @@
 package org.esupportail.lecture.domain.model;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 
 /**
@@ -13,7 +15,10 @@ public abstract class ComputedManagedElementFeatures {
 
 	/*
 	 *********************** PROPERTIES**************************************/ 
-
+	/**
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(ComputedManagedElementFeatures.class);
 	/**
 	 * Visibility rights for groups on the remote managed category
 	 * Using depends on trustCategory parameter
@@ -36,11 +41,19 @@ public abstract class ComputedManagedElementFeatures {
 	/*
 	 ********************* INITIALIZATION **************************************/
 	
+	public ComputedManagedElementFeatures(){
+		
+	}
+	
+	
 	/** 
 	 * Constructor
 	 * @param mcp Managed category profile concerned by these features
 	 */
 	protected ComputedManagedElementFeatures(ManagedElementProfile mep){
+		if (log.isDebugEnabled()){
+			log.debug("ComputedManagedElementFeatures("+mep.getId()+")");
+		}
 		this.mep = mep;
 	}
 	
@@ -53,6 +66,9 @@ public abstract class ComputedManagedElementFeatures {
 	 * @throws ElementNotLoadedException 
 	 */
 	protected void compute() throws ElementNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("compute()");
+		}
 		mep.computeFeatures();
 		isComputed = true;
 	}
@@ -64,6 +80,9 @@ public abstract class ComputedManagedElementFeatures {
 	 * @param visibility
 	 */
 	protected void update( VisibilitySets visibility) {
+		if (log.isDebugEnabled()){
+			log.debug("update(visibility)");
+		}
 		this.visibility = visibility;
 	}
 	
