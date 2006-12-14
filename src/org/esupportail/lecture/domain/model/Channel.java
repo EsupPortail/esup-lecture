@@ -16,6 +16,7 @@ import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.*;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.Assert;
 /**
  * The "lecture" channel : main domain model class
  * @author gbouteil
@@ -117,6 +118,7 @@ public class Channel implements InitializingBean {
 		if (log.isDebugEnabled()){
 			log.debug("afterPropertiesSet()");
 		}
+		Assert.notNull(daoService,"property daoService can not be null");
 		startup();
 		DomainTools.setChannel(this);
 		DomainTools.setDaoService(daoService);
