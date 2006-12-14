@@ -1,16 +1,12 @@
 package org.esupportail.lecture.dao;
-import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.domain.model.CustomManagedCategory;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
-
-
 
 /**
  * Interface Service to Data Access Object
@@ -94,8 +90,5 @@ public interface DaoService {
 
 	public void updateCustomSource(CustomSource source);
 
-
-	
-	
 		
 }

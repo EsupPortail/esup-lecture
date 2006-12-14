@@ -60,7 +60,12 @@ public class CustomContext implements CustomElement {
 	/**
 	 * Set of id corresponding to unfolded categories
 	 */
-	private Set<String> unfoldedCategories; 
+	private Set<String> unfoldedCategories;
+
+	/**
+	 * Database Primary Key
+	 */
+	private long customContextPK; 
 
 	
 	/*
@@ -80,6 +85,14 @@ public class CustomContext implements CustomElement {
 		this.contextId = contextId;
 		this.userProfile = user;
 		treeSize = 20;
+	}
+	
+	/**
+	 * Constructor
+	 */
+	public CustomContext() {
+		subscriptions = new Hashtable<String,CustomManagedCategory>();
+		unfoldedCategories = new HashSet<String>();
 	}
 	
 	/*
@@ -199,7 +212,8 @@ public class CustomContext implements CustomElement {
 		// TODO (GB) externaliser les bornes
 		if ((size >=0) && (size <=100)){
 			treeSize = size;
-			DomainTools.getDaoService().updateCustomContext(this);
+			//TODO RB!!!!
+			//DomainTools.getDaoService().updateCustomContext(this);
 		}else {
 			throw new TreeSizeErrorException("TreeSize must be into 0 and 100");
 		}
@@ -233,6 +247,28 @@ public class CustomContext implements CustomElement {
 		}else {
 			return true;
 		}
+	}
+
+	/**
+	 * @return database primary Key
+	 */
+	public long getCustomContextPK() {
+		return customContextPK;
+	}
+
+	/**
+	 * @param customContextPK - database Primary Key
+	 */
+	public void setCustomContextPK(long customContextPK) {
+		this.customContextPK = customContextPK;
+	}
+
+	public String getContextId() {
+		return contextId;
+	}
+
+	public void setContextId(String contextId) {
+		this.contextId = contextId;
 	}
 
 //

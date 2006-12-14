@@ -279,6 +279,7 @@ public class Channel implements InitializingBean {
 		
 		if (userProfile == null){
 			userProfile = new UserProfile(userId);
+			DomainTools.getDaoService().saveUserProfile(userProfile);
 		}
 		return userProfile;
 	}

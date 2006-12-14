@@ -27,30 +27,28 @@
 			value="classpath:/properties/dao/hibernate/hibernate.cfg.xml" />
 		<property name="mappingLocations">
 			<list>
-			<!-- 
 				<value>
-					classpath:/properties/dao/hibernate/mapping/User.hbm.xml
+					classpath:/properties/dao/hibernate/mapping/userProfile.hbm
 				</value>
 				<value>
-					classpath:/properties/dao/hibernate/mapping/Department.hbm.xml
+					classpath:/properties/dao/hibernate/mapping/customContext.hbm
 				</value>
-				<value>
-					classpath:/properties/dao/hibernate/mapping/DepartmentManager.hbm.xml
-				</value>
-				<value>
-					classpath:/properties/dao/hibernate/mapping/Thing.hbm.xml
-				</value>
-				<value>
-					classpath:/properties/dao/hibernate/mapping/VersionManager.hbm.xml
-				</value>
-			 -->
 			</list>
 		</property>
 	</bean>
-
 	
 	<bean 
 		id="sessionFactory" 
+		parent="abstractHibernateSessionFactory" 
+		lazy-init="true"
+		>
+		<description>
+			This bean is the 'normal' session factory used by the application.
+		</description>
+	</bean>
+
+	<bean 
+		id="testSessionFactory" 
 		parent="abstractHibernateSessionFactory" 
 		lazy-init="true"
 		>
@@ -122,7 +120,6 @@
 			The Hibernate template, used by the DAO service to access the database.
 		</description>
 		<property name="jdbcExceptionTranslator" ref="jdbcExceptionTranslator" />
-		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 	<!-- 
@@ -142,10 +139,29 @@
 		</property>
 	</bean>
 
-	<bean id="daoServiceRemoteXML"
+	<bean id="daoService2" class="org.esupportail.lecture.dao.DaoServiceImpl">
+		<description>
+			This bean provides the dao service of the application, used by the 
+			domain.model.
+			It must implement interface org.esupportail.lecture.domain.DAOService.
+		</description>
+		<property name="remoteXMLService">
+			<ref bean="daoServiceRemoteXML" />
+		</property>
+		<property name="hibernateService">
+			<ref bean="daoServiceHibernate"/>
+		</property>
+	</bean>
+
+	<bean id="daoServiceRemoteXML" 
         class="org.esupportail.lecture.dao.DaoServiceRemoteXML">
         <property name="cacheProviderFacade" ref="cacheProviderFacade" />
 		<property name="cachingModel" ref="cachingModel" />
+	</bean>
+
+	<bean id="daoServiceHibernate" parent="hibernateSessionFactoryContainer"
+        class="org.esupportail.lecture.dao.DaoServiceHibernate">
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 
     <bean id="cacheProviderFacade"

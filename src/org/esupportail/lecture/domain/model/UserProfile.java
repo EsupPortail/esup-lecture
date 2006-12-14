@@ -52,6 +52,10 @@ public class UserProfile {
 	 * Hashtable of CustomSource defined for the user, indexed by SourceProfilID.
 	 */
 	private Map<String,CustomSource> customSources;
+	/**
+	 * Database Primary Key
+	 */
+	private long userProfilePK;
 
 	
 	/*
@@ -71,9 +75,17 @@ public class UserProfile {
 		customCategories = new Hashtable<String, CustomCategory>();
 		customSources = new Hashtable<String,CustomSource>();
 		this.setUserId(userId);
-//		 TODO (gb) DAO save ici ou à l'appel ?
-		DomainTools.getDaoService().saveUserProfile(this);
 	}
+
+	/**
+	 * Constructor
+	 */
+	public UserProfile(){
+		customContexts = new Hashtable<String,CustomContext>();
+		customCategories = new Hashtable<String, CustomCategory>();
+		customSources = new Hashtable<String,CustomSource>();
+	}
+
 	/*
 	 *************************** METHODS ************************************/
 
@@ -249,6 +261,20 @@ public class UserProfile {
 	public void setCustomCategories(
 			Map<String, CustomCategory> customCategories) {
 		this.customCategories = customCategories;
+	}
+
+	/**
+	 * @return database primary Key
+	 */
+	public long getUserProfilePK() {
+		return userProfilePK;
+	}
+
+	/**
+	 * @param userProfilePK - database Primary Key
+	 */
+	public void setUserProfilePK(long userProfilePK) {
+		this.userProfilePK = userProfilePK;
 	}
 
 	

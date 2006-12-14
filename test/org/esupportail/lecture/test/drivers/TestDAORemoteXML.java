@@ -22,9 +22,9 @@ import org.springframework.core.io.ClassPathResource;
  * @author gbouteil
  * @see org.esupportail.lecture.domain.model
  */
-public class TestDAORemoteXMLRaymond {
+public class TestDAORemoteXML {
 	
-	protected static final Log log = LogFactory.getLog(TestDAORemoteXMLRaymond.class); 
+	protected static final Log log = LogFactory.getLog(TestDAORemoteXML.class); 
 	
 	/**
 	 * @param args non argumet needed

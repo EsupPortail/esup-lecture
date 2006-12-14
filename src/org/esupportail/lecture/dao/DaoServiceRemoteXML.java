@@ -56,7 +56,7 @@ public class DaoServiceRemoteXML {
 	
 	/**
 	 * @throws ErrorException 
-	 * @see org.esupportail.lecture.dao.DaoService#getCategory(java.lang.String, int, java.lang.String)
+	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(ManagedCategoryProfile)
 	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
 	
@@ -193,11 +193,8 @@ public class DaoServiceRemoteXML {
 	
 	/**
 	 * get a source form cache
-	 * @param urlSource url of the source
-	 * @param ttl ttl of the source
-	 * @param profileId 
-	 * @param specificUserContent : is the content is specific to current user. If yes never use cache
-	 * @return
+	 * @param sourceProfile source profile of source to get
+	 * @return the source
 	 */
 	public Source getSource(SourceProfile sourceProfile) {
 		Source ret = new GlobalSource();

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.esupportail.lecture.domain.model">
+	<class name="CustomContext" table="CUSTOMCONTEXT">
+		<id name="customContextPK" type="long" column="CUSTOMCONTEXTPK">
+			<generator class="native" />
+		</id>
+		<property name="treeSize" column="TREEWINWIDTH"
+			type="integer" not-null="false" length="10" />
+		<property name="contextId" column="CONTEXTID"
+			type="string" not-null="false" length="10" />
+	</class>
+</hibernate-mapping>
