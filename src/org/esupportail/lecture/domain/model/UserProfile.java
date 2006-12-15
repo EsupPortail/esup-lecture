@@ -181,7 +181,10 @@ public class UserProfile {
 	   	if (log.isDebugEnabled()){
     		log.debug("removeCustomCategory("+categoryId+")");
     	}
-		customCategories.remove(categoryId);
+	   	CustomCategory ccat = customCategories.remove(categoryId);
+		if( ccat!= null) {
+			DomainTools.getDaoService().deleteCustomCategory(ccat);
+		}
 	}
 	
 	/**
@@ -201,7 +204,10 @@ public class UserProfile {
 	   	if (log.isDebugEnabled()){
     		log.debug("removeCustomSource("+sourceId+")");
     	}
-		customSources.remove(sourceId);
+		CustomSource cs = customSources.remove(sourceId);
+		if (cs != null) {
+			DomainTools.getDaoService().deleteCustomSource(cs);
+		}
 	}
 		
 	/* ************************** ACCESSORS ********************************* */

@@ -114,8 +114,8 @@ public class CustomContext implements CustomElement {
 		/* update this customContext with context */
 		getContext().updateCustom(this,externalService);
 		
-		DomainTools.getDaoService().updateUserProfile(userProfile);
 		DomainTools.getDaoService().updateCustomContext(this);
+		DomainTools.getDaoService().updateUserProfile(userProfile);
 		
 		List<CustomCategory> listCustomCategories = new Vector<CustomCategory>();
 		for(CustomManagedCategory customCat : subscriptions.values()){
@@ -159,7 +159,6 @@ public class CustomContext implements CustomElement {
 		if (cmc != null) {
 			subscriptions.remove(profileId);
 			userProfile.removeCustomCategory(profile.getId());
-			DomainTools.getDaoService().deleteCustomCategory(cmc);
 		} 
 		
 	}

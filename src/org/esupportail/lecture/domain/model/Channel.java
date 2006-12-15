@@ -43,6 +43,11 @@ public class Channel implements InitializingBean {
 	 */
 	private Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash;
 	
+	/**
+	 * Hashtable of UserProfiles loaded from database, indexed by their userId.
+	 */
+	private Hashtable<String,UserProfile> userProfilesHash;
+	
 	/* mappings */
 	
 	/**
@@ -109,6 +114,11 @@ public class Channel implements InitializingBean {
 	/*
 	 ************************** Initialization ************************************/
 
+	public Channel(){
+		userProfilesHash = new Hashtable<String,UserProfile>();
+	}
+	
+	
 	/**
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws ContextNotFoundException 
@@ -275,11 +285,15 @@ public class Channel implements InitializingBean {
 			log.debug("getUserProfile("+userId+")");
 		}
 	
-		UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
+		UserProfile userProfile = userProfilesHash.get(userId);
+		if (userProfile == null) {
+			userProfile = DomainTools.getDaoService().getUserProfile(userId);
 		
-		if (userProfile == null){
-			userProfile = new UserProfile(userId);
-			DomainTools.getDaoService().saveUserProfile(userProfile);
+			if (userProfile == null){
+				userProfile = new UserProfile(userId);
+				DomainTools.getDaoService().saveUserProfile(userProfile);
+			}
+			userProfilesHash.put(userId, userProfile);
 		}
 		return userProfile;
 	}
@@ -318,8 +332,8 @@ public class Channel implements InitializingBean {
 
 	/**
 	 * Returns the managed category profile by giving its Id.
-	 * @param s the managed category profile Id
-	 * @return managedCategoryProfilesHash
+	 * @param id the managed category profile Id
+	 * @return managedCategoryProfile
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @see Channel#managedCategoryProfilesHash
 	 */
@@ -346,6 +360,7 @@ public class Channel implements InitializingBean {
 		this.managedCategoryProfilesHash.put(m.getId(),m);
 	}
 	
+
 	/**
 	 * Add a mapping to the list of mappings defined in the channel.
 	 * @param m the mapping to add
@@ -554,6 +569,23 @@ public class Channel implements InitializingBean {
 		this.managedCategoryProfilesHash = managedCategoryProfilesHash;
 	}
 
+	/**
+	 * Returns a hashtable of UserProfile, indexed by their ids
+	 * @return userProfilesHash
+	 * @see Channel#userProfilesHash
+	 */
+	public Hashtable<String, UserProfile> getUserProfilesHash() {
+		return userProfilesHash;
+	}
+	
+	/**
+	 * Set Hashtable of userProfiles, indexed by their ids
+	 * @param userProfilesHash
+	 * @see Channel#userProfilesHash
+	 */
+	public void setUserProfilesHash(Hashtable<String, UserProfile> userProfilesHash) {
+		this.userProfilesHash = userProfilesHash;
+	}
 
 //	public void setMappingFile(MappingFile m){
 //		this.mappingFile = m;
@@ -594,6 +626,8 @@ public class Channel implements InitializingBean {
 	public void setDaoService(DaoService daoService) {
 		this.daoService = daoService;
 	}
+
+
 
 
 

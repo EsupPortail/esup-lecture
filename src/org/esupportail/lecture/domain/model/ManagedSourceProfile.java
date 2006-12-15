@@ -185,7 +185,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			 * user app.allowed => rien à faire + sortir
 			 * user n'app. rien => effacer la custom source .
 			 */
-		log.debug("setUpCustomCategoryVisibility");
 
 			boolean isInObliged = false;
 			boolean isInAutoSubscribed = false;

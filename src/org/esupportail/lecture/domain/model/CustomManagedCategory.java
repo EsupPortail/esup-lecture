@@ -67,13 +67,13 @@ public class CustomManagedCategory extends CustomCategory {
 		ManagedCategoryProfile profile = getProfile();
 		profile.updateCustom(this,externalService);
 		
-		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
 		DomainTools.getDaoService().updateCustomCategory(this);
+		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
 		
 		List<CustomSource> listSources = new Vector<CustomSource>();
 		for(CustomSource customSource : subscriptions.values()){
 			listSources.add(customSource);
-			log.debug("Add source");
+			log.trace("Add source");
 		}
 	
 		return listSources;
@@ -111,7 +111,6 @@ public class CustomManagedCategory extends CustomCategory {
 		if (cs != null) {
 			subscriptions.remove(profile.getId());
 			getUserProfile().removeCustomSource(profile.getId());
-			DomainTools.getDaoService().deleteCustomSource(cs);
 		} else {
 			log.warn("CustomManagedSource "+profileId+" to remove is not in subscriptions of CustomContext "+super.getElementId());
 		}
