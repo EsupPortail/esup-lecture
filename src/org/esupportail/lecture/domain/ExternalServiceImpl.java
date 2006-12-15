@@ -34,7 +34,7 @@ public class ExternalServiceImpl implements ExternalService {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		if (PortletUtil.isPortletRequest(facesContext)) {
 			modeService = new PortletService();
-		} else {// TODO make better
+		} else {// TODO (GB/RB) make better
 			modeService = new ServletService();
 		}
 	}

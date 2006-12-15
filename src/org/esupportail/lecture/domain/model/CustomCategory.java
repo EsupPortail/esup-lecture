@@ -79,14 +79,14 @@ public abstract class CustomCategory implements CustomElement {
 //	 * @param managedSourceProfile
 //	 */
 //	public abstract void addSubscription (ManagedSourceProfile managedSourceProfile) ;
-// TODO (GB later : addImportation(), addCreation())
+// TODO (GB later) addImportation(), addCreation())
 
 	/**
 	 * remove a ManagedCustomSource, indifferently an importation or a subscription
 	 * @param managedSourceProfile
 	 */
 	public abstract void removeCustomManagedSource (ManagedSourceProfile managedSourceProfile) ;
-	// TODO (GB later : removeCustomPersonalSource())
+	// TODO (GB later) removeCustomPersonalSource())
 	
 	/**
 	 * @return the categoryProfile associated with this customCategory

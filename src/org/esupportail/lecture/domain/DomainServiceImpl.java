@@ -97,11 +97,7 @@ public class DomainServiceImpl implements DomainService {
 			log.error("Context not found for service 'getContext(user "+userId+", context "+contextId);
 			throw new DomainServiceException(e);
 		}
-		
-		// TODO (GB) mise à jour du DAO ?
-//		DomainTools.getDaoService().updateCustomContext(customContext);
-//		DomainTools.getDaoService().updateUserProfile(userProfile);
-		
+			
 		return contextBean;		
 	}
 
@@ -120,15 +116,12 @@ public class DomainServiceImpl implements DomainService {
 
 		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
 		try {
-			// TODO (GB) appel via le userProfile ?
 			List<CustomCategory> customCategories = customContext.getSortedCustomCategories(externalService);
 
 			for(CustomCategory customCategory : customCategories){
 				
 				CategoryBean category = new CategoryBean(customCategory,customContext);
 				listCategoryBean.add(category);
-				// TODO (GB) mise à jour du DAO ?
-//				DomainTools.getDaoService().updateCustomCategory(customCategory);
 			}
 		} catch (ContextNotFoundException e){
 			log.error("Context not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
@@ -140,10 +133,6 @@ public class DomainServiceImpl implements DomainService {
 			log.error("ManagedCategoryProfile not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
 			throw new DomainServiceException(e);
 		} 
-		
-		// TODO (GB) mise à jour du DAO ?
-//		DomainTools.getDaoService().updateCustomContext(customContext);
-//		DomainTools.getDaoService().updateUserProfile(userProfile);
 		return listCategoryBean;
 	}
 	
@@ -156,14 +145,13 @@ public class DomainServiceImpl implements DomainService {
 			log.debug("getVisibleSources("+uid+","+categoryId+",externalService)");
 		}
 		
-		// TODO (gb): getVisibleCategories doit avoir été appelé avant pour charger la category : est ce bien ?
+		// TODO (GB) getVisibleCategories doit avoir été appelé avant pour charger la category : est ce bien ?
 		/* Get current user profile and customCoategory */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomCategory customCategory;
 
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
 		try {
-			// TODO (GB) appel via le userProfile ?
 			customCategory = userProfile.getCustomCategory(categoryId);
 			List<CustomSource> customSources = customCategory.getSortedCustomSources(externalService);
 			int nbSources = customSources.size();
@@ -215,8 +203,7 @@ public class DomainServiceImpl implements DomainService {
 		List<ItemBean> listItemBean = new ArrayList<ItemBean>();
 		
 		List<Item> listItems;
-		try {			
-			// TODO (GB) appel via le userProfile ?
+		try {
 			listItems = customSource.getItems(externalService);
 		} catch (SourceNotLoadedException e) {
 			log.error("Source is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
@@ -228,13 +215,7 @@ public class DomainServiceImpl implements DomainService {
 		for(Item item : listItems){
 			ItemBean itemBean = new ItemBean(item,customSource);
 			listItemBean.add(itemBean);
-			// 	TODO (GB) mise à jour du DAO ?
-//			DomainTools.getDaoService().updateCustomSource(customSource);
-			
 		}
-		// 	TODO (GB) mise à jour du DAO ?
-//		DomainTools.getDaoService().updateUserProfile(userProfile);
-//		DomainTools.getDaoService().updateCustomCategory(customCategory);		
 		return listItemBean;
 	}
 
@@ -252,7 +233,6 @@ public class DomainServiceImpl implements DomainService {
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomSource customSource;
 		try {
-			// TODO (GB) appel via le userProfile ?
 			customSource = userProfile.getCustomSource(sourceId);
 			customSource.setItemAsRead(itemId);
 		} catch (CustomSourceNotFoundException e) {
@@ -273,7 +253,6 @@ public class DomainServiceImpl implements DomainService {
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomSource customSource;
 		try {
-			// TODO (GB) appel via le userProfile ?
 			customSource = userProfile.getCustomSource(sourceId);
 			customSource.setItemAsUnRead(itemId);
 		} catch (CustomSourceNotFoundException e) {
@@ -293,7 +272,6 @@ public class DomainServiceImpl implements DomainService {
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
-		// TODO (GB) appel via le userProfile ?
 		CustomContext customContext = userProfile.getCustomContext(contextId);
 		customContext.setTreeSize(size);
 		
@@ -307,7 +285,6 @@ public class DomainServiceImpl implements DomainService {
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
-		// TODO (GB) appel via le userProfile ?
 		CustomContext customContext = userProfile.getCustomContext(cxtId);
 		customContext.foldCategory(catId);
 	}
@@ -319,7 +296,6 @@ public class DomainServiceImpl implements DomainService {
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
-		// TODO (GB) appel via le userProfile ?
 		CustomContext customContext = userProfile.getCustomContext(cxtId);
 		customContext.unfoldCategory(catId);
 	}

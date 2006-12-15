@@ -76,7 +76,7 @@ public interface DaoService {
 
 	public void updateCustomContext(CustomContext customContext);
 
-	// TODO (GB) creer un service pour supprimer définitivement un contexte par l'admin ?
+	// TODO (GB later) creer un service pour supprimer définitivement un contexte par l'admin ?
 	public void deleteCustomContext(CustomContext cco);
 	
 	/* CustomCategory */

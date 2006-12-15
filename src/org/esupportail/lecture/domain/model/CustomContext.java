@@ -142,7 +142,7 @@ public class CustomContext implements CustomElement {
 			userProfile.addCustomCategory(customManagedCategory);
 		}
 	}
-	// TODO (GB later : addImportation(), addCreation())
+	// TODO (GB later) addImportation(), addCreation())
 	
 	/**
 	 * Remove the managedCategoryProfile from the customContext
@@ -158,12 +158,12 @@ public class CustomContext implements CustomElement {
 		if (cmc != null) {
 			subscriptions.remove(profileId);
 			userProfile.removeCustomCategory(profile.getId());
-			// TODO (gb) later : il faudra supprimer toutes les références à cette cmc
+			// TODO (gb later) : il faudra supprimer toutes les références à cette cmc
 			// (importations dans d'autre customContext)
 		} 
 		
 	}
-	// TODO (GB) later : removeCustomPersonalCategory()
+	// TODO (GB later)  removeCustomPersonalCategory()
 	
 	/**
 	 * @return context refered by this
@@ -213,7 +213,7 @@ public class CustomContext implements CustomElement {
 	}
 	
 	public void modifyTreeSize(int size)throws TreeSizeErrorException {
-		// TODO (GB) externaliser les bornes
+		// TODO (GB later) externaliser les bornes
 		if ((size >=0) && (size <=100)){
 			treeSize = size;
 			DomainTools.getDaoService().updateCustomContext(this);

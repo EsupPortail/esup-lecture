@@ -3,7 +3,7 @@ package org.esupportail.lecture.domain.utils;
  * @author gbouteil
  * Access to external in serlvet mode
  */
-// TODO make better
+// TODO (GB/RB) make better
 public class ServletService implements ModeService {
 
 	/**

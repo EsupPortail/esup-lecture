@@ -130,7 +130,7 @@ public abstract class Source implements Element,Serializable {
 	   	if (log.isDebugEnabled()){
     		log.debug("computeXslt()");
     	}
-		// TODO (gb later) revoir cet algo
+		// TODO (GB later) revoir cet algo
 		Channel channel = DomainTools.getChannel();
 		
 		String setXsltURL = xsltURL;
@@ -152,7 +152,7 @@ public abstract class Source implements Element,Serializable {
 				m = channel.getMappingBySourceURL(URL);
 			}else {
 				log.error("Source "+this.profileId +"does not have any URL defined");
-				// TODO (gb) throw exception
+				// TODO (GB) throw exception
 			}
 			if (m == null) {
 				//no mapping find from url so using XML content caracteristics

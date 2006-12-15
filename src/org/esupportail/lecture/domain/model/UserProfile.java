@@ -159,7 +159,6 @@ public class UserProfile {
     	}
 		customContexts.put(customContext.getElementId(),customContext);
 		DomainTools.getDaoService().updateUserProfile(this);
-		// TODO (gb) DAO quand fera t on le delete ?
 	}
 	
 	/**

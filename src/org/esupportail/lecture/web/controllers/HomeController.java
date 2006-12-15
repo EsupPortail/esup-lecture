@@ -277,7 +277,7 @@ public class HomeController extends twoPanesController {
 		ret = ctx.getDescription();
 		CategoryWebBean categoryWebBean = ctx.getSelectedCategory();
 		if (categoryWebBean != null) {
-			//TODO description not name
+			//TODO (RB) description not name
 			ret = categoryWebBean.getDescription();
 		}
 		return ret;
@@ -409,7 +409,7 @@ public class HomeController extends twoPanesController {
 		ContextWebBean ctx = getContext();
 		CategoryWebBean categoryWebBean = ctx.getSelectedCategory();
 		if (categoryWebBean != null) {
-			//TODO description not name
+			//TODO (RB) description not name
 			ret = categoryWebBean.getName();
 			if (isSourceSelected) {
 				SourceWebBean sourceWebBean = categoryWebBean.getSelectedSource();

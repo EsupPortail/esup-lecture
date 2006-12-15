@@ -105,13 +105,12 @@ public class CustomManagedCategory extends CustomCategory {
 		if (log.isDebugEnabled()){
 			log.debug("removeCustomManagedSource("+profile.getId()+")");
 		}
-		//		 TODO (GB) tester avec la BDD
 		String profileId = profile.getId();
 		CustomSource cs = subscriptions.get(profileId);
 		if (cs != null) {
 			subscriptions.remove(profile.getId());
 			getUserProfile().removeCustomSource(profile.getId());
-			// TODO (gb) later : il faudra supprimer toutes les références à cette cmc
+			// TODO (gb later) il faudra supprimer toutes les références à cette cmc
 			// (importations dans d'autre customContext)
 		}
 	}

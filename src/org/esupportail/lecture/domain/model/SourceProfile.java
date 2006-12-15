@@ -151,7 +151,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 */
 	public Source getElement() throws SourceNotLoadedException {
 		if (source == null){
-			// TODO (GB) on pourrait faire un loadSource ?
+			// TODO (GB) on pourrait faire un loadSource ou autre chose ou ailleurs ?
 			throw new SourceNotLoadedException("Source "+id+" is not loaded in profile");
 		}
 		return source;
