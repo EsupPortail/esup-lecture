@@ -20,24 +20,17 @@ public class ExternalServiceImpl implements ExternalService {
 	 */
 	protected static final Log log = LogFactory.getLog(ExternalServiceImpl.class);
 
-	/** 
-	 * Composant for mode servlet or mode portlet
-	 */
-	private ModeService modeService;
-	
-	
 	/**
-	 * Constructor 
+	 * portlet version of ExternalService
 	 */
-	public ExternalServiceImpl(){
-		// Dynamic instantiation for portlet/servlet context
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		if (PortletUtil.isPortletRequest(facesContext)) {
-			modeService = new PortletService();
-		} else {// TODO (GB/RB) make better
-			modeService = new ServletService();
-		}
-	}
+	//TODO (RB) inject by spring
+	static PortletService portletService = new PortletService();
+
+	/**
+	 * servlet version of ExternalService
+	 */
+	//TODO (RB) inject by spring
+	static ServletService servletService = new ServletService();
 	
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
@@ -59,7 +52,7 @@ public class ExternalServiceImpl implements ExternalService {
 	   if (log.isDebugEnabled()) {
 			log.debug("getPreferences("+name+")");
 		}
-	    String ret = modeService.getPreference(name);
+	    String ret = getModeService().getPreference(name);
 	   
         if (log.isTraceEnabled()) {
 			log.trace("getPreferences("+name+") return "+ret);
@@ -75,7 +68,7 @@ public class ExternalServiceImpl implements ExternalService {
 	    if (log.isDebugEnabled()) {
 			log.debug("getUserAttribute("+attribute+")");
 		}
-		String ret = modeService.getUserAttribute(attribute);
+		String ret = getModeService().getUserAttribute(attribute);
 		
 		if (log.isTraceEnabled()) {
 			log.trace("getUserAttribute("+attribute+") return "+ret);
@@ -95,17 +88,34 @@ public class ExternalServiceImpl implements ExternalService {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.ExternalService#isUserInRole(java.lang.String)
+	 * @see org.esupportail.lecture.domain.ExternalService#isUserInGroup(java.lang.String)
 	 */
 	public boolean isUserInGroup(String group) {
 	    if (log.isDebugEnabled()) {
 			log.debug("isUserInRole("+group+")");
 		}
 	    
-	    boolean ret = modeService.isUserInGroup(group);
+	    boolean ret = getModeService().isUserInGroup(group);
 	   
         if (log.isDebugEnabled()) {
 			log.debug("isUserInRole("+group+") return "+ret);
+		}
+		return ret;
+	}
+
+	/**
+	 * used to get mode service computed just in time and not in contructor because Spring can't find facesContext at startup
+	 * @return ModeService - the current mode service
+	 */
+	private ModeService getModeService() {
+		ModeService ret = null;
+		// Dynamic instantiation for portlet/servlet context
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		if (PortletUtil.isPortletRequest(facesContext)) {
+			ret = portletService;
+		} else {
+			// TODO make better
+			ret = servletService;
 		}
 		return ret;
 	}

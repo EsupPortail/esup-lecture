@@ -22,7 +22,6 @@ public class TestController extends AbstractContextAwareController {
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(TestController.class);
-	private String test = "TEST!!!";
 	private DaoService dao;
 	
 	/**
@@ -31,37 +30,51 @@ public class TestController extends AbstractContextAwareController {
 	public void reset() {
 		// TODO Auto-generated method stub
 	}
-	public String getTest() {
+	public String test1() {
 		UserProfile userProfile = dao.getUserProfile("test");
 		if (userProfile != null) {
 			System.out.println("userProfile.getUserId --> " + userProfile.getUserId());			
-			//delete userProfile test
-			//dao.deleteUserProfile(userProfile);
 		}
 		else {
 			System.out.println("userProfile is null (test not found)");
 		}
-		//set userProfile test
-		userProfile = new UserProfile("test");
-		//dao.saveUserProfile(userProfile);
-		UserProfile userProfile2 = dao.getUserProfile("test");
-		if (userProfile2 != null) {
-			System.out.println("userProfile.getUserId --> " + userProfile2.getUserId());	
-			Map<String, CustomContext> ccs = userProfile2.getCustomContexts();
+		if (userProfile != null) {
+			System.out.println("userProfile.getUserId --> " + userProfile.getUserId());	
+			Map<String, CustomContext> ccs = userProfile.getCustomContexts();
 			Iterator<String> iter = ccs.keySet().iterator();
 			while (iter.hasNext()) {
 				String element = (String) iter.next();
 				CustomContext cc = ccs.get(element);
 				System.out.println("treesize of customContext "+element+" = "+cc.getTreeSize());
 			}
-			//delete userProfile test
-//			dao.deleteUserProfile(userProfile2);
 		}
-		return test;
+		return "OK";
 	}
-	public void setTest(String test) {
-		this.test = test;
+
+	public String test2(){
+		UserProfile userProfile = dao.getUserProfile("test");
+		if (userProfile != null) {
+			System.out.println("after read");			
+			System.out.println("userProfile.getUserId --> " + userProfile.getUserId());			
+			System.out.println("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());			
+		}
+		else {
+			System.out.println("userProfile is null (test not found)");
+		}
+		dao.saveUserProfile(userProfile);
+		System.out.println("after save");			
+		System.out.println("userProfile.getUserId --> " + userProfile.getUserId());			
+		System.out.println("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());			
+		UserProfile userProfile2 = dao.getUserProfile("test");
+		if (userProfile2 != null) {
+			System.out.println("after second read");			
+			System.out.println("userProfile.getUserId --> " + userProfile2.getUserId());			
+			System.out.println("userProfile.getUserProfilePK --> " + userProfile2.getUserProfilePK());			
+		}
+		return "OK";
+		
 	}
+	
 	public DaoService getDaoService() {
 		return dao;
 	}

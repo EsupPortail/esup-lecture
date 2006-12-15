@@ -5,19 +5,14 @@
 */
 package org.esupportail.lecture.test.drivers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
-import org.esupportail.lecture.dao.DaoServiceImpl;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 
@@ -44,7 +39,9 @@ public class TestDAOLecture {
 //		DaoService dao = (DaoService)factory.getBean("daoService2");
 		UserProfile userProfile = dao.getUserProfile("test");
 		if (userProfile != null) {
+			System.out.println("after read");			
 			System.out.println("userProfile.getUserId --> " + userProfile.getUserId());			
+			System.out.println("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());			
 			//delete userProfile test
 			//dao.deleteUserProfile(userProfile);
 		}
@@ -53,17 +50,22 @@ public class TestDAOLecture {
 		}
 		//set userProfile test
 		userProfile = new UserProfile("test");
-		//dao.saveUserProfile(userProfile);
+		dao.saveUserProfile(userProfile);
+		System.out.println("after save");			
+		System.out.println("userProfile.getUserId --> " + userProfile.getUserId());			
+		System.out.println("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());			
 		UserProfile userProfile2 = dao.getUserProfile("test");
 		if (userProfile2 != null) {
-			System.out.println("userProfile.getUserId --> " + userProfile2.getUserId());	
-			Map<String, CustomContext> ccs = userProfile2.getCustomContexts();
-			Iterator<String> iter = ccs.keySet().iterator();
-			while (iter.hasNext()) {
-				String element = (String) iter.next();
-				CustomContext cc = ccs.get(element);
-				System.out.println("treesize of customContext "+element+" = "+cc.getTreeSize());
-			}
+			System.out.println("after second read");			
+			System.out.println("userProfile.getUserId --> " + userProfile2.getUserId());			
+			System.out.println("userProfile.getUserProfilePK --> " + userProfile2.getUserProfilePK());			
+//			Map<String, CustomContext> ccs = userProfile2.getCustomContexts();
+//			Iterator<String> iter = ccs.keySet().iterator();
+//			while (iter.hasNext()) {
+//				String element = (String) iter.next();
+//				CustomContext cc = ccs.get(element);
+//				System.out.println("treesize of customContext "+element+" = "+cc.getTreeSize());
+//			}
 			//delete userProfile test
 //			dao.deleteUserProfile(userProfile2);
 		}
