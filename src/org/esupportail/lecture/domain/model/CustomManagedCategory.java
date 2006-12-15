@@ -111,11 +111,9 @@ public class CustomManagedCategory extends CustomCategory {
 		if (cs != null) {
 			subscriptions.remove(profile.getId());
 			getUserProfile().removeCustomSource(profile.getId());
-		} else {
-			log.warn("CustomManagedSource "+profileId+" to remove is not in subscriptions of CustomContext "+super.getElementId());
+			// TODO (gb) later : il faudra supprimer toutes les références à cette cmc
+			// (importations dans d'autre customContext)
 		}
-		// TODO (GB later) on purrait aussi le laisser dans le user profile
-		
 	}
 	
 	/**

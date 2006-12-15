@@ -153,16 +153,17 @@ public class CustomContext implements CustomElement {
 		if (log.isDebugEnabled()){
 			log.debug("removeCustomManagedCategory("+profile.getId()+")");
 		}
-		// TODO (GB) tester avec la BDD
 		String profileId = profile.getId();
 		CustomManagedCategory cmc = subscriptions.get(profileId);
 		if (cmc != null) {
 			subscriptions.remove(profileId);
 			userProfile.removeCustomCategory(profile.getId());
+			// TODO (gb) later : il faudra supprimer toutes les références à cette cmc
+			// (importations dans d'autre customContext)
 		} 
 		
 	}
-	// TODO (GB later : removeCustomPersonalCategory())
+	// TODO (GB) later : removeCustomPersonalCategory()
 	
 	/**
 	 * @return context refered by this
@@ -208,11 +209,14 @@ public class CustomContext implements CustomElement {
 	}
 
 	public void setTreeSize(int size)throws TreeSizeErrorException {
+		treeSize = size;
+	}
+	
+	public void modifyTreeSize(int size)throws TreeSizeErrorException {
 		// TODO (GB) externaliser les bornes
 		if ((size >=0) && (size <=100)){
 			treeSize = size;
-			//TODO RB!!!!
-			//DomainTools.getDaoService().updateCustomContext(this);
+			DomainTools.getDaoService().updateCustomContext(this);
 		}else {
 			throw new TreeSizeErrorException("TreeSize must be into 0 and 100");
 		}

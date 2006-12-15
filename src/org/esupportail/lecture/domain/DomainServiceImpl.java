@@ -167,18 +167,11 @@ public class DomainServiceImpl implements DomainService {
 			customCategory = userProfile.getCustomCategory(categoryId);
 			List<CustomSource> customSources = customCategory.getSortedCustomSources(externalService);
 			int nbSources = customSources.size();
-			log.debug("NB sources : "+nbSources);
+			log.trace("NB sources : "+nbSources);
 			for(CustomSource customSource : customSources){
 				SourceBean source = new SourceBean(customSource);
 				listSourceBean.add(source);
-				// TODO (GB) mise à jour du DAO ?
-//				DomainTools.getDaoService().updateCustomSource(customSource);
 			}	
-
-			// TODO (GB) mise à jour du DAO ?
-//			DomainTools.getDaoService().updateUserProfile(userProfile);
-//			DomainTools.getDaoService().updateCustomCategory(customCategory);		
-		
 		
 		}catch(CustomCategoryNotFoundException e){
 			log.error("CustomCategory not found for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
