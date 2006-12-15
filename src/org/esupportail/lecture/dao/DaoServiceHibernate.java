@@ -58,7 +58,6 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void deleteUserProfile(UserProfile userProfile) {
 		getHibernateTemplate().delete(userProfile);
-		getHibernateTemplate().flush();
 	}
 
 	/**

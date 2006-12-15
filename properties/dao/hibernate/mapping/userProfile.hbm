@@ -11,7 +11,7 @@
 		<property name="userId" type="string" column="USERID">
 		</property>
 		<map name="customContexts" lazy="true" cascade="delete">
-			<key column="USERPROFILE_USERPROFILEPK" />
+			<key column="USERPROFILE_USERPROFILEPK" not-null="true"/>
 			<index column="CONTEXTID" type="string"/>
 			<one-to-many class="CustomContext" />
 		</map>

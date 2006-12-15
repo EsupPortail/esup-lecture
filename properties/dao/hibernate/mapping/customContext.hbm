@@ -10,7 +10,7 @@
 		</id>
 		<property name="treeSize" column="TREEWINWIDTH"
 			type="integer" not-null="false" length="10" />
-		<property name="contextId" column="CONTEXTID"
+		<property name="contextId" column="CONTEXTID" insert="false" update="false"
 			type="string" not-null="false" length="10" />
 	</class>
 </hibernate-mapping>

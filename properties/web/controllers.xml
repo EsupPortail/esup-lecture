@@ -13,13 +13,6 @@
 		This file is referenced by /properties/applicationContext.xml.
 	-->
 
-	<bean id="testController"
-		class="org.esupportail.lecture.web.controllers.TestController"
-		parent="abstractContextAwareController">
-		<description>A bean to manage the test page.</description>
-		<property name="daoService" ref="daoService2"/>
-	</bean>
-
 	<bean id="editController"
 		class="org.esupportail.lecture.web.controllers.EditController"
 		parent="abstractContextAwareController">
