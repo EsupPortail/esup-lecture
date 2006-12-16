@@ -11,11 +11,14 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.commons.dao.HibernateUtils;
 import org.esupportail.lecture.dao.DaoService;
+import org.esupportail.lecture.domain.model.Channel;
+import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.CustomManagedCategory;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.hibernate.FlushMode;
+import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -34,11 +37,10 @@ public class TestDAOLecture {
 	
 	protected static final Log log = LogFactory.getLog(TestDAOLecture.class);
 	private static SessionFactory sessionFactory;
-	private static Transaction transaction; 
+	private static Transaction transaction;
+	private static XmlBeanFactory factory; 
 	
 	private static DaoService getDAO() {
-		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
-		XmlBeanFactory factory = new XmlBeanFactory(res);
 		sessionFactory = (SessionFactory) factory.getBean("sessionFactory");
 		Session session = SessionFactoryUtils.getSession(sessionFactory, true);
 		transaction = session.beginTransaction();
@@ -58,6 +60,7 @@ public class TestDAOLecture {
 	private static void execute(String methodName) {
 		Class params[] = {};
 		Object paramsObj[] = {};
+		out("************************************************");
 		out("executing test: "+methodName);
 		try {
 			Method method = TestDAOLecture.class.getDeclaredMethod(methodName, params);
@@ -67,7 +70,7 @@ public class TestDAOLecture {
 		}
 	}
 
-	private static void test1() {
+	private static void navigate() throws CategoryProfileNotFoundException, CategoryNotLoadedException {
 		out("actions : read, save, read userProfile and navigate throw customcontext");
 		DaoService dao = getDAO();
 		UserProfile userProfile = dao.getUserProfile("test");
@@ -98,6 +101,13 @@ public class TestDAOLecture {
 				CustomContext cc = ccs.get(element);
 				out("treesize of customContext "+element+" = "+cc.getTreeSize());
 			}
+			Map<String, CustomCategory> ccats = userProfile2.getCustomCategories();
+			iter = ccats.keySet().iterator();
+			while (iter.hasNext()) {
+				String element = (String) iter.next();
+				CustomCategory ccat = ccats.get(element);
+				out("name of customCategory "+element+" = "+ccat.getName());
+			}
 		}
 		releaseDAO();
 	}
@@ -119,6 +129,33 @@ public class TestDAOLecture {
 		releaseDAO();
 	}
 	
+	private static void populate() {
+		out("actions : populate database from test userprofile");
+		DaoService dao = getDAO();
+		//create user profile
+		UserProfile userProfile = new UserProfile("test");
+		//create custom contexts
+		CustomContext cc = new CustomContext("c1",userProfile);
+		cc.setTreeSize(10);
+		userProfile.addCustomContext(cc);
+		cc = new CustomContext("c2",userProfile);
+		cc.setTreeSize(20);
+		userProfile.addCustomContext(cc);
+		cc = new CustomContext("c3",userProfile);
+		cc.setTreeSize(30);
+		userProfile.addCustomContext(cc);
+		//create custom categories
+		CustomCategory ccat = new CustomManagedCategory("cp1", userProfile);
+		userProfile.addCustomCategory(ccat);
+		ccat = new CustomManagedCategory("cp2", userProfile);
+		userProfile.addCustomCategory(ccat);
+		ccat = new CustomManagedCategory("cp3", userProfile);
+		userProfile.addCustomCategory(ccat);
+		//save
+		dao.saveUserProfile(userProfile);
+		releaseDAO();
+	}
+	
 	private static void out(String string) {
 		System.out.println(string);
 	}
@@ -129,6 +166,9 @@ public class TestDAOLecture {
 	 * @throws SecurityException 
 	 */
 	public static void main(String[] args) {
+		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
+		factory = new XmlBeanFactory(res);
+		Channel channel = (Channel)factory.getBean("channel");
 		for (int i = 0; i < args.length; i++) {
 			execute(args[i]);
 		}

@@ -10,17 +10,15 @@
 		</id>
 		<property name="userId" type="string" column="USERID">
 		</property>
-		<map name="customContexts" lazy="true" cascade="delete">
+		<map name="customContexts" lazy="true" cascade="all">
 			<key column="USERPROFILE_USERPROFILEPK" not-null="true"/>
 			<index column="CONTEXTID" type="string"/>
 			<one-to-many class="CustomContext" />
 		</map>
-		<!-- 
-		<map name="customMabagedCategories" inverse="true" lazy="false" cascade="delete">
-			<key column="USERPROFILE_ID" />
-			<map-key column="MANAGEDCATEGORYPROFILEID" type="int"/>
+		<map name="customCategories" cascade="all">
+			<key column="USERPROFILE_USERPROFILEPK" not-null="true"/>
+			<map-key column="CUSTOMCATEGORYID" type="string"/>
 			<one-to-many class="CustomManagedCategory" />
 		</map>
-		 -->
 	</class>
 </hibernate-mapping>

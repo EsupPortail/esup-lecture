@@ -33,6 +33,9 @@
 				<value>
 					classpath:/properties/dao/hibernate/mapping/customContext.hbm
 				</value>
+				<value>
+					classpath:/properties/dao/hibernate/mapping/customCategory.hbm
+				</value>
 			</list>
 		</property>
 	</bean>

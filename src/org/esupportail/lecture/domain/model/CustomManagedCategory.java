@@ -1,20 +1,15 @@
 package org.esupportail.lecture.domain.model;
 
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
-import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 
 /**
  * Customizations on a managedCategory for a user Profile
@@ -25,6 +20,9 @@ public class CustomManagedCategory extends CustomCategory {
 
 	/*
 	 ************************** PROPERTIES *********************************/	
+	/**
+	 * logger
+	 */
 	protected static final Log log = LogFactory.getLog(CustomManagedCategory.class);
 
 
@@ -38,7 +36,7 @@ public class CustomManagedCategory extends CustomCategory {
 
 
 	/**
-	 * @param catId
+	 * @param profileId 
 	 * @param user
 	 */
 	public CustomManagedCategory(String profileId,UserProfile user){
@@ -47,8 +45,31 @@ public class CustomManagedCategory extends CustomCategory {
 			log.debug("CustomManagedCategory("+profileId+","+user.getUserId()+")");
 		}
 		subscriptions = new Hashtable<String,CustomManagedSource>();
-		
 	}
+
+	/**
+	 * default constructor
+	 */
+	public CustomManagedCategory(){
+		super();
+		if (log.isDebugEnabled()){
+			log.debug("CustomManagedCategory()");
+		}
+		subscriptions = new Hashtable<String,CustomManagedSource>();
+	}
+
+	//TODO (RB) remove ?
+//	/**
+//	 * @param catId
+//	 * @param user
+//	 */
+//	public CustomManagedCategory() {
+//		super();
+//		if (log.isDebugEnabled()){
+//			log.debug("CustomManagedCategory()");
+//		}
+//		subscriptions = new Hashtable<String,CustomManagedSource>();
+//	}
 	
 	/*
 	 ************************** METHODS *********************************/	
@@ -81,7 +102,7 @@ public class CustomManagedCategory extends CustomCategory {
 	
 
 	/**
-	 * @see org.esupportail.lecture.domain.model.CustomCategory#addManagedCustomSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
+	 * @param managedSourceProfile
 	 */
 	public void addSubscription(ManagedSourceProfile managedSourceProfile) {
 		if (log.isDebugEnabled()){
@@ -98,9 +119,8 @@ public class CustomManagedCategory extends CustomCategory {
 	
 
 	/**
-	 * @see org.esupportail.lecture.domain.model.CustomCategory#removeManagedCustomSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#removeCustomManagedSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
 	 */
-	@Override
 	public void removeCustomManagedSource(ManagedSourceProfile profile) {
 		if (log.isDebugEnabled()){
 			log.debug("removeCustomManagedSource("+profile.getId()+")");

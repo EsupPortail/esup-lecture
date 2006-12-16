@@ -34,6 +34,10 @@ public abstract class CustomCategory implements CustomElement {
 	 * The Id of this CustomCategory
 	 */
 	private String profileId;
+	/**
+	 * database pk
+	 */
+	private long customCategoryPK;
 	
 //  not here : in parent customContext	
 //	/**
@@ -47,7 +51,7 @@ public abstract class CustomCategory implements CustomElement {
 	
 	/**
 	 * Constructor
-	 * @param catId id of the category refered by this
+	 * @param profileId of the category profile
 	 * @param user owner of this 
 	 */
 	public CustomCategory(String profileId, UserProfile user) {
@@ -57,6 +61,22 @@ public abstract class CustomCategory implements CustomElement {
 		this.profileId = profileId;
 		this.userProfile = user;
 	}
+
+	/**
+	 * default constructor
+	 */
+	public CustomCategory() {
+		if (log.isDebugEnabled()){
+			log.debug("CustomCategory()");
+		}
+	}
+
+	//TODO (RB) remove ?
+//	public CustomCategory() {
+//		if (log.isDebugEnabled()){
+//			log.debug("CustomCategory()");
+//		}
+//	}
 
 	/* 
 	 ************************** METHODS **********************************/
@@ -116,6 +136,13 @@ public abstract class CustomCategory implements CustomElement {
 		return userProfile;
 	}
 
+	/**
+	 * @param userProfile
+	 */
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
+	
 //	/**
 //	 * @return true is the category is folded
 //	 */
@@ -135,8 +162,33 @@ public abstract class CustomCategory implements CustomElement {
 	public String getElementId() {
 		return profileId;
 	}
-	
 
-	
-	
+	/**
+	 * @return database pk
+	 */
+	public long getCustomCategoryPK() {
+		return customCategoryPK;
+	}
+
+	/**
+	 * @param customCategoryPK - databasePK
+	 */
+	public void setCustomCategoryPK(long customCategoryPK) {
+		this.customCategoryPK = customCategoryPK;
+	}
+
+	/**
+	 * @return profile id
+	 */
+	public String getProfileId() {
+		return profileId;
+	}
+
+	/**
+	 * @param profileId
+	 */
+	public void setProfileId(String profileId) {
+		this.profileId = profileId;
+	}
+
 }

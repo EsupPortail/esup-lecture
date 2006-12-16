@@ -6,7 +6,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.CustomSourceNotFoundException;
 
@@ -261,7 +260,7 @@ public class UserProfile {
 	}
 
 	/**
-	 * @param customManagedCategories
+	 * @param customCategories 
 	 */
 	public void setCustomCategories(
 			Map<String, CustomCategory> customCategories) {
