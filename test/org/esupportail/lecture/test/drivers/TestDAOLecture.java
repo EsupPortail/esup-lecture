@@ -16,6 +16,7 @@ import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomManagedCategory;
+import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
@@ -135,15 +136,15 @@ public class TestDAOLecture {
 		//create user profile
 		UserProfile userProfile = new UserProfile("test");
 		//create custom contexts
-		CustomContext cc = new CustomContext("c1",userProfile);
-		cc.setTreeSize(10);
-		userProfile.addCustomContext(cc);
-		cc = new CustomContext("c2",userProfile);
-		cc.setTreeSize(20);
-		userProfile.addCustomContext(cc);
-		cc = new CustomContext("c3",userProfile);
-		cc.setTreeSize(30);
-		userProfile.addCustomContext(cc);
+		CustomContext cc1 = new CustomContext("c1",userProfile);
+		cc1.setTreeSize(10);
+		userProfile.addCustomContext(cc1);
+		CustomContext cc2 = new CustomContext("c2",userProfile);
+		cc2.setTreeSize(20);
+		userProfile.addCustomContext(cc2);
+		CustomContext cc3 = new CustomContext("c3",userProfile);
+		cc3.setTreeSize(30);
+		userProfile.addCustomContext(cc3);
 		//create custom categories
 		CustomCategory ccat = new CustomManagedCategory("cp1", userProfile);
 		userProfile.addCustomCategory(ccat);
@@ -151,6 +152,8 @@ public class TestDAOLecture {
 		userProfile.addCustomCategory(ccat);
 		ccat = new CustomManagedCategory("cp3", userProfile);
 		userProfile.addCustomCategory(ccat);
+		//subscribe some categories
+		//TODO (RB) subscribe some categories
 		//save
 		dao.saveUserProfile(userProfile);
 		releaseDAO();
