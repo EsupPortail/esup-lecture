@@ -3,11 +3,17 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.CustomSourceNotFoundException;
+import org.esupportail.lecture.exceptions.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
 
 
 
@@ -104,12 +110,15 @@ public class UserProfile {
 		if (customContext == null){
 			customContext = new CustomContext(contextId,this);
 			addCustomContext(customContext);
-
 		}
 		
 		return customContext;
 	}
 	
+	public boolean containsCustomContext(String contextId) {
+		return customContexts.containsKey(contextId);
+	}
+
 	/**
 	 * Return the customCategory identifed by the category id
 	 * if exist,else,create it.
@@ -128,6 +137,24 @@ public class UserProfile {
 			throw new CustomCategoryNotFoundException ("CustomCategory "+categoryId+" is not found in userProfile "+this.userId);
 		}
 		return customCategory;
+	}
+	
+	public void updateCustomContextsForOneManagedCategory(String categoryProfileId,ExternalService ex) 
+		throws ManagedCategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException {
+		ManagedCategoryProfile mcp = DomainTools.getChannel().getManagedCategoryProfile(categoryProfileId);
+		Set<Context> contexts = mcp.getContextsSet();
+		for(Context context : contexts){
+			String contextId = context.getId();
+			if (containsCustomContext(contextId)) {
+				CustomContext customContext = getCustomContext(contextId);
+				if (!mcp.updateCustomContext(customContext, ex)){
+					throw new CategoryNotVisibleException("This Category is not visible for this user profile");
+				}else {
+					mcp.updateCustomContext(customContext, ex);
+				}
+			}
+		}	
+		
 	}
 	
 	/**
@@ -280,6 +307,9 @@ public class UserProfile {
 	public void setUserProfilePK(long userProfilePK) {
 		this.userProfilePK = userProfilePK;
 	}
+
+
+
 
 	
 }

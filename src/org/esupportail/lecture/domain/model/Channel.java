@@ -360,7 +360,6 @@ public class Channel implements InitializingBean {
 		this.managedCategoryProfilesHash.put(m.getId(),m);
 	}
 	
-
 	/**
 	 * Add a mapping to the list of mappings defined in the channel.
 	 * @param m the mapping to add
@@ -626,6 +625,9 @@ public class Channel implements InitializingBean {
 	public void setDaoService(DaoService daoService) {
 		this.daoService = daoService;
 	}
+
+
+
 
 
 

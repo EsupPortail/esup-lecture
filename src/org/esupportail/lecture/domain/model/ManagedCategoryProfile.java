@@ -106,15 +106,15 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 //	/**
 //	 * @param customContext
 //	 * @param externalService
-//	 * @return
+//	 * @return true if the category is visble by the userProfile
 //	 */
-	public void updateCustomContext(CustomContext customContext,ExternalService externalService) 
+	public boolean updateCustomContext(CustomContext customContext,ExternalService externalService) 
 		throws ElementNotLoadedException{
 		if (log.isDebugEnabled()){
 			log.debug("updateCustomContext("+customContext.getElementId()+"externalService)");
 		}
 		loadCategory(externalService);
-		setUpCustomContextVisibility(customContext, externalService);
+		return setUpCustomContextVisibility(customContext, externalService);
 		
 	}
 
@@ -436,6 +436,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	public void setTtl(int ttl) {
 		this.ttl = ttl;
+	}
+
+	protected Set<Context> getContextsSet() {
+		return contextsSet;
 	}
 
 

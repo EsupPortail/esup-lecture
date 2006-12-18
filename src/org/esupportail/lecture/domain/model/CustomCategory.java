@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 
 
@@ -28,7 +29,7 @@ public abstract class CustomCategory implements CustomElement {
 	/**
 	 * The userprofile parent 
 	 */
-	private UserProfile userProfile;
+	protected UserProfile userProfile;
 
 	/**
 	 * The Id of this CustomCategory
@@ -89,8 +90,9 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryProfileNotFoundException
 	 * @throws CategoryNotLoadedException
 	 * @throws ElementNotLoadedException 
+	 * @throws CategoryNotVisibleException 
 	 */
-	public abstract List<CustomSource> getSortedCustomSources(ExternalService externalService) throws CategoryProfileNotFoundException, ElementNotLoadedException;
+	public abstract List<CustomSource> getSortedCustomSources(ExternalService externalService) throws CategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException;
 
 	
 //	Not here : it is only specific to CustomManagedCategories
@@ -123,7 +125,6 @@ public abstract class CustomCategory implements CustomElement {
 		}
 		return getProfile().getName();
 	}
-	
 	
 	/* 
 	 ************************** ACCESSORS **********************************/
@@ -165,7 +166,7 @@ public abstract class CustomCategory implements CustomElement {
 	}
 
 	/**
-	 * @return profile id
+	 * @return id of the profile category referred by this customCategory
 	 */
 	public String getProfileId() {
 		return profileId;

@@ -26,7 +26,7 @@ public class DomainTest {
 
 	
 	/* Controller local variables */
-	private static String userId;
+	private static String userId = "bourges";
 	private static String contextId;
 	private static List<String> categoryIds;
 	private static String itemId;
@@ -38,7 +38,8 @@ public class DomainTest {
 		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		facadeService = (FacadeService)factory.getBean("facadeService");
-
+		
+		/* Test normal behavior */
 		testGetConnectedUser();
 		testGetContext();
 		testGetVisibleCategories();
@@ -47,6 +48,9 @@ public class DomainTest {
 		//testMarkItemAsRead();
 		//testSetTreeSize();
 		//testFoldCategory();
+		
+		/* Test alternative behavior */
+		testGetVisibleSourceAlternativeWay();
 	
 	}
 
@@ -59,14 +63,13 @@ public class DomainTest {
  * Méthodes de Test
  */
 
-
 	/**
 	 * Test of servide "getConnectedUser"
 	 */
 	private static void testGetConnectedUser() {
 		printIntro("getConnectedUser");
-		userId = facadeService.getConnectedUserId();
-		UserBean user = facadeService.getConnectedUser(userId);
+		String userIdLocal = facadeService.getConnectedUserId();
+		UserBean user = facadeService.getConnectedUser(userIdLocal);
 		System.out.println(user.toString());
 	}
 	
@@ -109,6 +112,29 @@ public class DomainTest {
 				sourceId = so.getId();
 			}
 		}
+		
+	}
+
+
+	/**
+	 *  Test of service "getSources" in an alternative way :
+	 *  - the parent category has not been got before
+	 */
+	private static void testGetVisibleSourceAlternativeWay() {		
+		printIntro("getVisibleSources - alternative way");
+		categoryIds = new ArrayList<String>();
+		categoryIds.add("cp1");
+		categoryIds.add("cp2");
+		for(String catId : categoryIds){
+		System.out.println(" **** cat "+catId+" **********");
+		List<SourceBean> sources = facadeService.getVisibleSources(userId, catId);
+		for(SourceBean so : sources){
+			System.out.println("  **** source ****");
+			System.out.println(so.toString());
+			sourceId = so.getId();
+		}
+	}
+		// TODO Auto-generated method stub
 		
 	}
 
