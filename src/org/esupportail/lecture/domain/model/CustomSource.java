@@ -128,15 +128,6 @@ public abstract class CustomSource implements CustomElement {
 		return profileId;
 	}
 	
-//	
-//	public String getItemXPath() throws SourceNotLoadedException {
-//		return getProfile().getElement().getItemXPath();
-//	}
-//	
-//	public String getXslt() throws SourceNotLoadedException {
-//		return getProfile().getElement().getXsltURL();
-//	}
-	
 
 	
 }

@@ -190,29 +190,11 @@ public class CustomContext implements CustomElement {
 		return getContext().getName();
 	}
 	
-	/* 
-	 ************************** ACCESSORS **********************************/
-
-	/**
-	 * @return contextId
-	 * @see CustomContext#contextId
-	 */
-	public String getElementId() {
-		return contextId;
-	}
-
-	/**
-	 * @return userProfile
-	 */
-	public UserProfile getUserProfile() {
-		return userProfile;
-	}
-
-	public void setTreeSize(int size)throws TreeSizeErrorException {
-		treeSize = size;
-	}
 	
 	public void modifyTreeSize(int size)throws TreeSizeErrorException {
+		/* old name was setTreesize but it has been changed to prevent 
+		 * loop by calling dao
+		 */
 		// TODO (GB later) externaliser les bornes
 		if ((size >=0) && (size <=100)){
 			treeSize = size;
@@ -222,10 +204,7 @@ public class CustomContext implements CustomElement {
 		}
 		
 	}
-
-	public int getTreeSize() {
-		return treeSize;
-	}
+	
 
 	public void foldCategory(String catId) {
 		if (!unfoldedCategories.remove(catId)){
@@ -251,6 +230,35 @@ public class CustomContext implements CustomElement {
 			return true;
 		}
 	}
+	
+	
+	/* 
+	 ************************** ACCESSORS **********************************/
+
+	/**
+	 * @return contextId
+	 * @see CustomContext#contextId
+	 */
+	public String getElementId() {
+		return contextId;
+	}
+
+	/**
+	 * @return userProfile
+	 */
+	public UserProfile getUserProfile() {
+		return userProfile;
+	}
+
+	public void setTreeSize(int size)throws TreeSizeErrorException {
+		treeSize = size;
+	}
+
+
+	public int getTreeSize() {
+		return treeSize;
+	}
+
 
 	/**
 	 * @return database primary Key
@@ -273,56 +281,5 @@ public class CustomContext implements CustomElement {
 	public void setContextId(String contextId) {
 		this.contextId = contextId;
 	}
-
-//
-//	
-//	public Collection getCreations() {
-//		return creations;
-//	}
-//
-//	public void setCreations(Collection creations) {
-//		this.creations = creations;
-//	}
-
-	
-
-
-//	
-//	public SortedSet getOrderCategories() {
-//		return orderCategories;
-//	}
-//
-//	
-//	public void setOrderCategories(SortedSet orderCategories) {
-//		this.orderCategories = orderCategories;
-//	}
-
-
-
-//
-//	public Collection getImportations() {
-//		return importations;
-//	}
-//
-//	
-//	public void setImportations(Collection importations) {
-//		this.importations = importations;
-//	}
-
-
-
-//
-//	public int getTreeWinWidth() {
-//		return treeWinWidth;
-//	}
-//
-//	public void setTreeWinWidth(int treeWinWidth) {
-//		this.treeWinWidth = treeWinWidth;
-//	}
-
-
-
-
-
 
 }

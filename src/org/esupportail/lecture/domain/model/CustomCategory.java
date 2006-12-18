@@ -135,26 +135,13 @@ public abstract class CustomCategory implements CustomElement {
 	public UserProfile getUserProfile() {
 		return userProfile;
 	}
-
+	
 	/**
 	 * @param userProfile
 	 */
 	public void setUserProfile(UserProfile userProfile) {
 		this.userProfile = userProfile;
 	}
-	
-//	/**
-//	 * @return true is the category is folded
-//	 */
-//	public boolean isFolded() {
-//		return folded;
-//	}
-//	/** set if the categoryis folded or not
-//	 * @param folded
-//	 */
-//	public void setFolded(boolean folded) {
-//		this.folded = folded;
-//	}
 	
 	/**
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getElementId()
