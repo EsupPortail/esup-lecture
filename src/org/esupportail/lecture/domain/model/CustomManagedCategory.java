@@ -84,7 +84,7 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	public List<CustomSource> getSortedCustomSources(ExternalService externalService) 
+	public List<CustomSource> getSortedCustomSources(ExternalService ex) 
 		throws CategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException, CustomContextNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("getSortedCustomSources(externalService)");
@@ -93,9 +93,9 @@ public class CustomManagedCategory extends CustomCategory {
 		
 		ManagedCategoryProfile profile = getProfile();
 		try {
-			profile.updateCustom(this,externalService);
+			profile.updateCustom(this,ex);
 		} catch (ElementNotLoadedException e) {	
-			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),externalService);
+			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 			// TODO (GB) !!!  et le dao ?
 		}
 		

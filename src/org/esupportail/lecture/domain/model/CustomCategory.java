@@ -86,7 +86,7 @@ public abstract class CustomCategory implements CustomElement {
 
 	
 	/**
-	 * @param externalService
+	 * @param ex
 	 * @return a list of customSource associated to this CustomCategory
 	 * @throws CategoryProfileNotFoundException
 	 * @throws CategoryNotLoadedException
@@ -94,7 +94,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryNotVisibleException 
 	 * @throws CustomContextNotFoundException 
 	 */
-	public abstract List<CustomSource> getSortedCustomSources(ExternalService externalService) 
+	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) 
 		throws CategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException, CustomContextNotFoundException;
 
 	

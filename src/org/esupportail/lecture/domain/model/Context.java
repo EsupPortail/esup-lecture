@@ -107,17 +107,17 @@ public class Context {
 	 * Evaluate user visibility on managed categories of the context 
 	 * And update customContext according to visibilities
 	 * @param customContext customContext to upadte
-	 * @param externalService access to portlet service
+	 * @param ex access to portlet service
 	 * @throws ElementNotLoadedException 
 	 */
-	public void updateCustom(CustomContext customContext, ExternalService externalService) throws ElementNotLoadedException {
+	public void updateCustom(CustomContext customContext, ExternalService ex) throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustom("+customContext.getElementId()+",externalService)");
 		}
 		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet){
-			mcp.updateCustomContext(customContext, externalService);	
+			mcp.updateCustomContext(customContext, ex);	
 		}
 	}
 

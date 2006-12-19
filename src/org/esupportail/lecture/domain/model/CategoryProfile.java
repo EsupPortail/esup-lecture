@@ -119,7 +119,7 @@ public abstract class CategoryProfile implements ElementProfile {
 		return category;
 	}
 
-	protected abstract void loadCategory(ExternalService externalService) throws CategoryNotLoadedException;
+	protected abstract void loadCategory(ExternalService ex) throws CategoryNotLoadedException;
 	
 	/*
 	 ************************** ACCESSORS *********************************/	

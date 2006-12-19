@@ -66,14 +66,14 @@ public abstract class SourceProfile implements ElementProfile {
 	
 
 
-	protected abstract void loadSource(ExternalService externalService) throws ElementNotLoadedException; 
+	protected abstract void loadSource(ExternalService ex) throws ElementNotLoadedException; 
 	
 	
-	public List<Item> getItems(ExternalService externalService) throws ElementNotLoadedException {
+	public List<Item> getItems(ExternalService ex) throws ElementNotLoadedException {
 	   	if (log.isDebugEnabled()){
     		log.debug("getItems(externalService)");
     	}
-		loadSource(externalService);
+		loadSource(ex);
 		Source source = getElement();
 		return source.getItems();
 	}

@@ -43,12 +43,12 @@ public class RegularOfSet {
 	 * @param portletService
 	 * @return boolean
 	 */
-	public boolean evaluate(ExternalService externalService) {
+	public boolean evaluate(ExternalService ex) {
 		if (log.isDebugEnabled()){
 			log.debug("evaluate(externalService)");
 		}
 		
-		String userAttributeValue = externalService.getUserAttribute(attribute);
+		String userAttributeValue = ex.getUserAttribute(attribute);
 		// TODO (GB) voir le cas ou il y est mais que le portail ne connait pas
 		if (userAttributeValue == null) {
 			log.warn("No value for user attribute '"+ attribute +"'");

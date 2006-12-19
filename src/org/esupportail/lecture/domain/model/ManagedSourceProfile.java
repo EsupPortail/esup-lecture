@@ -95,13 +95,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/*
 	 *************************** METHODS ******************************** */	
 	
-	public void updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService externalService) 
+	public void updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService ex) 
 		throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustomCategory("+customManagedCategory.getElementId()+"externalService)");
 		}
-		// no loadSource(externalService) is needed here
-		setUpCustomCategoryVisibility(customManagedCategory,externalService);
+		// no loadSource(ex) is needed here
+		setUpCustomCategoryVisibility(customManagedCategory,ex);
 		
 	}
 
@@ -141,7 +141,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		
 	}
 
-	protected void loadSource(ExternalService externalService) throws ElementNotLoadedException {
+	protected void loadSource(ExternalService ex) throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("loadSource(externalService)");
 		}
@@ -152,7 +152,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			setElement(source);
 			
 		} else if (getAccess() == Accessibility.CAS) {
-			String ptCas = externalService.getUserProxyTicketCAS();
+			String ptCas = ex.getUserProxyTicketCAS();
 			Source source = DomainTools.getDaoService().getSource(this,ptCas);
 			setElement(source);
 			
@@ -166,13 +166,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * Evaluate visibility of current user for this managed source profile.
 	 * Update customManagedCategory (belongs to user) if needed :
 	 * add or remove customManagedSources associated with
-	 * @param externalService
+	 * @param ex
 	 * @param customManagedCategory
 	 * @throws ElementNotLoadedException 
 	 * @return true if sourceProfile is visible by user (in Obliged or in autoSubscribed, or in Allowed)
 	 */
 	
-	private boolean setUpCustomCategoryVisibility(CustomManagedCategory customManagedCategory,ExternalService externalService) 
+	private boolean setUpCustomCategoryVisibility(CustomManagedCategory customManagedCategory,ExternalService ex) 
 		throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("setUpCustomCategoryVisibility("+customManagedCategory.getElementId()+",externalService)");
@@ -192,7 +192,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 						
 		/* ---OBLIGED SET--- */
 			log.debug("Evaluation DefinitionSets(obliged) de la source profile : "+this.getId()+" pour la cat : "+customManagedCategory.getElementId());
-			isInObliged = getVisibilityObliged().evaluateVisibility(externalService);
+			isInObliged = getVisibilityObliged().evaluateVisibility(ex);
 			log.debug("IsInObliged : "+isInObliged);
 			if (isInObliged) {
 				log.debug("Is in obliged");
@@ -210,7 +210,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				} else {
 		/* ---ALLOWED SET--- */
 					log.debug("Evaluation DefinitionSets(allowed) de la source profile : "+this.getId()+" pour la cat : "+customManagedCategory.getElementId());
-					isInAllowed = getVisibilityAllowed().evaluateVisibility(externalService);
+					isInAllowed = getVisibilityAllowed().evaluateVisibility(ex);
 					
 					if (!isInAllowed) { // If isInAllowed : nothing to do
 		/* ---CATEGORY NOT VISIBLE FOR USER--- */

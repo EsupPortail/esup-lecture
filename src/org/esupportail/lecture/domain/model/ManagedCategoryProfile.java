@@ -105,21 +105,21 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 	/**
 	 * @param customContext
-	 * @param externalService
+	 * @param ex
 	 * @return true if the category is visble by the userProfile
 	 */
-	public boolean updateCustomContext(CustomContext customContext,ExternalService externalService) 
+	public boolean updateCustomContext(CustomContext customContext,ExternalService ex) 
 		throws ElementNotLoadedException, CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustomContext("+customContext.getElementId()+"externalService)");
 		}
-		loadCategory(externalService);
-		return setUpCustomContextVisibility(customContext, externalService);
+		loadCategory(ex);
+		return setUpCustomContextVisibility(customContext, ex);
 		
 	}
 
 	@Override
-	protected void loadCategory(ExternalService externalService) throws CategoryNotLoadedException {
+	protected void loadCategory(ExternalService ex) throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("loadCategory(externalService)");
 		}
@@ -127,7 +127,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			setElement(DomainTools.getDaoService().getManagedCategory(this)); 
 			
 		} else if (getAccess() == Accessibility.CAS) {
-			String ptCas = externalService.getUserProxyTicketCAS();
+			String ptCas = ex.getUserProxyTicketCAS();
 			setElement(DomainTools.getDaoService().getManagedCategory(this,ptCas));
 		}
 		//computedFeatures.compute();
@@ -137,12 +137,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * Evaluate visibility of current user for this managed category.
 	 * Update customContext (belongs to user) if needed :
 	 * add or remove customCategories associated with
-	 * @param externalService
+	 * @param ex
 	 * @param customContext
 	 * @return true if the mcp is visible by the user of the customContext, else return false
 	 * @throws ElementNotLoadedException 
 	 */
-	private boolean setUpCustomContextVisibility(CustomContext customContext, ExternalService externalService) 
+	private boolean setUpCustomContextVisibility(CustomContext customContext, ExternalService ex) 
 		throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("setUpCustomContextVisibility("+customContext.getElementId()+",externalService)");
@@ -165,7 +165,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		
 	/* ---OBLIGED SET--- */
 		log.debug("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+ getId());
-		isInObliged =  getVisibilityObliged().evaluateVisibility(externalService);
+		isInObliged =  getVisibilityObliged().evaluateVisibility(ex);
 		log.debug("IsInObliged : "+isInObliged);
 		if (isInObliged) {
 			customContext.addSubscription(this);
@@ -183,7 +183,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			} else {
 	/* ---ALLOWED SET--- */
 				log.debug("Appel de evaluate sur DefenitionSets(allowed) de la cat : "+ getId());
-				isInAllowed =  getVisibilityAllowed().evaluateVisibility(externalService);
+				isInAllowed =  getVisibilityAllowed().evaluateVisibility(ex);
 				isVisible = true;
 				
 				if (!isInAllowed) { // If isInAllowed : nothing to do
@@ -209,13 +209,13 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @throws ElementNotLoadedException 
 	 * @throws ElementNotLoadedException 
 	 */
-	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) 
+	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) 
 		throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustom("+customManagedCategory.getElementId()+",externalService)");
 		}
 		ManagedCategory category = (ManagedCategory) getElement();
-		category.updateCustom(customManagedCategory, externalService);
+		category.updateCustom(customManagedCategory, ex);
 	}
 	
 	

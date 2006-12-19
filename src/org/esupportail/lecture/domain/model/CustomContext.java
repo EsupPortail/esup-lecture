@@ -99,12 +99,12 @@ public class CustomContext implements CustomElement {
 	 *************************** METHODS ************************************/
 
 	/**
-	 * @param externalService access to externalService
+	 * @param ex access to externalService
 	 * @return list of customCategories defined in this customContext
 	 * @throws ContextNotFoundException 
 	 * @throws ElementNotLoadedException 
 	 */
-	public List<CustomCategory> getSortedCustomCategories(ExternalService externalService) 
+	public List<CustomCategory> getSortedCustomCategories(ExternalService ex) 
 		throws ContextNotFoundException, ElementNotLoadedException{
 		if (log.isDebugEnabled()){
 			log.debug("getSortedCustomCategories(externalService)");
@@ -112,7 +112,7 @@ public class CustomContext implements CustomElement {
 		// TODO (GB later) rewrite with custom personnal category (+ sorted display)
 	
 		/* update this customContext with context */
-		getContext().updateCustom(this,externalService);
+		getContext().updateCustom(this,ex);
 		
 		DomainTools.getDaoService().updateCustomContext(this);
 		DomainTools.getDaoService().updateUserProfile(userProfile);

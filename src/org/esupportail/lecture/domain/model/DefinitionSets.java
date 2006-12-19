@@ -73,7 +73,7 @@ public class DefinitionSets {
 	 * @param portletService for portletContainer access, in order to know user rights
 	 * @return true if the user is define in this DefinitionSets
 	 */
-	protected boolean evaluateVisibility(ExternalService externalService) {
+	protected boolean evaluateVisibility(ExternalService ex) {
 	   	if (log.isDebugEnabled()){
     		log.debug("evaluateVisibility(externalService)");
     	}
@@ -83,7 +83,7 @@ public class DefinitionSets {
 		while (iteratorGroups.hasNext()){
 			String group = (String) iteratorGroups.next();
 			log.debug("DefinionSets, evaluation on group : "+group);
-			if (externalService.isUserInGroup(group)){
+			if (ex.isUserInGroup(group)){
 				return true;
 			}
 		}
@@ -93,7 +93,7 @@ public class DefinitionSets {
 		while (iteratorReg.hasNext()){
 			RegularOfSet reg = (RegularOfSet) iteratorReg.next();
 			log.debug("DefinionSets, evaluation regular : attr("+ reg.getAttribute() +") val("+ reg.getValue()+")");
-			if (reg.evaluate(externalService)){
+			if (reg.evaluate(ex)){
 				return true;
 			}
 		}

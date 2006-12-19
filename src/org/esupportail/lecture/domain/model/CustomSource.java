@@ -73,11 +73,11 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws ElementNotLoadedException
 	 * @throws SourceNotLoadedException
 	 */
-	public List<Item> getItems(ExternalService externalService) throws ElementNotLoadedException, SourceNotLoadedException {
+	public List<Item> getItems(ExternalService ex) throws ElementNotLoadedException, SourceNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("getItems(externalService)");
 		}
-		return getProfile().getItems(externalService);
+		return getProfile().getItems(ex);
 	}
 	
 	/**

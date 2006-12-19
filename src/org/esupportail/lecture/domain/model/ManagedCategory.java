@@ -70,7 +70,7 @@ public class ManagedCategory extends Category {
 	 * @throws ElementNotLoadedException 
 	 * @throws ElementNotLoadedException 
 	 */
-	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService externalService) 
+	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) 
 		throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustom("+customManagedCategory.getElementId()+",externalService)");
@@ -80,7 +80,7 @@ public class ManagedCategory extends Category {
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
 			log.debug("Managed Source profile ok");
-			msp.updateCustomCategory(customManagedCategory,externalService);
+			msp.updateCustomCategory(customManagedCategory,ex);
 		}
 	}
 	

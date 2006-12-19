@@ -113,7 +113,7 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, ExternalService)
 	 */
-	public List<CategoryBean> getVisibleCategories(String userId, String contextId,ExternalService externalService) throws InternalDomainException {
+	public List<CategoryBean> getVisibleCategories(String userId, String contextId,ExternalService ex) throws InternalDomainException {
 		if (log.isDebugEnabled()){
 			log.debug("getVisibleCategories("+userId+","+contextId+",externalService)");
 		}
@@ -124,7 +124,7 @@ public class DomainServiceImpl implements DomainService {
 
 		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
 		try {
-			List<CustomCategory> customCategories = customContext.getSortedCustomCategories(externalService);
+			List<CustomCategory> customCategories = customContext.getSortedCustomCategories(ex);
 
 			for(CustomCategory customCategory : customCategories){
 				
@@ -148,15 +148,15 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService externalService) throws InternalDomainException {
+	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService ex) throws InternalDomainException {
 		if (log.isDebugEnabled()){
 			log.debug("getVisibleSources("+uid+","+categoryId+",externalService)");
 		}
 		
 		try {
 			UserProfile userProfile = channel.getUserProfile(uid);
-			CustomCategory customCategory = userProfile.getCustomCategory(categoryId,externalService);
-			List<CustomSource> customSources = customCategory.getSortedCustomSources(externalService);
+			CustomCategory customCategory = userProfile.getCustomCategory(categoryId,ex);
+			List<CustomSource> customSources = customCategory.getSortedCustomSources(ex);
 			int nbSources = customSources.size();
 			List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
 			for(CustomSource customSource : customSources){
@@ -186,15 +186,15 @@ public class DomainServiceImpl implements DomainService {
 
 	/**
 	 * @param customCategory
-	 * @param externalService
+	 * @param ex
 	 * @throws CategoryProfileNotFoundException
 	 * @throws ElementNotLoadedException
 	 * @throws CategoryNotVisibleException
 	 * @throws CustomContextNotFoundException 
 	 */
-	private List<SourceBean> getSortedCustomSourcesForCustomCategory(CustomCategory customCategory, ExternalService externalService) 
+	private List<SourceBean> getSortedCustomSourcesForCustomCategory(CustomCategory customCategory, ExternalService ex) 
 		throws CategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException, CustomContextNotFoundException {
-		List<CustomSource> customSources = customCategory.getSortedCustomSources(externalService);
+		List<CustomSource> customSources = customCategory.getSortedCustomSources(ex);
 		int nbSources = customSources.size();
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
 		for(CustomSource customSource : customSources){
@@ -211,7 +211,7 @@ public class DomainServiceImpl implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<ItemBean> getItems(String uid, String sourceId,ExternalService externalService) {
+	public List<ItemBean> getItems(String uid, String sourceId,ExternalService ex) {
 		if (log.isDebugEnabled()){
 			log.debug("getItems("+uid+","+sourceId+",externalService)");
 		}
@@ -231,7 +231,7 @@ public class DomainServiceImpl implements DomainService {
 		
 		List<Item> listItems;
 		try {
-			listItems = customSource.getItems(externalService);
+			listItems = customSource.getItems(ex);
 		} catch (SourceNotLoadedException e) {
 			log.error("Source is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
 			throw new InternalDomainException(e);
@@ -345,7 +345,7 @@ public class DomainServiceImpl implements DomainService {
 		DomainServiceImpl.channel = channel;
 	}
 
-	public List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService externalService) {
+	public List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService ex) {
 		// TODO Auto-generated method stub
 		return null;
 	}

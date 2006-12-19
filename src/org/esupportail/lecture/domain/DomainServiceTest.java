@@ -85,7 +85,7 @@ public class DomainServiceTest implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String)
 	 */
-	public List<ItemBean> getItems(String sourceId, String uid,ExternalService externalService) {
+	public List<ItemBean> getItems(String sourceId, String uid,ExternalService ex) {
 		return items;
 	}
 
@@ -105,19 +105,19 @@ public class DomainServiceTest implements DomainService {
 
 	}
 
-	public ContextBean getContext(String uid, String contextId, ExternalService externalService) {
+	public ContextBean getContext(String uid, String contextId, ExternalService ex) {
 		return getContext(uid, contextId);
 	}
 
-	public List<CategoryBean> getVisibleCategories(String uid, String contextId, ExternalService externalService) {
+	public List<CategoryBean> getVisibleCategories(String uid, String contextId, ExternalService ex) {
 		return getVisibleCategories(contextId, uid);
 	}
 
-	public List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService externalService) {
+	public List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) {
 		return getVisibleSources(categoryId, uid);
 	}
 
-	public List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService externalService) {
+	public List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService ex) {
 		List<SourceBean> ret = null;
 		ret = sources;
 		return ret;

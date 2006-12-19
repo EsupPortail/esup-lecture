@@ -33,30 +33,30 @@ public interface DomainService {
 	/**
 	 * @param uid
 	 * @param contextId
-	 * @param externalService access to external service 
+	 * @param ex access to external service 
 	 * @return List<CategoryBean>
 	 * @throws InternalDaoException 
 	 * @see FacadeService#getVisibleCategories(String, String)
 	 */
-	List<CategoryBean> getVisibleCategories(String uid,String contextId,ExternalService externalService) throws InternalDomainException;
+	List<CategoryBean> getVisibleCategories(String uid,String contextId,ExternalService ex) throws InternalDomainException;
 
 	/**
 	 * @param categoryId 
 	 * @param uid 
-	 * @param externalService 
+	 * @param ex 
 	 * @return List<SourceBean>
 	 * @see FacadeService#getVisibleSources(String, String)
 	 */
-	List<SourceBean> getVisibleSources(String uid,String categoryId,ExternalService externalService);
+	List<SourceBean> getVisibleSources(String uid,String categoryId,ExternalService ex);
 
 	/**
 	 * @param sourceId 
 	 * @param uid 
-	 * @param externalService access to external service 
+	 * @param ex access to external service 
 	 * @return List<ItemBean>
 	 * @see FacadeService#getItems(String, String)
 	 */
-	List<ItemBean> getItems( String uid,String sourceId,ExternalService externalService);
+	List<ItemBean> getItems( String uid,String sourceId,ExternalService ex);
 
 	/**
 	 * @param uid 
@@ -77,11 +77,11 @@ public interface DomainService {
 	/**
 	 * @param categoryId 
 	 * @param uid 
-	 * @param externalService 
+	 * @param ex 
 	 * @return List<SourceBean>
 	 * @see FacadeService#getAvailableSources(String, String)
 	 */
-	List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService externalService);
+	List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService ex);
 	
 	/**
 	 * @param uid
