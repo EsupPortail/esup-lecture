@@ -18,19 +18,19 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.CategoryNotVisibleException;
-import org.esupportail.lecture.exceptions.CustomContextNotFoundException;
-import org.esupportail.lecture.exceptions.ElementNotLoadedException;
-import org.esupportail.lecture.exceptions.ContextNotFoundException;
-import org.esupportail.lecture.exceptions.CustomCategoryNotFoundException;
-import org.esupportail.lecture.exceptions.CustomSourceNotFoundException;
-import org.esupportail.lecture.exceptions.InfoFacadeServiceException;
-import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.DomainServiceException;
-import org.esupportail.lecture.exceptions.SourceNotLoadedException;
-import org.esupportail.lecture.exceptions.TreeSizeErrorException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
+import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
+import org.esupportail.lecture.exceptions.domain.CustomContextNotFoundException;
+import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.springframework.util.Assert;
 
 /**
@@ -96,24 +96,24 @@ public class DomainServiceImpl implements DomainService {
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(userId);
 		CustomContext customContext = userProfile.getCustomContext(contextId);
-		
+		// => throw InfoException
 		/* Make the contextUserBean to display */
 		ContextBean contextBean;
 		try {
 			contextBean = new ContextBean(customContext);
 		} catch (ContextNotFoundException e) {
 			log.error("Context not found for service 'getContext(user "+userId+", context "+contextId);
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		}
 			
 		return contextBean;		
 	}
 
 	/**
-	 * @throws DomainServiceException 
+	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, ExternalService)
 	 */
-	public List<CategoryBean> getVisibleCategories(String userId, String contextId,ExternalService externalService) throws DomainServiceException {
+	public List<CategoryBean> getVisibleCategories(String userId, String contextId,ExternalService externalService) throws InternalDomainException {
 		if (log.isDebugEnabled()){
 			log.debug("getVisibleCategories("+userId+","+contextId+",externalService)");
 		}
@@ -133,22 +133,22 @@ public class DomainServiceImpl implements DomainService {
 			}
 		} catch (ContextNotFoundException e){
 			log.error("Context not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		} catch (ElementNotLoadedException e) {
 			log.error("Context not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		} catch (CategoryProfileNotFoundException e) {
 			log.error("ManagedCategoryProfile not found for service 'getVisibleCategories(user "+userId+", context "+contextId);
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		} 
 		return listCategoryBean;
 	}
 	
 	/**
-	 * @throws DomainServiceException 
+	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService externalService) throws DomainServiceException {
+	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService externalService) throws InternalDomainException {
 		if (log.isDebugEnabled()){
 			log.debug("getVisibleSources("+uid+","+categoryId+",externalService)");
 		}
@@ -167,19 +167,19 @@ public class DomainServiceImpl implements DomainService {
 			
 		}catch (CategoryNotVisibleException e) {
 			log.warn("Category is not visible anymore for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-			throw new InfoFacadeServiceException(e);
+			throw new InfoDomainException(e);
 		} catch (CategoryProfileNotFoundException e){
 			log.error("ManagedCategoryProfile not found for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		} catch (CategoryNotLoadedException e) {	
 			log.error("Category is not loaded for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		} catch (ElementNotLoadedException e) {
 			log.error("Element is not loaded for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		} catch (CustomContextNotFoundException e) {
 			log.error("User profile has not got any customContext where category "+categoryId+" is defined service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		}
 	}
 
@@ -224,7 +224,7 @@ public class DomainServiceImpl implements DomainService {
 			customSource = userProfile.getCustomSource(sourceId);
 		} catch (CustomSourceNotFoundException e) {
 			log.error("CustomSource is not found for service 'getItems(user "+uid+", source "+sourceId+ ")'");
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		}
 	
 		List<ItemBean> listItemBean = new ArrayList<ItemBean>();
@@ -234,10 +234,10 @@ public class DomainServiceImpl implements DomainService {
 			listItems = customSource.getItems(externalService);
 		} catch (SourceNotLoadedException e) {
 			log.error("Source is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		} catch (ElementNotLoadedException e) {
 			log.error("Composant is not loaded for service 'getItems(user "+uid+", source "+sourceId+ ")'");
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		}
 		for(Item item : listItems){
 			ItemBean itemBean = new ItemBean(item,customSource);
@@ -264,7 +264,7 @@ public class DomainServiceImpl implements DomainService {
 			customSource.setItemAsRead(itemId);
 		} catch (CustomSourceNotFoundException e) {
 			log.error("CustomSource is not found for service 'marckItemAsRead(user "+uid+", source "+sourceId+", item"+ itemId+")");
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		}
 	}
 	
@@ -284,7 +284,7 @@ public class DomainServiceImpl implements DomainService {
 			customSource.setItemAsUnRead(itemId);
 		} catch (CustomSourceNotFoundException e) {
 			log.error("CustomSource is not found for service 'marckItemAsUnread(user "+uid+", source "+sourceId+", item"+ itemId+")");
-			throw new DomainServiceException(e);
+			throw new InternalDomainException(e);
 		}
 	}
 

@@ -5,8 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
-import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 
 
 /**

@@ -5,11 +5,11 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.CategoryNotVisibleException;
-import org.esupportail.lecture.exceptions.CustomContextNotFoundException;
-import org.esupportail.lecture.exceptions.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.CustomContextNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 
 
 /**

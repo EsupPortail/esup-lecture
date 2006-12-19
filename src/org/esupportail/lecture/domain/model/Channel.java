@@ -15,6 +15,8 @@ import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.*;
+import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 /**

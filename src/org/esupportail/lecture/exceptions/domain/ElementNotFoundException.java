@@ -1,4 +1,4 @@
-package org.esupportail.lecture.exceptions;
+package org.esupportail.lecture.exceptions.domain;
 
 public class ElementNotFoundException extends ComposantNotFoundException {
 

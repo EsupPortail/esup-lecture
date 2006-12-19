@@ -12,8 +12,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 
 /**
  * Managed category profile element.
@@ -109,7 +109,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @return true if the category is visble by the userProfile
 	 */
 	public boolean updateCustomContext(CustomContext customContext,ExternalService externalService) 
-		throws ElementNotLoadedException{
+		throws ElementNotLoadedException, CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustomContext("+customContext.getElementId()+"externalService)");
 		}

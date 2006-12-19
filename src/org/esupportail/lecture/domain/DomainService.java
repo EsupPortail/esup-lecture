@@ -7,8 +7,8 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
-import org.esupportail.lecture.exceptions.DomainServiceException;
-import org.esupportail.lecture.exceptions.TreeSizeErrorException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 
 /**
  * @author bourges
@@ -35,10 +35,10 @@ public interface DomainService {
 	 * @param contextId
 	 * @param externalService access to external service 
 	 * @return List<CategoryBean>
-	 * @throws DomainServiceException 
+	 * @throws InternalDaoException 
 	 * @see FacadeService#getVisibleCategories(String, String)
 	 */
-	List<CategoryBean> getVisibleCategories(String uid,String contextId,ExternalService externalService) throws DomainServiceException;
+	List<CategoryBean> getVisibleCategories(String uid,String contextId,ExternalService externalService) throws InternalDomainException;
 
 	/**
 	 * @param categoryId 

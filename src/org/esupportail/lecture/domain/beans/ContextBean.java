@@ -2,7 +2,7 @@ package org.esupportail.lecture.domain.beans;
 
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.exceptions.ContextNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 
 /**
  * @author bourges

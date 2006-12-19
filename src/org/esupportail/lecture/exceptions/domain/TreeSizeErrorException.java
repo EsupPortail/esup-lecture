@@ -1,6 +1,6 @@
-package org.esupportail.lecture.exceptions;
+package org.esupportail.lecture.exceptions.domain;
 
-public class TreeSizeErrorException extends InfoFacadeServiceException {
+public class TreeSizeErrorException extends InfoDomainException {
 
 	public TreeSizeErrorException(Exception cause) {
 		super(cause);

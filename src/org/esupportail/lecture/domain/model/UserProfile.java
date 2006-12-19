@@ -9,12 +9,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.CategoryNotVisibleException;
-import org.esupportail.lecture.exceptions.CustomCategoryNotFoundException;
-import org.esupportail.lecture.exceptions.CustomContextNotFoundException;
-import org.esupportail.lecture.exceptions.CustomSourceNotFoundException;
-import org.esupportail.lecture.exceptions.ElementNotLoadedException;
-import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
+import org.esupportail.lecture.exceptions.domain.CustomContextNotFoundException;
+import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 
 
@@ -109,6 +109,8 @@ public class UserProfile {
 		CustomContext customContext = 
 				customContexts.get(contextId);
 		if (customContext == null){
+			// TODO (GB) verifier l'existance du context dans le canal
+			//=> throw ContextNotFoundException
 			customContext = new CustomContext(contextId,this);
 			addCustomContext(customContext);
 		}

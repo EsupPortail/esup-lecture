@@ -1,6 +1,6 @@
-package org.esupportail.lecture.exceptions;
+package org.esupportail.lecture.exceptions.domain;
 
-public class CategoryNotVisibleException extends DomainException {
+public class CategoryNotVisibleException extends PrivateException {
 
 	public CategoryNotVisibleException(Exception e) {
 		super(e);

@@ -3,7 +3,7 @@
 * For any information please refer to http://esup-helpdesk.sourceforge.net
 * You may obtain a copy of the licence at http://www.esup-portail.org/license/
 */
-package org.esupportail.lecture.exceptions;
+package org.esupportail.lecture.exceptions.domain;
 
 
 /**
@@ -11,7 +11,7 @@ package org.esupportail.lecture.exceptions;
  * @author gbouteil
  *
  */
-public class MissingPtCasException extends InfoFacadeServiceException {
+public class MissingPtCasException extends InfoDomainException {
 
 	public MissingPtCasException(Exception cause) {
 		super(cause);

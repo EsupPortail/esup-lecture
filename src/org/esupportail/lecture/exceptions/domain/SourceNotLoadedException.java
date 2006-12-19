@@ -1,4 +1,5 @@
-package org.esupportail.lecture.exceptions;
+package org.esupportail.lecture.exceptions.domain;
+
 
 public class SourceNotLoadedException extends ElementNotLoadedException {
 

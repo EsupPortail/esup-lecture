@@ -11,10 +11,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.ElementNotLoadedException;
-import org.esupportail.lecture.exceptions.ContextNotFoundException;
-import org.esupportail.lecture.exceptions.ElementProfileNotFoundException;
-import org.esupportail.lecture.exceptions.TreeSizeErrorException;
+import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ElementProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 
 
 /**

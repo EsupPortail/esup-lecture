@@ -2,7 +2,7 @@ package org.esupportail.lecture.domain.model;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.exceptions.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 
 /**
  * Class that contains computed features of a element :

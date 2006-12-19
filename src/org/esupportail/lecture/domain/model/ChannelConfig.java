@@ -21,6 +21,8 @@ import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.*;
 //import org.apache.commons.configuration.HierarchicalConfiguration; version 1.3
+import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 /**
  * Channel Config : used for loading and parsing XML channel file config.

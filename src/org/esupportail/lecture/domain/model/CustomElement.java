@@ -1,9 +1,9 @@
 package org.esupportail.lecture.domain.model;
 
 
-import org.esupportail.lecture.exceptions.ElementNotFoundException;
-import org.esupportail.lecture.exceptions.ElementNotLoadedException;
-import org.esupportail.lecture.exceptions.ElementProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ElementNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ElementProfileNotFoundException;
 
 /**
  * @author gbouteil
