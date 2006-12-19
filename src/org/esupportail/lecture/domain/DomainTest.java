@@ -50,6 +50,7 @@ public class DomainTest {
 		//testFoldCategory();
 		
 		/* Test alternative behavior */
+		testGetContextBis("ccc");
 		testGetVisibleSourceAlternativeWay();
 	
 	}
@@ -80,6 +81,11 @@ public class DomainTest {
 		printIntro("getContext");
 		contextId = facadeService.getCurrentContextId();
 		ContextBean context = facadeService.getContext(userId,contextId);
+		System.out.println(context.toString());
+	}
+	private static void testGetContextBis(String cid) {
+		printIntro("getContext");
+		ContextBean context = facadeService.getContext(userId,cid);
 		System.out.println(context.toString());
 	}
 
