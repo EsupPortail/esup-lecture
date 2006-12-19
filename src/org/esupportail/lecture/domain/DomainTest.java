@@ -40,11 +40,11 @@ public class DomainTest {
 		facadeService = (FacadeService)factory.getBean("facadeService");
 		
 		/* Test normal behavior */
-		testGetConnectedUser();
-		testGetContext();
-		testGetVisibleCategories();
-		testGetVisibleSources();
-		testGetItems();
+//		testGetConnectedUser();
+//		testGetContext();
+//		testGetVisibleCategories();
+//		testGetVisibleSources();
+//		testGetItems();
 		//testMarkItemAsRead();
 		//testSetTreeSize();
 		//testFoldCategory();
@@ -120,7 +120,8 @@ public class DomainTest {
 	 *  Test of service "getSources" in an alternative way :
 	 *  - the parent category has not been got before
 	 */
-	private static void testGetVisibleSourceAlternativeWay() {		
+	private static void testGetVisibleSourceAlternativeWay() {	
+		testGetContext();	
 		printIntro("getVisibleSources - alternative way");
 		categoryIds = new ArrayList<String>();
 		categoryIds.add("cp1");

@@ -103,11 +103,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	
 	
 
-//	/**
-//	 * @param customContext
-//	 * @param externalService
-//	 * @return true if the category is visble by the userProfile
-//	 */
+	/**
+	 * @param customContext
+	 * @param externalService
+	 * @return true if the category is visble by the userProfile
+	 */
 	public boolean updateCustomContext(CustomContext customContext,ExternalService externalService) 
 		throws ElementNotLoadedException{
 		if (log.isDebugEnabled()){

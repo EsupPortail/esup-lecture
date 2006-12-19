@@ -12,6 +12,7 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.CustomContextNotFoundException;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 
 /**
@@ -79,11 +80,12 @@ public class CustomManagedCategory extends CustomCategory {
 
 	/**
 	 * @throws CategoryNotVisibleException 
+	 * @throws CustomContextNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
 	public List<CustomSource> getSortedCustomSources(ExternalService externalService) 
-		throws CategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException{
+		throws CategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException, CustomContextNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("getSortedCustomSources(externalService)");
 		}

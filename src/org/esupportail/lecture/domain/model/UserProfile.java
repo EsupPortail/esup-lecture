@@ -11,6 +11,7 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.CustomCategoryNotFoundException;
+import org.esupportail.lecture.exceptions.CustomContextNotFoundException;
 import org.esupportail.lecture.exceptions.CustomSourceNotFoundException;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.ManagedCategoryProfileNotFoundException;
@@ -124,9 +125,13 @@ public class UserProfile {
 	 * if exist,else,create it.
 	 * @param categoryId identifier of the category refered by the customCategory
 	 * @return customCategory (or null)
-	 * @throws CustomCategoryNotFoundException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws ElementNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CustomContextNotFoundException 
 	 */
-	public CustomCategory getCustomCategory(String categoryId) throws CustomCategoryNotFoundException{
+	public CustomCategory getCustomCategory(String categoryId,ExternalService ex) 
+		throws ManagedCategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException, CustomContextNotFoundException {
 	   	if (log.isDebugEnabled()){
     		log.debug("getCustomCategory("+categoryId+")");
     	}
@@ -134,26 +139,31 @@ public class UserProfile {
 		CustomCategory customCategory = 
 			customCategories.get(categoryId);
 		if(customCategory == null){
-			throw new CustomCategoryNotFoundException ("CustomCategory "+categoryId+" is not found in userProfile "+this.userId);
+			updateCustomContextsForOneManagedCategory(categoryId,ex);
+			customCategory = customCategories.get(categoryId);
 		}
 		return customCategory;
 	}
 	
-	public void updateCustomContextsForOneManagedCategory(String categoryProfileId,ExternalService ex) 
-		throws ManagedCategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException {
+	protected void updateCustomContextsForOneManagedCategory(String categoryProfileId,ExternalService ex) 
+		throws ManagedCategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException, CustomContextNotFoundException {
+		
 		ManagedCategoryProfile mcp = DomainTools.getChannel().getManagedCategoryProfile(categoryProfileId);
 		Set<Context> contexts = mcp.getContextsSet();
+		boolean contextFound = false;
 		for(Context context : contexts){
 			String contextId = context.getId();
 			if (containsCustomContext(contextId)) {
+				contextFound = true;
 				CustomContext customContext = getCustomContext(contextId);
 				if (!mcp.updateCustomContext(customContext, ex)){
 					throw new CategoryNotVisibleException("This Category is not visible for this user profile");
-				}else {
-					mcp.updateCustomContext(customContext, ex);
 				}
 			}
 		}	
+		if (!contextFound){
+			throw new CustomContextNotFoundException ("CustomContext not found in userProfile "+this.userId+" for managedCategory "+categoryProfileId);
+		}
 		
 	}
 	

@@ -8,6 +8,7 @@ import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.CustomContextNotFoundException;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 
 
@@ -91,8 +92,10 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryNotLoadedException
 	 * @throws ElementNotLoadedException 
 	 * @throws CategoryNotVisibleException 
+	 * @throws CustomContextNotFoundException 
 	 */
-	public abstract List<CustomSource> getSortedCustomSources(ExternalService externalService) throws CategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException;
+	public abstract List<CustomSource> getSortedCustomSources(ExternalService externalService) 
+		throws CategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException, CustomContextNotFoundException;
 
 	
 //	Not here : it is only specific to CustomManagedCategories

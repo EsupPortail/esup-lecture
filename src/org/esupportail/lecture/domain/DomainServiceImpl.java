@@ -21,6 +21,7 @@ import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.CustomContextNotFoundException;
 import org.esupportail.lecture.exceptions.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.CustomCategoryNotFoundException;
@@ -35,6 +36,11 @@ import org.springframework.util.Assert;
 /**
  * Service implementation offered by domain layer
  * @author gbouteil
+ * 
+ * All of services are available for a user only if 
+ * he has a customContext defined in his userProfile.
+ * To have a customContext defined in a userProfile, the service
+ * getContext must have been called one time in channel life (over user session)
  *
  */
 public class DomainServiceImpl implements DomainService {
@@ -147,37 +153,19 @@ public class DomainServiceImpl implements DomainService {
 			log.debug("getVisibleSources("+uid+","+categoryId+",externalService)");
 		}
 		
-		// TODO (GB) getVisibleCategories doit avoir été appelé avant pour charger la category : est ce bien ?
-		/* Get current user profile and customCoategory */
-		UserProfile userProfile = channel.getUserProfile(uid);
-		CustomCategory customCategory = null;
-		
 		try {
-			customCategory = userProfile.getCustomCategory(categoryId);
-		}
-		catch (CustomCategoryNotFoundException e){
-			log.info("CustomCategory not directly found  for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-			try {
-				// TODO : renseigner la var customCategory => non : faire l'appel à la méthode ci-dessous dans
-				// userProfile.getCustomCategory(categoryId);
-				userProfile.updateCustomContextsForOneManagedCategory(categoryId,externalService);
-				return getSortedCustomSourcesForCustomCategory(customCategory, externalService);	
-
-			} catch (CategoryProfileNotFoundException e1) {
-				log.error("ManagedCategoryProfile not found for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-				throw new DomainServiceException(e);
-			} catch (ElementNotLoadedException e1) {
-				log.error("Element is not loaded for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-				throw new DomainServiceException(e);
-			} catch (CategoryNotVisibleException e1) {
-				log.warn("Category is not visible anymore for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
-				throw new InfoFacadeServiceException(e);
+			UserProfile userProfile = channel.getUserProfile(uid);
+			CustomCategory customCategory = userProfile.getCustomCategory(categoryId,externalService);
+			List<CustomSource> customSources = customCategory.getSortedCustomSources(externalService);
+			int nbSources = customSources.size();
+			List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
+			for(CustomSource customSource : customSources){
+				SourceBean source = new SourceBean(customSource);
+				listSourceBean.add(source);
 			}
-		} 
-		try {
-			return getSortedCustomSourcesForCustomCategory(customCategory, externalService);	
-
-		} catch (CategoryNotVisibleException e) {
+			return listSourceBean;
+			
+		}catch (CategoryNotVisibleException e) {
 			log.warn("Category is not visible anymore for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
 			throw new InfoFacadeServiceException(e);
 		} catch (CategoryProfileNotFoundException e){
@@ -189,6 +177,9 @@ public class DomainServiceImpl implements DomainService {
 		} catch (ElementNotLoadedException e) {
 			log.error("Element is not loaded for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
 			throw new DomainServiceException(e);
+		} catch (CustomContextNotFoundException e) {
+			log.error("User profile has not got any customContext where category "+categoryId+" is defined service 'getVisibleSources(user "+uid+", category "+categoryId+ ")'");
+			throw new DomainServiceException(e);
 		}
 	}
 
@@ -199,11 +190,12 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws CategoryProfileNotFoundException
 	 * @throws ElementNotLoadedException
 	 * @throws CategoryNotVisibleException
+	 * @throws CustomContextNotFoundException 
 	 */
-	private List<SourceBean> getSortedCustomSourcesForCustomCategory(CustomCategory customCategory, ExternalService externalService) throws CategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException {
+	private List<SourceBean> getSortedCustomSourcesForCustomCategory(CustomCategory customCategory, ExternalService externalService) 
+		throws CategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException, CustomContextNotFoundException {
 		List<CustomSource> customSources = customCategory.getSortedCustomSources(externalService);
 		int nbSources = customSources.size();
-		log.trace("NB sources : "+nbSources);
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
 		for(CustomSource customSource : customSources){
 			SourceBean source = new SourceBean(customSource);
