@@ -39,19 +39,23 @@ public class DomainTest {
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		facadeService = (FacadeService)factory.getBean("facadeService");
 		
+		/* Test alternative behavior */
+		//testGetContextBis("ccc");
+		//testGetVisibleSourceAlternativeWay(); 
+		
 		/* Test normal behavior */
-//		testGetConnectedUser();
-//		testGetContext();
-//		testGetVisibleCategories();
-//		testGetVisibleSources();
-//		testGetItems();
+		testGetConnectedUser();
+		testGetContext();
+		testGetVisibleCategories();
+		testGetVisibleSources();
+		testGetItems();
+		
+		/* small actions */
 		//testMarkItemAsRead();
 		//testSetTreeSize();
 		//testFoldCategory();
 		
-		/* Test alternative behavior */
-		testGetContextBis("ccc");
-		testGetVisibleSourceAlternativeWay();
+
 	
 	}
 

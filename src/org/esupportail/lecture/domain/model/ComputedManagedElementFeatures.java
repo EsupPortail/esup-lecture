@@ -65,7 +65,7 @@ public abstract class ComputedManagedElementFeatures {
 	 * Compute features
 	 * @throws ElementNotLoadedException 
 	 */
-	protected void compute() throws ElementNotLoadedException {
+	synchronized protected void compute() throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("compute()");
 		}
@@ -79,7 +79,7 @@ public abstract class ComputedManagedElementFeatures {
 	 * It is called by the associated managed element profile when it concretly computes features
 	 * @param visibility
 	 */
-	protected void update( VisibilitySets visibility) {
+	synchronized protected void update( VisibilitySets visibility) {
 		if (log.isDebugEnabled()){
 			log.debug("update(visibility)");
 		}
@@ -100,7 +100,7 @@ public abstract class ComputedManagedElementFeatures {
 	 * Sets IsComuted
 	 * @param b the boolean to set
 	 */
-	protected void setIsComputed(boolean b) {
+	synchronized protected void setIsComputed(boolean b) {
 		isComputed = b;
 	}
 
@@ -109,7 +109,7 @@ public abstract class ComputedManagedElementFeatures {
 	 * @return Returns the visibility.
 	 * @throws ElementNotLoadedException 
 	 */
-	protected VisibilitySets getVisibility() throws ElementNotLoadedException {
+	synchronized protected VisibilitySets getVisibility() throws ElementNotLoadedException {
 		if (!isComputed){
 			compute();
 		}

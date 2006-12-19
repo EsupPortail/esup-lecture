@@ -133,7 +133,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @see CategoryProfile#name
 	 * @see ElementProfile#setName(String)
 	 */
-	public void setName(String name) {
+	synchronized public void setName(String name) {
 		this.name = name;
 	}
 	
@@ -151,7 +151,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @see CategoryProfile#id
 	 * @see ElementProfile#setId(String)
 	 */
-	public void setId(String id) {
+	synchronized public void setId(String id) {
 		this.id = id;
 	}
 
@@ -159,7 +159,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	/**
 	 * @param category The category to set.
 	 */
-	public void setElement(Category category) {
+	synchronized public void setElement(Category category) {
 		this.category = category;
 	}
 

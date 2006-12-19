@@ -69,7 +69,7 @@ public abstract class SourceProfile implements ElementProfile {
 	protected abstract void loadSource(ExternalService ex) throws ElementNotLoadedException; 
 	
 	
-	public List<Item> getItems(ExternalService ex) throws ElementNotLoadedException {
+	synchronized public List<Item> getItems(ExternalService ex) throws ElementNotLoadedException {
 	   	if (log.isDebugEnabled()){
     		log.debug("getItems(externalService)");
     	}
@@ -108,7 +108,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 * Sets the source profile Id
 	 * @param id
 	 */
-	public void setId(String id) {
+	synchronized public void setId(String id) {
 		this.id = id;
 	}
 
@@ -124,7 +124,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 * Sets the source profile name
 	 * @param name
 	 */
-	public void setName(String name) {
+	synchronized public void setName(String name) {
 		this.name = name;
 	}
 
@@ -140,7 +140,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 * Sets the source URL of the source profile
 	 * @param sourceURL
 	 */
-	public void setSourceURL(String sourceURL) {
+	synchronized public void setSourceURL(String sourceURL) {
 		this.sourceURL = sourceURL;
 	}
 
@@ -161,18 +161,18 @@ public abstract class SourceProfile implements ElementProfile {
 	 * Sets source on the profile
 	 * @param source
 	 */
-	public void setElement(Source source) {
+	synchronized public void setElement(Source source) {
 		this.source = source;
 	}
 
 
-	public void setXsltURL(String string) {
+	synchronized public void setXsltURL(String string) {
 		xsltURL = string;
 		
 	}
 
 
-	public void setItemXPath(String string) {
+	synchronized public void setItemXPath(String string) {
 		itemXPath = string;
 		
 	}
@@ -193,7 +193,7 @@ public abstract class SourceProfile implements ElementProfile {
 	}
 
 
-	public void setTtl(int ttl) {
+	synchronized public void setTtl(int ttl) {
 		this.ttl = ttl;
 	}
 
@@ -202,7 +202,7 @@ public abstract class SourceProfile implements ElementProfile {
 	}
 
 
-	public void setSpecificUserContent(boolean specificUserContent) {
+	synchronized public void setSpecificUserContent(boolean specificUserContent) {
 		this.specificUserContent = specificUserContent;
 	}
 

@@ -126,7 +126,7 @@ public abstract class Source implements Element,Serializable {
 	 * find item XPath and url of Xslt file, in Mapping file, in fonction of dtd, xmlType, 
 	 * xmlns or XML root element of the source XML content
 	 */
-	protected void computeXslt(){
+	synchronized protected void computeXslt(){
 	   	if (log.isDebugEnabled()){
     		log.debug("computeXslt()");
     	}
@@ -194,7 +194,7 @@ public abstract class Source implements Element,Serializable {
 	 * find Items objects in fonction of itemXPath, xsltURL, xmlStream
 	 */
 	@SuppressWarnings("unchecked")
-	protected void computeItems() {
+	synchronized protected void computeItems() {
 	   	if (log.isDebugEnabled()){
     		log.debug("computeItems()");
     	}
@@ -263,7 +263,7 @@ public abstract class Source implements Element,Serializable {
 	 * @param xsltFileURL URL of XSLT file
 	 * @return html content
 	 */
-	private String xml2html(String xml, String xsltFileURL) {
+	synchronized private String xml2html(String xml, String xsltFileURL) {
 	   	if (log.isDebugEnabled()){
     		log.debug("xml2html(xml,xsltFileURL)");
     	}
@@ -321,7 +321,7 @@ public abstract class Source implements Element,Serializable {
 	/**
 	 * @param itemXPath The itemXPath to set.
 	 */
-	public void setItemXPath(String itemXPath) {
+	synchronized public void setItemXPath(String itemXPath) {
 	   	if (log.isDebugEnabled()){
     		log.debug("setItemXPath("+itemXPath+")");
     	}
@@ -345,7 +345,7 @@ public abstract class Source implements Element,Serializable {
 	/**
 	 * @param xsltURL The xsltURL to set.
 	 */
-	public void setXsltURL(String xsltURL) {
+	synchronized public void setXsltURL(String xsltURL) {
 	   	if (log.isDebugEnabled()){
     		log.debug("setXsltURL("+xsltURL+")");
     	}
@@ -363,7 +363,7 @@ public abstract class Source implements Element,Serializable {
 		return XPathNameSpaces;
 	}
 
-	public void setXPathNameSpaces(HashMap<String, String> pathNameSpaces) {
+	synchronized public void setXPathNameSpaces(HashMap<String, String> pathNameSpaces) {
 	   	if (log.isDebugEnabled()){
     		log.debug("setXPathNameSpaces("+pathNameSpaces+")");
     	}
@@ -398,7 +398,7 @@ public abstract class Source implements Element,Serializable {
 	 * set the dtd of source XML content
 	 * @param dtd
 	 */
-	public void setDtd(String dtd) {
+	synchronized public void setDtd(String dtd) {
 		this.dtd = dtd;
 	}
 
@@ -414,7 +414,7 @@ public abstract class Source implements Element,Serializable {
 	/**
 	 * @param rootElement The rootElement to set.
 	 */
-	public void setRootElement(String rootElement) {
+	synchronized public void setRootElement(String rootElement) {
 		this.rootElement = rootElement;
 	}
 
@@ -430,7 +430,7 @@ public abstract class Source implements Element,Serializable {
 	/**
 	 * @param xmlns The xmlns to set.
 	 */
-	public void setXmlns(String xmlns) {
+	synchronized public void setXmlns(String xmlns) {
 		this.xmlns = xmlns;
 	}
 
@@ -446,7 +446,7 @@ public abstract class Source implements Element,Serializable {
 	/**
 	 * @param xmlType The xmlType to set.
 	 */
-	public void setXmlType(String xmlType) {
+	synchronized public void setXmlType(String xmlType) {
 		this.xmlType = xmlType;
 	}
 
@@ -463,7 +463,7 @@ public abstract class Source implements Element,Serializable {
 	 * set XML Stream (XML content) of the source
 	 * @param xmlStream
 	 */
-	public void setXmlStream(String xmlStream) {
+	synchronized public void setXmlStream(String xmlStream) {
 		this.xmlStream = xmlStream;
 	}
 

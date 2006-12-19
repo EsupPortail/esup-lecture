@@ -100,7 +100,7 @@ public class RegularOfSet {
 	 * @param attribute
 	 * @see RegularOfSet#attribute
 	 */
-	public void setAttribute(String attribute) {
+	synchronized public void setAttribute(String attribute) {
 		this.attribute = attribute;
 	}
 
@@ -117,7 +117,7 @@ public class RegularOfSet {
 	 * @param value
 	 * @see RegularOfSet#value
 	 */
-	public void setValue(String value) {
+	synchronized public void setValue(String value) {
 		this.value = value;
 	}
 

@@ -23,7 +23,7 @@ public class Item {
 	/**
 	 * @param htmlContent
 	 */
-	public void setHtmlContent(String htmlContent) {
+	synchronized public void setHtmlContent(String htmlContent) {
 		this.htmlContent = htmlContent;
 	}
 	/**
@@ -35,7 +35,7 @@ public class Item {
 	/**
 	 * @param id
 	 */
-	public void setId(String id) {
+	synchronized public void setId(String id) {
 		this.id = id;
 	}
 

@@ -38,11 +38,6 @@ public class ComputedManagedCategoryFeatures extends ComputedManagedElementFeatu
 	protected ComputedManagedCategoryFeatures(ManagedCategoryProfile mcp){
 		super(mcp);
 	}
-	
-	
-
-
-
 
 	/*
 	 *********************** METHODS **************************************/

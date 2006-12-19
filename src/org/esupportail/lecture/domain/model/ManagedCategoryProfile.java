@@ -108,7 +108,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param ex
 	 * @return true if the category is visble by the userProfile
 	 */
-	public boolean updateCustomContext(CustomContext customContext,ExternalService ex) 
+	synchronized public boolean updateCustomContext(CustomContext customContext,ExternalService ex) 
 		throws ElementNotLoadedException, CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustomContext("+customContext.getElementId()+"externalService)");
@@ -119,7 +119,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 
 	@Override
-	protected void loadCategory(ExternalService ex) throws CategoryNotLoadedException {
+	synchronized protected void loadCategory(ExternalService ex) throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("loadCategory(externalService)");
 		}
@@ -142,7 +142,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @return true if the mcp is visible by the user of the customContext, else return false
 	 * @throws ElementNotLoadedException 
 	 */
-	private boolean setUpCustomContextVisibility(CustomContext customContext, ExternalService ex) 
+	synchronized private boolean setUpCustomContextVisibility(CustomContext customContext, ExternalService ex) 
 		throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("setUpCustomContextVisibility("+customContext.getElementId()+",externalService)");
@@ -209,7 +209,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @throws ElementNotLoadedException 
 	 * @throws ElementNotLoadedException 
 	 */
-	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) 
+	synchronized public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) 
 		throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustom("+customManagedCategory.getElementId()+",externalService)");
@@ -223,7 +223,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#computeActiveFeatures()
 	 */
-	public void computeFeatures() throws CategoryNotLoadedException {
+	synchronized public void computeFeatures() throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("computeFeatures()");
 		}
@@ -267,7 +267,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @see ManagedCategoryProfile#visibility
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibility(org.esupportail.lecture.domain.model.VisibilitySets)
 	 */
-	public void setVisibility(VisibilitySets visibility) {
+	synchronized public void setVisibility(VisibilitySets visibility) {
 		if (log.isDebugEnabled()){
 			log.debug("setVisibility(visibility)");
 		}
@@ -278,7 +278,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
-	public void setVisibilityAllowed(DefinitionSets d) {
+	synchronized public void setVisibilityAllowed(DefinitionSets d) {
 		if (log.isDebugEnabled()){
 			log.debug("setVisibilityAllowed(definitionSets)");
 		}
@@ -289,7 +289,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
-	public void setVisibilityAutoSubcribed(DefinitionSets d) {
+	synchronized public void setVisibilityAutoSubcribed(DefinitionSets d) {
 		if (log.isDebugEnabled()){
 			log.debug("setVisibilityAutoSubcribed(definitionSets)");
 		}
@@ -300,7 +300,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
-	public void setVisibilityObliged(DefinitionSets d) {
+	synchronized public void setVisibilityObliged(DefinitionSets d) {
 		if (log.isDebugEnabled()){
 			log.debug("setVisibilityObliged(definitionSets)");
 		}
@@ -314,7 +314,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param c context to add
 	 * @see ManagedCategoryProfile#contextsSet
 	 */
-	protected void addContext(Context c){
+	synchronized protected void addContext(Context c){
 		if (log.isDebugEnabled()){
 			log.debug("addContext("+c.getId()+")");
 		}
@@ -339,7 +339,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param urlCategory the URL to set
 	 * @see ManagedCategoryProfile#urlCategory
 	 */
-	public void setUrlCategory(String categoryURL) {
+	synchronized public void setUrlCategory(String categoryURL) {
 		this.categoryURL = categoryURL;
 	}
 
@@ -357,7 +357,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param trustCategory 
 	 * @see ManagedCategoryProfile#trustCategory
 	 */
-	protected void setTrustCategory(boolean trustCategory) {
+	synchronized protected void setTrustCategory(boolean trustCategory) {
 		this.trustCategory = trustCategory;
 	}
 
@@ -375,7 +375,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @see ManagedCategoryProfile#access
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setAccess(org.esupportail.lecture.domain.model.Accessibility)
 	 */
-	public void setAccess(Accessibility access) {
+	synchronized public void setAccess(Accessibility access) {
 		this.access = access;
 	}
 	
@@ -434,7 +434,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @see ManagedCategoryProfile#ttl
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setTtl(int)
 	 */
-	public void setTtl(int ttl) {
+	synchronized public void setTtl(int ttl) {
 		this.ttl = ttl;
 	}
 

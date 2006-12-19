@@ -70,7 +70,7 @@ public class ManagedCategory extends Category {
 	 * @throws ElementNotLoadedException 
 	 * @throws ElementNotLoadedException 
 	 */
-	public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) 
+	synchronized public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) 
 		throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustom("+customManagedCategory.getElementId()+",externalService)");
@@ -103,7 +103,7 @@ public class ManagedCategory extends Category {
 	 * Sets visibility sets of this managed category
 	 * @param visibility
 	 */
-	public void setVisibility(VisibilitySets visibility) {
+	synchronized public void setVisibility(VisibilitySets visibility) {
 		this.visibility = visibility;
 	}
 
@@ -120,53 +120,10 @@ public class ManagedCategory extends Category {
 	/**
 	 * @param edit The edit to set.
 	 */
-	public void setEdit(Editability edit) {
+	synchronized public void setEdit(Editability edit) {
 		this.edit = edit;
 	}
 
-	
-
-	
-
-
-
-
-	
-
-
-//	protected Editability getEdit() {
-//		return edit;
-//	}
-
-
-//	protected void setEdit(Editability edit) {
-//		this.edit = edit;
-//	}
-//	
-
-//	/** 
-//	 * @uml.property name="managedChildren"
-//	 * @uml.associationEnd multiplicity="(0 -1)" aggregation="composite" inverse="managedCategory:org.esupportail.lecture.domain.model.ManagedElementProfile"
-//	 */
-//	private Collection managedElementProfile;
-//
-//	/** 
-//	 * Getter of the property <tt>managedChildren</tt>
-//	 * @return  Returns the managedElementProfile.
-//	 * @uml.property  name="managedChildren"
-//	 */
-//	protected Collection getManagedChildren() {
-//		return managedElementProfile;
-//	}
-//
-//	/** 
-//	 * Setter of the property <tt>managedChildren</tt>
-//	 * @param managedChildren  The managedElementProfile to set.
-//	 * @uml.property  name="managedChildren"
-//	 */
-//	protected void setManagedChildren(Collection managedChildren) {
-//		managedElementProfile = managedChildren;
-//	}
 
 		
 	

@@ -46,7 +46,7 @@ public class ComputedManagedSourceFeatures extends ComputedManagedElementFeature
 	 * @param setVisib visibility
 	 * @param setAccess access
 	 */
-	public void update(VisibilitySets setVisib, Accessibility setAccess) {
+	synchronized public void update(VisibilitySets setVisib, Accessibility setAccess) {
 		if (log.isDebugEnabled()){
 			log.debug("update(setVisib,setAccess)");
 		}
@@ -59,7 +59,7 @@ public class ComputedManagedSourceFeatures extends ComputedManagedElementFeature
 	 * @return Returns the access.
 	 * @throws ElementNotLoadedException 
 	 */
-	protected Accessibility getAccess() throws ElementNotLoadedException {
+	synchronized protected Accessibility getAccess() throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("getAccess()");
 		}

@@ -111,7 +111,7 @@ public class Mapping {
 	 * @param dtd
 	 * @see Mapping#dtd
 	 */
-	protected void setDtd(String dtd) {
+	synchronized protected void setDtd(String dtd) {
 		this.dtd = dtd;
 	}
 
@@ -129,7 +129,7 @@ public class Mapping {
 	 * @param xsltUrl xsltFile URL
 	 * @see Mapping#xsltFile
 	 */
-	protected void setXsltUrl(String xsltUrl) {
+	synchronized protected void setXsltUrl(String xsltUrl) {
 		this.xsltUrl = xsltUrl;
 	}
 
@@ -147,7 +147,7 @@ public class Mapping {
 	 * @param itemXPath
 	 * @see Mapping#itemXPath
 	 */
-	protected void setItemXPath(String itemXPath) {
+	synchronized protected void setItemXPath(String itemXPath) {
 		this.itemXPath = itemXPath;
 	}
 
@@ -164,7 +164,7 @@ public class Mapping {
 	 * @param xmlns
 	 * @see Mapping#xmlns
 	 */
-	protected void setXmlns(String xmlns) {
+	synchronized protected void setXmlns(String xmlns) {
 		this.xmlns = xmlns;
 	}
 
@@ -182,7 +182,7 @@ public class Mapping {
 	 * @param xmlType
 	 * @see Mapping#xmlType
 	 */
-	protected void setXmlType(String xmlType) {
+	synchronized protected void setXmlType(String xmlType) {
 		this.xmlType = xmlType;
 	}
 
@@ -198,7 +198,7 @@ public class Mapping {
 	 * Sets the root element of the XML
 	 * @param rootElement root element
 	 */
-	protected void setRootElement(String rootElement) {
+	synchronized protected void setRootElement(String rootElement) {
 		this.rootElement = rootElement;
 	}
 	
@@ -213,7 +213,7 @@ public class Mapping {
 	 * set source URL
 	 * @param sourceURL
 	 */
-	protected void setSourceURL(String sourceURL) {
+	synchronized protected void setSourceURL(String sourceURL) {
 		this.sourceURL = sourceURL;
 	}
 	
@@ -228,7 +228,7 @@ public class Mapping {
 	 * set map of XPathNameSpaces
 	 * @param pathNameSpace
 	 */
-	protected void setXPathNameSpaces(HashMap<String, String> pathNameSpace) {
+	synchronized protected void setXPathNameSpaces(HashMap<String, String> pathNameSpace) {
 		XPathNameSpaces = pathNameSpace;
 	}
 	

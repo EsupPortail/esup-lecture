@@ -134,7 +134,6 @@ public class Channel implements InitializingBean {
 		startup();
 		DomainTools.setChannel(this);
 		DomainTools.setDaoService(daoService);
-		
 	}
 	
 	/**
@@ -143,7 +142,7 @@ public class Channel implements InitializingBean {
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws ContextNotFoundException 
 	 */
-	private void startup() throws ContextNotFoundException, ManagedCategoryProfileNotFoundException {
+	synchronized private void startup() throws ContextNotFoundException, ManagedCategoryProfileNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("startup()");
 		}
@@ -159,7 +158,7 @@ public class Channel implements InitializingBean {
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws ContextNotFoundException 
 	 */
-	private void loadConfig()throws ConfigException, ContextNotFoundException, ManagedCategoryProfileNotFoundException {
+	synchronized private void loadConfig()throws ConfigException, ContextNotFoundException, ManagedCategoryProfileNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("loadConfig()");
 		}
@@ -205,7 +204,7 @@ public class Channel implements InitializingBean {
 	/**
 	 * Initialize every channel properties that are set up by loading channel configuration file
 	 */
-	private void resetChannelConfigProperties(){
+	synchronized private void resetChannelConfigProperties(){
 		if (log.isDebugEnabled()){
 			log.debug("resetChannelConfigProperties()");
 		}
@@ -221,7 +220,7 @@ public class Channel implements InitializingBean {
 	 * @see org.esupportail.lecture.domain.model.MappingFile#getInstance()
 	 * @exception FatalException
 	 */	
-	private void loadMappingFile() throws FatalException {
+	synchronized private void loadMappingFile() throws FatalException {
 		if (log.isDebugEnabled()){
 			log.debug("loadMappingFile()");
 		}
@@ -252,15 +251,15 @@ public class Channel implements InitializingBean {
 			MappingFile.initChannelHashMappings(this);
 
 		}
-		if (!configLoaded){
-			configLoaded = true;
+		if (!mappingsLoaded){
+			mappingsLoaded = true;
 		}
 	}
 
 	/**
 	 * Initialize every channel properties that are set up by loading mapping file
 	 */
-	private void resetMappingFileProperties(){
+	synchronized private void resetMappingFileProperties(){
 		if (log.isDebugEnabled()){
 			log.debug("resetMappingFileProperties()");
 		}
@@ -282,7 +281,7 @@ public class Channel implements InitializingBean {
 	 * @param userId : identifient of the user profile
 	 * @return the user profile
 	 */
-	public UserProfile getUserProfile(String userId){
+	synchronized public UserProfile getUserProfile(String userId){
 		if (log.isDebugEnabled()){
 			log.debug("getUserProfile("+userId+")");
 		}
@@ -324,7 +323,7 @@ public class Channel implements InitializingBean {
 	 * @see Channel#contextsHash
 	 */
 	
-	protected void addContext(Context c) {
+	synchronized protected void addContext(Context c) {
 		if (log.isDebugEnabled()){
 			log.debug("addContext("+c.getId()+")");
 		}
@@ -355,7 +354,7 @@ public class Channel implements InitializingBean {
 	 * @param m the managed category profile
 	 * @see Channel#managedCategoryProfilesHash
 	 */
-	protected void addManagedCategoryProfile(ManagedCategoryProfile m) {
+	synchronized protected void addManagedCategoryProfile(ManagedCategoryProfile m) {
 		if (log.isDebugEnabled()){
 			log.debug("addManagedCategoryProfile("+m.getId()+")");
 		}
@@ -367,7 +366,7 @@ public class Channel implements InitializingBean {
 	 * @param m the mapping to add
 	 * @see Channel#mappingList
 	 */
-	protected void addMapping(Mapping m){
+	synchronized protected void addMapping(Mapping m){
 		if (log.isDebugEnabled()){
 			log.debug("addMapping("+m.getRootElement()+")");
 		}
@@ -379,7 +378,7 @@ public class Channel implements InitializingBean {
 	 * @param m the mapping to add
 	 * @see Channel#mappingHashByDtd
 	 */
-	protected void addMappingByDtd(Mapping m) {
+	synchronized protected void addMappingByDtd(Mapping m) {
 		if (log.isDebugEnabled()){
 			log.debug("addMappingByDtd("+m.getRootElement()+")");
 		}
@@ -402,7 +401,7 @@ public class Channel implements InitializingBean {
 	 * @param m the mapping to add
 	 * @see Channel#mappingHashByXmlns
 	 */
-	protected void addMappingByXmlns(Mapping m) {
+	synchronized protected void addMappingByXmlns(Mapping m) {
 		if (log.isDebugEnabled()){
 			log.debug("addMappingByXmlns("+m.getRootElement()+")");
 		}
@@ -424,7 +423,7 @@ public class Channel implements InitializingBean {
 	 * @param m the mapping to add
 	 * @see Channel#mappingHashByXmlType
 	 */
-	protected void addMappingByXmlType(Mapping m) {
+	synchronized protected void addMappingByXmlType(Mapping m) {
 		if (log.isDebugEnabled()){
 			log.debug("addMappingByXmlType("+m.getRootElement()+")");
 		}
@@ -447,7 +446,7 @@ public class Channel implements InitializingBean {
 	 * @param m the mapping to add
 	 * @see Channel#mappingHashByRootElement
 	 */
-	protected void addMappingByRootElement(Mapping m) {
+	synchronized protected void addMappingByRootElement(Mapping m) {
 		if (log.isDebugEnabled()){
 			log.debug("addMappingByRootElement("+m.getRootElement()+")");
 		}
@@ -470,7 +469,7 @@ public class Channel implements InitializingBean {
 	 * @param m
 	 * @see Channel#mappingHashBySourceURL
 	 */
-	protected void addMappingBySourceURL(Mapping m) {
+	synchronized protected void addMappingBySourceURL(Mapping m) {
 		if (log.isDebugEnabled()){
 			log.debug("addMappingBySourceURL("+m.getRootElement()+")");
 		}
@@ -566,7 +565,7 @@ public class Channel implements InitializingBean {
 	 * @param managedCategoryProfilesHash
 	 * @see Channel#managedCategoryProfilesHash
 	 */
-	public void setManagedCategoryProfilesHash(Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash) {
+	synchronized public void setManagedCategoryProfilesHash(Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash) {
 		this.managedCategoryProfilesHash = managedCategoryProfilesHash;
 	}
 
@@ -584,7 +583,7 @@ public class Channel implements InitializingBean {
 	 * @param userProfilesHash
 	 * @see Channel#userProfilesHash
 	 */
-	public void setUserProfilesHash(Hashtable<String, UserProfile> userProfilesHash) {
+	synchronized public void setUserProfilesHash(Hashtable<String, UserProfile> userProfilesHash) {
 		this.userProfilesHash = userProfilesHash;
 	}
 
@@ -608,7 +607,7 @@ public class Channel implements InitializingBean {
 	 * Sets a mappings list in the channel
 	 * @param mappingList
 	 */
-	public void setMappingList(List<Mapping> mappingList) {
+	synchronized public void setMappingList(List<Mapping> mappingList) {
 		this.mappingList = mappingList;
 	}
 
@@ -624,7 +623,7 @@ public class Channel implements InitializingBean {
 	 * set DaoService
 	 * @param daoService
 	 */
-	public void setDaoService(DaoService daoService) {
+	synchronized public void setDaoService(DaoService daoService) {
 		this.daoService = daoService;
 	}
 

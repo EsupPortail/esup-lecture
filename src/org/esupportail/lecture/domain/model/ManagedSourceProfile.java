@@ -95,7 +95,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/*
 	 *************************** METHODS ******************************** */	
 	
-	public void updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService ex) 
+	synchronized public void updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService ex) 
 		throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustomCategory("+customManagedCategory.getElementId()+"externalService)");
@@ -112,7 +112,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#computeFeatures()
 	 * Can be called only when source has been realy get. (Not at the instantiation of the object)
 	 */
-	public void computeFeatures() throws ElementNotLoadedException {
+	synchronized public void computeFeatures() throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("computeFeatures()");
 		}
@@ -141,7 +141,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		
 	}
 
-	protected void loadSource(ExternalService ex) throws ElementNotLoadedException {
+	synchronized protected void loadSource(ExternalService ex) throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("loadSource(externalService)");
 		}
@@ -172,7 +172,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @return true if sourceProfile is visible by user (in Obliged or in autoSubscribed, or in Allowed)
 	 */
 	
-	private boolean setUpCustomCategoryVisibility(CustomManagedCategory customManagedCategory,ExternalService ex) 
+	synchronized private boolean setUpCustomCategoryVisibility(CustomManagedCategory customManagedCategory,ExternalService ex) 
 		throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("setUpCustomCategoryVisibility("+customManagedCategory.getElementId()+",externalService)");
@@ -232,7 +232,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see ManagedSourceProfile#access
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getAccess()
 	 */
-	public Accessibility getAccess() throws ElementNotLoadedException {
+	synchronized public Accessibility getAccess() throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("getAccess()");
 		}
@@ -243,7 +243,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see ManagedSourceProfile#access
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setAccess(org.esupportail.lecture.domain.model.Accessibility)
 	 */
-	public void setAccess(Accessibility access) {
+	synchronized public void setAccess(Accessibility access) {
 		if (log.isDebugEnabled()){
 			log.debug("setAccess()");
 		}
@@ -269,7 +269,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see ManagedSourceProfile#visibility
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibility(org.esupportail.lecture.domain.model.VisibilitySets)
 	 */
-	public void setVisibility(VisibilitySets visibility) {
+	synchronized public void setVisibility(VisibilitySets visibility) {
 		if (log.isDebugEnabled()){
 			log.debug("setVisibility(visibility)");
 		}
@@ -280,7 +280,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/** 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
-	public void setVisibilityAllowed(DefinitionSets d) {
+	synchronized public void setVisibilityAllowed(DefinitionSets d) {
 		if (log.isDebugEnabled()){
 			log.debug("setVisibilityAllowed(definitionSets)");
 		}
@@ -303,7 +303,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
-	public void setVisibilityAutoSubcribed(DefinitionSets d) {
+	synchronized public void setVisibilityAutoSubcribed(DefinitionSets d) {
 		if (log.isDebugEnabled()){
 			log.debug("setVisibilityAutoSubcribed(definitionSets)");
 		}
@@ -325,7 +325,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
 	 */
-	public void setVisibilityObliged(DefinitionSets d) {
+	synchronized public void setVisibilityObliged(DefinitionSets d) {
 		if (log.isDebugEnabled()){
 			log.debug("setVisibilityObliged(definitionSets)");
 		}
@@ -363,7 +363,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see ManagedSourceProfile#ttl
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setTtl(int)
 	 */
-	public void setTtl(int ttl) {
+	synchronized public void setTtl(int ttl) {
 		this.ttl = ttl;
 	}
 
@@ -381,7 +381,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @param specificUserContent
 	 * @see ManagedSourceProfile#specificUserContent
 	 */
-	public void setSpecificUserContent(boolean specificUserContent) {
+	synchronized public void setSpecificUserContent(boolean specificUserContent) {
 		this.specificUserContent = specificUserContent;
 	}
 
@@ -391,7 +391,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	}
 
 
-	public void setFileId(String fileId) {
+	synchronized public void setFileId(String fileId) {
 		this.fileId = fileId;
 		super.setId(super.makeId("m",categoryProfile.getId(),fileId));
 	}

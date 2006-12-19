@@ -87,7 +87,7 @@ public abstract class Category implements Element,Serializable{
 	/**
 	 * @param sourceProfilesSet The sourceProfilesSet to set.
 	 */
-	public void setSourceProfilesHash(Hashtable<String,SourceProfile> sourceProfilesHash) {
+	synchronized public void setSourceProfilesHash(Hashtable<String,SourceProfile> sourceProfilesHash) {
 		this.sourceProfilesHash = sourceProfilesHash;
 	}
 	/**
@@ -105,7 +105,7 @@ public abstract class Category implements Element,Serializable{
 	 * @param name
 	 * @see Category#name
 	 */
-	public void setName(String name) {
+	synchronized public void setName(String name) {
 		this.name = name;
 	}
 	
@@ -123,7 +123,7 @@ public abstract class Category implements Element,Serializable{
 	 * @param description
 	 * @see Category#description
 	 */
-	public void setDescription(String description) {
+	synchronized public void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -143,12 +143,8 @@ public abstract class Category implements Element,Serializable{
 	 * @param profilId
 	 * @see Category#profilId
 	 */
-	public void setProfileId(String profileId) {
+	synchronized public void setProfileId(String profileId) {
 		this.profileId = profileId;
 	}
-
-
-
-	
 
 }

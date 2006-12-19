@@ -46,7 +46,7 @@ public class VisibilitySets {
 	/**
 	 * Check existence of group names, attributes names used in group definition
 	 */
-	protected void checkNamesExistence(){
+	synchronized protected void checkNamesExistence(){
 	   	if (log.isDebugEnabled()){
     		log.debug("checkNamesExistence()");
     	}
@@ -89,7 +89,7 @@ public class VisibilitySets {
 	 * @param allowed
 	 * @see VisibilitySets#allowed
 	 */
-	public void setAllowed(DefinitionSets allowed) {
+	synchronized public void setAllowed(DefinitionSets allowed) {
 		this.allowed = allowed;
 	}
 
@@ -106,7 +106,7 @@ public class VisibilitySets {
 	 * @param autoSubscribed
 	 * @see VisibilitySets#autoSubscribed
 	 */
-	public void setAutoSubscribed(DefinitionSets autoSubscribed) {
+	synchronized public void setAutoSubscribed(DefinitionSets autoSubscribed) {
 		this.autoSubscribed = autoSubscribed;
 	}
 
@@ -124,7 +124,7 @@ public class VisibilitySets {
 	 * @param obliged
 	 * @see VisibilitySets#obliged
 	 */
-	public void setObliged(DefinitionSets obliged) {
+	synchronized public void setObliged(DefinitionSets obliged) {
 		this.obliged = obliged;
 	}
 

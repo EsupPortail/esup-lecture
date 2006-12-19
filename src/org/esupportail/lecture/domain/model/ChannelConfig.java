@@ -150,7 +150,7 @@ public class ChannelConfig  {
 	 * @throws ErrorException
 	 * @throws WarningException
 	 */
-	private void checkXmlFile() throws WarningException{
+	synchronized private void checkXmlFile() throws WarningException{
 		if (log.isDebugEnabled()){
 			log.debug("checkXmlFile()");
 		}
@@ -182,7 +182,7 @@ public class ChannelConfig  {
 	 * Load attribute name provided by portlet request 
 	 * to identified user profiles (userId)
 	 */
-	public static void loadUserId() {
+	synchronized public static void loadUserId() {
 		if (log.isDebugEnabled()){
 			log.debug("loadUserId()");
 		}
@@ -196,7 +196,7 @@ public class ChannelConfig  {
 	 * Load Managed Category profiles from config file in the channel
 	 * @param channel of the loading
 	 */
-	protected static void loadManagedCategoryProfiles(Channel channel)  {
+	synchronized protected static void loadManagedCategoryProfiles(Channel channel)  {
 		if (log.isDebugEnabled()){
 			log.debug("loadManagedCategoryProfiles()");
 		}
@@ -258,7 +258,7 @@ public class ChannelConfig  {
 	 * @param index index of the XML element category profile
 	 * @return the initialized DefinitionSets
 	 */
-	private static DefinitionSets loadDefAndContentSets(String fatherName,int index){
+	synchronized private static DefinitionSets loadDefAndContentSets(String fatherName,int index){
 		if (log.isDebugEnabled()){
 			log.debug("loadDefAndContentSets("+fatherName+","+index+")");
 		}
@@ -286,7 +286,7 @@ public class ChannelConfig  {
 	 * Load Contexts from config file in the channel
 	 * @param channel of the loading
 	 */
-	protected static void loadContexts(Channel channel){
+	synchronized protected static void loadContexts(Channel channel){
     	if (log.isDebugEnabled()){
     		log.debug("loadContexts()");
     	}
@@ -315,7 +315,7 @@ public class ChannelConfig  {
      * @throws ContextNotFoundException 
      * @throws ManagedCategoryProfileNotFoundException 
      */
-	protected static void initContextManagedCategoryProfilesLinks(Channel channel) throws ContextNotFoundException, ManagedCategoryProfileNotFoundException{
+	synchronized protected static void initContextManagedCategoryProfilesLinks(Channel channel) throws ContextNotFoundException, ManagedCategoryProfileNotFoundException{
     	if (log.isDebugEnabled()){
     		log.debug("initContextManagedCategoryProfilesLinks()");
     	}
@@ -346,7 +346,7 @@ public class ChannelConfig  {
 	 * @param filePath
 	 * @see ChannelConfig#filePath
 	 */
-	protected static void setfilePath(String filePath) {
+	synchronized protected static void setfilePath(String filePath) {
 		log.debug("setFilePath("+filePath+")");
 		ChannelConfig.filePath = filePath;
 	}
@@ -360,7 +360,7 @@ public class ChannelConfig  {
 	/**
 	 * @param modified The modified to set.
 	 */
-	protected static void setModified(boolean modified) {
+	synchronized protected static void setModified(boolean modified) {
 		ChannelConfig.modified = modified;
 	}
 

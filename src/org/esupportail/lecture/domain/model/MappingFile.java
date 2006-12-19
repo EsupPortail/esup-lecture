@@ -143,7 +143,7 @@ public class MappingFile {
 	 * @throws ErrorException
 	 * @throws WarningException
 	 */
-	private static void checkXmlFile() {
+	synchronized private static void checkXmlFile() {
 		if (log.isDebugEnabled()){
 			log.debug("checkXmlFile()");
 		}
@@ -216,7 +216,7 @@ public class MappingFile {
 	 * Load mappings in the channel 
 	 * @param channel of the loading
 	 */
-	protected static void loadMappings(Channel channel) {
+	synchronized protected static void loadMappings(Channel channel) {
 		if (log.isDebugEnabled()){
 			log.debug("loadMappings()");
 		}
@@ -228,7 +228,7 @@ public class MappingFile {
 	 * Initialize hash mappings in channel
 	 * @param channel of the initialization
 	 */
-	protected static void initChannelHashMappings(Channel channel){
+	synchronized protected static void initChannelHashMappings(Channel channel){
 		if (log.isDebugEnabled()){
 			log.debug("initChannelHashMappings()");
 		}
@@ -287,7 +287,7 @@ public class MappingFile {
 	 * @param mappingFilePath
 	 * @see MappingFile#mappingFilePath
 	 */
-	protected static void setMappingFilePath(String mappingFilePath) {
+	synchronized protected static void setMappingFilePath(String mappingFilePath) {
 		if(log.isDebugEnabled()){
 			log.debug("setMappingFilePath("+mappingFilePath+")");
 		}
@@ -304,11 +304,8 @@ public class MappingFile {
 	/**
 	 * @param modified The modified to set.
 	 */
-	protected static void setModified(boolean modified) {
+	synchronized protected static void setModified(boolean modified) {
 		MappingFile.modified = modified;
 	}
-
-
-	
 
 }

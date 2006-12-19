@@ -84,7 +84,7 @@ public class Context {
 	 * @param channel channel where the context is defined 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	protected void initManagedCategoryProfiles(Channel channel) throws ManagedCategoryProfileNotFoundException {
+	synchronized protected void initManagedCategoryProfiles(Channel channel) throws ManagedCategoryProfileNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("initManagedCategoryProfiles(channel)");
 		}
@@ -110,7 +110,7 @@ public class Context {
 	 * @param ex access to portlet service
 	 * @throws ElementNotLoadedException 
 	 */
-	public void updateCustom(CustomContext customContext, ExternalService ex) throws ElementNotLoadedException {
+	synchronized public void updateCustom(CustomContext customContext, ExternalService ex) throws ElementNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustom("+customContext.getElementId()+",externalService)");
 		}
@@ -126,7 +126,7 @@ public class Context {
 	 * @param s the id to add
 	 * @see Context#refIdManagedCategoryProfilesSet
 	 */
-	protected void addRefIdManagedCategoryProfile(String s) {
+	synchronized protected void addRefIdManagedCategoryProfile(String s) {
 		if (log.isDebugEnabled()){
 			log.debug("addRefIdManagedCategoryProfile("+s+")");
 		}
@@ -189,7 +189,7 @@ public class Context {
 	 * @param name the name to set
 	 * @see Context#name
 	 */
-	public void setName(String name) {
+	synchronized public void setName(String name) {
 		this.name = name;
 	}
 
@@ -207,7 +207,7 @@ public class Context {
 	 * @param description the description to set
 	 * @see Context#description
 	 */
-	protected void setDescription(String description) {
+	synchronized protected void setDescription(String description) {
 		this.description = description;
 	}
 
@@ -225,7 +225,7 @@ public class Context {
 	 * @param id the id to set
 	 * @see Context#id
 	 */
-	protected void setId(String id) {
+	synchronized protected void setId(String id) {
 		this.id = id;
 	}
 	
@@ -251,7 +251,7 @@ public class Context {
 	  * Sets the set of managed category profiles in the channel
 	 * @param managedCategoryProfilesSet
 	 */
-	protected void setManagedCategoryProfilesSet(
+	synchronized protected void setManagedCategoryProfilesSet(
 			Set<ManagedCategoryProfile> managedCategoryProfilesSet) {
 		this.managedCategoryProfilesSet = managedCategoryProfilesSet;
 	}

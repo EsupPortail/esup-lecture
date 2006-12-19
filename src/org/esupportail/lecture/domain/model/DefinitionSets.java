@@ -48,7 +48,7 @@ public class DefinitionSets {
 	 * Check existence of group names, attributes names used in group enumeration
 	 * and regulars definition
 	 */
-	protected void checkNamesExistence(){
+	synchronized protected void checkNamesExistence(){
 	   	if (log.isDebugEnabled()){
     		log.debug("checkNamesExistence()");
     	}
@@ -73,7 +73,7 @@ public class DefinitionSets {
 	 * @param portletService for portletContainer access, in order to know user rights
 	 * @return true if the user is define in this DefinitionSets
 	 */
-	protected boolean evaluateVisibility(ExternalService ex) {
+	synchronized protected boolean evaluateVisibility(ExternalService ex) {
 	   	if (log.isDebugEnabled()){
     		log.debug("evaluateVisibility(externalService)");
     	}
@@ -107,7 +107,7 @@ public class DefinitionSets {
 	 * @param group group to add
 	 * @see DefinitionSets#groups
 	 */
-	public void addGroup(String group) {
+	synchronized public void addGroup(String group) {
 	   	if (log.isDebugEnabled()){
     		log.debug("addGroup("+group+")");
     	}
@@ -119,7 +119,7 @@ public class DefinitionSets {
 	 * @param regular
 	 * @see DefinitionSets#regulars
 	 */
-	public void addRegular(RegularOfSet regular) {
+	synchronized public void addRegular(RegularOfSet regular) {
 	   	if (log.isDebugEnabled()){
     		log.debug("addGroup(regular)");
     	}
@@ -156,7 +156,7 @@ public class DefinitionSets {
 	 * @param groups 
 	 * @see DefinitionSets#groups
 	 */
-	protected void setGroups(List<String> groups) {
+	synchronized protected void setGroups(List<String> groups) {
 		this.groups = groups;
 	}
 
@@ -173,7 +173,7 @@ public class DefinitionSets {
 	 * @param regulars
 	 * @see DefinitionSets#regulars
 	 */
-	protected void setRegulars(List<RegularOfSet> regulars) {
+	synchronized protected void setRegulars(List<RegularOfSet> regulars) {
 		this.regulars = regulars;
 	}
 
