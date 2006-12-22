@@ -13,6 +13,7 @@ import java.util.Iterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 /**
  * DefinitionSets is composed of the set definition, 
  * by two ways :
@@ -47,23 +48,25 @@ public class DefinitionSets {
 	/**
 	 * Check existence of group names, attributes names used in group enumeration
 	 * and regulars definition
+	 * Not used for the moment : see later
+	 * Not ready to use without modification
 	 */
 	synchronized protected void checkNamesExistence(){
 	   	if (log.isDebugEnabled()){
     		log.debug("checkNamesExistence()");
     	}
-		Iterator iterator;
-		iterator = groups.iterator();
-		for(String group = null; iterator.hasNext();){
-			group = (String)iterator.next();
+		Iterator<String> iteratorString;
+		iteratorString = groups.iterator();
+		for(String group = null; iteratorString.hasNext();){
+			group = iteratorString.next();
 //			 TODO (GB later) vérification de l'existence du groupe dans le portail
 			// si PB : log.warn();
 			// PAs sure que c'est par là qu'on le fasse 
 		}
 		
-		iterator = regulars.iterator();
-		for(RegularOfSet reg = null; iterator.hasNext();){
-			reg = (RegularOfSet)iterator.next();
+		Iterator<RegularOfSet> iteratorReg = regulars.iterator();
+		for(RegularOfSet reg = null; iteratorReg.hasNext();){
+			reg = iteratorReg.next();
 			reg.checkNamesExistence();
 		}
 	}
@@ -79,25 +82,33 @@ public class DefinitionSets {
     	}
 			
 		/* group evaluation */
-		Iterator iteratorGroups = groups.iterator();
+		Iterator<String> iteratorGroups = groups.iterator();
 		while (iteratorGroups.hasNext()){
-			String group = (String) iteratorGroups.next();
+			String group = iteratorGroups.next();
 			log.debug("DefinionSets, evaluation on group : "+group);
-			if (ex.isUserInGroup(group)){
-				return true;
+			boolean isUserIn;
+			try {
+				isUserIn = ex.isUserInGroup(group);
+				if (isUserIn){
+					return true;
+				}
+			} catch (InternalExternalException e) {
+				log.error("Group user evaluation impossible (external service unavailable) : "+e.getMessage());
 			}
+			
 		}
 		
 		/* regulars evaluation */
-		Iterator iteratorReg = regulars.iterator();
+		Iterator<RegularOfSet> iteratorReg = regulars.iterator();
 		while (iteratorReg.hasNext()){
-			RegularOfSet reg = (RegularOfSet) iteratorReg.next();
-			log.debug("DefinionSets, evaluation regular : attr("+ reg.getAttribute() +") val("+ reg.getValue()+")");
+			RegularOfSet reg = iteratorReg.next();
+			if (log.isTraceEnabled()){
+				log.trace("DefinionSets, evaluation regular : attr("+ reg.getAttribute() +") val("+ reg.getValue()+")");
+			}
 			if (reg.evaluate(ex)){
 				return true;
 			}
 		}
-		
 		
 		return false;
 	}

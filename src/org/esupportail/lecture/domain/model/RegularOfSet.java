@@ -8,6 +8,8 @@ package org.esupportail.lecture.domain.model;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
 /**
  * Regular definition of a group : 
@@ -42,18 +44,25 @@ public class RegularOfSet {
 	 * Return true if user checks this regular
 	 * @param portletService
 	 * @return boolean
+	 * @throws NoExternalAttributeValueException 
 	 */
 	public boolean evaluate(ExternalService ex) {
 		if (log.isDebugEnabled()){
 			log.debug("evaluate(externalService)");
 		}
 		
-		String userAttributeValue = ex.getUserAttribute(attribute);
-		// TODO (GB) voir le cas ou il y est mais que le portail ne connait pas
-		if (userAttributeValue == null) {
-			log.warn("No value for user attribute '"+ attribute +"'");
+		String userAttributeValue;
+		try {
+			userAttributeValue = ex.getUserAttribute(attribute);
+		} catch (NoExternalValueException e) {
+			log.warn("User attribute evaluation impossible (NoExternalValueException) : "+e.getMessage());
+			return false;
+		} catch (InternalExternalException e) {
+			log.error("User attribute evaluation impossible (external service unavailable) : "+e.getMessage());
 			return false;
 		}
+		// TODO (GB) voir le cas ou il y est mais que le portail ne connait pas
+		
 		if (userAttributeValue.equals(value)) {
 			return true;
 		}

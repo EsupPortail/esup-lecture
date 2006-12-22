@@ -6,11 +6,17 @@ package org.esupportail.lecture.domain;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.exceptions.domain.DomainServiceException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
@@ -37,7 +43,10 @@ public class FacadeService implements InitializingBean {
 	 * domain service used to access domain information
 	 */
 	private DomainService domainService;
-	
+	/**
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(DomainServiceImpl.class);
 	/* 
 	 ************************** INIT **********************************/
 
@@ -57,9 +66,15 @@ public class FacadeService implements InitializingBean {
 
 	/**
 	 * @return the current connected user
+	 * @throws InternalExternalException 
 	 */
-	public String getConnectedUserId() {
-		return externalService.getConnectedUserId();
+	public String getConnectedUserId() throws InternalExternalException {
+		try {
+			return externalService.getConnectedUserId();
+		} catch (NoExternalValueException e) {
+			log.error("Service getConnectedUserId not available : (NoExternalValueException)"+e.getMessage());
+			throw new InternalExternalException(e);
+		} 
 	}
 	
 	/**	
@@ -72,9 +87,15 @@ public class FacadeService implements InitializingBean {
 	/**
 	 * 
 	 * @return the current context id (portlet preference with name "context")
+	 * @throws InternalExternalException 
 	 */
-	public String getCurrentContextId() {
-		return externalService.getCurrentContextId();
+	public String getCurrentContextId() throws InternalExternalException {
+		try {
+			return externalService.getCurrentContextId();
+		} catch (NoExternalValueException e) {
+			log.error("Service getCurrentContextId not available : (NoExternalValueException) "+e.getMessage());
+			throw new InternalExternalException(e);
+		} 
 	}
 	
 
@@ -82,8 +103,9 @@ public class FacadeService implements InitializingBean {
 	 * @param uid id of the connected user
 	 * @param contextId id of the current context
 	 * @return a ContextBean of the current context of the connected user
+	 * @throws DomainServiceException 
 	 */
-	public ContextBean getContext(String uid,String contextId) {
+	public ContextBean getContext(String uid,String contextId) throws DomainServiceException {
 		return domainService.getContext(uid,contextId);
 	}
 	
@@ -91,8 +113,9 @@ public class FacadeService implements InitializingBean {
 	 * @param contextId id of context
 	 * @param uid user ID
 	 * @return List of CategoryBean, bean of a visible category (obliged or subscribed by a user) in a context
+	 * @throws InternalDomainException 
 	 */
-	public List<CategoryBean> getVisibleCategories(String uid,String contextId) {
+	public List<CategoryBean> getVisibleCategories(String uid,String contextId) throws InternalDomainException {
 		return domainService.getVisibleCategories(uid,contextId,externalService);
 	}
 	
@@ -100,8 +123,9 @@ public class FacadeService implements InitializingBean {
 	 * @param categoryId id of category
 	 * @param uid user ID
 	 * @return List of SourceBean, bean of a visible source (obliged or subscribed by a user) in a category
+	 * @throws DomainServiceException 
 	 */
-	public List<SourceBean> getVisibleSources(String uid,String categoryId) {
+	public List<SourceBean> getVisibleSources(String uid,String categoryId) throws DomainServiceException {
 		return domainService.getVisibleSources(uid, categoryId,externalService);
 	}
 	
@@ -118,8 +142,9 @@ public class FacadeService implements InitializingBean {
 	 * @param sourceId id of source
 	 * @param uid user ID
 	 * @return List of ItemBean in a source
+	 * @throws DomainServiceException 
 	 */
-	public List<ItemBean> getItems(String uid,String sourceId) {
+	public List<ItemBean> getItems(String uid,String sourceId) throws DomainServiceException {
 		return domainService.getItems(uid,sourceId,externalService);
 	}
 
@@ -129,8 +154,9 @@ public class FacadeService implements InitializingBean {
 	 * @param itemId item id
 	 * @param sourceId source if
 	 * marck a Item form a source for a user as read
+	 * @throws DomainServiceException 
 	 */
-	public void marckItemAsRead(String uid, String sourceId,String itemId) {
+	public void marckItemAsRead(String uid, String sourceId,String itemId) throws DomainServiceException {
 		domainService.marckItemAsRead(uid, sourceId, itemId);
 	}
 
@@ -139,8 +165,9 @@ public class FacadeService implements InitializingBean {
 	 * @param itemId item id
 	 * @param sourceId source if
 	 * marck a Item form a source for a user as unread
+	 * @throws DomainServiceException 
 	 */
-	public void marckItemAsUnread(String uid, String sourceId, String itemId) {
+	public void marckItemAsUnread(String uid, String sourceId, String itemId) throws DomainServiceException {
 		domainService.marckItemAsUnread(uid, sourceId, itemId);
 	}
 

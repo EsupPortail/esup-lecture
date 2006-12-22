@@ -7,6 +7,7 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 
@@ -26,9 +27,10 @@ public interface DomainService {
 	 * @param uid
 	 * @param contextId
 	 * @return ContextBean
+	 * @throws DomainServiceException 
 	 * @see FacadeService#getContext(String,String)
 	 */
-	ContextBean getContext(String uid,String contextId);
+	ContextBean getContext(String uid,String contextId) throws DomainServiceException;
 
 	/**
 	 * @param uid
@@ -45,34 +47,38 @@ public interface DomainService {
 	 * @param uid 
 	 * @param ex 
 	 * @return List<SourceBean>
+	 * @throws DomainServiceException 
 	 * @see FacadeService#getVisibleSources(String, String)
 	 */
-	List<SourceBean> getVisibleSources(String uid,String categoryId,ExternalService ex);
+	List<SourceBean> getVisibleSources(String uid,String categoryId,ExternalService ex) throws DomainServiceException;
 
 	/**
 	 * @param sourceId 
 	 * @param uid 
 	 * @param ex access to external service 
 	 * @return List<ItemBean>
+	 * @throws DomainServiceException 
 	 * @see FacadeService#getItems(String, String)
 	 */
-	List<ItemBean> getItems( String uid,String sourceId,ExternalService ex);
+	List<ItemBean> getItems( String uid,String sourceId,ExternalService ex) throws DomainServiceException;
 
 	/**
 	 * @param uid 
 	 * @param itemId 
 	 * @param sourceId 
+	 * @throws DomainServiceException 
 	 * @see FacadeService#marckItemAsRead(String, String, String)
 	 */
-	void marckItemAsRead(String uid, String sourceId,String itemId);
+	void marckItemAsRead(String uid, String sourceId,String itemId) throws DomainServiceException;
 
 	/**
 	 * @param uid 
 	 * @param itemId 
 	 * @param sourceId 
+	 * @throws DomainServiceException 
 	 * @see FacadeService#marckItemAsUnread(String, String, String)
 	 */
-	void marckItemAsUnread(String uid, String sourceId,String itemId);
+	void marckItemAsUnread(String uid, String sourceId,String itemId) throws DomainServiceException;
 	
 	/**
 	 * @param categoryId 

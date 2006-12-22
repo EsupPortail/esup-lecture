@@ -7,8 +7,10 @@ import javax.faces.context.FacesContext;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
-import org.apache.myfaces.portlet.PortletUtil;
+
 import org.esupportail.lecture.exceptions.ErrorException;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
 
 /**
@@ -18,44 +20,65 @@ import org.esupportail.lecture.exceptions.ErrorException;
 public class PortletService implements ModeService {
 
 	/**
+	 * @throws InternalExternalException 
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getPreference(java.lang.String)
 	 */
-	public String getPreference(String name) {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ExternalContext externalContext = facesContext.getExternalContext();
-	    PortletRequest request = (PortletRequest) externalContext.getRequest();
-	    PortletPreferences portletPreferences = request.getPreferences();
-	    return portletPreferences.getValue(name, "default");			
+	public String getPreference(String name)throws InternalExternalException,NoExternalValueException  {
+		String value;
+		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			PortletRequest request = (PortletRequest) externalContext.getRequest();
+			PortletPreferences portletPreferences = request.getPreferences();
+			value = portletPreferences.getValue(name, "default");
+		} catch (Exception e){
+			throw new InternalExternalException(e);
+		}
+		if (value == null){
+			throw new NoExternalValueException("No value for portlet preference '"+ name +"' returned by external service");
+		}
+		return value;
 		
 	}
 
 	/**
+	 * @throws InternalExternalException,NoExternalValueException 
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getUserAttribute(java.lang.String)
 	 */
-	public String getUserAttribute(String attribute) {
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ExternalContext externalContext = facesContext.getExternalContext();
-		PortletRequest request = (PortletRequest) externalContext.getRequest();
-		Map userInfo = (Map)request.getAttribute(PortletRequest.USER_INFO);
-		String ret = (String)userInfo.get(attribute);
-		if (ret == null) {
-			throw new ErrorException("User Attribute "+attribute+" not found ! See your portlet.xml file for user-attribute definition.");
+	public String getUserAttribute(String attribute) throws InternalExternalException,NoExternalValueException {
+		String value; 
+		try {
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			PortletRequest request = (PortletRequest) externalContext.getRequest();
+			Map userInfo = (Map)request.getAttribute(PortletRequest.USER_INFO);
+			value = (String)userInfo.get(attribute);
+		} catch (Exception e){
+			throw new InternalExternalException(e);
 		}
-		return ret;
+		if (value == null) {
+			throw new NoExternalValueException("User Attribute "+attribute+" not found ! See your portlet.xml file for user-attribute definition.");
+		}
+		return value;
 	}
 
 	/**
+	 * @throws InternalExternalException 
 	 * @see org.esupportail.lecture.domain.utils.ModeService#isUserInGroup(java.lang.String)
 	 */
-	public boolean isUserInGroup(String group) {
-		boolean ret= Boolean.FALSE;
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ExternalContext externalContext = facesContext.getExternalContext();
-		PortletRequest request = (PortletRequest) externalContext.getRequest();
-		if (request.isUserInRole(group)) {
-			ret = Boolean.TRUE;
-		} 
-		return ret;
+	public boolean isUserInGroup(String group) throws InternalExternalException {
+		boolean value = Boolean.FALSE;
+		try {			
+			FacesContext facesContext = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = facesContext.getExternalContext();
+			PortletRequest request = (PortletRequest) externalContext.getRequest();
+			if (request.isUserInRole(group)) {
+				value = Boolean.TRUE;
+			} 
+		} catch (Exception e){
+			throw new InternalExternalException(e);
+		}
+		return value;
 	}
 
 }

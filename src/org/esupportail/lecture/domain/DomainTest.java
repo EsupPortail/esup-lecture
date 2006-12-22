@@ -12,6 +12,10 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
+import org.esupportail.lecture.exceptions.domain.DomainServiceException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 
@@ -33,8 +37,10 @@ public class DomainTest {
 	private static String sourceId;
 	/**
 	 * @param args non argumet needed
+	 * @throws InternalExternalException 
+	 * @throws DomainServiceException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InternalExternalException, DomainServiceException {
 		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		facadeService = (FacadeService)factory.getBean("facadeService");
@@ -70,8 +76,9 @@ public class DomainTest {
 
 	/**
 	 * Test of servide "getConnectedUser"
+	 * @throws InternalExternalException 
 	 */
-	private static void testGetConnectedUser() {
+	private static void testGetConnectedUser() throws InternalExternalException {
 		printIntro("getConnectedUser");
 		String userIdLocal = facadeService.getConnectedUserId();
 		UserBean user = facadeService.getConnectedUser(userIdLocal);
@@ -80,14 +87,16 @@ public class DomainTest {
 	
 	/**
 	 * Test of service "getContext"
+	 * @throws InternalExternalException 
+	 * @throws DomainServiceException 
 	 */
-	private static void testGetContext() {
+	private static void testGetContext() throws InternalExternalException, DomainServiceException {
 		printIntro("getContext");
 		contextId = facadeService.getCurrentContextId();
 		ContextBean context = facadeService.getContext(userId,contextId);
 		System.out.println(context.toString());
 	}
-	private static void testGetContextBis(String cid) {
+	private static void testGetContextBis(String cid) throws DomainServiceException {
 		printIntro("getContext");
 		ContextBean context = facadeService.getContext(userId,cid);
 		System.out.println(context.toString());
@@ -95,8 +104,9 @@ public class DomainTest {
 
 	/**
 	 * Test of service "getCategories"
+	 * @throws InternalDomainException 
 	 */
-	private static void testGetVisibleCategories() {
+	private static void testGetVisibleCategories() throws InternalDomainException {
 		printIntro("getVisibleCategories");
 		List<CategoryBean> categories = facadeService.getVisibleCategories(userId, contextId);
 		categoryIds = new ArrayList<String>();
@@ -110,8 +120,9 @@ public class DomainTest {
 	
 	/**
 	 * Test of service "getSources"
+	 * @throws DomainServiceException 
 	 */
-	private static void testGetVisibleSources() {
+	private static void testGetVisibleSources() throws DomainServiceException {
 		printIntro("getVisibleSources");
 		for(String catId : categoryIds){
 			System.out.println(" **** cat "+catId+" **********");
@@ -129,8 +140,10 @@ public class DomainTest {
 	/**
 	 *  Test of service "getSources" in an alternative way :
 	 *  - the parent category has not been got before
+	 * @throws DomainServiceException 
+	 * @throws InternalExternalException 
 	 */
-	private static void testGetVisibleSourceAlternativeWay() {	
+	private static void testGetVisibleSourceAlternativeWay() throws DomainServiceException, InternalExternalException {	
 		testGetContext();	
 		printIntro("getVisibleSources - alternative way");
 		categoryIds = new ArrayList<String>();
@@ -152,8 +165,9 @@ public class DomainTest {
 
 	/**
 	 * Test of service "getItems"
+	 * @throws DomainServiceException 
 	 */
-	private static void testGetItems() {
+	private static void testGetItems() throws DomainServiceException {
 		printIntro("getItems");
 		System.out.println(" **** source "+sourceId+" **********");
 		List<ItemBean> items = facadeService.getItems(userId,sourceId);
@@ -167,8 +181,9 @@ public class DomainTest {
 	
 	/**
 	 * Test of service markItemAsRead and markItemAsUnread
+	 * @throws DomainServiceException 
 	 */
-	private static void testMarkItemAsRead() {
+	private static void testMarkItemAsRead() throws DomainServiceException {
 		printIntro("markItemAsRead");
 		System.out.println("Marquage de l'item "+itemId+" comme lu");
 		facadeService.marckItemAsRead(userId, "un", itemId);
@@ -183,8 +198,10 @@ public class DomainTest {
 
 	/**
 	 * Test of service setTreeSize
+	 * @throws DomainServiceException 
+	 * @throws InternalExternalException 
 	 */
-	private static void testSetTreeSize() {
+	private static void testSetTreeSize() throws InternalExternalException, DomainServiceException {
 		printIntro("setTreeSize");
 		int newTreeSize = 10;
 		System.out.println("Set tree size to "+newTreeSize);
@@ -195,8 +212,9 @@ public class DomainTest {
 
 	/**
 	 * Test of service foldCategory and unfoldCategory
+	 * @throws InternalDomainException 
 	 */
-	private static void testFoldCategory() {
+	private static void testFoldCategory() throws InternalDomainException {
 		printIntro("foldCategory");
 		System.out.println("Pliage de la categorie cp1 (deja pliée) => WARN");
 		facadeService.foldCategory(userId, contextId, "cp1");

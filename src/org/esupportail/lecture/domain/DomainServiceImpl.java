@@ -25,6 +25,7 @@ import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
+import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
@@ -88,7 +89,7 @@ public class DomainServiceImpl implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public ContextBean getContext(String userId,String contextId) {
+	public ContextBean getContext(String userId,String contextId)throws DomainServiceException {
 		if (log.isDebugEnabled()){
 			log.debug("getContext("+userId+","+contextId+")");
 		}
@@ -148,7 +149,7 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService ex) throws InternalDomainException {
+	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService ex) throws DomainServiceException {
 		if (log.isDebugEnabled()){
 			log.debug("getVisibleSources("+uid+","+categoryId+",externalService)");
 		}
@@ -211,7 +212,7 @@ public class DomainServiceImpl implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<ItemBean> getItems(String uid, String sourceId,ExternalService ex) {
+	public List<ItemBean> getItems(String uid, String sourceId,ExternalService ex)throws DomainServiceException {
 		if (log.isDebugEnabled()){
 			log.debug("getItems("+uid+","+sourceId+",externalService)");
 		}
@@ -251,7 +252,7 @@ public class DomainServiceImpl implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemasRead(java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void marckItemAsRead(String uid, String sourceId, String itemId) {
+	public void marckItemAsRead(String uid, String sourceId, String itemId)throws DomainServiceException {
 		if (log.isDebugEnabled()){
 			log.debug("marckItemAsRead("+uid+","+sourceId+","+itemId+")");
 		}
@@ -271,7 +272,7 @@ public class DomainServiceImpl implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemasUnread(java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void marckItemAsUnread(String uid, String sourceId, String itemId) {
+	public void marckItemAsUnread(String uid, String sourceId, String itemId)throws DomainServiceException {
 		if (log.isDebugEnabled()){
 			log.debug("marckItemAsUnread("+uid+","+sourceId+","+itemId+")");
 		}
