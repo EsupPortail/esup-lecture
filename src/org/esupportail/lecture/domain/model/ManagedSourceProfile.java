@@ -177,54 +177,85 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (log.isDebugEnabled()){
 			log.debug("setUpCustomCategoryVisibility("+customManagedCategory.getElementId()+",externalService)");
 		}
-			/*
-			 * Algo pour gerer les customSourceProfiles :
-			 * ------------------------------------
-			 * user app. obliged => enregistrer la source dans le user profile + sortir
-			 * user app. autoSub => enregistrer la source dans le user profile si c'est la première fois + sortir
-			 * user app.allowed => rien à faire + sortir
-			 * user n'app. rien => effacer la custom source .
-			 */
-
-			boolean isInObliged = false;
-			boolean isInAutoSubscribed = false;
-			boolean isInAllowed = false;
-						
-		/* ---OBLIGED SET--- */
-			log.debug("Evaluation DefinitionSets(obliged) de la source profile : "+this.getId()+" pour la cat : "+customManagedCategory.getElementId());
-			isInObliged = getVisibilityObliged().evaluateVisibility(ex);
-			log.debug("IsInObliged : "+isInObliged);
-			if (isInObliged) {
-				log.debug("Is in obliged");
-				customManagedCategory.addSubscription(this);
-			
-			} else {
-		/* ---AUTOSUBSCRIBED SET--- */	
-				// TODO (GB later) isInAutoSubscribed =  getVisibilitySubscribed().evaluateVisibility(portletService);
-				// en attendant : isInAutoSubscribed = false 
-				
-				if(isInAutoSubscribed) {
-					// TODO (GB later) l'ajouter dans le custom category si c'est la preniere fois
-					// customManagedCategory.addManagedCustomSource(this);
-				
-				} else {
-		/* ---ALLOWED SET--- */
-					log.debug("Evaluation DefinitionSets(allowed) de la source profile : "+this.getId()+" pour la cat : "+customManagedCategory.getElementId());
-					isInAllowed = getVisibilityAllowed().evaluateVisibility(ex);
-					
-					if (!isInAllowed) { // If isInAllowed : nothing to do
-		/* ---CATEGORY NOT VISIBLE FOR USER--- */
-						customManagedCategory.removeCustomManagedSource(this);
-						return false;
-					}
-					
-				}	
+		/*
+		 * Algo pour gerer les customSourceProfiles :
+		 * ------------------------------------
+		 * user app. obliged => enregistrer la source dans le user profile + sortir
+		 * user app. autoSub => enregistrer la source dans le user profile si c'est la première fois + sortir
+		 * user app.allowed => rien à faire + sortir
+		 * user n'app. rien => effacer la custom source .
+		 */
+		
+		VisibilityMode mode = getVisibility().whichVisibility(ex);
+		
+		if (mode == VisibilityMode.OBLIGED){
+			if (log.isTraceEnabled()){
+				log.trace("IsInObliged : "+mode);
 			}
-			// TODO (GB later) retirer les customSource du user profile qui correspondent à des profiles 
-			// de sources  disparus	
+			customManagedCategory.addSubscription(this);
 			return true;
 		}
-	
+		
+		if (mode == VisibilityMode.AUTOSUBSCRIBED){
+			if (log.isTraceEnabled()){
+				log.trace("IsInAutoSubscribed : "+mode);
+			}
+			// TODO (GB later) l'ajouter dans le custom category si c'est la premiere fois
+			//customManagedCategory.addSubscription(this);
+			return true;
+		}
+		
+		if (mode == VisibilityMode.ALLOWED) {
+			if (log.isTraceEnabled()){
+				log.trace("IsInAllowed : "+mode);
+			}
+			// Nothing to do
+			return true;
+		} 
+		// TODO (GB later) retirer les customSource du user profile qui correspondent à des profiles 
+		// de sources  disparus	
+		
+		// ELSE not Visible
+		customManagedCategory.removeCustomManagedSource(this);
+		return false;
+		
+//
+//			boolean isInObliged = false;
+//			boolean isInAutoSubscribed = false;
+//			boolean isInAllowed = false;
+//						
+//		/* ---OBLIGED SET--- */
+//			log.debug("Evaluation DefinitionSets(obliged) de la source profile : "+this.getId()+" pour la cat : "+customManagedCategory.getElementId());
+//			isInObliged = getVisibilityObliged().evaluateVisibility(ex);
+//			log.debug("IsInObliged : "+isInObliged);
+//			if (isInObliged) {
+//				log.debug("Is in obliged");
+//				customManagedCategory.addSubscription(this);
+//			
+//			} else {
+//		/* ---AUTOSUBSCRIBED SET--- */	
+//				// en attendant : isInAutoSubscribed = false 
+//				
+//				if(isInAutoSubscribed) {
+//					// customManagedCategory.addManagedCustomSource(this);
+//				
+//				} else {
+//		/* ---ALLOWED SET--- */
+//					log.debug("Evaluation DefinitionSets(allowed) de la source profile : "+this.getId()+" pour la cat : "+customManagedCategory.getElementId());
+//					isInAllowed = getVisibilityAllowed().evaluateVisibility(ex);
+//					
+//					if (!isInAllowed) { // If isInAllowed : nothing to do
+//		/* ---CATEGORY NOT VISIBLE FOR USER--- */
+//						customManagedCategory.removeCustomManagedSource(this);
+//						return false;
+//					}
+//					
+//				}	
+//			}
+//			
+//			return true;
+//		}
+	}
 
 	/**	 
 	 * @return access
