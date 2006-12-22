@@ -200,6 +200,19 @@ public class UserProfile {
 	}
 	
 	/**
+	 * @param contextId 
+	 */
+	public void removeCustomContext(String contextId){
+	   	if (log.isDebugEnabled()){
+    		log.debug("removeCustomContext("+contextId+")");
+    	}
+	   	CustomContext cctx = customContexts.remove(contextId);
+		if( cctx!= null) {
+			DomainTools.getDaoService().deleteCustomContext(cctx);
+		}
+	}
+	
+	/**
 	 * @param customCategory
 	 */
 	public void addCustomCategory(CustomCategory customCategory){

@@ -24,7 +24,7 @@
 			<key>
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
 			</key>
-			<map-key column="CUSTOMCATEGORYID" type="string"/>
+			<index column="CUSTOMCATEGORYID" type="string"/>
 			<one-to-many class="CustomCategory" />
 		</map>
 	</class>

@@ -6,8 +6,11 @@
 package org.esupportail.lecture.test.drivers;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -101,6 +104,11 @@ public class TestDAOLecture {
 				String element = (String) iter.next();
 				CustomContext cc = ccs.get(element);
 				out("treesize of customContext "+element+" = "+cc.getTreeSize());
+				Iterator<String> iter2 = cc.getSubscriptions().keySet().iterator();
+				while (iter2.hasNext()) {
+					String element2 = (String) iter2.next();
+					out("getSubscriptions key : "+element2);
+				}
 			}
 			Map<String, CustomCategory> ccats = userProfile2.getCustomCategories();
 			iter = ccats.keySet().iterator();
@@ -121,15 +129,18 @@ public class TestDAOLecture {
 			out("after read");			
 			out("userProfile.getUserId --> " + userProfile.getUserId());			
 			out("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());	
-			//on détache les fils des péres
-			for(CustomCategory cc : userProfile.getCustomCategories().values()) {
-				dao.deleteCustomCategory(cc);
-			}
-			userProfile.getCustomCategories().clear();
-			for(CustomContext cc : userProfile.getCustomContexts().values()) {
+			//remove CustomContexts from userprofile
+			ArrayList<CustomContext> collec2 = new ArrayList<CustomContext>(userProfile.getCustomContexts().values());
+			for(CustomContext cc : collec2) {
+				userProfile.removeCustomContext(cc.getContextId());
 				dao.deleteCustomContext(cc);
 			}
-			userProfile.getCustomContexts().clear();
+			//remove CustomCategories from userprofile
+			ArrayList<CustomCategory> collec = new ArrayList<CustomCategory>(userProfile.getCustomCategories().values());
+			for(CustomCategory cc : collec) {
+				userProfile.removeCustomCategory(cc.getProfileId());
+				dao.deleteCustomCategory(cc);
+			}
 			dao.deleteUserProfile(userProfile);
 		}
 		else {
@@ -170,9 +181,9 @@ public class TestDAOLecture {
 		userProfile.addCustomCategory(ccat3);
 		
 		//subscribe some categories
-//		cc1.addSubscription(ccat1.getProfile());
-//		cc1.addSubscription(ccat2.getProfile());
-//		cc1.addSubscription(ccat3.getProfile());
+		cc1.addSubscription(ccat1.getProfile());
+		cc1.addSubscription(ccat2.getProfile());
+		cc1.addSubscription(ccat3.getProfile());
 
 		//save
 		dao.saveUserProfile(userProfile);
