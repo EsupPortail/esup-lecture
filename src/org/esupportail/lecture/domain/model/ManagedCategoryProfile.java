@@ -156,47 +156,76 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		 * user n'app. rien => effacer la cat.
 		 */
 
-		boolean isInObliged = false;
-		boolean isInAutoSubscribed = false;
-		boolean isInAllowed = false;
+		VisibilityMode mode = getVisibility().whichVisibility(ex);
 		
-		boolean isVisible = false;
-		
-		
-	/* ---OBLIGED SET--- */
-		log.debug("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+ getId());
-		isInObliged =  getVisibilityObliged().evaluateVisibility(ex);
-		log.debug("IsInObliged : "+isInObliged);
-		if (isInObliged) {
+		if (mode == VisibilityMode.OBLIGED){
+			if (log.isTraceEnabled()){
+				log.trace("IsInObliged : "+mode);
+			}
 			customContext.addSubscription(this);
-			isVisible = true;
-		
-		} else {
-	/* ---AUTOSUBSCRIBED SET--- */	
-			// TODO (GB later) isInAutoSubscribed =  getVisibilityAutoSubscribed().evaluateVisibility(portletService);
-			// en attendant : isInAutoSubscribed = false 			
-			if(isInAutoSubscribed) {
-				// TODO (GB later) l'ajouter dans le custom context si c'est la preniere fois
-				// customContext.addCustomCategory(mcp);
-				// isVisible = true;
-			
-			} else {
-	/* ---ALLOWED SET--- */
-				log.debug("Appel de evaluate sur DefenitionSets(allowed) de la cat : "+ getId());
-				isInAllowed =  getVisibilityAllowed().evaluateVisibility(ex);
-				isVisible = true;
-				
-				if (!isInAllowed) { // If isInAllowed : nothing to do
-	/* ---CATEGORY NOT VISIBLE FOR USER--- */
-					customContext.removeCustomManagedCategory(this);
-					isVisible = false;
-				}			
-			}	
+			return true;
 		}
+		
+		if (mode == VisibilityMode.AUTOSUBSCRIBED){
+			if (log.isTraceEnabled()){
+				log.trace("IsInAutoSubscribed : "+mode);
+			}
+			// TODO (GB later) l'ajouter dans le custom context si c'est la premiere fois
+			//customContext.addSubscription(this);
+			return true;
+		}
+		
+		if (mode == VisibilityMode.ALLOWED) {
+			if (log.isTraceEnabled()){
+				log.trace("IsInAllowed : "+mode);
+			}
+			// Nothing to do
+			return true;
+		} 
 		// TODO (GB later) retirer les customCat du user profile qui correspondent à des profiles 
 		// de catégories  disparus
-
-		return isVisible;
+		
+		// ELSE not Visible
+		customContext.removeCustomManagedCategory(this);
+		return false;
+		
+//		boolean isInObliged = false;
+//		boolean isInAutoSubscribed = false;
+//		boolean isInAllowed = false;
+//		
+//		boolean isVisible = false;
+//		
+//		
+//	/* ---OBLIGED SET--- */
+//	//	log.trace("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+ getId());
+//		isInObliged =  getVisibilityObliged().evaluateVisibility(ex);
+//	//	log.debug("IsInObliged : "+isInObliged);
+//		if (isInObliged) {
+//			customContext.addSubscription(this);
+//			isVisible = true;
+//		
+//		} else {
+//	/* ---AUTOSUBSCRIBED SET--- */
+//			// en attendant : isInAutoSubscribed = false 			
+//			if(isInAutoSubscribed) {
+//				
+//				// customContext.addCustomCategory(mcp);
+//				// isVisible = true;
+//			
+//			} else {
+//	/* ---ALLOWED SET--- */
+//				log.debug("Appel de evaluate sur DefenitionSets(allowed) de la cat : "+ getId());
+//				isInAllowed =  getVisibilityAllowed().evaluateVisibility(ex);
+//				isVisible = true;
+//				
+//				if (!isInAllowed) { // If isInAllowed : nothing to do
+//	/* ---CATEGORY NOT VISIBLE FOR USER--- */
+//					customContext.removeCustomManagedCategory(this);
+//					isVisible = false;
+//				}			
+//			}	
+//		}
+//		return isVisible;
 	}
 	
 		

@@ -7,6 +7,7 @@ package org.esupportail.lecture.domain.model;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.ExternalService;
 
 
 /**
@@ -45,6 +46,8 @@ public class VisibilitySets {
 	
 	/**
 	 * Check existence of group names, attributes names used in group definition
+	 * Not used for the moment : see later
+	 * Not ready to use without modification
 	 */
 	synchronized protected void checkNamesExistence(){
 	   	if (log.isDebugEnabled()){
@@ -55,7 +58,32 @@ public class VisibilitySets {
 		autoSubscribed.checkNamesExistence();
 	}
 	
-	
+	synchronized protected VisibilityMode whichVisibility(ExternalService ex){
+		
+		VisibilityMode mode = VisibilityMode.NOVISIBLE;
+		
+		boolean isVisible = false;
+		
+		isVisible = obliged.evaluateVisibility(ex);
+		if (isVisible){
+			mode = VisibilityMode.OBLIGED;
+		
+		} else {
+			isVisible = autoSubscribed.evaluateVisibility(ex);
+			if (isVisible){
+				mode = VisibilityMode.AUTOSUBSCRIBED;
+			
+			} else {
+				isVisible = allowed.evaluateVisibility(ex);
+				if (isVisible){
+					mode = VisibilityMode.ALLOWED;
+				} else {
+					mode = VisibilityMode.NOVISIBLE;
+				}
+			}
+		}
+		return mode;
+	}
 	
 	/**
 	 * Returns a string containing VisibilitySets content : allowed group, autoSubscribed group

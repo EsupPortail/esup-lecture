@@ -72,6 +72,8 @@ public class RegularOfSet {
 	
 	/**
 	 * Check existence of attributes names used in regular definition
+	 * Not used for the moment : see later
+	 * Not ready to use without modification
 	 */
 	protected void checkNamesExistence(){
 	   	if (log.isDebugEnabled()){
