@@ -1,8 +1,7 @@
 package org.esupportail.lecture.exceptions.domain;
 
-import org.esupportail.commons.exceptions.EsupException;
 
-public class DomainServiceException extends EsupException {
+public class DomainServiceException extends Exception {
 	public DomainServiceException(String message) {
 		super(message);
 	}

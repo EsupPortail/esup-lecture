@@ -8,4 +8,8 @@ public class PrivateException extends Exception {
 	public PrivateException(String message) {
 		super(message);
 	}
+	
+	public PrivateException(String message,Exception e) {
+		super(message,e);
+	}
 }

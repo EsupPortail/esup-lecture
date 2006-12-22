@@ -1,7 +1,16 @@
 package org.esupportail.lecture.exceptions.domain;
 
-import org.esupportail.commons.exceptions.EsupException;
 
-public class ExternalServiceException extends EsupException {
-
+public class ExternalServiceException extends Exception {
+	public ExternalServiceException(Exception e) {
+		super(e);
+	}
+	
+	public ExternalServiceException(String message) {
+		super(message);
+	}
+	
+	public ExternalServiceException(String message,Exception e) {
+		super(message,e);
+	}
 }
