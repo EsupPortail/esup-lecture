@@ -113,15 +113,23 @@ public class TestDAOLecture {
 		releaseDAO();
 	}
 	
-	private static void delete() {
+	private static void delete() throws CategoryProfileNotFoundException {
 		out("actions : delete test userprofile");
 		DaoService dao = getDAO();
 		UserProfile userProfile = dao.getUserProfile("test");
 		if (userProfile != null) {
 			out("after read");			
 			out("userProfile.getUserId --> " + userProfile.getUserId());			
-			out("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());			
-			//delete userProfile test
+			out("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());	
+			//on détache les fils des péres
+			for(CustomCategory cc : userProfile.getCustomCategories().values()) {
+				dao.deleteCustomCategory(cc);
+			}
+			userProfile.getCustomCategories().clear();
+			for(CustomContext cc : userProfile.getCustomContexts().values()) {
+				dao.deleteCustomContext(cc);
+			}
+			userProfile.getCustomContexts().clear();
 			dao.deleteUserProfile(userProfile);
 		}
 		else {
@@ -130,7 +138,7 @@ public class TestDAOLecture {
 		releaseDAO();
 	}
 	
-	private static void populate() {
+	private static void populate() throws CategoryProfileNotFoundException {
 		out("actions : populate database from test userprofile");
 		DaoService dao = getDAO();
 		//create user profile
@@ -138,22 +146,34 @@ public class TestDAOLecture {
 		//create custom contexts
 		CustomContext cc1 = new CustomContext("c1",userProfile);
 		cc1.setTreeSize(10);
+		cc1.setUserProfile(userProfile);
 		userProfile.addCustomContext(cc1);
 		CustomContext cc2 = new CustomContext("c2",userProfile);
 		cc2.setTreeSize(20);
+		cc2.setUserProfile(userProfile);
 		userProfile.addCustomContext(cc2);
 		CustomContext cc3 = new CustomContext("c3",userProfile);
 		cc3.setTreeSize(30);
+		cc3.setUserProfile(userProfile);
 		userProfile.addCustomContext(cc3);
 		//create custom categories
-		CustomCategory ccat = new CustomManagedCategory("cp1", userProfile);
-		userProfile.addCustomCategory(ccat);
-		ccat = new CustomManagedCategory("cp2", userProfile);
-		userProfile.addCustomCategory(ccat);
-		ccat = new CustomManagedCategory("cp3", userProfile);
-		userProfile.addCustomCategory(ccat);
+		CustomManagedCategory ccat1 = new CustomManagedCategory("cp1", userProfile);
+		ccat1.setUserProfile(userProfile);
+		userProfile.addCustomCategory(ccat1);
+		
+		CustomManagedCategory ccat2 = new CustomManagedCategory("cp2", userProfile);
+		ccat2.setUserProfile(userProfile);
+		userProfile.addCustomCategory(ccat2);
+		
+		CustomManagedCategory ccat3 = new CustomManagedCategory("cp3", userProfile);
+		ccat3.setUserProfile(userProfile);
+		userProfile.addCustomCategory(ccat3);
+		
 		//subscribe some categories
-		//TODO (RB) subscribe some categories
+//		cc1.addSubscription(ccat1.getProfile());
+//		cc1.addSubscription(ccat2.getProfile());
+//		cc1.addSubscription(ccat3.getProfile());
+
 		//save
 		dao.saveUserProfile(userProfile);
 		releaseDAO();

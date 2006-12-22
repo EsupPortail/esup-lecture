@@ -28,13 +28,13 @@
 		<property name="mappingLocations">
 			<list>
 				<value>
-					classpath:/properties/dao/hibernate/mapping/userProfile.hbm
+					classpath:/properties/dao/hibernate/mapping/userProfile.hbm.xml
 				</value>
 				<value>
-					classpath:/properties/dao/hibernate/mapping/customContext.hbm
+					classpath:/properties/dao/hibernate/mapping/customContext.hbm.xml
 				</value>
 				<value>
-					classpath:/properties/dao/hibernate/mapping/customCategory.hbm
+					classpath:/properties/dao/hibernate/mapping/customCategory.hbm.xml
 				</value>
 			</list>
 		</property>

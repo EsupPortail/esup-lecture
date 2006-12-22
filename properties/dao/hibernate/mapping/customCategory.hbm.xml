@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.esupportail.lecture.domain.model">
+	<class name="CustomCategory" table="CUSTOMCATEGORY">
+		<id name="customCategoryPK" type="long">
+			<column name="CUSTOMCATEGORYPK" sql-type="int"/>
+			<generator class="native" />
+		</id>
+		<discriminator type="string">
+			<column name="NATURE" not-null="true" length="1"/>
+		</discriminator>
+		<many-to-one name="userProfile" class="UserProfile">
+			<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
+		</many-to-one>
+		<property name="profileId" type="string">
+			<column name="CUSTOMCATEGORYID" length="250" not-null="true" />
+		</property>
+		<subclass name="CustomManagedCategory" discriminator-value="M">
+		</subclass>
+	</class>
+</hibernate-mapping>

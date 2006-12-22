@@ -64,55 +64,48 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 * @see org.esupportail.lecture.dao.DaoService#updateUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void updateUserProfile(UserProfile userProfile) {
-		// TODO Auto-generated method stub
-
+		getHibernateTemplate().saveOrUpdate(userProfile);
 	}
 
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#updateCustomContext(org.esupportail.lecture.domain.model.CustomContext)
 	 */
 	public void updateCustomContext(CustomContext customContext) {
-		// TODO Auto-generated method stub
-
+		getHibernateTemplate().saveOrUpdate(customContext);
 	}
 
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomContext(org.esupportail.lecture.domain.model.CustomContext)
 	 */
 	public void deleteCustomContext(CustomContext cco) {
-		// TODO Auto-generated method stub
-
+		getHibernateTemplate().delete(cco);
 	}
 
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomCategory(org.esupportail.lecture.domain.model.CustomCategory)
 	 */
 	public void deleteCustomCategory(CustomCategory cca) {
-		// TODO Auto-generated method stub
-
+		getHibernateTemplate().delete(cca);
 	}
 
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#updateCustomCategory(org.esupportail.lecture.domain.model.CustomCategory)
 	 */
 	public void updateCustomCategory(CustomCategory cca) {
-		// TODO Auto-generated method stub
-
+		getHibernateTemplate().saveOrUpdate(cca);
 	}
 
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomSource(org.esupportail.lecture.domain.model.CustomSource)
 	 */
 	public void deleteCustomSource(CustomSource cs) {
-		// TODO Auto-generated method stub
-
+		getHibernateTemplate().delete(cs);
 	}
 
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#updateCustomSource(org.esupportail.lecture.domain.model.CustomSource)
 	 */
 	public void updateCustomSource(CustomSource source) {
-		// TODO Auto-generated method stub
-
+		getHibernateTemplate().saveOrUpdate(source);
 	}
 }

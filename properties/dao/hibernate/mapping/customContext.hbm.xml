@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.esupportail.lecture.domain.model">
+	<class name="CustomContext" table="CUSTOMCONTEXT">
+		<id name="customContextPK" type="long">
+			<column name="CUSTOMCONTEXTPK" sql-type="int"/>
+			<generator class="native" />
+		</id>
+		<property name="treeSize" type="int">
+			<column name="TREEWINWIDTH" not-null="true"/>
+		</property>
+		<property name="contextId" type="string">
+			<column name="CONTEXTID" length="205" not-null="true" unique="true"/>
+		</property>
+		<many-to-one name="userProfile" class="UserProfile">
+			<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
+		</many-to-one>
+		<map name="subscriptions" cascade="save-update">
+			<key>
+				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED"/>
+			</key>
+			<index column="CUSTOMCATEGORYID" type="string"/>
+			<one-to-many class="CustomManagedCategory" />
+		</map>
+		<set name="foldedCategories" table="FOLDEDCATEGORY" cascade="save-update">
+			<key>
+				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK" not-null="true"/>
+			</key>
+			<element type="string" length="250" not-null="true"/>
+		</set>
+	</class>
+</hibernate-mapping>

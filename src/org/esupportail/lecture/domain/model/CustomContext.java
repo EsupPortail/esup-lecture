@@ -13,9 +13,7 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.ElementProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
-
 
 /**
  * Customizations on a context for a user profile 
@@ -45,7 +43,7 @@ public class CustomContext implements CustomElement {
 	/**
 	 * The map of subscribed CustomManagedCategory
 	 */
-	private Hashtable<String,CustomManagedCategory> subscriptions;
+	private Map<String,CustomManagedCategory> subscriptions;
 	
 	/**
 	 * The userprofile parent (used by hibernate)
@@ -60,7 +58,7 @@ public class CustomContext implements CustomElement {
 	/**
 	 * Set of id corresponding to unfolded categories
 	 */
-	private Set<String> unfoldedCategories;
+	private Set<String> foldedCategories;
 
 	/**
 	 * Database Primary Key
@@ -81,7 +79,7 @@ public class CustomContext implements CustomElement {
 			log.debug("CustomContext("+contextId+","+user.getUserId()+")");
 		}
 		subscriptions = new Hashtable<String,CustomManagedCategory>();
-		unfoldedCategories = new HashSet<String>();
+		foldedCategories = new HashSet<String>();
 		this.contextId = contextId;
 		this.userProfile = user;
 		treeSize = 20;
@@ -92,7 +90,7 @@ public class CustomContext implements CustomElement {
 	 */
 	public CustomContext() {
 		subscriptions = new Hashtable<String,CustomManagedCategory>();
-		unfoldedCategories = new HashSet<String>();
+		foldedCategories = new HashSet<String>();
 	}
 	
 	/*
@@ -191,6 +189,11 @@ public class CustomContext implements CustomElement {
 	}
 	
 	
+	/**
+	 * modify tree size
+	 * @param size
+	 * @throws TreeSizeErrorException
+	 */
 	public void modifyTreeSize(int size)throws TreeSizeErrorException {
 		/* old name was setTreesize but it has been changed to prevent 
 		 * loop by calling dao
@@ -206,16 +209,24 @@ public class CustomContext implements CustomElement {
 	}
 	
 
+	/**
+	 * mark as folded a category
+	 * @param catId
+	 */
 	public void foldCategory(String catId) {
-		if (!unfoldedCategories.remove(catId)){
+		if (!foldedCategories.add(catId)){
 			log.warn("foldCategory("+catId+") is called in customContext "+contextId+" but this category is yet folded");
 		} else {
 			DomainTools.getDaoService().updateCustomContext(this);
 		}
 	}
 	
+	/**
+	 * mark as unfolded a category
+	 * @param catId
+	 */
 	public void unfoldCategory(String catId) {
-		if(!unfoldedCategories.add(catId)){
+		if(!foldedCategories.remove(catId)){
 			log.warn("unfoldCategory("+catId+") is called in customContext "+contextId+" but this category is yet unfolded");
 		} else {
 			DomainTools.getDaoService().updateCustomContext(this);
@@ -223,12 +234,18 @@ public class CustomContext implements CustomElement {
 	
 	}
 
+	/**
+	 * @param catId
+	 * @return if category is folded or not
+	 */
 	public boolean isCategoryFolded(String catId) {
-		if(unfoldedCategories.contains(catId)){
-			return false;
+		boolean ret = false;
+		if(foldedCategories.contains(catId)){
+			ret = true;
 		}else {
-			return true;
+			ret = false;
 		}
+		return ret;
 	}
 	
 	
@@ -250,11 +267,18 @@ public class CustomContext implements CustomElement {
 		return userProfile;
 	}
 
+	/**
+	 * @param size
+	 * @throws TreeSizeErrorException
+	 */
 	public void setTreeSize(int size)throws TreeSizeErrorException {
 		treeSize = size;
 	}
 
 
+	/**
+	 * @return tree size
+	 */
 	public int getTreeSize() {
 		return treeSize;
 	}
@@ -274,12 +298,53 @@ public class CustomContext implements CustomElement {
 		this.customContextPK = customContextPK;
 	}
 
+	/**
+	 * @return context ID
+	 */
 	public String getContextId() {
 		return contextId;
 	}
 
+	/**
+	 * @param contextId
+	 */
 	public void setContextId(String contextId) {
 		this.contextId = contextId;
 	}
 
+	/**
+	 * @param userProfile
+	 */
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
+
+	/**
+	 * @return hash of subscribed categories
+	 */
+	public Map<String, CustomManagedCategory> getSubscriptions() {
+		return subscriptions;
+	}
+
+	/**
+	 * @param subscriptions
+	 */
+	public void setSubscriptions(
+			Map<String, CustomManagedCategory> subscriptions) {
+		this.subscriptions = subscriptions;
+	}
+
+	/**
+	 * @return a set of folded categories ID 
+	 */
+	public Set<String> getFoldedCategories() {
+		return foldedCategories;
+	}
+
+	/**
+	 * @param foldedCategories - set of olded categories ID 
+	 */
+	public void setFoldedCategories(Set<String> foldedCategories) {
+		this.foldedCategories = foldedCategories;
+	}
 }
