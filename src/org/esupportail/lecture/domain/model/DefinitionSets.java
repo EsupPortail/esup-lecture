@@ -85,11 +85,11 @@ public class DefinitionSets {
 		Iterator<String> iteratorGroups = groups.iterator();
 		while (iteratorGroups.hasNext()){
 			String group = iteratorGroups.next();
-			log.debug("DefinionSets, evaluation on group : "+group);
-			boolean isUserIn;
+			if (log.isTraceEnabled()){
+				log.trace("DefinitionSets, evaluation on group : "+group);
+			}
 			try {
-				isUserIn = ex.isUserInGroup(group);
-				if (isUserIn){
+				if (ex.isUserInGroup(group)){
 					return true;
 				}
 			} catch (InternalExternalException e) {
