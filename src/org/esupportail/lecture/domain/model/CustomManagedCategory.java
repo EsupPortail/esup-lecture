@@ -3,6 +3,7 @@ package org.esupportail.lecture.domain.model;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
@@ -33,7 +34,7 @@ public class CustomManagedCategory extends CustomCategory {
 	/**
 	 * The map of subscribed CustomManagedSource
 	 */
-	private Hashtable<String,CustomManagedSource> subscriptions;
+	private Map<String,CustomManagedSource> subscriptions;
 	
 	/*
 	 ************************** INIT *********************************/	
@@ -122,6 +123,7 @@ public class CustomManagedCategory extends CustomCategory {
 		String profileId = managedSourceProfile.getId();
 		
 		if (!subscriptions.containsKey(profileId)){
+			//TODO (RB --> GB) A new Here !!!!!
 			CustomManagedSource customManagedSource = new CustomManagedSource(managedSourceProfile, getUserProfile());
 			subscriptions.put(profileId,customManagedSource);
 			getUserProfile().addCustomSource(customManagedSource);
@@ -156,6 +158,21 @@ public class CustomManagedCategory extends CustomCategory {
 		}
 		Channel channel = DomainTools.getChannel();
 		return channel.getManagedCategoryProfile(getElementId());
+	}
+
+	/**
+	 * @return source subcription of this category
+	 */
+	public Map<String, CustomManagedSource> getSubscriptions() {
+		return subscriptions;
+	}
+
+	/**
+	 * @param subscriptions
+	 */
+	public void setSubscriptions(
+			Map<String, CustomManagedSource> subscriptions) {
+		this.subscriptions = subscriptions;
 	}
 	
 

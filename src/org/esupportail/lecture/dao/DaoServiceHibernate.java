@@ -134,7 +134,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void deleteCustomSource(CustomSource cs) {
 		if (log.isDebugEnabled()) {
-			log.debug("deleteCustomSource PK=?????");			
+			log.debug("deleteCustomSource PK="+cs.getCustomSourcePK());			
 		}
 		getHibernateTemplate().delete(cs);
 		if (useFlush) {

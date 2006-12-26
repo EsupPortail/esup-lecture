@@ -18,7 +18,7 @@
 		<many-to-one name="userProfile" class="UserProfile">
 			<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
 		</many-to-one>
-		<map name="subscriptions">
+		<map name="subscriptions" cascade="save-update">
 			<key>
 				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED"/>
 			</key>

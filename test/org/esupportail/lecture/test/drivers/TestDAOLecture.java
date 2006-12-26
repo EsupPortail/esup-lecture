@@ -203,14 +203,18 @@ public class TestDAOLecture {
 		cc1.unfoldCategory(ccat3.getProfileId());
 
 		//create custom sources
-		CustomManagedSource cs1 = new CustomManagedSource();
-		cs1.setUserProfile(userProfile);
-		cs1.setProfileId("url1");
+		ManagedCategoryProfile mcp = new ManagedCategoryProfile();
+		ManagedSourceProfile msp = new ManagedSourceProfile(mcp);
+		msp.setId("url1");
+		CustomManagedSource cs1 = new CustomManagedSource(msp, userProfile);
 		userProfile.addCustomSource(cs1);
-		CustomManagedSource cs2 = new CustomManagedSource();
-		cs2.setUserProfile(userProfile);
-		cs2.setProfileId("url2");
+		msp.setId("url2");
+		CustomManagedSource cs2 = new CustomManagedSource(msp, userProfile);
 		userProfile.addCustomSource(cs2);
+		
+		//subcribe some sources
+		ccat2.addSubscription((ManagedSourceProfile)cs1.getProfile());
+		ccat3.addSubscription((ManagedSourceProfile)cs2.getProfile());
 		
 		//save
 		dao.saveUserProfile(userProfile);
