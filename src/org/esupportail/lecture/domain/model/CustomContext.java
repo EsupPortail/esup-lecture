@@ -58,7 +58,7 @@ public class CustomContext implements CustomElement {
 	/**
 	 * Set of id corresponding to unfolded categories
 	 */
-	private Set<String> foldedCategories;
+	private Set<String> unfoldedCategories;
 
 	/**
 	 * Database Primary Key
@@ -79,7 +79,7 @@ public class CustomContext implements CustomElement {
 			log.debug("CustomContext("+contextId+","+user.getUserId()+")");
 		}
 		subscriptions = new Hashtable<String,CustomManagedCategory>();
-		foldedCategories = new HashSet<String>();
+		unfoldedCategories = new HashSet<String>();
 		this.contextId = contextId;
 		this.userProfile = user;
 		treeSize = 20;
@@ -90,7 +90,7 @@ public class CustomContext implements CustomElement {
 	 */
 	public CustomContext() {
 		subscriptions = new Hashtable<String,CustomManagedCategory>();
-		foldedCategories = new HashSet<String>();
+		unfoldedCategories = new HashSet<String>();
 	}
 	
 	/*
@@ -214,7 +214,7 @@ public class CustomContext implements CustomElement {
 	 * @param catId
 	 */
 	public void foldCategory(String catId) {
-		if (!foldedCategories.add(catId)){
+		if (!unfoldedCategories.remove(catId)){
 			log.warn("foldCategory("+catId+") is called in customContext "+contextId+" but this category is yet folded");
 		} else {
 			DomainTools.getDaoService().updateCustomContext(this);
@@ -226,7 +226,7 @@ public class CustomContext implements CustomElement {
 	 * @param catId
 	 */
 	public void unfoldCategory(String catId) {
-		if(!foldedCategories.remove(catId)){
+		if(!unfoldedCategories.add(catId)){
 			log.warn("unfoldCategory("+catId+") is called in customContext "+contextId+" but this category is yet unfolded");
 		} else {
 			DomainTools.getDaoService().updateCustomContext(this);
@@ -240,10 +240,10 @@ public class CustomContext implements CustomElement {
 	 */
 	public boolean isCategoryFolded(String catId) {
 		boolean ret = false;
-		if(foldedCategories.contains(catId)){
-			ret = true;
-		}else {
+		if(unfoldedCategories.contains(catId)){
 			ret = false;
+		}else {
+			ret = true;
 		}
 		return ret;
 	}
@@ -337,14 +337,14 @@ public class CustomContext implements CustomElement {
 	/**
 	 * @return a set of folded categories ID 
 	 */
-	public Set<String> getFoldedCategories() {
-		return foldedCategories;
+	public Set<String> getUnfoldedCategories() {
+		return unfoldedCategories;
 	}
 
 	/**
 	 * @param foldedCategories - set of olded categories ID 
 	 */
-	public void setFoldedCategories(Set<String> foldedCategories) {
-		this.foldedCategories = foldedCategories;
+	public void setUnfoldedCategories(Set<String> foldedCategories) {
+		this.unfoldedCategories = foldedCategories;
 	}
 }

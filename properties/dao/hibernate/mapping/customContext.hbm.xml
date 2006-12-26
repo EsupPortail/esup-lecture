@@ -27,20 +27,17 @@
 				I use a formula (so just a read-only access) because when I use a <column> hibernate tries to put null in the key when
 				I remove CustomManagedCategory from CustomContext.subscriptions and this violates not null constraint on the column table
 				 -->
-				<formula>CUSTOMCATEGORYID</formula>
+				<formula>PROFILEID</formula>
 			</map-key>
-			<!-- 
-			<index type="string" >
-				<column name="CUSTOMCATEGORYID"/>
-			</index>
-			 -->
 			<one-to-many class="CustomManagedCategory" />
 		</map>
-		<set name="foldedCategories" table="FOLDEDCATEGORY">
+		<set name="unfoldedCategories" table="UNFOLDEDCATEGORY">
 			<key>
-				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK"/>
+				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK" not-null="true" unique="true" sql-type="int"/>
 			</key>
-			<element type="string" length="250"/>
+			<element type="string" length="250">
+				<column name="CATEGORYID" not-null="true"/>
+			</element>
 		</set>
 	</class>
 </hibernate-mapping>

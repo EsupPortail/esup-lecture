@@ -4,34 +4,29 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
-	<class name="Customsource" table="CUSTOMSOURCE">
-		<id name="Id" type="integer" column="CUSTOMSOURCEID">
-			<generator class="native" />
+	<class name="CustomSource" table="CUSTOMSOURCE">
+		<id name="customSourcePK" type="long">
+			<column name="CUSTOMSOURCEPK" sql-type="int"/>
+			<generator class="native"/>
 		</id>
-
-		<property name="UserprofileId" column="USERPROFILE_ID"
-			type="string" not-null="true" length="50" />
-		<property name="CustomcategoryIdSubscribed"
-			column="CUSTOMCATEGORY_ID_SUBSCRIBED" type="integer" not-null="false"
-			length="10" />
-		<property name="CustomcategoryIdCreated"
-			column="CUSTOMCATEGORY_ID_CREATED" type="integer" not-null="false"
-			length="10" />
-		<property name="CustomcategoryIdImported"
-			column="CUSTOMCATEGORY_ID_IMPORTED" type="integer" not-null="false"
-			length="10" />
-		<property name="Managedsourceprofileid"
-			column="MANAGEDSOURCEPROFILEID" type="integer" not-null="false"
-			length="10" />
-		<property name="Zoomed" column="ZOOMED" type="java.lang.Byte"
-			not-null="false" length="1" />
-		<property name="Name" column="NAME" type="string"
-			not-null="false" length="50" />
-		<property name="Sourceurl" column="SOURCEURL" type="string"
-			not-null="false" length="255" />
-		<property name="Nature" column="NATURE" type="string"
-			not-null="false" length="1" />
-
-
+		<discriminator type="string">
+			<column name="NATURE" not-null="true" length="1"/>
+		</discriminator>
+		<many-to-one name="userProfile" class="UserProfile">
+			<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
+		</many-to-one>
+		<property name="profileId" type="string">
+			<column name="PROFILEID" length="250" not-null="true" unique="true"/>
+		</property>
+		<set name="readItems" table="READITEM">
+			<key>
+				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true" unique="true" sql-type="int"/>
+			</key>
+			<element type="string" length="50">
+				<column name="ITEMID" not-null="true"/>
+			</element>
+		</set>
+		<subclass name="CustomManagedSource" discriminator-value="M">
+		</subclass>
 	</class>
 </hibernate-mapping>

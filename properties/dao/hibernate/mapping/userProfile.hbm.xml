@@ -24,8 +24,27 @@
 			<key>
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
 			</key>
-			<index column="CUSTOMCATEGORYID" type="string"/>
+			<map-key type="string" >
+				<!-- 
+				I use a formula (so just a read-only access) because when I use a <column> hibernate tries to put null in the key when
+				I remove CustomManagedCategory from CustomContext.subscriptions and this violates not null constraint on the column table
+				 -->
+				<formula>PROFILEID</formula>
+			</map-key>
 			<one-to-many class="CustomCategory" />
+		</map>
+		<map name="customSources" inverse="true" cascade="save-update">
+			<key>
+				<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
+			</key>
+			<map-key type="string" >
+				<!-- 
+				I use a formula (so just a read-only access) because when I use a <column> hibernate tries to put null in the key when
+				I remove CustomManagedCategory from CustomContext.subscriptions and this violates not null constraint on the column table
+				 -->
+				<formula>PROFILEID</formula>
+			</map-key>
+			<one-to-many class="CustomSource" />
 		</map>
 	</class>
 </hibernate-mapping>

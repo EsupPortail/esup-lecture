@@ -31,6 +31,18 @@ public class CustomManagedSource extends CustomSource{
 	}
 
 	/**
+	 * Constructor
+	 * @param profile profile of eleemnt refered by this
+	 * @param user owner of this custom element
+	 */
+	public CustomManagedSource() {
+		super();
+		if (log.isDebugEnabled()){
+			log.debug("CustomManagedSource()");
+		}
+	}
+
+	/**
 	 * @see org.esupportail.lecture.domain.model.CustomSource#getProfile()
 	 */
 	@Override

@@ -16,7 +16,7 @@
 			<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
 		</many-to-one>
 		<property name="profileId" type="string">
-			<column name="CUSTOMCATEGORYID" length="250" not-null="true" unique="true"/>
+			<column name="PROFILEID" length="250" not-null="true" unique="true"/>
 		</property>
 		<subclass name="CustomManagedCategory" discriminator-value="M">
 		</subclass>

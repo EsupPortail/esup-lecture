@@ -19,10 +19,14 @@ import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomManagedCategory;
+import org.esupportail.lecture.domain.model.CustomManagedSource;
+import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
+import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -141,6 +145,15 @@ public class TestDAOLecture {
 				userProfile.removeCustomCategory(cc.getProfileId());
 				dao.deleteCustomCategory(cc);
 			}
+			
+			//remove customSources from userprofile
+			ArrayList<CustomSource> collec3 = new ArrayList<CustomSource>(userProfile.getCustomSources().values());
+			for(CustomSource cc : collec3) {
+				userProfile.removeCustomSource(cc.getProfileId());
+				dao.deleteCustomSource(cc);
+			}
+			
+			//remove userprofile
 			dao.deleteUserProfile(userProfile);
 		}
 		else {
@@ -149,11 +162,12 @@ public class TestDAOLecture {
 		releaseDAO();
 	}
 	
-	private static void populate() throws CategoryProfileNotFoundException {
+	private static void populate() throws CategoryProfileNotFoundException, TreeSizeErrorException {
 		out("actions : populate database from test userprofile");
 		DaoService dao = getDAO();
 		//create user profile
 		UserProfile userProfile = new UserProfile("test");
+		
 		//create custom contexts
 		CustomContext cc1 = new CustomContext("c1",userProfile);
 		cc1.setTreeSize(10);
@@ -167,15 +181,14 @@ public class TestDAOLecture {
 		cc3.setTreeSize(30);
 		cc3.setUserProfile(userProfile);
 		userProfile.addCustomContext(cc3);
+		
 		//create custom categories
 		CustomManagedCategory ccat1 = new CustomManagedCategory("cp1", userProfile);
 		ccat1.setUserProfile(userProfile);
 		userProfile.addCustomCategory(ccat1);
-		
 		CustomManagedCategory ccat2 = new CustomManagedCategory("cp2", userProfile);
 		ccat2.setUserProfile(userProfile);
 		userProfile.addCustomCategory(ccat2);
-		
 		CustomManagedCategory ccat3 = new CustomManagedCategory("cp3", userProfile);
 		ccat3.setUserProfile(userProfile);
 		userProfile.addCustomCategory(ccat3);
@@ -184,7 +197,21 @@ public class TestDAOLecture {
 		cc1.addSubscription(ccat1.getProfile());
 		cc1.addSubscription(ccat2.getProfile());
 		cc1.addSubscription(ccat3.getProfile());
+		
+		//unfold some categogires
+		cc1.unfoldCategory(ccat2.getProfileId());
+		cc1.unfoldCategory(ccat3.getProfileId());
 
+		//create custom sources
+		CustomManagedSource cs1 = new CustomManagedSource();
+		cs1.setUserProfile(userProfile);
+		cs1.setProfileId("url1");
+		userProfile.addCustomSource(cs1);
+		CustomManagedSource cs2 = new CustomManagedSource();
+		cs2.setUserProfile(userProfile);
+		cs2.setProfileId("url2");
+		userProfile.addCustomSource(cs2);
+		
 		//save
 		dao.saveUserProfile(userProfile);
 		releaseDAO();

@@ -31,6 +31,10 @@ public abstract class CustomSource implements CustomElement {
 	 * Set of read item by User
 	 */
 	private Set<String> readItems;
+	/**
+	 * Database Primary Key
+	 */
+	private long customSourcePK;
 	
 	/* 
 	 ************************** INIT **********************************/
@@ -46,6 +50,17 @@ public abstract class CustomSource implements CustomElement {
 		readItems = new HashSet<String>();
 		userProfile = user;
 		profileId = profile.getId();
+	}
+
+	/**
+	 * Constructor
+	 * @param user owner of this customSource
+	 */
+	public CustomSource(){
+		if (log.isDebugEnabled()){
+			log.debug("CustomSource()");
+		}
+		readItems = new HashSet<String>();
 	}
 
 	/* 
@@ -126,6 +141,55 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	public String getElementId(){
 		return profileId;
+	}
+
+	/**
+	 * @return
+	 */
+	public long getCustomSourcePK() {
+		return customSourcePK;
+	}
+
+	/**
+	 * @param customSourcePK - - database Primary Key
+	 */
+	public void setCustomSourcePK(long customSourcePK) {
+		this.customSourcePK = customSourcePK;
+	}
+
+	/**
+	 * @param userProfile
+	 */
+	public void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
+
+	/**
+	 * @return profileID os this custom source
+	 */
+	public String getProfileId() {
+		return profileId;
+	}
+
+	/**
+	 * @param profileId
+	 */
+	public void setProfileId(String profileId) {
+		this.profileId = profileId;
+	}
+
+	/**
+	 * @return a set of read items ID
+	 */
+	public Set<String> getReadItems() {
+		return readItems;
+	}
+
+	/**
+	 * @param readItems
+	 */
+	public void setReadItems(Set<String> readItems) {
+		this.readItems = readItems;
 	}
 	
 

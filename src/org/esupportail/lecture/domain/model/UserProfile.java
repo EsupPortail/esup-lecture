@@ -333,6 +333,20 @@ public class UserProfile {
 		this.userProfilePK = userProfilePK;
 	}
 
+	/**
+	 * @return custom sources from this userProfile
+	 */
+	public Map<String, CustomSource> getCustomSources() {
+		return customSources;
+	}
+
+	/**
+	 * @param customSources
+	 */
+	public void setCustomSources(Map<String, CustomSource> customSources) {
+		this.customSources = customSources;
+	}
+
 
 
 
