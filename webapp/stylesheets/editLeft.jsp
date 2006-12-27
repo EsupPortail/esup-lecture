@@ -18,7 +18,13 @@
 			<t:htmlTag value="ul">
 				<t:dataList value="#{editController.context.categories}" var="cat" layout="simple">
 					<t:htmlTag value="li"
-						styleClass="#{cat.folded ? 'collapsed' : 'expanded' }">
+						styleClass="edit">
+						<h:commandButton action="#{editController.selectElement}"
+							image="/media/puce.gif" alt="#{msgs['editCategory']}"
+							title="#{msgs['editCategory']}">
+							<t:updateActionListener property="#{editController.categoryId}"
+								value="#{cat.id}" />
+						</h:commandButton>
 						<h:outputText value="#{cat.name}" />
 					</t:htmlTag>
 				</t:dataList>

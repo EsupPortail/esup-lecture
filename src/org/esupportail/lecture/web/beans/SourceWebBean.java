@@ -2,6 +2,8 @@ package org.esupportail.lecture.web.beans;
 
 import java.util.List;
 
+import org.esupportail.lecture.domain.beans.SourceBean;
+
 /**
  * @author bourges
  * used to display source information in view
@@ -73,6 +75,39 @@ public class SourceWebBean {
 	 */
 	public void setItems(List<ItemWebBean> items) {
 		this.items = items;
+	}
+	
+	/**
+	 * @return if source is obliged or not
+	 */
+	public boolean isObliged() {
+		boolean ret = false;
+		if (type==SourceBean.OBLIGED) {
+			ret = true;
+		}
+		return ret;
+	}
+	
+	/**
+	 * @return if source is macked as subcribed
+	 */
+	public boolean isSubscribed() {
+		boolean ret = false;
+		if (type==SourceBean.SUBSCRIBED) {
+			ret = true;
+		}
+		return ret;
+	}
+	
+	/**
+	 * @return if source is macked as unsubcribed
+	 */
+	public boolean isNotSubscribed() {
+		boolean ret = false;
+		if (type==SourceBean.NOTSUBSCRIBED) {
+			ret = true;
+		}
+		return ret;
 	}
 	
 }

@@ -15,7 +15,7 @@
 
 	<bean id="editController"
 		class="org.esupportail.lecture.web.controllers.EditController"
-		parent="abstractContextAwareController">
+		parent="abstractContextAwareController" scope="session">
 		<description>A bean to manage the edit page.</description>
 		<property name="facadeService" ref="facadeService"/>
 	</bean>

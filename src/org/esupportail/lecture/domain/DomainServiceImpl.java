@@ -347,8 +347,28 @@ public class DomainServiceImpl implements DomainService {
 	}
 
 	public List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService ex) {
-		// TODO Auto-generated method stub
-		return null;
+		// TODO (RB --> GB) test code. To change !
+		List<SourceBean> ret = null;
+		try {
+			ret = getVisibleSources(uid, categoryId, ex);
+		} catch (DomainServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int i = 1;
+		for(SourceBean sb : ret) {
+			if (i==1) {
+				sb.setType(SourceBean.OBLIGED);
+			}
+			if (i==2) {
+				sb.setType(SourceBean.NOTSUBSCRIBED);
+			}
+			if (i==3) {
+				sb.setType(SourceBean.SUBSCRIBED);
+			}
+			i++;
+		}
+		return ret;
 	}
 
 

@@ -22,12 +22,32 @@ public class SourceBean {
 	 * "notSubscribed" --> The source is alloweb and not yet subscribed by the user (used in edit mode)
 	 * "obliged" --> The source is obliged: user can't subscribe or unsubscribe this source
 	 */
-	//TODO (GB later) utiliser des constantes définies dans DomainTools pour ça.
 	private String type;
+	/**
+	 * SUBSCRIBED type
+	 */
+	public final static String SUBSCRIBED = "subscribed";
+	/**
+	 * NOTSUBSCRIBED type
+	 */
+	public final static String NOTSUBSCRIBED = "notSubscribed";
+	/**
+	 * OBLIGED type
+	 */
+	public final static String OBLIGED = "obliged";
+	
 	// TODO (GB later) revoir comment concevoir cela : il faut aussi tenir compte des personnalSources qui n'ont pas de type
 	
-	public SourceBean(){}
+	/**
+	 * default constructor
+	 */
+	public SourceBean(){
+	}
 	
+	/**
+	 * constructor
+	 * @param customSource
+	 */
 	public SourceBean(CustomSource customSource){
 		SourceProfile profile = customSource.getProfile();
 		
@@ -35,9 +55,6 @@ public class SourceBean {
 		setId(profile.getId());
 		
 	}
-	
-	
-	
 	
 	/**
 	 * @return name of source

@@ -45,13 +45,13 @@
 				<!-- Read/Unread Button -->
 				<t:htmlTag value="div" styleClass="toggleButton">
 					<h:commandButton action="#{homeController.toggleItemReadState}"
-						image="/media/unread.gif" alt="#{msgs['markAsRead']}"
+						image="/media/unread.png" alt="#{msgs['markAsRead']}"
 						title="#{msgs['markAsRead']}" rendered="#{!item.read}">
 						<t:updateActionListener property="#{homeController.item}"
 							value="#{item}" />
 					</h:commandButton>
 					<h:commandButton action="#{homeController.toggleItemReadState}"
-						image="/media/read.gif" alt="#{msgs['markAsUnread']}"
+						image="/media/read.png" alt="#{msgs['markAsUnread']}"
 						title="#{msgs['markAsUnread']}" rendered="#{item.read}">
 						<t:updateActionListener property="#{homeController.item}"
 							value="#{item}" />

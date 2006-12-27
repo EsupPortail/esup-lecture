@@ -5,25 +5,16 @@
  */
 package org.esupportail.lecture.web.controllers;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.CategoryBean;
-import org.esupportail.lecture.domain.beans.ContextBean;
-import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
-import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
-import org.esupportail.lecture.web.beans.ItemWebBean;
-import org.esupportail.lecture.web.beans.SourceWebBean;
-import org.esupportail.lecture.domain.FacadeService;
 import org.springframework.util.Assert;
-
 
 /**
  * @author : Raymond 
@@ -38,66 +29,10 @@ public class EditController extends twoPanesController {
 	 */
 	static final String CONTEXT = "contextInEditMode";
 	/**
-	 * Access to multiple instance of channel in a one session (contexts)
-	 */
-	private VirtualSession virtualSession;
-	/**
-	 * UID of the connected user
-	 */
-	private String UID = null;
-
-	/**
 	 * @see org.esupportail.commons.web.controllers.Resettable#reset()
 	 */
 	public void reset() {
 		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * To display information about the custom Context of the connected user
-	 * @return Returns the context.
-	 */
-	public ContextWebBean getContext() {
-		ContextWebBean context = (ContextWebBean) virtualSession.get(CONTEXT);
-		if (context == null){
-			if (log.isDebugEnabled()) 
-				log.debug ("getContext() :  Context not yet loaded : loading...");
-			//We evalute the context and we put it in the virtual session
-			context = new ContextWebBean();
-			String contextId = getFacadeService().getCurrentContextId(); 
-			ContextBean contextBean = getFacadeService().getContext(getUID(), contextId);
-			context.setName(contextBean.getName());
-			context.setId(contextBean.getId());
-			List<CategoryBean> categories = getFacadeService().getVisibleCategories(getUID(), contextId);
-			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
-			if (categories != null) {
-				Iterator<CategoryBean> iter = categories.iterator();
-				while (iter.hasNext()) {
-					CategoryBean categoryBean = iter.next();
-					CategoryWebBean categoryWebBean =  new CategoryWebBean();
-					categoryWebBean.setId(categoryBean.getId());
-					categoryWebBean.setName(categoryBean.getName());
-					//find sources in this category
-					List<SourceBean> sources = getFacadeService().getAvailableSources(getUID(), categoryBean.getId());
-					List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
-					if (sources != null) {
-						Iterator<SourceBean> iter2 = sources.iterator();
-						while (iter2.hasNext()) {
-							SourceBean sourceBean = iter2.next();
-							SourceWebBean sourceWebBean = new SourceWebBean();
-							sourceWebBean.setId(sourceBean.getId());
-							sourceWebBean.setName(sourceBean.getName());
-							sourcesWeb.add(sourceWebBean);
-						}
-					}
-					categoryWebBean.setSources(sourcesWeb);
-					categoriesWeb.add(categoryWebBean);
-				}
-			}
-			context.setCategories(categoriesWeb);
-			virtualSession.put(CONTEXT,context);
-		}
-		return context;
 	}
 
 	/**
@@ -111,18 +46,38 @@ public class EditController extends twoPanesController {
 	}
 
 	/**
-	 * @return the connected user UID
+	 * JSF action : select a category or a source from the tree, use categoryID and sourceID valued by t:updateActionListener
+	 * @return JSF from-outcome
 	 */
-	private String getUID() {
-		if (UID == null) {
-			//init the user
-			String userId = getFacadeService().getConnectedUserId();
-			UserBean userBean = getFacadeService().getConnectedUser(userId);
-			UID = userBean.getUid();
-		}
-		return UID;
+	public String selectElement() {
+		if (log.isDebugEnabled()) log.debug("in selectElement");
+		String catID = this.categoryId;
+		CategoryWebBean cat = getCategorieByID(catID);
+		// set category focused by user as selected category in the context
+		ContextWebBean ctx = getContext();
+		ctx.setSelectedCategory(cat);
+		return "OK";
 	}
 
+	/**
+	 * JSF action : Change subscrition status of a source
+	 * @return JSF from-outcome
+	 */
+	public String toogleSourceSubcribtion() {
+		//TODO (RB)
+		return "OK";		
+	}
+	
+	/**
+	 * @return the current selected category
+	 */
+	public CategoryWebBean getSelectedCat() {
+		CategoryWebBean ret = null;
+		ContextWebBean ctx = getContext();
+		ret = ctx.getSelectedCategory();
+		return ret;
+	}
+	
 	/**
 	 * Controller constructor
 	 */
@@ -131,5 +86,27 @@ public class EditController extends twoPanesController {
 		//instatiate a virtual session
 		virtualSession = new VirtualSession();
 	}
+
+	/**
+	 * @param categoryBean
+	 * @return list of visible sources
+	 */
+//	@Override
+	protected List<SourceBean> getSources(CategoryBean categoryBean) {
+		//this method need to be overwrite in edit controller
+		List<SourceBean> sources = getFacadeService().getAvailableSources(getUID(), categoryBean.getId());
+		return sources;
+	}
+	
+//	/**
+//	 * @param contextId
+//	 * @return list of avalable categories
+//	 * @throws InternalDomainException
+//	 */
+//	@Override
+//	protected List<CategoryBean> getCategories(String contextId) throws InternalDomainException {
+//		List<CategoryBean> categories = getFacadeService().getAvailableSources(getUID(), categoryId);
+//		return categories;
+//	}
 
 }

@@ -213,8 +213,21 @@ public class TestDAOLecture {
 		userProfile.addCustomSource(cs2);
 		
 		//subcribe some sources
-		ccat2.addSubscription((ManagedSourceProfile)cs1.getProfile());
-		ccat3.addSubscription((ManagedSourceProfile)cs2.getProfile());
+//genere duplicate key		
+//		Collection<CustomCategory> collec = userProfile.getCustomCategories().values();
+//		for(CustomCategory cc : collec) {
+//			if (cc.getProfileId().equals("cp2")) {
+//				CustomManagedCategory cmc = (CustomManagedCategory)cc;
+//				cmc.addSubscription((ManagedSourceProfile)cs1.getProfile());
+//			}
+//			if (cc.getProfileId().equals("cp3")) {
+//				CustomManagedCategory cmc = (CustomManagedCategory)cc;
+//				cmc.addSubscription((ManagedSourceProfile)cs2.getProfile());
+//			}
+//		}
+//ne manipule plus l'object rataché à userprofile.... Cf. mail gwenaëlle
+//		ccat2.addSubscription((ManagedSourceProfile)cs1.getProfile());
+//		ccat3.addSubscription((ManagedSourceProfile)cs2.getProfile());
 		
 		//save
 		dao.saveUserProfile(userProfile);
