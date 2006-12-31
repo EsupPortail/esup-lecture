@@ -314,4 +314,21 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 		this.sourceId = sourceId;
 	}
 
+	/**
+	 * @param cat where to find source
+	 * @param id of source to find
+	 * @return the finded source
+	 */
+	protected SourceWebBean getSourceByID(CategoryWebBean cat, String id) {
+		SourceWebBean ret = null;
+		Iterator<SourceWebBean> iter = cat.getSources().iterator();
+		while (iter.hasNext()) {
+			SourceWebBean src = iter.next();
+			if (src.getId() == id) {
+				ret = src;
+			}
+		}
+		return ret;
+	}
+
 }

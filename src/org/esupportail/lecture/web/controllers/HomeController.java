@@ -123,23 +123,6 @@ public class HomeController extends twoPanesController {
 	 */
 
 	/**
-	 * @param cat where to find source
-	 * @param id of source to find
-	 * @return the finded source
-	 */
-	private SourceWebBean getSourceByID(CategoryWebBean cat, String id) {
-		SourceWebBean ret = null;
-		Iterator<SourceWebBean> iter = cat.getSources().iterator();
-		while (iter.hasNext()) {
-			SourceWebBean src = iter.next();
-			if (src.getId() == id) {
-				ret = src;
-			}
-		}
-		return ret;
-	}
-
-	/**
 	 * sort items list in function of itemDisplayMode
 	 * @param items List to sort
 	 * @return Sorted items list

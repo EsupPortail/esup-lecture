@@ -11,9 +11,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
+import org.esupportail.lecture.exceptions.ErrorException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
+import org.esupportail.lecture.web.beans.SourceWebBean;
 import org.springframework.util.Assert;
 
 /**
@@ -64,7 +66,21 @@ public class EditController extends twoPanesController {
 	 * @return JSF from-outcome
 	 */
 	public String toogleSourceSubcribtion() {
-		//TODO (RB)
+		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
+		SourceWebBean src = getSourceByID(selectedCategory, sourceId);
+		String type = null;
+		if (src.isNotSubscribed()) {
+			//TODO (RB) call facadeservice
+			type = SourceBean.SUBSCRIBED;
+		}
+		if (src.isSubscribed()) {
+			//TODO (RB) call facadeservice
+			type = SourceBean.NOTSUBSCRIBED;
+		}
+		if (type != null) {
+			src.setType(type);
+		}
+		//TODO (RB) refresh context for normal mode !!!
 		return "OK";		
 	}
 	

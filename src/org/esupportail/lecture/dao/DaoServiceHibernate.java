@@ -12,9 +12,6 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.ErrorException;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -25,11 +22,17 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 * Log instance 
 	 */
 	private static final Log log = LogFactory.getLog(DaoServiceHibernate.class);
+	
+	/**
+	 * boolena flag in order to use flush during work
+	 * should be false (true for test)
+	 */
 	private static final boolean useFlush = false;
 
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#getUserProfile(java.lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	public UserProfile getUserProfile(String userId) {
 		if (log.isDebugEnabled()) {
 			log.debug("getUserProfile("+userId+")");			

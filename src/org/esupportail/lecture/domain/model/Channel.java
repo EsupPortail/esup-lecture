@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.*;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
@@ -99,23 +100,24 @@ public class Channel implements InitializingBean {
 	 */
 	private MappingFile mappingFile;
 	
-//	/**
-//	 * Channel configuration from xml file.
-//	 */
-//	private ChannelConfig config; 
-	
-	/* DAO */
-	
 	/**
 	 * access to dao services
 	 */
 	private DaoService daoService;
+	
+	/**
+	 * acces to external service
+	 */
+	private ExternalService externalService;
 	
 
 	
 	/*
 	 ************************** Initialization ************************************/
 
+	/**
+	 * default constructor
+	 */
 	public Channel(){
 		userProfilesHash = new Hashtable<String,UserProfile>();
 	}
@@ -131,9 +133,11 @@ public class Channel implements InitializingBean {
 			log.debug("afterPropertiesSet()");
 		}
 		Assert.notNull(daoService,"property daoService can not be null");
+		Assert.notNull(externalService,"property externalService can not be null");
 		startup();
 		DomainTools.setChannel(this);
 		DomainTools.setDaoService(daoService);
+		DomainTools.setExternalService(externalService);
 	}
 	
 	/**
@@ -627,19 +631,18 @@ public class Channel implements InitializingBean {
 		this.daoService = daoService;
 	}
 
+	/**
+	 * @return the external service
+	 */
+	public ExternalService getExternalService() {
+		return externalService;
+	}
 
-
-
-
-
-
-
-//	public ChannelConfig getChannelConfig(){
-//	return config;
-//}
-//public void setChannelConfig (ChannelConfig config){
-//	this.config = config;
-//}
-
+	/**
+	 * @param externalService
+	 */
+	public void setExternalService(ExternalService externalService) {
+		this.externalService = externalService;
+	}
 
 }

@@ -70,25 +70,53 @@ public interface DaoService {
 	// TODO (GB) creer un service pour supprimer définitivement un userProfile par l'admin ?
 	public void deleteUserProfile(UserProfile userProfile);
 
+	/**
+	 * update userProfile
+	 * @param userProfile
+	 */
 	public void updateUserProfile(UserProfile userProfile);
 	
 	/* CustomContext */
 
+	/**
+	 * update custom context
+	 * @param customContext
+	 */
 	public void updateCustomContext(CustomContext customContext);
 
+	/**
+	 * delete custom context
+	 * @param cco
+	 */
 	// TODO (GB later) creer un service pour supprimer définitivement un contexte par l'admin ?
 	public void deleteCustomContext(CustomContext cco);
 	
 	/* CustomCategory */
 	
+	/**
+	 * delete custom category
+	 * @param cca
+	 */
 	public void deleteCustomCategory(CustomCategory cca);
 
+	/**
+	 * update custom category
+	 * @param cca
+	 */
 	public void updateCustomCategory(CustomCategory cca);
 
 	/* CustomSource */
 	
+	/**
+	 * delete custom source
+	 * @param cs
+	 */
 	public void deleteCustomSource(CustomSource cs);
 
+	/**
+	 * update custom source
+	 * @param source
+	 */
 	public void updateCustomSource(CustomSource source);
 
 		

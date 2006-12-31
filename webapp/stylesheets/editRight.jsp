@@ -19,13 +19,13 @@
 					<h:commandButton action="#{editController.toogleSourceSubcribtion}"
 						image="/media/subscribe.png" alt="#{msgs['subscribeSource']}"
 						title="#{msgs['subscribeSource']}" rendered="#{src.notSubscribed}">
-						<t:updateActionListener property="#{homeController.sourceId}"
+						<t:updateActionListener property="#{editController.sourceId}"
 							value="#{src.id}" />
 					</h:commandButton>
 					<h:commandButton action="#{editController.toogleSourceSubcribtion}"
 						image="/media/unsubscribe.png" alt="#{msgs['unsubscribeSource']}"
 						title="#{msgs['unsubscribeSource']}" rendered="#{src.subscribed}">
-						<t:updateActionListener property="#{homeController.sourceId}"
+						<t:updateActionListener property="#{editController.sourceId}"
 							value="#{src.id}" />
 					</h:commandButton>
 					<h:graphicImage value="/media/forced.png"
