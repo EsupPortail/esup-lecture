@@ -122,6 +122,13 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 				if (log.isDebugEnabled()){
 					log.debug("replaceWithUserAttributes"+" :: replace "+value+" by "+ret);
 				}
+				//is there some other { } ?
+				int firstIndex2 = ret.indexOf("{");
+				int lastIndex2 = ret.indexOf("}");
+				//is { and } in value
+				if (firstIndex2!=-1 && lastIndex2!=-1) {
+					ret = replaceWithUserAttributes(ret);
+				}
 			}
 			// no { and } in value
 			else {

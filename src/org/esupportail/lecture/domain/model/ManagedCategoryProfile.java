@@ -369,7 +369,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @see ManagedCategoryProfile#urlCategory
 	 */
 	synchronized public void setUrlCategory(String categoryURL) {
-		categoryURL = DomainTools.replaceWithUserAttributes(categoryURL);
+		//RB categoryURL = DomainTools.replaceWithUserAttributes(categoryURL);
 		this.categoryURL = categoryURL;
 	}
 

@@ -141,7 +141,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @param sourceURL
 	 */
 	synchronized public void setSourceURL(String sourceURL) {
-		sourceURL = DomainTools.replaceWithUserAttributes(sourceURL);
+		//RB sourceURL = DomainTools.replaceWithUserAttributes(sourceURL);
 		this.sourceURL = sourceURL;
 	}
 

@@ -36,6 +36,12 @@ public class ExternalServiceImpl implements ExternalService {
 	static ServletService servletService = new ServletService();
 	
 	/**
+	 * default version of ExternalService
+	 */
+	//TODO (RB) inject by spring (gb : => so no more static)
+	static ServletService defaultService = servletService;
+	
+	/**
 	 * @throws InternalExternalException 
 	 * @throws NoExternalValueException 
 	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
@@ -124,11 +130,15 @@ public class ExternalServiceImpl implements ExternalService {
 		ModeService ret = null;
 		// Dynamic instantiation for portlet/servlet context
 		FacesContext facesContext = FacesContext.getCurrentInstance();
-		if (PortletUtil.isPortletRequest(facesContext)) {
-			ret = portletService;
+		if (facesContext != null) {
+			if (PortletUtil.isPortletRequest(facesContext)) {
+				ret = portletService;
+			} else {
+				// TODO make better
+				ret = servletService;
+			}			
 		} else {
-			// TODO make better
-			ret = servletService;
+			ret = defaultService;
 		}
 		return ret;
 	}
