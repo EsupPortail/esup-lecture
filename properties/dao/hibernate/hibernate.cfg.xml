@@ -15,14 +15,13 @@
 			com.mysql.jdbc.Driver
 		</property>
 		<property name="hibernate.connection.url">
-			jdbc:mysql://localhost/lecture
+			jdbc:mysql://localhost/test
 		</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password">admin</property>
 		<property name="hibernate.dialect">
 			org.hibernate.dialect.MySQLDialect
 		</property>
-		<property name="hibernate.show_sql">true</property>
 		<property name="hibernate.bytecode.use_reflection_optimizer">
 			false
 		</property>

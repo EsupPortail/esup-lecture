@@ -6,7 +6,7 @@
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
 	<class name="CustomContext" table="CUSTOMCONTEXT">
 		<id name="customContextPK" type="long">
-			<column name="CUSTOMCONTEXTPK" sql-type="int"/>
+			<column name="CUSTOMCONTEXTPK"/>
 			<generator class="native" />
 		</id>
 		<property name="treeSize" type="int">
@@ -19,7 +19,7 @@
 			<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
 		</many-to-one>
 		<map name="subscriptions" cascade="save-update">
-			<key>
+			<key foreign-key="FK_CUSTOMCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED">
 				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED"/>
 			</key>
 			<map-key type="string" >
@@ -32,8 +32,8 @@
 			<one-to-many class="CustomManagedCategory" />
 		</map>
 		<set name="unfoldedCategories" table="UNFOLDEDCATEGORY">
-			<key>
-				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK" not-null="true" unique="true" sql-type="int"/>
+			<key foreign-key="FK_UNFOLDEDCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK">
+				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK" not-null="true"/>
 			</key>
 			<element type="string" length="250">
 				<column name="CATEGORYID" not-null="true"/>

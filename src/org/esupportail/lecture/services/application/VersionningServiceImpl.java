@@ -7,6 +7,9 @@ package org.esupportail.lecture.services.application;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.beans.User;
 import org.esupportail.lecture.web.controllers.AbstractDomainAwareBean;
 import org.esupportail.commons.dao.HibernateUtils;
@@ -25,13 +28,17 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	/**
 	 * A logger.
 	 */
-	private final Logger logger = new LoggerImpl(getClass());
+	private static final Log log = LogFactory.getLog(DomainServiceImpl.class);
 
 	/**
 	 * @see org.esupportail.commons.services.application.VersionningService#initDatabase()
 	 */
 	public void initDatabase() {
 		// TODO Auto-generated method stub
+		log.info("ici!!!!");
+		HibernateUtils.create();
+		getDomainService().getConnectedUser("bourges");
+		HibernateUtils.close(false);
 	}
 
 	/**
@@ -39,7 +46,6 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	 */
 	public void checkVersion(boolean throwException, boolean printLatestVersion) throws ConfigException {
 		// TODO Auto-generated method stub
-		
 	}
 
 	/**

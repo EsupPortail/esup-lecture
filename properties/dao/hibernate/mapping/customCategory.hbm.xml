@@ -6,7 +6,7 @@
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
 	<class name="CustomCategory" table="CUSTOMCATEGORY">
 		<id name="customCategoryPK" type="long">
-			<column name="CUSTOMCATEGORYPK" sql-type="int" />
+			<column name="CUSTOMCATEGORYPK"/>
 			<generator class="native" />
 		</id>
 		<discriminator type="string">
@@ -22,7 +22,7 @@
 		<subclass name="CustomManagedCategory"
 			discriminator-value="M">
 			<map name="subscriptions" cascade="save-update">
-				<key>
+				<key foreign-key="FK_CUSTOMSOURCE_CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED">
 					<column
 						name="CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED" />
 				</key>

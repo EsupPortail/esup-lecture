@@ -6,7 +6,7 @@
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
 	<class name="UserProfile" table="USERPROFILE">
 		<id name="userProfilePK" type="long">
-			<column name="USERPROFILEPK" sql-type="int"/>
+			<column name="USERPROFILEPK"/>
 			<generator class="native" />
 		</id>
 		<property name="userId" type="string">
@@ -14,14 +14,14 @@
             </column>		
 		</property>
 		<map name="customContexts" inverse="true" cascade="save-update">
-			<key>
+			<key foreign-key="FK_CUSTOMCONTEXT_USERPROFILE_USERPROFILEPK">
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
 			</key>
 			<index column="CONTEXTID" type="string"/>
 			<one-to-many class="CustomContext" />
 		</map>
 		<map name="customCategories" inverse="true" cascade="save-update">
-			<key>
+			<key foreign-key="FK_CUSTOMCATEGORY_USERPROFILE_USERPROFILEPK">
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
 			</key>
 			<map-key type="string" >
@@ -34,7 +34,7 @@
 			<one-to-many class="CustomCategory" />
 		</map>
 		<map name="customSources" inverse="true" cascade="save-update">
-			<key>
+			<key foreign-key="FK_CUSTOMSOURCE_USERPROFILE_USERPROFILEPK">
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
 			</key>
 			<map-key type="string" >

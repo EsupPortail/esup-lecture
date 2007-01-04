@@ -6,7 +6,7 @@
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
 	<class name="CustomSource" table="CUSTOMSOURCE">
 		<id name="customSourcePK" type="long">
-			<column name="CUSTOMSOURCEPK" sql-type="int"/>
+			<column name="CUSTOMSOURCEPK"/>
 			<generator class="native"/>
 		</id>
 		<discriminator type="string">
@@ -19,8 +19,8 @@
 			<column name="PROFILEID" length="250" not-null="true" unique="true"/>
 		</property>
 		<set name="readItems" table="READITEM">
-			<key>
-				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true" unique="true" sql-type="int"/>
+			<key foreign-key="FK_READITEM_CUSTOMSOURCE_CUSTOMSOURCEPK">
+				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true"/>
 			</key>
 			<element type="string" length="50">
 				<column name="ITEMID" not-null="true"/>
