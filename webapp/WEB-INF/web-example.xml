@@ -14,12 +14,18 @@
 
 	<context-param>
 		<description>
+			The location of log4j config file. 
+		</description>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:/properties/logging/log4j.properties</param-value>
+	</context-param>
+
+	<context-param>
+		<description>
 			The location of the main configuration file of the Spring framework. 
 		</description>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			classpath:/properties/applicationContext.xml
-		</param-value>
+		<param-value>classpath:/properties/applicationContext.xml</param-value>
 	</context-param>
 
 	<context-param>
@@ -31,6 +37,12 @@
 			/WEB-INF/classes/properties/jsf/commons-render-kit.xml,/WEB-INF/classes/properties/jsf/managed-beans.xml,/WEB-INF/classes/properties/jsf/navigation-rules.xml,/WEB-INF/classes/properties/jsf/application.xml
 		</param-value>
 	</context-param>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.util.Log4jConfigListener
+		</listener-class>
+	</listener>
 
 	<listener>
 		<description>
@@ -48,6 +60,7 @@
 		</listener-class>
 	</listener>
 
+<!-- 
 	<filter>
 		<description>
 			This filter is in charge of managing the Hibernate sessions.
@@ -66,7 +79,9 @@
 		<filter-name>OpenSessionInViewFilter</filter-name>
 		<servlet-name>Faces Servlet</servlet-name>		
 	</filter-mapping>
+ -->
 
+<!-- 
 	<filter>
 		<description>
 			This filter is needed to use some Tomahawk extentions.
@@ -92,23 +107,42 @@
 		<filter-name>MyFacesExtensionsFilter</filter-name>
 		<url-pattern>/faces/myFacesExtensionResource/*</url-pattern>
 	</filter-mapping>
+ -->
+
+	<servlet>
+		<description>
+			The main servlet of the application. This class inherits from 
+			the MyFaces implementation and handles exceptions thrown for
+			specific exception handling.
+		</description>
+		<display-name>Faces Servlet</display-name>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>
+			org.esupportail.commons.web.servlet.FacesServlet
+		</servlet-class>
+		<!-- <load-on-startup>1</load-on-startup> -->
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<description>The esup-lecture portlet servlet</description>
 		<display-name>esup-lecture</display-name>
 		<servlet-name>esup-lecture</servlet-name>
 		<servlet-class>
-			org.apache.pluto.core.PortletServlet
+			org.esupportail.commons.web.portlet.PortletServlet
 		</servlet-class>
 		<init-param>
 			<param-name>portlet-class</param-name>
 			<param-value>
-				org.esupportail.commons.web.portlet.ExceptionHandlingFacesPortlet
+				org.esupportail.commons.web.portlet.FacesPortlet
 			</param-value>
 		</init-param>
 		<init-param>
 			<param-name>portlet-guid</param-name>
-			<param-value>esup-lecture.esup-lecture</param-value>
+			<param-value>LecturePortlet.esup-lecture</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>
@@ -116,6 +150,7 @@
 		<url-pattern>/foo/*</url-pattern>
 	</servlet-mapping>
 
+<!-- 
 	<servlet>
 		<servlet-name>Download Servlet</servlet-name>
 		<servlet-class>
@@ -126,6 +161,7 @@
 		<servlet-name>Download Servlet</servlet-name>
 		<url-pattern>/download</url-pattern>
 	</servlet-mapping>
+ -->
 
 	<security-constraint>
 		<display-name>Protection of the raw JSP pages</display-name>

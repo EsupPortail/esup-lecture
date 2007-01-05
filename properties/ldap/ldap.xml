@@ -103,7 +103,7 @@
 			http://ldaptemplate.sourceforge.net.
 		</description>
 		<property name="url"
-			value="ldap://ldapglobal.univ-rennes1.fr:389">
+			value="ldap://ldap.univ.fr:389">
 			<description>The LDAP URL of the directory.</description>
 		</property>
 		<property name="userName" value="">
@@ -117,7 +117,7 @@
 			</description>
 		</property>
 		<property name="base"
-			value="ou=people,dc=univ-rennes1,dc=fr">
+			value="ou=people,dc=univ,dc=fr">
 			<description>The search base (mandatory).</description>
 		</property>
 		<property name="baseEnvironmentProperties">

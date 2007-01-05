@@ -52,7 +52,7 @@ public class SessionController extends AbstractDomainAwareBean {
 	}
 
 	/**
-	 * @see org.esupportail.blank.web.controllers.AbstractDomainAwareBean#afterPropertiesSetInternal()
+	 * @see org.esupportail.lecture.web.controllers.AbstractDomainAwareBean#afterPropertiesSetInternal()
 	 */
 	@Override
 	public void afterPropertiesSetInternal() {

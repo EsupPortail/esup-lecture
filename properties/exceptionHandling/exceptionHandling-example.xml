@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+	>
+
+	<!-- 
+		/properties/exceptionHandling/exceptionHandling.xml
+		The configuration file for domain services.
+		This file is referenced by /properties/applicationContext.xml.
+	-->
+
+	<bean 
+		id="exceptionServiceFactory" 
+		class="org.esupportail.lecture.services.exceptionHandling.CachingEmailExceptionServiceFactoryImpl" 
+		parent="abstractApplicationAwareBean" >
+		<description>
+			This factory is used to create beans in charge of handling the exceptions 
+			thrown by the application. It must implement interface 
+			org.esupportail.commons.services.exceptionHandling.ExceptionServiceFactory.
+			By default, exception reports are also sent to an archived bugs mailing list,
+			accessible to the developers of the project only. This feature is used to be 
+			warned of all the possible exceptions occuring on the applciation anywhere; 
+			this way, most bugs can be corrected as soon as they happen. If you do not 
+			want the exceptions to be sent to this list, you can manually set property 
+			doNotSendExceptionReportsToDevelopers to true.
+			esup-lecture developers are ready and pleased to help you through the support
+			mailing lists, please help them to improve the application by sending them 
+			the exception reports. Thanks!
+		</description>
+		<property name="doNotSendExceptionReportsToDevelopers" value="false"/>
+		<property name="smtpService" ref="smtpService" >
+			<description>
+				The service used to send exception reports.
+			</description>
+		</property>
+		<property name="authenticationService" ref="authenticationService" >
+			<description>
+				The authentication service, user to retrieve the current user's id to
+				fill exception reports.
+			</description>
+		</property>
+		<property name="recipientEmail" value="my.name@domain.edu" >
+			<description>
+				The email address the exception reports will be sent to. This property is
+				optional; if the tag is ommited or empty, then no mail is sent.
+			</description>
+		</property>
+		<property name="cacheManager" ref="cacheManager" >
+			<description>
+				The cache manager, required.
+			</description>
+		</property>
+		<property name="cacheName" value="" >
+			<description>
+				The name of the cache, optional.
+			</description>
+		</property>
+<!-- 
+		<property name="exceptionView" value="/LecturePortlet/stylesheets/exception.jsp"/>
+ -->		
+	</bean>
+
+</beans>

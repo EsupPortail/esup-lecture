@@ -21,9 +21,20 @@
 		properties/jsf/application.xml
 		properties/jsf/managed-beans.xml
 		properties/jsf/navigation-rules.xml
-	" />
-	<property name="app.zip-files.servlet.include" value="
+	" />            
+	<property name="app.zip-files.include" value="
 		${app.zip-files.shared.include}
+		build-example.properties
+		webapp/WEB-INF/web.xml
+		properties/cache/*.xml
+		properties/deepLinking/deepLinking.xml
+		properties/i18n/i18n.xml
+		properties/ldap/ldap.xml
+		properties/auth/auth.xml
+		properties/urlGeneration/urlGeneration.xml
+		properties/domain/domain.xml
+		properties/portal/portal.xml
+		properties/logging/log4j-batch.properties
 	" />
 	<property name="app.zip-files.quick-start.include" value="
 		${app.zip-files.shared.include}
@@ -50,14 +61,16 @@
 		
 	<target name="_restart" depends="_commons-restart" description="deploy and restart Tomcat" />
 
-	<target name="_dist" depends="_commons-dist,_dist-portlet-zip" description="build ZIP archives">
+	<target name="_dist" depends="_commons-dist" description="build ZIP archives">
 	</target>	 
 
+	<!--
 	<target name="_dist-portlet-zip">
 		<zip destfile="${dist.dir}/LecturePortlet.zip">
 			<zipfileset dir="${build.dir}" prefix="LecturePortlet" includes="**/*"/>
 		</zip>
 	</target>
+	-->
 	
 	<target name="_doc" depends="_commons-doc" description="build the web site" />
 
