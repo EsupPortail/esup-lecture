@@ -41,6 +41,27 @@
   </articleinfo>
 
   <section>
+    <title>TODO (RB) Dispatch in installation and technical
+    configuration</title>
+
+    <para>To configure this application you have to adapt some configuration
+    files. Each time you will find a
+    &lt;fileName&gt;-example.&lt;extension&gt; example file that you can copy
+    to &lt;fileName&gt;.&lt;extension&gt; before adapting. adapt
+    build.properties. Adapt properties/exceptionHandling/exceptionHandlin.xml.
+    Note : By default, exception reports are also sent to an archived bugs
+    mailing list, accessible to the developers of the project only. This
+    feature is used to be warned of all the possible exceptions occuring on
+    the applciation anywhere; this way, most bugs can be corrected as soon as
+    they happen. If you do not want the exceptions to be sent to this list,
+    you can manually set property doNotSendExceptionReportsToDevelopers to
+    true. Adapt properties/smtp/smtp.xml
+    properties/dao/hibernate/hibernate.cfg.xml ant test-config ant test-smtp
+    ant test-database ant init adapt properties/logging/log4j.properties Adapt
+    properties/mappings.xml and properties/esup-lecture.xml ant deploy</para>
+  </section>
+
+  <section>
     <title>Installation</title>
 
     <note>

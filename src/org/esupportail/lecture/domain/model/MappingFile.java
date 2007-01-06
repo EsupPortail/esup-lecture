@@ -88,6 +88,11 @@ public class MappingFile {
 		}
 		if (singleton == null) {
 			URL url = MappingFile.class.getResource(mappingFilePath);
+			if (url==null) {
+				String ErrorMsg = "Mapping config file: "+mappingFilePath+" not found.";
+				log.error(ErrorMsg);
+				throw new ConfigException(ErrorMsg);
+			}
 			File mappingFile = new File(url.getFile());
 			mappingFileBasePath = mappingFile.getAbsolutePath();
 			mappingFileLastModified = mappingFile.lastModified();		

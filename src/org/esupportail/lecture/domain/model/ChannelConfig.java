@@ -99,6 +99,11 @@ public class ChannelConfig  {
 		
 		if (singleton == null) {
 			URL url = ChannelConfig.class.getResource(filePath);
+			if (url==null) {
+				String ErrorMsg = "Config file: "+filePath+" not found.";
+				log.error(ErrorMsg);
+				throw new ConfigException(ErrorMsg);
+			}
 			File file = new File(url.getFile());
 			fileBasePath = file.getAbsolutePath();
 			fileLastModified = file.lastModified();

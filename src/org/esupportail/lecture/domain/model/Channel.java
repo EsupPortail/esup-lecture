@@ -179,8 +179,9 @@ public class Channel implements InitializingBean {
 			if (configLoaded) {
 				log.error("loadConfig :: unable to load new config : "+e.getMessage());
 			} else {
-				log.fatal("loadConfig :: unable to load config and start initialization : "+e.getMessage());
-				throw new FatalException();
+				String ErrorMsg = "loadConfig :: unable to load config and start initialization : "+e.getMessage(); 
+				log.fatal(ErrorMsg);
+				throw new FatalException(ErrorMsg);
 			}
 		}
 		
@@ -239,8 +240,9 @@ public class Channel implements InitializingBean {
 			if (mappingsLoaded) {
 				log.error("loadMappingFile :: unable to load new mappings : "+e.getMessage());
 			} else {
-				log.fatal("loadMappingFile :: unable to load mappings and start initialization : "+e.getMessage());
-				throw new FatalException();
+				String ErrorMsg = "loadMappingFile :: unable to load mappings and start initialization : "+e.getMessage(); 
+				log.fatal(ErrorMsg);
+				throw new FatalException(ErrorMsg);
 			}
 		}
 		

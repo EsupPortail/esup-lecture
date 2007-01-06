@@ -58,9 +58,6 @@
 				The name of the cache, optional.
 			</description>
 		</property>
-<!-- 
-		<property name="exceptionView" value="/LecturePortlet/stylesheets/exception.jsp"/>
- -->		
 	</bean>
 
 </beans>

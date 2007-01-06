@@ -26,6 +26,7 @@
 		${app.zip-files.shared.include}
 		build-example.properties
 		webapp/WEB-INF/web.xml
+		webapp/WEB-INF/portlet.xml
 		properties/cache/*.xml
 		properties/deepLinking/deepLinking.xml
 		properties/i18n/i18n.xml
@@ -35,6 +36,13 @@
 		properties/domain/domain.xml
 		properties/portal/portal.xml
 		properties/logging/log4j-batch.properties
+		properties/logging/log4j.properties
+		properties/init/init.xml
+		properties/tags/tags.xml
+		properties/tests/tests.xml
+		properties/*.dtd
+		properties/mappings.xml
+		properties/esup-lecture.xml
 	" />
 	<property name="app.zip-files.quick-start.include" value="
 		${app.zip-files.shared.include}
