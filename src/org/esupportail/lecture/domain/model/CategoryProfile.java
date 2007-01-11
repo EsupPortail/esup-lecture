@@ -110,7 +110,7 @@ public abstract class CategoryProfile implements ElementProfile {
 			log.debug("getElement()");
 		}
 		if (category==null){
-			// TODO (GB) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
+			// TODO (GB ?) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
 			String errorMsg = "Category "+id+" is not loaded in profile";
 			log.error(errorMsg);
 			throw new CategoryNotLoadedException(errorMsg);

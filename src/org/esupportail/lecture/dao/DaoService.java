@@ -67,7 +67,7 @@ public interface DaoService {
 	 * Delete userProfile that is identified with "userId" 
 	 * @param userProfile : userProfile to delete
 	 */
-	// TODO (GB) creer un service pour supprimer définitivement un userProfile par l'admin ?
+	// TODO (GB later) creer un service pour supprimer définitivement un userProfile par l'admin ?
 	public void deleteUserProfile(UserProfile userProfile);
 
 	/**

@@ -135,7 +135,6 @@ public class CustomContext implements CustomElement {
 		String profileId = profile.getId();
 		
 		if (!subscriptions.containsKey(profileId)){
-			//TODO (RB --> GB) A new Here !!!!!
 			CustomManagedCategory customManagedCategory = new CustomManagedCategory(profileId,userProfile);
 			subscriptions.put(profileId,customManagedCategory);
 			userProfile.addCustomCategory(customManagedCategory);

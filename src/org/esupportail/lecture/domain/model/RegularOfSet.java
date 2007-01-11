@@ -62,7 +62,7 @@ public class RegularOfSet {
 			// TODO revoir ?
 			return false;
 		}
-		// TODO (GB) voir le cas ou il y est mais que le portail ne connait pas
+		// TODO (GB later) voir le cas ou il y est mais que le portail ne connait pas
 		
 		if (userAttributeValue.equals(value)) {
 			return true;
