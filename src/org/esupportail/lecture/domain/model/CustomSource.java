@@ -9,8 +9,11 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 /**
  * Customizations on a Source 
  * @author gbouteil
@@ -85,10 +88,15 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @param externalService
 	 * @return a list of Items contained in source refered by this
+	 * @throws Xml2HtmlException 
+	 * @throws ComputeItemsException 
+	 * @throws MappingNotFoundException 
+	 * @throws SourceNotLoadedException 
 	 * @throws ElementNotLoadedException
 	 * @throws SourceNotLoadedException
 	 */
-	public List<Item> getItems(ExternalService ex) throws ElementNotLoadedException, SourceNotLoadedException {
+	public List<Item> getItems(ExternalService ex) 
+		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException  {
 		if (log.isDebugEnabled()){
 			log.debug("getItems(externalService)");
 		}

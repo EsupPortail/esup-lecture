@@ -11,10 +11,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 /**
  * Customizations on a managedCategory for a user Profile
@@ -80,13 +82,21 @@ public class CustomManagedCategory extends CustomCategory {
 	 ************************** METHODS *********************************/	
 
 	/**
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws ElementNotLoadedException 
+	 * @throws CustomContextNotFoundException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CustomContextNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	public List<CustomSource> getSortedCustomSources(ExternalService ex) 
-		throws CategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException, CustomContextNotFoundException {
+	public List<CustomSource> getSortedCustomSources(ExternalService ex) throws CategoryProfileNotFoundException, CategoryNotVisibleException {
 		if (log.isDebugEnabled()){
 			log.debug("getSortedCustomSources(externalService)");
 		}
@@ -95,7 +105,7 @@ public class CustomManagedCategory extends CustomCategory {
 		ManagedCategoryProfile profile = getProfile();
 		try {
 			profile.updateCustom(this,ex);
-		} catch (ElementNotLoadedException e) {	
+		} catch (CategoryNotLoadedException e) {
 			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 			// TODO (GB) !!!  et le dao ?
 		}
@@ -123,7 +133,6 @@ public class CustomManagedCategory extends CustomCategory {
 		String profileId = managedSourceProfile.getId();
 		
 		if (!subscriptions.containsKey(profileId)){
-			//TODO (RB --> GB) A new Here !!!!!
 			CustomManagedSource customManagedSource = new CustomManagedSource(managedSourceProfile, getUserProfile());
 			subscriptions.put(profileId,customManagedSource);
 			getUserProfile().addCustomSource(customManagedSource);

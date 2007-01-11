@@ -2,8 +2,6 @@ package org.esupportail.lecture.domain.model;
 
 
 import org.esupportail.lecture.exceptions.domain.ElementNotFoundException;
-import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.ElementProfileNotFoundException;
 
 /**
  * @author gbouteil
@@ -14,11 +12,8 @@ public interface CustomElement {
 
 	/**
 	 * @return element name 
-	 * @throws ElementNotFoundException
-	 * @throws ElementProfileNotFoundException
-	 * @throws ElementNotLoadedException
 	 */
-	public String getName() throws ElementNotFoundException, ElementProfileNotFoundException, ElementNotLoadedException;
+	public String getName()throws ElementNotFoundException;
 	
 	/**
 	 * @return user profile : owner of this customElement

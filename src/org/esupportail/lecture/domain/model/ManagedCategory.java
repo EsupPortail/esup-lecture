@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 
 
@@ -67,11 +68,8 @@ public class ManagedCategory extends Category {
 	 * But there is not any loading of source at this time
 	 * @param customManagedCategory customManagedCAtegory to update
 	 * @param portletService Access to portlet service
-	 * @throws ElementNotLoadedException 
-	 * @throws ElementNotLoadedException 
 	 */
-	synchronized public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) 
-		throws ElementNotLoadedException {
+	synchronized public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustom("+customManagedCategory.getElementId()+",externalService)");
 		}
@@ -80,7 +78,12 @@ public class ManagedCategory extends Category {
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
 			log.debug("Managed Source profile ok");
-			msp.updateCustomCategory(customManagedCategory,ex);
+			try {
+				msp.updateCustomCategory(customManagedCategory,ex);
+			} catch (ComputeFeaturesException e) {
+				log.error("Impossible to update CustomCategory associated to category profile "+super.getProfileId()
+						+" for managedSourceProfile "+msp.getId(),e);
+			}
 		}
 	}
 	

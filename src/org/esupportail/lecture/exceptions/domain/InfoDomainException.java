@@ -3,6 +3,9 @@ package org.esupportail.lecture.exceptions.domain;
 
 public class InfoDomainException extends DomainServiceException {
 
+	public InfoDomainException() {
+		super();
+	}
 	public InfoDomainException(Exception cause) {
 		super(cause);
 	}

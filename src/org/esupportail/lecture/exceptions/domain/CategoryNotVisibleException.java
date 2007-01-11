@@ -1,14 +1,12 @@
 package org.esupportail.lecture.exceptions.domain;
 
-public class CategoryNotVisibleException extends PrivateException {
+public class CategoryNotVisibleException extends InfoDomainException {
 
 	public CategoryNotVisibleException(Exception e) {
 		super(e);
-		// TODO Auto-generated constructor stub
 	}
 	public CategoryNotVisibleException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 
 }

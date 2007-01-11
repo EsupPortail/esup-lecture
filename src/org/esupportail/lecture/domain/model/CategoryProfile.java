@@ -81,7 +81,7 @@ public abstract class CategoryProfile implements ElementProfile {
 		try {
 			name = getElement().getName();
 		}catch (CategoryNotLoadedException e) {
-			log.error("getName : Category "+id+" is not loaded");
+			log.error("Category "+id+" is not loaded");
 			name = this.name;
 		}
 		return name;
@@ -97,11 +97,8 @@ public abstract class CategoryProfile implements ElementProfile {
 			log.debug("getDescription()");
 		}
 		Category category = (Category) getElement();
-		if (category == null){
-			return null;
-		}else {
-			return category.getDescription();
-		}
+		return category.getDescription();
+		
 	}
 
 	/**
@@ -114,12 +111,14 @@ public abstract class CategoryProfile implements ElementProfile {
 		}
 		if (category==null){
 			// TODO (GB) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
-			throw new CategoryNotLoadedException("Category "+id+" is not loaded in profile");
+			String errorMsg = "Category "+id+" is not loaded in profile";
+			log.error(errorMsg);
+			throw new CategoryNotLoadedException(errorMsg);
 		}
 		return category;
 	}
 
-	protected abstract void loadCategory(ExternalService ex) throws CategoryNotLoadedException;
+	protected abstract void loadCategory(ExternalService ex);
 	
 	/*
 	 ************************** ACCESSORS *********************************/	

@@ -73,13 +73,6 @@ public abstract class CustomCategory implements CustomElement {
 		}
 	}
 
-	//TODO (RB) remove ?
-//	public CustomCategory() {
-//		if (log.isDebugEnabled()){
-//			log.debug("CustomCategory()");
-//		}
-//	}
-
 	/* 
 	 ************************** METHODS **********************************/
 
@@ -88,14 +81,15 @@ public abstract class CustomCategory implements CustomElement {
 	/**
 	 * @param ex
 	 * @return a list of customSource associated to this CustomCategory
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryProfileNotFoundException
 	 * @throws CategoryNotLoadedException
 	 * @throws ElementNotLoadedException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CustomContextNotFoundException 
 	 */
-	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) 
-		throws CategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException, CustomContextNotFoundException;
+	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) throws CategoryProfileNotFoundException, CategoryNotVisibleException;
 
 	
 //	Not here : it is only specific to CustomManagedCategories
@@ -120,9 +114,10 @@ public abstract class CustomCategory implements CustomElement {
 	public abstract CategoryProfile getProfile() throws CategoryProfileNotFoundException ;
 	
 	/**
+	 * @throws CategoryProfileNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
-	public String getName() throws CategoryProfileNotFoundException, CategoryNotLoadedException {
+	public String getName() throws CategoryProfileNotFoundException  {
 		if (log.isDebugEnabled()){
 			log.debug("getName()");
 		}

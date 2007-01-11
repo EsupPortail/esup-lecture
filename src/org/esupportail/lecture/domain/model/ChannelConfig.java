@@ -21,6 +21,7 @@ import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.*;
 //import org.apache.commons.configuration.HierarchicalConfiguration; version 1.3
+import org.esupportail.lecture.exceptions.domain.ChannelConfigException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
@@ -87,11 +88,10 @@ public class ChannelConfig  {
 	/**
 	 * Get an instance of the file to load
 	 * @return an instance of the file to load (singleton)
-	 * @throws ErrorException
-	 * @throws WarningException
+	 * @throws ChannelConfigException 
 	 * @see ChannelConfig#singleton
 	 */
-	synchronized protected static ChannelConfig getInstance()throws ConfigException {
+	synchronized protected static ChannelConfig getInstance()throws ChannelConfigException {
 		if (log.isDebugEnabled()){
 			log.debug("getInstance()");
 		}
@@ -100,9 +100,9 @@ public class ChannelConfig  {
 		if (singleton == null) {
 			URL url = ChannelConfig.class.getResource(filePath);
 			if (url==null) {
-				String ErrorMsg = "Config file: "+filePath+" not found.";
-				log.error(ErrorMsg);
-				throw new ConfigException(ErrorMsg);
+				String errorMsg = "Config file: "+filePath+" not found.";
+				log.error(errorMsg);
+				throw new ChannelConfigException(errorMsg);
 			}
 			File file = new File(url.getFile());
 			fileBasePath = file.getAbsolutePath();
@@ -132,8 +132,9 @@ public class ChannelConfig  {
 	
 	/**
 	 * Private Constructor: load xml config file
+	 * @throws ChannelConfigException 
 	 */
-	private ChannelConfig() throws ConfigException {
+	private ChannelConfig() throws ChannelConfigException {
 		if (log.isDebugEnabled()){
 			log.debug("ChannelConfig()");
 		}
@@ -145,17 +146,16 @@ public class ChannelConfig  {
 			checkXmlFile();
 			modified = true;
 		} catch (ConfigurationException e) {
-			log.error("ChannelConfig :: ConfigurationException, "+e.getMessage());
-			throw new ConfigException("Error to load channel config",e);
+			String errorMsg = "Impossible to load XML Channel config (esup-lecture.xml)";
+			log.error(errorMsg);
+			throw new ChannelConfigException(errorMsg,e);
 		} 
 	}
 	
 	/**
 	 * Check syntax file that cannot be checked by DTD
-	 * @throws ErrorException
-	 * @throws WarningException
 	 */
-	synchronized private void checkXmlFile() throws WarningException{
+	synchronized private void checkXmlFile() throws ChannelConfigException{
 		if (log.isDebugEnabled()){
 			log.debug("checkXmlFile()");
 		}
@@ -171,13 +171,15 @@ public class ChannelConfig  {
 		//  (vérifier que les attributs portail référencés dans la config
 	   	//      ont bien été déclarés dans le portlet.xml)
 		if (false){
-			throw new WarningException("...");
+			String errorMsg = "...";
+			log.error(errorMsg);
+			throw new ChannelConfigException(errorMsg);
 		}
 		
 		nbContexts = xmlFile.getMaxIndex("context") + 1;
 		
 		if (nbContexts == 0) {
-			log.warn("checkXmlConfig :: No context declared in channel config");
+			log.warn("No context declared in channel config (esup-lecture.xml)");
 		}
 		
 	}
@@ -318,9 +320,12 @@ public class ChannelConfig  {
      * defined in the channel config in channel
      * @param channel of the initialization
      * @throws ContextNotFoundException 
+     * @throws ContextNotFoundException 
+     * @throws ManagedCategoryProfileNotFoundException 
      * @throws ManagedCategoryProfileNotFoundException 
      */
-	synchronized protected static void initContextManagedCategoryProfilesLinks(Channel channel) throws ContextNotFoundException, ManagedCategoryProfileNotFoundException{
+	synchronized protected static void initContextManagedCategoryProfilesLinks(Channel channel) 
+		throws ContextNotFoundException, ManagedCategoryProfileNotFoundException {
     	if (log.isDebugEnabled()){
     		log.debug("initContextManagedCategoryProfilesLinks()");
     	}

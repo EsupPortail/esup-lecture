@@ -2,6 +2,8 @@ package org.esupportail.lecture.domain.model;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 
 /**
@@ -11,14 +13,14 @@ import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
  * @author gbouteil
  *
  */
-public abstract class ComputedManagedElementFeatures {
+public abstract class ManagedElementFeatures {
 
 	/*
 	 *********************** PROPERTIES**************************************/ 
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(ComputedManagedElementFeatures.class);
+	protected static final Log log = LogFactory.getLog(ManagedElementFeatures.class);
 	/**
 	 * Visibility rights for groups on the remote managed category
 	 * Using depends on trustCategory parameter
@@ -35,13 +37,13 @@ public abstract class ComputedManagedElementFeatures {
 	/**
 	 * Managed element profile concerned by these features
 	 */
-	private ManagedElementProfile mep;
+	protected ManagedElementProfile mep;
 	
 	
 	/*
 	 ********************* INITIALIZATION **************************************/
 	
-	public ComputedManagedElementFeatures(){
+	public ManagedElementFeatures(){
 		
 	}
 	
@@ -50,9 +52,9 @@ public abstract class ComputedManagedElementFeatures {
 	 * Constructor
 	 * @param mcp Managed category profile concerned by these features
 	 */
-	protected ComputedManagedElementFeatures(ManagedElementProfile mep){
+	protected ManagedElementFeatures(ManagedElementProfile mep){
 		if (log.isDebugEnabled()){
-			log.debug("ComputedManagedElementFeatures("+mep.getId()+")");
+			log.debug("ManagedElementFeatures("+mep.getId()+")");
 		}
 		this.mep = mep;
 	}
@@ -63,9 +65,16 @@ public abstract class ComputedManagedElementFeatures {
 	 *********************** METHODS **************************************/
 	/**
 	 * Compute features
+	 * @throws CategoryNotLoadedException 
+	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ComputeFeaturesException 
+	 * @throws ElementNotLoadedException 
 	 * @throws ElementNotLoadedException 
 	 */
-	synchronized protected void compute() throws ElementNotLoadedException {
+	synchronized protected void compute() throws CategoryNotLoadedException, ComputeFeaturesException   {
 		if (log.isDebugEnabled()){
 			log.debug("compute()");
 		}
@@ -107,11 +116,19 @@ public abstract class ComputedManagedElementFeatures {
 		
 	/**
 	 * @return Returns the visibility.
+	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
 	 * @throws ElementNotLoadedException 
 	 */
-	synchronized protected VisibilitySets getVisibility() throws ElementNotLoadedException {
+	synchronized protected VisibilitySets getVisibility() throws ComputeFeaturesException {
 		if (!isComputed){
-			compute();
+			try {
+				compute();
+			} catch (CategoryNotLoadedException e) {
+				String errorMsg = "Impossible to compute features on element "+ mep.getId() + "because Category is not loaded";
+				log.error(errorMsg);
+				throw new ComputeFeaturesException(errorMsg,e);
+			}
 		}
 		return visibility;
 	}

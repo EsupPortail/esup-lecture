@@ -10,7 +10,7 @@ import org.apache.commons.logging.LogFactory;
  * @author gbouteil
  *
  */
-public class ComputedManagedCategoryFeatures extends ComputedManagedElementFeatures {
+public class ManagedCategoryFeatures extends ManagedElementFeatures {
 	
 	/*
 	 *********************** PROPERTIES**************************************/ 
@@ -18,7 +18,7 @@ public class ComputedManagedCategoryFeatures extends ComputedManagedElementFeatu
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(ComputedManagedCategoryFeatures.class);
+	protected static final Log log = LogFactory.getLog(ManagedCategoryFeatures.class);
 	
 //	/**
 //	 * Remote managed category edit mode : not used for the moment
@@ -35,7 +35,7 @@ public class ComputedManagedCategoryFeatures extends ComputedManagedElementFeatu
 	 * Constructor
 	 * @param mcp  Managed category profile concerned by these features
 	 */
-	protected ComputedManagedCategoryFeatures(ManagedCategoryProfile mcp){
+	protected ManagedCategoryFeatures(ManagedCategoryProfile mcp){
 		super(mcp);
 	}
 

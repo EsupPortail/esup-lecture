@@ -100,10 +100,10 @@ public class CustomContext implements CustomElement {
 	 * @param ex access to externalService
 	 * @return list of customCategories defined in this customContext
 	 * @throws ContextNotFoundException 
+	 * @throws ContextNotFoundException 
 	 * @throws ElementNotLoadedException 
 	 */
-	public List<CustomCategory> getSortedCustomCategories(ExternalService ex) 
-		throws ContextNotFoundException, ElementNotLoadedException{
+	public List<CustomCategory> getSortedCustomCategories(ExternalService ex) throws ContextNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("getSortedCustomCategories(externalService)");
 		}
@@ -204,7 +204,9 @@ public class CustomContext implements CustomElement {
 			treeSize = size;
 			DomainTools.getDaoService().updateCustomContext(this);
 		}else {
-			throw new TreeSizeErrorException("TreeSize must be into 0 and 100");
+			String errorMsg = "TreeSize must be into 0 and 100";
+			log.error(errorMsg);
+			throw new TreeSizeErrorException(errorMsg);
 		}
 		
 	}

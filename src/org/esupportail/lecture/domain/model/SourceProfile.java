@@ -12,8 +12,12 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
+import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 
 /**
  * Source profile element : a source profile can be a managed or personal one.
@@ -66,16 +70,24 @@ public abstract class SourceProfile implements ElementProfile {
 	
 
 
-	protected abstract void loadSource(ExternalService ex) throws ElementNotLoadedException; 
+	protected abstract void loadSource(ExternalService ex) throws ComputeFeaturesException ; 
 	
 	
-	synchronized public List<Item> getItems(ExternalService ex) throws ElementNotLoadedException {
+	synchronized public List<Item> getItems(ExternalService ex) 
+		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException  {
 	   	if (log.isDebugEnabled()){
     		log.debug("getItems(externalService)");
     	}
-		loadSource(ex);
-		Source source = getElement();
-		return source.getItems();
+		try {
+			loadSource(ex);
+			Source source = getElement();
+			return source.getItems();
+		} catch (ComputeFeaturesException e) {
+			String errorMsg = "Impossible to loadSource on sourceProfile "+ getId() + " impossible to compute features";
+			log.error(errorMsg);
+			throw new SourceNotLoadedException(errorMsg,e);
+		} 
+		
 	}
 
 	/**
@@ -153,7 +165,9 @@ public abstract class SourceProfile implements ElementProfile {
 	public Source getElement() throws SourceNotLoadedException {
 		if (source == null){
 			// TODO (GB) on pourrait faire un loadSource ou autre chose ou ailleurs ?
-			throw new SourceNotLoadedException("Source "+id+" is not loaded in profile");
+			String errorMsg = "Source "+id+" is not loaded in profile";
+			log.error(errorMsg);
+			throw new SourceNotLoadedException(errorMsg);
 		}
 		return source;
 	}

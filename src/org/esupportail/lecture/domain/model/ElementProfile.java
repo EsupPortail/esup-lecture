@@ -7,6 +7,7 @@ package org.esupportail.lecture.domain.model;
 
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 
 
 /**
@@ -41,30 +42,10 @@ public interface ElementProfile {
 	
 	/**
 	 * @return the element associated to this profile
+	 * @throws ElementNotLoadedException 
 	 * @throws ElementNotLoadedException
 	 */
-	public Element getElement() throws ElementNotLoadedException;
-	
+	public Element getElement() throws ElementNotLoadedException ;
 	
 
-//	/**
-//	 * Getter of the property <tt>refreshTimer</tt>
-//	 * @return  Returns the refreshTimer.
-//	 */
-//	public int getRefreshTimer();
-//
-//	/**
-//	 * Setter of the property <tt>refreshTimer</tt>
-//	 * @param refreshTimer  The refreshTimer to set.
-//	 */
-//	public void setRefreshTimer(int refreshTimer);
-//	/**
-//	 */
-//	public void refresh();
-//	/**
-//	 */
-//	public boolean isTimeToReload();
-//	/**
-//	 */
-//	public void forceRefreshTimer();
 }

@@ -2,6 +2,8 @@ package org.esupportail.lecture.domain.model;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 
 /**
@@ -11,7 +13,7 @@ import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
  * @author gbouteil
  *
  */
-public class ComputedManagedSourceFeatures extends ComputedManagedElementFeatures {
+public class ManagedSourceFeatures extends ManagedElementFeatures {
 
 	/*
 	 *********************** PROPERTIES**************************************/ 
@@ -19,7 +21,7 @@ public class ComputedManagedSourceFeatures extends ComputedManagedElementFeature
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(ComputedManagedSourceFeatures.class);
+	protected static final Log log = LogFactory.getLog(ManagedSourceFeatures.class);
 	
 	
 	private Accessibility access;
@@ -29,10 +31,10 @@ public class ComputedManagedSourceFeatures extends ComputedManagedElementFeature
 	
 	/*
 	 ********************* INITIALIZATION **************************************/
-	protected ComputedManagedSourceFeatures(ManagedSourceProfile msp) {
+	protected ManagedSourceFeatures(ManagedSourceProfile msp) {
 		super(msp);
 		if (log.isDebugEnabled()){
-			log.debug("ComputedManagedSourceFeatures("+msp.getId()+")");
+			log.debug("ManagedSourceFeatures("+msp.getId()+")");
 		}
 	}
 	
@@ -51,20 +53,27 @@ public class ComputedManagedSourceFeatures extends ComputedManagedElementFeature
 			log.debug("update(setVisib,setAccess)");
 		}
 		super.update(setVisib);
-
 		access = setAccess;
 	}
 
 	/**
 	 * @return Returns the access.
+	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
 	 * @throws ElementNotLoadedException 
 	 */
-	synchronized protected Accessibility getAccess() throws ElementNotLoadedException {
+	synchronized protected Accessibility getAccess() throws ComputeFeaturesException{
 		if (log.isDebugEnabled()){
 			log.debug("getAccess()");
 		}
 		if (!super.isComputed()){
-			super.compute();
+			try {
+				super.compute();
+			} catch (CategoryNotLoadedException e) {
+				String errorMsg = "Impossible to compute features on element "+ super.mep.getId() + "because Category is not loaded";
+				log.error(errorMsg);
+				throw new ComputeFeaturesException(errorMsg,e);
+			}
 		}
 		return access;
 	}

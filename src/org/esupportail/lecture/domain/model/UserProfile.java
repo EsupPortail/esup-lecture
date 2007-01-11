@@ -10,6 +10,8 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
+import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
@@ -101,16 +103,19 @@ public class UserProfile {
 	 * if exists, else create it.
 	 * @param contextId identifier of the context refered by the customContext
 	 * @return customContext (or null)
+	 * @throws ContextNotFoundException 
 	 */
-	public CustomContext getCustomContext(String contextId){
+	public CustomContext getCustomContext(String contextId) throws ContextNotFoundException{
 	   	if (log.isDebugEnabled()){
     		log.debug("getCustomContext("+contextId+")");
     	}
-		CustomContext customContext = 
-				customContexts.get(contextId);
+		CustomContext customContext = customContexts.get(contextId);
 		if (customContext == null){
-			// TODO (GB) verifier l'existance du context dans le canal
-			//=> throw ContextNotFoundException
+			if (!DomainTools.getChannel().isThereContext(contextId)) {
+				String errorMsg = "Context "+contextId+ "is not found in Channel";
+				log.error(errorMsg);
+				throw new ContextNotFoundException(errorMsg);
+			}
 			customContext = new CustomContext(contextId,this);
 			addCustomContext(customContext);
 		}
@@ -128,43 +133,69 @@ public class UserProfile {
 	 * @param categoryId identifier of the category refered by the customCategory
 	 * @return customCategory (or null)
 	 * @throws CategoryNotVisibleException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws ElementNotLoadedException 
+	 * @throws CustomContextNotFoundException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CategoryNotVisibleException 
 	 * @throws ElementNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CustomCategoryNotFoundException 
 	 * @throws CustomContextNotFoundException 
 	 */
 	public CustomCategory getCustomCategory(String categoryId,ExternalService ex) 
-		throws ManagedCategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException, CustomContextNotFoundException {
+		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, CustomCategoryNotFoundException {
 	   	if (log.isDebugEnabled()){
     		log.debug("getCustomCategory("+categoryId+")");
     	}
-		// TODO (GB later) avec customManagedCategory et customPersonalCategory
-		CustomCategory customCategory = 
-			customCategories.get(categoryId);
+		// TODO (GB later) revoir avec customManagedCategory et customPersonalCategory
+		CustomCategory customCategory = customCategories.get(categoryId);
 		if(customCategory == null){
 			updateCustomContextsForOneManagedCategory(categoryId,ex);
 			customCategory = customCategories.get(categoryId);
+			if (customCategory == null){
+				String errorMsg = "CustomCategory associated to category "+categoryId
+					+"is not found in user profile "+userId+"whereas an updateCustimContextForOneManagedCategory " +
+							"has done and category seems visible to user profile "+userId;
+				log.error(errorMsg);
+				throw new CustomCategoryNotFoundException(errorMsg);
+			}
 		}
 		return customCategory;
 	}
 	
 	protected void updateCustomContextsForOneManagedCategory(String categoryProfileId,ExternalService ex) 
-		throws ManagedCategoryProfileNotFoundException, ElementNotLoadedException, CategoryNotVisibleException, CustomContextNotFoundException {
+		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException {
 		
 		ManagedCategoryProfile mcp = DomainTools.getChannel().getManagedCategoryProfile(categoryProfileId);
 		Set<Context> contexts = mcp.getContextsSet();
-		boolean contextFound = false;
+		boolean categoryIsVisible = true;
+		// For all contexts refered by the managedCategoryProfile
 		for(Context context : contexts){
 			String contextId = context.getId();
+			// Update on customContexts existing in userProfile
 			if (containsCustomContext(contextId)) {
-				contextFound = true;
-				CustomContext customContext = getCustomContext(contextId);
-				if (!mcp.updateCustomContext(customContext, ex)){
-					throw new CategoryNotVisibleException("This Category is not visible for this user profile");
+				CustomContext customContext;
+				try {
+					customContext = getCustomContext(contextId);
+				
+					if (!mcp.updateCustomContext(customContext, ex)){
+						categoryIsVisible = false;
+					}
+				} catch (ContextNotFoundException e) {
+					log.error("Impossible to get CustomContext associated to context "+ contextId
+							+" for managedCategoryProfile "+mcp.getId()+" because context not found",e);
+				} catch (ComputeFeaturesException e) {
+					log.error("Impossible to update CustomContext associated to context "+ contextId
+							+" for managedCategoryProfile "+mcp.getId()+"because an error occured when computing features",e);
 				}
 			}
-		}	
-		if (!contextFound){
-			throw new CustomContextNotFoundException ("CustomContext not found in userProfile "+this.userId+" for managedCategory "+categoryProfileId);
+		}
+		if (!categoryIsVisible){
+			String errorMsg = "Category "+categoryProfileId+" is not visible for user profile "+userId;
+			log.error(errorMsg);
+			throw new CategoryNotVisibleException(errorMsg);
 		}
 		
 	}
@@ -179,10 +210,13 @@ public class UserProfile {
 	   	if (log.isDebugEnabled()){
     		log.debug("getCustomSource("+sourceId+")");
     	}
+	   	// TODO (GB later) revoir avec customManagedSource et customPersonalSource
 		CustomSource customSource = 
 			customSources.get(sourceId);
 		if(customSource == null){
-			throw new CustomSourceNotFoundException ("CustomSource "+sourceId+" is not found in userProfile "+this.userId);
+			String errorMsg = "CustomSource "+sourceId+" is not found in userProfile "+this.userId;
+			log.error(errorMsg);
+			throw new CustomSourceNotFoundException(errorMsg);
 		}
 		
 		return customSource;

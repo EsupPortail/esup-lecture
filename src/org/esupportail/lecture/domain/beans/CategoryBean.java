@@ -5,6 +5,7 @@ import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 /**
@@ -37,58 +38,66 @@ public class CategoryBean {
 	public CategoryBean(CustomCategory customCategory,CustomContext customContext) throws CategoryProfileNotFoundException, CategoryNotLoadedException{
 		CategoryProfile profile = customCategory.getProfile();
 		
-		setName(profile.getName());
-		setDescription(profile.getDescription());
-		setId(profile.getId());
-		folded = customContext.isCategoryFolded(id);
+		this.name = profile.getName();
+		this.description = profile.getDescription();
+		this.id = profile.getId();
+		this.folded = customContext.isCategoryFolded(id);
 	}
 	
 	/**
 	 * @return description of the category
+	 * @throws DomainServiceException 
 	 */
-	public String getDescription() {
+	public String getDescription() throws DomainServiceException {
 		return description;
 	}
 	/**
 	 * @param description description of the category
+	 * @throws DomainServiceException 
 	 */
-	public void setDescription(String description) {
+	public void setDescription(String description) throws DomainServiceException {
 		this.description = description;
 	}
 	/**
 	 * @return if category is folded or not
+	 * @throws DomainServiceException 
 	 */
-	public boolean isFolded() {
+	public boolean isFolded() throws DomainServiceException {
 		return folded;
 	}
 	/**
 	 * @param folded
+	 * @throws DomainServiceException 
 	 */
-	public void setFolded(boolean folded) {
+	public void setFolded(boolean folded) throws DomainServiceException {
 		this.folded = folded;
 	}
 	/**
 	 * @return id of category
+	 * @throws DomainServiceException 
 	 */
-	public String getId() {
+	public String getId() throws DomainServiceException {
 		return id;
 	}
 	/**
 	 * @param id
+	 * @throws DomainServiceException 
 	 */
-	public void setId(String id) {
+	public void setId(String id) throws DomainServiceException {
 		this.id = id;
 	}
 	/**
 	 * @return name of category
+	 * @throws DomainServiceException 
 	 */
-	public String getName() {
+	public String getName() throws DomainServiceException {
 		return name;
 	}
 	/**
 	 * @param name
+	 * @throws DomainServiceException 
 	 */
-	public void setName(String name) {
+	public void setName(String name) throws DomainServiceException {
 		this.name = name;
 	}
 

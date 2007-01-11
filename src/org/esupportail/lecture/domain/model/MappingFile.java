@@ -17,6 +17,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.lecture.exceptions.*;
+import org.esupportail.lecture.exceptions.domain.MappingFileException;
 
 
 /**
@@ -78,11 +79,10 @@ public class MappingFile {
 	/**
 	* Get an instance of the mapping file
 	 * @return an instance of the mapping file (singleton)
-	 * @throws ErrorException
-	 * @throws WarningException
+	 * @throws MappingFileException 
 	 * @see MappingFile#singleton
 	 */
-	synchronized protected static MappingFile getInstance() throws ConfigException  {
+	synchronized protected static MappingFile getInstance() throws MappingFileException  {
 		if (log.isDebugEnabled()){
 			log.debug("getInstance()");
 		}
@@ -91,7 +91,7 @@ public class MappingFile {
 			if (url==null) {
 				String ErrorMsg = "Mapping config file: "+mappingFilePath+" not found.";
 				log.error(ErrorMsg);
-				throw new ConfigException(ErrorMsg);
+				throw new MappingFileException(ErrorMsg);
 			}
 			File mappingFile = new File(url.getFile());
 			mappingFileBasePath = mappingFile.getAbsolutePath();
@@ -121,10 +121,8 @@ public class MappingFile {
 
 	/**
 	 * Private Constructor: load xml mapping file 
-	 * @throws ErrorException
-	 * @throws WarningException
 	 */
-	protected MappingFile() throws ConfigException {
+	protected MappingFile() throws MappingFileException {
 		if (log.isDebugEnabled()){
 			log.debug("MappingFile()");
 		}
@@ -138,17 +136,17 @@ public class MappingFile {
 			modified = true;
 
 		} catch (ConfigurationException e) {
-			log.error("MappingFile :: ConfigurationException, "+e.getMessage());
-			throw new ConfigException(e.getMessage());	
+			String errorMsg = "Impossible to load XML Mapping file (mappings.xml)";
+			log.error(errorMsg);
+			throw new MappingFileException(errorMsg,e);	
 		} 
 	}	
 
 	/**
 	 * Check syntax file that cannot be checked by DTD
-	 * @throws ErrorException
-	 * @throws WarningException
+	 * @throws MappingFileException 
 	 */
-	synchronized private static void checkXmlFile() {
+	synchronized private static void checkXmlFile() throws MappingFileException {
 		if (log.isDebugEnabled()){
 			log.debug("checkXmlFile()");
 		}
@@ -166,7 +164,9 @@ public class MappingFile {
 			String rootElement = xmlFile.getString(pathMapping+ "[@rootElement]");
 			
 			if (sourceURL == null && dtd == null && xmlns == null && xmlType == null && rootElement == null){
-				throw new ErrorException("loadMappings :: you must declare sourceURL or dtd or xmlns or xmltype or rootElement in a mapping.");
+				String errorMsg = "In mappingFile, mapping n°"+i+"is empty, you must declare sourceURL or dtd or xmlns or xmltype or rootElement in a mapping.";
+				log.error(errorMsg);
+				throw new MappingFileException(errorMsg);
 			}
 			
 			if (sourceURL == null){

@@ -7,4 +7,12 @@ public class SourceNotLoadedException extends ElementNotLoadedException {
 		super(string);
 	}
 
+	public SourceNotLoadedException(Exception e) {
+		super(e);
+	}
+
+	public SourceNotLoadedException(String errorMsg, ComputeFeaturesException e) {
+		super(errorMsg,e);
+	}
+
 }

@@ -16,8 +16,12 @@ import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.*;
+import org.esupportail.lecture.exceptions.domain.ChannelConfigException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
+import org.esupportail.lecture.exceptions.domain.FatalException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.MappingFileException;
+import org.esupportail.lecture.exceptions.domain.PrivateException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 /**
@@ -124,17 +128,32 @@ public class Channel implements InitializingBean {
 	
 	
 	/**
+	 * @throws FatalException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws ContextNotFoundException 
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
-	public void afterPropertiesSet() throws ContextNotFoundException, ManagedCategoryProfileNotFoundException  {
+	public void afterPropertiesSet() throws FatalException   {
 		if (log.isDebugEnabled()){
 			log.debug("afterPropertiesSet()");
 		}
 		Assert.notNull(daoService,"property daoService can not be null");
 		Assert.notNull(externalService,"property externalService can not be null");
-		startup();
+		try {
+			startup();
+		} catch (PrivateException e) {
+			String errorMsg = "Unable to startup channel because of a PrivateException.";
+			log.fatal(errorMsg);
+			throw new FatalException(errorMsg,e);
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to startup channel because of a ContextNotFoundException.";
+			log.fatal(errorMsg);
+			throw new FatalException(errorMsg,e);
+		} catch (ManagedCategoryProfileNotFoundException e) {
+			String errorMsg = "Unable to startup channel because of a ManagedCategoryProfileNotFoundException.";
+			log.fatal(errorMsg);
+			throw new FatalException(errorMsg,e);
+		} 
 		DomainTools.setChannel(this);
 		DomainTools.setDaoService(daoService);
 		DomainTools.setExternalService(externalService);
@@ -143,10 +162,15 @@ public class Channel implements InitializingBean {
 	/**
 	 * Methods call to load the config and mapping file 
 	 * if needed (when files are modified from last loading)
+	 * @throws ChannelConfigException 
+	 * @throws ContextNotFoundException 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws ContextNotFoundException 
+	 * @throws MappingFileException 
 	 */
-	synchronized private void startup() throws ContextNotFoundException, ManagedCategoryProfileNotFoundException {
+	synchronized private void startup() 
+		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, ChannelConfigException, MappingFileException {
 		if (log.isDebugEnabled()){
 			log.debug("startup()");
 		}
@@ -157,12 +181,15 @@ public class Channel implements InitializingBean {
 	/**
 	 * Load config file if needed (using ChannelConfig), containing contexts and managed category profiles definition.
 	 * Initialize these elements.
+	 * @throws ChannelConfigException 
+	 * @throws ContextNotFoundException 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.ChannelConfig#getInstance()
 	 * @exception FatalException
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws ContextNotFoundException 
 	 */
-	synchronized private void loadConfig()throws ConfigException, ContextNotFoundException, ManagedCategoryProfileNotFoundException {
+	synchronized private void loadConfig() throws ChannelConfigException, ManagedCategoryProfileNotFoundException, ContextNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("loadConfig()");
 		}
@@ -172,17 +199,16 @@ public class Channel implements InitializingBean {
 			// - utiliser l'objet config pour appeler les méthodes après (reset ...)
 			// 		et faire une classe FileToLoad avec ces méthodes en non static
 			// - charger la config via un DAO ?
-		} catch (WarningException w) {
-			log.warn(w.getMessage());
 			
-		} catch (ConfigException e) {
-			if (configLoaded) {
-				log.error("loadConfig :: unable to load new config : "+e.getMessage());
-			} else {
-				String ErrorMsg = "loadConfig :: unable to load config and start initialization : "+e.getMessage(); 
-				log.fatal(ErrorMsg);
-				throw new FatalException(ErrorMsg);
-			}
+		} catch (ChannelConfigException e) {
+			// TODO (GB later)
+//			if (configLoaded) {
+//				log.error("Unable to load new config : "+e.getMessage());
+//			} else {
+				String ErrorMsg = "Unable to load config and start initialization : "+e.getMessage(); 
+				log.error(ErrorMsg);
+				throw new ChannelConfigException(ErrorMsg,e);
+//			}
 		}
 		
 		if (ChannelConfig.isModified()){
@@ -225,7 +251,7 @@ public class Channel implements InitializingBean {
 	 * @see org.esupportail.lecture.domain.model.MappingFile#getInstance()
 	 * @exception FatalException
 	 */	
-	synchronized private void loadMappingFile() throws FatalException {
+	synchronized private void loadMappingFile() throws MappingFileException {
 		if (log.isDebugEnabled()){
 			log.debug("loadMappingFile()");
 		}
@@ -233,17 +259,15 @@ public class Channel implements InitializingBean {
 		try {
 			mappingFile = MappingFile.getInstance();
 			
-		} catch (WarningException w) {
-			log.warn(w.getMessage());
-			
-		} catch (ConfigException e) {
-			if (mappingsLoaded) {
-				log.error("loadMappingFile :: unable to load new mappings : "+e.getMessage());
-			} else {
-				String ErrorMsg = "loadMappingFile :: unable to load mappings and start initialization : "+e.getMessage(); 
-				log.fatal(ErrorMsg);
-				throw new FatalException(ErrorMsg);
-			}
+		} catch (MappingFileException e) {
+			// TODO (GB later)
+//			if (mappingsLoaded) {
+//				log.error("unable to load new mappings : "+e.getMessage());
+//			} else {
+				String ErrorMsg = "Unable to load mappings and start initialization : "+e.getMessage(); 
+				log.error(ErrorMsg);
+				throw new MappingFileException(ErrorMsg);
+//			}
 		}
 		
 		if (MappingFile.isModified()){
@@ -318,11 +342,19 @@ public class Channel implements InitializingBean {
 		}
 		Context context = contextsHash.get(contextId);
 		if (context == null) {
-			throw new ContextNotFoundException("Context "+contextId+" is not defined in channel");
+			String errorMsg = "Context "+contextId+" is not defined in channel";
+			log.error(errorMsg);
+			throw new ContextNotFoundException(errorMsg);
 		}
 		return context;
 	}
 	
+	public boolean isThereContext(String contextId) {
+		if (log.isDebugEnabled()){
+			log.debug("getContext("+contextId+")");
+		}
+		return contextsHash.containsKey(contextId);		
+	}
 	/**
 	 * Add a context to the hashtable of contexts, indexed by its id
 	 * @param c context to add
@@ -350,7 +382,9 @@ public class Channel implements InitializingBean {
 		}
 		ManagedCategoryProfile mcp = managedCategoryProfilesHash.get(id);
 		if (mcp == null) {
-			throw new ManagedCategoryProfileNotFoundException("ManagedCategoryProfile "+id+" is not defined in channel");
+			String errorMsg = "ManagedCategoryProfile "+id+" is not defined in channel";
+			log.error(errorMsg);
+			throw new ManagedCategoryProfileNotFoundException(errorMsg);
 		}
 		return mcp;
 	}
@@ -646,5 +680,8 @@ public class Channel implements InitializingBean {
 	public void setExternalService(ExternalService externalService) {
 		this.externalService = externalService;
 	}
+
+
+	
 
 }

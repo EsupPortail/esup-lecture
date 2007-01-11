@@ -15,6 +15,9 @@ import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
+import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
+import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
+import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 
@@ -29,8 +32,11 @@ public class TestDAORemoteXMLSource {
 	
 	/**
 	 * @param args non argumet needed
+	 * @throws Xml2HtmlException 
+	 * @throws ComputeItemsException 
+	 * @throws MappingNotFoundException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException {
 	
 		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
@@ -62,7 +68,7 @@ public class TestDAORemoteXMLSource {
 //		printSrc(src);		
 	}
 
-	private static void printSrc(Source src) {
+	private static void printSrc(Source src) throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException {
 		System.out.println("*********************************");
 		System.out.println(" dtd --> "+src.getDtd());
 		System.out.println(" rootElement --> "+src.getRootElement());

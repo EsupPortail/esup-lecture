@@ -15,6 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
@@ -84,7 +85,7 @@ public class Context {
 	 * @param channel channel where the context is defined 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	synchronized protected void initManagedCategoryProfiles(Channel channel) throws ManagedCategoryProfileNotFoundException {
+	synchronized protected void initManagedCategoryProfiles(Channel channel) throws ManagedCategoryProfileNotFoundException  {
 		if (log.isDebugEnabled()){
 			log.debug("initManagedCategoryProfiles(channel)");
 		}
@@ -108,16 +109,20 @@ public class Context {
 	 * And update customContext according to visibilities
 	 * @param customContext customContext to upadte
 	 * @param ex access to portlet service
-	 * @throws ElementNotLoadedException 
 	 */
-	synchronized public void updateCustom(CustomContext customContext, ExternalService ex) throws ElementNotLoadedException {
+	synchronized public void updateCustom(CustomContext customContext, ExternalService ex)  {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustom("+customContext.getElementId()+",externalService)");
 		}
 		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet){
-			mcp.updateCustomContext(customContext, ex);	
+			try {
+				mcp.updateCustomContext(customContext, ex);
+			} catch (ComputeFeaturesException e) {
+				log.error("Impossible to update CustomContext associated to context "+ getId()
+						+" for managedCategoryProfile "+mcp.getId()+" because a compute feature error occured",e);
+			}	
 		}
 	}
 

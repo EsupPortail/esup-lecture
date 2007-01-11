@@ -24,7 +24,6 @@ public class Mapping {
 	 * Log instance
 	 */
 	protected static final Log log = LogFactory.getLog(Mapping.class);
-
 	
 	/**
 	 * Source URL

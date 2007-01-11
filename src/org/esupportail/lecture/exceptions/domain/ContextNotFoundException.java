@@ -7,6 +7,10 @@ public class ContextNotFoundException extends ElementNotFoundException {
 	public ContextNotFoundException(String string) {
 		super(string);
 	}
+
+	public ContextNotFoundException() {
+		super();
+	}
 	
 
 }

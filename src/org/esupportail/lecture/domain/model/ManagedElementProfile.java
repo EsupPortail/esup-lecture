@@ -6,7 +6,9 @@
 package org.esupportail.lecture.domain.model;
 
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.VisibilityNotFoundException;
 
 
 /**
@@ -23,8 +25,9 @@ interface ManagedElementProfile extends ElementProfile {
 	 * Returns access mode of the Element
 	 * @return access 
 	 * @throws ElementNotLoadedException 
+	 * @throws ComputeFeaturesException 
 	 */
-	public Accessibility getAccess() throws ElementNotLoadedException; 
+	public Accessibility getAccess() throws ComputeFeaturesException; 
 	
 	/**
 	 * Sets access mode of the Element
@@ -35,9 +38,11 @@ interface ManagedElementProfile extends ElementProfile {
 	/**
 	 * Returns visibility sets of the Element
 	 * @return visibility 
+	 * @throws ComputeFeaturesException 
 	 * @throws ElementNotLoadedException 
+	 * @throws ComputeFeaturesException 
 	 */
-	public VisibilitySets getVisibility() throws ElementNotLoadedException;
+	public VisibilitySets getVisibility() throws ComputeFeaturesException ;
 	/**
 	 * Sets visibility sets of the Element
 	 * @param visibility
@@ -66,7 +71,7 @@ interface ManagedElementProfile extends ElementProfile {
 	 * @return allowed 
 	 * @throws ElementNotLoadedException 
 	 */
-	public DefinitionSets getVisibilityAllowed() throws ElementNotLoadedException;
+	public DefinitionSets getVisibilityAllowed() throws ComputeFeaturesException;
 	/**
 	 * Sets autoSubscribed visibility group of the Element
 	 * @param d subscribed group
@@ -77,7 +82,7 @@ interface ManagedElementProfile extends ElementProfile {
 	 * @return autoSubscribed 
 	 * @throws ElementNotLoadedException 
 	 */
-	public DefinitionSets getVisibilityAutoSubscribed() throws ElementNotLoadedException;
+	public DefinitionSets getVisibilityAutoSubscribed() throws ComputeFeaturesException;
 	/**
 	 * Sets obliged visibility group of the Element
 	 * @param d obliged group
@@ -87,14 +92,21 @@ interface ManagedElementProfile extends ElementProfile {
 	 * Returns obliged visibility group of the Element
 	 * @return d obliged group
 	 * @throws ElementNotLoadedException 
+	 * @throws ComputeFeaturesException 
 	 */
-	public DefinitionSets getVisibilityObliged() throws ElementNotLoadedException;
+	public DefinitionSets getVisibilityObliged() throws ComputeFeaturesException;
 	/**
 	 * Computes rights on parameters shared between a ManagedElementProfile and its
 	 * ManagedElement (edit, visibility)
+	 * @throws CategoryNotLoadedException 
 	 * @throws ElementNotLoadedException 
+	 * @throws VisibilityNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ComputeFeaturesException 
 	 */
-	public void computeFeatures() throws ElementNotLoadedException;
+	public void computeFeatures() throws CategoryNotLoadedException, ComputeFeaturesException ;
 	
 
 }
