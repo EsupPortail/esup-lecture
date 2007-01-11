@@ -87,9 +87,10 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryNotLoadedException
 	 * @throws ElementNotLoadedException 
 	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryNotLoadedException 
 	 * @throws CustomContextNotFoundException 
 	 */
-	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) throws CategoryProfileNotFoundException, CategoryNotVisibleException;
+	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException;
 
 	
 //	Not here : it is only specific to CustomManagedCategories

@@ -13,6 +13,7 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
@@ -136,10 +137,11 @@ public class FacadeService implements InitializingBean {
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
 	 * @throws DomainServiceException 
 	 */
 	public List<SourceBean> getVisibleSources(String uid,String categoryId) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException {
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, CategoryNotLoadedException {
 		return domainService.getVisibleSources(uid, categoryId,externalService);
 	}
 	

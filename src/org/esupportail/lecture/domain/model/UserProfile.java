@@ -182,6 +182,8 @@ public class UserProfile {
 				
 					if (!mcp.updateCustomContext(customContext, ex)){
 						categoryIsVisible = false;
+					} else {
+						DomainTools.getDaoService().updateCustomContext(customContext);
 					}
 				} catch (ContextNotFoundException e) {
 					log.error("Impossible to get CustomContext associated to context "+ contextId

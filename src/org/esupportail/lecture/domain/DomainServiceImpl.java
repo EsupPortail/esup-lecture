@@ -150,13 +150,14 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
 	 * @throws InternalDomainException 
+	 * @throws CategoryNotLoadedException 
 	 * @throws CustomContextNotFoundException 
 	 * @throws CustomCategoryNotFoundException 
 	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService ex) 
-		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException  {
+		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException  {
 		if (log.isDebugEnabled()){
 			log.debug("getVisibleSources("+uid+","+categoryId+",externalService)");
 		}
@@ -188,9 +189,10 @@ public class DomainServiceImpl implements DomainService {
 	 * @param ex
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
 	 */
 	private List<SourceBean> getSortedCustomSourcesForCustomCategory(CustomCategory customCategory, ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException {
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException {
 		List<CustomSource> customSources = customCategory.getSortedCustomSources(ex);
 		int nbSources = customSources.size();
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();

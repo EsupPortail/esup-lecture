@@ -12,6 +12,7 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
@@ -149,9 +150,10 @@ public class DomainTest {
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
 	 * @throws DomainServiceException 
 	 */
-	private static void testGetVisibleSources() throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException  {
+	private static void testGetVisibleSources() throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, CategoryNotLoadedException  {
 		printIntro("getVisibleSources");
 		for(String catId : categoryIds){
 			System.out.println(" **** cat "+catId+" **********");
@@ -176,8 +178,9 @@ public class DomainTest {
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
 	 */
-	private static void testGetVisibleSourceAlternativeWay() throws ContextNotFoundException, InternalExternalException, CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException  {	
+	private static void testGetVisibleSourceAlternativeWay() throws ContextNotFoundException, InternalExternalException, CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, CategoryNotLoadedException  {	
 		testGetContext();	
 		printIntro("getVisibleSources - alternative way");
 		categoryIds = new ArrayList<String>();

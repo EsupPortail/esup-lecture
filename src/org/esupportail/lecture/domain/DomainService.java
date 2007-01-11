@@ -7,6 +7,7 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
@@ -52,10 +53,11 @@ public interface DomainService {
 	 * @param uid 
 	 * @param ex 
 	 * @return List<SourceBean>
+	 * @throws CategoryNotLoadedException 
 	 * @see FacadeService#getVisibleSources(String, String)
 	 */
 	List<SourceBean> getVisibleSources(String uid,String categoryId,ExternalService ex)  
-		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException ;
+		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException ;
 
 	/**
 	 * @param sourceId 

@@ -92,11 +92,12 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @throws ElementNotLoadedException 
 	 * @throws CustomContextNotFoundException 
 	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryNotLoadedException 
 	 * @throws CustomContextNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	public List<CustomSource> getSortedCustomSources(ExternalService ex) throws CategoryProfileNotFoundException, CategoryNotVisibleException {
+	public List<CustomSource> getSortedCustomSources(ExternalService ex) throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("getSortedCustomSources(externalService)");
 		}
@@ -107,7 +108,7 @@ public class CustomManagedCategory extends CustomCategory {
 			profile.updateCustom(this,ex);
 		} catch (CategoryNotLoadedException e) {
 			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
-			// TODO (GB) !!!  et le dao ?
+			profile.updateCustom(this,ex);
 		}
 		
 		DomainTools.getDaoService().updateCustomCategory(this);
