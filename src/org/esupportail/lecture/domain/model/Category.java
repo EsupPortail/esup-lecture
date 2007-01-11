@@ -5,69 +5,59 @@
 */
 package org.esupportail.lecture.domain.model;
 
-import java.util.HashSet;
 import java.util.Hashtable;
-import java.util.Set;
-
-
-
 import java.io.Serializable;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.dao.DaoServiceStub;
 
 /**
  * Category element : a category can be a managed or personal one.
+ * A Category is referenced by a categoryProfile and contains SourceProfiles
  * @author gbouteil
  *
  */
-public abstract class Category implements Element,Serializable{
+public abstract class Category implements Element,Serializable {
 
 	/*
 	 *************************** PROPERTIES *********************************/	
+
 	/**
 	 * Log instance
 	 */
 	protected static final Log log = LogFactory.getLog(Category.class);
-	
 	/**
-	 * Name of the category : not used
+	 * Name of the category 
 	 */
 	private String name = "";
-
 	/**
 	 * Description of the category
 	 */
 	private String description = "";
-
 	/**
 	 * Id of the categoryProfil
 	 */
 	private String profileId;
+	/**
+	 * SourcesProfiles contained by this Category
+	 */
+	private Hashtable<String,SourceProfile> sourceProfilesHash = new Hashtable<String,SourceProfile>();
 	
-	private Hashtable<String,SourceProfile> sourceProfilesHash;
-	
+
 	/*
 	 *************************** INIT *********************************/
 	
-	/**
-	 * Constructor
-	 */
-	public Category() {
-		sourceProfilesHash = new Hashtable<String,SourceProfile>();
-	}
 	
 	/*
 	 *************************** METHODS *********************************/
 	
 	
-	protected SourceProfile getSourceProfileById(String id){
+/*	protected SourceProfile getSourceProfileById(String id){
 		if (log.isDebugEnabled()){
 			log.debug("getSourceProfileById("+id+")");
 		}
 		return sourceProfilesHash.get(id);
 	}
+*/
 
 
 
@@ -77,73 +67,79 @@ public abstract class Category implements Element,Serializable{
 	
 	
 	/**
-	 * @return Returns the sourceProfilesSet.
+	 * @return Returns the sourceProfilesHash of this category
 	 */
-	public Hashtable<String,SourceProfile> getSourceProfilesHash() {
+	protected Hashtable<String,SourceProfile> getSourceProfilesHash() {
+	
 		return sourceProfilesHash;
 	}
 
 
 	/**
-	 * @param sourceProfilesSet The sourceProfilesSet to set.
+	 * @param sourceProfilesHash to set.
 	 */
 	synchronized public void setSourceProfilesHash(Hashtable<String,SourceProfile> sourceProfilesHash) {
+		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.sourceProfilesHash = sourceProfilesHash;
 	}
+	
 	/**
-	 * Returns catgeory name
+	 * Returns the name of the category
 	 * @return name
 	 * @see Category#name
 	 */
-	public String getName() {
+	protected String getName() {
 		return name;
 	}
 
 
 	/**
-	 * Sets categroy name
+	 * Sets the category name
 	 * @param name
 	 * @see Category#name
 	 */
 	synchronized public void setName(String name) {
+		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.name = name;
 	}
 	
 	/**
-	 * Returns category description
+	 * Returns the category description
 	 * @return description
 	 * @see Category#description
 	 */
-	public String getDescription() {
+	protected String getDescription() {
 		return description;
 	}
 
 	/**
-	 * Sets category description
+	 * Sets the category description
 	 * @param description
 	 * @see Category#description
 	 */
 	synchronized public void setDescription(String description) {
+		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.description = description;
 	}
 
 	
 	/**
-	 * Returns the id category
+	 * Returns the id of the categoryProfile accociated to this
 	 * @return id
-	 * @see Category#profilId
+	 * @see Category#profileId
 	 */
-	public String getProfileId() {
+	protected String getProfileId() {
 		return profileId;
 	}
 
 
 	/**
-	 * Sets id category
-	 * @param profilId
-	 * @see Category#profilId
+	 * Sets the id of the categoryProfile accociated to this
+	 * @param profileId
+	 * @see Category#profileId
 	 */
 	synchronized public void setProfileId(String profileId) {
+		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.profileId = profileId;
 	}
 

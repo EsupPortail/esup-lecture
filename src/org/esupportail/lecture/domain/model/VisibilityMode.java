@@ -7,11 +7,11 @@ package org.esupportail.lecture.domain.model;
  */
 public enum VisibilityMode {
 	/**
-	 * Obliged visibility : automatic subscription with no unsubcription possible 
+	 * Obliged visibility : automatic subscription with impossible unsubcription 
 	 */
 	OBLIGED,
 	/**
-	 * AutoSubscribed visibility : automatic subscription with unsubcription possible 
+	 * AutoSubscribed visibility : automatic subscription with possible unsubcription 
 	 */
 	AUTOSUBSCRIBED,
 	/**

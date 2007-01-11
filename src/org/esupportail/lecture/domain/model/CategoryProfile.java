@@ -5,49 +5,42 @@
 */
 package org.esupportail.lecture.domain.model;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Vector;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 /**
  * Category profile element : a category profile can be a managed or personal one.
+ * A Category profile references a category and is displayed in a context
  * @author gbouteil
- *
  */
 public abstract class CategoryProfile implements ElementProfile {
 	
 	/* 
 	 *************************** PROPERTIES *********************************/	
+
 	/**
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(CategoryProfile.class); 
 	/**
-	 *  Category profile name
+	 *  Category profile name.
+	 *  It is the category name that is used.
+	 *  This name is used only when category is not loaded
 	 */
 	private String name = "";
 	/**
 	 *  Category profile id
 	 */
 	private String id;
-
 	/**
-	 * Its category
-	 * When its category is not null,
-	 * The categroy profile is said "full"
+	 * Category described by this
 	 */
 	private Category category;
 	
 	
 	/** 
-	 * Returns a string containing category profile content : name, description and Id.
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString(){
@@ -67,10 +60,9 @@ public abstract class CategoryProfile implements ElementProfile {
 	 ************************** METHODS *********************************/	
 	
 	/**
+	 * Return the name of the referenced category. When the category is not loaded, it returns
+	 * the name of this.
 	 * @return name
-	 * @throws CategoryNotLoadedException 
-	 * @see CategoryProfile#name
-	 * @see ElementProfile#getName()
 	 */
 	public String getName(){
 		if (log.isDebugEnabled()){
@@ -89,20 +81,19 @@ public abstract class CategoryProfile implements ElementProfile {
 	
 	
 	/**
-	 * @return description of the category
+	 * @return description of the category referenced by this
 	 * @throws CategoryNotLoadedException
 	 */
 	public String getDescription() throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("getDescription()");
 		}
-		Category category = (Category) getElement();
-		return category.getDescription();
+		return getElement().getDescription();
 		
 	}
 
 	/**
-	 * @return Returns the category.
+	 * @return Returns the category referenced by this
 	 * @throws CategoryNotLoadedException 
 	 */
 	public Category getElement() throws CategoryNotLoadedException {
