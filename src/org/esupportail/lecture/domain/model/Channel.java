@@ -343,7 +343,7 @@ public class Channel implements InitializingBean {
 	
 	/**
 	 * @param contextId id of the context
-	 * @return true if the context is defined in this
+	 * @return true if the context is defined in this Channel
 	 */
 	protected boolean isThereContext(String contextId) {
 		if (log.isDebugEnabled()){
@@ -353,7 +353,7 @@ public class Channel implements InitializingBean {
 	}
 	
 	/**
-	 * Add a context to this.
+	 * Add a context to this Channel.
 	 * @param c context to add
 	 */	
 	synchronized protected void addContext(Context c) {
@@ -383,7 +383,7 @@ public class Channel implements InitializingBean {
 	}
 	
 	/**
-	 * Add a managed category profile to this
+	 * Add a managed category profile to this Channel
 	 * @param m the managed category profile to add
 	 */
 	synchronized protected void addManagedCategoryProfile(ManagedCategoryProfile m) {
@@ -394,7 +394,7 @@ public class Channel implements InitializingBean {
 	}
 	
 	/**
-	 * Add a mapping to the list of mappings defined in this
+	 * Add a mapping to the list of mappings defined in this Channel
 	 * @param m the mapping to add
 	 */
 	synchronized protected void addMapping(Mapping m){
@@ -438,7 +438,7 @@ public class Channel implements InitializingBean {
 	
 	/**
 	 * @param dtd
-	 * @return mapping for this dtd
+	 * @return mapping associated with dtd
 	 */
 	protected Mapping getMappingByDtd(String dtd){
 		if (log.isDebugEnabled()){
@@ -460,7 +460,7 @@ public class Channel implements InitializingBean {
 	}	
 	/**
 	 * @param xmlns
-	 * @return mapping for this xmlns
+	 * @return mapping associated with xmlns
 	 */
 	protected Mapping getMappingByXmlns(String xmlns){
 		if (log.isDebugEnabled()){
@@ -483,7 +483,7 @@ public class Channel implements InitializingBean {
 
 	/**
 	 * @param xmlType
-	 * @return mapping for this xmlType
+	 * @return mapping associated with xmlType
 	 */
 	protected Mapping getMappingByXmlType(String xmlType){
 		if (log.isDebugEnabled()){
@@ -506,7 +506,7 @@ public class Channel implements InitializingBean {
 
 	/**
 	 * @param rootElement
-	 * @return mapping for this rootElement
+	 * @return mapping associated with rootElement
 	 */
 	protected Mapping getMappingByRootElement(String rootElement){
 		if (log.isDebugEnabled()){
@@ -602,7 +602,7 @@ public class Channel implements InitializingBean {
   
 
 	/**
-	 * Returns the list of mappings defined in this
+	 * Returns the list of mappings defined in this Channel
 	 * @return mappingList
 	 * @see Channel#mappingList
 	 */
@@ -611,7 +611,7 @@ public class Channel implements InitializingBean {
 	}
 	
 	/**
-	 * Sets the mappings list of this
+	 * Sets the mappings list of this Channel
 	 * @param mappingList
 	 */
 	synchronized protected void setMappingList(List<Mapping> mappingList) {

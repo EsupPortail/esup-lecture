@@ -6,21 +6,17 @@
 package org.esupportail.lecture.domain.model;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.Iterator;
-import java.util.Vector;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
-import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 /**
- * Context element.
+ * Context element : it is the environnement context of an instance
+ * of lecture channel. It displays category, leaded by categoryProfiles
  * @author gbouteil
  */
 
@@ -55,46 +51,34 @@ public class Context {
 //	private Editability edit;
 
 	/**
-	 * Managed category profiles available in this context.
+	 * Managed category profiles available in this Context.
 	 */
-	private Set<ManagedCategoryProfile> managedCategoryProfilesSet;
+	private Set<ManagedCategoryProfile> managedCategoryProfilesSet = new HashSet<ManagedCategoryProfile>();
 
 	/**
-	 * Set of managed category profiles id available in this context.
+	 * Set of managed category profiles id available in this Context.
 	 */
-	private Set<String> refIdManagedCategoryProfilesSet;
-
+	private Set<String> refIdManagedCategoryProfilesSet = new HashSet<String>();
 
 	/*
-	 **************************** Initialization ************************************/
+	 *************************** INIT *********************************/
 
 	/**
-	 * Constructor
-	 */
-	public Context() {
-		if (log.isDebugEnabled()){
-			log.debug("Context()");
-		}
-		managedCategoryProfilesSet = new HashSet<ManagedCategoryProfile>();
-		refIdManagedCategoryProfilesSet = new HashSet<String>();
-	}
-	
-	/**
-	 * Initilizes associations to managed category profiles linked to this context.
-	 * The channel is given because it contains managed cateories profiles objects to link with
+	 * Initilizes associations with managed category profiles linked to this Context.
+	 * This method needs channel because it provides links to managed cateories profiles
 	 * @param channel channel where the context is defined 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
 	synchronized protected void initManagedCategoryProfiles(Channel channel) throws ManagedCategoryProfileNotFoundException  {
 		if (log.isDebugEnabled()){
-			log.debug("initManagedCategoryProfiles(channel)");
+			log.debug("id="+id+" - initManagedCategoryProfiles(channel)");
 		}
 		/* Connecting Managed category profiles and contexts */
-		Iterator iterator = refIdManagedCategoryProfilesSet.iterator();
+		Iterator<String> iterator = refIdManagedCategoryProfilesSet.iterator();
 
 		while (iterator.hasNext()) {
-			String id = (String) iterator.next();
-			ManagedCategoryProfile mcp = channel.getManagedCategoryProfile(id);
+			String profileId = iterator.next();
+			ManagedCategoryProfile mcp = channel.getManagedCategoryProfile(profileId);
 			managedCategoryProfilesSet.add(mcp);
 			mcp.addContext(this);
 		}
@@ -104,15 +88,15 @@ public class Context {
 	 *************************** METHODS ******************************** */
 
 	/**
-	 * Load managedCategories of this context,
-	 * Evaluate user visibility on managed categories of the context 
-	 * And update customContext according to visibilities
-	 * @param customContext customContext to upadte
-	 * @param ex access to portlet service
+	 * Update the customContext linked to this Context.
+	 * It sets up subscriptions on managedCategoryProfiles
+	 * defined in this Context, according to managedCategory visibilities
+	 * @param customContext customContext to update
+	 * @param ex access to external service for visibility evaluation
 	 */
-	synchronized public void updateCustom(CustomContext customContext, ExternalService ex)  {
+	synchronized protected void updateCustom(CustomContext customContext, ExternalService ex)  {
 		if (log.isDebugEnabled()){
-			log.debug("updateCustom("+customContext.getElementId()+",externalService)");
+			log.debug("id="+id+" - updateCustom("+customContext.getElementId()+",externalService)");
 		}
 		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
@@ -127,23 +111,17 @@ public class Context {
 	}
 
 	/**
-	 * Add a managed category profile id to the set of id refered to in this context
+	 * Add a managed category profile id to this context
 	 * @param s the id to add
-	 * @see Context#refIdManagedCategoryProfilesSet
 	 */
 	synchronized protected void addRefIdManagedCategoryProfile(String s) {
 		if (log.isDebugEnabled()){
-			log.debug("addRefIdManagedCategoryProfile("+s+")");
+			log.debug("id="+id+" - addRefIdManagedCategoryProfile("+s+")");
 		}
 		refIdManagedCategoryProfilesSet.add(s);
 	}
-
-	
-
 	
 	/** 
-	 * Return the string containing context content : 
-	 * name, description, id, id category profiles set, managed category profiles available in this context
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -169,9 +147,9 @@ public class Context {
 		// string += " edit : "+ edit +"\n";;
 		/* Managed category profiles available in this context */
 		string += "	managedCategoryProfilesSet : \n";
-		Iterator iterator = managedCategoryProfilesSet.iterator();
+		Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
 		for (ManagedCategoryProfile m = null; iterator.hasNext();) {
-			m = (ManagedCategoryProfile) iterator.next();
+			m = iterator.next();
 			string += "         (" + m.getId() + "," + m.getName() + ")\n";
 		}
 
@@ -180,6 +158,7 @@ public class Context {
 
 	/*
 	 * ************************** ACCESSORS ******************************** */
+	
 	/**
 	 * Returns the name of the context 
 	 * @return name
@@ -194,7 +173,7 @@ public class Context {
 	 * @param name the name to set
 	 * @see Context#name
 	 */
-	synchronized public void setName(String name) {
+	synchronized protected void setName(String name) {
 		this.name = name;
 	}
 
@@ -244,22 +223,22 @@ public class Context {
 //	}
 
 	
-	/**
-	 * Returns set of Managed category profiles defined in the context
-	 * @return managedCategoryProfilesSet
-	 */
-	public Set<ManagedCategoryProfile> getManagedCategoryProfilesSet() {
-		return managedCategoryProfilesSet;
-	}
+//	/**
+//	 * Returns set of Managed category profiles defined in the context
+//	 * @return managedCategoryProfilesSet
+//	 */
+//	public Set<ManagedCategoryProfile> getManagedCategoryProfilesSet() {
+//		return managedCategoryProfilesSet;
+//	}
 	
-	 /**
-	  * Sets the set of managed category profiles in the channel
-	 * @param managedCategoryProfilesSet
-	 */
-	synchronized protected void setManagedCategoryProfilesSet(
-			Set<ManagedCategoryProfile> managedCategoryProfilesSet) {
-		this.managedCategoryProfilesSet = managedCategoryProfilesSet;
-	}
+//	 /**
+//	  * Sets the set of managed category profiles in the Context
+//	 * @param managedCategoryProfilesSet
+//	 */
+//	synchronized protected void setManagedCategoryProfilesSet(
+//			Set<ManagedCategoryProfile> managedCategoryProfilesSet) {
+//		this.managedCategoryProfilesSet = managedCategoryProfilesSet;
+//	}
 
 
 //	protected void setSetRefIdManagedCategoryProfiles(Set<String> s) {

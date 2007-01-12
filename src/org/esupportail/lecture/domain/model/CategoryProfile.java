@@ -35,7 +35,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	 */
 	private String id;
 	/**
-	 * Category described by this
+	 * Category described by this CategoryProfile
 	 */
 	private Category category;
 	
@@ -44,14 +44,14 @@ public abstract class CategoryProfile implements ElementProfile {
 	 ************************** METHODS *********************************/	
 	
 	/**
-	 * Load the category referenced by this
+	 * Load the category referenced by this CategoryProfile
 	 * @param ex
 	 */
 	protected abstract void loadCategory(ExternalService ex);
 	
 	/**
 	 * Return the name of the referenced category. When the category is not loaded, it returns
-	 * the name of this.
+	 * the name of this CategoryProfile.
 	 * @return name
 	 */
 	public String getName(){
@@ -70,7 +70,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	}
 	
 	/**
-	 * @return description of the category referenced by this
+	 * @return description of the category referenced by this CategoryProfile
 	 * @throws CategoryNotLoadedException
 	 */
 	public String getDescription() throws CategoryNotLoadedException {
@@ -82,7 +82,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	}
 
 	/**
-	 * @return Returns the category referenced by this
+	 * @return Returns the category referenced by this CategoryProfile
 	 * @throws CategoryNotLoadedException 
 	 */
 	public Category getElement() throws CategoryNotLoadedException {

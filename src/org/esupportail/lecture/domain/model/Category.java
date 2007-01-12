@@ -124,7 +124,7 @@ public abstract class Category implements Element,Serializable {
 
 	
 	/**
-	 * Returns the id of the categoryProfile accociated to this
+	 * Returns the id of the categoryProfile accociated to this Category
 	 * @return id
 	 * @see Category#profileId
 	 */
@@ -134,7 +134,7 @@ public abstract class Category implements Element,Serializable {
 
 
 	/**
-	 * Sets the id of the categoryProfile accociated to this
+	 * Sets the id of the categoryProfile accociated to this Category
 	 * @param profileId
 	 * @see Category#profileId
 	 */
