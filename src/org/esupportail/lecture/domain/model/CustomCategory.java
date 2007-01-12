@@ -15,7 +15,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundExceptio
 
 
 /**
- * Customizations on a Category for a user profile 
+ * Customizations on a CategoryProfile for a user profile 
  * @author gbouteil
  */
 public abstract class CustomCategory implements CustomElement {
@@ -26,17 +26,14 @@ public abstract class CustomCategory implements CustomElement {
 	 * Log instance
 	 */
 	protected static final Log log = LogFactory.getLog(CustomCategory.class);
-
 	/**
 	 * The userprofile owner 
 	 */
 	protected UserProfile userProfile;
-
 	/**
 	 * The Id of the categoryProfile referring by this CustomCategory
 	 */
-	private String profileId;
-	
+	private String profileId;	
 	/**
 	 * database pk
 	 */
@@ -47,8 +44,8 @@ public abstract class CustomCategory implements CustomElement {
 	
 	/**
 	 * Constructor
-	 * @param profileId of the category profile
-	 * @param user owner of this 
+	 * @param profileId of the category profile refered by this CustomManagedSource
+	 * @param user owner of this  CustomCategory
 	 */
 	protected CustomCategory(String profileId, UserProfile user) {
 		if (log.isDebugEnabled()){
@@ -58,14 +55,6 @@ public abstract class CustomCategory implements CustomElement {
 		this.userProfile = user;
 	}
 
-	/**
-	 * default constructor
-	 */
-	protected CustomCategory() {
-		if (log.isDebugEnabled()){
-			log.debug("id="+profileId+" - CustomCategory()");
-		}
-	}
 
 	/* 
 	 ************************** METHODS **********************************/
@@ -113,6 +102,7 @@ public abstract class CustomCategory implements CustomElement {
 	 ************************** ACCESSORS **********************************/
 
 	/**
+	 * The user Profile, owner of this CustomCategory
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getUserProfile()
 	 */
 	public UserProfile getUserProfile() {

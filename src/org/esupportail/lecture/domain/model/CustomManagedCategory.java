@@ -19,7 +19,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 
 /**
- * Customizations on a managedCategory for a user Profile
+ * Customizations on a managedCategoryProfile for a user Profile
  * @author gbouteil
  *
  */
@@ -44,7 +44,7 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @param profileId 
 	 * @param user
 	 */
-	public CustomManagedCategory(String profileId,UserProfile user){
+	protected CustomManagedCategory(String profileId,UserProfile user){
 		super(profileId,user);
 		if (log.isDebugEnabled()){
 			log.debug("CustomManagedCategory("+profileId+","+user.getUserId()+")");

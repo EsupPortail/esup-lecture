@@ -26,4 +26,4 @@ public enum Editability {
 	/**
 	 * Personal element creation and managed element importaion
 	 */
-	ALL };
+	ALL }

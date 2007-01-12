@@ -319,7 +319,7 @@ public class DomainServiceImpl implements DomainService {
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomContext customContext = userProfile.getCustomContext(contextId);
-		customContext.setTreeSize(size);
+		customContext.modifyTreeSize(size);
 		
 	}
 

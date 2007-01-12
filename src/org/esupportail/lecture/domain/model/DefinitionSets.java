@@ -15,11 +15,10 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 /**
- * DefinitionSets is composed of the set definition, 
- * by two ways :
+ * DefinitionSets is a the set definition,
+ * It can be defined by two ways :
  * 		- an enumeration of groups (groups)
- * 		- a set of regulars defining groups (regulars)
- *
+ * 		- a set of regulars defining groups (regulars) *
  * @author gbouteil
  *
  */
@@ -41,6 +40,8 @@ public class DefinitionSets {
 	 */
 	private List<RegularOfSet> regulars = new ArrayList<RegularOfSet>();
 	
+	/* 
+	 ************************** INIT **********************************/
 
 	/*
 	 *************************** METHODS ******************************** */	
@@ -50,7 +51,9 @@ public class DefinitionSets {
 	 * and regulars definition
 	 * Not used for the moment : see later
 	 * Not ready to use without modification
+	 * @deprecated
 	 */
+	@Deprecated
 	synchronized protected void checkNamesExistence(){
 	   	if (log.isDebugEnabled()){
     		log.debug("checkNamesExistence()");
@@ -73,8 +76,8 @@ public class DefinitionSets {
 	
 	/**
 	 * Evaluate current user visibility for this DefinitionSets
-	 * @param portletService for portletContainer access, in order to know user rights
-	 * @return true if the user is define in this DefinitionSets
+	 * @param ex access to externalService, in order to know user rights
+	 * @return true if the user to the set defined by this DefinitionSets
 	 */
 	synchronized protected boolean evaluateVisibility(ExternalService ex) {
 	   	if (log.isDebugEnabled()){
@@ -114,7 +117,7 @@ public class DefinitionSets {
 	}
 	
 	/**
-	 * Add a group in groups enumeration
+	 * Add a group in groups enumeration of this DefintionSets
 	 * @param group group to add
 	 * @see DefinitionSets#groups
 	 */
@@ -126,7 +129,7 @@ public class DefinitionSets {
 	}
 	
 	/**
-	 * Add a regulars in list of regulars of this object
+	 * Add a regulars in list of regulars of this DefintionSets
 	 * @param regular
 	 * @see DefinitionSets#regulars
 	 */
@@ -139,54 +142,53 @@ public class DefinitionSets {
 	
 	
 	/**
-	 * Returns a string containing this object content :groups, regulars and content sets
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString(){
 		
 		String string="";
 		string += "		groups : "+ groups.toString()+"\n";
 		string += "		regulars : "+ regulars.toString()+"\n";
-		//string += "	content : "+ content.toString()+"\n";
 		
 		return string;
 	}
 	
 	/* ************************** ACCESSORS ******************************** */	
 
-	/**
-	 * Returns groups enumeration of this object
-	 * @return groups
-	 * @see DefinitionSets#groups
-	 */
-	public List<String> getGroups() {
-		return groups;
-	}
-	/**
-	 * Sets groups enumeration of this object
-	 * @param groups 
-	 * @see DefinitionSets#groups
-	 */
-	synchronized protected void setGroups(List<String> groups) {
-		this.groups = groups;
-	}
+//	/**
+//	 * Returns groups enumeration of this object
+//	 * @return groups
+//	 * @see DefinitionSets#groups
+//	 */
+//	public List<String> getGroups() {
+//		return groups;
+//	}
+//	/**
+//	 * Sets groups enumeration of this object
+//	 * @param groups 
+//	 * @see DefinitionSets#groups
+//	 */
+//	synchronized protected void setGroups(List<String> groups) {
+//		this.groups = groups;
+//	}
 
-	/**
-	 * Returns regulars of this object
-	 * @return regulars
-	 * @see DefinitionSets#regulars
-	 */
-	public List<RegularOfSet> getRegulars() {
-		return regulars;
-	}
-	/**
-	 * Sets regulars of this object
-	 * @param regulars
-	 * @see DefinitionSets#regulars
-	 */
-	synchronized protected void setRegulars(List<RegularOfSet> regulars) {
-		this.regulars = regulars;
-	}
+//	/**
+//	 * Returns regulars of this object
+//	 * @return regulars
+//	 * @see DefinitionSets#regulars
+//	 */
+//	public List<RegularOfSet> getRegulars() {
+//		return regulars;
+//	}
+//	/**
+//	 * Sets regulars of this object
+//	 * @param regulars
+//	 * @see DefinitionSets#regulars
+//	 */
+//	synchronized protected void setRegulars(List<RegularOfSet> regulars) {
+//		this.regulars = regulars;
+//	}
 
 	
 

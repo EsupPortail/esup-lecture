@@ -5,14 +5,13 @@
 */
 package org.esupportail.lecture.domain.model;
 
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 
 
 /**
- * Element profile 
- * An element profile can be a source or a category profile.
+ * Element profile : it covers an element and is referred by a customElement to be 
+ * used in a userProfile
+ * An element profile can be a sourceProfile or a categoryProfile.
  * @author gbouteil
  *
  */
@@ -30,7 +29,7 @@ public interface ElementProfile {
 	 */
 	public void setId(String id);
 	/**
-	 * Returns the name of the element profile (should be the same as the correcponding element)
+	 * Returns the name of the element profile (should be the same as the corresponding element)
 	 * @return String name
 	 */
 	public String getName();
