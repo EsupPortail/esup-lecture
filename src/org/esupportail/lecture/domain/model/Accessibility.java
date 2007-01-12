@@ -19,4 +19,4 @@ public enum Accessibility {
 	 * Restricted access, by CAS authentification
 	 */
 	CAS 
-};
+}

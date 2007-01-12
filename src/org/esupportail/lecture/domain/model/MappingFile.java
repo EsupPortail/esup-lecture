@@ -240,27 +240,29 @@ public class MappingFile {
 		Iterator iterator = channel.getMappingList().iterator();
 		for(Mapping m = null; iterator.hasNext();){
 			m = (Mapping)iterator.next();
-			String sourceURL = m.getSourceURL();
-			String dtd = m.getDtd();
-			String xmlns = m.getXmlns();
-			String xmlType = m.getXmlType();
-			String rootElement = m.getRootElement();
+			channel.addMapping(m);
 			
-			if (!sourceURL.equals("")) {
-				channel.addMappingBySourceURL(m);
-			}
-			if (!dtd.equals("")) {
-				channel.addMappingByDtd(m);
-			}
-			if (!xmlns.equals("")) {
-				channel.addMappingByXmlns(m);
-			}
-			if (!xmlType.equals("")) {
-				channel.addMappingByXmlType(m);
-			}
-			if (!rootElement.equals("")) {
-				channel.addMappingByRootElement(m);
-			}
+//			String sourceURL = m.getSourceURL();
+//			String dtd = m.getDtd();
+//			String xmlns = m.getXmlns();
+//			String xmlType = m.getXmlType();
+//			String rootElement = m.getRootElement();
+//			
+//			if (!sourceURL.equals("")) {
+//				channel.addMappingBySourceURL(m);
+//			}
+//			if (!dtd.equals("")) {
+//				channel.addMappingByDtd(m);
+//			}
+//			if (!xmlns.equals("")) {
+//				channel.addMappingByXmlns(m);
+//			}
+//			if (!xmlType.equals("")) {
+//				channel.addMappingByXmlType(m);
+//			}
+//			if (!rootElement.equals("")) {
+//				channel.addMappingByRootElement(m);
+//			}
 		}
 	}
 	
