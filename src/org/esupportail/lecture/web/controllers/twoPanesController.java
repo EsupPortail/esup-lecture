@@ -20,6 +20,7 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.exceptions.ErrorException;
+import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
@@ -178,6 +179,7 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 				context.setName(contextBean.getName());
 				context.setId(contextBean.getId());
 				context.setDescription(contextBean.getDescription());
+				//find categories in this context
 				List<CategoryBean> categories = getCategories(contextId);
 				List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
 				if (categories != null) {
@@ -230,8 +232,9 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 * @param contextId
 	 * @return list of visible categories
 	 * @throws InternalDomainException
+	 * @throws ContextNotFoundException 
 	 */
-	protected List<CategoryBean> getCategories(String contextId) throws InternalDomainException {
+	protected List<CategoryBean> getCategories(String contextId) throws ContextNotFoundException {
 		//this method need to be overwrite in edit controller
 		List<CategoryBean> categories = getFacadeService().getVisibleCategories(getUID(), contextId);
 		return categories;

@@ -106,23 +106,12 @@ public class EditController extends twoPanesController {
 	/**
 	 * @param categoryBean
 	 * @return list of visible sources
+	 * @throws DomainServiceException 
 	 */
-//	@Override
-	protected List<SourceBean> getSources(CategoryBean categoryBean) {
+	protected List<SourceBean> getSources(CategoryBean categoryBean) throws DomainServiceException {
 		//this method need to be overwrite in edit controller
 		List<SourceBean> sources = getFacadeService().getAvailableSources(getUID(), categoryBean.getId());
 		return sources;
 	}
 	
-//	/**
-//	 * @param contextId
-//	 * @return list of avalable categories
-//	 * @throws InternalDomainException
-//	 */
-//	@Override
-//	protected List<CategoryBean> getCategories(String contextId) throws InternalDomainException {
-//		List<CategoryBean> categories = getFacadeService().getAvailableSources(getUID(), categoryId);
-//		return categories;
-//	}
-
 }

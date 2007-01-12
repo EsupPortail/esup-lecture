@@ -124,6 +124,7 @@ public class DaoServiceRemoteXML {
 	 * @return Managed category
 	 */
 	private ManagedCategory getFreshManagedCategory(ManagedCategoryProfile profile) {
+		//TODO (RB) refactoring of exceptions
 		if (log.isDebugEnabled()) {
 			log.debug("in getFreshManagedCategory");
 		}
@@ -240,6 +241,7 @@ public class DaoServiceRemoteXML {
 	 * @return the source
 	 */
 	private Source getFreshSource(SourceProfile sourceProfile) {
+		//TODO (RB) refactoring of exceptions
 		//log.debug("URL de la source : "+urlSource);
 		Source ret = new GlobalSource();
 		try {
