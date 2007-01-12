@@ -5,13 +5,14 @@ import org.esupportail.lecture.exceptions.domain.ElementNotFoundException;
 
 /**
  * @author gbouteil
- * Customization of a user on an element
+ * Customization of an element for a user
+ * An element can be a source, a category or a context
  */
 public interface CustomElement {
 
-
 	/**
 	 * @return element name 
+	 * @throws ElementNotFoundException
 	 */
 	public String getName()throws ElementNotFoundException;
 	

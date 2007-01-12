@@ -1,10 +1,13 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.model;
 
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
@@ -14,9 +17,6 @@ import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.CustomContextNotFoundException;
-import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 /**
  * Customizations on a managedCategory for a user Profile
@@ -32,15 +32,13 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	protected static final Log log = LogFactory.getLog(CustomManagedCategory.class);
 
-
 	/**
-	 * The map of subscribed CustomManagedSource
+	 * Subscriptions of CustomManagedSources
 	 */
-	private Map<String,CustomManagedSource> subscriptions;
+	private Map<String,CustomManagedSource> subscriptions = new Hashtable<String,CustomManagedSource>();
 	
 	/*
 	 ************************** INIT *********************************/	
-
 
 	/**
 	 * @param profileId 
@@ -51,55 +49,24 @@ public class CustomManagedCategory extends CustomCategory {
 		if (log.isDebugEnabled()){
 			log.debug("CustomManagedCategory("+profileId+","+user.getUserId()+")");
 		}
-		subscriptions = new Hashtable<String,CustomManagedSource>();
 	}
-
-	/**
-	 * default constructor
-	 */
-	public CustomManagedCategory(){
-		super();
-		if (log.isDebugEnabled()){
-			log.debug("CustomManagedCategory()");
-		}
-		subscriptions = new Hashtable<String,CustomManagedSource>();
-	}
-
-	//TODO (RB) remove ?
-//	/**
-//	 * @param catId
-//	 * @param user
-//	 */
-//	public CustomManagedCategory() {
-//		super();
-//		if (log.isDebugEnabled()){
-//			log.debug("CustomManagedCategory()");
-//		}
-//		subscriptions = new Hashtable<String,CustomManagedSource>();
-//	}
 	
 	/*
 	 ************************** METHODS *********************************/	
-
+	
 	/**
-	 * @throws CategoryProfileNotFoundException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws CategoryProfileNotFoundException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws ElementNotLoadedException 
-	 * @throws CustomContextNotFoundException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws CustomContextNotFoundException 
+	 * Return the list of sorted customSources displayed by this customCategory
+	 * @param ex access to external service 
+	 * @return the list of customSource
+	 * @throws CategoryProfileNotFoundException
+	 * @throws CategoryNotVisibleException
+	 * @throws CategoryNotLoadedException
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
 	public List<CustomSource> getSortedCustomSources(ExternalService ex) throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
-			log.debug("getSortedCustomSources(externalService)");
+			log.debug("id="+super.getElementId()+" - getSortedCustomSources(externalService)");
 		}
 	// TODO (GB later) à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
 		
@@ -125,11 +92,14 @@ public class CustomManagedCategory extends CustomCategory {
 	
 
 	/**
-	 * @param managedSourceProfile
+	 * Add a subscription source to this custom category (if no exists, else do nothing) 
+	 * and creates the corresponding customManagedSource with the given managedSourceProfile
+	 * This new customManagedSource is also added to the userProfile (owner of all customElements)
+	 * @param managedSourceProfile the source profile to subscribe
 	 */
-	public void addSubscription(ManagedSourceProfile managedSourceProfile) {
+	protected void addSubscription(ManagedSourceProfile managedSourceProfile) {
 		if (log.isDebugEnabled()){
-			log.debug("addSubscription("+managedSourceProfile.getId()+")");
+			log.debug("id="+super.getElementId()+" - addSubscription("+managedSourceProfile.getId()+")");
 		}
 		String profileId = managedSourceProfile.getId();
 		
@@ -139,14 +109,17 @@ public class CustomManagedCategory extends CustomCategory {
 			getUserProfile().addCustomSource(customManagedSource);
 		}
 	}
-	
 
 	/**
-	 * @see org.esupportail.lecture.domain.model.CustomCategory#removeCustomManagedSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
+	 * remove a CustomManagedSource displayed in this CustomManagedCategory
+	 * and also removes it from the userProfile
+	 * Used to remove a subscription or an importation indifferently
+	 * @param profile the managedSourceProfile associated to the CustomManagedSource to remove
 	 */
-	public void removeCustomManagedSource(ManagedSourceProfile profile) {
+	@Override
+	protected void removeCustomManagedSource(ManagedSourceProfile profile) {
 		if (log.isDebugEnabled()){
-			log.debug("removeCustomManagedSource("+profile.getId()+")");
+			log.debug("id="+super.getElementId()+" - removeCustomManagedSource("+profile.getId()+")");
 		}
 		String profileId = profile.getId();
 		CustomSource cs = subscriptions.get(profileId);
@@ -159,39 +132,38 @@ public class CustomManagedCategory extends CustomCategory {
 	}
 	
 	/**
+	 * Returns the ManagedCategoryProfile associated to this CustomManagedCategory
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getProfile()
 	 */
 	@Override
 	public ManagedCategoryProfile getProfile() throws CategoryProfileNotFoundException {
+		// TODO cf customContext
 		if (log.isDebugEnabled()){
-			log.debug("getProfile()");
+			log.debug("id="+super.getElementId()+" - getProfile()");
 		}
 		Channel channel = DomainTools.getChannel();
 		return channel.getManagedCategoryProfile(getElementId());
 	}
-
-	/**
-	 * @return source subcription of this category
-	 */
-	public Map<String, CustomManagedSource> getSubscriptions() {
-		return subscriptions;
-	}
-
-	/**
-	 * @param subscriptions
-	 */
-	public void setSubscriptions(
-			Map<String, CustomManagedSource> subscriptions) {
-		this.subscriptions = subscriptions;
-	}
-	
-
-	
 	
 	/*
 	 ************************** ACCESSORS *********************************/	
 
 
+//	/**
+//	 * @return source subcription of this category
+//	 */
+//	public Map<String, CustomManagedSource> getSubscriptions() {
+//		return subscriptions;
+//	}
+//
+//	/**
+//	 * @param subscriptions
+//	 */
+//	public void setSubscriptions(
+//			Map<String, CustomManagedSource> subscriptions) {
+//		this.subscriptions = subscriptions;
+//	}
+	
 
 
 

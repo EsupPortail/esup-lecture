@@ -1,21 +1,22 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.model;
 
 import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.CustomContextNotFoundException;
-import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 
 
 /**
- * Customizations on a Category for a customContext
+ * Customizations on a Category for a user profile 
  * @author gbouteil
- *
  */
 public abstract class CustomCategory implements CustomElement {
 
@@ -26,28 +27,21 @@ public abstract class CustomCategory implements CustomElement {
 	 */
 	protected static final Log log = LogFactory.getLog(CustomCategory.class);
 
-
 	/**
-	 * The userprofile parent 
+	 * The userprofile owner 
 	 */
 	protected UserProfile userProfile;
 
 	/**
-	 * The Id of this CustomCategory
+	 * The Id of the categoryProfile referring by this CustomCategory
 	 */
 	private String profileId;
+	
 	/**
 	 * database pk
 	 */
 	private long customCategoryPK;
 	
-//  not here : in parent customContext	
-//	/**
-//	 * Flag : store if CustomCategory is folded or not
-//	 */
-//	private boolean folded;
-	
-
 	/* 
 	 ************************** INIT **********************************/
 	
@@ -56,9 +50,9 @@ public abstract class CustomCategory implements CustomElement {
 	 * @param profileId of the category profile
 	 * @param user owner of this 
 	 */
-	public CustomCategory(String profileId, UserProfile user) {
+	protected CustomCategory(String profileId, UserProfile user) {
 		if (log.isDebugEnabled()){
-			log.debug("CustomCategory("+profileId+","+user.getUserId()+")");
+			log.debug("id="+profileId+" - CustomCategory("+profileId+","+user.getUserId()+")");
 		}
 		this.profileId = profileId;
 		this.userProfile = user;
@@ -67,67 +61,56 @@ public abstract class CustomCategory implements CustomElement {
 	/**
 	 * default constructor
 	 */
-	public CustomCategory() {
+	protected CustomCategory() {
 		if (log.isDebugEnabled()){
-			log.debug("CustomCategory()");
+			log.debug("id="+profileId+" - CustomCategory()");
 		}
 	}
 
 	/* 
 	 ************************** METHODS **********************************/
-
-
 	
+
 	/**
-	 * @param ex
-	 * @return a list of customSource associated to this CustomCategory
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryProfileNotFoundException 
+	 * Return the list of sorted customSources displayed by this customCategory
+	 * @param ex access to external service 
+	 * @return the list of customSource
 	 * @throws CategoryProfileNotFoundException
+	 * @throws CategoryNotVisibleException
 	 * @throws CategoryNotLoadedException
-	 * @throws ElementNotLoadedException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws CustomContextNotFoundException 
 	 */
 	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException;
 
-	
-//	Not here : it is only specific to CustomManagedCategories
-//	/**
-//	 * Add a ManagedCustomSource 
-//	 * @param managedSourceProfile
-//	 */
-//	public abstract void addSubscription (ManagedSourceProfile managedSourceProfile) ;
-// TODO (GB later) addImportation(), addCreation())
-
 	/**
-	 * remove a ManagedCustomSource, indifferently an importation or a subscription
-	 * @param managedSourceProfile
+	 * remove a CustomManegedSource displayed in this CustomCategory
+	 * and also removes it from the userProfile
+	 * Used to remove a subscription or an importation indifferently
+	 * @param managedSourceProfile the managedSourceProfile associated to the CustomManagedSource to remove
 	 */
-	public abstract void removeCustomManagedSource (ManagedSourceProfile managedSourceProfile) ;
+	protected abstract void removeCustomManagedSource (ManagedSourceProfile managedSourceProfile) ;
 	// TODO (GB later) removeCustomPersonalSource())
 	
 	/**
-	 * @return the categoryProfile associated with this customCategory
+	 * The categoryProfile associated to this CustomCategory
+	 * @return the categoryProfile 
 	 * @throws CategoryProfileNotFoundException 
 	 */
 	public abstract CategoryProfile getProfile() throws CategoryProfileNotFoundException ;
 	
 	/**
+	 * The used name of the categoryProfile
 	 * @throws CategoryProfileNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
 	public String getName() throws CategoryProfileNotFoundException  {
 		if (log.isDebugEnabled()){
-			log.debug("getName()");
+			log.debug("id="+profileId+" - getName()");
 		}
 		return getProfile().getName();
 	}
 	
 	/* 
 	 ************************** ACCESSORS **********************************/
-	
 
 	/**
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getUserProfile()
@@ -137,13 +120,7 @@ public abstract class CustomCategory implements CustomElement {
 	}
 	
 	/**
-	 * @param userProfile
-	 */
-	public void setUserProfile(UserProfile userProfile) {
-		this.userProfile = userProfile;
-	}
-	
-	/**
+	 * @return id of the profile category referred by this customCategory
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getElementId()
 	 */
 	public String getElementId() {
@@ -163,19 +140,19 @@ public abstract class CustomCategory implements CustomElement {
 	public void setCustomCategoryPK(long customCategoryPK) {
 		this.customCategoryPK = customCategoryPK;
 	}
-
-	/**
-	 * @return id of the profile category referred by this customCategory
-	 */
-	public String getProfileId() {
-		return profileId;
-	}
-
-	/**
-	 * @param profileId
-	 */
-	public void setProfileId(String profileId) {
-		this.profileId = profileId;
-	}
+	
+//	/**
+//	 * @param userProfile
+//	 */
+//	public void setUserProfile(UserProfile userProfile) {
+//		this.userProfile = userProfile;
+//	}
+	
+//	/**
+//	 * @param profileId
+//	 */
+//	public void setProfileId(String profileId) {
+//		this.profileId = profileId;
+//	}
 
 }
