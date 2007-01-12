@@ -105,14 +105,14 @@ public class TestDAOLecture {
 			Map<String, CustomContext> ccs = userProfile2.getCustomContexts();
 			Iterator<String> iter = ccs.keySet().iterator();
 			while (iter.hasNext()) {
-				String element = (String) iter.next();
-				CustomContext cc = ccs.get(element);
-				out("treesize of customContext "+element+" = "+cc.getTreeSize());
-				Iterator<String> iter2 = cc.getSubscriptions().keySet().iterator();
-				while (iter2.hasNext()) {
-					String element2 = (String) iter2.next();
-					out("getSubscriptions key : "+element2);
-				}
+//				String element = (String) iter.next();
+//				CustomContext cc = ccs.get(element);
+//				out("treesize of customContext "+element+" = "+cc.getTreeSize());
+//				Iterator<String> iter2 = cc.getSubscriptions().keySet().iterator();
+//				while (iter2.hasNext()) {
+//					String element2 = (String) iter2.next();
+//					out("getSubscriptions key : "+element2);
+//				}
 			}
 			Map<String, CustomCategory> ccats = userProfile2.getCustomCategories();
 			iter = ccats.keySet().iterator();
@@ -136,21 +136,21 @@ public class TestDAOLecture {
 			//remove CustomContexts from userprofile
 			ArrayList<CustomContext> collec2 = new ArrayList<CustomContext>(userProfile.getCustomContexts().values());
 			for(CustomContext cc : collec2) {
-				userProfile.removeCustomContext(cc.getContextId());
-				dao.deleteCustomContext(cc);
+//				userProfile.removeCustomContext(cc.getContextId());
+//				dao.deleteCustomContext(cc);
 			}
 			//remove CustomCategories from userprofile
 			ArrayList<CustomCategory> collec = new ArrayList<CustomCategory>(userProfile.getCustomCategories().values());
 			for(CustomCategory cc : collec) {
-				userProfile.removeCustomCategory(cc.getProfileId());
-				dao.deleteCustomCategory(cc);
+//				userProfile.removeCustomCategory(cc.getProfileId());
+//				dao.deleteCustomCategory(cc);
 			}
 			
 			//remove customSources from userprofile
 			ArrayList<CustomSource> collec3 = new ArrayList<CustomSource>(userProfile.getCustomSources().values());
 			for(CustomSource cc : collec3) {
-				userProfile.removeCustomSource(cc.getProfileId());
-				dao.deleteCustomSource(cc);
+//				userProfile.removeCustomSource(cc.getProfileId());
+//				dao.deleteCustomSource(cc);
 			}
 			
 			//remove userprofile
@@ -169,66 +169,66 @@ public class TestDAOLecture {
 		UserProfile userProfile = new UserProfile("test");
 		
 		//create custom contexts
-		CustomContext cc1 = new CustomContext("c1",userProfile);
-		cc1.setTreeSize(10);
-		cc1.setUserProfile(userProfile);
-		userProfile.addCustomContext(cc1);
-		CustomContext cc2 = new CustomContext("c2",userProfile);
-		cc2.setTreeSize(20);
-		cc2.setUserProfile(userProfile);
-		userProfile.addCustomContext(cc2);
-		CustomContext cc3 = new CustomContext("c3",userProfile);
-		cc3.setTreeSize(30);
-		cc3.setUserProfile(userProfile);
-		userProfile.addCustomContext(cc3);
-		
-		//create custom categories
-		CustomManagedCategory ccat1 = new CustomManagedCategory("cp1", userProfile);
-		ccat1.setUserProfile(userProfile);
-		userProfile.addCustomCategory(ccat1);
-		CustomManagedCategory ccat2 = new CustomManagedCategory("cp2", userProfile);
-		ccat2.setUserProfile(userProfile);
-		userProfile.addCustomCategory(ccat2);
-		CustomManagedCategory ccat3 = new CustomManagedCategory("cp3", userProfile);
-		ccat3.setUserProfile(userProfile);
-		userProfile.addCustomCategory(ccat3);
-		
-		//subscribe some categories
-		cc1.addSubscription(ccat1.getProfile());
-		cc1.addSubscription(ccat2.getProfile());
-		cc1.addSubscription(ccat3.getProfile());
-		
-		//unfold some categogires
-		cc1.unfoldCategory(ccat2.getProfileId());
-		cc1.unfoldCategory(ccat3.getProfileId());
-
-		//create custom sources
-		ManagedCategoryProfile mcp = new ManagedCategoryProfile();
-		ManagedSourceProfile msp = new ManagedSourceProfile(mcp);
-		msp.setId("url1");
-		CustomManagedSource cs1 = new CustomManagedSource(msp, userProfile);
-		userProfile.addCustomSource(cs1);
-		msp.setId("url2");
-		CustomManagedSource cs2 = new CustomManagedSource(msp, userProfile);
-		userProfile.addCustomSource(cs2);
-		
-		//subcribe some sources
-//genere duplicate key		
-//		Collection<CustomCategory> collec = userProfile.getCustomCategories().values();
-//		for(CustomCategory cc : collec) {
-//			if (cc.getProfileId().equals("cp2")) {
-//				CustomManagedCategory cmc = (CustomManagedCategory)cc;
-//				cmc.addSubscription((ManagedSourceProfile)cs1.getProfile());
-//			}
-//			if (cc.getProfileId().equals("cp3")) {
-//				CustomManagedCategory cmc = (CustomManagedCategory)cc;
-//				cmc.addSubscription((ManagedSourceProfile)cs2.getProfile());
-//			}
-//		}
-//ne manipule plus l'object rataché à userprofile.... Cf. mail gwenaëlle
-//		ccat2.addSubscription((ManagedSourceProfile)cs1.getProfile());
-//		ccat3.addSubscription((ManagedSourceProfile)cs2.getProfile());
-		
+//		CustomContext cc1 = new CustomContext("c1",userProfile);
+//		cc1.setTreeSize(10);
+//		cc1.setUserProfile(userProfile);
+//		userProfile.addCustomContext(cc1);
+//		CustomContext cc2 = new CustomContext("c2",userProfile);
+//		cc2.setTreeSize(20);
+//		cc2.setUserProfile(userProfile);
+//		userProfile.addCustomContext(cc2);
+//		CustomContext cc3 = new CustomContext("c3",userProfile);
+//		cc3.setTreeSize(30);
+//		cc3.setUserProfile(userProfile);
+//		userProfile.addCustomContext(cc3);
+//		
+//		//create custom categories
+//		CustomManagedCategory ccat1 = new CustomManagedCategory("cp1", userProfile);
+//		ccat1.setUserProfile(userProfile);
+//		userProfile.addCustomCategory(ccat1);
+//		CustomManagedCategory ccat2 = new CustomManagedCategory("cp2", userProfile);
+//		ccat2.setUserProfile(userProfile);
+//		userProfile.addCustomCategory(ccat2);
+//		CustomManagedCategory ccat3 = new CustomManagedCategory("cp3", userProfile);
+//		ccat3.setUserProfile(userProfile);
+//		userProfile.addCustomCategory(ccat3);
+//		
+//		//subscribe some categories
+//		cc1.addSubscription(ccat1.getProfile());
+//		cc1.addSubscription(ccat2.getProfile());
+//		cc1.addSubscription(ccat3.getProfile());
+//		
+//		//unfold some categogires
+//		cc1.unfoldCategory(ccat2.getProfileId());
+//		cc1.unfoldCategory(ccat3.getProfileId());
+//
+//		//create custom sources
+//		ManagedCategoryProfile mcp = new ManagedCategoryProfile();
+//		ManagedSourceProfile msp = new ManagedSourceProfile(mcp);
+//		msp.setId("url1");
+//		CustomManagedSource cs1 = new CustomManagedSource(msp, userProfile);
+//		userProfile.addCustomSource(cs1);
+//		msp.setId("url2");
+//		CustomManagedSource cs2 = new CustomManagedSource(msp, userProfile);
+//		userProfile.addCustomSource(cs2);
+//		
+//		//subcribe some sources
+////genere duplicate key		
+////		Collection<CustomCategory> collec = userProfile.getCustomCategories().values();
+////		for(CustomCategory cc : collec) {
+////			if (cc.getProfileId().equals("cp2")) {
+////				CustomManagedCategory cmc = (CustomManagedCategory)cc;
+////				cmc.addSubscription((ManagedSourceProfile)cs1.getProfile());
+////			}
+////			if (cc.getProfileId().equals("cp3")) {
+////				CustomManagedCategory cmc = (CustomManagedCategory)cc;
+////				cmc.addSubscription((ManagedSourceProfile)cs2.getProfile());
+////			}
+////		}
+////ne manipule plus l'object rataché à userprofile.... Cf. mail gwenaëlle
+////		ccat2.addSubscription((ManagedSourceProfile)cs1.getProfile());
+////		ccat3.addSubscription((ManagedSourceProfile)cs2.getProfile());
+//		
 		//save
 		dao.saveUserProfile(userProfile);
 		releaseDAO();

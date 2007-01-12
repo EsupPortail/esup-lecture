@@ -31,10 +31,20 @@
       <revision>
         <revnumber>1.0</revnumber>
 
-        <date>29/11/2006</date>
+        <date>2006-11-29</date>
 
         <revdescription>
           <para>First version of the installation Guide</para>
+        </revdescription>
+      </revision>
+
+      <revision>
+        <revnumber>1.1</revnumber>
+
+        <date>2007-01-12</date>
+
+        <revdescription>
+          <para>installation Guide form Esup Lecture Portlet V0.6</para>
         </revdescription>
       </revision>
     </revhistory>
@@ -45,20 +55,43 @@
     configuration</title>
 
     <para>To configure this application you have to adapt some configuration
-    files. Each time you will find a
+    files. Every time you will find a
     &lt;fileName&gt;-example.&lt;extension&gt; example file that you can copy
-    to &lt;fileName&gt;.&lt;extension&gt; before adapting. adapt
-    build.properties. Adapt properties/exceptionHandling/exceptionHandlin.xml.
-    Note : By default, exception reports are also sent to an archived bugs
-    mailing list, accessible to the developers of the project only. This
-    feature is used to be warned of all the possible exceptions occuring on
-    the applciation anywhere; this way, most bugs can be corrected as soon as
-    they happen. If you do not want the exceptions to be sent to this list,
-    you can manually set property doNotSendExceptionReportsToDevelopers to
-    true. Adapt properties/smtp/smtp.xml
-    properties/dao/hibernate/hibernate.cfg.xml ant test-config ant test-smtp
-    ant test-database ant init adapt properties/logging/log4j.properties Adapt
-    properties/mappings.xml and properties/esup-lecture.xml ant deploy</para>
+    to &lt;fileName&gt;.&lt;extension&gt; before adapting. </para>
+
+    <para>Adapt build.properties. </para>
+
+    <para>Adapt properties/exceptionHandling/exceptionHandlin.xml. </para>
+
+    <note>
+      <para>By default, exception reports are also sent to an archived bugs
+      mailing list, accessible to the developers of the project only. This
+      feature is used to be warned of all the possible exceptions occuring on
+      the applciation anywhere; this way, most bugs can be corrected as soon
+      as they happen. If you do not want the exceptions to be sent to this
+      list, you can manually set property
+      doNotSendExceptionReportsToDevelopers to true.</para>
+    </note>
+
+    <para>Adapt properties/smtp/smtp.xml </para>
+
+    <para>properties/dao/hibernate/hibernate.cfg.xml </para>
+
+    <para>ant test-config </para>
+
+    <para>ant test-smtp </para>
+
+    <para>ant test-database </para>
+
+    <para>ant init </para>
+
+    <para>adapt properties/logging/log4j.properties </para>
+
+    <para>Adapt properties/mappings.xml </para>
+
+    <para>and properties/esup-lecture.xml </para>
+
+    <para>ant deploy</para>
   </section>
 
   <section>

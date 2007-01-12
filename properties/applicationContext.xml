@@ -39,5 +39,6 @@
 	<import resource="web/controllers.xml" />
 	<import resource="web/converters.xml" />
 	<import resource="tests/tests.xml" />
+	<import resource="deepLinking/deepLinking.xml" />
 
 </beans>

@@ -21,16 +21,18 @@
 		</navigation-case>
 	</navigation-rule>
 
+<!-- 
 	<navigation-rule>
 		<from-view-id>/stylesheets/exception.jsp</from-view-id>
 		<navigation-case>
 			<from-outcome>applicationRestarted</from-outcome>
-			<to-view-id>/stylesheets/welcome.jsp</to-view-id>
+			<to-view-id>/stylesheets/home.jsp</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+ -->
 
 	<navigation-rule>
-		<navigation-case>
+		<navigation-case> 
 			<from-outcome>applicationRestarted</from-outcome>
 			<to-view-id>/stylesheets/home.jsp</to-view-id>
 		</navigation-case>

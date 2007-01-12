@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.exceptions.EsupException;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.FacadeService;
 import org.esupportail.lecture.domain.beans.CategoryBean;
@@ -23,6 +24,7 @@ import org.esupportail.lecture.exceptions.ErrorException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
@@ -148,12 +150,15 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	
 	/**
 	 * For Spring injection of Service Class
-	 * @param facadeService facade og Spring Service Class
+	 * @param facadeService facade of Spring Service Class
 	 */
 	public void setFacadeService(FacadeService facadeService) {
 		this.facadeService = facadeService;
 	}
 
+	/**
+	 * @return facadeService
+	 */
 	public FacadeService getFacadeService() {
 		return facadeService;
 	}
@@ -174,7 +179,7 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 				contextId = getFacadeService().getCurrentContextId();
 				ContextBean contextBean = getFacadeService().getContext(getUID(), contextId);
 				if (contextBean == null) {
-					throw new ErrorException("No context with ID \""+contextId+"\" found in lecture-config.xml file. See this file or portlet preference with name \""+DomainTools.CONTEXT+"\".");
+					throw new WebException("No context with ID \""+contextId+"\" found in lecture-config.xml file. See this file or portlet preference with name \""+DomainTools.CONTEXT+"\".");
 				}
 				context.setName(contextBean.getName());
 				context.setId(contextBean.getId());
@@ -211,7 +216,7 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 				context.setCategories(categoriesWeb);
 				virtualSession.put(CONTEXT,context);
 			} catch (Exception e) {
-				throw new ErrorException("Error in getContext :"+e.getMessage());
+				throw new WebException("Error in getContext", e);
 			} 
 		}
 		return context;
@@ -250,7 +255,7 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 			try {
 				userId = getFacadeService().getConnectedUserId();
 			} catch (Exception e) {
-				throw new ErrorException("Error in getUID :"+e.getMessage());
+				throw new WebException("Error in getUID",e);
 			}
 			UserBean userBean = getFacadeService().getConnectedUser(userId);
 			UID = userBean.getUid();

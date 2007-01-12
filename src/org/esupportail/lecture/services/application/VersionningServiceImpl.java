@@ -37,7 +37,7 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 		// TODO Auto-generated method stub
 		log.info("ici!!!!");
 		HibernateUtils.create();
-		getDomainService().getConnectedUser("bourges");
+		getDomainService().getConnectedUser("foo");
 		HibernateUtils.close(false);
 	}
 

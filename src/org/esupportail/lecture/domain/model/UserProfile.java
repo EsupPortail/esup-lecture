@@ -112,7 +112,7 @@ public class UserProfile {
 		CustomContext customContext = customContexts.get(contextId);
 		if (customContext == null){
 			if (!DomainTools.getChannel().isThereContext(contextId)) {
-				String errorMsg = "Context "+contextId+ "is not found in Channel";
+				String errorMsg = "Context " + contextId + " is not found in Channel";
 				log.error(errorMsg);
 				throw new ContextNotFoundException(errorMsg);
 			}

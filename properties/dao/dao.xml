@@ -132,8 +132,7 @@
 	***************************************************
 				DAO SERVICE
 	***************************************************-->
-	<!--  Je ne me suis occupée que du DAO SERVICE TEST 
-	Je laisse Raymond revoir le fichier dans sa globalité -->
+	<!-- Test daoService
 	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceStub">
 		<description>
 			This bean provides the dao service of the application, used by the 
@@ -144,8 +143,9 @@
 			<ref bean="daoServiceRemoteXML" />
 		</property>
 	</bean>
+	 -->
 
-	<bean id="daoService2" class="org.esupportail.lecture.dao.DaoServiceImpl">
+	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceImpl">
 		<description>
 			This bean provides the dao service of the application, used by the 
 			domain.model.

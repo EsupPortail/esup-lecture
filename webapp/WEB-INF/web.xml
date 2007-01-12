@@ -120,6 +120,10 @@
 		<servlet-class>
 			org.esupportail.commons.web.servlet.FacesServlet
 		</servlet-class>
+		<init-param>
+			<param-name>default-view</param-name>
+			<param-value>/stylesheets/home.faces</param-value>
+		</init-param>
 		<!-- <load-on-startup>1</load-on-startup> -->
 	</servlet>
 	<servlet-mapping>

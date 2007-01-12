@@ -83,7 +83,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		if (log.isDebugEnabled()) {
 			log.debug("updateUserProfile PK="+userProfile.getUserProfilePK());			
 		}
-		getHibernateTemplate().saveOrUpdate(userProfile);
+		//getHibernateTemplate().saveOrUpdate(userProfile);
 	}
 
 	/**

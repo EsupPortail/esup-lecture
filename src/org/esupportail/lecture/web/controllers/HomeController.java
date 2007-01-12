@@ -13,6 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.exceptions.ErrorException;
+import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
@@ -68,7 +69,7 @@ public class HomeController extends twoPanesController {
 				getFacadeService().marckItemAsRead(getUID(), selectedCategory.getSelectedSource().getId(), item.getId());			
 			}
 		} catch (Exception e) {
-			throw new ErrorException("Error in toggleItemReadState :"+e.getMessage());
+			throw new WebException("Error in toggleItemReadState",e);
 		}
 		item.setRead(!item.isRead());
 		return "OK";
@@ -196,7 +197,7 @@ public class HomeController extends twoPanesController {
 					try {
 						items = getFacadeService().getItems(getUID(), selectedSource.getId());
 					} catch (Exception e) {
-						throw new ErrorException("Error in getItems :"+e.getMessage());
+						throw new WebException("Error in getItems",e);
 					}
 					ret = new ArrayList<ItemWebBean>();
 					if (items != null) {

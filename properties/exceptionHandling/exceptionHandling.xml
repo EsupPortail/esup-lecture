@@ -30,6 +30,7 @@
 			mailing lists, please help them to improve the application by sending them 
 			the exception reports. Thanks!
 		</description>
+		<property name="doNotSendExceptionReportsToDevelopers" value="false"/>
 		<property name="smtpService" ref="smtpService" >
 			<description>
 				The service used to send exception reports.
@@ -57,9 +58,6 @@
 				The name of the cache, optional.
 			</description>
 		</property>
-<!-- 
-		<property name="exceptionView" value="/LecturePortlet/stylesheets/exception.jsp"/>
- -->		
 	</bean>
 
 </beans>
