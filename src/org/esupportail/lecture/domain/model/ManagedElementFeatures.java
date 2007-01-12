@@ -1,15 +1,19 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.model;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
-import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 
 /**
- * Class that contains computed features of a element :
- * It merges features (visibility,tll) between managedElementProfile
- * and its managedElement
+ * Class that contains features of a managed element needed to be computed
+ * because of inheritance rules between managedElement and managedElementProfile :
+ * Interested feature is : visibility
  * @author gbouteil
  *
  */
@@ -22,11 +26,10 @@ public abstract class ManagedElementFeatures {
 	 */
 	protected static final Log log = LogFactory.getLog(ManagedElementFeatures.class);
 	/**
-	 * Visibility rights for groups on the remote managed category
-	 * Using depends on trustCategory parameter
+	 * Visibility rights for groups on the managed element
+	 * Its values depends on trustCategory parameter 
 	 */
 	private VisibilitySets visibility;
-
 	/**
 	 * Indicates if activeFeatures can be used or not :
 	 *  - false : features are not computed, they can't be used
@@ -35,7 +38,7 @@ public abstract class ManagedElementFeatures {
 	private boolean isComputed = false;
 	
 	/**
-	 * Managed element profile concerned by these features
+	 * Managed element profile needing these features
 	 */
 	protected ManagedElementProfile mep;
 	
@@ -43,14 +46,9 @@ public abstract class ManagedElementFeatures {
 	/*
 	 ********************* INITIALIZATION **************************************/
 	
-	public ManagedElementFeatures(){
-		
-	}
-	
-	
 	/** 
 	 * Constructor
-	 * @param mcp Managed category profile concerned by these features
+	 * @param mep Managed element profile needing these features
 	 */
 	protected ManagedElementFeatures(ManagedElementProfile mep){
 		if (log.isDebugEnabled()){
@@ -58,21 +56,14 @@ public abstract class ManagedElementFeatures {
 		}
 		this.mep = mep;
 	}
-	
-
-	
+		
 	/*
 	 *********************** METHODS **************************************/
+	
 	/**
-	 * Compute features
+	 * Compute features 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ComputeFeaturesException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws ComputeFeaturesException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws ComputeFeaturesException 
-	 * @throws ElementNotLoadedException 
-	 * @throws ElementNotLoadedException 
 	 */
 	synchronized protected void compute() throws CategoryNotLoadedException, ComputeFeaturesException   {
 		if (log.isDebugEnabled()){
@@ -82,43 +73,21 @@ public abstract class ManagedElementFeatures {
 		isComputed = true;
 	}
 	
-	
 	/**
-	 * Update features simply
-	 * It is called by the associated managed element profile when it concretly computes features
-	 * @param visibility
+	 * Used to update features directly, without any computing
+	 * It only sets value in parameter
+	 * @param visib the visibility feature to update
 	 */
-	synchronized protected void update( VisibilitySets visibility) {
+	synchronized protected void update(VisibilitySets visib) {
 		if (log.isDebugEnabled()){
 			log.debug("update(visibility)");
 		}
-		this.visibility = visibility;
+		this.visibility = visib;
 	}
 	
-	/*
-	 *********************** ACCESSORS **************************************/ 
 	/**
-	 * @return Returns the isComputed.
-	 */
-	protected boolean isComputed() {
-		return isComputed;
-	}
-	
-	
-	/**
-	 * Sets IsComuted
-	 * @param b the boolean to set
-	 */
-	synchronized protected void setIsComputed(boolean b) {
-		isComputed = b;
-	}
-
-		
-	/**
-	 * @return Returns the visibility.
+	 * @return Returns the visibility (feature is automatically computed if needed).
 	 * @throws ComputeFeaturesException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws ElementNotLoadedException 
 	 */
 	synchronized protected VisibilitySets getVisibility() throws ComputeFeaturesException {
 		if (!isComputed){
@@ -132,5 +101,24 @@ public abstract class ManagedElementFeatures {
 		}
 		return visibility;
 	}
+	
+	/*
+	 *********************** ACCESSORS **************************************/ 
+	/**
+	 * @return true if features are computed
+	 */
+	protected boolean isComputed() {
+		return isComputed;
+	}
+	
+	/**
+	 * Sets IsComputed
+	 * @param b the boolean to set
+	 */
+	synchronized protected void setIsComputed(boolean b) {
+		isComputed = b;
+	}
+		
+	
 	
 }

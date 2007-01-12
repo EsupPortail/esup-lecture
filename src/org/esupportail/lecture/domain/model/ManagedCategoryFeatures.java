@@ -1,14 +1,18 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.model;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Class that contains computed features of category :
- * It merges features (edit, visibility,tll) between managedCategoryProfile
- * and its managedCategory
- * @author gbouteil
- *
+ * Class that contains features of category needed to be computed
+ * because of inheritance rules between managedCategory and managedCategoryProfile :
+ * Interested features are : edit, visibility
+ * @author gbouteil 
  */
 public class ManagedCategoryFeatures extends ManagedElementFeatures {
 	
@@ -20,6 +24,7 @@ public class ManagedCategoryFeatures extends ManagedElementFeatures {
 	 */
 	protected static final Log log = LogFactory.getLog(ManagedCategoryFeatures.class);
 	
+// Used later	
 //	/**
 //	 * Remote managed category edit mode : not used for the moment
 //	 * Using depends on trustCategory parameter
@@ -29,7 +34,7 @@ public class ManagedCategoryFeatures extends ManagedElementFeatures {
 
 	
 	/*
-	 ********************* INITIALIZATION **************************************/
+	 ********************* INIT *********************************************/
 	
 	/** 
 	 * Constructor
@@ -42,13 +47,10 @@ public class ManagedCategoryFeatures extends ManagedElementFeatures {
 	/*
 	 *********************** METHODS **************************************/
 	
-	
-	
-	
 	/**
-	 * Update features simply
-	 * It is called by the associated managed category profile when it has concretly computed features
-	 * @param visibility
+	 * Used to update features directly, without any computing
+	 * It only sets value in parameter
+	 * @param visibility the visibility feature to update
 	 */
 	@Override
 	protected void update(/*Editability edit, */ VisibilitySets visibility) {
@@ -59,26 +61,8 @@ public class ManagedCategoryFeatures extends ManagedElementFeatures {
 		//this.edit = edit;
 		
 	}
-
-	
 	
 	/*
 	 *********************** ACCESSORS **************************************/ 
-	
-
-
-
-	
-
-	
-	
-	
-
-
-
-	
-
-	
-	
 	
 }
