@@ -188,6 +188,13 @@ public abstract class CustomSource implements CustomElement {
 	}
 
 	/**
+	 * @return profileID os this custom source
+	 */
+	private String getProfileId() {
+		return profileId;
+	}
+
+	/**
 	 * @param profileId
 	 */
 	private void setProfileId(String profileId) {

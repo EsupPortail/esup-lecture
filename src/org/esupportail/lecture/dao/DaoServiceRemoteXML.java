@@ -199,10 +199,11 @@ public class DaoServiceRemoteXML {
 	 */
 	public Source getSource(SourceProfile sourceProfile) {
 		Source ret = new GlobalSource();
-		if (sourceProfile.isSpecificUserContent()) { 
-			ret = getFreshSource(sourceProfile);
-		}
-		else {
+// not yet implemented
+//		if (sourceProfile.isSpecificUserContent()) { 
+//			ret = getFreshSource(sourceProfile);
+//		}
+//		else {
 			System.currentTimeMillis();
 			String urlSource = sourceProfile.getSourceURL();
 			Long lastSrcAccess = sourceLastAccess.get(urlSource);
@@ -230,7 +231,7 @@ public class DaoServiceRemoteXML {
 				cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
 				sourceLastAccess.put(urlSource, currentTimeMillis);
 			}
-		}
+//		}
 		return ret;
 
 	}

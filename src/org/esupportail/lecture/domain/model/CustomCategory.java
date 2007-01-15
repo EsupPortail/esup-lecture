@@ -150,7 +150,12 @@ public abstract class CustomCategory implements CustomElement {
 	}
 	
 
-	
+	/**
+	 * @return profile id
+	 */
+	private String getProfileId() {
+		return profileId;
+	}
 
 
 }
