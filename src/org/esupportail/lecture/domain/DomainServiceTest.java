@@ -12,7 +12,15 @@ import org.esupportail.lecture.domain.beans.UserBean;
  * @author bourges
  * an implementation of DomainService for tests
  */
+/**
+ * @author gbouteil
+ *
+ */
 public class DomainServiceTest implements DomainService {
+
+	/*
+	 ************************** PROPERTIES ******************************** */	
+
 	/**
 	 * Test context
 	 */
@@ -30,6 +38,8 @@ public class DomainServiceTest implements DomainService {
 	 */
 	private List<ItemBean> items;
 	
+	/*
+	 ************************** INIT ******************************** */	
 
 	/**
 	 * constructor used by Spring to instantiate this Test Class
@@ -46,6 +56,12 @@ public class DomainServiceTest implements DomainService {
 		this.items = items;
 	}
 
+	/*
+	 *************************** METHODS ******************************** */	
+
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getConnectedUser(java.lang.String)
+	 */
 	public UserBean getConnectedUser(String userId){
 		UserBean user = new UserBean(userId);
 		return user;
@@ -62,35 +78,63 @@ public class DomainServiceTest implements DomainService {
 		}
 		return ret;
 	}
+	
+	/**
+	 * @param uid
+	 * @param contextId
+	 * @param ex
+	 * @return a contextBean
+	 */
+	public ContextBean getContext(String uid, String contextId, ExternalService ex) {
+		return getContext(uid, contextId);
+	}
 
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getCategories(java.lang.String, java.lang.String)
+	 * @param contextId
+	 * @param uid
+	 * @return list of CategoryBean
 	 */
 	public List<CategoryBean> getVisibleCategories(String contextId, String uid) {
 		List<CategoryBean> ret = null;
 		ret = categories;
 		return ret;
 	}
-
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getSources(java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 */
+	public List<CategoryBean> getVisibleCategories(String uid, String contextId, ExternalService ex) {
+		return getVisibleCategories(contextId, uid);
+	}
+	
+	/**
+	 * @param categoryId
+	 * @param uid
+	 * @return list of sourceBean
 	 */
 	public List<SourceBean> getVisibleSources(String categoryId, String uid) {
 		List<SourceBean> ret = null;
 		ret = sources;
 		return ret;
 	}
-
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 */
+	public List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) {
+		return getVisibleSources(categoryId, uid);
+	}
+	
+	
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<ItemBean> getItems(String sourceId, String uid,ExternalService ex) {
 		return items;
 	}
 
+
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#marckItemasRead(java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#marckItemAsRead(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void marckItemAsRead(String uid, String itemId, String sourceId) {
 		// TODO Auto-generated method stub
@@ -98,46 +142,48 @@ public class DomainServiceTest implements DomainService {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#marckItemasUnread(java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#marckItemAsUnread(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void marckItemAsUnread(String uid, String itemId, String sourceId) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public ContextBean getContext(String uid, String contextId, ExternalService ex) {
-		return getContext(uid, contextId);
-	}
-
-	public List<CategoryBean> getVisibleCategories(String uid, String contextId, ExternalService ex) {
-		return getVisibleCategories(contextId, uid);
-	}
-
-	public List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) {
-		return getVisibleSources(categoryId, uid);
-	}
-
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 */
 	public List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService ex) {
 		List<SourceBean> ret = null;
 		ret = sources;
 		return ret;
 	}
 
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(java.lang.String, java.lang.String, int)
+	 */
 	public void setTreeSize(String uid, String contextId, int size) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#foldCategory(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public void foldCategory(String uid, String cxtId, String catId) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#unfoldCategory(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public void unfoldCategory(String uid, String cxtId, String catId) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/*
+	 *************************** ACCESSORS ******************************** */	
 
 
 }

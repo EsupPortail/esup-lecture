@@ -29,6 +29,7 @@ public interface DomainService {
 	 * @return UserBean
 	 * @see FacadeService#getConnectedUser(String)
 	 */
+	
 	UserBean getConnectedUser(String uid);
 	/**
 	 * @param uid
@@ -45,7 +46,6 @@ public interface DomainService {
 	 * @param ex access to external service 
 	 * @return List<CategoryBean>
 	 * @throws ContextNotFoundException 
-	 * @throws InternalDaoException 
 	 * @see FacadeService#getVisibleCategories(String, String)
 	 */
 	List<CategoryBean> getVisibleCategories(String uid,String contextId,ExternalService ex) throws ContextNotFoundException;
@@ -55,6 +55,9 @@ public interface DomainService {
 	 * @param uid 
 	 * @param ex 
 	 * @return List<SourceBean>
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws InternalDomainException 
 	 * @throws CategoryNotLoadedException 
 	 * @see FacadeService#getVisibleSources(String, String)
 	 */
@@ -66,10 +69,11 @@ public interface DomainService {
 	 * @param uid 
 	 * @param ex access to external service 
 	 * @return List<ItemBean>
+	 * @throws SourceNotLoadedException 
+	 * @throws InternalDomainException 
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws DomainServiceException 
 	 * @see FacadeService#getItems(String, String)
 	 */
 	List<ItemBean> getItems( String uid,String sourceId,ExternalService ex)  
@@ -79,7 +83,7 @@ public interface DomainService {
 	 * @param uid 
 	 * @param itemId 
 	 * @param sourceId 
-	 * @throws DomainServiceException 
+	 * @throws InternalDomainException 
 	 * @see FacadeService#marckItemAsRead(String, String, String)
 	 */
 	void marckItemAsRead(String uid, String sourceId,String itemId)  throws InternalDomainException;
@@ -88,7 +92,7 @@ public interface DomainService {
 	 * @param uid 
 	 * @param itemId 
 	 * @param sourceId 
-	 * @throws DomainServiceException 
+	 * @throws InternalDomainException 
 	 * @see FacadeService#marckItemAsUnread(String, String, String)
 	 */
 	void marckItemAsUnread(String uid, String sourceId,String itemId)  throws InternalDomainException;
@@ -106,6 +110,7 @@ public interface DomainService {
 	 * @param uid
 	 * @param contextId
 	 * @param size
+	 * @throws TreeSizeErrorException 
 	 * @throws ContextNotFoundException 
 	 * @see FacadeService#setTreeSize(String, String, int)
 	 */

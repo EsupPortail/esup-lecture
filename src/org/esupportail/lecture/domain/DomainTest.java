@@ -265,7 +265,7 @@ public class DomainTest {
 		System.out.println("Pliage de la categorie cp1 (deja pliée) => WARN");
 		facadeService.foldCategory(userId, contextId, "cp1");
 		System.out.println("Depliage de la categorie cp1 \n");
-		facadeService.unFoldCategory(userId, contextId, "cp1");
+		facadeService.unfoldCategory(userId, contextId, "cp1");
 		testGetVisibleCategories();
 		System.out.println("Pliage de la categorie cp1 \n");
 		facadeService.foldCategory(userId, contextId, "cp1");

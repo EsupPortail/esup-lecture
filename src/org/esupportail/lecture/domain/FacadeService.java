@@ -227,7 +227,7 @@ public class FacadeService implements InitializingBean {
 	 * set category catId unfolded in customContext cxtId
 	 * @throws ContextNotFoundException 
 	 */
-	public void unFoldCategory(String uid,String cxtId, String catId) throws ContextNotFoundException{
+	public void unfoldCategory(String uid,String cxtId, String catId) throws ContextNotFoundException{
 		domainService.unfoldCategory(uid,cxtId,catId);
 	}
 	

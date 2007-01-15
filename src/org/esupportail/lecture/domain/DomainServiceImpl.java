@@ -1,7 +1,6 @@
 package org.esupportail.lecture.domain;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -14,7 +13,6 @@ import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
-import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
@@ -28,7 +26,6 @@ import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
-import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
@@ -41,16 +38,20 @@ import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 import org.springframework.util.Assert;
 
 /**
- * Service implementation offered by domain layer
+ * Service implementation provided by domain layer
  * @author gbouteil
  * 
  * All of services are available for a user only if 
  * he has a customContext defined in his userProfile.
  * To have a customContext defined in a userProfile, the service
- * getContext must have been called one time in channel life (over user session)
+ * getContext must have been called one time (over several user session)
  *
  */
 public class DomainServiceImpl implements DomainService {
+	
+	/*
+	 ************************** PROPERTIES ******************************** */	
+	
 	/** 
 	 * Main domain model class
 	 */
@@ -67,7 +68,7 @@ public class DomainServiceImpl implements DomainService {
 	/**
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 		Assert.notNull(channel,"property channel can not be null");
 	}
 
@@ -76,6 +77,8 @@ public class DomainServiceImpl implements DomainService {
 	 ************************** Methodes - services - mode NORMAL ************************************/
 
 	/**
+	 * Return the user identified by userId
+	 * @param userId user Id
 	 * @see org.esupportail.lecture.domain.DomainService#getConnectedUser(java.lang.String)
 	 */
 	public UserBean getConnectedUser(String userId) {
@@ -93,8 +96,12 @@ public class DomainServiceImpl implements DomainService {
 	}
 
 	/**
+	 * Returns the contextBean corresponding to the context identified by contextId for user userId
+	 * @param userId id of the current user
+	 * @param contextId id of the context to get
+	 * @return contextBean
 	 * @throws ContextNotFoundException 
-	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 * @see org.esupportail.lecture.domain.DomainService#getContext(String,String)
 	 */
 	public ContextBean getContext(String userId,String contextId) throws ContextNotFoundException {
 		if (log.isDebugEnabled()){
@@ -113,7 +120,14 @@ public class DomainServiceImpl implements DomainService {
 	}
 
 	/**
-	 * 
+	 * Returns a list of categoryBean - corresponding to visibles categories into context contextId
+	 * Visible categories are one that user is subscribed to, in order to be displayed on user interface
+	 * for user userId
+	 * @param userId id of the current user
+	 * @param contextId  id of the current context 
+	 * @param ex externalService
+	 * @return a list of CategoryBean
+	 * @throws ContextNotFoundException
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, ExternalService)
 	 */
 	public List<CategoryBean> getVisibleCategories(String userId, String contextId,ExternalService ex) throws ContextNotFoundException {
@@ -144,18 +158,16 @@ public class DomainServiceImpl implements DomainService {
 	}
 	
 	/**
+	 * Returns a list of sourceBean - corresponding to visibles sources into categoryt categoryId
+	 * Visible sources are one that user is subscribed to, in order to be displayed on user interface
+	 * for user uid
+	 * @param uid Id of the user
+	 * @param categoryId id of the category to display sources
+	 * @return a list of sourceBean
 	 * @throws CategoryNotVisibleException 
-	 * @throws CustomCategoryNotFoundException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryProfileNotFoundException 
-	 * @throws ElementNotLoadedException 
-	 * @throws CategoryProfileNotFoundException 
-	 * @throws InternalDomainException 
+	 * @throws CategoryProfileNotFoundException
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotLoadedException 
-	 * @throws CustomContextNotFoundException 
-	 * @throws CustomCategoryNotFoundException 
-	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService ex) 
@@ -217,16 +229,18 @@ public class DomainServiceImpl implements DomainService {
 
 	/* see later */
 	
-	/**
-	 * @throws Xml2HtmlException 
-	 * @throws ComputeItemsException 
-	 * @throws MappingNotFoundException 
+	/** 
+	 * Returns a list of itemBean - corresponding to items containing in source sourceId,
+	 * in order to be displayed on user interface for user uid
+	 * @param uid user Id
+	 * @param sourceId source Id to display items
+	 * @param ex externalService
+	 * @return a list of itemBean
 	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws CustomSourceNotFoundException 
+	 * @throws ManagedCategoryProfileNotFoundException
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<ItemBean> getItems(String uid, String sourceId,ExternalService ex) 
@@ -274,8 +288,12 @@ public class DomainServiceImpl implements DomainService {
 
 
 	/**
+	 * Mark item as read for user uid
+	 * @param uid user Id
+	 * @param sourceId sourceId of the item
+	 * @param itemId item Id
 	 * @throws InternalDomainException 
-	 * @see org.esupportail.lecture.domain.DomainService#marckItemasRead(java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#marckItemAsRead(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void marckItemAsRead(String uid, String sourceId, String itemId) throws InternalDomainException {
 		if (log.isDebugEnabled()){
@@ -297,8 +315,12 @@ public class DomainServiceImpl implements DomainService {
 	}
 	
 	/**
+	 * Mark item as unread
+	 * @param uid user Id for user uid
+	 * @param sourceId sourceId of the item
+	 * @param itemId item Id
 	 * @throws InternalDomainException 
-	 * @see org.esupportail.lecture.domain.DomainService#marckItemasUnread(java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#marckItemAsUnread(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void marckItemAsUnread(String uid, String sourceId, String itemId) throws InternalDomainException {
 		if (log.isDebugEnabled()){
@@ -321,7 +343,12 @@ public class DomainServiceImpl implements DomainService {
 
 
 	/**
+	 * Set the tree size of the customContext
+	 * @param uid user Id for user uid
+	 * @param contextId context Id
+	 * @param size size to set
 	 * @throws ContextNotFoundException 
+	 * @throws TreeSizeErrorException
 	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(java.lang.String, java.lang.String, int)
 	 */
 	public void setTreeSize(String uid, String contextId, int size) throws TreeSizeErrorException, ContextNotFoundException {
@@ -337,6 +364,15 @@ public class DomainServiceImpl implements DomainService {
 	}
 
 
+	/**
+	 * Set category identified by catId as fold in the customContext ctxId
+	 * for user uid
+	 * @param uid user Id
+	 * @param cxtId context Id 
+	 * @param catId category Id
+	 * @throws ContextNotFoundException
+	 * @see org.esupportail.lecture.domain.DomainService#foldCategory(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public void foldCategory(String uid, String cxtId, String catId) throws ContextNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("foldCategory("+uid+","+cxtId+","+catId+")");
@@ -348,6 +384,15 @@ public class DomainServiceImpl implements DomainService {
 		customContext.foldCategory(catId);
 	}
 	
+	/**
+	 * Set category identified by catId as unfold in the customContext ctxId
+	 * for user uid
+	 * @param uid user Id
+	 * @param cxtId context Id 
+	 * @param catId category Id
+	 * @throws ContextNotFoundException
+	 * @see org.esupportail.lecture.domain.DomainService#unfoldCategory(java.lang.String, java.lang.String, java.lang.String)
+	 */
 	public void unfoldCategory(String uid, String cxtId, String catId) throws ContextNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("unfoldCategory("+uid+","+cxtId+","+catId+")");
