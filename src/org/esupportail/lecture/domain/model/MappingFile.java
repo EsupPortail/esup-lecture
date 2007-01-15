@@ -15,13 +15,12 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.commons.exceptions.ConfigException;
-import org.esupportail.lecture.exceptions.*;
 import org.esupportail.lecture.exceptions.domain.MappingFileException;
 
 
 /**
- * Mapping file : used for loading and parsing XML mapping file.
+ * Mapping file : used for loading and parsing XML file where are declared mappings.
+ * @see Mapping
  * @author gbouteil
  *
  */
@@ -30,14 +29,14 @@ public class MappingFile {
 	/*
 	 *********************** PROPERTIES**************************************/ 
 	/**
-	 * Instance of the mapping file
-	 */
-	private static MappingFile singleton = null;
-	
-	/**
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(MappingFile.class);
+	
+	/**
+	 * Instance of this class
+	 */
+	private static MappingFile singleton = null;
 	
 	/**
 	 * XML file loaded
@@ -45,23 +44,23 @@ public class MappingFile {
 	private static XMLConfiguration xmlFile;
 	
 	/**
-	 *  classpath relative path of the mapping file
+	 *  relative classpath of the file to load
 	 */
 	private static String mappingFilePath = "/properties/mappings.xml";
 	//TODO (GB later) externaliser mappingFilePath
 	
 	/**
-	 *  Base path of the mapping file
+	 *  Base path of the file to load
 	 */
 	private static String mappingFileBasePath;
 	
 	/**
-	 * Last modified time of the mapping file
+	 * Last modified time of the file to load
 	 */
 	private static long mappingFileLastModified;
 
 	/**
-	 * Indicates if mapping file has been modified since the last loading
+	 * Indicates if file has been modified since the last getInstance() calling
 	 */
 	private static boolean modified = false;
 	
@@ -70,6 +69,32 @@ public class MappingFile {
 	 */
 	private static List<Mapping> mappingList;
 	
+	/*
+	 ************************** INIT *********************************/	
+	
+	/**
+	 * Private Constructor: load xml mapping file 
+	 * @throws MappingFileException
+	 */
+	private MappingFile() throws MappingFileException {
+		if (log.isDebugEnabled()){
+			log.debug("MappingFile()");
+		}
+		
+		try {
+			xmlFile = new XMLConfiguration();
+			xmlFile.setFileName(mappingFileBasePath);
+			xmlFile.setValidating(true);
+			xmlFile.load();
+			checkXmlFile();
+			modified = true;
+
+		} catch (ConfigurationException e) {
+			String errorMsg = "Impossible to load XML Mapping file (mappings.xml)";
+			log.error(errorMsg);
+			throw new MappingFileException(errorMsg,e);	
+		} 
+	}	
 
 	
 	/*
@@ -77,8 +102,8 @@ public class MappingFile {
 	
 
 	/**
-	* Get an instance of the mapping file
-	 * @return an instance of the mapping file (singleton)
+	* Returns a singleton of this class used to load mappings
+	 * @return an instance of the mapping file (singleton) to load
 	 * @throws MappingFileException 
 	 * @see MappingFile#singleton
 	 */
@@ -119,28 +144,6 @@ public class MappingFile {
 	}
 
 
-	/**
-	 * Private Constructor: load xml mapping file 
-	 */
-	protected MappingFile() throws MappingFileException {
-		if (log.isDebugEnabled()){
-			log.debug("MappingFile()");
-		}
-		
-		try {
-			xmlFile = new XMLConfiguration();
-			xmlFile.setFileName(mappingFileBasePath);
-			xmlFile.setValidating(true);
-			xmlFile.load();
-			checkXmlFile();
-			modified = true;
-
-		} catch (ConfigurationException e) {
-			String errorMsg = "Impossible to load XML Mapping file (mappings.xml)";
-			log.error(errorMsg);
-			throw new MappingFileException(errorMsg,e);	
-		} 
-	}	
 
 	/**
 	 * Check syntax file that cannot be checked by DTD
@@ -237,9 +240,9 @@ public class MappingFile {
 		if (log.isDebugEnabled()){
 			log.debug("initChannelHashMappings()");
 		}
-		Iterator iterator = channel.getMappingList().iterator();
+		Iterator<Mapping> iterator = channel.getMappingList().iterator();
 		for(Mapping m = null; iterator.hasNext();){
-			m = (Mapping)iterator.next();
+			m = iterator.next();
 			channel.addMapping(m);
 			
 //			String sourceURL = m.getSourceURL();
@@ -271,6 +274,7 @@ public class MappingFile {
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString(){
 		String string = "path : "+ mappingFilePath ;
 		return string ;
@@ -308,11 +312,11 @@ public class MappingFile {
 		return modified;
 	}
 
-	/**
-	 * @param modified The modified to set.
-	 */
-	synchronized protected static void setModified(boolean modified) {
-		MappingFile.modified = modified;
-	}
+//	/**
+//	 * @param modified The modified to set.
+//	 */
+//	synchronized protected static void setModified(boolean modified) {
+//		MappingFile.modified = modified;
+//	}
 
 }

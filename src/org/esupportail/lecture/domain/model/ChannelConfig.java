@@ -62,7 +62,7 @@ public class ChannelConfig  {
 	private static long fileLastModified;
 	
 	/**
-	 * Indicates if file has been modified since last getInstance
+	 * Indicates if file has been modified since last getInstance() calling
 	 */
 	private static boolean modified = false;
 	

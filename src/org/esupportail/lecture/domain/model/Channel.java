@@ -589,7 +589,8 @@ public class Channel implements InitializingBean {
 //        return string;
 //	}		
 
-	/* ************************** ACCESSORS ********************************* */
+	/* 
+	 *************************** ACCESSORS ********************************* */
 	
 	/**
 	 * Returns the hashtable of contexts, indexed by their ids

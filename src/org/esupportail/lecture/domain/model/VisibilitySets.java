@@ -11,11 +11,7 @@ import org.esupportail.lecture.domain.ExternalService;
 
 
 /**
- * Visibility sets for managed categories and sources 
- * @author gbouteil
- *
- */
-/**
+ * Visibility sets for managed categories and managed sources 
  * @author gbouteil
  *
  */
@@ -32,7 +28,7 @@ public class VisibilitySets {
 	 */
 	private DefinitionSets allowed = new DefinitionSets();
 	/**
-	 * Group of autoSubribed users to element
+	 * Group of autoSubribed users to element (subscribed automatically, unsubscription possible)
 	 */
 	private DefinitionSets autoSubscribed = new DefinitionSets();
 	/**
@@ -40,15 +36,21 @@ public class VisibilitySets {
 	 */
 	private DefinitionSets obliged = new DefinitionSets();
 
+	/*
+	 *************************** INIT  *********************************** */	
+
 
 	/*
-	 ************************** METHODS ******************************** */	
+	 ************************** METHODS ********************************** */	
 	
 	/**
 	 * Check existence of group names, attributes names used in group definition
 	 * Not used for the moment : see later
 	 * Not ready to use without modification
+	 * @deprecated
 	 */
+	@SuppressWarnings("deprecation")
+	@Deprecated
 	synchronized protected void checkNamesExistence(){
 	   	if (log.isDebugEnabled()){
     		log.debug("checkNamesExistence()");
@@ -58,6 +60,12 @@ public class VisibilitySets {
 		autoSubscribed.checkNamesExistence();
 	}
 	
+	
+	/**
+	 * Return the visibility mode for current user (user connected to externalService)
+	 * @param ex externalService
+	 * @return visibilityMode 
+	 */
 	synchronized protected VisibilityMode whichVisibility(ExternalService ex){
 		
 		VisibilityMode mode = VisibilityMode.NOVISIBLE;
@@ -90,6 +98,7 @@ public class VisibilitySets {
 	 * and obliged group.
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString(){
 		
 		String string ="";

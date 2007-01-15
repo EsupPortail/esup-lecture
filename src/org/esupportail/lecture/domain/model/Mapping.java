@@ -11,7 +11,14 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * An xslt and xpath mapping to source view and item acess
+ * A mapping provides a xsltURL and xpath to source view and item access
+ * A mapping can have several entries (at least one):
+ * - sourceURL
+ * - dtd
+ * - xmlns
+ * - xmlType
+ * - rootElement
+ * An XPath can use a set of NamesSpace definition
  * @author gbouteil
  *
  */
@@ -66,7 +73,11 @@ public class Mapping {
 	private HashMap<String, String> XPathNameSpaces = new HashMap<String, String>();
 	
 	/*
-	 ************************** Methods ******************************** */	
+	 ************************** INIT *********************************/	
+	
+	
+	/*
+	 ************************** METHODS ******************************** */	
 
 //	/**
 //	 * Return a string containing mapping content : dtd, xsltfile, itemXPath, xmlns and xmlType 
@@ -115,9 +126,8 @@ public class Mapping {
 	}
 
 	/**
-	 * Returns the xslt file
-	 * @return xsltFile
-	 * @see Mapping#xsltFile
+	 * Returns the xslt url
+	 * @return xsltUrl
 	 */
 	protected String getXsltUrl() {
 		return xsltUrl;
@@ -125,8 +135,8 @@ public class Mapping {
 	
 	/**
 	 * Sets the xsltFile
-	 * @param xsltUrl xsltFile URL
-	 * @see Mapping#xsltFile
+	 * @param xsltUrl xslt URL
+	 * @see Mapping#xsltUrl
 	 */
 	synchronized protected void setXsltUrl(String xsltUrl) {
 		this.xsltUrl = xsltUrl;

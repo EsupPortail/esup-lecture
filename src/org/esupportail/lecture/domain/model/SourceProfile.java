@@ -9,24 +9,25 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
-import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 
 /**
  * Source profile element : a source profile can be a managed or personal one.
+ * A Source profile references a source and is defined in a category
  * @author gbouteil
+ * @see ElementProfile
  *
  */
 public abstract class SourceProfile implements ElementProfile {
 
-/* ************************** PROPERTIES ******************************** */
+	/*
+	 *************************** PROPERTIES ******************************** */
+	
 	/**
 	 * Log instance 
 	 */
@@ -54,26 +55,49 @@ public abstract class SourceProfile implements ElementProfile {
 	 */
 	private Source source;
 	
+	/**
+	 * URL of the xslt file 
+	 */
 	private String xsltURL;
 
+	/**
+	 * Xpath of an item 
+	 */
 	private String itemXPath;
 	
-	private boolean specificUserContent = false; 
-	
+	/**
+	 * Ttl of the remote source reloading
+	 */
 	private int ttl;
 	
 
 
-/* ************************** METHODS ******************************** */	
-	
-	
-	
+	/*
+	 *************************** INIT	 ******************************** */	
+		
 
 
+	/*
+	 *************************** METHODS ******************************** */	
+
+	/**
+	 * Load the source referenced by this SourceProfile
+	 * @param ex
+	 * @throws ComputeFeaturesException
+	 */
 	protected abstract void loadSource(ExternalService ex) throws ComputeFeaturesException ; 
 	
 	
-	synchronized public List<Item> getItems(ExternalService ex) 
+	/**
+	 * Return the list of items to be displayed for this source
+	 * @param ex access to externalService
+	 * @return a list of items
+	 * @throws SourceNotLoadedException
+	 * @throws MappingNotFoundException
+	 * @throws ComputeItemsException
+	 * @throws Xml2HtmlException
+	 */
+	synchronized protected List<Item> getItems(ExternalService ex) 
 		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException  {
 	   	if (log.isDebugEnabled()){
     		log.debug("getItems(externalService)");
@@ -91,22 +115,38 @@ public abstract class SourceProfile implements ElementProfile {
 	}
 
 	/**
-	 * Make the id of this  (<type>:<parentId>:<interneId>)
-	 * @param type = p | m  (persdonal or managed)
+	 * Make the (long)id of this sourceProfile (<type>:<parentId>:<interneId>)
+	 * @param type = p | m  (personal or managed)
 	 * @param parentId = 0 for a personal (no parent owner) | CategoryProfileId for a managed
-	 * @param simpleId for a personal | fileId for a managed	  
+	 * @param simpleId = interneId for a personal | fileId for a managed	  
 	 * @return ID made from the three parameters
 	 */
-	protected String makeId(String type,String parentId,String interneId){
+	protected String makeId(String type,String parentId,String simpleId){
 	   	if (log.isDebugEnabled()){
-    		log.debug("makeId("+type+","+parentId+","+interneId+")");
+    		log.debug("makeId("+type+","+parentId+","+simpleId+")");
     	}
-		String id = type+":"+parentId+":"+interneId;
+		id = type+":"+parentId+":"+simpleId;
 		return id;
 	}
 	
+	/**
+	 * Returns source of this managed source profile (if loaded)
+	 * @return source
+	 * @throws SourceNotLoadedException 
+	 */
+	public Source getElement() throws SourceNotLoadedException {
+		if (source == null){
+			// TODO (GB ?) on pourrait faire un loadSource ou autre chose ou ailleurs ?
+			String errorMsg = "Source "+id+" is not loaded in profile";
+			log.error(errorMsg);
+			throw new SourceNotLoadedException(errorMsg);
+		}
+		return source;
+	}
 	
-/* ************************** ACCESSORS ******************************** */	
+	
+	/*
+	 *************************** ACCESSORS ******************************** */	
 
 	/**
 	 * Returns the source profile Id
@@ -157,21 +197,7 @@ public abstract class SourceProfile implements ElementProfile {
 		this.sourceURL = sourceURL;
 	}
 
-	/**
-	 * Returns source of this managed source profile (if loaded)
-	 * @return source
-	 * @throws SourceNotLoadedException 
-	 */
-	public Source getElement() throws SourceNotLoadedException {
-		if (source == null){
-			// TODO (GB ?) on pourrait faire un loadSource ou autre chose ou ailleurs ?
-			String errorMsg = "Source "+id+" is not loaded in profile";
-			log.error(errorMsg);
-			throw new SourceNotLoadedException(errorMsg);
-		}
-		return source;
-	}
-	
+
 	/**
 	 * Sets source on the profile
 	 * @param source
@@ -181,44 +207,55 @@ public abstract class SourceProfile implements ElementProfile {
 	}
 
 
+	/**
+	 * @param string
+	 */
 	synchronized public void setXsltURL(String string) {
 		xsltURL = string;
 		
 	}
 
 
+	/**
+	 * @param string
+	 */
 	synchronized public void setItemXPath(String string) {
 		itemXPath = string;
 		
 	}
 
 
-	public String getItemXPath() {
+	/**
+	 * @return itemXPath
+	 */
+	private String getItemXPath() {
 		return itemXPath;
 	}
 
 
-	public String getXsltURL() {
+	/**
+	 * @return xsltURL
+	 */
+	private String getXsltURL() {
 		return xsltURL;
 	}
 
 
+	/**
+	 * @return ttl
+	 */
 	public int getTtl() {
 		return ttl;
 	}
 
 
+	/**
+	 * @param ttl
+	 */
 	synchronized public void setTtl(int ttl) {
 		this.ttl = ttl;
 	}
 
-	public boolean isSpecificUserContent() {
-		return specificUserContent;
-	}
 
-
-	synchronized public void setSpecificUserContent(boolean specificUserContent) {
-		this.specificUserContent = specificUserContent;
-	}
 
 }

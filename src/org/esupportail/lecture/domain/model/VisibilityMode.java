@@ -22,4 +22,4 @@ public enum VisibilityMode {
 	 * No visibility
 	 */
 	NOVISIBLE
-};
+}

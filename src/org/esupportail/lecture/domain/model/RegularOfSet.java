@@ -41,12 +41,12 @@ public class RegularOfSet {
 	 *************************** METHODS ******************************** */	
 	
 	/**
-	 * Return true if user checks this regular
-	 * @param portletService
+	 * Return true if user checks this regular, else returns false
+	 * (returns false when no answer or error from externalService)
+	 * @param ex access to externalService
 	 * @return boolean
-	 * @throws NoExternalAttributeValueException 
 	 */
-	public boolean evaluate(ExternalService ex) {
+	protected boolean evaluate(ExternalService ex) {
 		if (log.isDebugEnabled()){
 			log.debug("evaluate(externalService)");
 		}
@@ -75,7 +75,9 @@ public class RegularOfSet {
 	 * Check existence of attributes names used in regular definition
 	 * Not used for the moment : see later
 	 * Not ready to use without modification
+	 * @deprecated
 	 */
+	@Deprecated
 	protected void checkNamesExistence(){
 	   	if (log.isDebugEnabled()){
     		log.debug("checkNamesExistence()");
@@ -87,6 +89,7 @@ public class RegularOfSet {
 	/**
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString(){
 		
 		String string ="";

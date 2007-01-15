@@ -419,7 +419,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @return specificUserContent
 	 * @see ManagedSourceProfile#specificUserContent
 	 */
-	@Override
 	public boolean isSpecificUserContent() {
 		return specificUserContent;
 	}
@@ -429,7 +428,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @param specificUserContent
 	 * @see ManagedSourceProfile#specificUserContent
 	 */
-	@Override
 	synchronized public void setSpecificUserContent(boolean specificUserContent) {
 		this.specificUserContent = specificUserContent;
 	}

@@ -25,10 +25,6 @@ import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundE
  * @author gbouteil
  *
  */
-/**
- * @author gwen
- *
- */
 public class UserProfile {
 	
 	/*
@@ -40,7 +36,7 @@ public class UserProfile {
 	protected static final Log log = LogFactory.getLog(UserProfile.class);
 	
 	/**
-	 * Id of the user, get from portlet request by USER_ID, defined in the channel config
+	 * Id of the user, get from externalService request by USER_ID, defined in the channel config
 	 * @see org.esupportail.lecture.domain.DomainTools#USER_ID
 	 * @see ChannelConfig#loadUserId()
 	 */
@@ -49,17 +45,17 @@ public class UserProfile {
 	/**
 	 * Hashtable of CustomContexts defined for the user, indexed by contexID.
 	 */
-	private Map<String,CustomContext> customContexts;
+	private Map<String,CustomContext> customContexts = new Hashtable<String,CustomContext>();
 
 	/**
 	 * Hashtable of CustomManagedCategory defined for the user, indexed by ManagedCategoryProfilID.
 	 */
-	private Map<String,CustomCategory> customCategories;
+	private Map<String,CustomCategory> customCategories = new Hashtable<String, CustomCategory>();
 
 	/**
 	 * Hashtable of CustomSource defined for the user, indexed by SourceProfilID.
 	 */
-	private Map<String,CustomSource> customSources;
+	private Map<String,CustomSource> customSources = new Hashtable<String,CustomSource>();
 	/**
 	 * Database Primary Key
 	 */
@@ -79,19 +75,7 @@ public class UserProfile {
 	   	if (log.isDebugEnabled()){
     		log.debug("UserProfile("+userId+")");
     	}
-		customContexts = new Hashtable<String,CustomContext>();
-		customCategories = new Hashtable<String, CustomCategory>();
-		customSources = new Hashtable<String,CustomSource>();
 		this.setUserId(userId);
-	}
-
-	/**
-	 * Constructor
-	 */
-	public UserProfile(){
-		customContexts = new Hashtable<String,CustomContext>();
-		customCategories = new Hashtable<String, CustomCategory>();
-		customSources = new Hashtable<String,CustomSource>();
 	}
 
 	/*
@@ -99,8 +83,8 @@ public class UserProfile {
 
 	
 	/**
-	 * Return the customContext identified by the context id" 
-	 * if exists, else create it.
+	 * Return the customContext identified by the contextId 
+	 * if exists in userProfile, else create it.
 	 * @param contextId identifier of the context refered by the customContext
 	 * @return customContext (or null)
 	 * @throws ContextNotFoundException 
@@ -123,6 +107,10 @@ public class UserProfile {
 		return customContext;
 	}
 	
+	/**
+	 * @param contextId
+	 * @return true if this userProfile contains the customContext identified by contextId
+	 */
 	public boolean containsCustomContext(String contextId) {
 		return customContexts.containsKey(contextId);
 	}
@@ -131,18 +119,11 @@ public class UserProfile {
 	 * Return the customCategory identifed by the category id
 	 * if exist,else,create it.
 	 * @param categoryId identifier of the category refered by the customCategory
+	 * @param ex access to externalService
 	 * @return customCategory (or null)
 	 * @throws CategoryNotVisibleException 
 	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws ElementNotLoadedException 
-	 * @throws CustomContextNotFoundException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws ElementNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws CustomCategoryNotFoundException 
-	 * @throws CustomContextNotFoundException 
 	 */
 	public CustomCategory getCustomCategory(String categoryId,ExternalService ex) 
 		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, CustomCategoryNotFoundException {
@@ -165,6 +146,13 @@ public class UserProfile {
 		return customCategory;
 	}
 	
+	/**
+	 * Update every customContext of this userProfile for (only one)categoryProfile identified by categoryProfileId
+	 * @param categoryProfileId
+	 * @param ex access to externalService
+	 * @throws ManagedCategoryProfileNotFoundException
+	 * @throws CategoryNotVisibleException
+	 */
 	protected void updateCustomContextsForOneManagedCategory(String categoryProfileId,ExternalService ex) 
 		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException {
 		
@@ -225,9 +213,10 @@ public class UserProfile {
 	}
 	
 	/**
+	 * Add a customContext to this userProfile
 	 * @param customContext
 	 */
-	public void addCustomContext(CustomContext customContext){
+	protected void addCustomContext(CustomContext customContext){
 	   	if (log.isDebugEnabled()){
     		log.debug("addCustomContext("+customContext.getElementId()+")");
     	}
@@ -236,9 +225,10 @@ public class UserProfile {
 	}
 	
 	/**
-	 * @param contextId 
+	 * Remove a customContext from this userProfile
+	 * @param contextId id of the customContext to add
 	 */
-	public void removeCustomContext(String contextId){
+	protected void removeCustomContext(String contextId){
 	   	if (log.isDebugEnabled()){
     		log.debug("removeCustomContext("+contextId+")");
     	}
@@ -249,9 +239,10 @@ public class UserProfile {
 	}
 	
 	/**
-	 * @param customCategory
+	 * Add a customCategory to this userProfile
+	 * @param customCategory customCategory to add
 	 */
-	public void addCustomCategory(CustomCategory customCategory){
+	protected void addCustomCategory(CustomCategory customCategory){
 	   	if (log.isDebugEnabled()){
     		log.debug("addCustomCategory("+customCategory.getElementId()+")");
     	}
@@ -261,9 +252,10 @@ public class UserProfile {
 	
 
 	/**
+	 * Remove a customCategory from this userProfile
 	 * @param categoryId
 	 */
-	public void removeCustomCategory(String categoryId){
+	protected void removeCustomCategory(String categoryId){
 	   	if (log.isDebugEnabled()){
     		log.debug("removeCustomCategory("+categoryId+")");
     	}
@@ -274,19 +266,21 @@ public class UserProfile {
 	}
 	
 	/**
-	 * @param customSource
+	 * Add a customSource to this userProfile
+	 * @param customSource customSource to add
 	 */
-	public void addCustomSource(CustomSource customSource){
+	protected void addCustomSource(CustomSource customSource){
 	   	if (log.isDebugEnabled()){
     		log.debug("addCustomSource("+customSource.getElementId()+")");
     	}
 		customSources.put(customSource.getElementId(),customSource);
 	}
 	
-	/**
+	/**	 * 
+	 * Remove a customCategory from this userProfile
 	 * @param sourceId
 	 */
-	public void removeCustomSource(String sourceId){
+	protected void removeCustomSource(String sourceId){
 	   	if (log.isDebugEnabled()){
     		log.debug("removeCustomSource("+sourceId+")");
     	}
@@ -331,14 +325,14 @@ public class UserProfile {
 	/**
 	 * @return customManagedCategories
 	 */
-	public Map<String, CustomCategory> getCustomCategories() {
+	private Map<String, CustomCategory> getCustomCategories() {
 		return customCategories;
 	}
 
 	/**
 	 * @param customCategories 
 	 */
-	public void setCustomCategories(
+	private void setCustomCategories(
 			Map<String, CustomCategory> customCategories) {
 		this.customCategories = customCategories;
 	}
@@ -360,14 +354,14 @@ public class UserProfile {
 	/**
 	 * @return custom sources from this userProfile
 	 */
-	public Map<String, CustomSource> getCustomSources() {
+	private Map<String, CustomSource> getCustomSources() {
 		return customSources;
 	}
 
 	/**
 	 * @param customSources
 	 */
-	public void setCustomSources(Map<String, CustomSource> customSources) {
+	private void setCustomSources(Map<String, CustomSource> customSources) {
 		this.customSources = customSources;
 	}
 
