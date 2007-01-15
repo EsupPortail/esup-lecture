@@ -61,7 +61,17 @@ public class CustomManagedCategory extends CustomCategory {
 			log.debug("CustomManagedCategory("+profileId+","+user.getUserId()+")");
 		}
 	}
-	
+
+	/**
+	 * default constructor
+	 */
+	protected CustomManagedCategory(){
+		super();
+		if (log.isDebugEnabled()){
+			log.debug("CustomManagedCategory()");
+		}
+	}
+
 	/*
 	 ************************** METHODS *********************************/	
 	

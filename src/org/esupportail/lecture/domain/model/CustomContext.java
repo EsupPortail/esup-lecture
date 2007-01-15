@@ -88,6 +88,11 @@ public class CustomContext implements CustomElement {
 		treeSize = 20;
 	}
 	
+	/**
+	 * Constructor
+	 */
+	protected CustomContext() {
+	}
 	
 	/*
 	 *************************** METHODS ************************************/

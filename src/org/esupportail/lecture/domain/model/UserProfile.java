@@ -78,6 +78,12 @@ public class UserProfile {
 		this.setUserId(userId);
 	}
 
+	/**
+	 * Constructor
+	 */
+	public UserProfile(){
+	}
+
 	/*
 	 *************************** METHODS ************************************/
 

@@ -50,6 +50,16 @@ public class CustomManagedSource extends CustomSource{
 		sourceProfile = profile;
 	}
 	
+	/**
+	 * default constructor
+	 */
+	protected CustomManagedSource() {
+		super();
+		if (log.isDebugEnabled()){
+			log.debug("CustomManagedSource()");
+		}
+	}	
+	
 	/*
 	 ************************** METHODS *********************************/	
 	

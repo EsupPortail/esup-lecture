@@ -68,6 +68,16 @@ public abstract class CustomSource implements CustomElement {
 		profileId = profile.getId();
 	}
 
+	/**
+	 * Constructor
+	 */
+	protected CustomSource(){
+		if (log.isDebugEnabled()){
+			log.debug("CustomSource()");
+		}
+		readItems = new HashSet<String>();
+	}
+
 	/* 
 	 ************************** METHODS **********************************/
 	

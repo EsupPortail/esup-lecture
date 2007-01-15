@@ -56,6 +56,14 @@ public abstract class CustomCategory implements CustomElement {
 		this.userProfile = user;
 	}
 
+	/**
+	 * default constructor
+	 */
+	protected CustomCategory() {
+		if (log.isDebugEnabled()){
+			log.debug("CustomCategory()");
+		}
+	}
 
 	/* 
 	 ************************** METHODS **********************************/
