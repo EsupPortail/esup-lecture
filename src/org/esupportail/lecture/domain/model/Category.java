@@ -9,6 +9,7 @@ import java.util.Hashtable;
 import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
  * Category element : a category can be a managed or personal one.
@@ -51,13 +52,25 @@ public abstract class Category implements Element,Serializable {
 	 *************************** METHODS *********************************/
 	
 	
-/*	protected SourceProfile getSourceProfileById(String id){
+	/**
+	 * Returns the sourceProfile identified by id, defined in this Category
+	 * @param id id oh the sourceProfile
+	 * @return the sourceProfile
+	 * @throws SourceProfileNotFoundException 
+	 */
+	protected SourceProfile getSourceProfileById(String id) throws SourceProfileNotFoundException{
 		if (log.isDebugEnabled()){
 			log.debug("getSourceProfileById("+id+")");
 		}
-		return sourceProfilesHash.get(id);
+		SourceProfile profile = sourceProfilesHash.get(id);
+		if (profile==null){
+			String errorMsg = "SourceProfile "+id+"is not found in Category "+this.profileId;
+			log.error(errorMsg);
+			throw new SourceProfileNotFoundException(errorMsg);
+		}
+		return profile;
 	}
-*/
+
 
 
 

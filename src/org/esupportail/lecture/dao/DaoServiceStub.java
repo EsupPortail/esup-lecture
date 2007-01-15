@@ -148,7 +148,7 @@ public class DaoServiceStub  implements DaoService {
 
 	public void updateCustomSource(CustomSource source) {
 		if (log.isDebugEnabled()){
-			log.debug("deleteCustomSource("+source.getElementId()+")");
+			log.debug("updateCustomSource("+source.getElementId()+")");
 		}
 	}
 

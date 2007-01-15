@@ -11,6 +11,7 @@ import org.esupportail.lecture.domain.beans.CategoryDummyBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
+import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.Context;
@@ -34,6 +35,7 @@ import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 import org.springframework.util.Assert;
@@ -171,8 +173,16 @@ public class DomainServiceImpl implements DomainService {
 			int nbSources = customSources.size();
 				
 			for(CustomSource customSource : customSources){
-				SourceBean source = new SourceBean(customSource);
-				listSourceBean.add(source);
+				SourceBean source;
+				try {
+					source = new SourceBean(customSource);
+					listSourceBean.add(source);
+				} catch (InfoDomainException e) {
+					log.error("Error on service 'getVisibleSources(user "+uid+", category "+categoryId+") : creation of a SourceDummyBean");
+					source = new SourceDummyBean(e);
+					listSourceBean.add(source);
+				}
+				
 			}
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")";
@@ -184,24 +194,24 @@ public class DomainServiceImpl implements DomainService {
 	}
 
 
-	/**
-	 * @param customCategory
-	 * @param ex
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
-	 */
-	private List<SourceBean> getSortedCustomSourcesForCustomCategory(CustomCategory customCategory, ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException {
-		List<CustomSource> customSources = customCategory.getSortedCustomSources(ex);
-		int nbSources = customSources.size();
-		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
-		for(CustomSource customSource : customSources){
-			SourceBean source = new SourceBean(customSource);
-			listSourceBean.add(source);
-		}
-		return listSourceBean;
-	}
+//	/**
+//	 * @param customCategory
+//	 * @param ex
+//	 * @throws CategoryNotVisibleException 
+//	 * @throws CategoryProfileNotFoundException 
+//	 * @throws CategoryNotLoadedException 
+//	 */
+//	private List<SourceBean> getSortedCustomSourcesForCustomCategory(CustomCategory customCategory, ExternalService ex) 
+//		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException {
+//		List<CustomSource> customSources = customCategory.getSortedCustomSources(ex);
+//		int nbSources = customSources.size();
+//		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
+//		for(CustomSource customSource : customSources){
+//			SourceBean source = new SourceBean(customSource);
+//			listSourceBean.add(source);
+//		}
+//		return listSourceBean;
+//	}
 	
 	
 
@@ -213,11 +223,14 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws MappingNotFoundException 
 	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws CustomSourceNotFoundException 
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<ItemBean> getItems(String uid, String sourceId,ExternalService ex) 
-		throws SourceNotLoadedException, InternalDomainException {
+		throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException {
 		if (log.isDebugEnabled()){
 			log.debug("getItems("+uid+","+sourceId+",externalService)");
 		}
@@ -352,25 +365,25 @@ public class DomainServiceImpl implements DomainService {
 	public List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService ex) {
 		// TODO (RB --> GB) test code. To change !
 		List<SourceBean> ret = null;
-		try {
-			ret = getVisibleSources(uid, categoryId, ex);
-		} catch (DomainServiceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		int i = 1;
-		for(SourceBean sb : ret) {
-			if (i==1) {
-				sb.setType(SourceBean.OBLIGED);
-			}
-			if (i==2) {
-				sb.setType(SourceBean.NOTSUBSCRIBED);
-			}
-			if (i==3) {
-				sb.setType(SourceBean.SUBSCRIBED);
-			}
-			i++;
-		}
+//		try {
+//			ret = getVisibleSources(uid, categoryId, ex);
+//		} catch (DomainServiceException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		int i = 1;
+//		for(SourceBean sb : ret) {
+//			if (i==1) {
+//				sb.setType(SourceBean.OBLIGED);
+//			}
+//			if (i==2) {
+//				sb.setType(SourceBean.NOTSUBSCRIBED);
+//			}
+//			if (i==3) {
+//				sb.setType(SourceBean.SUBSCRIBED);
+//			}
+//			i++;
+//		}
 		return ret;
 	}
 	

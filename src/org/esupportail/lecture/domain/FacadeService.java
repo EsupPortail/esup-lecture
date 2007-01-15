@@ -20,8 +20,10 @@ import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
@@ -160,9 +162,12 @@ public class FacadeService implements InitializingBean {
 	 * @return List of ItemBean in a source
 	 * @throws InternalDomainException 
 	 * @throws SourceNotLoadedException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws DomainServiceException 
 	 */
-	public List<ItemBean> getItems(String uid,String sourceId) throws SourceNotLoadedException, InternalDomainException {
+	public List<ItemBean> getItems(String uid,String sourceId) throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException {
 		return domainService.getItems(uid,sourceId,externalService);
 	}
 

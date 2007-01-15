@@ -112,7 +112,7 @@ public class UserProfile {
 		CustomContext customContext = customContexts.get(contextId);
 		if (customContext == null){
 			if (!DomainTools.getChannel().isThereContext(contextId)) {
-				String errorMsg = "Context " + contextId + " is not found in Channel";
+				String errorMsg = "Context "+contextId+ " is not found in Channel";
 				log.error(errorMsg);
 				throw new ContextNotFoundException(errorMsg);
 			}
@@ -298,19 +298,7 @@ public class UserProfile {
 		
 	/* ************************** ACCESSORS ********************************* */
 
-//	/**
-//	 * @return Returns the customContexts.
-//	 */
-//	public Hashtable<String, CustomContext> getCustomContexts() {
-//		return customContexts;
-//	}
-//
-//	/**
-//	 * @param customContexts The customContexts to set.
-//	 */
-//	public void setCustomContexts(Hashtable<String, CustomContext> customContexts) {
-//		this.customContexts = customContexts;
-//	}
+
 
 	/**
 	 * @return Returns the userId.
@@ -329,14 +317,14 @@ public class UserProfile {
 	/**
 	 * @return customContexts
 	 */
-	public Map<String, CustomContext> getCustomContexts() {
+	private Map<String, CustomContext> getCustomContexts() {
 		return customContexts;
 	}
 
 	/**
 	 * @param customContexts
 	 */
-	public void setCustomContexts(Map<String, CustomContext> customContexts) {
+	private void setCustomContexts(Map<String, CustomContext> customContexts) {
 		this.customContexts = customContexts;
 	}
 

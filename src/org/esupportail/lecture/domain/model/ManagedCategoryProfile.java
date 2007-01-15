@@ -15,6 +15,7 @@ import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
  * Managed category profile element.
@@ -353,6 +354,24 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		}
 		contextsSet.add(c);
 	}
+	
+	/**
+	 * Returns the managedSourceProfile identified by id, accessible by this ManagedCategoryProfile
+	 * (Defined in ManagedCategory referred by this ManagedCategoryProfile)
+	 * @param id id of the sourceProfile to get
+	 * @return the sourceProfile
+	 * @throws CategoryNotLoadedException 
+	 * @throws SourceProfileNotFoundException 
+	 */
+	@Override
+	protected ManagedSourceProfile getSourceProfileById(String id) throws CategoryNotLoadedException, SourceProfileNotFoundException {
+//		 TODO (GB ?) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
+		return (ManagedSourceProfile) getElement().getSourceProfileById(id);
+
+	}
+
+	
+	
 	
 	/*
 	 *************************** ACCESSORS ******************************** */	

@@ -23,6 +23,10 @@ import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundExceptio
  * @author gbouteil
  *
  */
+/**
+ * @author gbouteil
+ *
+ */
 public class CustomManagedCategory extends CustomCategory {
 
 	/*
@@ -36,6 +40,12 @@ public class CustomManagedCategory extends CustomCategory {
 	 * Subscriptions of CustomManagedSources
 	 */
 	private Map<String,CustomManagedSource> subscriptions = new Hashtable<String,CustomManagedSource>();
+	
+	
+	/**
+	 * CategoryProfile associated to this customManagedCategory
+	 */
+	private ManagedCategoryProfile categoryProfile;
 	
 	/*
 	 ************************** INIT *********************************/	
@@ -137,32 +147,34 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	@Override
 	public ManagedCategoryProfile getProfile() throws CategoryProfileNotFoundException {
-		// TODO cf customContext
 		if (log.isDebugEnabled()){
 			log.debug("id="+super.getElementId()+" - getProfile()");
 		}
-		Channel channel = DomainTools.getChannel();
-		return channel.getManagedCategoryProfile(getElementId());
+		if (categoryProfile == null){
+			Channel channel = DomainTools.getChannel();
+			categoryProfile = channel.getManagedCategoryProfile(getElementId());
+		}
+		return categoryProfile;		
 	}
 	
 	/*
 	 ************************** ACCESSORS *********************************/	
 
 
-//	/**
-//	 * @return source subcription of this category
-//	 */
-//	public Map<String, CustomManagedSource> getSubscriptions() {
-//		return subscriptions;
-//	}
-//
-//	/**
-//	 * @param subscriptions
-//	 */
-//	public void setSubscriptions(
-//			Map<String, CustomManagedSource> subscriptions) {
-//		this.subscriptions = subscriptions;
-//	}
+	/**
+	 * @return source subcription of this category
+	 */
+	private Map<String, CustomManagedSource> getSubscriptions() {
+		return subscriptions;
+	}
+
+	/**
+	 * @param subscriptions
+	 */
+	private void setSubscriptions(
+			Map<String, CustomManagedSource> subscriptions) {
+		this.subscriptions = subscriptions;
+	}
 	
 
 

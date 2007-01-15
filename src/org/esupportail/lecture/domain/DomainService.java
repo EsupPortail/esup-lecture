@@ -13,7 +13,9 @@ import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundExceptio
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 
 /**
@@ -64,11 +66,14 @@ public interface DomainService {
 	 * @param uid 
 	 * @param ex access to external service 
 	 * @return List<ItemBean>
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws DomainServiceException 
 	 * @see FacadeService#getItems(String, String)
 	 */
 	List<ItemBean> getItems( String uid,String sourceId,ExternalService ex)  
-		throws SourceNotLoadedException, InternalDomainException;
+		throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException;
 
 	/**
 	 * @param uid 

@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
  * Category profile element : a category profile can be a managed or personal one.
@@ -97,6 +98,20 @@ public abstract class CategoryProfile implements ElementProfile {
 		}
 		return category;
 	}
+	
+	/**
+	 * Returns the sourceProfile identified by id, accessible by CategoryProfile
+	 * (Defined in Category referred by this categoryProfile
+	 * @param id id of the sourceProfile
+	 * @return the sourceProfile
+	 * @throws CategoryNotLoadedException 
+	 * @throws SourceProfileNotFoundException 
+	 */
+	protected abstract SourceProfile getSourceProfileById(String id) throws CategoryNotLoadedException, SourceProfileNotFoundException ;
+
+	
+	
+	
 	
 	/** 
 	 * @see java.lang.Object#toString()

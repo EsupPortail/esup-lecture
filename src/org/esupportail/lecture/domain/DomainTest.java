@@ -21,7 +21,9 @@ import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InfoExternalException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -54,15 +56,15 @@ public class DomainTest {
 		
 		try {
 			/* Test alternative behavior */
-//			testGetContextBis("ccc");
-//			testGetVisibleSourceAlternativeWay(); 
+			testGetContextBis("c1");
+			testGetVisibleSourceAlternativeWay(); 
 			
 			/* Test normal behavior */
-			testGetConnectedUser();
-			testGetContext();
-			testGetVisibleCategories();
-			testGetVisibleSources();
-			testGetItems();
+//			testGetConnectedUser();
+//			testGetContext();
+//			testGetVisibleCategories();
+//			testGetVisibleSources();
+//			testGetItems();
 		
 			/* small actions */
 //			testMarkItemAsRead();
@@ -147,13 +149,10 @@ public class DomainTest {
 	
 	/**
 	 * Test of service "getSources"
-	 * @throws InternalDomainException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws DomainServiceException 
 	 * @throws DomainServiceException 
 	 */
-	private static void testGetVisibleSources() throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, CategoryNotLoadedException  {
+	private static void testGetVisibleSources() throws DomainServiceException  {
 		printIntro("getVisibleSources");
 		for(String catId : categoryIds){
 			System.out.println(" **** cat "+catId+" **********");
@@ -172,15 +171,11 @@ public class DomainTest {
 	 *  Test of service "getSources" in an alternative way :
 	 *  - the parent category has not been got before
 	 * @throws InternalExternalException 
-	 * @throws ContextNotFoundException 
 	 * @throws DomainServiceException 
 	 * @throws InternalExternalException 
-	 * @throws InternalDomainException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws DomainServiceException 
 	 */
-	private static void testGetVisibleSourceAlternativeWay() throws ContextNotFoundException, InternalExternalException, CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, CategoryNotLoadedException  {	
+	private static void testGetVisibleSourceAlternativeWay() throws InternalExternalException, DomainServiceException  {	
 		testGetContext();	
 		printIntro("getVisibleSources - alternative way");
 		categoryIds = new ArrayList<String>();
@@ -204,9 +199,12 @@ public class DomainTest {
 	 * Test of service "getItems"
 	 * @throws InternalDomainException 
 	 * @throws SourceNotLoadedException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws DomainServiceException 
 	 */
-	private static void testGetItems() throws SourceNotLoadedException, InternalDomainException  {
+	private static void testGetItems() throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException  {
 		printIntro("getItems");
 		System.out.println(" **** source "+sourceId+" **********");
 		List<ItemBean> items = facadeService.getItems(userId,sourceId);
@@ -222,9 +220,12 @@ public class DomainTest {
 	 * Test of service markItemAsRead and markItemAsUnread
 	 * @throws InternalDomainException 
 	 * @throws SourceNotLoadedException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws DomainServiceException 
 	 */
-	private static void testMarkItemAsRead() throws InternalDomainException, SourceNotLoadedException {
+	private static void testMarkItemAsRead() throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException {
 		printIntro("markItemAsRead");
 		System.out.println("Marquage de l'item "+itemId+" comme lu");
 		facadeService.marckItemAsRead(userId, "un", itemId);

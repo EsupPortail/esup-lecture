@@ -13,9 +13,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 
 /**
@@ -70,15 +73,21 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * The SourceProfile associated to this CustomSource
 	 * @return the SourceProfile 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	public abstract SourceProfile getProfile();
+	public abstract SourceProfile getProfile() throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException;
 	
 
 	/**
 	 * The name of the source profile associated to this CustomSource
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
-	public String getName(){
+	public String getName() throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException{
 		if (log.isDebugEnabled()){
 			log.debug("id="+profileId+" - getName()");
 		}
@@ -95,9 +104,12 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws MappingNotFoundException
 	 * @throws ComputeItemsException
 	 * @throws Xml2HtmlException
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
 	public List<Item> getItems(ExternalService ex) 
-		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException  {
+		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException  {
 		if (log.isDebugEnabled()){
 			log.debug("id="+profileId+" - getItems(externalService)");
 		}
@@ -167,33 +179,33 @@ public abstract class CustomSource implements CustomElement {
 		this.customSourcePK = customSourcePK;
 	}
 
-//	/**
-//	 * @param userProfile
-//	 */
-//	public void setUserProfile(UserProfile userProfile) {
-//		this.userProfile = userProfile;
-//	}
-//
-//	/**
-//	 * @param profileId
-//	 */
-//	public void setProfileId(String profileId) {
-//		this.profileId = profileId;
-//	}
-//
-//	/**
-//	 * @return a set of read items ID
-//	 */
-//	public Set<String> getReadItems() {
-//		return readItems;
-//	}
-//
-//	/**
-//	 * @param readItems
-//	 */
-//	public void setReadItems(Set<String> readItems) {
-//		this.readItems = readItems;
-//	}
+	/**
+	 * @param userProfile
+	 */
+	private void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
+
+	/**
+	 * @param profileId
+	 */
+	private void setProfileId(String profileId) {
+		this.profileId = profileId;
+	}
+
+	/**
+	 * @return a set of read items ID
+	 */
+	private Set<String> getReadItems() {
+		return readItems;
+	}
+
+	/**
+	 * @param readItems
+	 */
+	private void setReadItems(Set<String> readItems) {
+		this.readItems = readItems;
+	}
 	
 
 	

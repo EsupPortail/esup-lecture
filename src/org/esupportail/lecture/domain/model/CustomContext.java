@@ -328,32 +328,33 @@ public class CustomContext implements CustomElement {
 		this.userProfile = userProfile;
 	}
 
-//	/**
-//	 * @return hash of subscribed categories
-//	 */
-//	public Map<String, CustomManagedCategory> getSubscriptions() {
-//		return subscriptions;
-//	}
+	/**
+	 * @return hash of subscribed categories
+	 */
+	private Map<String, CustomManagedCategory> getSubscriptions() {
+		return subscriptions;
+	}
 
-//	/**
-//	 * @param subscriptions
-//	 */
-//	public void setSubscriptions(
-//			Map<String, CustomManagedCategory> subscriptions) {
-//		this.subscriptions = subscriptions;
-//	}
+	/**
+	 * Sets Map of subscriptions
+	 * @param subscriptions
+	 */
+	private void setSubscriptions(
+			Map<String, CustomManagedCategory> subscriptions) {
+		this.subscriptions = subscriptions;
+	}
 
-//	/**
-//	 * @return a set of folded categories ID 
-//	 */
-//	public Set<String> getUnfoldedCategories() {
-//		return unfoldedCategories;
-//	}
-//
-//	/**
-//	 * @param foldedCategories - set of olded categories ID 
-//	 */
-//	public void setUnfoldedCategories(Set<String> foldedCategories) {
-//		this.unfoldedCategories = foldedCategories;
-//	}
+	/**
+	 * @return a set of folded categories ID 
+	 */
+	private Set<String> getUnfoldedCategories() {
+		return unfoldedCategories;
+	}
+
+	/**
+	 * @param foldedCategories - set of olded categories ID 
+	 */
+	private void setUnfoldedCategories(Set<String> foldedCategories) {
+		this.unfoldedCategories = foldedCategories;
+	}
 }

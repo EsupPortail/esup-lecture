@@ -2,6 +2,10 @@ package org.esupportail.lecture.domain.beans;
 
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.SourceProfile;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.DomainServiceException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
  * @author bourges
@@ -47,50 +51,56 @@ public class SourceBean {
 	/**
 	 * constructor
 	 * @param customSource
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	public SourceBean(CustomSource customSource){
+	public SourceBean(CustomSource customSource) throws ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException{
 		SourceProfile profile = customSource.getProfile();
 		
-		setName(profile.getName());
-		setId(profile.getId());
+		this.name = profile.getName();
+		this.id = profile.getId();
 		
 	}
 	
 	/**
 	 * @return name of source
+	 * @throws DomainServiceException 
 	 */
-	public String getName() {
+	public String getName() throws DomainServiceException {
 		return name;
 	}
 	
 	/**
 	 * @param name
+	 * @throws DomainServiceException 
 	 */
-	public void setName(String name) {
+	public void setName(String name) throws DomainServiceException {
 		this.name = name;
 	}
 	/**
 	 * @return id of source
 	 */
-	public String getId() {
+	public String getId()  throws DomainServiceException{
 		return id;
 	}
 	/**
 	 * @param id
 	 */
-	public void setId(String id) {
+	public void setId(String id)  throws DomainServiceException{
 		this.id = id;
 	}
 	/**
 	 * @return type of source
 	 */
-	public String getType() {
+	public String getType()  throws DomainServiceException{
 		return type;
 	}
 	/**
 	 * @param type
+	 * @throws DomainServiceException 
 	 */
-	public void setType(String type) {
+	public void setType(String type) throws DomainServiceException {
 		this.type = type;
 	}
 	

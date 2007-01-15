@@ -109,6 +109,15 @@ public abstract class CustomCategory implements CustomElement {
 		return userProfile;
 	}
 	
+
+	/**
+	 * Sets userProfile
+	 * @param userProfile
+	 */
+	private void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+	}
+	
 	/**
 	 * @return id of the profile category referred by this customCategory
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getElementId()
@@ -117,6 +126,14 @@ public abstract class CustomCategory implements CustomElement {
 		return profileId;
 	}
 
+	/**
+	 * Sets categoryProfile Id
+	 * @param profileId
+	 */
+	private void setProfileId(String profileId) {
+		this.profileId = profileId;
+	}
+	
 	/**
 	 * @return database pk
 	 */
@@ -131,18 +148,8 @@ public abstract class CustomCategory implements CustomElement {
 		this.customCategoryPK = customCategoryPK;
 	}
 	
-//	/**
-//	 * @param userProfile
-//	 */
-//	public void setUserProfile(UserProfile userProfile) {
-//		this.userProfile = userProfile;
-//	}
+
 	
-//	/**
-//	 * @param profileId
-//	 */
-//	public void setProfileId(String profileId) {
-//		this.profileId = profileId;
-//	}
+
 
 }
