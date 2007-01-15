@@ -2,17 +2,31 @@ package org.esupportail.lecture.domain.model;
 
 /**
  * @author bourges
- * used to store item informations
+ * It is the smallest unit information. 
+ * It is self-supported : it represent an XML element extracted from an XML Stream get from a source.
+ * This XML element is yet parsed and we can get the HTML content to be displayed on user interface.
  */
 public class Item {
+
+	/* 
+	 *************************** PROPERTIES ******************************** */	
+
 	/**
-	 * id of item
+	 * Id of item
 	 */
 	private String id;
 	/**
 	 * html content of item
 	 */
 	private String htmlContent;
+
+	/*
+	 *************************** INIT ************************************** */	
+	/*
+	 *************************** METHODS *********************************** */	
+
+	/*
+	 *************************** ACCESSORS ********************************* */	
 
 	/**
 	 * @return html content of item
@@ -23,7 +37,7 @@ public class Item {
 	/**
 	 * @param htmlContent
 	 */
-	synchronized public void setHtmlContent(String htmlContent) {
+	synchronized protected void setHtmlContent(String htmlContent) {
 		this.htmlContent = htmlContent;
 	}
 	/**
@@ -35,7 +49,7 @@ public class Item {
 	/**
 	 * @param id
 	 */
-	synchronized public void setId(String id) {
+	synchronized protected void setId(String id) {
 		this.id = id;
 	}
 

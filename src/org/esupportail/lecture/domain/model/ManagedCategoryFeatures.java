@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
  * because of inheritance rules between managedCategory and managedCategoryProfile :
  * Interested features are : edit, visibility
  * @author gbouteil 
+ * @see ManagedElementFeatures
  */
 public class ManagedCategoryFeatures extends ManagedElementFeatures {
 	

@@ -24,6 +24,7 @@ import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 /**
  * Customizations on a SourceProfile for a user Profile 
  * @author gbouteil
+ * @see CustomElement
  *
  */
 public abstract class CustomSource implements CustomElement {

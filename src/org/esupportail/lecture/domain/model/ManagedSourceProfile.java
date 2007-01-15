@@ -6,27 +6,18 @@
 package org.esupportail.lecture.domain.model;
 
 
-import javax.swing.text.DefaultEditorKit.CutAction;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
-import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 
 
 /**
- * Managed source profile element.
+ * Managed source profile element. It refers a source and is defined in a managedCategory
  * @author gbouteil
  * @see org.esupportail.lecture.domain.model.SourceProfile
  * @see org.esupportail.lecture.domain.model.ManagedElementProfile
- *
- */
-/**
- * @author gbouteil
  *
  */
 public class ManagedSourceProfile extends SourceProfile implements ManagedElementProfile {
@@ -62,28 +53,29 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	private boolean specificUserContent;
 	
 	/**
-	 * Resolve feature values (access, visibility,tll,ItemXpath,xsltURL) from :
-	 * - managedSourceProfile features
-	 * - source features
+	 * Resolve feature values (access, visibility) from :
+	 * - managedSourceProfile 
+	 * - source 
 	 * - trustCategory parameter 
 	 */
 	private ManagedSourceFeatures features;
 
 	/**
-	 * profile of the owner category of this managed source profile 
+	 * profile of the parent category of this managed source profile 
 	 */
 	private ManagedCategoryProfile categoryProfile;
 	
 	/**
-	 * source profile Id defined in the xml file : interne Id of hte source Profile
+	 * source profile Id defined in the xml file : interne Id of the source Profile
 	 */
 	private String fileId;
 
 	/*
-	 ************************** PROPERTIES ******************************** */	
+	 ************************** INIT ******************************** */	
 	
 	/**
 	 * Constructor
+	 * @param mcp profile of the managedCategory parent of this ManagedSourceProfile
 	 */
 	public ManagedSourceProfile(ManagedCategoryProfile mcp) {
 		if (log.isDebugEnabled()){
@@ -97,6 +89,15 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/*
 	 *************************** METHODS ******************************** */	
 	
+	/** 
+	 * Update CustomCategory with this ManagedSourceProfile. 
+	 * It evaluates visibility for user profile and subscribe it 
+	 * or not to customCategory.
+	 * @param customManagedCategory the customManagedCategory to update
+	 * @param ex access to externalService
+	 * @return true if the source is visible by the userProfile
+	 * @throws ComputeFeaturesException
+	 */
 	synchronized public boolean updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService ex) 
 		throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
@@ -110,11 +111,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	
 
 	/**
+	 * Computes rights on parameters shared between parent ManagedCategory and managedSourceProfile
+	 * ManagedCategory (edit, visibility,access)
 	 * @throws ComputeFeaturesException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws ComputeFeaturesException 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#computeFeatures()
-	 * Can be called only when source has been realy get. (Not at the instantiation of the object)
 	 */
 	synchronized public void computeFeatures() throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
@@ -145,6 +144,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		
 	}
 
+	/**
+	 * Load the source referenced by this ManagedSourceProfile
+	 * @param ex access to externalService
+	 * @throws ComputeFeaturesException
+	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource(org.esupportail.lecture.domain.ExternalService)
+	 */
+	@Override
 	synchronized protected void loadSource(ExternalService ex) throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
 			log.debug("loadSource(externalService)");
@@ -170,10 +176,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * Evaluate visibility of current user for this managed source profile.
 	 * Update customManagedCategory (belongs to user) if needed :
-	 * add or remove customManagedSources associated with
-	 * @param ex
-	 * @param customManagedCategory
-	 * @throws ElementNotLoadedException 
+	 * add or remove customManagedSources associated with this ManagedSourceProfile
+	 * @param ex access to externalService to evaluate visibility
+	 * @param customManagedCategory customManagedCategory to set up
 	 * @return true if sourceProfile is visible by user (in Obliged or in autoSubscribed, or in Allowed)
 	 * @throws ComputeFeaturesException 
 	 */
@@ -263,12 +268,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 //		}
 	}
 
-	/**	 
+	/**	
+	 * Compute access value from feature and returns it
 	 * @return access
 	 * @throws ComputeFeaturesException 
-	 * @throws ElementNotLoadedException 
-	 * @throws ElementNotLoadedException 
-	 * @see ManagedSourceProfile#access
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getAccess()
 	 */
 	synchronized public Accessibility getAccess() throws ComputeFeaturesException {
@@ -291,10 +294,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	}
 
 	/**
+	 * Compute visibility value from features and returns it
 	 * @return visibility
 	 * @throws ComputeFeaturesException 
-	 * @throws CategoryNotLoadedException 
-	 * @see ManagedSourceProfile#visibility
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
 	 */
 	public VisibilitySets getVisibility() throws ComputeFeaturesException  {
@@ -317,87 +319,88 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		features.setIsComputed(false);
 	}
 	
-	/** 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	synchronized public void setVisibilityAllowed(DefinitionSets d) {
-		if (log.isDebugEnabled()){
-			log.debug("setVisibilityAllowed(definitionSets)");
-		}
-		visibility.setAllowed(d);
-		features.setIsComputed(false);
-		
-	}
-
-	/**
-	 * @throws ComputeFeaturesException 
-	 * @throws ElementNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAllowed()
-	 */
-	public DefinitionSets getVisibilityAllowed() throws ComputeFeaturesException  {
-		if (log.isDebugEnabled()){
-			log.debug("getVisibilityAllowed()");
-		}
-		return features.getVisibility().getAllowed();
-	}
-
-	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	synchronized public void setVisibilityAutoSubcribed(DefinitionSets d) {
-		if (log.isDebugEnabled()){
-			log.debug("setVisibilityAutoSubcribed(definitionSets)");
-		}
-		visibility.setAutoSubscribed(d);
-		features.setIsComputed(false);	
-	}
-
-	/**
-	 * @throws ComputeFeaturesException 
-	 * @throws ElementNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAutoSubscribed()
-	 */
-	public DefinitionSets getVisibilityAutoSubscribed() throws ComputeFeaturesException {
-		if (log.isDebugEnabled()){
-			log.debug("getVisibilityAutoSubscribed()");
-		}
-		return features.getVisibility().getAutoSubscribed();
-	}
-
-	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	synchronized public void setVisibilityObliged(DefinitionSets d) {
-		if (log.isDebugEnabled()){
-			log.debug("setVisibilityObliged(definitionSets)");
-		}
-		visibility.setObliged(d);
-		features.setIsComputed(false);	
-		
-	}
-
-	/**
-	 * @throws ComputeFeaturesException 
-	 * @throws ElementNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityObliged()
-	 */
-	public DefinitionSets getVisibilityObliged() throws ComputeFeaturesException  {
-		if (log.isDebugEnabled()){
-			log.debug("getVisibilityObliged()");
-		}
-		return features.getVisibility().getObliged();
-	}
+//	/** 
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
+//	 */
+//	synchronized public void setVisibilityAllowed(DefinitionSets d) {
+//		if (log.isDebugEnabled()){
+//			log.debug("setVisibilityAllowed(definitionSets)");
+//		}
+//		visibility.setAllowed(d);
+//		features.setIsComputed(false);
+//		
+//	}
+//
+//	/**
+//	 * @throws ComputeFeaturesException 
+//	 * @throws ElementNotLoadedException 
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAllowed()
+//	 */
+//	public DefinitionSets getVisibilityAllowed() throws ComputeFeaturesException  {
+//		if (log.isDebugEnabled()){
+//			log.debug("getVisibilityAllowed()");
+//		}
+//		return features.getVisibility().getAllowed();
+//	}
+//
+//	/**
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
+//	 */
+//	synchronized public void setVisibilityAutoSubcribed(DefinitionSets d) {
+//		if (log.isDebugEnabled()){
+//			log.debug("setVisibilityAutoSubcribed(definitionSets)");
+//		}
+//		visibility.setAutoSubscribed(d);
+//		features.setIsComputed(false);	
+//	}
+//
+//	/**
+//	 * @throws ComputeFeaturesException 
+//	 * @throws ElementNotLoadedException 
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAutoSubscribed()
+//	 */
+//	public DefinitionSets getVisibilityAutoSubscribed() throws ComputeFeaturesException {
+//		if (log.isDebugEnabled()){
+//			log.debug("getVisibilityAutoSubscribed()");
+//		}
+//		return features.getVisibility().getAutoSubscribed();
+//	}
+//
+//	/**
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
+//	 */
+//	synchronized public void setVisibilityObliged(DefinitionSets d) {
+//		if (log.isDebugEnabled()){
+//			log.debug("setVisibilityObliged(definitionSets)");
+//		}
+//		visibility.setObliged(d);
+//		features.setIsComputed(false);	
+//		
+//	}
+//
+//	/**
+//	 * @throws ComputeFeaturesException 
+//	 * @throws ElementNotLoadedException 
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityObliged()
+//	 */
+//	public DefinitionSets getVisibilityObliged() throws ComputeFeaturesException  {
+//		if (log.isDebugEnabled()){
+//			log.debug("getVisibilityObliged()");
+//		}
+//		return features.getVisibility().getObliged();
+//	}
 
 	
-	/* ************************** ACCESSORS ******************************** */	
+	/* 
+	 *************************** ACCESSORS ******************************** */	
 
 	
 	/**
 	 * Returns ttl
-	 * @throws ElementNotLoadedException 
 	 * @see ManagedSourceProfile#ttl
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getTtl()
 	 */
+	@Override
 	public int getTtl()  {
 		return ttl;
 	}
@@ -406,6 +409,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see ManagedSourceProfile#ttl
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setTtl(int)
 	 */
+	@Override
 	synchronized public void setTtl(int ttl) {
 		this.ttl = ttl;
 	}
@@ -415,6 +419,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @return specificUserContent
 	 * @see ManagedSourceProfile#specificUserContent
 	 */
+	@Override
 	public boolean isSpecificUserContent() {
 		return specificUserContent;
 	}
@@ -424,16 +429,23 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @param specificUserContent
 	 * @see ManagedSourceProfile#specificUserContent
 	 */
+	@Override
 	synchronized public void setSpecificUserContent(boolean specificUserContent) {
 		this.specificUserContent = specificUserContent;
 	}
 
 
+	/**
+	 * @return fileId : sourceProfileId defined in xml file category
+	 */
 	public String getFileId() {
 		return fileId;
 	}
 
 
+	/**
+	 * @param fileId sourceProfileId defiend in xml category file
+	 */
 	synchronized public void setFileId(String fileId) {
 		this.fileId = fileId;
 		super.setId(super.makeId("m",categoryProfile.getId(),fileId));

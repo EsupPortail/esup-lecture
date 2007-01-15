@@ -5,25 +5,18 @@
 */
 package org.esupportail.lecture.domain.model;
 
-import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Set;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
-import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
-
-
 
 
 /**
  * Managed category element : loaded from a remote definition, transfered by an XML file
+ * A category contains a set of sourceProfiles
  * @author gbouteil
+ * @see Category
  *
  */
 public class ManagedCategory extends Category {
@@ -35,25 +28,19 @@ public class ManagedCategory extends Category {
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(ManagedCategory.class);
-
-	
 	/**
 	 * Visibility sets of this category (if defined)
 	 * Using depends on trustCategory parameter in 
 	 * ManagedCategoryProfile corresponding 
 	 */
 	private VisibilitySets visibility;
-
-	/**
-	 * Managed category edit mode : not used for the moment (if defined)
-	 * Using depends on trustCategory parameter in 
-	 * ManagedCategoryProfile corresponding
-	 */
-	private Editability edit;
+//	/**
+//	 * Managed category edit mode : not used for the moment (if defined)
+//	 * Using depends on trustCategory parameter in 
+//	 * ManagedCategoryProfile corresponding
+//	 */
+//	private Editability edit;
 	
-	
-
-
 	/*
 	 *********************** INIT **************************************/ 
 
@@ -63,17 +50,18 @@ public class ManagedCategory extends Category {
 	 *********************** METHOD **************************************/ 
 		
 	/**
-	 * Evaluate user visibility on managed source profiles of this managed category 
-	 * And update the customManagedCategory associated with, according to visibilities
-	 * But there is not any loading of source at this time
-	 * @param customManagedCategory customManagedCAtegory to update
-	 * @param portletService Access to portlet service
+	 * Update the CustomManagedCategory linked to this ManagedCategory.
+	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles
+	 * defined in ths ManagedCategory, according to managedSourceProfiles visibility
+	 * (there is not any loading of source at this time)
+	 * @param customManagedCategory customManagedCategory to update
+	 * @param  ex access to external service for visibility evaluation
 	 */
-	synchronized public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) {
+	synchronized protected void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustom("+customManagedCategory.getElementId()+",externalService)");
 		}
-		Iterator iterator = getSourceProfilesHash().values().iterator();
+		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
 		
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
@@ -110,22 +98,20 @@ public class ManagedCategory extends Category {
 		this.visibility = visibility;
 	}
 
-	/**
-	 * @return Returns the edit.
-	 */
-	public Editability getEdit() {
-		return edit;
-	}
-	
-	
-	
-
-	/**
-	 * @param edit The edit to set.
-	 */
-	synchronized public void setEdit(Editability edit) {
-		this.edit = edit;
-	}
+//	/**
+//	 * @return Returns the edit.
+//	 */
+//	public Editability getEdit() {
+//		return edit;
+//	}
+//	
+//
+//	/**
+//	 * @param edit The edit to set.
+//	 */
+//	synchronized public void setEdit(Editability edit) {
+//		this.edit = edit;
+//	}
 
 
 		

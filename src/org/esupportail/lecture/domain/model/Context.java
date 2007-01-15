@@ -89,7 +89,7 @@ public class Context {
 
 	/**
 	 * Update the customContext linked to this Context.
-	 * It sets up subscriptions on managedCategoryProfiles
+	 * It sets up subscriptions of customContext on managedCategoryProfiles
 	 * defined in this Context, according to managedCategory visibilities
 	 * @param customContext customContext to update
 	 * @param ex access to external service for visibility evaluation

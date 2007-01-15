@@ -15,6 +15,7 @@ import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
  * because of inheritance rules between Source and managedSourceProfile :
  * Interested feature are : visibility,access
  * @author gbouteil
+ * @see ManagedElementFeatures
  *
  */
 public class ManagedSourceFeatures extends ManagedElementFeatures {

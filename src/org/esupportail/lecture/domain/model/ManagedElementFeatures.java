@@ -15,6 +15,7 @@ import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
  * because of inheritance rules between managedElement and managedElementProfile :
  * Interested feature is : visibility
  * @author gbouteil
+ * @see ManagedElementFeatures
  *
  */
 public abstract class ManagedElementFeatures {

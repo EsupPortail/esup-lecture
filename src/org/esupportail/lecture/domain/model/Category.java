@@ -15,6 +15,7 @@ import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
  * Category element : a category can be a managed or personal one.
  * A Category is referenced by a categoryProfile and contains SourceProfiles
  * @author gbouteil
+ * @see Element
  *
  */
 public abstract class Category implements Element,Serializable {
@@ -38,6 +39,7 @@ public abstract class Category implements Element,Serializable {
 	 * Id of the categoryProfil
 	 */
 	private String profileId;
+	
 	/**
 	 * SourcesProfiles contained by this Category
 	 */

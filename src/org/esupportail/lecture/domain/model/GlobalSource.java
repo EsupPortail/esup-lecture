@@ -8,17 +8,32 @@ package org.esupportail.lecture.domain.model;
 
 /**
  * Global source element :
- * Source that can be in global environnement channel.
+ * Source defined in global environnement channel.
  * This source is loaded for every users
  * @author gbouteil
+ * @see Source
  *
  */ 
 public class GlobalSource extends Source {
 
-/* ************************** PROPERTIES ******************************** */	
+	
+// TODO (GB --> RB : tu sais c'est quoi ?)
+//	/**
+//	 * 
+//	 */
+//	private static final long serialVersionUID = 1L;
 
-/* ************************** METHODS ******************************** */	
+/* 
+ *************************** PROPERTIES ******************************** */	
 
-/* ************************** ACCESSORS ******************************** */	
+/*
+ *************************** INIT ************************************** */	
+	
+	
+/*
+ *************************** METHODS *********************************** */	
+
+/*
+ *************************** ACCESSORS ********************************* */	
 
 }

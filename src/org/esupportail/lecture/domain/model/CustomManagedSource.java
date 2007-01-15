@@ -17,6 +17,7 @@ import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 /**
  * Customizations on a managedSourceProfile for a user Profile
  * @author gbouteil
+ * @see CustomSource
  *
  */
 public class CustomManagedSource extends CustomSource{

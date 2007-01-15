@@ -7,16 +7,29 @@ package org.esupportail.lecture.domain.model;
 
 /**
  * Sigle source element :
- * Source that is specific to a user.
+ * Source specific to a user.
  * This source is loaded for only one user
  * @author gbouteil
  *
  */
 public class SingleSource extends Source {
-/* ************************** PROPERTIES ******************************** */	
 
-/* ************************** METHODS ******************************** */	
+//	 TODO (GB --> RB : tu sais c'est quoi ?)
+//	/**
+//	 * 
+//	 */
+//	private static final long serialVersionUID = 1L;
+	
+/* 
+ *************************** PROPERTIES ******************************** */	
 
-/* ************************** ACCESSORS ******************************** */	
+/*
+ *************************** INIT ************************************** */	
+		
+/*
+ *************************** METHODS *********************************** */	
+
+/*
+ *************************** ACCESSORS ********************************* */	
 
 }

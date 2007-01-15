@@ -21,6 +21,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundExceptio
 /**
  * Customizations on a managedCategoryProfile for a user Profile
  * @author gbouteil
+ * @see CustomCategory
  *
  */
 /**

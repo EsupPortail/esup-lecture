@@ -14,15 +14,14 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
-import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
- * Managed category profile element.
+ * Managed category profile element. It references a managedCategory
+ * It is defined in a context.
  * @author gbouteil
- * @see org.esupportail.lecture.domain.model.CategoryProfile
- * @see org.esupportail.lecture.domain.model.ManagedElementProfile
- *
+ * @see CategoryProfile
+ * @see ManagedElementProfile
  */
 public class ManagedCategoryProfile extends CategoryProfile implements ManagedElementProfile {
 
@@ -47,12 +46,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * trustCategory parameter : indicates between managed category and category profile, which one to trust
 	 * True : category is trusted. 
 	 * False : category is not trusted, only parameters profile are good 
-	 * parameters (edit, visibility)
+	 * parameters interested : edit, visibility
 	 */
 	private boolean trustCategory;
 	
 	/**
-	 * Resolve feature values (edit, visibility,tll) from :
+	 * Resolve feature values (edit, visibility) from :
 	 * - managedCategoryProfile features
 	 * - managedCategory features
 	 * - trustCategory parameter 
@@ -67,8 +66,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 //	private Editability edit;
 	
 	/**
-	 * Visibility rights for groups on the remote managed category
-	 * Using depends on trustCategory parameter
+	 * Visibility rights for groups on the remote managed category.
+	 * Value is one defined in channel config. This value not must be
+	 * exploited directly. It must be used by attribute "features" 
+	 * (take care of trustCategory parameter)
 	 */
 	private VisibilitySets visibility;
 
@@ -93,7 +94,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Constructor 
 	 */
-	public ManagedCategoryProfile() {
+	protected ManagedCategoryProfile() {
 		if (log.isDebugEnabled()){
 			log.debug("ManagedCategoryProfile()");
 		}
@@ -106,13 +107,15 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	
 
 	/**
-	 * @param customContext
-	 * @param ex
-	 * @return true if the category is visble by the userProfile
+	 * Update CustomContext with this ManagedCategoryProfile. 
+	 * It evaluates visibility for user profile and subscribe it 
+	 * or not to customContext.
+	 * @param customContext the customContext to update
+	 * @param ex access to externalService to evaluate visibility
+	 * @return true if the category is visible by the userProfile
 	 * @throws ComputeFeaturesException 
-	 * @throws ElementNotLoadedException 
 	 */
-	synchronized public boolean updateCustomContext(CustomContext customContext,ExternalService ex) 
+	synchronized protected boolean updateCustomContext(CustomContext customContext,ExternalService ex) 
 		throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustomContext("+customContext.getElementId()+"externalService)");
@@ -122,6 +125,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		
 	}
 
+	/**
+	 *  Load the category referenced by this ManagedCategoryProfile
+	 *  @param ex access to externalservice to get proxy ticket CAS
+	 */
 	@Override
 	synchronized protected void loadCategory(ExternalService ex)  {
 		if (log.isDebugEnabled()){
@@ -134,18 +141,16 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			String ptCas = ex.getUserProxyTicketCAS();
 			setElement(DomainTools.getDaoService().getManagedCategory(this,ptCas));
 		}
-		//features.compute();
 	}
 	
 	/**
 	 * Evaluate visibility of current user for this managed category.
 	 * Update customContext (belongs to user) if needed :
-	 * add or remove customCategories associated with
-	 * @param ex
-	 * @param customContext
-	 * @return true if the mcp is visible by the user of the customContext, else return false
+	 * add or remove subscription associated with this managedCategoryProfile
+	 * @param ex access to externalService to evaluate visibility
+	 * @param customContext customContext to set up
+	 * @return true if the mcp is visible by the user of the customContext (in Obliged or in autoSubscribed, or in Allowed), else return false 
 	 * @throws ComputeFeaturesException 
-	 * @throws ElementNotLoadedException 
 	 */
 	synchronized private boolean setUpCustomContextVisibility(CustomContext customContext, ExternalService ex) 
 		throws ComputeFeaturesException {
@@ -235,16 +240,15 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	
 		
 	/**
-	 * Evaluate user visibility on managed source profiles of this managed category 
-	 * And update the customManagedCategory associated with, according to visibilities
-	 * But there is not any loading of source at this time
-	 * @param customManagedCategory customManagedCAtegory to update
-	 * @param portletService Access to portlet service
-	 * @throws CategoryNotLoadedException 
-	 * @throws ElementNotLoadedException 
-	 * @throws ElementNotLoadedException 
+	 * Update the CustomManagedCategory linked to this ManagedCategoryProfile.
+	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles
+	 * defined in ManagedCategory of this Profile, according to managedSourceProfiles visibility
+	 * (there is not any loading of source at this time)
+	 * @param customManagedCategory customManagedCategory to update
+	 * @param ex access to external service for visibility evaluation
+	 * @throws CategoryNotLoadedException
 	 */
-	synchronized public void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) 
+	synchronized protected void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) 
 		throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustom("+customManagedCategory.getElementId()+",externalService)");
@@ -254,9 +258,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 	
 	
-	/**
+	/** 
+	 * Computes rights on parameters shared between a ManagedCategoryProfile and its
+	 * ManagedCategory (edit, visibility)
 	 * @throws CategoryNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#computeFeatures()
 	 */
 	synchronized public void computeFeatures() throws CategoryNotLoadedException  {
 		if (log.isDebugEnabled()){
@@ -284,11 +289,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 
 	/**
+	 * Compute visibility value from features and returns it
 	 * @return Visibility
 	 * @throws ComputeFeaturesException 
-	 * @throws CategoryNotLoadedException 
 	 * @see ManagedCategoryProfile#visibility
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
 	 */
 	public VisibilitySets getVisibility() throws ComputeFeaturesException{
 		if (log.isDebugEnabled()){
@@ -298,8 +302,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 	
 	/**
-	 * @see ManagedCategoryProfile#visibility
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibility(org.esupportail.lecture.domain.model.VisibilitySets)
+	 * @param visibility
 	 */
 	synchronized public void setVisibility(VisibilitySets visibility) {
 		if (log.isDebugEnabled()){
@@ -309,44 +312,44 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		features.setIsComputed(false);
 	}
 	
-	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	synchronized public void setVisibilityAllowed(DefinitionSets d) {
-		if (log.isDebugEnabled()){
-			log.debug("setVisibilityAllowed(definitionSets)");
-		}
-		this.visibility.setAllowed(d);
-		features.setIsComputed(false);
-	}
-	
-	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	synchronized public void setVisibilityAutoSubcribed(DefinitionSets d) {
-		if (log.isDebugEnabled()){
-			log.debug("setVisibilityAutoSubcribed(definitionSets)");
-		}
-		this.visibility.setAutoSubscribed(d);
-		features.setIsComputed(false);
-	}
-	
-	/**
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
-	 */
-	synchronized public void setVisibilityObliged(DefinitionSets d) {
-		if (log.isDebugEnabled()){
-			log.debug("setVisibilityObliged(definitionSets)");
-		}
-		this.visibility.setObliged(d);
-		features.setIsComputed(false);
-	}
-	
+//	/**
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
+//	 */
+//	synchronized public void setVisibilityAllowed(DefinitionSets d) {
+//		if (log.isDebugEnabled()){
+//			log.debug("setVisibilityAllowed(definitionSets)");
+//		}
+//		this.visibility.setAllowed(d);
+//		features.setIsComputed(false);
+//	}
+//	
+//	/**
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
+//	 */
+//	synchronized public void setVisibilityAutoSubcribed(DefinitionSets d) {
+//		if (log.isDebugEnabled()){
+//			log.debug("setVisibilityAutoSubcribed(definitionSets)");
+//		}
+//		this.visibility.setAutoSubscribed(d);
+//		features.setIsComputed(false);
+//	}
+//	
+//	/**
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
+//	 */
+//	synchronized public void setVisibilityObliged(DefinitionSets d) {
+//		if (log.isDebugEnabled()){
+//			log.debug("setVisibilityObliged(definitionSets)");
+//		}
+//		this.visibility.setObliged(d);
+//		features.setIsComputed(false);
+//	}
+//	
 
 	/**
-	 * Add a context to the set of context in this managed category profile
+	 * Add a context to the set of context of this managed category profile
+	 * This means that this managedCategoryProfile is declared in context c
 	 * @param c context to add
-	 * @see ManagedCategoryProfile#contextsSet
 	 */
 	synchronized protected void addContext(Context c){
 		if (log.isDebugEnabled()){
@@ -365,6 +368,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	@Override
 	protected ManagedSourceProfile getSourceProfileById(String id) throws CategoryNotLoadedException, SourceProfileNotFoundException {
+		if (log.isDebugEnabled()){
+			log.debug("getSourceProfileById("+id+")");
+		}
 //		 TODO (GB ?) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
 		return (ManagedSourceProfile) getElement().getSourceProfileById(id);
 
@@ -380,7 +386,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Returns the URL of the remote managed category
 	 * @return urlCategory
-	 * @see ManagedCategoryProfile#urlCategory
 	 */
 	public String getUrlCategory() {
 		return categoryURL;
@@ -388,8 +393,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	
 	/** 
 	 * Sets the URL of the remote managed category
-	 * @param urlCategory the URL to set
-	 * @see ManagedCategoryProfile#urlCategory
+	 * @param categoryURL the URL to set
 	 */
 	synchronized public void setUrlCategory(String categoryURL) {
 		//RB categoryURL = DomainTools.replaceWithUserAttributes(categoryURL);
@@ -399,7 +403,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Returns the state (true or false) of the trust category parameter
 	 * @return trustCategory
-	 * @see ManagedCategoryProfile#trustCategory
 	 */
 	protected boolean getTrustCategory() {
 		return trustCategory;
@@ -408,7 +411,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Sets the trust category parameter
 	 * @param trustCategory 
-	 * @see ManagedCategoryProfile#trustCategory
 	 */
 	synchronized protected void setTrustCategory(boolean trustCategory) {
 		this.trustCategory = trustCategory;
@@ -417,16 +419,13 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 	/**
 	 * @return access
-	 * @see ManagedCategoryProfile#access
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getAccess()
 	 */
 	public Accessibility getAccess() {
 		return access;
 	}
 	
 	/**
-	 * @see ManagedCategoryProfile#access
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setAccess(org.esupportail.lecture.domain.model.Accessibility)
+	 * @param access 
 	 */
 	synchronized public void setAccess(Accessibility access) {
 		this.access = access;
@@ -443,56 +442,54 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	
 	
 
-	/**
-	 * @return allowed visibility group 
-	 * @throws ComputeFeaturesException 
-	 * @throws ElementNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAllowed()
-	 */
-	public DefinitionSets getVisibilityAllowed() throws ComputeFeaturesException  {
-		return getVisibility().getAllowed();
-	}
-
-
-	/** 
-	 * @return autoSubscribed group visibility
-	 * @throws ComputeFeaturesException 
-	 * @throws ElementNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAutoSubscribed()
-	 */
-	public DefinitionSets getVisibilityAutoSubscribed() throws ComputeFeaturesException  {
-		return getVisibility().getAutoSubscribed();
-	}
-
-	
-	/**
-	 * @return obliged group visibility
-	 * @throws ElementNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityObliged()
-	 */
-	public DefinitionSets getVisibilityObliged() throws ComputeFeaturesException {
-		return getVisibility().getObliged();
-		
-	}
+//	/**
+//	 * @return allowed visibility group 
+//	 * @throws ComputeFeaturesException 
+//	 */
+//	public DefinitionSets getVisibilityAllowed() throws ComputeFeaturesException  {
+//		return getVisibility().getAllowed();
+//	}
+//
+//
+//	/** 
+//	 * @return autoSubscribed group visibility
+//	 * @throws ComputeFeaturesException 
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAutoSubscribed()
+//	 */
+//	public DefinitionSets getVisibilityAutoSubscribed() throws ComputeFeaturesException  {
+//		return getVisibility().getAutoSubscribed();
+//	}
+//
+//	
+//	/**
+//	 * @return obliged group visibility
+//	 * @throws ElementNotLoadedException 
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityObliged()
+//	 */
+//	public DefinitionSets getVisibilityObliged() throws ComputeFeaturesException {
+//		return getVisibility().getObliged();
+//		
+//	}
 
 	/**
-	 * Returns ttl
-	 * @throws ElementNotLoadedException 
+	 * @return ttl
 	 * @see ManagedCategoryProfile#ttl
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getTtl()
 	 */
 	public int getTtl(){
 		return ttl;
 	}
 	
 	/**
+	 * @param ttl 
 	 * @see ManagedCategoryProfile#ttl
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setTtl(int)
 	 */
 	synchronized public void setTtl(int ttl) {
 		this.ttl = ttl;
 	}
 
+	/**
+	 * @return contextSets
+	 */
 	protected Set<Context> getContextsSet() {
 		return contextsSet;
 	}

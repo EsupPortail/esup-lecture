@@ -15,6 +15,7 @@ import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
  * Category profile element : a category profile can be a managed or personal one.
  * A Category profile references a category and is displayed in a context
  * @author gbouteil
+ * @see ElementProfile
  */
 public abstract class CategoryProfile implements ElementProfile {
 	

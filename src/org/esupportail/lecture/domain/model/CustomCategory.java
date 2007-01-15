@@ -17,6 +17,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundExceptio
 /**
  * Customizations on a CategoryProfile for a user profile 
  * @author gbouteil
+ * @see CustomElement
  */
 public abstract class CustomCategory implements CustomElement {
 

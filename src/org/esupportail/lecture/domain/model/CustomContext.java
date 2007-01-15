@@ -22,6 +22,7 @@ import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 /**
  * Customizations on a context for a user profile 
  * @author gbouteil
+ * @see CustomElement
  *
  */
 public class CustomContext implements CustomElement {
