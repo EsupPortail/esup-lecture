@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.beans;
 
 import org.esupportail.lecture.domain.model.CustomSource;
@@ -12,6 +17,9 @@ import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
  * used to store source informations
  */
 public class SourceBean {
+	
+	/* 
+	 *************************** PROPERTIES ******************************** */	
 	/**
 	 * id of source
 	 */
@@ -40,16 +48,19 @@ public class SourceBean {
 	 */
 	public final static String OBLIGED = "obliged";
 	
+	// TODO (GB --> RB) pourquoi pas utiliser un attribut de la classe VisibilityMode ?
 	// TODO (GB later) revoir comment concevoir cela : il faut aussi tenir compte des personnalSources qui n'ont pas de type
+
+	/*
+	 *************************** INIT ************************************** */	
 	
 	/**
 	 * default constructor
 	 */
-	public SourceBean(){
-	}
+	public SourceBean(){}
 	
 	/**
-	 * constructor
+	 * constructor initializing object
 	 * @param customSource
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
@@ -62,6 +73,9 @@ public class SourceBean {
 		this.id = profile.getId();
 		
 	}
+
+	/*
+	 *************************** ACCESSORS ********************************* */	
 	
 	/**
 	 * @return name of source
@@ -104,6 +118,8 @@ public class SourceBean {
 		this.type = type;
 	}
 	
+	/*
+	 *************************** METHODS *********************************** */	
 	/**
 	 * @see java.lang.Object#toString()
 	 */

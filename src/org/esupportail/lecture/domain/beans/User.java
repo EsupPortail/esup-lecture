@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.beans;
 
 
@@ -7,6 +12,9 @@ import org.esupportail.commons.utils.strings.StringUtils;
  * The class that represent users.
  */
 public class User {
+	
+	/* 
+	 *************************** PROPERTIES ******************************** */	
 	
 	/**
 	 * Id of the user.
@@ -28,13 +36,16 @@ public class User {
      */
     private String language;
     
-	/**
+	/*
+	 *************************** INIT ************************************** */	
+
+    /**
 	 * Bean constructor.
 	 */
 	public User() {
 		super();
 	}
-
+	
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -67,17 +78,34 @@ public class User {
 	}
 
 	/**
-	 * @return  the id of the user.
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
 	 * @param id
 	 */
 	public void setId(final String id) {
 		this.id = StringUtils.nullIfEmpty(id);
+	}
+	
+	/**
+	 * @param displayName  The displayName to set.
+	 */
+    public void setDisplayName(final String displayName) {
+        this.displayName = StringUtils.nullIfEmpty(displayName);
+    }
+    
+	/**
+	 * @param language the language to set
+	 */
+	public void setLanguage(final String language) {
+		this.language = StringUtils.nullIfEmpty(language);
+	}
+	
+	/*
+	 *************************** ACCESSORS ********************************* */	
+	
+	/**
+	 * @return  the id of the user.
+	 */
+	public String getId() {
+		return id;
 	}
 
     /**
@@ -88,18 +116,12 @@ public class User {
     }
 
     /**
-	 * @param displayName  The displayName to set.
-	 */
-    public void setDisplayName(final String displayName) {
-        this.displayName = StringUtils.nullIfEmpty(displayName);
-    }
-    
-    /**
 	 * @param admin  The admin to set.
 	 */
     public void setAdmin(final boolean admin) {
         this.admin = admin;
     }
+
     /**
 	 * @return  Returns the admin.
 	 */
@@ -113,13 +135,5 @@ public class User {
 	public String getLanguage() {
 		return language;
 	}
-
-	/**
-	 * @param language the language to set
-	 */
-	public void setLanguage(final String language) {
-		this.language = StringUtils.nullIfEmpty(language);
-	}
-    
 
 }

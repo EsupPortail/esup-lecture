@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.beans;
 
 import org.esupportail.lecture.domain.model.Context;
@@ -9,6 +14,9 @@ import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
  * used to store context informations
  */
 public class ContextBean {
+
+	/* 
+	 *************************** PROPERTIES ******************************** */	
 	/**
 	 * id of context
 	 */
@@ -27,15 +35,16 @@ public class ContextBean {
 	 */
 	private int treeSize;
 
+	/*
+	 *************************** INIT ************************************** */	
 
 	/**
 	 * default contructor
 	 */
-	public ContextBean(){
-		super();
-	}
+	public ContextBean(){}
 	
 	/**
+	 * Constructor initializing object
 	 * @param customContext
 	 * @throws ContextNotFoundException 
 	 */
@@ -49,6 +58,9 @@ public class ContextBean {
 		setId(context.getId());
 		
 	}
+	
+	/*
+	 *************************** ACCESSORS ********************************* */	
 	
 	/**
 	 * get the id of the context
@@ -94,8 +106,25 @@ public class ContextBean {
 	}
 	
 	/**
+	 * @return tree size of context
+	 */
+	public int getTreeSize() {
+		return treeSize;
+	}
+
+	/**
+	 * @param treeSize tree size to set
+	 */
+	public void setTreeSize(int treeSize) {
+		this.treeSize = treeSize;
+	}
+	
+	/*
+	 *************************** METHODS *********************************** */	
+	/**
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString(){
 		String string = "";
 		string += " Id = " + id.toString() + "\n";
@@ -104,12 +133,5 @@ public class ContextBean {
 		string += " TreeSize = " + treeSize +  "\n";
 		return string;
 	}
-
-	public int getTreeSize() {
-		return treeSize;
-	}
-
-	public void setTreeSize(int treeSize) {
-		this.treeSize = treeSize;
-	}
+	
 }

@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.beans;
 
 import org.esupportail.lecture.domain.model.CategoryProfile;
@@ -6,13 +11,16 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 /**
  * @author bourges
  * used to store category informations
  */
 public class CategoryBean {
+	
+	/* 
+	 *************************** PROPERTIES ******************************** */	
+	
 	/**
 	 * id of categery
 	 */
@@ -30,11 +38,21 @@ public class CategoryBean {
 	 */
 	private boolean folded = true;
 	
+	/*
+	 *************************** INIT ************************************** */	
+			
 	/**
-	 * Constructor
+	 * Default Constructor
 	 */
 	public CategoryBean(){}
 	
+	/**
+	 * Constructor initializing object
+	 * @param customCategory
+	 * @param customContext
+	 * @throws CategoryProfileNotFoundException
+	 * @throws CategoryNotLoadedException
+	 */
 	public CategoryBean(CustomCategory customCategory,CustomContext customContext) throws CategoryProfileNotFoundException, CategoryNotLoadedException{
 		CategoryProfile profile = customCategory.getProfile();
 		
@@ -43,6 +61,9 @@ public class CategoryBean {
 		this.id = profile.getId();
 		this.folded = customContext.isCategoryFolded(id);
 	}
+	
+	/*
+	 *************************** ACCESSORS ********************************* */	
 	
 	/**
 	 * @return description of the category
@@ -100,6 +121,9 @@ public class CategoryBean {
 	public void setName(String name) throws DomainServiceException {
 		this.name = name;
 	}
+
+	/*
+	 *************************** METHODS *********************************** */	
 
 	/**
 	 * @see java.lang.Object#toString()
