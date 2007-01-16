@@ -29,11 +29,9 @@ import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundExceptio
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
-import org.esupportail.lecture.exceptions.domain.CustomContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
-import org.esupportail.lecture.exceptions.domain.InternalDomainException;
-import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
@@ -188,7 +186,6 @@ public class DomainServiceImpl implements DomainService {
 			UserProfile userProfile = channel.getUserProfile(uid);
 			CustomCategory customCategory = userProfile.getCustomCategory(categoryId,ex);
 			List<CustomSource> customSources = customCategory.getSortedCustomSources(ex);
-			int nbSources = customSources.size();
 				
 			for(CustomSource customSource : customSources){
 				SourceBean source;
@@ -255,7 +252,7 @@ public class DomainServiceImpl implements DomainService {
 			log.debug("getItems("+uid+","+sourceId+",externalService)");
 		}
 		
-		List<ItemBean> listItemBean = new ArrayList<ItemBean>();;
+		List<ItemBean> listItemBean = new ArrayList<ItemBean>();
 		try {
 			
 			/* Get current user profile and customCoategory */
