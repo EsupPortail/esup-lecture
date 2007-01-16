@@ -101,7 +101,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	synchronized public boolean updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService ex) 
 		throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
-			log.debug("updateCustomCategory("+customManagedCategory.getElementId()+"externalService)");
+			log.debug("id="+this.getId()+" - updateCustomCategory("+customManagedCategory.getElementId()+"externalService)");
 		}
 		// no loadSource(ex) is needed here
 		return setUpCustomCategoryVisibility(customManagedCategory,ex);
@@ -117,7 +117,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	synchronized public void computeFeatures() throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
-			log.debug("computeFeatures()");
+			log.debug("id="+this.getId()+" - computeFeatures()");
 		}
 	
 		/* Features that can be herited by the managedCategoryProfile */
@@ -153,7 +153,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	@Override
 	synchronized protected void loadSource(ExternalService ex) throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
-			log.debug("loadSource(externalService)");
+			log.debug("id="+this.getId()+" - loadSource(externalService)");
 		}
 			
 		if(getAccess() == Accessibility.PUBLIC) {
@@ -186,7 +186,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	synchronized private boolean setUpCustomCategoryVisibility(CustomManagedCategory customManagedCategory,ExternalService ex) 
 	throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
-			log.debug("setUpCustomCategoryVisibility("+customManagedCategory.getElementId()+",externalService)");
+			log.debug("id="+this.getId()+" - setUpCustomCategoryVisibility("+customManagedCategory.getElementId()+",externalService)");
 		}
 		/*
 		 * Algo pour gerer les customSourceProfiles :
@@ -276,7 +276,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	synchronized public Accessibility getAccess() throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
-			log.debug("getAccess()");
+			log.debug("id="+this.getId()+" - getAccess()");
 		}
 		return features.getAccess();
 	}
@@ -287,7 +287,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	synchronized public void setAccess(Accessibility access) {
 		if (log.isDebugEnabled()){
-			log.debug("setAccess()");
+			log.debug("id="+this.getId()+" - setAccess()");
 		}
 		this.access = access;
 		features.setIsComputed(false);
@@ -301,7 +301,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	public VisibilitySets getVisibility() throws ComputeFeaturesException  {
 		if (log.isDebugEnabled()){
-			log.debug("getVisibility()");
+			log.debug("id="+this.getId()+" - getVisibility()");
 		}
 		return features.getVisibility();
 	}
@@ -313,7 +313,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	synchronized public void setVisibility(VisibilitySets visibility) {
 		if (log.isDebugEnabled()){
-			log.debug("setVisibility(visibility)");
+			log.debug("id="+this.getId()+" - setVisibility(visibility)");
 		}
 		this.visibility = visibility;
 		features.setIsComputed(false);

@@ -50,7 +50,7 @@ public abstract class CustomCategory implements CustomElement {
 	 */
 	protected CustomCategory(String profileId, UserProfile user) {
 		if (log.isDebugEnabled()){
-			log.debug("id="+profileId+" - CustomCategory("+profileId+","+user.getUserId()+")");
+			log.debug("CustomCategory("+profileId+","+user.getUserId()+")");
 		}
 		this.profileId = profileId;
 		this.userProfile = user;

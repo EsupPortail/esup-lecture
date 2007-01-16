@@ -79,9 +79,12 @@ public class UserProfile {
 	}
 
 	/**
-	 * Constructor
+	 * Default Constructor
 	 */
 	public UserProfile(){
+		if (log.isDebugEnabled()){
+    		log.debug("UserProfile("+userId+")");
+    	}
 	}
 
 	/*
@@ -97,7 +100,7 @@ public class UserProfile {
 	 */
 	public CustomContext getCustomContext(String contextId) throws ContextNotFoundException{
 	   	if (log.isDebugEnabled()){
-    		log.debug("getCustomContext("+contextId+")");
+    		log.debug("id="+userId+" - getCustomContext("+contextId+")");
     	}
 		CustomContext customContext = customContexts.get(contextId);
 		if (customContext == null){
@@ -118,6 +121,9 @@ public class UserProfile {
 	 * @return true if this userProfile contains the customContext identified by contextId
 	 */
 	public boolean containsCustomContext(String contextId) {
+	   	if (log.isDebugEnabled()){
+    		log.debug("id="+userId+" - containsCustomContext("+contextId+")");
+    	}
 		return customContexts.containsKey(contextId);
 	}
 
@@ -134,7 +140,7 @@ public class UserProfile {
 	public CustomCategory getCustomCategory(String categoryId,ExternalService ex) 
 		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, CustomCategoryNotFoundException {
 	   	if (log.isDebugEnabled()){
-    		log.debug("getCustomCategory("+categoryId+")");
+    		log.debug("id="+userId+" - getCustomCategory("+categoryId+")");
     	}
 		// TODO (GB later) revoir avec customManagedCategory et customPersonalCategory
 		CustomCategory customCategory = customCategories.get(categoryId);
@@ -161,6 +167,9 @@ public class UserProfile {
 	 */
 	protected void updateCustomContextsForOneManagedCategory(String categoryProfileId,ExternalService ex) 
 		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException {
+	   	if (log.isDebugEnabled()){
+    		log.debug("id="+userId+" - updateCustomContextsForOneManagedCategory("+categoryProfileId+",ex)");
+    	}
 		
 		ManagedCategoryProfile mcp = DomainTools.getChannel().getManagedCategoryProfile(categoryProfileId);
 		Set<Context> contexts = mcp.getContextsSet();
@@ -204,7 +213,7 @@ public class UserProfile {
 	 */
 	public CustomSource getCustomSource(String sourceId) throws CustomSourceNotFoundException {
 	   	if (log.isDebugEnabled()){
-    		log.debug("getCustomSource("+sourceId+")");
+    		log.debug("id="+userId+" - getCustomSource("+sourceId+")");
     	}
 	   	// TODO (GB later) revoir avec customManagedSource et customPersonalSource
 		CustomSource customSource = 
@@ -224,7 +233,7 @@ public class UserProfile {
 	 */
 	protected void addCustomContext(CustomContext customContext){
 	   	if (log.isDebugEnabled()){
-    		log.debug("addCustomContext("+customContext.getElementId()+")");
+    		log.debug("id="+userId+" - addCustomContext("+customContext.getElementId()+")");
     	}
 		customContexts.put(customContext.getElementId(),customContext);
 		DomainTools.getDaoService().updateUserProfile(this);
@@ -236,7 +245,7 @@ public class UserProfile {
 	 */
 	protected void removeCustomContext(String contextId){
 	   	if (log.isDebugEnabled()){
-    		log.debug("removeCustomContext("+contextId+")");
+    		log.debug("id="+userId+" - removeCustomContext("+contextId+")");
     	}
 	   	CustomContext cctx = customContexts.remove(contextId);
 		if( cctx!= null) {
@@ -250,7 +259,7 @@ public class UserProfile {
 	 */
 	protected void addCustomCategory(CustomCategory customCategory){
 	   	if (log.isDebugEnabled()){
-    		log.debug("addCustomCategory("+customCategory.getElementId()+")");
+    		log.debug("id="+userId+" - addCustomCategory("+customCategory.getElementId()+")");
     	}
 		String id = customCategory.getElementId();
 		customCategories.put(id,customCategory);
@@ -263,7 +272,7 @@ public class UserProfile {
 	 */
 	protected void removeCustomCategory(String categoryId){
 	   	if (log.isDebugEnabled()){
-    		log.debug("removeCustomCategory("+categoryId+")");
+    		log.debug("id="+userId+" - removeCustomCategory("+categoryId+")");
     	}
 	   	CustomCategory ccat = customCategories.remove(categoryId);
 		if( ccat!= null) {
@@ -277,7 +286,7 @@ public class UserProfile {
 	 */
 	protected void addCustomSource(CustomSource customSource){
 	   	if (log.isDebugEnabled()){
-    		log.debug("addCustomSource("+customSource.getElementId()+")");
+    		log.debug("id="+userId+" - addCustomSource("+customSource.getElementId()+")");
     	}
 		customSources.put(customSource.getElementId(),customSource);
 	}
@@ -288,7 +297,7 @@ public class UserProfile {
 	 */
 	protected void removeCustomSource(String sourceId){
 	   	if (log.isDebugEnabled()){
-    		log.debug("removeCustomSource("+sourceId+")");
+    		log.debug("id="+userId+" - removeCustomSource("+sourceId+")");
     	}
 		CustomSource cs = customSources.remove(sourceId);
 		if (cs != null) {

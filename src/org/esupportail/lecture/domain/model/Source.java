@@ -140,7 +140,7 @@ public abstract class Source implements Element,Serializable {
 	 */
 	synchronized private void computeXslt() throws MappingNotFoundException{
 	   	if (log.isDebugEnabled()){
-    		log.debug("computeXslt()");
+    		log.debug("id="+this.profileId+" - computeXslt()");
     	}
 		// TODO (GB later) revoir cet algo
 		Channel channel = DomainTools.getChannel();
@@ -208,7 +208,7 @@ public abstract class Source implements Element,Serializable {
 	@SuppressWarnings("unchecked")
 	synchronized private void computeItems() throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException {
 	   	if (log.isDebugEnabled()){
-    		log.debug("computeItems()");
+    		log.debug("id="+this.profileId+" - computeItems()");
     	}
 		if (!isXsltComputed){
 			computeXslt();
@@ -275,7 +275,7 @@ public abstract class Source implements Element,Serializable {
 	 */
 	synchronized private String xml2html(String xml, String xsltFileURL) throws Xml2HtmlException {
 	   	if (log.isDebugEnabled()){
-    		log.debug("xml2html(xml,xsltFileURL)");
+    		log.debug("id="+this.profileId+" - xml2html(xml,xsltFileURL)");
     	}
 		log.debug("voici le xsltFileUrl : "+xsltFileURL);
 		String ret = null;
@@ -318,7 +318,7 @@ public abstract class Source implements Element,Serializable {
 	 */
 	private String getItemXPath() throws MappingNotFoundException {
 	   	if (log.isDebugEnabled()){
-    		log.debug("getItemXPath()");
+    		log.debug("id="+this.profileId+" - getItemXPath()");
     	}
 		if (!isXsltComputed){
 			computeXslt();
@@ -331,7 +331,7 @@ public abstract class Source implements Element,Serializable {
 	 */
 	synchronized private void setItemXPath(String itemXPath) {
 	   	if (log.isDebugEnabled()){
-    		log.debug("setItemXPath("+itemXPath+")");
+    		log.debug("id="+this.profileId+" - setItemXPath("+itemXPath+")");
     	}
 		this.itemXPath = itemXPath;
 		isXsltComputed = false;
@@ -343,7 +343,7 @@ public abstract class Source implements Element,Serializable {
 	 */
 	private String getXsltURL() throws MappingNotFoundException {
 	   	if (log.isDebugEnabled()){
-    		log.debug("getXsltURL()");
+    		log.debug("id="+this.profileId+" - getXsltURL()");
     	}
 		if (!isXsltComputed){
 			computeXslt();
@@ -356,7 +356,7 @@ public abstract class Source implements Element,Serializable {
 	 */
 	synchronized private void setXsltURL(String xsltURL) {
 	   	if (log.isDebugEnabled()){
-    		log.debug("setXsltURL("+xsltURL+")");
+    		log.debug("id="+this.profileId+" - setXsltURL("+xsltURL+")");
     	}
 		this.xsltURL = xsltURL;
 		isXsltComputed = false;
@@ -368,7 +368,7 @@ public abstract class Source implements Element,Serializable {
 	 */
 	private HashMap<String, String> getXPathNameSpaces() throws MappingNotFoundException {
 	   	if (log.isDebugEnabled()){
-    		log.debug("getXPathNameSpaces()");
+    		log.debug("id="+this.profileId+" - getXPathNameSpaces()");
     	}
 		if (!isXsltComputed){
 			computeXslt();
@@ -381,7 +381,7 @@ public abstract class Source implements Element,Serializable {
 	 */
 	synchronized private void setXPathNameSpaces(HashMap<String, String> pathNameSpaces) {
 	   	if (log.isDebugEnabled()){
-    		log.debug("setXPathNameSpaces("+pathNameSpaces+")");
+    		log.debug("id="+this.profileId+" - setXPathNameSpaces("+pathNameSpaces+")");
     	}
 		XPathNameSpaces = pathNameSpaces;
 		isXsltComputed = false;
@@ -396,7 +396,7 @@ public abstract class Source implements Element,Serializable {
 	 */
 	protected List<Item> getItems() throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException {
 	   	if (log.isDebugEnabled()){
-    		log.debug("getItems()");
+    		log.debug("id="+this.profileId+" - getItems()");
     	}
 		if (!isItemComputed){
 			computeItems();

@@ -92,6 +92,9 @@ public class CustomContext implements CustomElement {
 	 * Constructor
 	 */
 	protected CustomContext() {
+		if (log.isDebugEnabled()){
+			log.debug("CustomContext()");
+		}
 	}
 	
 	/*

@@ -63,7 +63,6 @@ public abstract class CustomSource implements CustomElement {
 		if (log.isDebugEnabled()){
 			log.debug("CustomSource("+profile.getId()+","+user.getUserId()+")");
 		}
-		readItems = new HashSet<String>();
 		userProfile = user;
 		profileId = profile.getId();
 	}
@@ -75,7 +74,6 @@ public abstract class CustomSource implements CustomElement {
 		if (log.isDebugEnabled()){
 			log.debug("CustomSource()");
 		}
-		readItems = new HashSet<String>();
 	}
 
 	/* 

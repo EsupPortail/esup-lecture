@@ -100,7 +100,7 @@ public abstract class SourceProfile implements ElementProfile {
 	synchronized protected List<Item> getItems(ExternalService ex) 
 		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException  {
 	   	if (log.isDebugEnabled()){
-    		log.debug("getItems(externalService)");
+    		log.debug("id="+this.id+" - getItems(externalService)");
     	}
 		try {
 			loadSource(ex);
@@ -123,7 +123,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 */
 	protected String makeId(String type,String parentId,String simpleId){
 	   	if (log.isDebugEnabled()){
-    		log.debug("makeId("+type+","+parentId+","+simpleId+")");
+    		log.debug("id="+this.id+" - makeId("+type+","+parentId+","+simpleId+")");
     	}
 		id = type+":"+parentId+":"+simpleId;
 		return id;
@@ -135,6 +135,9 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @throws SourceNotLoadedException 
 	 */
 	public Source getElement() throws SourceNotLoadedException {
+	   	if (log.isDebugEnabled()){
+    		log.debug("id="+this.id+" - getElement()");
+    	}
 		if (source == null){
 			// TODO (GB ?) on pourrait faire un loadSource ou autre chose ou ailleurs ?
 			String errorMsg = "Source "+id+" is not loaded in profile";

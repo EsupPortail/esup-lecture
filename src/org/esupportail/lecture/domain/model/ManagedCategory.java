@@ -59,7 +59,7 @@ public class ManagedCategory extends Category {
 	 */
 	synchronized protected void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) {
 		if (log.isDebugEnabled()){
-			log.debug("updateCustom("+customManagedCategory.getElementId()+",externalService)");
+			log.debug("id="+this.getProfileId()+" - updateCustom("+customManagedCategory.getElementId()+",externalService)");
 		}
 		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
 		

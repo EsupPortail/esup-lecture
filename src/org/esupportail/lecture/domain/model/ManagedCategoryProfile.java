@@ -118,7 +118,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	synchronized protected boolean updateCustomContext(CustomContext customContext,ExternalService ex) 
 		throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
-			log.debug("updateCustomContext("+customContext.getElementId()+"externalService)");
+			log.debug("id="+this.getId()+" - updateCustomContext("+customContext.getElementId()+"externalService)");
 		}
 		loadCategory(ex);
 		return setUpCustomContextVisibility(customContext, ex);
@@ -132,7 +132,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	@Override
 	synchronized protected void loadCategory(ExternalService ex)  {
 		if (log.isDebugEnabled()){
-			log.debug("loadCategory(externalService)");
+			log.debug("id="+this.getId()+" - loadCategory(externalService)");
 		}
 		if(getAccess() == Accessibility.PUBLIC) {
 			setElement(DomainTools.getDaoService().getManagedCategory(this)); 
@@ -155,7 +155,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	synchronized private boolean setUpCustomContextVisibility(CustomContext customContext, ExternalService ex) 
 		throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
-			log.debug("setUpCustomContextVisibility("+customContext.getElementId()+",externalService)");
+			log.debug("id="+this.getId()+" - setUpCustomContextVisibility("+customContext.getElementId()+",externalService)");
 		}
 		/*
 		 * Algo pour gerer les customCategories :
@@ -251,7 +251,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	synchronized protected void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) 
 		throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
-			log.debug("updateCustom("+customManagedCategory.getElementId()+",externalService)");
+			log.debug("id="+this.getId()+" - updateCustom("+customManagedCategory.getElementId()+",externalService)");
 		}
 		ManagedCategory category = (ManagedCategory) getElement();
 		category.updateCustom(customManagedCategory, ex);
@@ -265,7 +265,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	synchronized public void computeFeatures() throws CategoryNotLoadedException  {
 		if (log.isDebugEnabled()){
-			log.debug("computeFeatures()");
+			log.debug("id="+this.getId()+" - computeFeatures()");
 		}
 		
 		ManagedCategory managedCategory = (ManagedCategory)getElement();
@@ -296,7 +296,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	public VisibilitySets getVisibility() throws ComputeFeaturesException{
 		if (log.isDebugEnabled()){
-			log.debug("getVisibility()");
+			log.debug("id="+this.getId()+" - getVisibility()");
 		}
 		return features.getVisibility();
 	}
@@ -306,7 +306,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	synchronized public void setVisibility(VisibilitySets visibility) {
 		if (log.isDebugEnabled()){
-			log.debug("setVisibility(visibility)");
+			log.debug("id="+this.getId()+" - setVisibility(visibility)");
 		}
 		this.visibility = visibility;
 		features.setIsComputed(false);
@@ -353,7 +353,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	synchronized protected void addContext(Context c){
 		if (log.isDebugEnabled()){
-			log.debug("addContext("+c.getId()+")");
+			log.debug("id="+this.getId()+" - addContext("+c.getId()+")");
 		}
 		contextsSet.add(c);
 	}
@@ -369,7 +369,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	@Override
 	protected ManagedSourceProfile getSourceProfileById(String id) throws CategoryNotLoadedException, SourceProfileNotFoundException {
 		if (log.isDebugEnabled()){
-			log.debug("getSourceProfileById("+id+")");
+			log.debug("id="+this.getId()+" - getSourceProfileById("+id+")");
 		}
 //		 TODO (GB ?) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
 		return (ManagedSourceProfile) getElement().getSourceProfileById(id);
