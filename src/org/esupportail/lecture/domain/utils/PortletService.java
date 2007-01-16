@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain.utils;
 
 import java.util.Map;
@@ -7,8 +12,9 @@ import javax.faces.context.FacesContext;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
-
-import org.esupportail.lecture.exceptions.ErrorException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
@@ -19,11 +25,27 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
  */
 public class PortletService implements ModeService {
 
+	/*
+	 ************************** PROPERTIES ******************************** */	
 	/**
-	 * @throws InternalExternalException 
+	 * Log instance 
+	 */
+	protected static final Log log = LogFactory.getLog(DomainServiceImpl.class);
+
+	/* 
+	 ************************** INIT ****************************************/
+
+	/* 
+	 ************************** METHODS *************************************/
+
+	/**
+	 * @throws InternalExternalException,NoExternalValueException  
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getPreference(java.lang.String)
 	 */
 	public String getPreference(String name)throws InternalExternalException,NoExternalValueException  {
+		if (log.isDebugEnabled()){
+			log.debug("getPreference("+name+")");
+		}
 		String value;
 		try {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -46,13 +68,16 @@ public class PortletService implements ModeService {
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getUserAttribute(java.lang.String)
 	 */
 	public String getUserAttribute(String attribute) throws InternalExternalException,NoExternalValueException {
+		if (log.isDebugEnabled()){
+			log.debug("getUserAttribute("+attribute+")");
+		}
 		String value; 
 		try {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = facesContext.getExternalContext();
 			PortletRequest request = (PortletRequest) externalContext.getRequest();
-			Map userInfo = (Map)request.getAttribute(PortletRequest.USER_INFO);
-			value = (String)userInfo.get(attribute);
+			Map<String,String> userInfo = (Map)request.getAttribute(PortletRequest.USER_INFO);
+			value = userInfo.get(attribute);
 		} catch (Exception e){
 			throw new InternalExternalException(e);
 		}
@@ -67,6 +92,9 @@ public class PortletService implements ModeService {
 	 * @see org.esupportail.lecture.domain.utils.ModeService#isUserInGroup(java.lang.String)
 	 */
 	public boolean isUserInGroup(String group) throws InternalExternalException {
+		if (log.isDebugEnabled()){
+			log.debug("isUserInGroup("+group+")");
+		}
 		boolean value = Boolean.FALSE;
 		try {			
 			FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -81,4 +109,8 @@ public class PortletService implements ModeService {
 		return value;
 	}
 
+	/*
+	 ************************** Accessors ************************************/
+
+	
 }
