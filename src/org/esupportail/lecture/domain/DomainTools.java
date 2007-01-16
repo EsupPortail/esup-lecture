@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain;
 
 import org.apache.commons.logging.Log;
@@ -8,11 +13,13 @@ import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
 /**
- * Class where are defined differents user attributes, provided by portlet container,
- * used by the lecture channel and others tools
+ * Provide various tools :
+ * - constants defintion for user attributes provided by externalService. 
+ * - single access to DaoService, externalService, channel for domain layer
  * @author gbouteil
- *
- */public class DomainTools {
+ */
+public class DomainTools {
+	
 	/*
 	 ************************** PROPERTIES *********************************/	
 
@@ -21,6 +28,9 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 	 */
 	protected static final Log log = LogFactory.getLog(DomainTools.class);
 
+	/* 
+	 * Single Access to layers or principal classes */
+	
 	/**
 	 * Current DaoService initialised during portlet init
 	 */
@@ -32,10 +42,13 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 	private static ExternalService externalService;
 
 	/**
-	 * Current Channel initialised duriant portlet init
+	 * Current Channel initialised during portlet init
 	 */
 	private static Channel channel;
 
+	/*
+	 * Constants definition */
+	
 	/**
 	 * Attribute name used to identified the user profile.
 	 * It is defined in the channel config
@@ -46,55 +59,26 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 	 * Name of the portlet preference that set a context to an instance of the channel
 	 */
 	public static final String CONTEXT = "context";
+	// TODO (GB later) externaliser cette chaine ?
+	
+	/*
+	 ************************** INIT ******************************** */	
+
 	
 	
 	/*
-	 ************************** ACCESSORS *********************************/	
-	/**
-	 * @param userId
-	 * @see DomainTools#USER_ID
-	 */
-	public static void setUSER_ID(String userId){
-		USER_ID=userId;
-	}
-	/**
-	 * Return an instance of current DaoService initialised by Spring
-	 * @return current DomainService
-	 */
-	public static DaoService getDaoService() {
-		return DomainTools.daoService;
-	}
+	 *************************** METHODS ******************************** */	
 
 	/**
-	 * set current DaoService (used by Spring)
-	 * @param daoService 
-	 */
-	public static void setDaoService(DaoService daoService) {
-		DomainTools.daoService = daoService;
-	}
-
-	/**
-	 * @return current channel
-	 */
-	public static Channel getChannel() {
-		return channel;
-	}
-
-	/**
-	 * @param channel
-	 */
-	public static void setChannel(Channel channel) {
-		DomainTools.channel = channel;
-	}
-	
-	/**
-	 * @param externalService to use to find user attribute
+	 *
 	 * @param value - string where we try to find user attribute to replace
 	 * @return value with {attribute} replaced by this attribute according to current connected user
-	 * @throws InternalExternalException 
-	 * @throws NoExternalValueException 
 	 */
+	// TODO (GB --> RB) Peux tu compléter la javadoc ?
 	public static String replaceWithUserAttributes(String value) {
+		if (log.isDebugEnabled()){
+			log.debug("replaceWithUserAttributes("+value+")");
+		}
 		String ret = null;
 		if (value!=null) {
 			// find and replace {...}
@@ -138,6 +122,52 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 		return ret;
 	}
 	
+	
+	
+	
+	/*
+	 ************************** ACCESSORS *********************************/	
+	/**
+	 * Set string that defines user ID in externalService 
+	 * @param userId
+	 * @see DomainTools#USER_ID
+	 */
+	public static void setUSER_ID(String userId){
+		USER_ID=userId;
+	}
+	/**
+	 * Return an instance of current DaoService initialised by Spring
+	 * @return current DomainService
+	 */
+	public static DaoService getDaoService() {
+		return DomainTools.daoService;
+	}
+
+	/**
+	 * set current DaoService (used by Spring)
+	 * @param daoService 
+	 */
+	public static void setDaoService(DaoService daoService) {
+		DomainTools.daoService = daoService;
+	}
+
+	/**
+	 * Returns current channel instance (main class)
+	 * @return current channel
+	 */
+	public static Channel getChannel() {
+		return channel;
+	}
+
+	/**
+	 * set current channel instance (used by Spring)
+	 * @param channel
+	 */
+	public static void setChannel(Channel channel) {
+		DomainTools.channel = channel;
+	}
+	
+
 	/**
 	 * @return external service
 	 */

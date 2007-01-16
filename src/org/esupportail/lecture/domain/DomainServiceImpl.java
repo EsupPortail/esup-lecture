@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain;
 
 import java.util.ArrayList;
@@ -79,6 +84,7 @@ public class DomainServiceImpl implements DomainService {
 	/**
 	 * Return the user identified by userId
 	 * @param userId user Id
+	 * @return userBean
 	 * @see org.esupportail.lecture.domain.DomainService#getConnectedUser(java.lang.String)
 	 */
 	public UserBean getConnectedUser(String userId) {

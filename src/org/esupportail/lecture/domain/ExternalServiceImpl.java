@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain;
 
 import javax.faces.context.FacesContext;
@@ -8,15 +13,21 @@ import org.apache.myfaces.portlet.PortletUtil;
 import org.esupportail.lecture.domain.utils.ModeService;
 import org.esupportail.lecture.domain.utils.PortletService;
 import org.esupportail.lecture.domain.utils.ServletService;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
 /**
  * @author bourges
- * an implementation of ExternalService for tests
+ * Implementation of interface ExternalService where
+ * externalService can be :
+ * - portlet service
+ * - servlet service
+ * The modeService (portlet or servlet) is dynamically defined at every method calls
  */
 public class ExternalServiceImpl implements ExternalService {
+
+	/* 
+	 *************************** PROPERTIES ******************************** */	
 
 	/**
 	 * the logger for this class
@@ -41,6 +52,12 @@ public class ExternalServiceImpl implements ExternalService {
 	//TODO (RB) inject by spring (gb : => so no more static)
 	static ServletService defaultService = servletService;
 	
+	/*
+	 *************************** INIT ************************************** */	
+
+	/*
+	 *************************** METHODS *********************************** */	
+
 	/**
 	 * @throws InternalExternalException 
 	 * @throws NoExternalValueException 
@@ -50,6 +67,8 @@ public class ExternalServiceImpl implements ExternalService {
 		return getUserAttribute(DomainTools.USER_ID);
 	}
 	/**
+	 * 
+	 * Return ID of the current context (from channel instantiation : portlet preference with name "context"))
 	 * @throws InternalExternalException 
 	 * @throws NoExternalValueException 
 	 * @see org.esupportail.lecture.domain.ExternalService#getCurrentContextId()
@@ -64,11 +83,7 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getPreferences(java.lang.String)
 	 */
 	public String getPreferences(String name) throws NoExternalValueException, InternalExternalException {
-	   if (log.isDebugEnabled()) {
-			log.debug("getPreferences("+name+")");
-		}
-	  
-	    String ret = getModeService().getPreference(name);
+	     String ret = getModeService().getPreference(name);
 	 
 	     if (log.isTraceEnabled()) {
 			log.trace("getPreferences("+name+") return "+ret);
@@ -83,9 +98,6 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserAttribute(java.lang.String)
 	 */
 	public String getUserAttribute(String attribute) throws NoExternalValueException, InternalExternalException {
-	    if (log.isDebugEnabled()) {
-			log.debug("getUserAttribute("+attribute+")");
-		}
 		String ret = getModeService().getUserAttribute(attribute);
 		
 		if (log.isTraceEnabled()) {
@@ -110,10 +122,6 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#isUserInGroup(java.lang.String)
 	 */
 	public boolean isUserInGroup(String group) throws InternalExternalException {
-	    if (log.isDebugEnabled()) {
-			log.debug("isUserInRole("+group+")");
-		}
-	    
 	    boolean ret = getModeService().isUserInGroup(group);
 	   
         if (log.isDebugEnabled()) {
@@ -123,7 +131,11 @@ public class ExternalServiceImpl implements ExternalService {
 	}
 
 	/**
-	 * used to get mode service computed just in time and not in contructor because Spring can't find facesContext at startup
+	 * Get the current mode service : 
+	 * 	- portletService
+	 *  - servletService
+	 *  - defaultService
+	 * Computes it dynamically and not in contructor because Spring can't find facesContext at startup
 	 * @return ModeService - the current mode service
 	 */
 	private ModeService getModeService() {
@@ -143,4 +155,8 @@ public class ExternalServiceImpl implements ExternalService {
 		return ret;
 	}
 
+	/*
+	 *************************** ACCESSORS ********************************* */	
+
+	
 }

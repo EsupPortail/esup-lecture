@@ -1,3 +1,8 @@
+/**
+* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+* For any information please refer to http://esup-helpdesk.sourceforge.net
+* You may obtain a copy of the licence at http://www.esup-portail.org/license/
+*/
 package org.esupportail.lecture.domain;
 
 import java.util.ArrayList;
@@ -34,20 +39,25 @@ import org.springframework.core.io.ClassPathResource;
  *
  */
 public class DomainTest {
+	/*
+	 ************************** PROPERTIES ******************************** */	
+
 	protected static final Log log = LogFactory.getLog(DomainTest.class); 
 	private static FacadeService facadeService;
 
-	
 	/* Controller local variables */
 	private static String userId = "bourges";
 	private static String contextId;
 	private static List<String> categoryIds;
 	private static String itemId;
 	private static String sourceId;
+	
+	
+	/*
+	 ************************** MAIN *************************************** */	
+
 	/**
 	 * @param args non argumet needed
-	 * @throws InternalExternalException 
-	 * @throws DomainServiceException 
 	 */
 	public static void main(String[] args)  {
 		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
@@ -93,13 +103,8 @@ public class DomainTest {
 	}
 
 
-
-
-
-
-/*
- * Méthodes de Test
- */
+	/*
+	 ************************** Méthodes de Test ******************************** */	
 
 	/**
 	 * Test of servide "getConnectedUser"
@@ -116,7 +121,6 @@ public class DomainTest {
 	 * Test of service "getContext"
 	 * @throws InternalExternalException 
 	 * @throws ContextNotFoundException 
-	 * @throws DomainServiceException 
 	 */
 	private static void testGetContext() throws InternalExternalException, ContextNotFoundException{
 		printIntro("getContext");
@@ -124,6 +128,10 @@ public class DomainTest {
 		ContextBean context = facadeService.getContext(userId,contextId);
 		System.out.println(context.toString());
 	}
+	/**
+	 * @param cid
+	 * @throws ContextNotFoundException
+	 */
 	private static void testGetContextBis(String cid) throws ContextNotFoundException  {
 		printIntro("getContext");
 		ContextBean context = facadeService.getContext(userId,cid);
@@ -202,7 +210,6 @@ public class DomainTest {
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws DomainServiceException 
 	 */
 	private static void testGetItems() throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException  {
 		printIntro("getItems");
@@ -223,7 +230,6 @@ public class DomainTest {
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws DomainServiceException 
 	 */
 	private static void testMarkItemAsRead() throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException {
 		printIntro("markItemAsRead");
@@ -243,7 +249,6 @@ public class DomainTest {
 	 * @throws TreeSizeErrorException 
 	 * @throws ContextNotFoundException 
 	 * @throws InternalExternalException 
-	 * @throws DomainServiceException 
 	 * @throws InternalExternalException 
 	 */
 	private static void testSetTreeSize() throws ContextNotFoundException, TreeSizeErrorException, InternalExternalException {
@@ -274,12 +279,6 @@ public class DomainTest {
 		
 	}
 
-
-
-
-
-
-	
 	
 	/**
 	 * Affichage du service à tester

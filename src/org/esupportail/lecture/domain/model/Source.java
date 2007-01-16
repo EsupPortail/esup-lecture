@@ -124,13 +124,10 @@ public abstract class Source implements Element,Serializable {
 	
 	/*
 	 *************************** INIT ******************************** */	
-	
-	
+		
 
 	/*
 	 *************************** METHODS ******************************** */	
-	
-	
 	
 	
 	/**
@@ -403,7 +400,9 @@ public abstract class Source implements Element,Serializable {
 		}
 		return Items;
 	}
-/* ************************** ACCESSORS ******************************** */	
+	
+	/* 
+	 ************************* ACCESSORS ******************************** */	
 
 	/**
 	 * @return the dtd of source XML content
