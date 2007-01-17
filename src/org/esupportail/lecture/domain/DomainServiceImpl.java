@@ -439,6 +439,23 @@ public class DomainServiceImpl implements DomainService {
 //		}
 		return ret;
 	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#marckSourceAsSubscribed(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	public void marckSourceAsSubscribed(String uid, String contextId, String categorieId, String sourceId) {
+		// TODO (RB --> GB) Auto-generated method stub
+		
+	}
+
+
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#marckSourceAsUnsubscribed(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	public void marckSourceAsUnsubscribed(String uid, String contextId, String categorieId, String sourceId) {
+		// TODO (RB --> GB) Auto-generated method stub
+		
+	}
 	
 	/*
 	 ************************** Accessors ************************************/
@@ -459,8 +476,4 @@ public class DomainServiceImpl implements DomainService {
 		DomainServiceImpl.channel = channel;
 	}
 
-
-
-
-	
 }

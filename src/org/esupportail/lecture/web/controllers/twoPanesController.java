@@ -24,6 +24,7 @@ import org.esupportail.lecture.exceptions.ErrorException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
@@ -74,6 +75,10 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 *  sourceID used by t:updateActionListener
 	 */
 	protected String sourceId;
+	/**
+	 * contextId store the contextId
+	 */
+	private String contextId = null;
 	/**
 	 * Controller constructor
 	 */
@@ -175,17 +180,16 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 			try {
 				//We evalute the context and we put it in the virtual session
 				context = new ContextWebBean();
-				String contextId;
-				contextId = getFacadeService().getCurrentContextId();
-				ContextBean contextBean = getFacadeService().getContext(getUID(), contextId);
+				String ctxId = getContextId();
+				ContextBean contextBean = getFacadeService().getContext(getUID(), ctxId);
 				if (contextBean == null) {
-					throw new WebException("No context with ID \""+contextId+"\" found in lecture-config.xml file. See this file or portlet preference with name \""+DomainTools.CONTEXT+"\".");
+					throw new WebException("No context with ID \""+ctxId+"\" found in lecture-config.xml file. See this file or portlet preference with name \""+DomainTools.CONTEXT+"\".");
 				}
 				context.setName(contextBean.getName());
 				context.setId(contextBean.getId());
 				context.setDescription(contextBean.getDescription());
 				//find categories in this context
-				List<CategoryBean> categories = getCategories(contextId);
+				List<CategoryBean> categories = getCategories(ctxId);
 				List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
 				if (categories != null) {
 					Iterator<CategoryBean> iter = categories.iterator();
@@ -337,6 +341,13 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 			}
 		}
 		return ret;
+	}
+
+	protected String getContextId() throws InternalExternalException {
+		if (contextId == null) {
+			contextId = getFacadeService().getCurrentContextId();
+		}
+		return contextId;
 	}
 
 }

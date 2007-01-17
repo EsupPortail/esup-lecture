@@ -13,6 +13,8 @@ import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.exceptions.ErrorException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
@@ -69,13 +71,19 @@ public class EditController extends twoPanesController {
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		SourceWebBean src = getSourceByID(selectedCategory, sourceId);
 		String type = null;
-		if (src.isNotSubscribed()) {
-			//TODO (RB) call facadeservice
-			type = SourceBean.SUBSCRIBED;
-		}
-		if (src.isSubscribed()) {
-			//TODO (RB) call facadeservice
-			type = SourceBean.NOTSUBSCRIBED;
+		try {
+			if (src.isNotSubscribed()) {
+				//TODO (RB) call facadeservice
+				getFacadeService().marckSourceAsSubscribed(getUID(), getContextId(), selectedCategory.getId(), sourceId);
+				type = SourceBean.SUBSCRIBED;
+			}
+			if (src.isSubscribed()) {
+				//TODO (RB) call facadeservice
+				getFacadeService().marckSourceAsUnsubscribed(getUID(), getContextId(), selectedCategory.getId(), sourceId);
+				type = SourceBean.NOTSUBSCRIBED;
+			}
+		} catch (InternalExternalException e) {
+			throw new WebException("Error in getContext", e);
 		}
 		if (type != null) {
 			src.setType(type);

@@ -137,5 +137,23 @@ public interface DomainService {
 	 * @see FacadeService#unfoldCategory(String, String, String)
 	 */
 	void unfoldCategory(String uid, String cxtId, String catId) throws ContextNotFoundException;
+	
+	/**
+	 * @param uid 
+	 * @param contextId 
+	 * @param categorieId 
+	 * @param sourceId 
+	 * @see FacadeService#marckSourceAsSubscribed(String, String, String, String)
+	 */
+	void marckSourceAsSubscribed(String uid, String contextId, String categorieId, String sourceId);
+
+	/**
+	 * @param uid 
+	 * @param contextId 
+	 * @param categorieId 
+	 * @param sourceId 
+	 * @see FacadeService#marckSourceAsUnsubscribed(String, String, String, String)
+	 */
+	void marckSourceAsUnsubscribed(String uid, String contextId, String categorieId, String sourceId);
 
 }
