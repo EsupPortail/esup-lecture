@@ -51,71 +51,89 @@
   </articleinfo>
 
   <section>
-    <title>TODO (RB) Dispatch in installation and technical
-    configuration</title>
-
-    <para>To configure this application you have to adapt some configuration
-    files. Every time you will find a
-    &lt;fileName&gt;-example.&lt;extension&gt; example file that you can copy
-    to &lt;fileName&gt;.&lt;extension&gt; before adapting. </para>
-
-    <para>Adapt build.properties. </para>
-
-    <para>Adapt properties/exceptionHandling/exceptionHandlin.xml. </para>
-
-    <note>
-      <para>By default, exception reports are also sent to an archived bugs
-      mailing list, accessible to the developers of the project only. This
-      feature is used to be warned of all the possible exceptions occuring on
-      the applciation anywhere; this way, most bugs can be corrected as soon
-      as they happen. If you do not want the exceptions to be sent to this
-      list, you can manually set property
-      doNotSendExceptionReportsToDevelopers to true.</para>
-    </note>
-
-    <para>Adapt properties/smtp/smtp.xml </para>
-
-    <para>properties/dao/hibernate/hibernate.cfg.xml </para>
-
-    <para>ant test-config </para>
-
-    <para>ant test-smtp </para>
-
-    <para>ant test-database </para>
-
-    <para>ant init </para>
-
-    <para>adapt properties/logging/log4j.properties </para>
-
-    <para>Adapt properties/mappings.xml </para>
-
-    <para>and properties/esup-lecture.xml </para>
-
-    <para>ant deploy</para>
-  </section>
-
-  <section>
     <title>Installation</title>
-
-    <note>
-      <para>For this version 0.5 installation instructions are simplified
-      because we don't use esup-commons standard installation mode.</para>
-    </note>
 
     <itemizedlist>
       <listitem>
-        <para>Download LecturePortlet.zip from <ulink
+        <para>Download esup-lecture-&lt;version&gt;.zip from <ulink
         url="https://sourcesup.cru.fr/frs/?group_id=251">the project
         site</ulink></para>
       </listitem>
 
       <listitem>
-        <para>Unzip LecturePortlet.zip somewhere on your tomcat server</para>
+        <para>Unzip the file somewhere on a working directory</para>
 
         <para><note>
-            <para>Do not use uPortal deployPortletApp ant target ! If you do
-            this you corrupt the web.xml file of the application.</para>
+            <para>To configure this application you have to adapt some
+            configuration files. Every time you will find a
+            &lt;fileName&gt;-example.&lt;extension&gt; example file that you
+            can copy to &lt;fileName&gt;.&lt;extension&gt; before
+            adapting.</para>
           </note></para>
+      </listitem>
+
+      <listitem>
+        <para>Adapt build.properties</para>
+      </listitem>
+
+      <listitem>
+        <para>Adapt properties/exceptionHandling/exceptionHandlin.xml.</para>
+
+        <para><note>
+            <para>By default, exception reports are also sent to an archived
+            bugs mailing list, accessible to the developers of the project
+            only. This feature is used to be warned of all the possible
+            exceptions occuring on the applciation anywhere; this way, most
+            bugs can be corrected as soon as they happen. If you do not want
+            the exceptions to be sent to this list, you can manually set
+            property doNotSendExceptionReportsToDevelopers to true.</para>
+          </note></para>
+      </listitem>
+
+      <listitem>
+        <para>Adapt properties/smtp/smtp.xml</para>
+      </listitem>
+
+      <listitem>
+        <para>Adapt properties/dao/hibernate/hibernate.cfg.xml</para>
+      </listitem>
+
+      <listitem>
+        <para>Test your configuration:<itemizedlist>
+            <listitem>
+              <para>ant test-config</para>
+            </listitem>
+
+            <listitem>
+              <para>ant test-smtp</para>
+            </listitem>
+
+            <listitem>
+              <para>ant test-database</para>
+            </listitem>
+          </itemizedlist></para>
+      </listitem>
+
+      <listitem>
+        <para>Initialize your database if necessary:<itemizedlist>
+            <listitem>
+              <para>ant init<note>
+                  <para><emphasis role="bold">This Command will erase all
+                  existing data in your database !!!!</emphasis></para>
+
+                  <para>Your database (configured in hibernate.cfg.xml) must
+                  exists.</para>
+                </note></para>
+            </listitem>
+          </itemizedlist></para>
+      </listitem>
+
+      <listitem>
+        <para>Deploy the application:<itemizedlist>
+            <listitem>
+              <para>ant deploy</para>
+            </listitem>
+          </itemizedlist></para>
       </listitem>
 
       <listitem>
@@ -144,6 +162,10 @@
             must be equal to the appliation server context name and
             esup-lecture must be equal to the portlet-name of the
             WEB-INF/portlet.xml file.</para>
+
+            <para>If you don't use this default value you have to adap the
+            "portlet-guid" parameter of "The esup-lecture portlet servlet"
+            servlet in the WEB-INF/web.xml too.</para>
           </note></para>
       </listitem>
     </itemizedlist>
@@ -152,19 +174,18 @@
   <section>
     <title>Configuration</title>
 
+    <para>You can configure your application. For this: adapt file(s) in
+    properties directory and use <command>ant deploy</command> to deploy again
+    your application.</para>
+
     <section>
       <title>Technical configuration</title>
 
-      <para><screen>TO COMPLETE !!!</screen> Adapt to your environment these
-      configuration files of WEB-INF/classes/properties:</para>
+      <para> Adapt to your environment these configuration files:</para>
 
       <itemizedlist>
         <listitem>
-          <para>ldap/ldap.xml</para>
-        </listitem>
-
-        <listitem>
-          <para>smtp/smtp.xml</para>
+          <para>logging/log4j.properties</para>
         </listitem>
       </itemizedlist>
     </section>
@@ -172,8 +193,8 @@
     <section>
       <title>Content configuration</title>
 
-      <para>To adapt to your environment, write these configuration files of
-      WEB-INF/classes/properties :</para>
+      <para>To adapt to your environment, edit these configuration
+      files:</para>
 
       <itemizedlist>
         <listitem>
@@ -558,9 +579,9 @@
       <section>
         <title>portlet.xml</title>
 
-        <para>All of portal user attributes used by portlet must be declared
-        in the <command>webapp/WEB-INF/portlet.xml</command>, here is an
-        example : <programlisting>&lt;user-attribute&gt;
+        <para>All portal user attributes used by portlet must be declared in
+        the <command>webapp/WEB-INF/portlet.xml</command>, here is an example
+        : <programlisting>&lt;user-attribute&gt;
   &lt;description&gt;the username of the portal user&lt;/description&gt;
   &lt;name&gt;username&lt;/name&gt;
 &lt;/user-attribute&gt;
