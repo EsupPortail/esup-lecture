@@ -181,7 +181,7 @@ public class HomeController extends twoPanesController {
 	 * @return the list of items to dysplay for current selection (category/source) and displayMode
 	 */
 	public List<ItemWebBean> getItems() {
-		if (log.isDebugEnabled()) log.debug("in getItems");
+		if (log.isDebugEnabled()) log.debug("getItems()");
 		List<ItemWebBean> ret = null;
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		if (selectedCategory != null) {
@@ -207,6 +207,7 @@ public class HomeController extends twoPanesController {
 							ItemWebBean itemWebBean = new ItemWebBean();
 							itemWebBean.setId(itemBean.getId());
 							itemWebBean.setHtmlContent(itemBean.getHtmlContent());
+							itemWebBean.setRead(itemBean.isRead());
 							ret.add(itemWebBean);
 						}
 						//Put items in selected source

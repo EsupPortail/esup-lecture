@@ -1,12 +1,14 @@
 package org.esupportail.lecture.web.beans;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  * @author bourges
  * used to display category informations in view
  */
-public class CategoryWebBean {
+public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	/**
 	 * id of categery
 	 */
@@ -89,6 +91,7 @@ public class CategoryWebBean {
 	 * @param sources
 	 */
 	public void setSources(List<SourceWebBean> sources) {
+		Collections.sort(sources);
 		this.sources = sources;
 	}
 	/**
@@ -102,6 +105,13 @@ public class CategoryWebBean {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	
+	/**
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(CategoryWebBean o) {
+		return name.compareTo(o.name);
 	}
 
 }

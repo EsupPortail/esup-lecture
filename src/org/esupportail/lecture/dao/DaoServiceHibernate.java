@@ -54,6 +54,15 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @see org.esupportail.lecture.dao.DaoService#refreshUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 */
+	public UserProfile refreshUserProfile(UserProfile userProfile) {
+		UserProfile ret = null;
+		ret = (UserProfile)getHibernateTemplate().merge(userProfile);
+		return ret;
+	}
+
+	/**
 	 * @see org.esupportail.lecture.dao.DaoService#saveUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void saveUserProfile(UserProfile userProfile) {
@@ -154,4 +163,5 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		}
 		getHibernateTemplate().saveOrUpdate(source);
 	}
+
 }

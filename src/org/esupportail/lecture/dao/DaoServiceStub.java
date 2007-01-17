@@ -38,7 +38,6 @@ public class DaoServiceStub  implements DaoService {
 
 	private DaoServiceRemoteXML remoteXMLService;	
 	
-
 	
 	/* 
 	 *************************** INITIALIZATION *********************************/	
@@ -84,6 +83,16 @@ public class DaoServiceStub  implements DaoService {
 			log.debug("getUserProfile("+userId+")");
 		}
 		return userProfiles.get(userId);
+	}
+
+	/* (non-Javadoc)
+	 * @see org.esupportail.lecture.dao.DaoService#refreshUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 */
+	public UserProfile refreshUserProfile(UserProfile userProfile) {
+		if (log.isDebugEnabled()){
+			log.debug("refresh("+userProfile.getUserId()+")");
+		}
+		return userProfile;
 	}
 
 	/**
@@ -171,9 +180,6 @@ public class DaoServiceStub  implements DaoService {
 	public DaoServiceRemoteXML getRemoteXMLService() {
 		return remoteXMLService;
 	}
-
-
-
 
 
 }

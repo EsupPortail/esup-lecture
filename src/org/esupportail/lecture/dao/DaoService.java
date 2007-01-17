@@ -58,6 +58,13 @@ public interface DaoService {
 	public UserProfile getUserProfile(String userId) ;
 
 	/**
+	 * Return a "fresh" userProfile from data base 
+	 * @param userProfile
+	 * @return a "fresh" userProfile
+	 */
+	public UserProfile refreshUserProfile(UserProfile userProfile);
+
+	/**
 	 * Add a user profile to persistent data.
 	 * @param userProfile : user to add
 	 */

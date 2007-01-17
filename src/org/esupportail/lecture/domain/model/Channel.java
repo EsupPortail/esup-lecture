@@ -317,6 +317,9 @@ public class Channel implements InitializingBean {
 				DomainTools.getDaoService().saveUserProfile(userProfile);
 			}
 			userProfilesHash.put(userId, userProfile);
+		} else {
+			// Reatach userProfile to hibernate session
+			userProfile = DomainTools.getDaoService().refreshUserProfile(userProfile);
 		}
 		return userProfile;
 	}

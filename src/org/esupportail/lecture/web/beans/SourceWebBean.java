@@ -8,7 +8,7 @@ import org.esupportail.lecture.domain.beans.SourceBean;
  * @author bourges
  * used to display source information in view
  */
-public class SourceWebBean {
+public class SourceWebBean  implements Comparable<SourceWebBean> {
 	/**
 	 * id of source
 	 */
@@ -108,6 +108,13 @@ public class SourceWebBean {
 			ret = true;
 		}
 		return ret;
+	}
+
+	/**
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	public int compareTo(SourceWebBean o) {
+		return name.compareTo(o.name);
 	}
 	
 }

@@ -1,5 +1,7 @@
 package org.esupportail.lecture.web.beans;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -80,6 +82,7 @@ public class ContextWebBean {
 	 * @param categories
 	 */
 	public void setCategories(List<CategoryWebBean> categories) {
+		Collections.sort(categories);
 		this.categories = categories;
 	}
 	/**

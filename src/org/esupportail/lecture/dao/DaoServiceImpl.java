@@ -74,6 +74,13 @@ public class DaoServiceImpl implements DaoService {
 	}
 
 	/**
+	 * @see org.esupportail.lecture.dao.DaoService#refreshUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 */
+	public UserProfile refreshUserProfile(UserProfile userProfile) {
+		return hibernateService.refreshUserProfile(userProfile);
+	}
+
+	/**
 	 * @see org.esupportail.lecture.dao.DaoService#saveUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void saveUserProfile(UserProfile userProfile) {
@@ -151,5 +158,6 @@ public class DaoServiceImpl implements DaoService {
 	public void setRemoteXMLService(DaoServiceRemoteXML remoteXMLService) {
 		this.remoteXMLService = remoteXMLService;
 	}
+
 	
 }
