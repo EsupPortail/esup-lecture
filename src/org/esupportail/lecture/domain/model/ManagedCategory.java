@@ -24,6 +24,7 @@ public class ManagedCategory extends Category {
 	/*
 	 *********************** PROPERTIES**************************************/ 
 
+
 	/**
 	 * Log instance 
 	 */

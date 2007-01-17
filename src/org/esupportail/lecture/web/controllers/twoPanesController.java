@@ -224,24 +224,24 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 
 	/**
 	 * @param categoryBean
-	 * @return list of visible sources
+	 * @return list of available sources
 	 * @throws DomainServiceException
 	 */
 	protected List<SourceBean> getSources(CategoryBean categoryBean) throws DomainServiceException {
 		//this method need to be overwrite in edit controller
-		List<SourceBean> sources = getFacadeService().getVisibleSources(getUID(), categoryBean.getId());
+		List<SourceBean> sources = getFacadeService().getAvailableSources(getUID(), categoryBean.getId());
 		return sources;
 	}
 
 	/**
 	 * @param contextId
-	 * @return list of visible categories
+	 * @return list of available categories
 	 * @throws InternalDomainException
 	 * @throws ContextNotFoundException 
 	 */
 	protected List<CategoryBean> getCategories(String contextId) throws ContextNotFoundException {
 		//this method need to be overwrite in edit controller
-		List<CategoryBean> categories = getFacadeService().getVisibleCategories(getUID(), contextId);
+		List<CategoryBean> categories = getFacadeService().getAvailableCategories(getUID(), contextId);
 		return categories;
 	}
 

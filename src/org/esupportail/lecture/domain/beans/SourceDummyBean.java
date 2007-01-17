@@ -9,7 +9,7 @@ import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.UnknownException;
 
 /**
- * A DummyBean for a SourceBean : every methods overriden from SourceBean throw the cause Exception
+ * A DummyBean for a SourceBean : every methods are overriden from SourceBean throw the cause Exception
  * @author gbouteil
  *
  */

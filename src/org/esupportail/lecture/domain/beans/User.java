@@ -10,6 +10,7 @@ import org.esupportail.commons.utils.strings.StringUtils;
 
 /**
  * The class that represent users.
+ * @author bourges
  */
 public class User {
 	

@@ -7,8 +7,8 @@ package org.esupportail.lecture.exceptions.domain;
 
 /**
  * 
- * @author gbouteil
  * The Proxy Ticket CAS is missing
+ * @author gbouteil
  */
 public class MissingPtCasException extends InfoDomainException {
 

@@ -139,6 +139,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * Sets categoryProfile Id
 	 * @param profileId
 	 */
+	// TODO (GB --> RB) : renommer cette methode, en setElementId()
 	private void setProfileId(String profileId) {
 		this.profileId = profileId;
 	}
@@ -161,6 +162,7 @@ public abstract class CustomCategory implements CustomElement {
 	/**
 	 * @return profile id
 	 */
+	// TODO (GB --> RB) : retirer cette methode, meme usage que getElementId()
 	private String getProfileId() {
 		return profileId;
 	}

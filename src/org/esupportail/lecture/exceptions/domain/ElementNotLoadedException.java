@@ -6,9 +6,9 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil
  * The element is not loaded in its profile
  * (it can be a category, a source)
+ * @author gbouteil
  */
 public class ElementNotLoadedException extends InfoDomainException {
 

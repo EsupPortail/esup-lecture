@@ -198,6 +198,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @return profileID os this custom source
 	 */
+	// TODO (GB --> RB) : retirer cette methode, meme usage que getElementId()
 	private String getProfileId() {
 		return profileId;
 	}
@@ -205,6 +206,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @param profileId
 	 */
+	// TODO (GB --> RB) : renommer cette methode, en setElementId()
 	private void setProfileId(String profileId) {
 		this.profileId = profileId;
 	}

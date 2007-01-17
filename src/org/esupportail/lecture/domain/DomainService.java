@@ -50,9 +50,9 @@ public interface DomainService {
 	 * @param ex access to external service 
 	 * @return List<CategoryBean>
 	 * @throws ContextNotFoundException 
-	 * @see FacadeService#getVisibleCategories(String, String)
+	 * @see FacadeService#getAvailableCategories(String, String)
 	 */
-	List<CategoryBean> getVisibleCategories(String uid,String contextId,ExternalService ex) throws ContextNotFoundException;
+	List<CategoryBean> getAvailableCategories(String uid,String contextId,ExternalService ex) throws ContextNotFoundException;
 
 	/**
 	 * @param categoryId 
@@ -63,9 +63,9 @@ public interface DomainService {
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotLoadedException 
-	 * @see FacadeService#getVisibleSources(String, String)
+	 * @see FacadeService#getAvailableSources(String, String)
 	 */
-	List<SourceBean> getVisibleSources(String uid,String categoryId,ExternalService ex)  
+	List<SourceBean> getAvailableSources(String uid,String categoryId,ExternalService ex)  
 		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException ;
 
 	/**
@@ -106,9 +106,9 @@ public interface DomainService {
 	 * @param uid 
 	 * @param ex 
 	 * @return List<SourceBean>
-	 * @see FacadeService#getAvailableSources(String, String)
+	 * @see FacadeService#getVisibleSources(String, String)
 	 */
-	List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService ex);
+	List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex);
 	
 	/**
 	 * @param uid

@@ -6,11 +6,11 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil 
  * Exceptions throwed by domain services, in order to be catched by calling layer
  * This exception does not provide any information about exception type :
  * This kind of exception is used as so much general : there is not any subclasses
  * (It is used in opposite to InfoDomainException) 
+ * @author gbouteil 
  * 
  */
 public class InternalDomainException extends DomainServiceException {

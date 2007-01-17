@@ -7,8 +7,8 @@ package org.esupportail.lecture.exceptions.domain;
 
 
 /**
- * @author gbouteil
  * The ManagedCategoryProfile is not found in Channel
+ * @author gbouteil
  */
 public class ManagedCategoryProfileNotFoundException extends CategoryProfileNotFoundException {
 

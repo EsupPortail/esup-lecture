@@ -6,8 +6,8 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil
  * The CustomElement is not found in UserProfile
+ * @author gbouteil
  */
 public class CustomElementNotFoundException extends PrivateException {
 	/**

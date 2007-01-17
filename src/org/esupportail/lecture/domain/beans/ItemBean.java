@@ -9,8 +9,8 @@ import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 
 /**
- * @author bourges
  * used to store item informations
+ * @author bourges
  */
 public class ItemBean {
 	

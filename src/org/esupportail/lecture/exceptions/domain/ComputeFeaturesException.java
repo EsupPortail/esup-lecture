@@ -6,8 +6,8 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil
  * An error occured when computing element features
+ * @author gbouteil
  */
 public class ComputeFeaturesException extends PrivateException {
 

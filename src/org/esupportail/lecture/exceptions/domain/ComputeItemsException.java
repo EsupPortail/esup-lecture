@@ -7,8 +7,8 @@ package org.esupportail.lecture.exceptions.domain;
 
 
 /**
- * @author gbouteil
  * An error occured when computing items of a source
+ * @author gbouteil
  */
 public class ComputeItemsException extends PrivateException {
 

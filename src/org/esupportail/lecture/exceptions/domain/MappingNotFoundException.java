@@ -6,8 +6,8 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil
  * The mapping is not found 
+ * @author gbouteil
  */
 public class MappingNotFoundException extends PrivateException {
 

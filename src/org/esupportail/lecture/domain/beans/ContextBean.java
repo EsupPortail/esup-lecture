@@ -10,8 +10,8 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 
 /**
- * @author bourges
  * used to store context informations
+ * @author bourges
  */
 public class ContextBean {
 

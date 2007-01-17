@@ -6,8 +6,8 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil
  * The cause of this exception is unknown
+ * @author gbouteil
  */
 public class UnknownException extends InfoDomainException {
 

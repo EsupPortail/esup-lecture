@@ -67,13 +67,13 @@ public class DomainTest {
 		try {
 			/* Test alternative behavior */
 			testGetContextBis("c1");
-			testGetVisibleSourceAlternativeWay(); 
+			testGetAvailableSourceAlternativeWay(); 
 			
 			/* Test normal behavior */
 //			testGetConnectedUser();
 //			testGetContext();
-//			testGetVisibleCategories();
-//			testGetVisibleSources();
+//			testGetAvailableCategories();
+//			testGetAvailableSources();
 //			testGetItems();
 		
 			/* small actions */
@@ -143,9 +143,9 @@ public class DomainTest {
 	 * @throws ContextNotFoundException 
 	 * @throws DomainServiceException 
 	 */
-	private static void testGetVisibleCategories() throws ContextNotFoundException,DomainServiceException{
-		printIntro("getVisibleCategories");
-		List<CategoryBean> categories = facadeService.getVisibleCategories(userId, contextId);
+	private static void testGetAvailableCategories() throws ContextNotFoundException,DomainServiceException{
+		printIntro("getAvailableCategories");
+		List<CategoryBean> categories = facadeService.getAvailableCategories(userId, contextId);
 		categoryIds = new ArrayList<String>();
 		for(CategoryBean cat : categories){
 			categoryIds.add(cat.getId());
@@ -156,15 +156,15 @@ public class DomainTest {
 	}
 	
 	/**
-	 * Test of service "getSources"
+	 * Test of service "getAvailableSources"
 	 * @throws DomainServiceException 
 	 * @throws DomainServiceException 
 	 */
-	private static void testGetVisibleSources() throws DomainServiceException  {
-		printIntro("getVisibleSources");
+	private static void testGetAvailableSources() throws DomainServiceException  {
+		printIntro("getAvailableSources");
 		for(String catId : categoryIds){
 			System.out.println(" **** cat "+catId+" **********");
-			List<SourceBean> sources = facadeService.getVisibleSources(userId, catId);
+			List<SourceBean> sources = facadeService.getAvailableSources(userId, catId);
 			for(SourceBean so : sources){
 				System.out.println("  **** source ****");
 				System.out.println(so.toString());
@@ -176,22 +176,22 @@ public class DomainTest {
 
 
 	/**
-	 *  Test of service "getSources" in an alternative way :
+	 *  Test of service "getAvailableSources" in an alternative way :
 	 *  - the parent category has not been got before
 	 * @throws InternalExternalException 
 	 * @throws DomainServiceException 
 	 * @throws InternalExternalException 
 	 * @throws DomainServiceException 
 	 */
-	private static void testGetVisibleSourceAlternativeWay() throws InternalExternalException, DomainServiceException  {	
+	private static void testGetAvailableSourceAlternativeWay() throws InternalExternalException, DomainServiceException  {	
 		testGetContext();	
-		printIntro("getVisibleSources - alternative way");
+		printIntro("getAvailableSources - alternative way");
 		categoryIds = new ArrayList<String>();
 		categoryIds.add("cp1");
 		categoryIds.add("cp2");
 		for(String catId : categoryIds){
 		System.out.println(" **** cat "+catId+" **********");
-		List<SourceBean> sources = facadeService.getVisibleSources(userId, catId);
+		List<SourceBean> sources = facadeService.getAvailableSources(userId, catId);
 		for(SourceBean so : sources){
 			System.out.println("  **** source ****");
 			System.out.println(so.toString());
@@ -271,10 +271,10 @@ public class DomainTest {
 		facadeService.foldCategory(userId, contextId, "cp1");
 		System.out.println("Depliage de la categorie cp1 \n");
 		facadeService.unfoldCategory(userId, contextId, "cp1");
-		testGetVisibleCategories();
+		testGetAvailableCategories();
 		System.out.println("Pliage de la categorie cp1 \n");
 		facadeService.foldCategory(userId, contextId, "cp1");
-		testGetVisibleCategories();
+		testGetAvailableCategories();
 		
 		
 	}

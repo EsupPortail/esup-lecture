@@ -6,8 +6,8 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
+ * The element visibility for user is not found
  * @author gbouteil
- * The ele;ent visibility for user is not found
  */
 public class VisibilityNotFoundException extends PrivateException {
 

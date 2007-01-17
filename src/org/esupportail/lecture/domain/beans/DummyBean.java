@@ -8,9 +8,9 @@ package org.esupportail.lecture.domain.beans;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 
 /**
- * @author gbouteil
  * Bean simulator. It is created when a real bean cannot be create 
  * while throwing an exception is too much.
+ * @author gbouteil
  */
 public interface DummyBean {
 

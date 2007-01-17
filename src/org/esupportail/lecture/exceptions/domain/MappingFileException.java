@@ -7,8 +7,8 @@ package org.esupportail.lecture.exceptions.domain;
 
 
 /**
- * @author gbouteil
  * There is an error in xml mapping file
+ * @author gbouteil
  */
 public class MappingFileException extends XMLFileException {
 

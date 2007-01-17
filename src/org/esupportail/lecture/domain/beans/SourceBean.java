@@ -13,8 +13,8 @@ import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundE
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
- * @author bourges
  * used to store source informations
+ * @author bourges
  */
 public class SourceBean {
 	

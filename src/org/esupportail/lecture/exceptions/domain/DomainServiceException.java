@@ -7,8 +7,8 @@ package org.esupportail.lecture.exceptions.domain;
 
 
 /**
- * @author gbouteil
  * Exceptions throwed by domain services, in order to be catched by calling layer
+ * @author gbouteil
  */
 public class DomainServiceException extends Exception {
 	

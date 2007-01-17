@@ -42,12 +42,13 @@ import org.springframework.util.Assert;
 
 /**
  * Service implementation provided by domain layer
- * @author gbouteil
- * 
  * All of services are available for a user only if 
  * he has a customContext defined in his userProfile.
  * To have a customContext defined in a userProfile, the service
  * getContext must have been called one time (over several user session)
+ * @author gbouteil
+ * 
+ * 
  *
  */
 public class DomainServiceImpl implements DomainService {
@@ -124,19 +125,21 @@ public class DomainServiceImpl implements DomainService {
 	}
 
 	/**
-	 * Returns a list of categoryBean - corresponding to visibles categories into context contextId
-	 * Visible categories are one that user is subscribed to, in order to be displayed on user interface
-	 * for user userId
+	 * Returns a list of categoryBean - corresponding to available categories to display on interface
+	 * into context contextId for user userId
+	 * Available categories are one that user : 
+	 * - is subscribed to (obliged or allowed or autoSubscribe)
+	 * - has created (personal categories)
 	 * @param userId id of the current user
 	 * @param contextId  id of the current context 
 	 * @param ex externalService
 	 * @return a list of CategoryBean
 	 * @throws ContextNotFoundException
-	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, ExternalService)
+	 * @see org.esupportail.lecture.domain.DomainService#getAvailableCategories(java.lang.String, java.lang.String, ExternalService)
 	 */
-	public List<CategoryBean> getVisibleCategories(String userId, String contextId,ExternalService ex) throws ContextNotFoundException {
+	public List<CategoryBean> getAvailableCategories(String userId, String contextId,ExternalService ex) throws ContextNotFoundException {
 		if (log.isDebugEnabled()){
-			log.debug("getVisibleCategories("+userId+","+contextId+",externalService)");
+			log.debug("getAvailableCategories("+userId+","+contextId+",externalService)");
 		}
 		
 		/* Get current user profile and customContext */
@@ -152,7 +155,7 @@ public class DomainServiceImpl implements DomainService {
 				category = new CategoryBean(customCategory,customContext);
 				listCategoryBean.add(category);
 			} catch (InfoDomainException e) {
-				log.error("Error on service 'getVisibleCategories(user "+userId+", context "+contextId+") : creation of a CategoryDummyBean");
+				log.error("Error on service 'getAvailableCategories(user "+userId+", context "+contextId+") : creation of a CategoryDummyBean");
 				category = new CategoryDummyBean(e);
 				listCategoryBean.add(category);
 			} 
@@ -162,9 +165,11 @@ public class DomainServiceImpl implements DomainService {
 	}
 	
 	/**
-	 * Returns a list of sourceBean - corresponding to visibles sources into categoryt categoryId
-	 * Visible sources are one that user is subscribed to, in order to be displayed on user interface
-	 * for user uid
+	 * Returns a list of sourceBean - corresponding to available categories to display on interface
+	 * into category categoryId for user userId
+	 * Available sources are one that user : 
+	 * - is subscribed to (obliged or allowed or autoSubscribe)
+	 * - has created (personal sources)
 	 * @param uid Id of the user
 	 * @param categoryId id of the category to display sources
 	 * @return a list of sourceBean
@@ -172,12 +177,12 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws CategoryProfileNotFoundException
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotLoadedException 
-	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<SourceBean> getVisibleSources(String uid, String categoryId,ExternalService ex) 
+	public List<SourceBean> getAvailableSources(String uid, String categoryId,ExternalService ex) 
 		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException  {
 		if (log.isDebugEnabled()){
-			log.debug("getVisibleSources("+uid+","+categoryId+",externalService)");
+			log.debug("getAvailableSources("+uid+","+categoryId+",externalService)");
 		}
 		
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
@@ -193,14 +198,14 @@ public class DomainServiceImpl implements DomainService {
 					source = new SourceBean(customSource);
 					listSourceBean.add(source);
 				} catch (InfoDomainException e) {
-					log.error("Error on service 'getVisibleSources(user "+uid+", category "+categoryId+") : creation of a SourceDummyBean");
+					log.error("Error on service 'getAvailableSources(user "+uid+", category "+categoryId+") : creation of a SourceDummyBean");
 					source = new SourceDummyBean(e);
 					listSourceBean.add(source);
 				}
 				
 			}
 		} catch (CustomCategoryNotFoundException e) {
-			String errorMsg = "CustomCategoryNotFound for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")";
+			String errorMsg = "CustomCategoryNotFound for service 'getAvailableSources(user "+uid+", category "+categoryId+ ")";
 			log.error(errorMsg);
 			throw new InternalDomainException(errorMsg,e);
 		}
@@ -410,7 +415,7 @@ public class DomainServiceImpl implements DomainService {
 	/*
 	 ************************** Methodes - services - mode EDIT ************************************/
 	
-	public List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService ex) {
+	public List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) {
 		// TODO (RB --> GB) test code. To change !
 		List<SourceBean> ret = null;
 //		try {

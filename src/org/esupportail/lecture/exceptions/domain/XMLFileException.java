@@ -7,8 +7,8 @@ package org.esupportail.lecture.exceptions.domain;
 
 
 /**
- * @author gbouteil
  * There is an error in xml file
+ * @author gbouteil
  */
 public class XMLFileException extends PrivateException {
 

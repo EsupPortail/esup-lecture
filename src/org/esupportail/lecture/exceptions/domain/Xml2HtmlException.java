@@ -7,9 +7,9 @@ package org.esupportail.lecture.exceptions.domain;
 
 
 /**
- * @author gbouteil
  * Computing items of the source failed 
  * because an error "XML to HTML" occured
+ * @author gbouteil
  */
 public class Xml2HtmlException extends PrivateException {
 

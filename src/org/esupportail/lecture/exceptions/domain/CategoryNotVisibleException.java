@@ -6,8 +6,8 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil
  * The category is not visible for requesting user
+ * @author gbouteil
  */
 public class CategoryNotVisibleException extends InfoDomainException {
 

@@ -8,8 +8,9 @@ package org.esupportail.lecture.domain.beans;
 import org.esupportail.lecture.domain.model.UserProfile;
 
 /**
- * @author bourges
+ * 
  * used to store user informations
+ * @author bourges
  */
 public class UserBean {
 

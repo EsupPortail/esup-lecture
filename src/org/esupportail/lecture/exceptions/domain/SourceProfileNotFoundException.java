@@ -6,8 +6,8 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil
  * The sourceProfile is not found in Category
+ * @author gbouteil
  */
 public class SourceProfileNotFoundException extends ElementNotFoundException {
 

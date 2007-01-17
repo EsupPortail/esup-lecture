@@ -6,8 +6,8 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil
  * The category is not loaded in CategoryProfile from remote URL
+ * @author gbouteil
  */
 public class CategoryNotLoadedException extends ElementNotLoadedException {
 

@@ -13,8 +13,8 @@ import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundExceptio
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 
 /**
- * @author bourges
  * used to store category informations
+ * @author bourges
  */
 public class CategoryBean {
 	

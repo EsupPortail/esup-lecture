@@ -7,8 +7,8 @@ package org.esupportail.lecture.exceptions.domain;
 
 
 /**
- * @author gbouteil
  * The Context is not found in Channel
+ * @author gbouteil
  */
 public class ContextNotFoundException extends ElementNotFoundException {
 

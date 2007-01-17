@@ -1,9 +1,9 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil
  * The Element is not found 
  * (it can be anything : customElement, CategoryProfile, Context, SourceProfile ...)
+ * @author gbouteil
  */
 public class ElementNotFoundException extends InfoDomainException {
 

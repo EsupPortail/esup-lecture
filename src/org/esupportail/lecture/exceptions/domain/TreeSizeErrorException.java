@@ -6,9 +6,9 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil
  * Size provided for tree in context display is wrong
  * Bounds are :  0 <= size <= 100
+ * @author gbouteil
  */
 // TODO (GB later) see bound in external file
 public class TreeSizeErrorException extends InfoDomainException {

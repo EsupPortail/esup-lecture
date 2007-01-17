@@ -110,7 +110,7 @@ public class EditController extends twoPanesController {
 	 */
 	protected List<SourceBean> getSources(CategoryBean categoryBean) throws DomainServiceException {
 		//this method need to be overwrite in edit controller
-		List<SourceBean> sources = getFacadeService().getAvailableSources(getUID(), categoryBean.getId());
+		List<SourceBean> sources = getFacadeService().getVisibleSources(getUID(), categoryBean.getId());
 		return sources;
 	}
 	

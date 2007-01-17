@@ -122,33 +122,37 @@ public class FacadeService implements InitializingBean {
 	}
 	
 	/**
-	 * Returns a list of categoryBean - corresponding to visibles categories into context contextId.
-	 * Visible categories are one that user is subscribed to, in order to be displayed on user interface
-	 * for user uid
+	 * Returns a list of categoryBean - corresponding to available categories to display on interface
+	 * into context contextId for user userId
+	 * Available categories are one that user : 
+	 * - is subscribed to (obliged or allowed or autoSubscribe)
+	 * - has created (personal categories)
 	 * @param contextId id of context
 	 * @param uid user ID
-	 * @return List of CategoryBean, bean of a visible category (obliged or subscribed by a user) in a context
+	 * @return List of CategoryBean
 	 * @throws ContextNotFoundException
 	 */
-	public List<CategoryBean> getVisibleCategories(String uid,String contextId) throws ContextNotFoundException  {
-		return domainService.getVisibleCategories(uid,contextId,externalService);
+	public List<CategoryBean> getAvailableCategories(String uid,String contextId) throws ContextNotFoundException  {
+		return domainService.getAvailableCategories(uid,contextId,externalService);
 	}
 	
 	/**
-	 * Returns a list of sourceBean - corresponding to visibles sources into category categoryId.
-	 * Visible sources are one that user is subscribed to, in order to be displayed on user interface
-	 * for user uid
+	 * Returns a list of sourceBean - corresponding to available categories to display on interface
+	 * into category categoryId for user userId
+	 * Available sources are one that user : 
+	 * - is subscribed to (obliged or allowed or autoSubscribe)
+	 * - has created (personal sources)
 	 * @param categoryId id of category
 	 * @param uid user ID
-	 * @return List of SourceBean, bean of a visible source (obliged or subscribed by a user) in a category
+	 * @return List of SourceBean
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 */
-	public List<SourceBean> getVisibleSources(String uid,String categoryId) 
+	public List<SourceBean> getAvailableSources(String uid,String categoryId) 
 		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, CategoryNotLoadedException {
-		return domainService.getVisibleSources(uid, categoryId,externalService);
+		return domainService.getAvailableSources(uid, categoryId,externalService);
 	}
 	
 
@@ -233,13 +237,14 @@ public class FacadeService implements InitializingBean {
 	}
 	
 	/**
+	 * 
 	 * @param categoryId id of category
 	 * @param uid user ID
-	 * @return List of SourceBean, bean of a available source (obliged, subscribed or notSubscribed by a user) in a category
+	 * @return List of SourceBean, bean of a visble source (obliged, subscribed or notSubscribed by a user) in a category
 	 */
 	// (GB) TODO javadoc
-	public List<SourceBean> getAvailableSources(String uid,String categoryId) {
-		return domainService.getAvailableSources(uid, categoryId,externalService);
+	public List<SourceBean> getVisibleSources(String uid,String categoryId) {
+		return domainService.getVisibleSources(uid, categoryId,externalService);
 	}
 	
 	

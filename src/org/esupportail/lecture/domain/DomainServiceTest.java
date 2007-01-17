@@ -100,16 +100,16 @@ public class DomainServiceTest implements DomainService {
 	 * @param uid
 	 * @return list of CategoryBean
 	 */
-	public List<CategoryBean> getVisibleCategories(String contextId, String uid) {
+	public List<CategoryBean> getAvailableCategories(String contextId, String uid) {
 		List<CategoryBean> ret = null;
 		ret = categories;
 		return ret;
 	}
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 * @see org.esupportail.lecture.domain.DomainService#getAvailableCategories(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<CategoryBean> getVisibleCategories(String uid, String contextId, ExternalService ex) {
-		return getVisibleCategories(contextId, uid);
+	public List<CategoryBean> getAvailableCategories(String uid, String contextId, ExternalService ex) {
+		return getAvailableCategories(contextId, uid);
 	}
 	
 	/**
@@ -117,16 +117,16 @@ public class DomainServiceTest implements DomainService {
 	 * @param uid
 	 * @return list of sourceBean
 	 */
-	public List<SourceBean> getVisibleSources(String categoryId, String uid) {
+	public List<SourceBean> getAvailableSources(String categoryId, String uid) {
 		List<SourceBean> ret = null;
 		ret = sources;
 		return ret;
 	}
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) {
-		return getVisibleSources(categoryId, uid);
+	public List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService ex) {
+		return getAvailableSources(categoryId, uid);
 	}
 	
 	
@@ -157,7 +157,7 @@ public class DomainServiceTest implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService ex) {
+	public List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) {
 		List<SourceBean> ret = null;
 		ret = sources;
 		return ret;

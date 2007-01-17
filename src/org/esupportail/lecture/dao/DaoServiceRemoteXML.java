@@ -56,6 +56,7 @@ public class DaoServiceRemoteXML {
 	
 	/**
 	 * @throws ErrorException 
+	 * @return a managedCategory
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(ManagedCategoryProfile)
 	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {

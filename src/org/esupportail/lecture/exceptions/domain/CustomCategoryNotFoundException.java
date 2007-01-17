@@ -6,8 +6,8 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil
  * The CustomCategory is not found in UserPRofile
+ * @author gbouteil
  */
 public class CustomCategoryNotFoundException extends CustomElementNotFoundException {
 

@@ -7,8 +7,8 @@ package org.esupportail.lecture.exceptions.domain;
 
 
 /**
- * @author gbouteil
  * The Source is not loaded in SourceProfile from remote URL 
+ * @author gbouteil
  */
 public class SourceNotLoadedException extends ElementNotLoadedException {
 

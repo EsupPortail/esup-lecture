@@ -6,8 +6,8 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * @author gbouteil
  * The CategoryProfile is not found
+ * @author gbouteil
  */
 public class CategoryProfileNotFoundException extends ElementNotFoundException {
 
