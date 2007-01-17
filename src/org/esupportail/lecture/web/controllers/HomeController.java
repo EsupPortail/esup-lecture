@@ -12,7 +12,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.ItemBean;
-import org.esupportail.lecture.exceptions.ErrorException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;

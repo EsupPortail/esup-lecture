@@ -401,6 +401,27 @@ public abstract class Source implements Element,Serializable {
 		return Items;
 	}
 	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuffer out = new StringBuffer();
+		out.append("\n dtd --> ").append(getDtd());
+		out.append("\n rootElement --> ").append(getRootElement());
+		out.append("\n xmlns --> ").append(getXmlns());
+		out.append("\n xmlType --> ").append(getXmlType());
+		out.append("\n xmlStream --> ").append(getXmlStream());
+		try {
+			out.append("\n xsltURL --> ").append(getXsltURL());
+			out.append("\n itemXPath --> ").append(getItemXPath());
+		} catch (MappingNotFoundException e) {
+			out.append("\n MappingNotFoundException !");
+		}
+		return out.toString();
+	}
+	
+	
 	/* 
 	 ************************* ACCESSORS ******************************** */	
 

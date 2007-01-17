@@ -11,7 +11,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
-import org.esupportail.lecture.exceptions.ErrorException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.web.WebException;

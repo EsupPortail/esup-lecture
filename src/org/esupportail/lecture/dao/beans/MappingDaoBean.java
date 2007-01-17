@@ -1,7 +1,6 @@
 package org.esupportail.lecture.dao.beans;
 
 import java.util.Hashtable;
-import java.util.List;
 
 public class MappingDaoBean {
 

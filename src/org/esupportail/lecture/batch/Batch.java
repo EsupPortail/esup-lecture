@@ -6,17 +6,9 @@ package org.esupportail.lecture.batch;
 
 import org.esupportail.commons.services.application.ApplicationService;
 import org.esupportail.commons.services.application.ApplicationUtils;
-import org.esupportail.commons.services.application.VersionningUtils;
-import org.esupportail.commons.services.authentication.AuthenticationUtils;
 import org.esupportail.commons.services.exceptionHandling.ExceptionUtils;
-import org.esupportail.commons.services.i18n.I18nUtils;
-import org.esupportail.commons.services.ldap.LdapUtils;
 import org.esupportail.commons.services.logging.Logger;
 import org.esupportail.commons.services.logging.LoggerImpl;
-import org.esupportail.commons.services.portal.PortalUtils;
-import org.esupportail.commons.services.smtp.SmtpUtils;
-import org.esupportail.commons.services.urlGeneration.UrlGenerationUtils;
-import org.esupportail.commons.web.deepLinking.DeepLinkingUtils;
 
 /**
  * A class with a main method called by ant targets.

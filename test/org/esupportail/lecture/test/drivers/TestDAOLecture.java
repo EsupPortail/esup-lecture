@@ -6,25 +6,12 @@
 package org.esupportail.lecture.test.drivers;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.model.Channel;
-import org.esupportail.lecture.domain.model.CustomCategory;
-import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.domain.model.CustomManagedCategory;
-import org.esupportail.lecture.domain.model.CustomManagedSource;
-import org.esupportail.lecture.domain.model.CustomSource;
-import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
-import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.hibernate.Session;
@@ -78,89 +65,89 @@ public class TestDAOLecture {
 		}
 	}
 
-	private static void navigate() throws CategoryProfileNotFoundException, CategoryNotLoadedException {
-		out("actions : read, save, read userProfile and navigate throw customcontext");
-		DaoService dao = getDAO();
-		UserProfile userProfile = dao.getUserProfile("test");
-		if (userProfile != null) {
-			out("after read");			
-			out("userProfile.getUserId --> " + userProfile.getUserId());			
-			out("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());			
-			//delete userProfile test
-			//dao.deleteUserProfile(userProfile);
-		}
-		else {
-			out("userProfile is null (test not found)");
-		}
-		//set userProfile test
-		dao.saveUserProfile(userProfile);
-		out("after save");			
-		out("userProfile.getUserId --> " + userProfile.getUserId());			
-		out("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());			
-		UserProfile userProfile2 = dao.getUserProfile("test");
-		if (userProfile2 != null) {
-			out("after second read");			
-			out("userProfile.getUserId --> " + userProfile2.getUserId());			
-			out("userProfile.getUserProfilePK --> " + userProfile2.getUserProfilePK());			
-			Map<String, CustomContext> ccs = userProfile2.getCustomContexts();
-			Iterator<String> iter = ccs.keySet().iterator();
-			while (iter.hasNext()) {
+//	private static void navigate() throws CategoryProfileNotFoundException, CategoryNotLoadedException {
+//		out("actions : read, save, read userProfile and navigate throw customcontext");
+//		DaoService dao = getDAO();
+//		UserProfile userProfile = dao.getUserProfile("test");
+//		if (userProfile != null) {
+//			out("after read");			
+//			out("userProfile.getUserId --> " + userProfile.getUserId());			
+//			out("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());			
+//			//delete userProfile test
+//			//dao.deleteUserProfile(userProfile);
+//		}
+//		else {
+//			out("userProfile is null (test not found)");
+//		}
+//		//set userProfile test
+//		dao.saveUserProfile(userProfile);
+//		out("after save");			
+//		out("userProfile.getUserId --> " + userProfile.getUserId());			
+//		out("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());			
+//		UserProfile userProfile2 = dao.getUserProfile("test");
+//		if (userProfile2 != null) {
+//			out("after second read");			
+//			out("userProfile.getUserId --> " + userProfile2.getUserId());			
+//			out("userProfile.getUserProfilePK --> " + userProfile2.getUserProfilePK());			
+//			Map<String, CustomContext> ccs = userProfile2.getCustomContexts();
+//			Iterator<String> iter = ccs.keySet().iterator();
+//			while (iter.hasNext()) {
+////				String element = (String) iter.next();
+////				CustomContext cc = ccs.get(element);
+////				out("treesize of customContext "+element+" = "+cc.getTreeSize());
+////				Iterator<String> iter2 = cc.getSubscriptions().keySet().iterator();
+////				while (iter2.hasNext()) {
+////					String element2 = (String) iter2.next();
+////					out("getSubscriptions key : "+element2);
+////				}
+//			}
+//			Map<String, CustomCategory> ccats = userProfile2.getCustomCategories();
+//			iter = ccats.keySet().iterator();
+//			while (iter.hasNext()) {
 //				String element = (String) iter.next();
-//				CustomContext cc = ccs.get(element);
-//				out("treesize of customContext "+element+" = "+cc.getTreeSize());
-//				Iterator<String> iter2 = cc.getSubscriptions().keySet().iterator();
-//				while (iter2.hasNext()) {
-//					String element2 = (String) iter2.next();
-//					out("getSubscriptions key : "+element2);
-//				}
-			}
-			Map<String, CustomCategory> ccats = userProfile2.getCustomCategories();
-			iter = ccats.keySet().iterator();
-			while (iter.hasNext()) {
-				String element = (String) iter.next();
-				CustomCategory ccat = ccats.get(element);
-				out("name of customCategory "+element+" = "+ccat.getName());
-			}
-		}
-		releaseDAO();
-	}
+//				CustomCategory ccat = ccats.get(element);
+//				out("name of customCategory "+element+" = "+ccat.getName());
+//			}
+//		}
+//		releaseDAO();
+//	}
 	
-	private static void delete() throws CategoryProfileNotFoundException {
-		out("actions : delete test userprofile");
-		DaoService dao = getDAO();
-		UserProfile userProfile = dao.getUserProfile("test");
-		if (userProfile != null) {
-			out("after read");			
-			out("userProfile.getUserId --> " + userProfile.getUserId());			
-			out("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());	
-			//remove CustomContexts from userprofile
-			ArrayList<CustomContext> collec2 = new ArrayList<CustomContext>(userProfile.getCustomContexts().values());
-			for(CustomContext cc : collec2) {
-//				userProfile.removeCustomContext(cc.getContextId());
-//				dao.deleteCustomContext(cc);
-			}
-			//remove CustomCategories from userprofile
-			ArrayList<CustomCategory> collec = new ArrayList<CustomCategory>(userProfile.getCustomCategories().values());
-			for(CustomCategory cc : collec) {
-//				userProfile.removeCustomCategory(cc.getProfileId());
-//				dao.deleteCustomCategory(cc);
-			}
-			
-			//remove customSources from userprofile
-			ArrayList<CustomSource> collec3 = new ArrayList<CustomSource>(userProfile.getCustomSources().values());
-			for(CustomSource cc : collec3) {
-//				userProfile.removeCustomSource(cc.getProfileId());
-//				dao.deleteCustomSource(cc);
-			}
-			
-			//remove userprofile
-			dao.deleteUserProfile(userProfile);
-		}
-		else {
-			out("userProfile is null (test not found)");
-		}
-		releaseDAO();
-	}
+//	private static void delete() throws CategoryProfileNotFoundException {
+//		out("actions : delete test userprofile");
+//		DaoService dao = getDAO();
+//		UserProfile userProfile = dao.getUserProfile("test");
+//		if (userProfile != null) {
+//			out("after read");			
+//			out("userProfile.getUserId --> " + userProfile.getUserId());			
+//			out("userProfile.getUserProfilePK --> " + userProfile.getUserProfilePK());	
+//			//remove CustomContexts from userprofile
+//			ArrayList<CustomContext> collec2 = new ArrayList<CustomContext>(userProfile.getCustomContexts().values());
+//			for(CustomContext cc : collec2) {
+////				userProfile.removeCustomContext(cc.getContextId());
+////				dao.deleteCustomContext(cc);
+//			}
+//			//remove CustomCategories from userprofile
+//			ArrayList<CustomCategory> collec = new ArrayList<CustomCategory>(userProfile.getCustomCategories().values());
+//			for(CustomCategory cc : collec) {
+////				userProfile.removeCustomCategory(cc.getProfileId());
+////				dao.deleteCustomCategory(cc);
+//			}
+//			
+//			//remove customSources from userprofile
+//			ArrayList<CustomSource> collec3 = new ArrayList<CustomSource>(userProfile.getCustomSources().values());
+//			for(CustomSource cc : collec3) {
+////				userProfile.removeCustomSource(cc.getProfileId());
+////				dao.deleteCustomSource(cc);
+//			}
+//			
+//			//remove userprofile
+//			dao.deleteUserProfile(userProfile);
+//		}
+//		else {
+//			out("userProfile is null (test not found)");
+//		}
+//		releaseDAO();
+//	}
 	
 	private static void populate() throws CategoryProfileNotFoundException, TreeSizeErrorException {
 		out("actions : populate database from test userprofile");

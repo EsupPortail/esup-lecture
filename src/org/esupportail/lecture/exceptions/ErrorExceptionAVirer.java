@@ -5,12 +5,12 @@ package org.esupportail.lecture.exceptions;
  * @author gbouteil
  *
  */
-public class ErrorException extends  RuntimeException{
+public class ErrorExceptionAVirer extends  RuntimeException{
 	
-	public ErrorException(String msg){
+	public ErrorExceptionAVirer(String msg){
 		super(msg);
 	}
-	public ErrorException(){
+	public ErrorExceptionAVirer(){
 		super();
 	}
 }

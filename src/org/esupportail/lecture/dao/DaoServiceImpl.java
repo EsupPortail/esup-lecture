@@ -13,9 +13,6 @@ import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.hibernate.Transaction;
-
-import sun.net.www.http.Hurryable;
 
 /**
  * @author bourges

@@ -15,7 +15,6 @@ import org.esupportail.lecture.domain.beans.User;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.utils.Assert;
-import org.esupportail.commons.utils.ExternalContextUtils;
 import org.esupportail.commons.utils.strings.StringUtils;
 import org.esupportail.commons.web.controllers.ExceptionController;
 

@@ -3,7 +3,7 @@
 * For any information please refer to http://esup-helpdesk.sourceforge.net
 * You may obtain a copy of the licence at http://www.esup-portail.org/license/
 */
-package org.esupportail.lecture.test.drivers;
+package org.esupportail.lecture.domain.model;
 
 import java.util.Iterator;
 import java.util.List;
@@ -59,7 +59,6 @@ public class TestDAORemoteXMLSource {
 		managedSourceProfile.setSourceURL("http://info.cri.univ-rennes1.fr/rss/rss.php");
 		src = dao.getSource(managedSourceProfile);
 		printSrc(src);
-//		printSrc(src);
 //		src = dao.getSource("http://perso.univ-rennes1.fr/raymond.bourges/esup-portlet-spring-JSF.xml", 100, "test", false);
 //		printSrc(src);
 //		src = dao.getSource("http://www.lemonde.fr/rss/sequence/0,2-3208,1-0,0.xml", 100, "test", false);
@@ -70,13 +69,7 @@ public class TestDAORemoteXMLSource {
 
 	private static void printSrc(Source src) throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException {
 		System.out.println("*********************************");
-		System.out.println(" dtd --> "+src.getDtd());
-		System.out.println(" rootElement --> "+src.getRootElement());
-		System.out.println(" xmlns --> "+src.getXmlns());
-		System.out.println(" xmlType --> "+src.getXmlType());
-		//System.out.println(" xmlStream --> "+src.getXmlStream());
-		System.out.println(" xsltURL --> "+src.getXsltURL());
-		System.out.println(" itemXPath --> "+src.getItemXPath());
+		System.out.println(src.toString());
 		List<Item> Items = src.getItems();
 		Iterator<Item> iter = Items.iterator();
 		while (iter.hasNext()) {

@@ -11,7 +11,7 @@ import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.exceptions.ErrorException;
+import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -48,7 +48,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		else {
 			String msg = "userId is null: can't find it in database";
 			log.error(msg);
-			throw new ErrorException(msg);
+			throw new InfoDaoException(msg);
 		}
 		return ret;
 	}

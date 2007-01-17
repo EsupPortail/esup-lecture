@@ -4,21 +4,13 @@
  */
 package org.esupportail.lecture.services.application; 
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainServiceImpl;
-import org.esupportail.lecture.domain.beans.User;
 import org.esupportail.lecture.web.controllers.AbstractDomainAwareBean;
 import org.esupportail.commons.dao.HibernateUtils;
 import org.esupportail.commons.exceptions.ConfigException;
-import org.esupportail.commons.services.application.Version;
 import org.esupportail.commons.services.application.VersionningService;
-import org.esupportail.commons.services.logging.Logger;
-import org.esupportail.commons.services.logging.LoggerImpl;
-import org.esupportail.commons.utils.Assert;
 
 /**
  * A bean for versionning management.

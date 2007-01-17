@@ -24,7 +24,8 @@ import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.domain.model.VisibilitySets;
-import org.esupportail.lecture.exceptions.ErrorException;
+import org.esupportail.lecture.exceptions.dao.InfoDaoException;
+import org.esupportail.lecture.exceptions.dao.XMLParseException;
 import org.springmodules.cache.CachingModel;
 import org.springmodules.cache.provider.CacheProviderFacade;
 
@@ -184,11 +185,16 @@ public class DaoServiceRemoteXML {
 			visibilitySets.setAutoSubscribed(XMLUtil.loadDefAndContentSets(xml, "visibility(0).autoSubscribed(0)"));
 			ret.setVisibility(visibilitySets);
 		} catch (MalformedURLException e) {
-			log.error("DaoServiceRemoteXML :: getFreshManagedCategory, "+e.getMessage());
-			throw new ErrorException("DaoServiceRemoteXML :: getFreshManagedCategory, "+e.getMessage());
+			String profileId = (profile != null ? profile.getId() : "null");
+			String urlValue = (profile != null ? profile.getUrlCategory() : "unknown");
+			String msg = "getFreshManagedCategory("+profileId+") with url = "+urlValue;
+			log.error(msg);
+			throw new org.esupportail.lecture.exceptions.dao.MalformedURLException(msg, e);
 		} catch (ConfigurationException e) {
-			log.error("DaoServiceRemoteXML :: getFreshManagedCategory, "+e.getMessage());
-			throw new ErrorException("DaoServiceRemoteXML :: getFreshManagedCategory, "+e.getMessage());
+			String profileId = (profile != null ? profile.getId() : "null");
+			String msg = "getFreshManagedCategory("+profileId+"). Can't read configuration file.";
+			log.error(msg);
+			throw new XMLParseException(msg, e);
 		} 
 		return ret;
 	}
@@ -292,8 +298,9 @@ public class DaoServiceRemoteXML {
 //			ret.setItemXPath(sourceProfile.getItemXPath());
 //			ret.setXsltURL(sourceProfile.getXsltURL());
 		} catch (DocumentException e) {
-			log.error("DaoServiceRemoteXML :: getSource, "+e.getMessage());
-			throw new ErrorException("DaoServiceRemoteXML :: getSource, url="+sourceProfile.getSourceURL()+", message="+e.getMessage());
+			String msg = "getSource with url="+sourceProfile.getSourceURL()+". Is it a valid XML Source ?";
+			log.error(msg);
+			throw new XMLParseException(msg ,e);
 		}
 		return ret;
 	}

@@ -13,14 +13,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.commons.exceptions.EsupException;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.FacadeService;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
-import org.esupportail.lecture.exceptions.ErrorException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
@@ -29,7 +27,6 @@ import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
-import org.springframework.util.Assert;
 
 /**
  * @author : Raymond 
@@ -238,14 +235,14 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	}
 
 	/**
-	 * @param contextId
+	 * @param ctxtId
 	 * @return list of available categories
 	 * @throws InternalDomainException
 	 * @throws ContextNotFoundException 
 	 */
-	protected List<CategoryBean> getCategories(String contextId) throws ContextNotFoundException {
+	protected List<CategoryBean> getCategories(String ctxtId) throws ContextNotFoundException {
 		//this method need to be overwrite in edit controller
-		List<CategoryBean> categories = getFacadeService().getAvailableCategories(getUID(), contextId);
+		List<CategoryBean> categories = getFacadeService().getAvailableCategories(getUID(), ctxtId);
 		return categories;
 	}
 
@@ -343,6 +340,10 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 		return ret;
 	}
 
+	/**
+	 * @return Context ID from facade service
+	 * @throws InternalExternalException
+	 */
 	protected String getContextId() throws InternalExternalException {
 		if (contextId == null) {
 			contextId = getFacadeService().getCurrentContextId();

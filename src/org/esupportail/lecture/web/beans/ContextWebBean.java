@@ -1,6 +1,5 @@
 package org.esupportail.lecture.web.beans;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
