@@ -11,6 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
+import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.web.WebException;
@@ -69,21 +70,21 @@ public class EditController extends twoPanesController {
 	public String toogleSourceSubcribtion() {
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		SourceWebBean src = getSourceByID(selectedCategory, sourceId);
-		String type = null;
-		try {
+		AvailabilityMode type = null;
+//		try {
 			if (src.isNotSubscribed()) {
 				//TODO (RB) call facadeservice
-				getFacadeService().marckSourceAsSubscribed(getUID(), getContextId(), selectedCategory.getId(), sourceId);
-				type = SourceBean.SUBSCRIBED;
+				//getFacadeService().marckSourceAsSubscribed(getUID(), getContextId(), selectedCategory.getId(), sourceId);
+				type = AvailabilityMode.SUBSCRIBED;
 			}
 			if (src.isSubscribed()) {
 				//TODO (RB) call facadeservice
-				getFacadeService().marckSourceAsUnsubscribed(getUID(), getContextId(), selectedCategory.getId(), sourceId);
-				type = SourceBean.NOTSUBSCRIBED;
+				//getFacadeService().marckSourceAsUnsubscribed(getUID(), getContextId(), selectedCategory.getId(), sourceId);
+				type = AvailabilityMode.NOTSUBSCRIBED;
 			}
-		} catch (InternalExternalException e) {
-			throw new WebException("Error in getContext", e);
-		}
+//		} catch (InternalExternalException e) {
+//			throw new WebException("Error in getContext", e);
+//		}
 		if (type != null) {
 			src.setType(type);
 		}

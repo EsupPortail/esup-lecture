@@ -9,6 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.domain.beans.User;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
@@ -304,6 +305,27 @@ public class UserProfile {
 		}
 	}
 		
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null) return false;
+		if (!(o instanceof UserProfile)) return false;
+		final UserProfile userprofile = (UserProfile) o;
+		if (!userprofile.getUserId().equals(this.getUserId())) return false;
+		return true;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return this.getUserId().hashCode();
+	}
+
 	/* ************************** ACCESSORS ********************************* */
 
 
@@ -378,9 +400,6 @@ public class UserProfile {
 	private void setCustomSources(Map<String, CustomSource> customSources) {
 		this.customSources = customSources;
 	}
-
-
-
 
 	
 }

@@ -12,6 +12,7 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
+import org.hibernate.LockMode;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -57,8 +58,12 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 * @see org.esupportail.lecture.dao.DaoService#refreshUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public UserProfile refreshUserProfile(UserProfile userProfile) {
-		UserProfile ret = null;
-		ret = (UserProfile)getHibernateTemplate().merge(userProfile);
+		if (log.isDebugEnabled()) {
+			log.debug("refreshUserProfile("+(userProfile != null ? userProfile.getUserId() : "null")+")");			
+		}
+		UserProfile ret = userProfile;
+		getHibernateTemplate().lock(userProfile, LockMode.NONE);
+		//ret = (UserProfile)getHibernateTemplate().merge(userProfile);
 		return ret;
 	}
 
@@ -70,6 +75,9 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 			log.debug("saveUserProfile PK="+userProfile.getUserProfilePK());			
 		}
 		getHibernateTemplate().saveOrUpdate(userProfile);
+		if (useFlush) {
+			getHibernateTemplate().flush();
+		} 
 	}
 
 	/**
@@ -92,7 +100,10 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		if (log.isDebugEnabled()) {
 			log.debug("updateUserProfile PK="+userProfile.getUserProfilePK());			
 		}
-		//getHibernateTemplate().saveOrUpdate(userProfile);
+		getHibernateTemplate().saveOrUpdate(userProfile);
+		if (useFlush) {
+			getHibernateTemplate().flush();
+		} 
 	}
 
 	/**
