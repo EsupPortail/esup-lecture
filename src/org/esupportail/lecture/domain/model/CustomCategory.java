@@ -12,6 +12,9 @@ import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
+import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 
 /**
@@ -121,7 +124,19 @@ public abstract class CustomCategory implements CustomElement {
 		return getProfile().getName();
 	}
 	
-	
+	/**For a customManagedCategory, it subscribes sourceId, but for a customPersonalcategory, 
+	 * there is not any subscription an throw an SubcriptionInPersonalException
+	 * @param sourceId source ID
+	 * @param ex access to externalService
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws SourceNotVisibleException 
+	 * @throws ComputeFeaturesException 
+	 */
+	// TODO faire le throw SubcriptionInPersonalImpossibleException pour le personal
+	public abstract void subscribeToSource(String sourceId, ExternalService ex) 
+		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, ComputeFeaturesException;
 
 	
 	
@@ -185,6 +200,8 @@ public abstract class CustomCategory implements CustomElement {
 		return profileId;
 	}
 
+	
+		
 
 
 

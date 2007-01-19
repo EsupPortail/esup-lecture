@@ -71,20 +71,22 @@ public class EditController extends twoPanesController {
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		SourceWebBean src = getSourceByID(selectedCategory, sourceId);
 		AvailabilityMode type = null;
-//		try {
+		try {
 			if (src.isNotSubscribed()) {
 				//TODO (RB) call facadeservice
-				//getFacadeService().marckSourceAsSubscribed(getUID(), getContextId(), selectedCategory.getId(), sourceId);
+				getFacadeService().subscribeToSource(getUID(), selectedCategory.getId(), sourceId);
 				type = AvailabilityMode.SUBSCRIBED;
 			}
 			if (src.isSubscribed()) {
 				//TODO (RB) call facadeservice
-				//getFacadeService().marckSourceAsUnsubscribed(getUID(), getContextId(), selectedCategory.getId(), sourceId);
+				//getFacadeService().unsubscribeToSource(getUID(), selectedCategory.getId(), sourceId);
 				type = AvailabilityMode.NOTSUBSCRIBED;
 			}
 //		} catch (InternalExternalException e) {
 //			throw new WebException("Error in getContext", e);
-//		}
+		} catch (DomainServiceException e) {
+			// TODO (GB --> RB) à traiter
+		}
 		if (type != null) {
 			src.setType(type);
 		}

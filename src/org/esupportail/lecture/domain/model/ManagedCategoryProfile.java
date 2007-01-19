@@ -115,7 +115,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @return true if the category is visible by the userProfile
 	 * @throws ComputeFeaturesException 
 	 */
-	synchronized protected boolean updateCustomContext(CustomContext customContext,ExternalService ex) 
+	synchronized protected VisibilityMode updateCustomContext(CustomContext customContext,ExternalService ex) 
 		throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - updateCustomContext("+customContext.getElementId()+"externalService)");
@@ -152,7 +152,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @return true if the mcp is visible by the user of the customContext (in Obliged or in autoSubscribed, or in Allowed), else return false 
 	 * @throws ComputeFeaturesException 
 	 */
-	synchronized private boolean setUpCustomContextVisibility(CustomContext customContext, ExternalService ex) 
+	synchronized private VisibilityMode setUpCustomContextVisibility(CustomContext customContext, ExternalService ex) 
 		throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - setUpCustomContextVisibility("+customContext.getElementId()+",externalService)");
@@ -173,7 +173,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 				log.trace("IsInObliged : "+mode);
 			}
 			customContext.addSubscription(this);
-			return true;
+			return mode;
 		}
 		
 		if (mode == VisibilityMode.AUTOSUBSCRIBED){
@@ -182,7 +182,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			}
 			// TODO (GB later) l'ajouter dans le custom context si c'est la premiere fois
 			//customContext.addSubscription(this);
-			return true;
+			return mode;
 		}
 		
 		if (mode == VisibilityMode.ALLOWED) {
@@ -190,19 +190,21 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 				log.trace("IsInAllowed : "+mode);
 			}
 			// Nothing to do
-			return true;
+			return mode;
 		} 
 		// TODO (GB later) retirer les customCat du user profile qui correspondent à des profiles 
-		// de catégories  disparus
+		// de catégories disparus
 		
 		// ELSE not Visible
 		customContext.removeCustomManagedCategory(this);
-		return false;
+
+		mode = VisibilityMode.NOVISIBLE;
+		return mode;
 		
 //		boolean isInObliged = false;
 //		boolean isInAutoSubscribed = false;
 //		boolean isInAllowed = false;
-//		
+		
 //		boolean isVisible = false;
 //		
 //		

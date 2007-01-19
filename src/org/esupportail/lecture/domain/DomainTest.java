@@ -30,6 +30,7 @@ import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundE
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
+import org.esupportail.lecture.exceptions.domain.VisibilityNotFoundException;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 
@@ -85,6 +86,7 @@ public class DomainTest {
 			testGetConnectedUser();
 			testGetContext();
 			testGetVisibleSources();
+			testSubscribeToSource();
 			
 		} catch (InternalExternalException e) {
 			System.out.println("\n!!! EXCEPTION !!!");
@@ -102,7 +104,7 @@ public class DomainTest {
 			System.out.println("\n!!! EXCEPTION !!!");
 			System.out.println("\n!!! Catching DomainServiceException");
 			e.printStackTrace();
-		}
+		} 
 		
 
 	
@@ -188,8 +190,8 @@ public class DomainTest {
 		categoryIds = new ArrayList<String>();
 		categoryIds.add("cp1");
 		categoryIds.add("cp2");
-		categoryIds.add("cp3");
-		categoryIds.add("cp4");
+		//categoryIds.add("cp3");
+		//categoryIds.add("cp4");
 		categoryIds.add("cp5");
 
 		for(String catId : categoryIds){
@@ -207,6 +209,45 @@ public class DomainTest {
 		}
 	}
 
+	/**
+	 * Test of service "getSubscribeToSource"
+	 * @throws DomainServiceException 
+	 * @throws DomainServiceException 
+	 * @throws VisibilityNotFoundException 
+	 */
+	private static void testSubscribeToSource() throws DomainServiceException {
+		printIntro("getSubscribeToSource");
+		
+		try {
+			/* source obliged */
+			System.out.println(" **** category cp5 : subscribe to source 'un' **********");
+			facadeService.subscribeToSource(userId, "cp5", "m:cp5:un");
+			/* source allowed */
+			System.out.println(" **** category cp5 : subscribe to source 'deux' **********");
+			facadeService.subscribeToSource(userId, "cp5", "m:cp5:deux");
+			/* source autosubscribed */
+			System.out.println(" **** category cp5 : subscribe to source 'trois' **********");
+			facadeService.subscribeToSource(userId, "cp5", "m:cp5:trois");
+			/* source no visible */
+			System.out.println(" **** category cp5 : subscribe to source 'quatre' **********");
+			facadeService.subscribeToSource(userId, "cp5", "m:cp5:quatre");
+			
+			/* category not subcribed to */
+			System.out.println(" **** category cp3 : subscribe to source 'trois' **********");
+			facadeService.subscribeToSource(userId, "cp5", "m:cp5:trois");
+		} catch (DomainServiceException e) {
+			System.out.println("DomainServiceException !!!! ");
+			e.printStackTrace();
+		}
+		
+		categoryIds = new ArrayList<String>();
+		categoryIds.add("cp5");
+		testGetAvailableSources();
+	}
+	
+	
+	
+	
 	/**
 	 *  Test of service "getAvailableSources" in an alternative way :
 	 *  - the parent category has not been got before

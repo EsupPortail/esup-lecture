@@ -21,8 +21,16 @@ public class VisibilityNotFoundException extends PrivateException {
 	/**
 	 * @param e
 	 */
-	public VisibilityNotFoundException(ElementNotLoadedException e) {
+	public VisibilityNotFoundException(Exception e) {
 		super(e);
+	}
+
+	/**
+	 * @param errorMsg
+	 * @param e
+	 */
+	public VisibilityNotFoundException(String errorMsg, Exception e) {
+		super(errorMsg,e);
 	}
 
 }

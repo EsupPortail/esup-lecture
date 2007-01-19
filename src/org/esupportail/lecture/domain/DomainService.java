@@ -15,12 +15,16 @@ import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
+import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
+import org.esupportail.lecture.exceptions.domain.VisibilityNotFoundException;
 
 /**
  * @author bourges
@@ -63,10 +67,11 @@ public interface DomainService {
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotLoadedException 
+	 * @throws UserNotSubscribedToCategoryException 
 	 * @see FacadeService#getAvailableSources(String, String)
 	 */
 	List<SourceBean> getAvailableSources(String uid,String categoryId,ExternalService ex)  
-		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException ;
+		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException, UserNotSubscribedToCategoryException ;
 
 	/**
 	 * @param sourceId 
@@ -113,10 +118,11 @@ public interface DomainService {
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotLoadedException 
+	 * @throws UserNotSubscribedToCategoryException 
 	 * @see FacadeService#getVisibleSources(String, String)
 	 */
 	List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) 
-		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException ;
+		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException, UserNotSubscribedToCategoryException ;
 	
 	/**
 	 * @param uid
@@ -148,20 +154,36 @@ public interface DomainService {
 	
 	/**
 	 * @param uid 
-	 * @param contextId 
 	 * @param categorieId 
 	 * @param sourceId 
-	 * @see FacadeService#marckSourceAsSubscribed(String, String, String, String)
+	 * @throws UserNotSubscribedToCategoryException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws SourceNotVisibleException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws ComputeFeaturesException 
+	 * @throws SourceNotVisibleException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws VisibilityNotFoundException 
+	 * @throws InternalDomainException 
+	 * @see FacadeService#subscribeToSource(String, String, String)
 	 */
-	void marckSourceAsSubscribed(String uid, String contextId, String categorieId, String sourceId);
-
+	void subscribeToSource(String uid, String categorieId, String sourceId, ExternalService ex) 
+		throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, 
+		CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, 
+		InternalDomainException ;
 	/**
 	 * @param uid 
-	 * @param contextId 
 	 * @param categorieId 
 	 * @param sourceId 
-	 * @see FacadeService#marckSourceAsUnsubscribed(String, String, String, String)
+	 * @see FacadeService#unsubscribeToSource(String, String, String)
 	 */
-	void marckSourceAsUnsubscribed(String uid, String contextId, String categorieId, String sourceId);
+	void unsubscribeToSource(String uid, String categorieId, String sourceId);
 
 }

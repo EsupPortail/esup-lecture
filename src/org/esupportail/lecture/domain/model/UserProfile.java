@@ -183,7 +183,8 @@ public class UserProfile {
 				try {
 					customContext = getCustomContext(contextId);
 				
-					if (!mcp.updateCustomContext(customContext, ex)){
+					VisibilityMode mode = mcp.updateCustomContext(customContext,ex);
+					if (mode != VisibilityMode.NOVISIBLE){
 						categoryIsVisible = false;
 					} else {
 						DomainTools.getDaoService().updateCustomContext(customContext);

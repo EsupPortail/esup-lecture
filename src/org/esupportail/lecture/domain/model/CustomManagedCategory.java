@@ -17,6 +17,9 @@ import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
+import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
  * Customizations on a managedCategoryProfile for a user Profile
@@ -222,6 +225,47 @@ public class CustomManagedCategory extends CustomCategory {
 		return categoryProfile;		
 	}
 	
+
+	/**
+	 * after checking visibility rights, subcribe user to the source sourceId
+	 * @param sourceId source ID
+	 * @param ex access to externalService
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws SourceNotVisibleException 
+	 * @throws ComputeFeaturesException 
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#subscribeToSource(java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 */
+	@Override
+	public void subscribeToSource(String sourceId, ExternalService ex) 
+		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, ComputeFeaturesException {
+		if (log.isDebugEnabled()){
+			log.debug("subscribeToSource("+sourceId+",externalService) ");
+		}
+		ManagedCategoryProfile catProfile = getProfile();
+		ManagedSourceProfile soProfile = catProfile.getSourceProfileById(sourceId);
+		VisibilityMode mode = soProfile.updateCustomCategory(this, ex);
+		
+		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
+			this.addSubscription(soProfile);
+			log.debug("addSubscription to source "+sourceId);
+			
+		} else if (mode == VisibilityMode.OBLIGED){
+			log.warn("Nothing is done for SubscribeToSource requested on source "+sourceId+
+					" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is OBLIGED in this case");
+			
+		} else if (mode == VisibilityMode.NOVISIBLE) {
+			String errorMsg = "SubscribeToSource("+sourceId+") is impossible because this source is NOT VISIBLE for user "
+				+getUserProfile().getUserId()+"in category "+getElementId();
+			log.error(errorMsg);
+			throw new SourceNotVisibleException(errorMsg);
+		}
+		
+	}
+	
+	
+	
 	/*
 	 ************************** ACCESSORS *********************************/	
 
@@ -240,6 +284,7 @@ public class CustomManagedCategory extends CustomCategory {
 			Map<String, CustomManagedSource> subscriptions) {
 		this.subscriptions = subscriptions;
 	}
+
 	
 
 

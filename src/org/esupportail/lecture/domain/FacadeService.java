@@ -22,8 +22,11 @@ import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
+import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
+import org.esupportail.lecture.exceptions.domain.VisibilityNotFoundException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
@@ -117,7 +120,7 @@ public class FacadeService implements InitializingBean {
 	 * @return a ContextBean of the current context of the connected user
 	 * @throws ContextNotFoundException 
 	 */
-	public ContextBean getContext(String uid,String contextId) throws ContextNotFoundException  {
+	public ContextBean getContext(String uid, String contextId) throws ContextNotFoundException  {
 		return domainService.getContext(uid,contextId);
 	}
 	
@@ -132,7 +135,7 @@ public class FacadeService implements InitializingBean {
 	 * @return List of CategoryBean
 	 * @throws ContextNotFoundException
 	 */
-	public List<CategoryBean> getAvailableCategories(String uid,String contextId) throws ContextNotFoundException  {
+	public List<CategoryBean> getAvailableCategories(String uid, String contextId) throws ContextNotFoundException  {
 		return domainService.getAvailableCategories(uid,contextId,externalService);
 	}
 	
@@ -149,9 +152,10 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
+	 * @throws UserNotSubscribedToCategoryException 
 	 */
-	public List<SourceBean> getAvailableSources(String uid,String categoryId) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, CategoryNotLoadedException {
+	public List<SourceBean> getAvailableSources(String uid, String categoryId) 
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, CategoryNotLoadedException, UserNotSubscribedToCategoryException {
 		return domainService.getAvailableSources(uid, categoryId,externalService);
 	}
 	
@@ -168,7 +172,7 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	public List<ItemBean> getItems(String uid,String sourceId) throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException {
+	public List<ItemBean> getItems(String uid, String sourceId) throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException {
 		return domainService.getItems(uid,sourceId,externalService);
 	}
 
@@ -181,7 +185,7 @@ public class FacadeService implements InitializingBean {
 	 * marck a Item form a source for a user as read
 	 * @throws InternalDomainException 
 	 */
-	public void marckItemAsRead(String uid, String sourceId,String itemId) throws InternalDomainException  {
+	public void marckItemAsRead(String uid, String sourceId, String itemId) throws InternalDomainException  {
 		domainService.marckItemAsRead(uid, sourceId, itemId);
 	}
 
@@ -206,7 +210,7 @@ public class FacadeService implements InitializingBean {
 	 * @throws ContextNotFoundException 
 	 * @throws TreeSizeErrorException 
 	 */
-	public void setTreeSize(String uid,String contextId,int size) throws ContextNotFoundException, TreeSizeErrorException {
+	public void setTreeSize(String uid, String contextId, int size) throws ContextNotFoundException, TreeSizeErrorException {
 		domainService.setTreeSize(uid,contextId, size);
 	}
 
@@ -219,7 +223,7 @@ public class FacadeService implements InitializingBean {
 	 * set category catId folded in customContext cxtId
 	 * @throws ContextNotFoundException 
 	 */
-	public void foldCategory(String uid,String cxtId, String catId) throws ContextNotFoundException{
+	public void foldCategory(String uid, String cxtId, String catId) throws ContextNotFoundException{
 		domainService.foldCategory(uid,cxtId,catId);
 	}
 	
@@ -232,9 +236,11 @@ public class FacadeService implements InitializingBean {
 	 * set category catId unfolded in customContext cxtId
 	 * @throws ContextNotFoundException 
 	 */
-	public void unfoldCategory(String uid,String cxtId, String catId) throws ContextNotFoundException{
+	public void unfoldCategory(String uid, String cxtId, String catId) throws ContextNotFoundException{
 		domainService.unfoldCategory(uid,cxtId,catId);
 	}
+	
+
 	
 	/**
 	 * Return visible sources (obliged, subscribed, obliged for managed source or personal source) of categoryId for user uid (for EDIT mode)
@@ -246,12 +252,46 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws UserNotSubscribedToCategoryException 
 	 */
 	public List<SourceBean> getVisibleSources(String uid,String categoryId) 
-		throws ManagedCategoryProfileNotFoundException, CategoryProfileNotFoundException, CategoryNotLoadedException, CategoryNotVisibleException, InternalDomainException {
+		throws ManagedCategoryProfileNotFoundException, CategoryProfileNotFoundException, CategoryNotLoadedException, CategoryNotVisibleException, InternalDomainException, UserNotSubscribedToCategoryException {
 		return domainService.getVisibleSources(uid, categoryId,externalService);
 	}
 	
+	/**
+	 * Subscribes user uid to source sourceId in Category categoryId 
+	 * @param uid - user ID
+	 * @param categorieId - categorie ID
+	 * @param sourceId - Source ID
+	 * @throws InternalDomainException 
+	 * @throws SourceNotVisibleException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws UserNotSubscribedToCategoryException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 */
+	public void subscribeToSource(String uid, String categorieId, String sourceId) 
+		throws ManagedCategoryProfileNotFoundException, CategoryProfileNotFoundException, CategoryNotLoadedException, 
+		SourceProfileNotFoundException, UserNotSubscribedToCategoryException, CategoryNotVisibleException, 
+		SourceNotVisibleException, InternalDomainException {
+		// TODO (GB)supprimer le context + javadoc
+		domainService.subscribeToSource(uid, categorieId, sourceId, externalService);
+	}
+
+	/**
+	 * Marck a source a subscribed in a selected categorie
+	 * @param uid - user ID
+	 * @param contextId - context ID
+	 * @param categorieId - categorie ID
+	 * @param sourceId - Source ID
+	 */
+	public void unsubscribeToSource(String uid, String contextId, String categorieId, String sourceId) {
+//		 TODO (GB)supprimer le context + javadoc
+		domainService.unsubscribeToSource(uid, categorieId, sourceId);
+	}
 	
 	
 	/* 
@@ -272,5 +312,4 @@ public class FacadeService implements InitializingBean {
 	}
 
 
-	
 }

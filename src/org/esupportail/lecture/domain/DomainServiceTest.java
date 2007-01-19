@@ -12,6 +12,15 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
+import org.esupportail.lecture.exceptions.domain.VisibilityNotFoundException;
 
 /**
  * @author bourges
@@ -188,20 +197,26 @@ public class DomainServiceTest implements DomainService {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#marckSourceAsSubscribed(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#subscribeToSource(java.lang.String, java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public void marckSourceAsSubscribed(String uid, String contextId, String categorieId, String sourceId) {
+	public void subscribeToSource(String uid,  String categorieId, String sourceId, ExternalService ex)
+		throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, 
+		CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, 
+		InternalDomainException {
+		
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToSource(java.lang.String, java.lang.String, java.lang.String)
+	 */
+	public void unsubscribeToSource(String uid, String categorieId, String sourceId) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	/**
-	 * @see org.esupportail.lecture.domain.DomainService#marckSourceAsUnsubscribed(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
-	 */
-	public void marckSourceAsUnsubscribed(String uid, String contextId, String categorieId, String sourceId) {
-		// TODO Auto-generated method stub
 		
-	}
 
 	/*
 	 *************************** ACCESSORS ******************************** */	
