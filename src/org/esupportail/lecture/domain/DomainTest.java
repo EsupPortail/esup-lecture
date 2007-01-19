@@ -86,7 +86,7 @@ public class DomainTest {
 			testGetConnectedUser();
 			testGetContext();
 			testGetVisibleSources();
-			testSubscribeToSource();
+			testSubUnSubscribeToSource();
 			
 		} catch (InternalExternalException e) {
 			System.out.println("\n!!! EXCEPTION !!!");
@@ -210,22 +210,22 @@ public class DomainTest {
 	}
 
 	/**
-	 * Test of service "getSubscribeToSource"
+	 * Test of service "subscribeToSource" and "unsubscribeToSource"
+	 * @throws DomainServiceException 
 	 * @throws DomainServiceException 
 	 * @throws DomainServiceException 
 	 * @throws VisibilityNotFoundException 
 	 */
-	private static void testSubscribeToSource() throws DomainServiceException {
+	private static void testSubUnSubscribeToSource() throws DomainServiceException  {
 		printIntro("getSubscribeToSource");
 		
 		try {
 			/* source obliged */
 			System.out.println(" **** category cp5 : subscribe to source 'un' **********");
 			facadeService.subscribeToSource(userId, "cp5", "m:cp5:un");
-			/* source allowed */
-			System.out.println(" **** category cp5 : subscribe to source 'deux' **********");
-			facadeService.subscribeToSource(userId, "cp5", "m:cp5:deux");
-			/* source autosubscribed */
+			/* source allowed or autosub */
+//			System.out.println(" **** category cp5 : subscribe to source 'deux' **********");
+//			facadeService.subscribeToSource(userId, "cp5", "m:cp5:deux");
 			System.out.println(" **** category cp5 : subscribe to source 'trois' **********");
 			facadeService.subscribeToSource(userId, "cp5", "m:cp5:trois");
 			/* source no visible */
@@ -234,7 +234,48 @@ public class DomainTest {
 			
 			/* category not subcribed to */
 			System.out.println(" **** category cp3 : subscribe to source 'trois' **********");
-			facadeService.subscribeToSource(userId, "cp5", "m:cp5:trois");
+			facadeService.subscribeToSource(userId, "cp3", "m:cp5:trois");
+		} catch (DomainServiceException e) {
+			System.out.println("DomainServiceException !!!! ");
+			e.printStackTrace();
+		}
+		
+		try {
+			/* source obliged */
+			System.out.println(" **** category cp5 : UNsubscribe to source 'un' **********");
+			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:un");
+		} catch (DomainServiceException e) {
+			System.out.println("DomainServiceException !!!! ");
+			e.printStackTrace();
+		}
+		try {
+			/* source allowed or autosubscribed */
+			System.out.println(" **** category cp5 : UNsubscribe to source 'deux' **********");
+			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:deux");			
+		} catch (DomainServiceException e) {
+			System.out.println("DomainServiceException !!!! ");
+			e.printStackTrace();
+		}
+		try{
+			System.out.println(" **** category cp5 : UNsubscribe to source 'trois' **********");
+			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:trois");
+		} catch (DomainServiceException e) {
+			System.out.println("DomainServiceException !!!! ");
+			e.printStackTrace();
+		}
+		
+		try{
+			/* source no visible */
+			System.out.println(" **** category cp5 : UNsubscribe to source 'quatre' **********");
+			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:quatre");
+		} catch (DomainServiceException e) {
+			System.out.println("DomainServiceException !!!! ");
+			e.printStackTrace();
+		}
+		try{
+			/* category not subcribed to */
+			System.out.println(" **** category cp3 : UNsubscribe to source 'trois' **********");
+			facadeService.unsubscribeToSource(userId, "cp3", "m:cp5:trois");
 		} catch (DomainServiceException e) {
 			System.out.println("DomainServiceException !!!! ");
 			e.printStackTrace();

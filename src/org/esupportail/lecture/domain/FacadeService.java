@@ -23,6 +23,7 @@ import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundE
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
@@ -282,15 +283,22 @@ public class FacadeService implements InitializingBean {
 	}
 
 	/**
-	 * Marck a source a subscribed in a selected categorie
+	 * Unsubscribes user uid to source sourceId in Category categoryId 
 	 * @param uid - user ID
-	 * @param contextId - context ID
 	 * @param categorieId - categorie ID
 	 * @param sourceId - Source ID
+	 * @throws UserNotSubscribedToCategoryException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws InternalDomainException 
+	 * @throws SourceObligedException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryProfileNotFoundException 
 	 */
-	public void unsubscribeToSource(String uid, String contextId, String categorieId, String sourceId) {
-//		 TODO (GB)supprimer le context + javadoc
-		domainService.unsubscribeToSource(uid, categorieId, sourceId);
+	public void unsubscribeToSource(String uid, String categorieId, String sourceId) 
+		throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, CategoryProfileNotFoundException, 
+		CategoryNotLoadedException, SourceProfileNotFoundException, SourceObligedException, InternalDomainException {
+		domainService.unsubscribeToSource(uid, categorieId, sourceId, externalService);
 	}
 	
 	

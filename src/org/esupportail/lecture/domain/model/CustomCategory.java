@@ -14,6 +14,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 
@@ -124,8 +125,9 @@ public abstract class CustomCategory implements CustomElement {
 		return getProfile().getName();
 	}
 	
-	/**For a customManagedCategory, it subscribes sourceId, but for a customPersonalcategory, 
-	 * there is not any subscription an throw an SubcriptionInPersonalException
+	/**
+	 * For a customManagedCategory, it subscribes sourceId, but for a customPersonalcategory, 
+	 * there is not any subscription and throws a SubcriptionInPersonalException
 	 * @param sourceId source ID
 	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
@@ -136,9 +138,24 @@ public abstract class CustomCategory implements CustomElement {
 	 */
 	// TODO faire le throw SubcriptionInPersonalImpossibleException pour le personal
 	public abstract void subscribeToSource(String sourceId, ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, ComputeFeaturesException;
+		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
+		SourceNotVisibleException, ComputeFeaturesException;
 
-	
+
+	/**
+	 * For a customManagedCategory, it unsubscribes sourceId, but for a customPersonalcategory, 
+	 * there is not any subscription and throws a SubcriptionInPersonalException
+	 * @param sourceId source ID
+	 * @param ex access to externalService
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ComputeFeaturesException 
+	 * @throws SourceObligedException 
+	 */
+	public abstract void unsubscribeToSource(String sourceId, ExternalService ex) 
+		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
+		ComputeFeaturesException, SourceObligedException;
 	
 	/* 
 	 ************************** ACCESSORS **********************************/
@@ -199,6 +216,8 @@ public abstract class CustomCategory implements CustomElement {
 	private String getProfileId() {
 		return profileId;
 	}
+
+	
 
 	
 		

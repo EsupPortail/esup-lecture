@@ -19,6 +19,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
@@ -227,7 +228,7 @@ public class CustomManagedCategory extends CustomCategory {
 	
 
 	/**
-	 * after checking visibility rights, subcribe user to the source sourceId
+	 * after checking visibility rights, subcribe user to the source sourceId in this CustomMAnagedCategory
 	 * @param sourceId source ID
 	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
@@ -241,15 +242,22 @@ public class CustomManagedCategory extends CustomCategory {
 	public void subscribeToSource(String sourceId, ExternalService ex) 
 		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, ComputeFeaturesException {
 		if (log.isDebugEnabled()){
-			log.debug("subscribeToSource("+sourceId+",externalService) ");
+			log.debug("subscribeToSource("+sourceId+",externalService)");
 		}
 		ManagedCategoryProfile catProfile = getProfile();
 		ManagedSourceProfile soProfile = catProfile.getSourceProfileById(sourceId);
 		VisibilityMode mode = soProfile.updateCustomCategory(this, ex);
 		
 		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
-			this.addSubscription(soProfile);
-			log.debug("addSubscription to source "+sourceId);
+			if (subscriptions.containsKey(sourceId)) {
+				log.warn("Nothing is done for SubscribeToSource requested on source "+sourceId+
+					" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is already in subscriptions");
+			} else {
+				addSubscription(soProfile);
+				DomainTools.getDaoService().updateCustomCategory(this);
+				DomainTools.getDaoService().updateUserProfile(userProfile);
+				log.debug("addSubscription to source "+sourceId);
+			}
 			
 		} else if (mode == VisibilityMode.OBLIGED){
 			log.warn("Nothing is done for SubscribeToSource requested on source "+sourceId+
@@ -264,6 +272,55 @@ public class CustomManagedCategory extends CustomCategory {
 		
 	}
 	
+	
+	/**
+	 * after checking visibility rights, unsubcribe user to the source sourceId in this CustomMAnagedCategory
+	 * @param sourceId source ID
+	 * @param ex access to externalService
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ComputeFeaturesException 
+	 * @throws SourceObligedException 
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#unsubscribeToSource(java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 */
+	@Override
+	public void unsubscribeToSource(String sourceId, ExternalService ex) 
+		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, ComputeFeaturesException, 
+		SourceObligedException {
+		if (log.isDebugEnabled()){
+			log.debug("unsubscribeToSource("+sourceId+",externalService)");
+		}
+
+		ManagedCategoryProfile catProfile = getProfile();
+		ManagedSourceProfile soProfile = catProfile.getSourceProfileById(sourceId);
+		VisibilityMode mode = soProfile.updateCustomCategory(this, ex);
+		
+		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
+			if (!subscriptions.containsKey(sourceId)) {
+				log.warn("Nothing is done for UnsubscribeToSource requested on source "+sourceId+
+					" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is not in subscriptions");
+			} else {
+				removeCustomManagedSource(soProfile);
+				DomainTools.getDaoService().updateCustomCategory(this);
+				DomainTools.getDaoService().updateUserProfile(userProfile);
+				log.debug("removeCustomManagedSource to source "+sourceId);
+			}
+			
+		} else if (mode == VisibilityMode.OBLIGED){
+			String errorMsg = "UnsubscribeToSource("+sourceId+") is impossible because this source is OBLIGED for user "
+				+getUserProfile().getUserId()+"in category "+getElementId();
+			log.error(errorMsg);
+			throw new SourceObligedException(errorMsg);
+			
+			
+			
+		} else if (mode == VisibilityMode.NOVISIBLE) {
+			log.warn("Nothing is done for UnsubscribeToSource requested on source "+sourceId+
+					" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is NOVISIBLE in this case");
+		}
+		
+	}
 	
 	
 	/*
@@ -284,6 +341,8 @@ public class CustomManagedCategory extends CustomCategory {
 			Map<String, CustomManagedSource> subscriptions) {
 		this.subscriptions = subscriptions;
 	}
+
+
 
 	
 

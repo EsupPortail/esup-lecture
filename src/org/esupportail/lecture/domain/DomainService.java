@@ -21,6 +21,7 @@ import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
@@ -156,21 +157,14 @@ public interface DomainService {
 	 * @param uid 
 	 * @param categorieId 
 	 * @param sourceId 
+	 * @param ex 
 	 * @throws UserNotSubscribedToCategoryException 
-	 * @throws CategoryNotVisibleException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceNotVisibleException 
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
-	 * @throws ComputeFeaturesException 
-	 * @throws SourceNotVisibleException 
-	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws CategoryProfileNotFoundException 
-	 * @throws VisibilityNotFoundException 
 	 * @throws InternalDomainException 
 	 * @see FacadeService#subscribeToSource(String, String, String)
 	 */
@@ -182,8 +176,20 @@ public interface DomainService {
 	 * @param uid 
 	 * @param categorieId 
 	 * @param sourceId 
+	 * @param ex
+	 * @throws CategoryNotVisibleException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws UserNotSubscribedToCategoryException 
+	 * @throws InternalDomainException 
+	 * @throws SourceObligedException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryProfileNotFoundException 
 	 * @see FacadeService#unsubscribeToSource(String, String, String)
-	 */
-	void unsubscribeToSource(String uid, String categorieId, String sourceId);
+	 */	
+	void unsubscribeToSource(String uid, String categorieId, String sourceId, ExternalService ex) 
+		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
+		InternalDomainException, CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
+		SourceObligedException;
 
 }

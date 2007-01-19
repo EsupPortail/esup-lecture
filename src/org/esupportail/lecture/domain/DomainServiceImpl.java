@@ -39,6 +39,7 @@ import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundE
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
@@ -431,7 +432,7 @@ public class DomainServiceImpl implements DomainService {
 	 * @return List of SourceBean
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryProfileNotFoundException 
-	 * @throws InternalDomainException 
+	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws CategoryNotLoadedException 
 	 */
 	public List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) 
@@ -481,14 +482,13 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
-	 * @throws VisibilityNotFoundException 
+	 * @throws InternalDomainException 
 	 */
 	public void subscribeToSource(String uid, String categoryId, String sourceId, ExternalService ex) 
 		throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, CategoryNotVisibleException,
 		CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, InternalDomainException {
-		// TODO (GB) revoir kles throw
 		if (log.isDebugEnabled()){
-			log.debug("subscribeToSource("+uid+","+categoryId+","+sourceId+")");
+			log.debug("subscribeToSource("+uid+","+categoryId+","+sourceId+", externalService)");
 		}
 		
 		try {
@@ -511,16 +511,46 @@ public class DomainServiceImpl implements DomainService {
 		
 	}
 
-
-
-
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToSource(java.lang.String, java.lang.String, java.lang.String)
+	 * unsubscribe user uid to source sourceId in categoryId, if user is already subscriber of categoryId
+	 * @param uid user ID
+	 * @param categoryId category ID
+	 * @param sourceId source ID
+	 * @param ex access to externalService
+	 * @throws CategoryNotVisibleException 
+	 * @throws UserNotSubscribedToCategoryException 
+	 * @throws InternalDomainException 
+	 * @throws SourceObligedException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryProfileNotFoundException 
 	 */
-	public void unsubscribeToSource(String uid, String categorieId, String sourceId) {
-		// TODO (RB --> GB) Auto-generated method stub
+	public void unsubscribeToSource(String uid, String categoryId, String sourceId, ExternalService ex) 
+		throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, InternalDomainException, 
+		CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceObligedException {
+		if (log.isDebugEnabled()){
+			log.debug("subscribeToSource("+uid+","+categoryId+","+sourceId+", externalService)");
+		}
 		
+		try {
+			UserProfile userProfile = channel.getUserProfile(uid);
+			CustomCategory customCategory = userProfile.getCustomCategory(categoryId,ex);
+			customCategory.unsubscribeToSource(sourceId,ex);
+			
+		}  catch (CustomCategoryNotFoundException e) {
+			String errorMsg = "CustomCategoryNotFound for service 'unsubscribeToSource(user "+uid+", category "+categoryId+ ", source "+sourceId+", externalService).\n" +
+			"User "+uid+" is not subscriber of Category "+categoryId;
+			log.error(errorMsg);
+			throw new UserNotSubscribedToCategoryException(errorMsg,e);
+		} catch (ComputeFeaturesException e) {
+			String errorMsg = "ComputeFeaturesException for service 'subscribeToSource(user "+uid+", category "+categoryId+ ", source "+sourceId+", externalService).\n" +
+			"Impossible to subscribe because the visibility of source is inaccessible";
+			log.error(errorMsg);
+			throw new InternalDomainException(errorMsg,e);
+		} 		
 	}
+
+
 	
 	
 	
@@ -542,6 +572,8 @@ public class DomainServiceImpl implements DomainService {
 		// It could be static without spring 
 		DomainServiceImpl.channel = channel;
 	}
+
+
 
 
 }
