@@ -22,6 +22,8 @@ import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
+import org.esupportail.lecture.domain.model.ProfileAvailability;
+import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
@@ -213,6 +215,7 @@ public class DomainServiceImpl implements DomainService {
 		return listSourceBean;
 	}
 
+	
 
 //	/**
 //	 * @param customCategory
@@ -415,29 +418,48 @@ public class DomainServiceImpl implements DomainService {
 	/*
 	 ************************** Methodes - services - mode EDIT ************************************/
 	
-	public List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) {
-		// TODO (RB --> GB) test code. To change !
-		List<SourceBean> ret = null;
-//		try {
-//			ret = getVisibleSources(uid, categoryId, ex);
-//		} catch (DomainServiceException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		int i = 1;
-//		for(SourceBean sb : ret) {
-//			if (i==1) {
-//				sb.setType(SourceBean.OBLIGED);
-//			}
-//			if (i==2) {
-//				sb.setType(SourceBean.NOTSUBSCRIBED);
-//			}
-//			if (i==3) {
-//				sb.setType(SourceBean.SUBSCRIBED);
-//			}
-//			i++;
-//		}
-		return ret;
+	/**
+	 * Return visible sources (obliged, subscribed, obliged for managed source or personal source) of categoryId for user uid (for EDIT mode)
+	 * @param categoryId id of category
+	 * @param uid user ID
+	 * @param ex access to externalService
+	 * @return List of SourceBean
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryNotLoadedException 
+	 */
+	public List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) 
+		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException {
+		if (log.isDebugEnabled()) {
+			log.debug("getVisibleSources("+uid+","+categoryId+",ex)");
+		}
+		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
+		
+		try {
+			UserProfile userProfile = channel.getUserProfile(uid);
+			CustomCategory customCategory = userProfile.getCustomCategory(categoryId,ex);
+			List<ProfileAvailability> couples = customCategory.getVisibleSources(ex);
+			
+			for(ProfileAvailability couple : couples){
+				SourceBean source;
+				//try {
+					source = new SourceBean(couple);
+					listSourceBean.add(source);
+					////////////////
+//				}catch (InfoDomainException e) {
+//					log.error("Error on service 'getVisibleSources(user "+uid+", category "+categoryId+") : creation of a SourceDummyBean");
+//					source = new SourceDummyBean(e);
+//					listSourceBean.add(source);
+//				}
+			}			
+		} catch (CustomCategoryNotFoundException e) {
+			String errorMsg = "CustomCategoryNotFound for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")";
+			log.error(errorMsg);
+			throw new InternalDomainException(errorMsg,e);
+		}
+		 return listSourceBean;
+		
 	}
 
 	/**
@@ -456,6 +478,8 @@ public class DomainServiceImpl implements DomainService {
 		// TODO (RB --> GB) Auto-generated method stub
 		
 	}
+	
+	
 	
 	/*
 	 ************************** Accessors ************************************/

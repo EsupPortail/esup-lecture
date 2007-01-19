@@ -66,8 +66,8 @@ public class DomainTest {
 		
 		try {
 			/* Test alternative behavior */
-			testGetContextBis("c1");
-			testGetAvailableSourceAlternativeWay(); 
+//			testGetContextBis("c1");
+//			testGetAvailableSourceAlternativeWay(); 
 			
 			/* Test normal behavior */
 //			testGetConnectedUser();
@@ -80,6 +80,12 @@ public class DomainTest {
 //			testMarkItemAsRead();
 //			testSetTreeSize();
 //			testFoldCategory();
+			
+			/* test mode EDIT */
+			testGetConnectedUser();
+			testGetContext();
+			testGetVisibleSources();
+			
 		} catch (InternalExternalException e) {
 			System.out.println("\n!!! EXCEPTION !!!");
 			System.out.println("\n!!! Catching InternalExternalException");
@@ -158,7 +164,6 @@ public class DomainTest {
 	/**
 	 * Test of service "getAvailableSources"
 	 * @throws DomainServiceException 
-	 * @throws DomainServiceException 
 	 */
 	private static void testGetAvailableSources() throws DomainServiceException  {
 		printIntro("getAvailableSources");
@@ -173,7 +178,34 @@ public class DomainTest {
 		}
 		
 	}
+	
+	/**
+	 * Test of service "getVisibleSources"
+	 * @throws DomainServiceException 
+	 */
+	private static void testGetVisibleSources() throws DomainServiceException {
+		printIntro("getVisibleSources");
+		categoryIds = new ArrayList<String>();
+		categoryIds.add("cp1");
+		categoryIds.add("cp2");
+		categoryIds.add("cp3");
+		categoryIds.add("cp4");
+		categoryIds.add("cp5");
 
+		for(String catId : categoryIds){
+			System.out.println(" **** cat "+catId+" **********");
+			try {
+				List<SourceBean> sources = facadeService.getVisibleSources(userId, catId);
+				for(SourceBean so : sources){
+					System.out.println("  **** source ****");
+					System.out.println(so.toString());
+					sourceId = so.getId();
+				}
+			}catch (CategoryNotVisibleException e){
+				System.out.println("CategoryNotVisibleException !!!! sur category "+catId);
+			}
+		}
+	}
 
 	/**
 	 *  Test of service "getAvailableSources" in an alternative way :

@@ -96,6 +96,20 @@ public abstract class CustomCategory implements CustomElement {
 	public abstract CategoryProfile getProfile() throws CategoryProfileNotFoundException ;
 	
 	/**
+	 * Return a list of <SourceProfile,AvailabilityMode> corresponding to visible sources for user, 
+	 * in this customCategory.
+	 * @param ex access to external service 
+	 * @return list of ProfileAvailability
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryNotLoadedException 
+	 */
+	public abstract List<ProfileAvailability> getVisibleSources(ExternalService ex) 
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException;
+
+	
+	
+	/**
 	 * The used name of the categoryProfile
 	 * @throws CategoryProfileNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
@@ -106,6 +120,10 @@ public abstract class CustomCategory implements CustomElement {
 		}
 		return getProfile().getName();
 	}
+	
+	
+
+	
 	
 	/* 
 	 ************************** ACCESSORS **********************************/
@@ -166,6 +184,8 @@ public abstract class CustomCategory implements CustomElement {
 	private String getProfileId() {
 		return profileId;
 	}
+
+
 
 
 }

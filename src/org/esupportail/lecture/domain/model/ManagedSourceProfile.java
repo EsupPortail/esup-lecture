@@ -98,7 +98,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @return true if the source is visible by the userProfile
 	 * @throws ComputeFeaturesException
 	 */
-	synchronized public boolean updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService ex) 
+	synchronized public VisibilityMode updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService ex) 
 		throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - updateCustomCategory("+customManagedCategory.getElementId()+"externalService)");
@@ -183,7 +183,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @throws ComputeFeaturesException 
 	 */
 	
-	synchronized private boolean setUpCustomCategoryVisibility(CustomManagedCategory customManagedCategory,ExternalService ex) 
+	synchronized private VisibilityMode setUpCustomCategoryVisibility(CustomManagedCategory customManagedCategory,ExternalService ex) 
 	throws ComputeFeaturesException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - setUpCustomCategoryVisibility("+customManagedCategory.getElementId()+",externalService)");
@@ -204,7 +204,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				log.trace("IsInObliged : "+mode);
 			}
 			customManagedCategory.addSubscription(this);
-			return true;
+			return mode;
 		}
 		
 		if (mode == VisibilityMode.AUTOSUBSCRIBED){
@@ -213,7 +213,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			}
 			// TODO (GB later) l'ajouter dans le custom category si c'est la premiere fois
 			//customManagedCategory.addSubscription(this);
-			return true;
+			return mode;
 		}
 		
 		if (mode == VisibilityMode.ALLOWED) {
@@ -221,14 +221,15 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				log.trace("IsInAllowed : "+mode);
 			}
 			// Nothing to do
-			return true;
+			return mode;
 		} 
 		// TODO (GB later) retirer les customSource du user profile qui correspondent à des profiles 
 		// de sources  disparus	
 		
 		// ELSE not Visible
 		customManagedCategory.removeCustomManagedSource(this);
-		return false;
+		mode = VisibilityMode.NOVISIBLE;
+		return mode;
 		
 //
 //			boolean isInObliged = false;

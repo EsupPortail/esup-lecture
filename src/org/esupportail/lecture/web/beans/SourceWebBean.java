@@ -3,6 +3,7 @@ package org.esupportail.lecture.web.beans;
 import java.util.List;
 
 import org.esupportail.lecture.domain.beans.SourceBean;
+import org.esupportail.lecture.domain.model.AvailabilityMode;
 
 /**
  * @author bourges
@@ -22,8 +23,9 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 * "subscribed" --> The source is alloweb and subscribed by the user
 	 * "notSubscribed" --> The source is alloweb and not yet subscribed by the user (used in edit mode)
 	 * "obliged" --> The source is obliged: user can't subscribe or unsubscribe this source
+	 * "owner" --> The source is personal
 	 */
-	private String type;
+	private AvailabilityMode type;
 	/**
 	 * List of items of source
 	 */
@@ -55,13 +57,13 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	/**
 	 * @return type of source
 	 */
-	public String getType() {
+	public AvailabilityMode getType() {
 		return type;
 	}
 	/**
 	 * @param type
 	 */
-	public void setType(String type) {
+	public void setType(AvailabilityMode type) {
 		this.type = type;
 	}
 	/**
@@ -82,7 +84,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 */
 	public boolean isObliged() {
 		boolean ret = false;
-		if (type==SourceBean.OBLIGED) {
+		if (type==AvailabilityMode.OBLIGED) {
 			ret = true;
 		}
 		return ret;
@@ -93,7 +95,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 */
 	public boolean isSubscribed() {
 		boolean ret = false;
-		if (type==SourceBean.SUBSCRIBED) {
+		if (type==AvailabilityMode.SUBSCRIBED) {
 			ret = true;
 		}
 		return ret;
@@ -104,7 +106,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 */
 	public boolean isNotSubscribed() {
 		boolean ret = false;
-		if (type==SourceBean.NOTSUBSCRIBED) {
+		if (type==AvailabilityMode.NOTSUBSCRIBED) {
 			ret = true;
 		}
 		return ret;

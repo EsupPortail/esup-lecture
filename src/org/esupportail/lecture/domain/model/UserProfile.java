@@ -147,8 +147,9 @@ public class UserProfile {
 			customCategory = customCategories.get(categoryId);
 			if (customCategory == null){
 				String errorMsg = "CustomCategory associated to category "+categoryId
-					+"is not found in user profile "+userId+"whereas an updateCustimContextForOneManagedCategory " +
-							"has done and category seems visible to user profile "+userId;
+					+" is not found in user profile "+userId+"\nwhereas an updateCustomContextForOneManagedCategory " +
+							"has done and category seems visible to user profile "+userId
+							+".\nPerhaps this categoryProfile is not defined in current context.";
 				log.error(errorMsg);
 				throw new CustomCategoryNotFoundException(errorMsg);
 			}

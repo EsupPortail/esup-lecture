@@ -77,6 +77,7 @@ public class CustomManagedCategory extends CustomCategory {
 	
 	/**
 	 * Return the list of sorted customSources displayed by this customCategory
+	 * and update it
 	 * @param ex access to external service 
 	 * @return the list of customSource
 	 * @throws CategoryProfileNotFoundException
@@ -85,7 +86,8 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	public List<CustomSource> getSortedCustomSources(ExternalService ex) throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException {
+	public List<CustomSource> getSortedCustomSources(ExternalService ex) 
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+super.getElementId()+" - getSortedCustomSources(externalService)");
 		}
@@ -97,6 +99,7 @@ public class CustomManagedCategory extends CustomCategory {
 		} catch (CategoryNotLoadedException e) {
 			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 			profile.updateCustom(this,ex);
+			// TODO (GB) il y a encore un CategoryNotLoaded à catcher : que fait on ?
 		}
 		
 		DomainTools.getDaoService().updateCustomCategory(this);
@@ -111,7 +114,58 @@ public class CustomManagedCategory extends CustomCategory {
 		return listSources;
 	}
 	
-
+	/**
+	 * Return a list of <SourceProfile,AvailabilityMode> corresponding to visible sources for user, 
+	 * in this customCategory and update it
+	 * @param ex access to external service 
+	 * @return list of ProfileAvailability
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryNotLoadedException 
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#getVisibleSources(org.esupportail.lecture.domain.ExternalService)
+	 */
+	@Override
+	public List<ProfileAvailability> getVisibleSources(ExternalService ex) 
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException {
+		if (log.isDebugEnabled()) {
+			log.debug("id="+super.getElementId()+" - getVisibleSources(ex)");
+		}
+//		 TODO (GB later) à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
+		ManagedCategoryProfile profile = getProfile();
+		List<ProfileVisibility> couplesVisib;
+		try {
+			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this,ex);
+		} catch (CategoryNotLoadedException e) {
+			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
+			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this,ex);
+			// TODO (GB) il y a encore un CategoryNotLoaded à catcher : que fait on ?
+		}
+		
+		DomainTools.getDaoService().updateCustomCategory(this);
+		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
+		
+		List<ProfileAvailability> couplesAvail = new Vector<ProfileAvailability>();
+		for(ProfileVisibility coupleV : couplesVisib){
+			// Every couple is not NOTVISBLE
+			ProfileAvailability coupleA;
+			SourceProfile sourceProfile = (SourceProfile) coupleV.getProfile();
+			
+			if (coupleV.getMode() == VisibilityMode.OBLIGED ) {
+				coupleA = new ProfileAvailability(sourceProfile,AvailabilityMode.OBLIGED);
+			
+			} else { // It must be ALLOWED OR AUTOSUBSRIBED
+				if (subscriptions.containsKey(sourceProfile.getId())){
+					coupleA = new ProfileAvailability(sourceProfile,AvailabilityMode.SUBSCRIBED);
+				} else {
+					coupleA = new ProfileAvailability(sourceProfile,AvailabilityMode.NOTSUBSCRIBED);
+				}
+			}
+			couplesAvail.add(coupleA);
+			log.trace("Add source and availability");
+		}
+		
+		return couplesAvail;
+	}
 	/**
 	 * Add a subscription source to this custom category (if no exists, else do nothing) 
 	 * and creates the corresponding customManagedSource with the given managedSourceProfile

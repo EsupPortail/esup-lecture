@@ -11,6 +11,7 @@
   	  <refCategoryProfile refId="cp2"/>
   	  <refCategoryProfile refId="cp3"/>
   	  <refCategoryProfile refId="cp4"/>
+  	  <refCategoryProfile refId="cp5"/>
 	
 	</context>
 	<context 
@@ -110,11 +111,28 @@ Pour plus d'informations voir le
 			</obliged>
 		</visibility>
 	</categoryProfile>
-		<categoryProfile 
+	<categoryProfile 
 		name="categorie4  : trust cat"
 		id="cp4"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
+		access="public"
+		ttl = "3600" > 
+		<visibility>
+		<!-- allowed and autoSubscribed not yet supported -->
+			<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group
+					name="local.10"/>
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+	<categoryProfile 
+		name="categorie5  : trust cat"
+		id="cp5"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
+		trustCategory="yes"
 		access="public"
 		ttl = "3600" > 
 		<visibility>

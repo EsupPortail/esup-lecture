@@ -106,9 +106,17 @@ public interface DomainService {
 	 * @param uid 
 	 * @param ex 
 	 * @return List<SourceBean>
+	 * @throws CategoryNotVisibleException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CategoryProfileNotFoundException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryNotLoadedException 
 	 * @see FacadeService#getVisibleSources(String, String)
 	 */
-	List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex);
+	List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) 
+		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException ;
 	
 	/**
 	 * @param uid

@@ -6,6 +6,9 @@
 package org.esupportail.lecture.domain.model;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
@@ -66,7 +69,7 @@ public class ManagedCategory extends Category {
 		
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
-			log.debug("Managed Source profile ok");
+			log.trace("Managed Source profile ok");
 			try {
 				msp.updateCustomCategory(customManagedCategory,ex);
 			} catch (ComputeFeaturesException e) {
@@ -76,6 +79,39 @@ public class ManagedCategory extends Category {
 		}
 	}
 	
+	/**
+	 * Return a list of <SourceProfile,VisibilityMode> corresponding to visible sources for user, 
+	 * in this ManagedCategory and update it (like methode updateCustom): 
+	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles
+	 * defined in ths ManagedCategory, according to managedSourceProfiles visibility
+	 * (there is not any loading of source at this time)
+	 * @param customManagedCategory custom to update
+	 * @param ex access to external service for visibility evaluation
+	 * @return list of ProfileVisibility
+	 */
+	synchronized protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(CustomManagedCategory customManagedCategory, ExternalService ex) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+this.getProfileId()+" - getVisibleSourcesAndUpdateCustom("+customManagedCategory.getElementId()+",externalService)");
+		}
+		List<ProfileVisibility> couplesVisib = new Vector<ProfileVisibility>();
+		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
+		while (iterator.hasNext()) {
+			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
+			log.trace("Managed Source profile ok");
+			ProfileVisibility couple;
+			try {
+				VisibilityMode mode = msp.updateCustomCategory(customManagedCategory,ex);
+				if (mode != VisibilityMode.NOVISIBLE){
+					couple = new ProfileVisibility(msp,mode);
+					couplesVisib.add(couple);
+				}
+			} catch (ComputeFeaturesException e) {
+				log.error("Impossible to get visibility mode for managedSourceProfile "+msp.getId()+" and update CustomCategory " +
+						"associated to category profile "+super.getProfileId() ,e);
+			}
+		}
+		return couplesVisib;
+	}
 
 	/*
 	 *********************** ACCESSORS**************************************/ 
@@ -98,6 +134,9 @@ public class ManagedCategory extends Category {
 	synchronized public void setVisibility(VisibilitySets visibility) {
 		this.visibility = visibility;
 	}
+
+
+
 
 //	/**
 //	 * @return Returns the edit.

@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.beans;
 
+import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.UnknownException;
 
@@ -85,7 +86,7 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#getType()
 	 */
 	@Override
-	public String getType() throws DomainServiceException {
+	public AvailabilityMode getType() throws DomainServiceException {
 		throw cause;
 	}
 	
@@ -93,7 +94,7 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#setType(java.lang.String)
 	 */
 	@Override
-	public void setType(String type) throws DomainServiceException {
+	public void setType(AvailabilityMode type) throws DomainServiceException {
 		throw cause;
 	}
 	

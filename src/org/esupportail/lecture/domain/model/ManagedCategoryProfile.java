@@ -257,6 +257,27 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		category.updateCustom(customManagedCategory, ex);
 	}
 	
+	/**
+	 * Return a list of <SourceProfile,VisibilityMode> corresponding to visible sources for user, 
+	 * in this CustomManagedCategory and update it (like methode updateCustom): 
+	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles
+	 * defined in ManagedCategory of this Profile, according to managedSourceProfiles visibility
+	 * @param customManagedCategory custom to update
+	 * @param ex access to externalService
+	 * @return list of <ProfileVisibility>
+	 * @throws CategoryNotLoadedException 
+	 * @see ManagedCategoryProfile#updateCustom(CustomManagedCategory, ExternalService)
+	 */
+	synchronized protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(CustomManagedCategory customManagedCategory, ExternalService ex) 
+		throws CategoryNotLoadedException {
+		if (log.isDebugEnabled()){
+			log.debug("id="+this.getId()+" - getVisibleSourcesAndUpdateCustom("+customManagedCategory.getElementId()+",externalService)");
+		}
+		ManagedCategory category = (ManagedCategory) getElement();
+		return category.getVisibleSourcesAndUpdateCustom(customManagedCategory, ex);
+	}
+	
+	
 	
 	/** 
 	 * Computes rights on parameters shared between a ManagedCategoryProfile and its
@@ -493,6 +514,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	protected Set<Context> getContextsSet() {
 		return contextsSet;
 	}
+
+
 
 
 

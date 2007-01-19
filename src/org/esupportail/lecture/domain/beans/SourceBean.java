@@ -5,7 +5,10 @@
 */
 package org.esupportail.lecture.domain.beans;
 
+import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.CustomSource;
+import org.esupportail.lecture.domain.model.ElementProfile;
+import org.esupportail.lecture.domain.model.ProfileAvailability;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
@@ -33,23 +36,9 @@ public class SourceBean {
 	 * "subscribed" --> The source is alloweb and subscribed by the user
 	 * "notSubscribed" --> The source is alloweb and not yet subscribed by the user (used in edit mode)
 	 * "obliged" --> The source is obliged: user can't subscribe or unsubscribe this source
+	 * "owner" --> For personal sources
 	 */
-	private String type;
-	/**
-	 * SUBSCRIBED type
-	 */
-	public final static String SUBSCRIBED = "subscribed";
-	/**
-	 * NOTSUBSCRIBED type
-	 */
-	public final static String NOTSUBSCRIBED = "notSubscribed";
-	/**
-	 * OBLIGED type
-	 */
-	public final static String OBLIGED = "obliged";
-	
-	// TODO (GB --> RB) pourquoi pas utiliser un attribut de la classe VisibilityMode ?
-	// TODO (GB later) revoir comment concevoir cela : il faut aussi tenir compte des personnalSources qui n'ont pas de type
+	private AvailabilityMode type;
 
 	/*
 	 *************************** INIT ************************************** */	
@@ -60,7 +49,7 @@ public class SourceBean {
 	public SourceBean(){}
 	
 	/**
-	 * constructor initializing object
+	 * constructor initializing object with a customSource
 	 * @param customSource
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
@@ -74,9 +63,22 @@ public class SourceBean {
 		
 	}
 
+	/**
+	 * constructor initializing object with a sourceProfile
+	 * @param sourceProfile
+	 */
+	public SourceBean(ProfileAvailability profAv) {
+		ElementProfile elt = profAv.getProfile();
+		this.name = elt.getName();
+		this.id = elt.getId();
+		this.type = profAv.getMode();
+	}
+	
 	/*
 	 *************************** ACCESSORS ********************************* */	
 	
+
+
 	/**
 	 * @return name of source
 	 * @throws DomainServiceException 
@@ -107,14 +109,14 @@ public class SourceBean {
 	/**
 	 * @return type of source
 	 */
-	public String getType()  throws DomainServiceException{
+	public AvailabilityMode getType()  throws DomainServiceException{
 		return type;
 	}
 	/**
 	 * @param type
 	 * @throws DomainServiceException 
 	 */
-	public void setType(String type) throws DomainServiceException {
+	public void setType(AvailabilityMode type) throws DomainServiceException {
 		this.type = type;
 	}
 	
