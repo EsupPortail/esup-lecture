@@ -37,7 +37,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * Id of the source refered by this
 	 */
-	private String profileId;
+	private String elementId;
 	/**
 	 * The userprofile parent 
 	 */
@@ -64,7 +64,7 @@ public abstract class CustomSource implements CustomElement {
 			log.debug("CustomSource("+profile.getId()+","+user.getUserId()+")");
 		}
 		userProfile = user;
-		profileId = profile.getId();
+		elementId = profile.getId();
 	}
 
 	/**
@@ -98,7 +98,7 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	public String getName() throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException{
 		if (log.isDebugEnabled()){
-			log.debug("id="+profileId+" - getName()");
+			log.debug("id="+elementId+" - getName()");
 		}
 		return getProfile().getName();
 	}
@@ -120,7 +120,7 @@ public abstract class CustomSource implements CustomElement {
 	public List<Item> getItems(ExternalService ex) 
 		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException  {
 		if (log.isDebugEnabled()){
-			log.debug("id="+profileId+" - getItems(externalService)");
+			log.debug("id="+elementId+" - getItems(externalService)");
 		}
 		return getProfile().getItems(ex);
 	}
@@ -130,7 +130,7 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	public void setItemAsRead(String itemId) {
 		if (log.isDebugEnabled()){
-			log.debug("id="+profileId+" - setItemAsRead("+itemId+")");
+			log.debug("id="+elementId+" - setItemAsRead("+itemId+")");
 		}
 		readItems.add(itemId);	
 		DomainTools.getDaoService().updateCustomSource(this);
@@ -140,7 +140,7 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	public void setItemAsUnRead(String itemId) {
 		if (log.isDebugEnabled()){
-			log.debug("id="+profileId+" - setItemAsUnRead("+itemId+")");
+			log.debug("id="+elementId+" - setItemAsUnRead("+itemId+")");
 		}
 		readItems.remove(itemId);
 		DomainTools.getDaoService().updateCustomSource(this);
@@ -151,7 +151,7 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	public boolean isItemRead(String itemId) {
 		if (log.isDebugEnabled()){
-			log.debug("id="+profileId+" - isItemRead("+itemId+")");
+			log.debug("id="+elementId+" - isItemRead("+itemId+")");
 		}
 		return readItems.contains(itemId);
 	}
@@ -191,7 +191,7 @@ public abstract class CustomSource implements CustomElement {
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getElementId()
 	 */
 	public String getElementId(){
-		return profileId;
+		return elementId;
 	}
 
 	/**
@@ -213,22 +213,6 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	private void setUserProfile(UserProfile userProfile) {
 		this.userProfile = userProfile;
-	}
-
-	/**
-	 * @return profileID os this custom source
-	 */
-	// TODO (GB --> RB) : retirer cette methode, meme usage que getElementId()
-	private String getProfileId() {
-		return profileId;
-	}
-
-	/**
-	 * @param profileId
-	 */
-	// TODO (GB --> RB) : renommer cette methode, en setElementId()
-	private void setProfileId(String profileId) {
-		this.profileId = profileId;
 	}
 
 	/**

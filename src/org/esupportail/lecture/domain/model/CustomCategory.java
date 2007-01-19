@@ -38,7 +38,7 @@ public abstract class CustomCategory implements CustomElement {
 	/**
 	 * The Id of the categoryProfile referring by this CustomCategory
 	 */
-	private String profileId;	
+	private String elementId;	
 	/**
 	 * database pk
 	 */
@@ -56,7 +56,7 @@ public abstract class CustomCategory implements CustomElement {
 		if (log.isDebugEnabled()){
 			log.debug("CustomCategory("+profileId+","+user.getUserId()+")");
 		}
-		this.profileId = profileId;
+		this.elementId = profileId;
 		this.userProfile = user;
 	}
 
@@ -120,7 +120,7 @@ public abstract class CustomCategory implements CustomElement {
 	 */
 	public String getName() throws CategoryProfileNotFoundException  {
 		if (log.isDebugEnabled()){
-			log.debug("id="+profileId+" - getName()");
+			log.debug("id="+elementId+" - getName()");
 		}
 		return getProfile().getName();
 	}
@@ -182,18 +182,9 @@ public abstract class CustomCategory implements CustomElement {
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getElementId()
 	 */
 	public String getElementId() {
-		return profileId;
+		return elementId;
 	}
 
-	/**
-	 * Sets categoryProfile Id
-	 * @param profileId
-	 */
-	// TODO (GB --> RB) : renommer cette methode, en setElementId()
-	private void setProfileId(String profileId) {
-		this.profileId = profileId;
-	}
-	
 	/**
 	 * @return database pk
 	 */
@@ -207,21 +198,5 @@ public abstract class CustomCategory implements CustomElement {
 	public void setCustomCategoryPK(long customCategoryPK) {
 		this.customCategoryPK = customCategoryPK;
 	}
-	
-
-	/**
-	 * @return profile id
-	 */
-	// TODO (GB --> RB) : retirer cette methode, meme usage que getElementId()
-	private String getProfileId() {
-		return profileId;
-	}
-
-	
-
-	
-		
-
-
 
 }

@@ -17,11 +17,7 @@ package org.esupportail.lecture.domain.model;
 public class GlobalSource extends Source {
 
 	
-// TODO (GB --> RB : tu sais c'est quoi ?)
-//	/**
-//	 * 
-//	 */
-//	private static final long serialVersionUID = 1L;
+
 
 /* 
  *************************** PROPERTIES ******************************** */	
