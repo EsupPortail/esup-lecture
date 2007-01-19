@@ -16,9 +16,12 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.FacadeService;
 import org.esupportail.lecture.domain.beans.CategoryBean;
+import org.esupportail.lecture.domain.beans.CategoryDummyBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
+import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
@@ -76,6 +79,10 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 * contextId store the contextId
 	 */
 	private String contextId = null;
+	/**
+	 * DummyId is used to have an unique ID for DummyCategory or DummySource
+	 */
+	private int DummyId = 0;
 	/**
 	 * Controller constructor
 	 */
@@ -192,10 +199,7 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 					Iterator<CategoryBean> iter = categories.iterator();
 					while (iter.hasNext()) {
 						CategoryBean categoryBean = iter.next();
-						CategoryWebBean categoryWebBean =  new CategoryWebBean();
-						categoryWebBean.setId(categoryBean.getId());
-						categoryWebBean.setName(categoryBean.getName());
-						categoryWebBean.setDescription(categoryBean.getDescription());
+						CategoryWebBean categoryWebBean = populateCategoryWebBean(categoryBean);
 						//find sources in this category
 						List<SourceBean> sources = getSources(categoryBean);
 						List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
@@ -203,10 +207,7 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 							Iterator<SourceBean> iter2 = sources.iterator();
 							while (iter2.hasNext()) {
 								SourceBean sourceBean = iter2.next();
-								SourceWebBean sourceWebBean = new SourceWebBean();
-								sourceWebBean.setId(sourceBean.getId());
-								sourceWebBean.setName(sourceBean.getName());
-								sourceWebBean.setType(sourceBean.getType());
+								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean);
 								sourcesWeb.add(sourceWebBean);
 							}
 						}
@@ -221,6 +222,52 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 			} 
 		}
 		return context;
+	}
+
+	/**
+	 * populate a SourceWebBean from a SourceBean
+	 * @param sourceBean
+	 * @return pupulated SourceWebBean
+	 * @throws DomainServiceException
+	 */
+	private SourceWebBean populateSourceWebBean(SourceBean sourceBean) throws DomainServiceException {
+		SourceWebBean sourceWebBean = new SourceWebBean();
+		if (sourceBean instanceof SourceDummyBean) {
+			String cause = ((SourceDummyBean)sourceBean).getCause().getMessage();
+			String id = "DummySrc:" + DummyId++ ;
+			sourceWebBean.setId(id);
+			sourceWebBean.setName(cause);
+			sourceWebBean.setType(AvailabilityMode.OBLIGED);
+		}
+		else {
+			sourceWebBean.setId(sourceBean.getId());
+			sourceWebBean.setName(sourceBean.getName());
+			sourceWebBean.setType(sourceBean.getType());			
+		}
+		return sourceWebBean;
+	}
+
+	/**
+	 * populate a CategoryWebBean from a CategoryBean
+	 * @param categoryBean
+	 * @return pupulated CategoryWebBean
+	 * @throws DomainServiceException
+	 */
+	private CategoryWebBean populateCategoryWebBean(CategoryBean categoryBean) throws DomainServiceException {
+		CategoryWebBean categoryWebBean =  new CategoryWebBean();
+		if (categoryBean instanceof CategoryDummyBean) {
+			String cause = ((CategoryDummyBean)categoryBean).getCause().getMessage();
+			String id = "DummyCat:" + DummyId++ ;
+			categoryWebBean.setId(id);
+			categoryWebBean.setName("Error!");
+			categoryWebBean.setDescription(cause);			
+		} 
+		else {
+			categoryWebBean.setId(categoryBean.getId());
+			categoryWebBean.setName(categoryBean.getName());
+			categoryWebBean.setDescription(categoryBean.getDescription());			
+		}
+		return categoryWebBean;
 	}
 
 	/**

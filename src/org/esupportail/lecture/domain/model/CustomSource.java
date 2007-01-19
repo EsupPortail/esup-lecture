@@ -156,6 +156,26 @@ public abstract class CustomSource implements CustomElement {
 		return readItems.contains(itemId);
 	}
 
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null) return false;
+		if (!(o instanceof CustomSource)) return false;
+		final CustomSource customSource = (CustomSource) o;
+		if (!customSource.getElementId().equals(this.getElementId())) return false;
+		return true;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return this.getElementId().hashCode();
+	}
 	
 	/* 
 	 ************************** ACCESSORS **********************************/
