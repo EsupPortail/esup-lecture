@@ -77,7 +77,8 @@
       </listitem>
 
       <listitem>
-        <para>Adapt properties/exceptionHandling/exceptionHandlin.xml.</para>
+        <para>Adapt properties/exceptionHandling/exceptionHandling.xml for
+        exception handling configuration.</para>
 
         <para><note>
             <para>By default, exception reports are also sent to an archived
@@ -91,11 +92,12 @@
       </listitem>
 
       <listitem>
-        <para>Adapt properties/smtp/smtp.xml</para>
+        <para>Adapt properties/smtp/smtp.xml for SMTP configuration.</para>
       </listitem>
 
       <listitem>
-        <para>Adapt properties/dao/hibernate/hibernate.cfg.xml</para>
+        <para>Adapt properties/dao/hibernate/hibernate.cfg.xml for database
+        confuguration.</para>
       </listitem>
 
       <listitem>
@@ -181,11 +183,11 @@
     <section>
       <title>Technical configuration</title>
 
-      <para> Adapt to your environment these configuration files:</para>
+      <para>Adapt to your environment these configuration files:</para>
 
       <itemizedlist>
         <listitem>
-          <para>logging/log4j.properties</para>
+          <para>logging/log4j.properties for logging configuration</para>
         </listitem>
       </itemizedlist>
     </section>

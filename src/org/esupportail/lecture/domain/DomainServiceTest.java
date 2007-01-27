@@ -209,7 +209,9 @@ public class DomainServiceTest implements DomainService {
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToSource(java.lang.String, java.lang.String, java.lang.String)
+	 * @param uid
+	 * @param categorieId
+	 * @param sourceId
 	 */
 	public void unsubscribeToSource(String uid, String categorieId, String sourceId) {
 		// TODO Auto-generated method stub

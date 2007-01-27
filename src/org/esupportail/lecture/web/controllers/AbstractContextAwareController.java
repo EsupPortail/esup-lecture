@@ -30,7 +30,7 @@ public abstract class AbstractContextAwareController extends AbstractDomainAware
 	}
 
 	/**
-	 * @see org.esupportail.blank.web.controllers.AbstractDomainAwareBean#afterPropertiesSetInternal()
+	 * @see org.esupportail.lecture.web.controllers.AbstractDomainAwareBean#afterPropertiesSetInternal()
 	 */
 	@Override
 	public void afterPropertiesSetInternal() {
@@ -53,7 +53,7 @@ public abstract class AbstractContextAwareController extends AbstractDomainAware
 	}
 
 	/**
-	 * @see org.esupportail.blank.web.controllers.AbstractDomainAwareBean#getCurrentUser()
+	 * @see org.esupportail.lecture.web.controllers.AbstractDomainAwareBean#getCurrentUser()
 	 */
 	@Override
 	protected User getCurrentUser() {

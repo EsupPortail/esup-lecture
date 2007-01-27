@@ -91,7 +91,7 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.domain.beans.SourceBean#setType(java.lang.String)
+	 * @see org.esupportail.lecture.domain.beans.SourceBean#setType(org.esupportail.lecture.domain.model.AvailabilityMode)
 	 */
 	@Override
 	public void setType(AvailabilityMode type) throws DomainServiceException {

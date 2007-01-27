@@ -95,9 +95,6 @@ public class DaoServiceStub  implements DaoService {
 		return userProfile;
 	}
 
-	/**
-	 * @see org.esupportail.lecture.dao.DaoService#addUserProfile(org.esupportail.lecture.domain.model.UserProfile)
-	 */
 	public void saveUserProfile(UserProfile userProfile) {
 		if (log.isDebugEnabled()){
 			log.debug("saveUserProfile("+userProfile.getUserId()+")");

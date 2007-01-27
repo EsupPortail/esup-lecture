@@ -46,12 +46,59 @@
 
     <itemizedlist>
       <listitem>
+        <para>Version 0.6</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>Version 0.6</title>
+
+    <itemizedlist>
+      <listitem>
         <para>Fix localhost in jsp (bug #1390)</para>
       </listitem>
 
       <listitem>
         <para>Change "userId" in <command>esup-lecture.xml</command> from
         "DisplayNane" to "username" (bug #1389)</para>
+      </listitem>
+
+      <listitem>
+        <para>Document exception reports sent to archived bugs mailing list
+        (Feature Request #1400)</para>
+      </listitem>
+
+      <listitem>
+        <para>Sources integrated in packaging (Feature Request #1434)</para>
+      </listitem>
+
+      <listitem>
+        <para>Database configuation specified in documentation (Feature
+        Request #1383)</para>
+      </listitem>
+
+      <listitem>
+        <para>Implemented:</para>
+
+        <para><itemizedlist>
+            <listitem>
+              <para>DAO for user preferences persistence</para>
+            </listitem>
+
+            <listitem>
+              <para>Edit mode</para>
+            </listitem>
+
+            <listitem>
+              <para>Exceptions on XML parsing, http error (timeout, not
+              found)</para>
+            </listitem>
+
+            <listitem>
+              <para>Log</para>
+            </listitem>
+          </itemizedlist></para>
       </listitem>
     </itemizedlist>
   </section>

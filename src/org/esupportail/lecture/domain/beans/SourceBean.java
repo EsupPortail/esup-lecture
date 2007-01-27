@@ -64,8 +64,8 @@ public class SourceBean {
 	}
 
 	/**
-	 * constructor initializing object with a sourceProfile
-	 * @param sourceProfile
+	 * constructor initializing object with ProfileAvailability
+	 * @param profAv ProfileAvailability
 	 */
 	public SourceBean(ProfileAvailability profAv) {
 		ElementProfile elt = profAv.getProfile();

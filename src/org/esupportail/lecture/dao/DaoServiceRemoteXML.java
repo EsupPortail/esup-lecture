@@ -24,7 +24,6 @@ import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.domain.model.VisibilitySets;
-import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
 import org.springmodules.cache.CachingModel;
 import org.springmodules.cache.provider.CacheProviderFacade;
@@ -56,7 +55,7 @@ public class DaoServiceRemoteXML {
 	private Hashtable<String, Long> sourceLastAccess = new Hashtable<String, Long>();
 	
 	/**
-	 * @throws ErrorException 
+	 * @param profile 
 	 * @return a managedCategory
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(ManagedCategoryProfile)
 	 */
@@ -244,8 +243,8 @@ public class DaoServiceRemoteXML {
 	}
 
 	/**
-	 * get a source from the web without Web
-	 * @see DaoServiceRemoteXML#getSource(String, int, String, boolean)
+	 * get a source form the Web (without cache)
+	 * @param sourceProfile source profile of source to get
 	 * @return the source
 	 */
 	private Source getFreshSource(SourceProfile sourceProfile) {

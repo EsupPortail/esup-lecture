@@ -294,7 +294,6 @@ public class CustomContext implements CustomElement {
 
 	/**
 	 * @return contextId
-	 * @see CustomContext#contextId
 	 */
 	public String getElementId() {
 		return elementId;

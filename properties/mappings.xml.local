@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mappings SYSTEM "mappings.dtd" >
+<mappings>
+	<mapping 
+		sourceURL="http://localhost:8080/data/rss_infocri.xml"
+		xsltFile="http://localhost:8080/data/stylesheet01.xsl"
+		itemXPath="/rdf:RDF/default:item">
+		<XPathNameSpace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+		<XPathNameSpace prefix="default" uri="http://purl.org/rss/1.0/" />
+	</mapping>
+	<mapping 
+		rootElement="rss"
+		xsltFile="http://localhost:8080/data/stylesheet02.xsl"
+		itemXPath="/rss/channel/item">
+	</mapping>
+	<mapping 
+		rootElement="flash"
+		xsltFile="http://localhost:8080/data/flash.xsl"
+		itemXPath="/flash/object">
+	</mapping>
+	<mapping 
+		rootElement="java"
+		xsltFile="http://localhost:8080/data/java.xsl"
+		itemXPath="/java/applet">
+	</mapping>
+
+</mappings>
