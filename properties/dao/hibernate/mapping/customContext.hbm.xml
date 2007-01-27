@@ -12,13 +12,13 @@
 		<property name="treeSize" type="int">
 			<column name="TREEWINWIDTH" not-null="true"/>
 		</property>
-		<property name="contextId" type="string">
-			<column name="CONTEXTID" length="250" not-null="true" unique="true"/>
+		<property name="elementId" type="string">
+			<column name="ELEMENTID" length="250" not-null="true" unique="true"/>
 		</property>
 		<many-to-one name="userProfile" class="UserProfile">
 			<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
 		</many-to-one>
-		<map name="subscriptions" cascade="save-update">
+		<map name="subscriptions" cascade="save-update,lock,merge">
 			<key foreign-key="FK_CUSTOMCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED">
 				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED"/>
 			</key>
@@ -27,7 +27,7 @@
 				I use a formula (so just a read-only access) because when I use a <column> hibernate tries to put null in the key when
 				I remove CustomManagedCategory from CustomContext.subscriptions and this violates not null constraint on the column table
 				 -->
-				<formula>PROFILEID</formula>
+				<formula>ELEMENTID</formula>
 			</map-key>
 			<one-to-many class="CustomManagedCategory" />
 		</map>

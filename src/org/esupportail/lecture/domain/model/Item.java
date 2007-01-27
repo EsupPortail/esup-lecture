@@ -25,6 +25,27 @@ public class Item {
 	/*
 	 *************************** METHODS *********************************** */	
 
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null) return false;
+		if (!(o instanceof Item)) return false;
+		final Item item = (Item) o;
+		if (!item.getId().equals(this.getId())) return false;
+		return true;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return this.getId().hashCode();
+	}
+
 	/*
 	 *************************** ACCESSORS ********************************* */	
 

@@ -156,6 +156,27 @@ public abstract class CustomCategory implements CustomElement {
 	public abstract void unsubscribeToSource(String sourceId, ExternalService ex) 
 		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
 		ComputeFeaturesException, SourceObligedException;
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null) return false;
+		if (!(o instanceof CustomCategory)) return false;
+		final CustomCategory customCategory = (CustomCategory) o;
+		if (!customCategory.getElementId().equals(this.getElementId())) return false;
+		return true;
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return this.getElementId().hashCode();
+	}
 	
 	/* 
 	 ************************** ACCESSORS **********************************/
@@ -197,6 +218,13 @@ public abstract class CustomCategory implements CustomElement {
 	 */
 	public void setCustomCategoryPK(long customCategoryPK) {
 		this.customCategoryPK = customCategoryPK;
+	}
+
+	/**
+	 * @param elementId
+	 */
+	public void setElementId(String elementId) {
+		this.elementId = elementId;
 	}
 
 }

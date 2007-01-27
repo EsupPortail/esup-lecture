@@ -228,6 +228,13 @@ public abstract class CustomSource implements CustomElement {
 	private void setReadItems(Set<String> readItems) {
 		this.readItems = readItems;
 	}
+
+	/**
+	 * @param elementId
+	 */
+	public void setElementId(String elementId) {
+		this.elementId = elementId;
+	}
 	
 
 	

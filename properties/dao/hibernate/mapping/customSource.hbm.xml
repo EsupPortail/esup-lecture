@@ -15,10 +15,10 @@
 		<many-to-one name="userProfile" class="UserProfile">
 			<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
 		</many-to-one>
-		<property name="profileId" type="string">
-			<column name="PROFILEID" length="250" not-null="true" unique="true"/>
+		<property name="elementId" type="string">
+			<column name="ELEMENTID" length="250" not-null="true" unique="true"/>
 		</property>
-		<set name="readItems" table="READITEM">
+		<set name="readItems" table="READITEM" cascade="save-update,lock,merge">
 			<key foreign-key="FK_READITEM_CUSTOMSOURCE_CUSTOMSOURCEPK">
 				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true"/>
 			</key>

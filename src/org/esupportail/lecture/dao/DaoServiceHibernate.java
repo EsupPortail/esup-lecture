@@ -74,6 +74,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		if (log.isDebugEnabled()) {
 			log.debug("saveUserProfile PK="+userProfile.getUserProfilePK());			
 		}
+		//userProfile = (UserProfile)getHibernateTemplate().merge(userProfile);
 		getHibernateTemplate().saveOrUpdate(userProfile);
 		if (useFlush) {
 			getHibernateTemplate().flush();
@@ -100,6 +101,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		if (log.isDebugEnabled()) {
 			log.debug("updateUserProfile PK="+userProfile.getUserProfilePK());			
 		}
+		//userProfile = (UserProfile)getHibernateTemplate().merge(userProfile);
 		getHibernateTemplate().saveOrUpdate(userProfile);
 		if (useFlush) {
 			getHibernateTemplate().flush();
@@ -113,6 +115,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		if (log.isDebugEnabled()) {
 			log.debug("updateCustomContext PK="+customContext.getCustomContextPK());			
 		}
+		//customContext = (CustomContext)getHibernateTemplate().merge(customContext);
 		getHibernateTemplate().saveOrUpdate(customContext);
 	}
 
@@ -149,7 +152,11 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		if (log.isDebugEnabled()) {
 			log.debug("updateCustomCategory PK="+cca.getCustomCategoryPK());			
 		}
+		//cca = (CustomCategory)getHibernateTemplate().merge(cca);
 		getHibernateTemplate().saveOrUpdate(cca);
+		if (useFlush) {
+			getHibernateTemplate().flush();
+		} 
 	}
 
 	/**
@@ -170,9 +177,13 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void updateCustomSource(CustomSource source) {
 		if (log.isDebugEnabled()) {
-			log.debug("updateCustomSource PK=?????");			
+			log.debug("updateCustomSource PK="+source.getElementId());			
 		}
+		//source = (CustomSource)getHibernateTemplate().merge(source);
 		getHibernateTemplate().saveOrUpdate(source);
+		if (useFlush) {
+			getHibernateTemplate().flush();
+		} 
 	}
 
 }

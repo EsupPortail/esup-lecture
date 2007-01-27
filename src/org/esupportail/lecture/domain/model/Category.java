@@ -66,7 +66,7 @@ public abstract class Category implements Element,Serializable {
 		}
 		SourceProfile profile = sourceProfilesHash.get(id);
 		if (profile==null){
-			String errorMsg = "SourceProfile "+id+"is not found in Category "+this.profileId;
+			String errorMsg = "SourceProfile "+id+" is not found in Category "+this.profileId;
 			log.error(errorMsg);
 			throw new SourceProfileNotFoundException(errorMsg);
 		}
