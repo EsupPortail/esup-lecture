@@ -132,8 +132,7 @@
 	***************************************************
 				DAO SERVICE
 	***************************************************-->
-	
-	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceStub">
+	<bean id="daoServiceTest" class="org.esupportail.lecture.dao.DaoServiceStub">
 		<description>
 			This bean provides the dao service of the application, used by the 
 			domain.model.
@@ -143,8 +142,7 @@
 			<ref bean="daoServiceRemoteXML" />
 		</property>
 	</bean>
-	 
-<!-- 
+
 	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceImpl">
 		<description>
 			This bean provides the dao service of the application, used by the 
@@ -158,18 +156,18 @@
 			<ref bean="daoServiceHibernate"/>
 		</property>
 	</bean>
--->
+
 	<bean id="daoServiceRemoteXML" 
         class="org.esupportail.lecture.dao.DaoServiceRemoteXML">
         <property name="cacheProviderFacade" ref="cacheProviderFacade" />
 		<property name="cachingModel" ref="cachingModel" />
 	</bean>
-<!-- 
+
 	<bean id="daoServiceHibernate" parent="hibernateSessionFactoryContainer"
         class="org.esupportail.lecture.dao.DaoServiceHibernate">
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
--->
+
     <bean id="cacheProviderFacade"
         class="org.springmodules.cache.provider.ehcache.EhCacheFacade">
         <property name="cacheManager" ref="cacheManager" />
