@@ -169,6 +169,7 @@ public abstract class CustomSource implements CustomElement {
 			log.debug("id="+elementId+" - itemDisplayMode("+mode+")");
 		}
 		this.mode = mode;
+		DomainTools.getDaoService().updateCustomSource(this);
 	}
 	
 	/**
