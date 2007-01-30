@@ -12,10 +12,10 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
@@ -25,7 +25,6 @@ import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
-import org.esupportail.lecture.exceptions.domain.VisibilityNotFoundException;
 
 /**
  * @author bourges
@@ -106,6 +105,16 @@ public interface DomainService {
 	 * @see FacadeService#marckItemAsUnread(String, String, String)
 	 */
 	void marckItemAsUnread(String uid, String sourceId,String itemId)  throws InternalDomainException;
+	
+	
+	/**
+	 * @param uid
+	 * @param sourceId
+	 * @param mode
+	 * @throws InternalDomainException 
+	 * @see FacadeService#marckItemDisplayMode(String,String,ItemDisplayMode)
+	 */
+	void markItemDisplayMode(String uid, String sourceId, ItemDisplayMode mode) throws InternalDomainException;
 	
 	/**
 	 * @param categoryId 
@@ -191,5 +200,8 @@ public interface DomainService {
 		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
 		InternalDomainException, CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
 		SourceObligedException;
+	
+	
+	
 
 }

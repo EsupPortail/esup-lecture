@@ -13,6 +13,7 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
@@ -27,7 +28,6 @@ import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
-import org.esupportail.lecture.exceptions.domain.VisibilityNotFoundException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
@@ -187,6 +187,7 @@ public class FacadeService implements InitializingBean {
 	 * @throws InternalDomainException 
 	 */
 	public void marckItemAsRead(String uid, String sourceId, String itemId) throws InternalDomainException  {
+		// TODO (GB) gerer l'appel a une seule methode pour les 2 services
 		domainService.marckItemAsRead(uid, sourceId, itemId);
 	}
 
@@ -194,7 +195,7 @@ public class FacadeService implements InitializingBean {
 	 * Mark item as unread
 	 * @param uid user ID
 	 * @param itemId item id
-	 * @param sourceId source if
+	 * @param sourceId source ID
 	 * marck a Item form a source for a user as unread
 	 * @throws InternalDomainException 
 	 */
@@ -202,6 +203,17 @@ public class FacadeService implements InitializingBean {
 		domainService.marckItemAsUnread(uid, sourceId, itemId);
 	}
 
+	/**
+	 * Mark the item display mode for source sourceId
+	 * @param uid user ID
+	 * @param sourceId sourceID
+	 * @param mode the item display mode to set
+	 * @throws InternalDomainException 
+	 */
+	public void marckItemDisplayMode(String uid, String sourceId, ItemDisplayMode mode) throws InternalDomainException {
+		domainService.markItemDisplayMode(uid, sourceId, mode);
+	}
+	
 	/**
 	 * Set the tree size of the customContext
 	 * @param uid user ID
@@ -278,7 +290,6 @@ public class FacadeService implements InitializingBean {
 		throws ManagedCategoryProfileNotFoundException, CategoryProfileNotFoundException, CategoryNotLoadedException, 
 		SourceProfileNotFoundException, UserNotSubscribedToCategoryException, CategoryNotVisibleException, 
 		SourceNotVisibleException, InternalDomainException {
-		// TODO (GB)supprimer le context + javadoc
 		domainService.subscribeToSource(uid, categorieId, sourceId, externalService);
 	}
 

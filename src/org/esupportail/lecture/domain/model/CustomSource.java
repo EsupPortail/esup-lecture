@@ -46,6 +46,11 @@ public abstract class CustomSource implements CustomElement {
 	 * Set of read item by User
 	 */
 	private Set<String> readItems = new HashSet<String>();
+	
+	/**
+	 * item display mode of this customSource 
+	 */
+	private ItemDisplayMode mode = ItemDisplayMode.ALL;
 	/**
 	 * Database Primary Key
 	 */
@@ -156,6 +161,26 @@ public abstract class CustomSource implements CustomElement {
 		return readItems.contains(itemId);
 	}
 
+	/**
+	 * @param mode item display mode to set
+	 */
+	public void setItemDisplayMode(ItemDisplayMode mode){
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - itemDisplayMode("+mode+")");
+		}
+		this.mode = mode;
+	}
+	
+	/**
+	 * @return the item display mode of this customSource
+	 */
+	public ItemDisplayMode getItemDisplayMode(){
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - itemDisplayMode("+mode+")");
+		}
+		return mode;
+	}
+	
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */

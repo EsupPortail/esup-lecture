@@ -17,6 +17,7 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
@@ -71,22 +72,26 @@ public class DomainTest {
 //			testGetAvailableSourceAlternativeWay(); 
 			
 			/* Test normal behavior */
-//			testGetConnectedUser();
-//			testGetContext();
-//			testGetAvailableCategories();
-//			testGetAvailableSources();
+			testGetConnectedUser();
+			testGetContext();
+			testGetAvailableCategories();
+			testGetAvailableSources();
 //			testGetItems();
 		
 			/* small actions */
 //			testMarkItemAsRead();
 //			testSetTreeSize();
 //			testFoldCategory();
+			testSetItemDisplayMode();
 			
 			/* test mode EDIT */
-			testGetConnectedUser();
-			testGetContext();
-			testGetVisibleSources();
-			testSubUnSubscribeToSource();
+//			testGetConnectedUser();
+//			testGetContext();
+//			testGetVisibleSources();
+//			testSubUnSubscribeToSource();
+			
+		
+			
 			
 		} catch (InternalExternalException e) {
 			System.out.println("\n!!! EXCEPTION !!!");
@@ -348,16 +353,23 @@ public class DomainTest {
 	private static void testMarkItemAsRead() throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException {
 		printIntro("markItemAsRead");
 		System.out.println("Marquage de l'item "+itemId+" comme lu");
-		facadeService.marckItemAsRead(userId, "un", itemId);
+		facadeService.marckItemAsRead(userId, "m:cp5:un", itemId);
 		testGetItems();
 		System.out.println("Marquage de l'item "+itemId+" comme non lu");
-		facadeService.marckItemAsUnread(userId, "un", itemId);
+		facadeService.marckItemAsUnread(userId, "m:cp5:un", itemId);
 		testGetItems();
 		
 		
 	}
 
-
+	private static void testSetItemDisplayMode() throws DomainServiceException {
+		printIntro("markItemDisplayMode");
+		System.out.println("Marquage de la source 'm:cp5:un' comme UNREADFIRST");
+		facadeService.marckItemDisplayMode(userId, "m:cp5:un", ItemDisplayMode.UNREADFIRST);
+		testGetAvailableSources();
+	}
+	
+	
 	/**
 	 * Test of service setTreeSize
 	 * @throws TreeSizeErrorException 

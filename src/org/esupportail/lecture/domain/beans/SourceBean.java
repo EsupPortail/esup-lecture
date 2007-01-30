@@ -8,6 +8,7 @@ package org.esupportail.lecture.domain.beans;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.ElementProfile;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.ProfileAvailability;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
@@ -39,6 +40,11 @@ public class SourceBean {
 	 * "owner" --> For personal sources
 	 */
 	private AvailabilityMode type;
+	
+	/**
+	 * the item display mode of the source
+	 */
+	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.ALL;
 
 	/*
 	 *************************** INIT ************************************** */	
@@ -60,6 +66,8 @@ public class SourceBean {
 		
 		this.name = profile.getName();
 		this.id = profile.getId();
+		this.itemDisplayMode = customSource.getItemDisplayMode();
+		
 		
 	}
 
@@ -72,6 +80,7 @@ public class SourceBean {
 		this.name = elt.getName();
 		this.id = elt.getId();
 		this.type = profAv.getMode();
+		
 	}
 	
 	/*
@@ -120,6 +129,19 @@ public class SourceBean {
 		this.type = type;
 	}
 	
+	/**
+	 * @return item display mode
+	 */
+	public ItemDisplayMode getItemDisplayMode() throws DomainServiceException {
+		return itemDisplayMode;
+	}
+
+	/**
+	 * @param itemDisplayMode
+	 */
+	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) throws DomainServiceException {
+		this.itemDisplayMode = itemDisplayMode;
+	}
 	/*
 	 *************************** METHODS *********************************** */	
 	/**
@@ -132,11 +154,14 @@ public class SourceBean {
 		string += "     Name = " + name.toString() + "\n";
 		string += "     Type = "; 
 		if (type != null){
-			string += type + "\n";
+			string += type;
 		}
+		string += "\n     displayMode = " + itemDisplayMode.toString() + "\n";
 		
 		return string;
 	}
+
+
 	
 	
 }

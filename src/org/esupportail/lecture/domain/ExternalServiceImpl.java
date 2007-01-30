@@ -146,7 +146,7 @@ public class ExternalServiceImpl implements ExternalService {
 			if (PortletUtil.isPortletRequest(facesContext)) {
 				ret = portletService;
 			} else {
-				// TODO make better
+				// TODO (RB/GB) make better
 				ret = servletService;
 			}			
 		} else {

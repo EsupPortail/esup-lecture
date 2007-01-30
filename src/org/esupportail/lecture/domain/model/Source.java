@@ -139,12 +139,9 @@ public abstract class Source implements Element,Serializable {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+this.profileId+" - computeXslt()");
     	}
-		// TODO (GB later) revoir cet algo
+		
 		Channel channel = DomainTools.getChannel();
 		
-//		String setXsltURL = xsltURL;
-//		String setItemXPath = itemXPath;
-			
 		if (log.isDebugEnabled()) {
 			log.debug("Source::computeXslt() : "+profileId);
 			log.debug("DTD : "+dtd);

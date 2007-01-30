@@ -12,6 +12,7 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
@@ -224,6 +225,11 @@ public class DomainServiceTest implements DomainService {
 	public void unsubscribeToSource(String uid, String categorieId, String sourceId, ExternalService ex) {
 		// TODO Auto-generated method stub
 			
+	}
+
+	public void markItemDisplayMode(String uid, String sourceId, ItemDisplayMode mode) throws InternalDomainException {
+		// TODO Auto-generated method stub
+				
 	}
 
 		

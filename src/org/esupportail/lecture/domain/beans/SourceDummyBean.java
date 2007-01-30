@@ -6,6 +6,7 @@
 package org.esupportail.lecture.domain.beans;
 
 import org.esupportail.lecture.domain.model.AvailabilityMode;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.UnknownException;
 
@@ -15,7 +16,7 @@ import org.esupportail.lecture.exceptions.domain.UnknownException;
  *
  */
 public class SourceDummyBean extends SourceBean implements DummyBean {
-	// TODO (GB later ) :cf TODO de CategoryDummyBean
+	// TODO (GB later) :cf celui de CategoryDummyBean
 	
 	/* 
 	 *************************** PROPERTIES ******************************** */	
@@ -97,6 +98,25 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	public void setType(AvailabilityMode type) throws DomainServiceException {
 		throw cause;
 	}
+	
+	
+	/**
+	 * @see org.esupportail.lecture.domain.beans.SourceBean#getItemDisplayMode()
+	 */
+	@Override
+	public ItemDisplayMode getItemDisplayMode() throws DomainServiceException {
+		throw cause;
+	}
+
+
+	/**
+	 * @see org.esupportail.lecture.domain.beans.SourceBean#setItemDisplayMode(org.esupportail.lecture.domain.model.ItemDisplayMode)
+	 */
+	@Override
+	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) throws DomainServiceException {
+		throw cause;
+	}
+	
 	
 	/*
 	 *************************** METHODS *********************************** */		

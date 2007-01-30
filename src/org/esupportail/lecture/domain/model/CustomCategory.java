@@ -136,7 +136,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws SourceNotVisibleException 
 	 * @throws ComputeFeaturesException 
 	 */
-	// TODO faire le throw SubcriptionInPersonalImpossibleException pour le personal
+	// TODO (GB later) faire le throw SubcriptionInPersonalImpossibleException pour le personal
 	public abstract void subscribeToSource(String sourceId, ExternalService ex) 
 		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
 		SourceNotVisibleException, ComputeFeaturesException;

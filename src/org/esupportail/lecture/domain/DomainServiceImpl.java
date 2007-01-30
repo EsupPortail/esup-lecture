@@ -22,8 +22,8 @@ import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.ProfileAvailability;
-import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
@@ -43,7 +43,6 @@ import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
-import org.esupportail.lecture.exceptions.domain.VisibilityNotFoundException;
 import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 import org.springframework.util.Assert;
 
@@ -182,7 +181,6 @@ public class DomainServiceImpl implements DomainService {
 	 * @return a list of sourceBean
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryProfileNotFoundException
-	 * @throws InternalDomainException 
 	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
@@ -334,7 +332,7 @@ public class DomainServiceImpl implements DomainService {
 	/**
 	 * Mark item as unread
 	 * @param uid user Id for user uid
-	 * @param sourceId sourceId of the item
+	 * @param sourceId source Id 
 	 * @param itemId item Id
 	 * @throws InternalDomainException 
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemAsUnread(java.lang.String, java.lang.String, java.lang.String)
@@ -358,7 +356,34 @@ public class DomainServiceImpl implements DomainService {
 		
 	}
 
-
+	/**
+	 * Mark item display mode on source for a user
+	 * @param uid user ID
+	 * @param sourceId source ID
+	 * @param mode item display mode to set
+	 * @throws InternalDomainException 
+	 * @see DomainService#markItemDisplayMode(String, String, ItemDisplayMode)
+	 */
+	public void markItemDisplayMode(String uid, String sourceId, ItemDisplayMode mode) throws InternalDomainException{
+		if (log.isDebugEnabled()){
+			log.debug("markItemDisplayMode("+uid+","+sourceId+","+mode+")");
+		}
+		
+		try {
+			/* Get current user profile and customCategory */
+			UserProfile userProfile = channel.getUserProfile(uid);
+			CustomSource customSource;
+			customSource = userProfile.getCustomSource(sourceId);
+			customSource.setItemDisplayMode(mode);
+		} catch (CustomSourceNotFoundException e) {
+			String errorMsg = "CustomSourceNotFoundException for service 'markItemDisplayMode(user "+uid+", source "+sourceId+ ", mode "+mode+ ")";
+			log.error(errorMsg);
+			throw new InternalDomainException(errorMsg,e);
+		}
+		
+	}
+	
+	
 	/**
 	 * Set the tree size of the customContext
 	 * @param uid user Id for user uid
