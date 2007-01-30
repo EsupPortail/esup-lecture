@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" >
+<channelConfig>
+	<!-- user attribute to define a user Id -->
+	<userId>username</userId>
+	<context 
+	  name = "Très beau context1"
+	  id = "c1">
+	  <description>C'est le context 1 ZZZZZZZZZZZZZZZ</description> 
+	  <refCategoryProfile refId="cp1"/>
+  	  <refCategoryProfile refId="cp2"/>
+  	  <refCategoryProfile refId="cp3"/>
+  	  <refCategoryProfile refId="cp4"/>
+  	  <refCategoryProfile refId="cp5"/>
+	
+	</context>
+	<context 
+	  name = "context2"
+	  id = "c2">
+	  <description>C'est le context 2</description> 
+	  <refCategoryProfile refId="cp1"/>
+  	  <refCategoryProfile refId="cp2"/>
+ 	</context>
+	<context 
+	  name = "context3"
+	  id = "c3">
+	  <description>C'est le context 3</description> 
+  	  <refCategoryProfile refId="cp2"/>
+  	  <refCategoryProfile refId="cp3"/>
+  	  <refCategoryProfile refId="cp4"/>  
+	</context>
+	<context 
+	  name = "Démonstration Esup-Lecture"
+	  id = "default">
+	  <description><![CDATA[
+<h1>Contexte de d&eacute;monstration</h1>
+D&eacute;monstration du canal Lecture.<br>
+<br>
+Pour plus d'informations voir le 
+<a target="_blank" href="http://sourcesup.cru.fr/projects/esup-lecture">site du projet</a>
+	  ]]></description> 
+  	  <refCategoryProfile refId="demo1"/>
+  	  <refCategoryProfile refId="demo2"/>
+  	  <refCategoryProfile refId="demo3"/>
+  	  <refCategoryProfile refId="demo4"/>
+	</context>
+
+	<context 
+	  name = "Servlet mode context"
+	  id = "context">
+	  <description>Test Context used in servlet mode (NOT NORMAL MODE!)</description> 
+  	  <refCategoryProfile refId="demo1"/>
+  	  <refCategoryProfile refId="demo2"/>
+  	  <refCategoryProfile refId="demo3"/>
+  	  <refCategoryProfile refId="demo4"/>
+	</context>
+
+	<categoryProfile 
+		name="categorie1 : no trust cat"
+		
+		id="cp1"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600" >
+		<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+			<allowed/>
+			<autoSubscribed/>
+			<obliged>
+				<regular
+					attribute="sn"
+					value="User"/>					
+			</obliged>
+		</visibility>
+	</categoryProfile>
+ 	<categoryProfile 
+		name="categorie2 : no trust cat"
+		
+		id="cp2"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600" >
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group
+					name="local.0"/>
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+	
+	<categoryProfile 
+		name="categorie3 : trust cat"
+		id="cp3"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600" >
+		<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+			<allowed/> 
+			<autoSubscribed/>
+			<obliged>
+				<regular
+					attribute="sn"
+					value="Useppr"/>					
+			</obliged>
+		</visibility>
+	</categoryProfile>
+	<categoryProfile 
+		name="categorie4  : trust cat"
+		id="cp4"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600" > 
+		<visibility>
+		<!-- allowed and autoSubscribed not yet supported -->
+			<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group
+					name="local.10"/>
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+	<categoryProfile 
+		name="categorie5  : trust cat"
+		id="cp5"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600" > 
+		<visibility>
+		<!-- allowed and autoSubscribed not yet supported -->
+			<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group
+					name="local.10"/>
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+	<categoryProfile 
+		name="Categorie de démo 1"
+		id="demo1"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo1.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600" > 
+		<visibility>
+			<!-- allowed and autoSubscribed not yet supported -->
+			<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group
+					name="local.0"/>
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+		
+	<categoryProfile 
+		name="Categorie de démo 2"
+		id="demo2"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo2.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600" > 
+		<visibility>
+			<!-- allowed and autoSubscribed not yet supported -->
+			<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group
+					name="local.0"/>
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+		
+	<categoryProfile 
+		name="Categorie de démo 3"
+		id="demo3"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo3.xml"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600" > 
+		<visibility>
+			<!-- allowed and autoSubscribed not yet supported -->
+			<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group
+					name="local.0"/>
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+		
+	<categoryProfile 
+		name="Categorie de démo 4"
+		id="demo4"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo4.xml"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600" > 
+		<visibility>
+			<!-- allowed and autoSubscribed not yet supported -->
+			<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group
+					name="local.0"/>
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+		
+</channelConfig>
