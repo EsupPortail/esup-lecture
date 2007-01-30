@@ -92,21 +92,12 @@ public interface DomainService {
 	 * @param uid 
 	 * @param itemId 
 	 * @param sourceId 
+	 * @param isRead
 	 * @throws InternalDomainException 
-	 * @see FacadeService#marckItemAsRead(String, String, String)
+	 * @see FacadeService#marckItemReadMode(String, String, String, boolean)
 	 */
-	void marckItemAsRead(String uid, String sourceId,String itemId)  throws InternalDomainException;
+	void marckItemReadMode(String uid, String sourceId,String itemId, boolean isRead)  throws InternalDomainException;
 
-	/**
-	 * @param uid 
-	 * @param itemId 
-	 * @param sourceId 
-	 * @throws InternalDomainException 
-	 * @see FacadeService#marckItemAsUnread(String, String, String)
-	 */
-	void marckItemAsUnread(String uid, String sourceId,String itemId)  throws InternalDomainException;
-	
-	
 	/**
 	 * @param uid
 	 * @param sourceId

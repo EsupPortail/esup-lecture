@@ -300,19 +300,18 @@ public class DomainServiceImpl implements DomainService {
 		return listItemBean;
 	}
 
-
-
 	/**
 	 * Mark item as read for user uid
 	 * @param uid user Id
 	 * @param sourceId sourceId of the item
 	 * @param itemId item Id
+	 * @param isRead the read Mode (true=item read | false=item not read)
 	 * @throws InternalDomainException 
-	 * @see org.esupportail.lecture.domain.DomainService#marckItemAsRead(java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
-	public void marckItemAsRead(String uid, String sourceId, String itemId) throws InternalDomainException {
+	public void marckItemReadMode(String uid, String sourceId,String itemId, boolean isRead) throws InternalDomainException {
 		if (log.isDebugEnabled()){
-			log.debug("marckItemAsRead("+uid+","+sourceId+","+itemId+")");
+			log.debug("marckItemReadMode("+uid+","+sourceId+","+itemId+","+isRead+")");
 		}
 		
 		try {
@@ -320,42 +319,16 @@ public class DomainServiceImpl implements DomainService {
 			UserProfile userProfile = channel.getUserProfile(uid);
 			CustomSource customSource;
 			customSource = userProfile.getCustomSource(sourceId);
-			customSource.setItemAsRead(itemId);
+			customSource.setItemReadMode(itemId, isRead);
 		} catch (CustomSourceNotFoundException e) {
-			String errorMsg = "CustomSourceNotFoundException for service 'marckItemAsRead(user "+uid+", source "+sourceId+ ", item "+itemId+ ")";
+			String errorMsg = "CustomSourceNotFoundException for service 'marckItemReadMode(user "+uid+", source "+sourceId+ ", item "+itemId+ ", isRead "+isRead+")";
 			log.error(errorMsg);
 			throw new InternalDomainException(errorMsg,e);
 		}
 		
 	}
 	
-	/**
-	 * Mark item as unread
-	 * @param uid user Id for user uid
-	 * @param sourceId source Id 
-	 * @param itemId item Id
-	 * @throws InternalDomainException 
-	 * @see org.esupportail.lecture.domain.DomainService#marckItemAsUnread(java.lang.String, java.lang.String, java.lang.String)
-	 */
-	public void marckItemAsUnread(String uid, String sourceId, String itemId) throws InternalDomainException {
-		if (log.isDebugEnabled()){
-			log.debug("marckItemAsUnread("+uid+","+sourceId+","+itemId+")");
-		}
-		
-		try {
-			/* Get current user profile and customCategory */
-			UserProfile userProfile = channel.getUserProfile(uid);
-			CustomSource customSource;
-			customSource = userProfile.getCustomSource(sourceId);
-			customSource.setItemAsUnRead(itemId);
-		} catch (CustomSourceNotFoundException e) {
-			String errorMsg = "CustomSourceNotFoundException for service 'marckItemAsUnread(user "+uid+", source "+sourceId+ ", item "+itemId+ ")";
-			log.error(errorMsg);
-			throw new InternalDomainException(errorMsg,e);
-		}
-		
-	}
-
+	
 	/**
 	 * Mark item display mode on source for a user
 	 * @param uid user ID

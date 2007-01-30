@@ -61,12 +61,8 @@ public class HomeController extends twoPanesController {
 		}
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		try {
-			if (item.isRead()) {
-				getFacadeService().marckItemAsUnread(getUID(), selectedCategory.getSelectedSource().getId(), item.getId());
-			}
-			else {
-				getFacadeService().marckItemAsRead(getUID(), selectedCategory.getSelectedSource().getId(), item.getId());			
-			}
+			getFacadeService().marckItemReadMode(getUID(), selectedCategory.getSelectedSource().getId(), item.getId(), item.isRead());
+			
 		} catch (Exception e) {
 			throw new WebException("Error in toggleItemReadState",e);
 		}

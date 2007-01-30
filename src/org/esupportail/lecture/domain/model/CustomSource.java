@@ -132,24 +132,20 @@ public abstract class CustomSource implements CustomElement {
 	
 	/**
 	 * @param itemId id of the item to set as read
+	 * @param isRead boolean : true=item is read | false=item is not read
 	 */
-	public void setItemAsRead(String itemId) {
+	public void setItemReadMode(String itemId, boolean isRead) {
 		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - setItemAsRead("+itemId+")");
+			log.debug("id="+elementId+" - setItemReadMode("+itemId+","+isRead+")");
 		}
-		readItems.add(itemId);	
+		if (isRead){
+			readItems.add(itemId);	
+		}else {
+			readItems.remove(itemId);
+		}
 		DomainTools.getDaoService().updateCustomSource(this);
 	}
-	/**
-	 * @param itemId id to the item to set as unread
-	 */
-	public void setItemAsUnRead(String itemId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - setItemAsUnRead("+itemId+")");
-		}
-		readItems.remove(itemId);
-		DomainTools.getDaoService().updateCustomSource(this);
-	}
+	
 	/**
 	 * @param itemId id of the item
 	 * @return true if the item is marked read

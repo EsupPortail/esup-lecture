@@ -183,24 +183,12 @@ public class FacadeService implements InitializingBean {
 	 * @param uid user ID
 	 * @param itemId item id
 	 * @param sourceId source if
+	 * @param isRead boolean : true = item is read | false = item is not read
 	 * marck a Item form a source for a user as read
 	 * @throws InternalDomainException 
 	 */
-	public void marckItemAsRead(String uid, String sourceId, String itemId) throws InternalDomainException  {
-		// TODO (GB) gerer l'appel a une seule methode pour les 2 services
-		domainService.marckItemAsRead(uid, sourceId, itemId);
-	}
-
-	/**
-	 * Mark item as unread
-	 * @param uid user ID
-	 * @param itemId item id
-	 * @param sourceId source ID
-	 * marck a Item form a source for a user as unread
-	 * @throws InternalDomainException 
-	 */
-	public void marckItemAsUnread(String uid, String sourceId, String itemId) throws InternalDomainException {
-		domainService.marckItemAsUnread(uid, sourceId, itemId);
+	public void marckItemReadMode(String uid, String sourceId, String itemId, boolean isRead) throws InternalDomainException {
+		domainService.marckItemReadMode(uid, sourceId, itemId, isRead);
 	}
 
 	/**

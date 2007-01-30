@@ -76,13 +76,13 @@ public class DomainTest {
 			testGetContext();
 			testGetAvailableCategories();
 			testGetAvailableSources();
-//			testGetItems();
+			testGetItems();
 		
 			/* small actions */
-//			testMarkItemAsRead();
+			testMarkItemReadMode();
 //			testSetTreeSize();
 //			testFoldCategory();
-			testSetItemDisplayMode();
+//			testSetItemDisplayMode();
 			
 			/* test mode EDIT */
 //			testGetConnectedUser();
@@ -350,13 +350,13 @@ public class DomainTest {
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	private static void testMarkItemAsRead() throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException {
-		printIntro("markItemAsRead");
+	private static void testMarkItemReadMode() throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException {
+		printIntro("markItemReadMode");
 		System.out.println("Marquage de l'item "+itemId+" comme lu");
-		facadeService.marckItemAsRead(userId, "m:cp5:un", itemId);
+		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId,true);
 		testGetItems();
 		System.out.println("Marquage de l'item "+itemId+" comme non lu");
-		facadeService.marckItemAsUnread(userId, "m:cp5:un", itemId);
+		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId,false);
 		testGetItems();
 		
 		
