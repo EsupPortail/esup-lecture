@@ -62,6 +62,16 @@ public class VirtualSession {
 	}
 	
 	/**
+	 * remove the value corresponding to "key" in the hashtable of the currentVirtualSession
+	 * @param key
+	 * @return the value
+	 */
+	public Object remove(String key) {
+		Hashtable<String,Object> currentVirtualSession = getCurrentVirtualSession();
+		return currentVirtualSession.remove(key);		
+	}
+	
+	/**
 	 * @return the hashtable of the current virtual session
 	 */
 	private Hashtable<String,Object> getCurrentVirtualSession() {
@@ -94,6 +104,14 @@ public class VirtualSession {
 	 */
 	public void setFacadeService(FacadeService facadeService) {
 		this.facadeService = facadeService;
+	}
+
+	/**
+	 * just used for debug trace
+	 * @return Hastable of sessions
+	 */
+	protected Hashtable<String, Hashtable<String, Object>> getSessions() {
+		return sessions;
 	}
 
 }

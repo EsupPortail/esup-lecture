@@ -50,7 +50,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * item display mode of this customSource 
 	 */
-	private ItemDisplayMode mode = ItemDisplayMode.ALL;
+	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.ALL;
 	/**
 	 * Database Primary Key
 	 */
@@ -164,7 +164,7 @@ public abstract class CustomSource implements CustomElement {
 		if (log.isDebugEnabled()){
 			log.debug("id="+elementId+" - itemDisplayMode("+mode+")");
 		}
-		this.mode = mode;
+		this.itemDisplayMode = mode;
 		DomainTools.getDaoService().updateCustomSource(this);
 	}
 	
@@ -173,9 +173,9 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	public ItemDisplayMode getItemDisplayMode(){
 		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - itemDisplayMode("+mode+")");
+			log.debug("id="+elementId+" - itemDisplayMode("+itemDisplayMode+")");
 		}
-		return mode;
+		return itemDisplayMode;
 	}
 	
 	/**

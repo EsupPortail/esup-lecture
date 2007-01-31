@@ -73,24 +73,22 @@ public class EditController extends twoPanesController {
 		AvailabilityMode type = null;
 		try {
 			if (src.isNotSubscribed()) {
-				//TODO (RB) call facadeservice
 				getFacadeService().subscribeToSource(getUID(), selectedCategory.getId(), sourceId);
 				type = AvailabilityMode.SUBSCRIBED;
 			}
 			if (src.isSubscribed()) {
-				//TODO (RB) call facadeservice
-				//getFacadeService().unsubscribeToSource(getUID(), selectedCategory.getId(), sourceId);
+				getFacadeService().unsubscribeToSource(getUID(), selectedCategory.getId(), sourceId);
 				type = AvailabilityMode.NOTSUBSCRIBED;
 			}
-//		} catch (InternalExternalException e) {
-//			throw new WebException("Error in getContext", e);
 		} catch (DomainServiceException e) {
 			// TODO (GB --> RB) à traiter
 		}
 		if (type != null) {
 			src.setType(type);
 		}
-		//TODO (RB) refresh context for normal mode !!!
+		//invalidate home page cache
+		if (log.isDebugEnabled()) log.debug("invalidate home page cache");
+		//TODO (RB) appeler la methode de flush de HomeController --> pb de virtual session non static --> créer un session controller au dessus...
 		return "OK";		
 	}
 	
@@ -122,6 +120,14 @@ public class EditController extends twoPanesController {
 		//this method need to be overwrite in edit controller
 		List<SourceBean> sources = getFacadeService().getVisibleSources(getUID(), categoryBean.getId());
 		return sources;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.web.controllers.twoPanesController#getContextName()
+	 */
+	@Override
+	protected String getContextName() {
+		return this.CONTEXT;
 	}
 	
 }

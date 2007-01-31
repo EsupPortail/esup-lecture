@@ -6,6 +6,8 @@
 package org.esupportail.lecture.web.controllers;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,10 +41,6 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 * Log instance 
 	 */
 	protected static final Log log = LogFactory.getLog(twoPanesController.class);
-	/**
-	 * Key used to store the context in virtual session
-	 */
-	static final String CONTEXT = "context";
 	/**
 	 * default tree size 
 	 */
@@ -177,10 +175,31 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 * @return Returns the context.
 	 */
 	public ContextWebBean getContext() {
-		ContextWebBean context = (ContextWebBean) virtualSession.get(CONTEXT);
+		String contextName = getContextName();
+		ContextWebBean context = (ContextWebBean) virtualSession.get(contextName);
+		if (log.isTraceEnabled()) {
+			// browse sessions
+			Enumeration<String> keys = virtualSession.getSessions().keys();
+			while (keys.hasMoreElements()) {
+				String key = (String) keys.nextElement();
+				log.trace("session: "+key);
+				Hashtable<String, Object> sessions = virtualSession.getSessions().get(key);
+				// browse objects in sessions
+				Enumeration<String> keys2 = sessions.keys();
+				while (keys2.hasMoreElements()) {
+					String key2 = (String) keys2.nextElement();
+					log.trace("  obj: "+key2);
+					Object obj = sessions.get(key2);
+					if (obj instanceof ContextWebBean) {
+						ContextWebBean ctx = (ContextWebBean) obj;
+						log.trace("    ContextWebBean: "+ctx.getId());
+					}
+				}
+			}
+		}
 		if (context == null){
 			if (log.isDebugEnabled()) 
-				log.debug ("getContext() :  Context not yet loaded : loading...");
+				log.debug ("getContext() :  Context ("+contextName+") not yet loaded or need to be refreshing : loading...");
 			try {
 				//We evalute the context and we put it in the virtual session
 				context = new ContextWebBean();
@@ -216,13 +235,19 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 					}
 				}
 				context.setCategories(categoriesWeb);
-				virtualSession.put(CONTEXT,context);
+				virtualSession.put(getContextName(),context);
 			} catch (Exception e) {
 				throw new WebException("Error in getContext", e);
 			} 
 		}
 		return context;
 	}
+
+	/**
+	 * return the context name of the implementation of twoPanesController
+	 * @return the context name used by virtualSession as key for storing context informations in session
+	 */
+	abstract protected String getContextName();
 
 	/**
 	 * populate a SourceWebBean from a SourceBean

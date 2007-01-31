@@ -167,6 +167,15 @@ public class HomeController extends twoPanesController {
 		}
 		return(items);
 	}
+	
+	/**
+	 * Remove Context cache from the virtual session
+	 */
+	protected void flushContextFormVirtualSession() {
+		//virtualSession is a HomeCrontroller local variable
+		//so I need this method to interact with it from EditController
+		virtualSession.remove(CONTEXT);
+	}
 
 	/*
 	 * **************** Getter and Setter ****************
@@ -258,6 +267,14 @@ public class HomeController extends twoPanesController {
 	 */
 	public void reset() {
 		// TODO Auto-generated method stub
+	}
+
+	/**
+	 * @see org.esupportail.lecture.web.controllers.twoPanesController#getContextName()
+	 */
+	@Override
+	protected String getContextName() {
+		return this.CONTEXT;
 	}
 
 }

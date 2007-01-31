@@ -118,7 +118,24 @@
 			<sysproperty key="log4j.configuration" value="file:${log4j.batch-config}" />
 			<arg value="test-domain"/>
 	    </java>
-	</target>	
+	</target>
+	
+	<target name="use-default-conf" description="use default ESUP-Lecture configuration files">
+		<antcall target="copy-conf">
+			<param name="conf-type" value="default"/>
+		</antcall>
+	</target>
+	
+	<target name="use-local-conf" description="use ESUP-Lecture configuration files for local data">
+		<antcall target="copy-conf">
+			<param name="conf-type" value="local"/>
+		</antcall>
+	</target>
+	
+	<target name="copy-conf">
+		<copy file="properties/esup-lecture.${conf-type}.xml" tofile="properties/esup-lecture.xml" overwrite="true" verbose="true"/>
+		<copy file="properties/mappings.${conf-type}.xml" tofile="properties/mappings.xml" overwrite="true" verbose="true"/>
+	</target>
 
 	
 </project>

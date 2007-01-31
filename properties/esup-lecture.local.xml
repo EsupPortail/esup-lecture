@@ -168,7 +168,7 @@ Pour plus d'informations voir le
 		name="Categorie de démo 2"
 		id="demo2"
 		urlCategory="http://localhost:8080/data/demo2.xml"
-		trustCategory="no"
+		trustCategory="yes"
 		access="public"
 		ttl = "3600" > 
 		<visibility>
