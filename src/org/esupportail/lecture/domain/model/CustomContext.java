@@ -150,13 +150,13 @@ public class CustomContext implements CustomElement {
 	/**
 	 * remove a CustomManagedCategory displayed in this CustomContext
 	 * and also removes every occcurence in userProfile
-	 * @param profile the managedCategoryProfile associated to the CustomManagedCategory to remove
+	 * @param profileId the managedCategoryProfile ID associated to the CustomManagedCategory to remove
 	 */
-	protected void removeCustomManagedCategoryFromProfile(ManagedCategoryProfile profile) {
+	protected void removeCustomManagedCategoryFromProfile(String profileId) {
 		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - removeCustomManagedSourceFromProfile("+profile.getId()+")");
+			log.debug("id="+elementId+" - removeCustomManagedSourceFromProfile("+profileId+")");
 		}
-		getUserProfile().removeCustomManagedCategoryFromProfile(profile.getId());
+		getUserProfile().removeCustomManagedCategoryFromProfile(profileId);
 		
 	}
 	// TODO (GB later)  removeCustomPersonalCategory()

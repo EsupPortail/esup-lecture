@@ -240,6 +240,7 @@ public class UserProfile {
 		}
 		if (true) { // TODO (GB later) remplacer true par la valeur de l'option autoDelCustom
 			removeCustomSourceFromProfile(sourceId);
+			DomainTools.getDaoService().updateUserProfile(this);
 			log.info("CustomSource "+sourceId+" has been removed from userProfile "+this.getUserId());
 		}else {
 			log.error("CustomSource "+sourceId+" NEEDS TO BE REMOVED from userProfile "+this.getUserId());

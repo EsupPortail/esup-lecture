@@ -202,6 +202,9 @@ public class DomainServiceImpl implements DomainService {
 				try {
 					source = new SourceBean(customSource);
 					listSourceBean.add(source);
+				}catch (SourceProfileNotFoundException e){
+					log.warn("Warning on service 'getAvailableSources(user "+uid+", category "+categoryId+") : clean custom source ");
+					userProfile.cleanCustomSourceFromProfile(customSource.getElementId());
 				} catch (InfoDomainException e) {
 					log.error("Error on service 'getAvailableSources(user "+uid+", category "+categoryId+") : creation of a SourceDummyBean");
 					source = new SourceDummyBean(e);
@@ -524,13 +527,12 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws InternalDomainException 
 	 * @throws SourceObligedException 
-	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 */
 	public void unsubscribeToSource(String uid, String categoryId, String sourceId, ExternalService ex) 
 		throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, InternalDomainException, 
-		CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceObligedException {
+		CategoryProfileNotFoundException, CategoryNotLoadedException, SourceObligedException {
 		if (log.isDebugEnabled()){
 			log.debug("subscribeToSource("+uid+","+categoryId+","+sourceId+", externalService)");
 		}

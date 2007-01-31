@@ -227,7 +227,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		// de sources  disparus	
 		
 		// ELSE not Visible
-		customManagedCategory.removeCustomManagedSourceFromProfile(this);
+		customManagedCategory.removeCustomManagedSourceFromProfile(this.getId());
 		mode = VisibilityMode.NOVISIBLE;
 		return mode;
 		

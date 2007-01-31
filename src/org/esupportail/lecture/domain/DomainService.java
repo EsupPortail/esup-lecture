@@ -80,13 +80,12 @@ public interface DomainService {
 	 * @return List<ItemBean>
 	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
-	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @see FacadeService#getItems(String, String)
 	 */
 	List<ItemBean> getItems( String uid,String sourceId,ExternalService ex)  
-		throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException;
+		throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException;
 
 	/**
 	 * @param uid 
@@ -182,15 +181,13 @@ public interface DomainService {
 	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws InternalDomainException 
 	 * @throws SourceObligedException 
-	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @see FacadeService#unsubscribeToSource(String, String, String)
 	 */	
 	void unsubscribeToSource(String uid, String categorieId, String sourceId, ExternalService ex) 
 		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
-		InternalDomainException, CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
-		SourceObligedException;
+		InternalDomainException, CategoryProfileNotFoundException, CategoryNotLoadedException, SourceObligedException;
 	
 	
 	

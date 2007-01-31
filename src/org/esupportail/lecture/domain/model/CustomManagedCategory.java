@@ -193,17 +193,18 @@ public class CustomManagedCategory extends CustomCategory {
 	 * remove a CustomManagedSource displayed in this CustomManagedCategory
 	 * and also removes every occcurence in userProfile
 	 * Used to remove a subscription or an importation indifferently
-	 * @param profile the managedSourceProfile associated to the CustomManagedSource to remove
+	 * @param profileId the managedSourceProfile ID associated to the CustomManagedSource to remove
 	 */
 	@Override
-	protected void removeCustomManagedSourceFromProfile(ManagedSourceProfile profile) {
+	protected void removeCustomManagedSourceFromProfile(String profileId) {
 		if (log.isDebugEnabled()){
-			log.debug("id="+super.getElementId()+" - removeCustomManagedSourceFromProfile("+profile.getId()+")");
+			log.debug("id="+super.getElementId()+" - removeCustomManagedSourceFromProfile("+profileId+")");
 		}
-		getUserProfile().removeCustomManagedSourceFromProfile(profile.getId());
+		getUserProfile().removeCustomManagedSourceFromProfile(profileId);
 		
 	}
 	
+
 	/** 
 	 * @param sourceId Id for customManagedSource
 	 * @return true if this customCategory has a reference on customManagedSource sourceId
@@ -334,7 +335,6 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @param sourceId source ID
 	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
-	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ComputeFeaturesException 
 	 * @throws SourceObligedException 
@@ -342,38 +342,47 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	@Override
 	public void unsubscribeToSource(String sourceId, ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, ComputeFeaturesException, 
+		throws CategoryProfileNotFoundException, CategoryNotLoadedException, ComputeFeaturesException, 
 		SourceObligedException {
 		if (log.isDebugEnabled()){
 			log.debug("unsubscribeToSource("+sourceId+",externalService)");
 		}
 
-		ManagedCategoryProfile catProfile = getProfile();
-		ManagedSourceProfile soProfile = catProfile.getSourceProfileById(sourceId);
-		VisibilityMode mode = soProfile.updateCustomCategory(this, ex);
-		
-		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
-			if (!subscriptions.containsKey(sourceId)) {
+		try {
+			ManagedCategoryProfile catProfile = getProfile();
+			ManagedSourceProfile soProfile = catProfile.getSourceProfileById(sourceId);
+			VisibilityMode mode = soProfile.updateCustomCategory(this, ex);
+			
+			if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
+				if (!subscriptions.containsKey(sourceId)) {
+					log.warn("Nothing is done for UnsubscribeToSource requested on source "+sourceId+
+						" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is not in subscriptions");
+				} else {
+					removeCustomManagedSourceFromProfile(sourceId);
+					// (GB -> RB) désabonnement dans le managed implique supression de toutes les importations ?
+					DomainTools.getDaoService().updateCustomCategory(this);
+					DomainTools.getDaoService().updateUserProfile(userProfile);
+					log.trace("removeCustomManagedSource to source "+sourceId);
+				}
+				
+			} else if (mode == VisibilityMode.OBLIGED){
+				String errorMsg = "UnsubscribeToSource("+sourceId+") is impossible because this source is OBLIGED for user "
+					+getUserProfile().getUserId()+"in category "+getElementId();
+				log.error(errorMsg);
+				throw new SourceObligedException(errorMsg);
+				
+				
+				
+			} else if (mode == VisibilityMode.NOVISIBLE) {
 				log.warn("Nothing is done for UnsubscribeToSource requested on source "+sourceId+
-					" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is not in subscriptions");
-			} else {
-				removeCustomManagedSourceFromProfile(soProfile);
-				DomainTools.getDaoService().updateCustomCategory(this);
-				DomainTools.getDaoService().updateUserProfile(userProfile);
-				log.debug("removeCustomManagedSource to source "+sourceId);
+						" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is NOVISIBLE in this case");
 			}
-			
-		} else if (mode == VisibilityMode.OBLIGED){
-			String errorMsg = "UnsubscribeToSource("+sourceId+") is impossible because this source is OBLIGED for user "
-				+getUserProfile().getUserId()+"in category "+getElementId();
-			log.error(errorMsg);
-			throw new SourceObligedException(errorMsg);
-			
-			
-			
-		} else if (mode == VisibilityMode.NOVISIBLE) {
-			log.warn("Nothing is done for UnsubscribeToSource requested on source "+sourceId+
-					" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is NOVISIBLE in this case");
+		} catch (SourceProfileNotFoundException e) {
+			removeCustomManagedSourceFromProfile(sourceId);
+			// (GB -> RB) cela va supprimer toutes les importations de ce customSource
+			DomainTools.getDaoService().updateCustomCategory(this);
+			DomainTools.getDaoService().updateUserProfile(userProfile);
+			log.trace("removeCustomManagedSource to source "+sourceId);
 		}
 		
 	}

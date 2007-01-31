@@ -87,9 +87,9 @@ public abstract class CustomCategory implements CustomElement {
 	 * remove a CustomManegedSource displayed in this CustomCategory
 	 * and also removes every occcurence in userProfile
 	 * Used to remove a subscription or an importation indifferently
-	 * @param managedSourceProfile the managedSourceProfile associated to the CustomManagedSource to remove
+	 * @param profileId the managedSourceProfile ID associated to the CustomManagedSource to remove
 	 */
-	protected abstract void removeCustomManagedSourceFromProfile (ManagedSourceProfile managedSourceProfile) ;
+	protected abstract void removeCustomManagedSourceFromProfile (String profileId) ;
 	// TODO (GB later) removeCustomPersonalSource())
 	
 	/**
@@ -148,14 +148,12 @@ public abstract class CustomCategory implements CustomElement {
 	 * @param sourceId source ID
 	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
-	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ComputeFeaturesException 
 	 * @throws SourceObligedException 
 	 */
 	public abstract void unsubscribeToSource(String sourceId, ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
-		ComputeFeaturesException, SourceObligedException;
+		throws CategoryProfileNotFoundException, CategoryNotLoadedException, ComputeFeaturesException, SourceObligedException;
 
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)

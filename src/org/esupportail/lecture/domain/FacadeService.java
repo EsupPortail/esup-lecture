@@ -169,11 +169,10 @@ public class FacadeService implements InitializingBean {
 	 * @return List of ItemBean in a source
 	 * @throws InternalDomainException 
 	 * @throws SourceNotLoadedException 
-	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	public List<ItemBean> getItems(String uid, String sourceId) throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException {
+	public List<ItemBean> getItems(String uid, String sourceId) throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException {
 		return domainService.getItems(uid,sourceId,externalService);
 	}
 
@@ -267,16 +266,16 @@ public class FacadeService implements InitializingBean {
 	 * @param sourceId - Source ID
 	 * @throws InternalDomainException 
 	 * @throws SourceNotVisibleException 
+	 * @throws SourceProfileNotFoundException
 	 * @throws CategoryNotVisibleException 
 	 * @throws UserNotSubscribedToCategoryException 
-	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
 	public void subscribeToSource(String uid, String categorieId, String sourceId) 
 		throws ManagedCategoryProfileNotFoundException, CategoryProfileNotFoundException, CategoryNotLoadedException, 
-		SourceProfileNotFoundException, UserNotSubscribedToCategoryException, CategoryNotVisibleException, 
+		UserNotSubscribedToCategoryException, CategoryNotVisibleException, SourceProfileNotFoundException,
 		SourceNotVisibleException, InternalDomainException {
 		domainService.subscribeToSource(uid, categorieId, sourceId, externalService);
 	}
@@ -290,13 +289,12 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryNotVisibleException 
 	 * @throws InternalDomainException 
 	 * @throws SourceObligedException 
-	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 */
 	public void unsubscribeToSource(String uid, String categorieId, String sourceId) 
 		throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, CategoryProfileNotFoundException, 
-		CategoryNotLoadedException, SourceProfileNotFoundException, SourceObligedException, InternalDomainException {
+		CategoryNotLoadedException, SourceObligedException, InternalDomainException {
 		domainService.unsubscribeToSource(uid, categorieId, sourceId, externalService);
 	}
 	

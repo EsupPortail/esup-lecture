@@ -196,7 +196,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		// de catégories disparus
 		
 		// ELSE not Visible
-		customContext.removeCustomManagedCategoryFromProfile(this);
+		customContext.removeCustomManagedCategoryFromProfile(this.getId());
 
 		mode = VisibilityMode.NOVISIBLE;
 		return mode;
