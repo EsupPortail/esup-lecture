@@ -207,7 +207,7 @@ public class CustomManagedCategory extends CustomCategory {
 	/** 
 	 * @param sourceId Id for customManagedSource
 	 * @return true if this customCategory has a reference on customManagedSource sourceId
-	 * @see org.esupportail.lecture.domain.model.CustomCategory#isThereCustomManagedSource(java.lang.String)
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#containsCustomManagedSource(java.lang.String)
 	 */
 	@Override
 	public boolean containsCustomManagedSource(String sourceId) {
@@ -217,6 +217,22 @@ public class CustomManagedCategory extends CustomCategory {
 		return subscriptions.containsKey(sourceId);
 		
 	}
+		
+	/** 
+	 * @param sourceId Id for customSource
+	 * @return true if this customCategory has a reference on customSource sourceId
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#containsCustomSource(java.lang.String)
+	 */
+	@Override
+	public boolean containsCustomSource(String sourceId) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+getElementId()+" - containsCustomSource("+sourceId+")");
+		}
+		return containsCustomManagedSource(sourceId);
+		// TODO (GB later ajouter pour les personnal)
+		
+	}
+
 	
 	/**
 	 * Remove the customManagedSource sourceId in this customManagedCategory only
@@ -233,7 +249,20 @@ public class CustomManagedCategory extends CustomCategory {
 			subscriptions.remove(sourceId);
 		}
 	}
-
+	
+	/**
+	 * Remove the customSource sourceId in this customManagedCategory only
+	 * @param sourceId ID for customManagedSource
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#removeCustomSource(java.lang.String)
+	 */
+	@Override
+	public void removeCustomSource(String sourceId) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+getElementId()+" - removeCustomSource("+sourceId+")");
+		}
+		removeCustomManagedSource(sourceId);
+		// TODO (GB later ajouter pour les personnal)
+	}
 	
 	
 	
@@ -368,6 +397,7 @@ public class CustomManagedCategory extends CustomCategory {
 			Map<String, CustomManagedSource> subscriptions) {
 		this.subscriptions = subscriptions;
 	}
+
 
 
 

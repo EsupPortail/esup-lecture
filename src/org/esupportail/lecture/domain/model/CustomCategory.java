@@ -185,6 +185,17 @@ public abstract class CustomCategory implements CustomElement {
 	 */
 	public abstract boolean containsCustomManagedSource(String sourceId);
 	
+	/**
+	 * @param sourceId Id for customSource
+	 * @return true if this customCategory has a reference on customdSource sourceId
+	 */
+	public abstract boolean containsCustomSource(String sourceId);
+		
+	/**
+	 * Remove the customSource sourceId in this CustomCategory only
+	 * @param sourceId ID for customSource
+	 */
+	public abstract void removeCustomSource(String sourceId);
 	
 	/**
 	 * Remove the customManagedSource sourceId in this CustomCategory only
@@ -240,6 +251,8 @@ public abstract class CustomCategory implements CustomElement {
 	public void setElementId(String elementId) {
 		this.elementId = elementId;
 	}
+
+
 
 	
 	

@@ -228,6 +228,42 @@ public class UserProfile {
 	}
 	
 	/**
+	 * Cleans all the userProfile for customSource sourceId. It means, if option
+	 * "autoDelCustom" in channel config is ( no option for now : it is yes all the time)
+	 * - yes => it removes it
+	 * - no => it not removes it, the admin will have to remove it manually with command tools
+	 * @param sourceId customSource ID
+	 */
+	public void cleanCustomSourceFromProfile(String sourceId) {
+		if (log.isDebugEnabled()){
+			log.debug("cleanCustomSourceFromProfile("+sourceId+")");
+		}
+		if (true) { // TODO (GB later) remplacer true par la valeur de l'option autoDelCustom
+			removeCustomSourceFromProfile(sourceId);
+			log.info("CustomSource "+sourceId+" has been removed from userProfile "+this.getUserId());
+		}else {
+			log.error("CustomSource "+sourceId+" NEEDS TO BE REMOVED from userProfile "+this.getUserId());
+		}
+	}
+	
+	/**
+	 * Remove the customSource sourceId in all the profile (this object and in customCategories)
+	 * @param sourceId customSource ID
+	 */
+	public void removeCustomSourceFromProfile(String sourceId) {
+		if (log.isDebugEnabled()){
+			log.debug("removeCustomSourceFromProfile("+sourceId+")");
+		}
+		
+		for (CustomCategory custom : customCategories.values()){
+			if (custom.containsCustomSource(sourceId)){
+				custom.removeCustomSource(sourceId);
+			}
+		}
+		removeCustomSource(sourceId);
+	}
+	
+	/**
 	 * Remove the customManagedSource sourceId in all the profile (this object and in customCategories)
 	 * @param sourceId customManagedSource ID
 	 */
@@ -434,6 +470,8 @@ public class UserProfile {
 	private void setCustomSources(Map<String, CustomSource> customSources) {
 		this.customSources = customSources;
 	}
+
+	
 
 	
 

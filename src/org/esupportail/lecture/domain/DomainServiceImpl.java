@@ -253,7 +253,6 @@ public class DomainServiceImpl implements DomainService {
 	 * @return a list of itemBean
 	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
-	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
@@ -283,7 +282,7 @@ public class DomainServiceImpl implements DomainService {
 		}catch	(SourceProfileNotFoundException e) {
 			String errorMsg = "SourceProfileNotFoundException for service 'getItems(user "+uid+", source "+sourceId+ ")";
 			log.error(errorMsg);
-			//userProfile.eraseCustomSourceFromException(sourceId);
+			userProfile.cleanCustomSourceFromProfile(sourceId);
 			throw new InternalDomainException(errorMsg,e);
 		} catch (CustomSourceNotFoundException e) {
 			String errorMsg = "CustomSourceNotFoundException for service 'getItems(user "+uid+", source "+sourceId+ ")";
