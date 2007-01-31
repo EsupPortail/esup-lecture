@@ -85,11 +85,11 @@ public abstract class CustomCategory implements CustomElement {
 
 	/**
 	 * remove a CustomManegedSource displayed in this CustomCategory
-	 * and also removes it from the userProfile
+	 * and also removes every occcurence in userProfile
 	 * Used to remove a subscription or an importation indifferently
 	 * @param managedSourceProfile the managedSourceProfile associated to the CustomManagedSource to remove
 	 */
-	protected abstract void removeCustomManagedSource (ManagedSourceProfile managedSourceProfile) ;
+	protected abstract void removeCustomManagedSourceFromProfile (ManagedSourceProfile managedSourceProfile) ;
 	// TODO (GB later) removeCustomPersonalSource())
 	
 	/**
@@ -178,6 +178,20 @@ public abstract class CustomCategory implements CustomElement {
 		return this.getElementId().hashCode();
 	}
 	
+	
+	/**
+	 * @param sourceId Id for customManagedSource
+	 * @return true if this customCategory has a reference on customManagedSource sourceId
+	 */
+	public abstract boolean containsCustomManagedSource(String sourceId);
+	
+	
+	/**
+	 * Remove the customManagedSource sourceId in this CustomCategory only
+	 * @param sourceId ID for customManagedSource
+	 */
+	public abstract void removeCustomManagedSource(String sourceId);
+
 	/* 
 	 ************************** ACCESSORS **********************************/
 
@@ -226,5 +240,8 @@ public abstract class CustomCategory implements CustomElement {
 	public void setElementId(String elementId) {
 		this.elementId = elementId;
 	}
+
+	
+	
 
 }

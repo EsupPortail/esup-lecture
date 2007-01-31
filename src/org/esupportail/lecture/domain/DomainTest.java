@@ -88,7 +88,7 @@ public class DomainTest {
 //			testGetConnectedUser();
 //			testGetContext();
 //			testGetVisibleSources();
-//			testSubUnSubscribeToSource();
+			testSubUnSubscribeToSource();
 			
 		
 			
@@ -261,8 +261,16 @@ public class DomainTest {
 			System.out.println("DomainServiceException !!!! ");
 			e.printStackTrace();
 		}
+		
 		try{
 			System.out.println(" **** category cp5 : UNsubscribe to source 'trois' **********");
+			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:trois");
+		} catch (DomainServiceException e) {
+			System.out.println("DomainServiceException !!!! ");
+			e.printStackTrace();
+		}
+		try{
+			System.out.println(" **** category cp5 AGAIN : UNsubscribe to source 'trois' **********");
 			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:trois");
 		} catch (DomainServiceException e) {
 			System.out.println("DomainServiceException !!!! ");

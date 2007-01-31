@@ -9,7 +9,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.domain.beans.User;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
@@ -127,7 +126,7 @@ public class UserProfile {
 	}
 
 	/**
-	 * Return the customCategory identifed by the category id
+	 * Return the customCategory identified by the category id
 	 * if exist,else,create it.
 	 * @param categoryId identifier of the category refered by the customCategory
 	 * @param ex access to externalService
@@ -229,6 +228,40 @@ public class UserProfile {
 	}
 	
 	/**
+	 * Remove the customManagedSource sourceId in all the profile (this object and in customCategories)
+	 * @param sourceId customManagedSource ID
+	 */
+	public void removeCustomManagedSourceFromProfile(String sourceId) {
+		if (log.isDebugEnabled()){
+			log.debug("removeCustomManagedSourceFromProfile("+sourceId+")");
+		}
+		
+		for (CustomCategory custom : customCategories.values()){
+			if (custom.containsCustomManagedSource(sourceId)){
+				custom.removeCustomManagedSource(sourceId);
+			}
+		}
+		removeCustomSource(sourceId);
+	}
+	
+	/**
+	 * Remove the customManagedCategory categoryId in all the profile (this object and in customContexts)
+	 * @param categoryId customManagedCategory ID
+	 */
+	public void removeCustomManagedCategoryFromProfile(String categoryId) {
+		if (log.isDebugEnabled()){
+			log.debug("removeCustomManagedCategoryFromProfile("+categoryId+")");
+		}
+		
+		for (CustomContext custom : customContexts.values()){
+			if (custom.containsCustomManagedCategory(categoryId)){
+				custom.removeCustomManagedCategory(categoryId);
+			}
+		}
+		removeCustomCategory(categoryId);
+	}
+
+	/**
 	 * Add a customContext to this userProfile
 	 * @param customContext
 	 */
@@ -241,7 +274,7 @@ public class UserProfile {
 	}
 	
 	/**
-	 * Remove a customContext from this userProfile
+	 * Remove a customContext from this userProfile only
 	 * @param contextId id of the customContext to add
 	 */
 	protected void removeCustomContext(String contextId){
@@ -268,7 +301,7 @@ public class UserProfile {
 	
 
 	/**
-	 * Remove a customCategory from this userProfile
+	 * Remove a customCategory from this userProfile only
 	 * @param categoryId
 	 */
 	protected void removeCustomCategory(String categoryId){
@@ -293,7 +326,7 @@ public class UserProfile {
 	}
 	
 	/**	 * 
-	 * Remove a customCategory from this userProfile
+	 * Remove a customCategory from this userProfile only
 	 * @param sourceId
 	 */
 	protected void removeCustomSource(String sourceId){
@@ -401,6 +434,9 @@ public class UserProfile {
 	private void setCustomSources(Map<String, CustomSource> customSources) {
 		this.customSources = customSources;
 	}
+
+	
+
 
 	
 }

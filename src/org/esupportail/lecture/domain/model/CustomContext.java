@@ -149,20 +149,14 @@ public class CustomContext implements CustomElement {
 	
 	/**
 	 * remove a CustomManagedCategory displayed in this CustomContext
-	 * and also removes it from the userProfile
+	 * and also removes every occcurence in userProfile
 	 * @param profile the managedCategoryProfile associated to the CustomManagedCategory to remove
 	 */
-	protected void removeCustomManagedCategory(ManagedCategoryProfile profile) {
+	protected void removeCustomManagedCategoryFromProfile(ManagedCategoryProfile profile) {
 		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - removeCustomManagedCategory("+profile.getId()+")");
+			log.debug("id="+elementId+" - removeCustomManagedSourceFromProfile("+profile.getId()+")");
 		}
-		String profileId = profile.getId();
-		CustomManagedCategory cmc = subscriptions.get(profileId);
-		if (cmc != null) {
-			subscriptions.remove(profileId);
-			userProfile.removeCustomCategory(profile.getId());
-			// TODO (gb later) : il faudra supprimer toutes les références à cette cmc
-		} 
+		getUserProfile().removeCustomManagedCategoryFromProfile(profile.getId());
 		
 	}
 	// TODO (GB later)  removeCustomPersonalCategory()
@@ -288,6 +282,33 @@ public class CustomContext implements CustomElement {
 		return this.getElementId().hashCode();
 	}
 
+	/**
+	 * @param categoryId ID for customManagedCategory
+	 * @return true if this customContext has a reference on customManagedCategory categoryId
+	 */
+	public boolean containsCustomManagedCategory(String categoryId) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - containsCustomManagedCategory("+categoryId+")");
+		}
+		return subscriptions.containsKey(categoryId);
+		
+	}
+	
+	/**
+	 * Remove the customManagedCategory categoryId in ths customContext only
+	 * @param categoryId ID for customManagedCategory
+	 */
+	public void removeCustomManagedCategory(String categoryId) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - removeCustomManagedCategory("+categoryId+")");
+		}
+		CustomCategory cs = subscriptions.get(categoryId);
+		if (cs != null) {
+			subscriptions.remove(categoryId);
+		}
+	}
+	
+	
 	
 	/* 
 	 ************************** ACCESSORS **********************************/

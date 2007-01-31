@@ -259,16 +259,17 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<ItemBean> getItems(String uid, String sourceId,ExternalService ex) 
-		throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException {
+		throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("getItems("+uid+","+sourceId+",externalService)");
 		}
 		
 		List<ItemBean> listItemBean = new ArrayList<ItemBean>();
+		UserProfile userProfile = channel.getUserProfile(uid);
 		try {
 			
 			/* Get current user profile and customCoategory */
-			UserProfile userProfile = channel.getUserProfile(uid);
+			
 			CustomSource customSource;
 			customSource = userProfile.getCustomSource(sourceId);
 			List<Item> listItems;
@@ -278,7 +279,12 @@ public class DomainServiceImpl implements DomainService {
 				ItemBean itemBean = new ItemBean(item,customSource);
 				listItemBean.add(itemBean);
 			}
-			
+		
+		}catch	(SourceProfileNotFoundException e) {
+			String errorMsg = "SourceProfileNotFoundException for service 'getItems(user "+uid+", source "+sourceId+ ")";
+			log.error(errorMsg);
+			//userProfile.eraseCustomSourceFromException(sourceId);
+			throw new InternalDomainException(errorMsg,e);
 		} catch (CustomSourceNotFoundException e) {
 			String errorMsg = "CustomSourceNotFoundException for service 'getItems(user "+uid+", source "+sourceId+ ")";
 			log.error(errorMsg);

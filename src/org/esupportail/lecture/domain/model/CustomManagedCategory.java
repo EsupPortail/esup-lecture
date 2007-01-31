@@ -191,24 +191,51 @@ public class CustomManagedCategory extends CustomCategory {
 
 	/**
 	 * remove a CustomManagedSource displayed in this CustomManagedCategory
-	 * and also removes it from the userProfile
+	 * and also removes every occcurence in userProfile
 	 * Used to remove a subscription or an importation indifferently
 	 * @param profile the managedSourceProfile associated to the CustomManagedSource to remove
 	 */
 	@Override
-	protected void removeCustomManagedSource(ManagedSourceProfile profile) {
+	protected void removeCustomManagedSourceFromProfile(ManagedSourceProfile profile) {
 		if (log.isDebugEnabled()){
-			log.debug("id="+super.getElementId()+" - removeCustomManagedSource("+profile.getId()+")");
+			log.debug("id="+super.getElementId()+" - removeCustomManagedSourceFromProfile("+profile.getId()+")");
 		}
-		String profileId = profile.getId();
-		CustomSource cs = subscriptions.get(profileId);
+		getUserProfile().removeCustomManagedSourceFromProfile(profile.getId());
+		
+	}
+	
+	/** 
+	 * @param sourceId Id for customManagedSource
+	 * @return true if this customCategory has a reference on customManagedSource sourceId
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#isThereCustomManagedSource(java.lang.String)
+	 */
+	@Override
+	public boolean containsCustomManagedSource(String sourceId) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+getElementId()+" - containsCustomManagedSource("+sourceId+")");
+		}
+		return subscriptions.containsKey(sourceId);
+		
+	}
+	
+	/**
+	 * Remove the customManagedSource sourceId in this customManagedCategory only
+	 * @param sourceId ID for customManagedSource
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#removeCustomManagedSource(java.lang.String)
+	 */
+	@Override
+	public void removeCustomManagedSource(String sourceId) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+getElementId()+" - removeCustomManagedSource("+sourceId+")");
+		}
+		CustomSource cs = subscriptions.get(sourceId);
 		if (cs != null) {
-			subscriptions.remove(profile.getId());
-			getUserProfile().removeCustomSource(profile.getId());
-			// TODO (gb later) il faudra supprimer toutes les références à cette cmc
-			// (importations dans d'autre customContext)
+			subscriptions.remove(sourceId);
 		}
 	}
+
+	
+	
 	
 	/**
 	 * Returns the ManagedCategoryProfile associated to this CustomManagedCategory
@@ -301,7 +328,7 @@ public class CustomManagedCategory extends CustomCategory {
 				log.warn("Nothing is done for UnsubscribeToSource requested on source "+sourceId+
 					" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is not in subscriptions");
 			} else {
-				removeCustomManagedSource(soProfile);
+				removeCustomManagedSourceFromProfile(soProfile);
 				DomainTools.getDaoService().updateCustomCategory(this);
 				DomainTools.getDaoService().updateUserProfile(userProfile);
 				log.debug("removeCustomManagedSource to source "+sourceId);
@@ -341,6 +368,9 @@ public class CustomManagedCategory extends CustomCategory {
 			Map<String, CustomManagedSource> subscriptions) {
 		this.subscriptions = subscriptions;
 	}
+
+
+
 
 
 
