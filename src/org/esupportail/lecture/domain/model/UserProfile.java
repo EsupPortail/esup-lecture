@@ -185,9 +185,7 @@ public class UserProfile {
 					VisibilityMode mode = mcp.updateCustomContext(customContext,ex);
 					if (mode != VisibilityMode.NOVISIBLE){
 						categoryIsVisible = false;
-					} else {
-						DomainTools.getDaoService().updateCustomContext(customContext);
-					}
+					} 
 				} catch (ContextNotFoundException e) {
 					log.error("Impossible to get CustomContext associated to context "+ contextId
 							+" for managedCategoryProfile "+mcp.getId()+" because context not found",e);
@@ -240,7 +238,6 @@ public class UserProfile {
 		}
 		if (true) { // TODO (GB later) remplacer true par la valeur de l'option autoDelCustom
 			removeCustomSourceFromProfile(sourceId);
-			DomainTools.getDaoService().updateUserProfile(this);
 			log.info("CustomSource "+sourceId+" has been removed from userProfile "+this.getUserId());
 		}else {
 			log.error("CustomSource "+sourceId+" NEEDS TO BE REMOVED from userProfile "+this.getUserId());
@@ -281,6 +278,8 @@ public class UserProfile {
 		removeCustomSource(sourceId);
 	}
 	
+	
+	
 	/**
 	 * Remove the customManagedCategory categoryId in all the profile (this object and in customContexts)
 	 * @param categoryId customManagedCategory ID
@@ -297,6 +296,7 @@ public class UserProfile {
 		}
 		removeCustomCategory(categoryId);
 	}
+	
 
 	/**
 	 * Add a customContext to this userProfile
@@ -321,6 +321,7 @@ public class UserProfile {
 	   	CustomContext cctx = customContexts.remove(contextId);
 		if( cctx!= null) {
 			DomainTools.getDaoService().deleteCustomContext(cctx);
+			DomainTools.getDaoService().updateUserProfile(this);
 		}
 	}
 	
@@ -334,6 +335,7 @@ public class UserProfile {
     	}
 		String id = customCategory.getElementId();
 		customCategories.put(id,customCategory);
+		DomainTools.getDaoService().updateUserProfile(this);
 	}
 	
 
@@ -348,6 +350,7 @@ public class UserProfile {
 	   	CustomCategory ccat = customCategories.remove(categoryId);
 		if( ccat!= null) {
 			DomainTools.getDaoService().deleteCustomCategory(ccat);
+			DomainTools.getDaoService().updateUserProfile(this);
 		}
 	}
 	
@@ -360,6 +363,7 @@ public class UserProfile {
     		log.debug("id="+userId+" - addCustomSource("+customSource.getElementId()+")");
     	}
 		customSources.put(customSource.getElementId(),customSource);
+		DomainTools.getDaoService().updateUserProfile(this);
 	}
 	
 	/**	 * 
@@ -373,6 +377,7 @@ public class UserProfile {
 		CustomSource cs = customSources.remove(sourceId);
 		if (cs != null) {
 			DomainTools.getDaoService().deleteCustomSource(cs);
+			DomainTools.getDaoService().updateUserProfile(this);
 		}
 	}
 		

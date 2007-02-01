@@ -106,8 +106,8 @@ public class CustomManagedCategory extends CustomCategory {
 			// TODO (GB) il y a encore un CategoryNotLoaded à catcher : que fait on ?
 		}
 		
-		DomainTools.getDaoService().updateCustomCategory(this);
-		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
+//		DomainTools.getDaoService().updateCustomCategory(this);
+//		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
 		
 		List<CustomSource> listSources = new Vector<CustomSource>();
 		for(CustomSource customSource : subscriptions.values()){
@@ -145,8 +145,8 @@ public class CustomManagedCategory extends CustomCategory {
 			// TODO (GB) il y a encore un CategoryNotLoaded à catcher : que fait on ?
 		}
 		
-		DomainTools.getDaoService().updateCustomCategory(this);
-		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
+//		DomainTools.getDaoService().updateCustomCategory(this);
+//		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
 		
 		List<ProfileAvailability> couplesAvail = new Vector<ProfileAvailability>();
 		for(ProfileVisibility coupleV : couplesVisib){
@@ -185,6 +185,7 @@ public class CustomManagedCategory extends CustomCategory {
 		if (!subscriptions.containsKey(profileId)){
 			CustomManagedSource customManagedSource = new CustomManagedSource(managedSourceProfile, getUserProfile());
 			subscriptions.put(profileId,customManagedSource);
+			DomainTools.getDaoService().updateCustomCategory(this);
 			getUserProfile().addCustomSource(customManagedSource);
 		}
 	}
@@ -248,6 +249,7 @@ public class CustomManagedCategory extends CustomCategory {
 		CustomSource cs = subscriptions.get(sourceId);
 		if (cs != null) {
 			subscriptions.remove(sourceId);
+			DomainTools.getDaoService().updateCustomCategory(this);
 		}
 	}
 	
@@ -311,8 +313,8 @@ public class CustomManagedCategory extends CustomCategory {
 					" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is already in subscriptions");
 			} else {
 				addSubscription(soProfile);
-				DomainTools.getDaoService().updateCustomCategory(this);
-				DomainTools.getDaoService().updateUserProfile(userProfile);
+//				DomainTools.getDaoService().updateCustomCategory(this);
+//				DomainTools.getDaoService().updateUserProfile(userProfile);
 				log.debug("addSubscription to source "+sourceId);
 			}
 			
@@ -359,9 +361,8 @@ public class CustomManagedCategory extends CustomCategory {
 						" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is not in subscriptions");
 				} else {
 					removeCustomManagedSourceFromProfile(sourceId);
-					// (GB -> RB) désabonnement dans le managed implique supression de toutes les importations ?
-					DomainTools.getDaoService().updateCustomCategory(this);
-					DomainTools.getDaoService().updateUserProfile(userProfile);
+//					DomainTools.getDaoService().updateCustomCategory(this);
+//					DomainTools.getDaoService().updateUserProfile(userProfile);
 					log.trace("removeCustomManagedSource to source "+sourceId);
 				}
 				
@@ -379,9 +380,8 @@ public class CustomManagedCategory extends CustomCategory {
 			}
 		} catch (SourceProfileNotFoundException e) {
 			removeCustomManagedSourceFromProfile(sourceId);
-			// (GB -> RB) cela va supprimer toutes les importations de ce customSource
-			DomainTools.getDaoService().updateCustomCategory(this);
-			DomainTools.getDaoService().updateUserProfile(userProfile);
+//			DomainTools.getDaoService().updateCustomCategory(this);
+//			DomainTools.getDaoService().updateUserProfile(userProfile);
 			log.trace("removeCustomManagedSource to source "+sourceId);
 		}
 		

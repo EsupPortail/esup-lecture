@@ -115,8 +115,8 @@ public class CustomContext implements CustomElement {
 		/* update this customContext with context */
 		getContext().updateCustom(this,ex);
 		
-		DomainTools.getDaoService().updateCustomContext(this);
-		DomainTools.getDaoService().updateUserProfile(userProfile);
+//		DomainTools.getDaoService().updateCustomContext(this);
+//		DomainTools.getDaoService().updateUserProfile(userProfile);
 		
 		List<CustomCategory> listCustomCategories = new Vector<CustomCategory>();
 		for(CustomManagedCategory customCat : subscriptions.values()){
@@ -142,6 +142,7 @@ public class CustomContext implements CustomElement {
 		if (!subscriptions.containsKey(profileId)){
 			CustomManagedCategory customManagedCategory = new CustomManagedCategory(profileId,userProfile);
 			subscriptions.put(profileId,customManagedCategory);
+			DomainTools.getDaoService().updateCustomContext(this);
 			userProfile.addCustomCategory(customManagedCategory);
 		}
 	}
@@ -305,6 +306,7 @@ public class CustomContext implements CustomElement {
 		CustomCategory cs = subscriptions.get(categoryId);
 		if (cs != null) {
 			subscriptions.remove(categoryId);
+			DomainTools.getDaoService().updateCustomContext(this);
 		}
 	}
 	
