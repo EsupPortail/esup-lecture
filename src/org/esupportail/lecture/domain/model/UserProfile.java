@@ -323,11 +323,13 @@ public class UserProfile {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+userId+" - removeCustomContext("+contextId+")");
     	}
-	   	CustomContext cctx = customContexts.remove(contextId);
-		if( cctx!= null) {
-			DomainTools.getDaoService().deleteCustomContext(cctx);
+	   	CustomContext custom = customContexts.get(contextId);
+	   	if (custom!= null){
+	   		custom.removeSubscriptions();
+	   		customContexts.remove(contextId);
+			DomainTools.getDaoService().deleteCustomContext(custom);
 			DomainTools.getDaoService().updateUserProfile(this);
-		}
+	   	}
 	}
 	
 	/**

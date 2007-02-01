@@ -274,11 +274,11 @@ public class CustomManagedCategory extends CustomCategory {
 	@Override
 	public void removeSubscriptions() {
 		if (log.isDebugEnabled()){
-			log.debug("removeSubscriptions()");
+			log.debug("id="+this.getElementId()+" - removeSubscriptions()");
 		}
 		
 		for (String sourceId : subscriptions.keySet()){
-			this.removeCustomManagedSourceFromProfile(sourceId);
+			removeCustomManagedSourceFromProfile(sourceId);
 		}
 		
 	}

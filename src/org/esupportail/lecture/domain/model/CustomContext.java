@@ -310,6 +310,19 @@ public class CustomContext implements CustomElement {
 		}
 	}
 	
+	/**
+	 * Remove every subscriptions (customManagedCategories) of this customContext.
+	 */
+	public void removeSubscriptions() {
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - removeSubscriptions()");
+		}
+		
+		for (String sourceId : subscriptions.keySet()){
+			removeCustomManagedCategoryFromProfile(sourceId);
+		}
+		
+	}
 	
 	
 	/* 
