@@ -20,6 +20,7 @@ import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.CustomManagedSource;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
@@ -261,18 +262,18 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<ItemBean> getItems(String uid, String sourceId,ExternalService ex) 
-		throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException {
+		throws SourceNotLoadedException, InternalDomainException, CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("getItems("+uid+","+sourceId+",externalService)");
 		}
 		
 		List<ItemBean> listItemBean = new ArrayList<ItemBean>();
 		UserProfile userProfile = channel.getUserProfile(uid);
+		CustomSource customSource = null;
 		try {
 			
 			/* Get current user profile and customCoategory */
 			
-			CustomSource customSource;
 			customSource = userProfile.getCustomSource(sourceId);
 			List<Item> listItems;
 			listItems = customSource.getItems(ex);
@@ -281,8 +282,14 @@ public class DomainServiceImpl implements DomainService {
 				ItemBean itemBean = new ItemBean(item,customSource);
 				listItemBean.add(itemBean);
 			}
-		
-		}catch	(SourceProfileNotFoundException e) {
+		} catch (ManagedCategoryProfileNotFoundException e){
+			String errorMsg = "ManagedCategoryProfileNotFoundException for service 'getItems(user "+uid+", source "+sourceId+ ")";
+			log.error(errorMsg);
+			CustomManagedSource customManagedSource = (CustomManagedSource) customSource;
+			String categoryId = customManagedSource.getManagedSourceProfileParentId();
+			userProfile.cleanCustomCategoryFromProfile(categoryId);
+			throw new InternalDomainException(errorMsg,e);
+		} catch	(SourceProfileNotFoundException e) {
 			String errorMsg = "SourceProfileNotFoundException for service 'getItems(user "+uid+", source "+sourceId+ ")";
 			log.error(errorMsg);
 			userProfile.cleanCustomSourceFromProfile(sourceId);

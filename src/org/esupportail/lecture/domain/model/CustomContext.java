@@ -296,6 +296,29 @@ public class CustomContext implements CustomElement {
 	}
 	
 	/**
+	 * @param categoryId ID for customCategory
+	 * @return true if this customContext has a reference on customCategory categoryId
+	 */
+	public boolean containsCustomCategory(String categoryId) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - containsCustomCategory("+categoryId+")");
+		}
+		return containsCustomManagedCategory(categoryId);
+		
+	}
+	
+	/**
+	 * Remove the customCategory categoryId in ths customContext only
+	 * @param categoryId ID for customCategory
+	 */
+	public void removeCustomCategory(String categoryId) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - removeCustomCategory("+categoryId+")");
+		}
+		removeCustomManagedCategory(categoryId);
+	}
+	
+	/**
 	 * Remove the customManagedCategory categoryId in ths customContext only
 	 * @param categoryId ID for customManagedCategory
 	 */

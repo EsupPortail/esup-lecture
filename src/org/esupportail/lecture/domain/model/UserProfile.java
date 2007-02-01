@@ -226,7 +226,26 @@ public class UserProfile {
 	}
 	
 	/**
-	 * Cleans all the userProfile for customSource sourceId. It means, if option
+	 * Cleans all the userProfile content for customCategory categoryId. It means, if option
+	 * "autoDelCustom" in channel config is ( no option for now : it is yes all the time)
+	 * - yes => it removes it
+	 * - no => it not removes it, the admin will have to remove it manually with command tools
+	 * @param categoryId customCatgeory ID
+	 */
+	public void cleanCustomCategoryFromProfile(String categoryId) {
+		if (log.isDebugEnabled()){
+			log.debug("cleanCustomCategoryFromProfile("+categoryId+")");
+		}
+		if (true) { // TODO (GB later) remplacer true par la valeur de l'option autoDelCustom
+			removeCustomCategoryFromProfile(categoryId);
+			log.info("customCatgeory "+categoryId+" has been removed from userProfile "+this.getUserId());
+		}else {
+			log.error("customCatgeory "+categoryId+" NEEDS TO BE REMOVED from userProfile "+this.getUserId());
+		}
+	}
+	
+	/**
+	 * Cleans all the userProfile content for customSource sourceId. It means, if option
 	 * "autoDelCustom" in channel config is ( no option for now : it is yes all the time)
 	 * - yes => it removes it
 	 * - no => it not removes it, the admin will have to remove it manually with command tools
@@ -276,11 +295,27 @@ public class UserProfile {
 				custom.removeCustomManagedSource(sourceId);
 			}
 		}
-		removeCustomSource(sourceId);
+		removeCustomSource(sourceId); // (GB) pourquoi pas un removeCustomManagedSource ?
 	}
 	
-	// TODO (GB later) : quand/si y'aura besoin ?
-	//public void removeCustomSourceFromProfile(String sourceId)
+	/**
+	 * Remove the customCategory categoryId in all the profile (this object and in customContexts)
+	 * @param categoryId customCategory ID
+	 */
+	public void removeCustomCategoryFromProfile(String categoryId) {
+		if (log.isDebugEnabled()){
+			log.debug("removeCustomCategoryFromProfile("+categoryId+")");
+		}
+		
+		for (CustomContext custom : customContexts.values()){
+			if (custom.containsCustomCategory(categoryId)){
+				// For all parent customContexts
+				custom.removeCustomCategory(categoryId);
+			}
+		}
+		removeCustomCategory(categoryId);
+	}
+	
 	
 	/**
 	 * Remove the customManagedCategory categoryId in all the profile (this object and in customContexts)
@@ -300,8 +335,7 @@ public class UserProfile {
 		removeCustomCategory(categoryId);
 	}
 	
-	// TODO (GB later) : quand/si y'aura besoin ?
-	//public void removeCustomSourceFromProfile(String sourceId)
+
 
 	/**
 	 * Add a customContext to this userProfile
