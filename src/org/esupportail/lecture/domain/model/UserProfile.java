@@ -144,14 +144,7 @@ public class UserProfile {
 		// TODO (GB later) revoir avec customManagedCategory et customPersonalCategory
 		CustomCategory customCategory = customCategories.get(categoryId);
 		if(customCategory == null){
-			try {
-				updateCustomContextsForOneManagedCategory(categoryId,ex);
-			} catch (ManagedCategoryProfileNotFoundException e) {
-				String errorMsg = "Unable to getCustomCategory(categoryId="+categoryId+") because of a ManagedCategoryProfileNotFoundException";
-				log.error(errorMsg);
-				cleanCustomCategoryFromProfile(categoryId);
-				throw new InternalDomainException(errorMsg,e);
-			}
+			updateCustomContextsForOneManagedCategory(categoryId,ex);
 			customCategory = customCategories.get(categoryId);
 			if (customCategory == null){
 				String errorMsg = "CustomCategory associated to category "+categoryId
@@ -169,39 +162,54 @@ public class UserProfile {
 	 * Update every customContext of this userProfile for (only one)categoryProfile identified by categoryProfileId
 	 * @param categoryProfileId
 	 * @param ex access to externalService
-	 * @throws ManagedCategoryProfileNotFoundException
 	 * @throws CategoryNotVisibleException
+	 * @throws InternalDomainException 
 	 */
 	protected void updateCustomContextsForOneManagedCategory(String categoryProfileId,ExternalService ex) 
-		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException {
+		throws  CategoryNotVisibleException, InternalDomainException {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+userId+" - updateCustomContextsForOneManagedCategory("+categoryProfileId+",ex)");
     	}
 		
-		ManagedCategoryProfile mcp = DomainTools.getChannel().getManagedCategoryProfile(categoryProfileId);
-		Set<Context> contexts = mcp.getContextsSet();
-		boolean categoryIsVisible = true;
-		// For all contexts refered by the managedCategoryProfile
-		for(Context context : contexts){
-			String contextId = context.getId();
-			// Update on customContexts existing in userProfile
-			if (containsCustomContext(contextId)) {
-				CustomContext customContext;
-				try {
-					customContext = getCustomContext(contextId);
+//		} catch (ManagedCategoryProfileNotFoundException e) {
+//			String errorMsg = "Unable to getCustomCategory(categoryId="+categoryId+") because of a ManagedCategoryProfileNotFoundException";
+//			log.error(errorMsg);
+//			cleanCustomCategoryFromProfile(categoryId);
+//			throw new InternalDomainException(errorMsg,e);
+//		}
+	   	boolean categoryIsVisible = true;
+		try {
+			ManagedCategoryProfile mcp = DomainTools.getChannel().getManagedCategoryProfile(categoryProfileId);
+			Set<Context> contexts = mcp.getContextsSet();
+			
+			// For all contexts refered by the managedCategoryProfile
+			for(Context context : contexts){
+				String contextId = context.getId();
+				// Update on customContexts existing in userProfile
+				if (containsCustomContext(contextId)) {
+					CustomContext customContext;
+					try {
+						customContext = getCustomContext(contextId);
 				
-					VisibilityMode mode = mcp.updateCustomContext(customContext,ex);
-					if (mode != VisibilityMode.NOVISIBLE){
-						categoryIsVisible = false;
-					} 
-				} catch (ContextNotFoundException e) {
-					log.error("Impossible to get CustomContext associated to context "+ contextId
+						VisibilityMode mode = mcp.updateCustomContext(customContext,ex);
+						if (mode != VisibilityMode.NOVISIBLE){
+							categoryIsVisible = false;
+						} 
+					} catch (ContextNotFoundException e) {
+						log.error("Impossible to get CustomContext associated to context "+ contextId
 							+" for managedCategoryProfile "+mcp.getId()+" because context not found",e);
-				} catch (ComputeFeaturesException e) {
-					log.error("Impossible to update CustomContext associated to context "+ contextId
+					} catch (ComputeFeaturesException e) {
+						log.error("Impossible to update CustomContext associated to context "+ contextId
 							+" for managedCategoryProfile "+mcp.getId()+"because an error occured when computing features",e);
+					}
 				}
 			}
+		
+		} catch (ManagedCategoryProfileNotFoundException e) {
+			String errorMsg = "Unable to updateCustomContextsForOneManagedCategory(categoryId="+categoryProfileId+") because of a ManagedCategoryProfileNotFoundException";
+			log.error(errorMsg);
+			cleanCustomCategoryFromProfile(categoryProfileId);
+			throw new InternalDomainException(errorMsg,e);
 		}
 		if (!categoryIsVisible){
 			String errorMsg = "Category "+categoryProfileId+" is not visible for user profile "+userId;

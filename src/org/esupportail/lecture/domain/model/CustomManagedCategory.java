@@ -18,6 +18,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
@@ -87,11 +88,12 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @throws CategoryProfileNotFoundException
 	 * @throws CategoryNotVisibleException
 	 * @throws CategoryNotLoadedException
+	 * @throws InternalDomainException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
 	public List<CustomSource> getSortedCustomSources(ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException {
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+super.getElementId()+" - getSortedCustomSources(externalService)");
 		}
@@ -126,11 +128,12 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryNotLoadedException 
+	 * @throws InternalDomainException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getVisibleSources(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
 	public List<ProfileAvailability> getVisibleSources(ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException {
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException {
 		if (log.isDebugEnabled()) {
 			log.debug("id="+super.getElementId()+" - getVisibleSources(ex)");
 		}

@@ -13,6 +13,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
@@ -80,8 +81,9 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryProfileNotFoundException
 	 * @throws CategoryNotVisibleException
 	 * @throws CategoryNotLoadedException
+	 * @throws InternalDomainException 
 	 */
-	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException;
+	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException;
 
 	/**
 	 * remove a CustomManegedSource displayed in this CustomCategory
@@ -107,9 +109,10 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryNotLoadedException 
+	 * @throws InternalDomainException 
 	 */
 	public abstract List<ProfileAvailability> getVisibleSources(ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException;
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException;
 
 	
 	
