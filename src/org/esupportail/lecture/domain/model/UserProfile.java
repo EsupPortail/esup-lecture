@@ -63,9 +63,7 @@ public class UserProfile {
 	
 	/*
 	 ************************** Initialization ************************************/
-	
 
-	
 	/**
 	 * Constructor
 	 * @param userId
@@ -89,6 +87,8 @@ public class UserProfile {
 	/*
 	 *************************** METHODS ************************************/
 
+	
+	/* GETTING CUSTOM ELEMENTS */
 	
 	/**
 	 * Return the customContext identified by the contextId 
@@ -115,17 +115,6 @@ public class UserProfile {
 		return customContext;
 	}
 	
-	/**
-	 * @param contextId
-	 * @return true if this userProfile contains the customContext identified by contextId
-	 */
-	public boolean containsCustomContext(String contextId) {
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - containsCustomContext("+contextId+")");
-    	}
-		return customContexts.containsKey(contextId);
-	}
-
 	/**
 	 * Return the customCategory identified by the category id
 	 * if exist,else,create it.
@@ -240,6 +229,47 @@ public class UserProfile {
 		
 		return customSource;
 	}
+
+	/* ADD CUSTOM ELEMENTS */
+	
+	/**
+	 * Add a customContext to this userProfile
+	 * @param customContext
+	 */
+	protected void addCustomContext(CustomContext customContext){
+	   	if (log.isDebugEnabled()){
+    		log.debug("id="+userId+" - addCustomContext("+customContext.getElementId()+")");
+    	}
+		customContexts.put(customContext.getElementId(),customContext);
+		DomainTools.getDaoService().updateUserProfile(this);
+	}
+	
+	/**
+	 * Add a customCategory to this userProfile
+	 * @param customCategory customCategory to add
+	 */
+	protected void addCustomCategory(CustomCategory customCategory){
+	   	if (log.isDebugEnabled()){
+    		log.debug("id="+userId+" - addCustomCategory("+customCategory.getElementId()+")");
+    	}
+		String id = customCategory.getElementId();
+		customCategories.put(id,customCategory);
+		DomainTools.getDaoService().updateUserProfile(this);
+	}
+	
+	/**
+	 * Add a customSource to this userProfile
+	 * @param customSource customSource to add
+	 */
+	protected void addCustomSource(CustomSource customSource){
+	   	if (log.isDebugEnabled()){
+    		log.debug("id="+userId+" - addCustomSource("+customSource.getElementId()+")");
+    	}
+		customSources.put(customSource.getElementId(),customSource);
+		DomainTools.getDaoService().updateUserProfile(this);
+	}
+	
+	/* REMOVE/CLEAN CUSTOM ELEMENTS FROM PROFILE */
 	
 	/**
 	 * Cleans all the userProfile content for customCategory categoryId. It means, if option
@@ -280,41 +310,6 @@ public class UserProfile {
 	}
 	
 	/**
-	 * Remove the customSource sourceId in all the profile (this object and in customCategories)
-	 * @param sourceId customSource ID
-	 */
-	public void removeCustomSourceFromProfile(String sourceId) {
-		if (log.isDebugEnabled()){
-			log.debug("removeCustomSourceFromProfile("+sourceId+")");
-		}
-		
-		for (CustomCategory custom : customCategories.values()){
-			if (custom.containsCustomSource(sourceId)){
-				custom.removeCustomSource(sourceId);
-			}
-		}
-		removeCustomSource(sourceId);
-	}
-	
-	/**
-	 * Remove the customManagedSource sourceId in all the profile (this object and in customCategories)
-	 * @param sourceId customManagedSource ID
-	 */
-	public void removeCustomManagedSourceFromProfile(String sourceId) {
-		if (log.isDebugEnabled()){
-			log.debug("removeCustomManagedSourceFromProfile("+sourceId+")");
-		}
-		
-		for (CustomCategory custom : customCategories.values()){
-			if (custom.containsCustomManagedSource(sourceId)){
-			// For all parent customCategories
-				custom.removeCustomManagedSource(sourceId);
-			}
-		}
-		removeCustomSource(sourceId); // (GB) pourquoi pas un removeCustomManagedSource ?
-	}
-	
-	/**
 	 * Remove the customCategory categoryId in all the profile (this object and in customContexts)
 	 * @param categoryId customCategory ID
 	 */
@@ -332,12 +327,12 @@ public class UserProfile {
 		removeCustomCategory(categoryId);
 	}
 	
-	
 	/**
 	 * Remove the customManagedCategory categoryId in all the profile (this object and in customContexts)
 	 * @param categoryId customManagedCategory ID
 	 */
 	public void removeCustomManagedCategoryFromProfile(String categoryId) {
+		//TODO (GB) A qoui sert il celui ci ?
 		if (log.isDebugEnabled()){
 			log.debug("removeCustomManagedCategoryFromProfile("+categoryId+")");
 		}
@@ -348,22 +343,45 @@ public class UserProfile {
 				custom.removeCustomManagedCategory(categoryId);
 			}
 		}
-		removeCustomCategory(categoryId);
+		removeCustomCategory(categoryId); // TODO (GB) pourquoi pas un removeCustomManagedCategory ?
 	}
 	
-
-
 	/**
-	 * Add a customContext to this userProfile
-	 * @param customContext
+	 * Remove the customSource sourceId in all the profile (this object and in customCategories)
+	 * @param sourceId customSource ID
 	 */
-	protected void addCustomContext(CustomContext customContext){
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - addCustomContext("+customContext.getElementId()+")");
-    	}
-		customContexts.put(customContext.getElementId(),customContext);
-		DomainTools.getDaoService().updateUserProfile(this);
+	public void removeCustomSourceFromProfile(String sourceId) {
+		if (log.isDebugEnabled()){
+			log.debug("removeCustomSourceFromProfile("+sourceId+")");
+		}
+		
+		for (CustomCategory custom : customCategories.values()){
+			if (custom.containsCustomSource(sourceId)){
+				custom.removeCustomSource(sourceId);
+			}
+		}
+		removeCustomSource(sourceId);
 	}
+	/**
+	 * Remove the customManagedSource sourceId in all the profile (this object and in customCategories)
+	 * @param sourceId customManagedSource ID
+	 */
+	public void removeCustomManagedSourceFromProfile(String sourceId) {
+		//TODO (GB) A qoui sert il celui ci ?
+		if (log.isDebugEnabled()){
+			log.debug("removeCustomManagedSourceFromProfile("+sourceId+")");
+		}
+		
+		for (CustomCategory custom : customCategories.values()){
+			if (custom.containsCustomManagedSource(sourceId)){
+			// For all parent customCategories
+				custom.removeCustomManagedSource(sourceId);
+			}
+		}
+		removeCustomSource(sourceId); // TODO (GB) pourquoi pas un removeCustomManagedSource ?
+	}
+	
+	/* REMOVE CUSTOM ELEMENTS : ATOMIC METHODS */
 	
 	/**
 	 * Remove a customContext from this userProfile only
@@ -380,19 +398,6 @@ public class UserProfile {
 			DomainTools.getDaoService().deleteCustomContext(custom);
 			DomainTools.getDaoService().updateUserProfile(this);
 	   	}
-	}
-	
-	/**
-	 * Add a customCategory to this userProfile
-	 * @param customCategory customCategory to add
-	 */
-	protected void addCustomCategory(CustomCategory customCategory){
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - addCustomCategory("+customCategory.getElementId()+")");
-    	}
-		String id = customCategory.getElementId();
-		customCategories.put(id,customCategory);
-		DomainTools.getDaoService().updateUserProfile(this);
 	}
 	
 
@@ -414,18 +419,6 @@ public class UserProfile {
 	   	}
 	}
 	
-	/**
-	 * Add a customSource to this userProfile
-	 * @param customSource customSource to add
-	 */
-	protected void addCustomSource(CustomSource customSource){
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - addCustomSource("+customSource.getElementId()+")");
-    	}
-		customSources.put(customSource.getElementId(),customSource);
-		DomainTools.getDaoService().updateUserProfile(this);
-	}
-	
 	/**	 * 
 	 * Remove a customCategory from this userProfile only
 	 * @param sourceId
@@ -440,7 +433,20 @@ public class UserProfile {
 			DomainTools.getDaoService().updateUserProfile(this);
 		}
 	}
-		
+	
+	/* MISCELLANEOUS */
+	
+	/**
+	 * @param contextId
+	 * @return true if this userProfile contains the customContext identified by contextId
+	 */
+	public boolean containsCustomContext(String contextId) {
+	   	if (log.isDebugEnabled()){
+    		log.debug("id="+userId+" - containsCustomContext("+contextId+")");
+    	}
+		return customContexts.containsKey(contextId);
+	}
+
 	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */

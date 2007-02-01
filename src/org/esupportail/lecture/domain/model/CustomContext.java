@@ -126,6 +126,8 @@ public class CustomContext implements CustomElement {
 		return listCustomCategories;
 	}
 	
+	
+	/* ADD ELEMENTS */
 
 	/**
 	 * Add a subscription category to this custom context (if no exists, else do nothing) 
@@ -148,6 +150,8 @@ public class CustomContext implements CustomElement {
 	}
 	// TODO (GB later) addImportation(), addCreation())
 	
+	/* REMOVE ELEMENTS */
+	
 	/**
 	 * remove a CustomManagedCategory displayed in this CustomContext
 	 * and also removes every occcurence in userProfile
@@ -161,6 +165,48 @@ public class CustomContext implements CustomElement {
 		
 	}
 	// TODO (GB later)  removeCustomPersonalCategory()
+	
+	/**
+	 * Remove the customCategory categoryId in ths customContext only
+	 * @param categoryId ID for customCategory
+	 */
+	public void removeCustomCategory(String categoryId) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - removeCustomCategory("+categoryId+")");
+		}
+		removeCustomManagedCategory(categoryId);
+	}
+	
+	/**
+	 * Remove the customManagedCategory categoryId in ths customContext only
+	 * @param categoryId ID for customManagedCategory
+	 */
+	public void removeCustomManagedCategory(String categoryId) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - removeCustomManagedCategory("+categoryId+")");
+		}
+		CustomCategory cs = subscriptions.get(categoryId);
+		if (cs != null) {
+			subscriptions.remove(categoryId);
+			DomainTools.getDaoService().updateCustomContext(this);
+		}
+	}
+	
+	/**
+	 * Remove every subscriptions (customManagedCategories) of this customContext.
+	 */
+	public void removeSubscriptions() {
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - removeSubscriptions()");
+		}
+		
+		for (String sourceId : subscriptions.keySet()){
+			removeCustomManagedCategoryFromProfile(sourceId);
+		}
+		
+	}
+	
+	/* MISCELLANEOUS */
 	
 	/**
 	 * Returns the Context associated to this customContext
@@ -245,6 +291,30 @@ public class CustomContext implements CustomElement {
 	}
 
 	/**
+	 * @param categoryId ID for customManagedCategory
+	 * @return true if this customContext has a reference on customManagedCategory categoryId
+	 */
+	public boolean containsCustomManagedCategory(String categoryId) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - containsCustomManagedCategory("+categoryId+")");
+		}
+		return subscriptions.containsKey(categoryId);
+		
+	}
+	
+	/**
+	 * @param categoryId ID for customCategory
+	 * @return true if this customContext has a reference on customCategory categoryId
+	 */
+	public boolean containsCustomCategory(String categoryId) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - containsCustomCategory("+categoryId+")");
+		}
+		return containsCustomManagedCategory(categoryId);
+		
+	}
+	
+	/**
 	 * Return true if the customCategory is folded in this customContext
 	 * @param catId
 	 * @return if category is folded or not
@@ -283,70 +353,6 @@ public class CustomContext implements CustomElement {
 		return this.getElementId().hashCode();
 	}
 
-	/**
-	 * @param categoryId ID for customManagedCategory
-	 * @return true if this customContext has a reference on customManagedCategory categoryId
-	 */
-	public boolean containsCustomManagedCategory(String categoryId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - containsCustomManagedCategory("+categoryId+")");
-		}
-		return subscriptions.containsKey(categoryId);
-		
-	}
-	
-	/**
-	 * @param categoryId ID for customCategory
-	 * @return true if this customContext has a reference on customCategory categoryId
-	 */
-	public boolean containsCustomCategory(String categoryId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - containsCustomCategory("+categoryId+")");
-		}
-		return containsCustomManagedCategory(categoryId);
-		
-	}
-	
-	/**
-	 * Remove the customCategory categoryId in ths customContext only
-	 * @param categoryId ID for customCategory
-	 */
-	public void removeCustomCategory(String categoryId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - removeCustomCategory("+categoryId+")");
-		}
-		removeCustomManagedCategory(categoryId);
-	}
-	
-	/**
-	 * Remove the customManagedCategory categoryId in ths customContext only
-	 * @param categoryId ID for customManagedCategory
-	 */
-	public void removeCustomManagedCategory(String categoryId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - removeCustomManagedCategory("+categoryId+")");
-		}
-		CustomCategory cs = subscriptions.get(categoryId);
-		if (cs != null) {
-			subscriptions.remove(categoryId);
-			DomainTools.getDaoService().updateCustomContext(this);
-		}
-	}
-	
-	/**
-	 * Remove every subscriptions (customManagedCategories) of this customContext.
-	 */
-	public void removeSubscriptions() {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - removeSubscriptions()");
-		}
-		
-		for (String sourceId : subscriptions.keySet()){
-			removeCustomManagedCategoryFromProfile(sourceId);
-		}
-		
-	}
-	
 	
 	/* 
 	 ************************** ACCESSORS **********************************/
