@@ -161,6 +161,9 @@ public class DomainServiceImpl implements DomainService {
 			try {
 				category = new CategoryBean(customCategory,customContext);
 				listCategoryBean.add(category);
+			} catch (CategoryProfileNotFoundException e){
+				log.warn("Warning on service 'getAvailableCategories(user "+userId+", context "+contextId+") : clean custom source ");
+				userProfile.cleanCustomCategoryFromProfile(customCategory.getElementId());
 			} catch (InfoDomainException e) {
 				log.error("Error on service 'getAvailableCategories(user "+userId+", context "+contextId+") : creation of a CategoryDummyBean");
 				category = new CategoryDummyBean(e);
@@ -497,27 +500,27 @@ public class DomainServiceImpl implements DomainService {
 	 * @param ex access to externalService
 	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceNotVisibleException 
 	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws CategoryProfileNotFoundException 
+	 * @throws CategoryNotLoadedException
 	 * @throws InternalDomainException 
 	 */
 	public void subscribeToSource(String uid, String categoryId, String sourceId, ExternalService ex) 
-		throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, CategoryNotVisibleException,
-		CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, InternalDomainException {
+		throws UserNotSubscribedToCategoryException, CategoryNotVisibleException,
+		CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, InternalDomainException {
 		if (log.isDebugEnabled()){
 			log.debug("subscribeToSource("+uid+","+categoryId+","+sourceId+", externalService)");
 		}
-		
+		UserProfile userProfile = channel.getUserProfile(uid);
 		try {
-			UserProfile userProfile = channel.getUserProfile(uid);
 			CustomCategory customCategory = userProfile.getCustomCategory(categoryId,ex);
 			customCategory.subscribeToSource(sourceId,ex);
-			
-
-		}  catch (CustomCategoryNotFoundException e) {
+		} catch	(CategoryProfileNotFoundException e) {
+			String errorMsg = "CategoryProfileNotFoundException for service 'subscribeToSource(user "+uid+", category "+categoryId+ ", source "+sourceId+", externalService)";
+			log.error(errorMsg);
+			userProfile.cleanCustomSourceFromProfile(categoryId);
+			throw new InternalDomainException(errorMsg,e);
+		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'subscribeToSource(user "+uid+", category "+categoryId+ ", source "+sourceId+", externalService).\n" +
 			"User "+uid+" is not subscriber of Category "+categoryId;
 			log.error(errorMsg);
@@ -542,21 +545,23 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws InternalDomainException 
 	 * @throws SourceObligedException 
 	 * @throws CategoryNotLoadedException 
-	 * @throws CategoryProfileNotFoundException 
 	 */
 	public void unsubscribeToSource(String uid, String categoryId, String sourceId, ExternalService ex) 
 		throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, InternalDomainException, 
-		CategoryProfileNotFoundException, CategoryNotLoadedException, SourceObligedException {
+		CategoryNotLoadedException, SourceObligedException {
 		if (log.isDebugEnabled()){
 			log.debug("subscribeToSource("+uid+","+categoryId+","+sourceId+", externalService)");
 		}
-		
+		UserProfile userProfile = channel.getUserProfile(uid);
 		try {
-			UserProfile userProfile = channel.getUserProfile(uid);
 			CustomCategory customCategory = userProfile.getCustomCategory(categoryId,ex);
 			customCategory.unsubscribeToSource(sourceId,ex);
-			
-		}  catch (CustomCategoryNotFoundException e) {
+		} catch	(CategoryProfileNotFoundException e) {
+			String errorMsg = "CategoryProfileNotFoundException for service 'unsubscribeToSource(user "+uid+", category "+categoryId+ ", source "+sourceId+", externalService)";
+			log.error(errorMsg);
+			userProfile.cleanCustomSourceFromProfile(categoryId);
+			throw new InternalDomainException(errorMsg,e);
+		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'unsubscribeToSource(user "+uid+", category "+categoryId+ ", source "+sourceId+", externalService).\n" +
 			"User "+uid+" is not subscriber of Category "+categoryId;
 			log.error(errorMsg);
