@@ -181,20 +181,20 @@ public class DomainServiceImpl implements DomainService {
 	 * @param categoryId id of the category to display sources
 	 * @return a list of sourceBean
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryProfileNotFoundException
 	 * @throws CategoryNotLoadedException 
+	 * @throws InternalDomainException 
 	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getAvailableSources(String uid, String categoryId,ExternalService ex) 
-		throws CategoryNotVisibleException, CategoryProfileNotFoundException, UserNotSubscribedToCategoryException, CategoryNotLoadedException  {
+		throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, CategoryNotLoadedException, InternalDomainException  {
 		if (log.isDebugEnabled()){
 			log.debug("getAvailableSources("+uid+","+categoryId+",externalService)");
 		}
 		
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
-		
+		UserProfile userProfile = channel.getUserProfile(uid);
 		try {
-			UserProfile userProfile = channel.getUserProfile(uid);
+			
 			CustomCategory customCategory = userProfile.getCustomCategory(categoryId,ex);
 			List<CustomSource> customSources = customCategory.getSortedCustomSources(ex);
 				
@@ -211,8 +211,12 @@ public class DomainServiceImpl implements DomainService {
 					source = new SourceDummyBean(e);
 					listSourceBean.add(source);
 				}
-				
 			}
+		} catch	(CategoryProfileNotFoundException e) {
+			String errorMsg = "CategoryProfileNotFoundException for service 'getAvailableSources(user "+uid+", category "+categoryId+ ")";
+			log.error(errorMsg);
+			userProfile.cleanCustomSourceFromProfile(categoryId);
+			throw new InternalDomainException(errorMsg,e);
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'getAvailableSources(user "+uid+", category "+categoryId+ ")\n" +
 					"User "+uid+" is not subscriber of Category "+categoryId;
@@ -258,7 +262,6 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<ItemBean> getItems(String uid, String sourceId,ExternalService ex) 
@@ -444,22 +447,21 @@ public class DomainServiceImpl implements DomainService {
 	 * @param ex access to externalService
 	 * @return List of SourceBean
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryProfileNotFoundException 
 	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws CategoryNotLoadedException 
+	 * @throws InternalDomainException 
 	 */
 	public List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) 
-		throws CategoryNotVisibleException, CategoryProfileNotFoundException, CategoryNotLoadedException, UserNotSubscribedToCategoryException {
+		throws CategoryNotVisibleException, CategoryNotLoadedException, UserNotSubscribedToCategoryException, InternalDomainException {
 		if (log.isDebugEnabled()) {
 			log.debug("getVisibleSources("+uid+","+categoryId+",ex)");
 		}
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
-		
+		UserProfile userProfile = channel.getUserProfile(uid);
 		try {
-			UserProfile userProfile = channel.getUserProfile(uid);
+			
 			CustomCategory customCategory = userProfile.getCustomCategory(categoryId,ex);
 			List<ProfileAvailability> couples = customCategory.getVisibleSources(ex);
-			
 			for(ProfileAvailability couple : couples){
 				SourceBean source;
 				//try {
@@ -472,7 +474,12 @@ public class DomainServiceImpl implements DomainService {
 //					listSourceBean.add(source);
 //				}
 			}			
-		} catch (CustomCategoryNotFoundException e) {
+		} catch	(CategoryProfileNotFoundException e) {
+			String errorMsg = "CategoryProfileNotFoundException for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")";
+			log.error(errorMsg);
+			userProfile.cleanCustomSourceFromProfile(categoryId);
+			throw new InternalDomainException(errorMsg,e);
+		}catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")" +
 			"User "+uid+" is not subscriber of Category "+categoryId;
 			log.error(errorMsg);

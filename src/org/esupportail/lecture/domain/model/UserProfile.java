@@ -14,6 +14,7 @@ import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 
@@ -132,18 +133,25 @@ public class UserProfile {
 	 * @param ex access to externalService
 	 * @return customCategory (or null)
 	 * @throws CategoryNotVisibleException 
-	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws CustomCategoryNotFoundException 
+	 * @throws InternalDomainException 
 	 */
 	public CustomCategory getCustomCategory(String categoryId,ExternalService ex) 
-		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, CustomCategoryNotFoundException {
+		throws  CategoryNotVisibleException, CustomCategoryNotFoundException, InternalDomainException {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+userId+" - getCustomCategory("+categoryId+")");
     	}
 		// TODO (GB later) revoir avec customManagedCategory et customPersonalCategory
 		CustomCategory customCategory = customCategories.get(categoryId);
 		if(customCategory == null){
-			updateCustomContextsForOneManagedCategory(categoryId,ex);
+			try {
+				updateCustomContextsForOneManagedCategory(categoryId,ex);
+			} catch (ManagedCategoryProfileNotFoundException e) {
+				String errorMsg = "Unable to getCustomCategory(categoryId="+categoryId+") because of a ManagedCategoryProfileNotFoundException";
+				log.error(errorMsg);
+				cleanCustomCategoryFromProfile(categoryId);
+				throw new InternalDomainException(errorMsg,e);
+			}
 			customCategory = customCategories.get(categoryId);
 			if (customCategory == null){
 				String errorMsg = "CustomCategory associated to category "+categoryId
