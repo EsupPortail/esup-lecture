@@ -272,13 +272,15 @@ public class UserProfile {
 		
 		for (CustomCategory custom : customCategories.values()){
 			if (custom.containsCustomManagedSource(sourceId)){
+			// For all parent customCategories
 				custom.removeCustomManagedSource(sourceId);
 			}
 		}
 		removeCustomSource(sourceId);
 	}
 	
-	
+	// TODO (GB later) : quand/si y'aura besoin ?
+	//public void removeCustomSourceFromProfile(String sourceId)
 	
 	/**
 	 * Remove the customManagedCategory categoryId in all the profile (this object and in customContexts)
@@ -291,12 +293,15 @@ public class UserProfile {
 		
 		for (CustomContext custom : customContexts.values()){
 			if (custom.containsCustomManagedCategory(categoryId)){
+				// For all parent customContexts
 				custom.removeCustomManagedCategory(categoryId);
 			}
 		}
 		removeCustomCategory(categoryId);
 	}
 	
+	// TODO (GB later) : quand/si y'aura besoin ?
+	//public void removeCustomSourceFromProfile(String sourceId)
 
 	/**
 	 * Add a customContext to this userProfile
@@ -347,11 +352,14 @@ public class UserProfile {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+userId+" - removeCustomCategory("+categoryId+")");
     	}
-	   	CustomCategory ccat = customCategories.remove(categoryId);
-		if( ccat!= null) {
-			DomainTools.getDaoService().deleteCustomCategory(ccat);
+	   	
+	   	CustomCategory custom = customCategories.get(categoryId);
+	   	if (custom != null){
+	   		custom.removeSubscriptions();
+	   		customCategories.remove(categoryId);
+	   		DomainTools.getDaoService().deleteCustomCategory(custom);
 			DomainTools.getDaoService().updateUserProfile(this);
-		}
+	   	}
 	}
 	
 	/**

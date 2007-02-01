@@ -201,6 +201,12 @@ public abstract class CustomCategory implements CustomElement {
 	 */
 	public abstract void removeCustomManagedSource(String sourceId);
 
+	/**
+	 * Remove every subscriptions (customManagedSources) of this customCategory if it is a customMAnagedCategory.
+	 * IT does not do anything if the customCAtegory is a customPersonalCategory 
+	 */
+	public abstract void removeSubscriptions();
+	
 	/* 
 	 ************************** ACCESSORS **********************************/
 
@@ -249,6 +255,8 @@ public abstract class CustomCategory implements CustomElement {
 	public void setElementId(String elementId) {
 		this.elementId = elementId;
 	}
+
+	
 
 
 

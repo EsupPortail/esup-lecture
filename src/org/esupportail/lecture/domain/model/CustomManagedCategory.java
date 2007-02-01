@@ -267,6 +267,21 @@ public class CustomManagedCategory extends CustomCategory {
 		// TODO (GB later ajouter pour les personnal)
 	}
 	
+	/**
+	 * Remove every subscriptions (customManagedSources) of this customManagedCategory.
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#removeSubscriptions()
+	 */
+	@Override
+	public void removeSubscriptions() {
+		if (log.isDebugEnabled()){
+			log.debug("removeSubscriptions()");
+		}
+		
+		for (String sourceId : subscriptions.keySet()){
+			this.removeCustomManagedSourceFromProfile(sourceId);
+		}
+		
+	}
 	
 	
 	/**
@@ -402,10 +417,11 @@ public class CustomManagedCategory extends CustomCategory {
 	/**
 	 * @param subscriptions
 	 */
-	private void setSubscriptions(
-			Map<String, CustomManagedSource> subscriptions) {
+	private void setSubscriptions(Map<String, CustomManagedSource> subscriptions) {
 		this.subscriptions = subscriptions;
 	}
+
+	
 
 
 
