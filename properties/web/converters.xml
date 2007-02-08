@@ -13,4 +13,13 @@
 		This file is referenced by /properties/applicationContext.xml.
 	-->
 
+	<bean 
+		id="itemDisplayModeConverter"
+		class="org.esupportail.lecture.web.converters.ItemDisplayModeConverter"
+		>
+    	<description>
+			A converter for source itemDisplayModeConverter
+    	</description>
+	</bean>
+
 </beans>

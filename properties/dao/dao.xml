@@ -39,6 +39,11 @@
 				<value>
 					classpath:/properties/dao/hibernate/mapping/customSource.hbm.xml
 				</value>
+				<!-- 
+				<value>
+					classpath:/properties/dao/hibernate/mapping/test.hbm.xml
+				</value>
+				 -->
 			</list>
 		</property>
 	</bean>

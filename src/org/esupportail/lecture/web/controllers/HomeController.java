@@ -12,6 +12,8 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.ItemBean;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
@@ -30,7 +32,7 @@ public class HomeController extends twoPanesController {
 	/**
 	 * Display mode for item (all | unread | unreadfirst)
 	 */
-	private String itemDisplayMode;
+	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.ALL;
 	/**
 	 *  item used by t:updateActionListener
 	 */
@@ -61,7 +63,7 @@ public class HomeController extends twoPanesController {
 		}
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		try {
-			getFacadeService().marckItemReadMode(getUID(), selectedCategory.getSelectedSource().getId(), item.getId(), item.isRead());
+			getFacadeService().marckItemReadMode(getUID(), selectedCategory.getSelectedSource().getId(), item.getId(), !item.isRead());
 			
 		} catch (Exception e) {
 			throw new WebException("Error in toggleItemReadState",e);
@@ -101,6 +103,17 @@ public class HomeController extends twoPanesController {
 	 * @return JSF from-outcome
 	 */
 	public String changeItemDisplayMode() {
+		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
+		if (selectedCategory != null) {
+			SourceWebBean selectedSource = selectedCategory.getSelectedSource();
+			if (selectedSource != null) {
+				try {
+					getFacadeService().marckItemDisplayMode(getUID(), selectedSource.getId(), itemDisplayMode);
+				} catch (Exception e) {
+					throw new WebException("Error in changeItemDisplayMode",e);
+				}
+			}
+		}
 		return "OK";
 	}	
 
@@ -124,10 +137,9 @@ public class HomeController extends twoPanesController {
 	 * @return Sorted items list
 	 */
 	private List<ItemWebBean> sortedItems(List<ItemWebBean> items) {
-		if (itemDisplayMode ==  null) return items;
-		if (itemDisplayMode.equals("all")) {
+		if (itemDisplayMode == ItemDisplayMode.ALL) {
 			// nothing to do
-		} else if (itemDisplayMode.equals("notRead")) {
+		} else if (itemDisplayMode == ItemDisplayMode.UNREAD) {
 			if (items != null){
 				List<ItemWebBean> ret = new ArrayList<ItemWebBean>();
 				Iterator<ItemWebBean> iter = items.iterator();
@@ -139,7 +151,7 @@ public class HomeController extends twoPanesController {
 				}
 				return ret;
 			}
-		} else if (itemDisplayMode.equals("unreadFirst")) {
+		} else if (itemDisplayMode == ItemDisplayMode.UNREADFIRST) {
 			if (items != null){
 				List<ItemWebBean> ret = new ArrayList<ItemWebBean>();
 				// find unread
@@ -242,7 +254,8 @@ public class HomeController extends twoPanesController {
 	/**
 	 * @return Display mode form items
 	 */
-	public String getItemDisplayMode() {
+	public ItemDisplayMode getItemDisplayMode() {
+		if (log.isDebugEnabled()) log.debug("getItemDisplayMode()="+itemDisplayMode);
 		return itemDisplayMode;
 	}
 
@@ -250,7 +263,8 @@ public class HomeController extends twoPanesController {
 	 * set the item display mode
 	 * @param itemDisplayMode
 	 */
-	public void setItemDisplayMode(String itemDisplayMode) {
+	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) {
+		if (log.isDebugEnabled()) log.debug("setItemDisplayMode("+itemDisplayMode+")");
 		this.itemDisplayMode = itemDisplayMode;
 	}
 
@@ -275,6 +289,27 @@ public class HomeController extends twoPanesController {
 	@Override
 	protected String getContextName() {
 		return this.CONTEXT;
+	}
+
+	/**
+	 * @return ALL value from ItemDisplayMode enumeration for JSF view
+	 */
+	public ItemDisplayMode getAll() {
+		return ItemDisplayMode.ALL;
+	}
+
+	/**
+	 * @return UNREAD value from ItemDisplayMode enumeration for JSF view
+	 */
+	public ItemDisplayMode getUnread() {
+		return ItemDisplayMode.UNREAD;
+	}
+
+	/**
+	 * @return UNREADFIRST value from ItemDisplayMode enumeration for JSF view
+	 */
+	public ItemDisplayMode getUnreadfirt() {
+		return ItemDisplayMode.UNREADFIRST;
 	}
 
 }

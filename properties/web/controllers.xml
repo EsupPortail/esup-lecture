@@ -18,6 +18,9 @@
 		parent="abstractContextAwareController" scope="session">
 		<description>A bean to manage the edit page.</description>
 		<property name="facadeService" ref="facadeService"/>
+		<property name="homeController" ref="homeController">
+			<description>Reference to homeController is needed to flush his cache when subscribtion is changed in editController</description>
+		</property>
 	</bean>
 
 	<bean id="homeController"

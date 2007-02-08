@@ -13,8 +13,6 @@ import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
-import org.esupportail.lecture.exceptions.domain.InternalExternalException;
-import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
@@ -27,11 +25,15 @@ public class EditController extends twoPanesController {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(EditController.class);
+	private static final Log log = LogFactory.getLog(EditController.class);
 	/**
 	 * Key used to store the context in virtual session
 	 */
 	static final String CONTEXT = "contextInEditMode";
+	/**
+	 * HomeController injected by Spring
+	 */
+	private HomeController homeController;
 	/**
 	 * @see org.esupportail.commons.web.controllers.Resettable#reset()
 	 */
@@ -88,7 +90,7 @@ public class EditController extends twoPanesController {
 		}
 		//invalidate home page cache
 		if (log.isDebugEnabled()) log.debug("invalidate home page cache");
-		//TODO (RB) appeler la methode de flush de HomeController --> pb de virtual session non static --> créer un session controller au dessus...
+		homeController.flushContextFormVirtualSession();
 		return "OK";		
 	}
 	
@@ -127,7 +129,14 @@ public class EditController extends twoPanesController {
 	 */
 	@Override
 	protected String getContextName() {
-		return this.CONTEXT;
+		return CONTEXT;
+	}
+
+	/**
+	 * @param homeController
+	 */
+	public void setHomeController(HomeController homeController) {
+		this.homeController = homeController;
 	}
 	
 }

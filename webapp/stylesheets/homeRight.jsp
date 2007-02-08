@@ -18,11 +18,10 @@
 				<t:htmlTag value="ul">
 					<t:htmlTag value="li">
 						<h:outputText value="#{msgs['selectorLabel']}" />
-						<h:selectOneMenu value="#{homeController.itemDisplayMode}">
-							<f:selectItem itemValue="all" itemLabel="#{msgs['all']}" />
-							<f:selectItem itemValue="notRead" itemLabel="#{msgs['notRead']}" />
-							<f:selectItem itemValue="unreadFirst"
-								itemLabel="#{msgs['unreadFirst']}" />
+						<h:selectOneMenu value="#{homeController.itemDisplayMode}" converter="#{itemDisplayModeConverter}">
+							<f:selectItem itemValue="#{homeController.all}" itemLabel="#{msgs['all']}" />
+							<f:selectItem itemValue="#{homeController.unread}" itemLabel="#{msgs['notRead']}" />
+							<f:selectItem itemValue="#{homeController.unreadfirt}" itemLabel="#{msgs['unreadFirst']}" />
 						</h:selectOneMenu>
 						<h:commandButton id="submit" value="#{msgs['changeItemDisplayModeButtonLabel']}" action="#{homeController.changeItemDisplayMode}"/>
 					</t:htmlTag>
