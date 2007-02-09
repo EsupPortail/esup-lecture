@@ -12,6 +12,7 @@
 	-->
 
 	<!-- TEST DATA -->
+	<!-- 
 	<bean id="context" class="org.esupportail.lecture.domain.beans.ContextBean">
 		<property name="id" value="c1" />
 		<property name="name" value="Test context !!!" />
@@ -33,33 +34,21 @@
 		class="org.esupportail.lecture.domain.beans.SourceBean">
 		<property name="id" value="1" />
 		<property name="name" value="Cinéma" />
-		<!-- 
-		<property name="type" value="obliged" />
-		 -->
 	</bean>
 	<bean id="source2"
 		class="org.esupportail.lecture.domain.beans.SourceBean">
 		<property name="id" value="2" />
 		<property name="name" value="Théatre" />
-		<!-- 
-		<property name="type" value="obliged" />
-		 -->
 	</bean>
 	<bean id="source3"
 		class="org.esupportail.lecture.domain.beans.SourceBean">
 		<property name="id" value="3" />
 		<property name="name" value="Concert" />
-		<!-- 
-		<property name="type" value="subscribed" />
-		 -->
 	</bean>
 	<bean id="source4"
 		class="org.esupportail.lecture.domain.beans.SourceBean">
 		<property name="id" value="4" />
 		<property name="name" value="Danse" />
-		<!-- 
-		<property name="type" value="notSubscribed" />
-		 -->
 	</bean>
 
 	<bean id="item1"
@@ -101,6 +90,7 @@ Cette inscription officialise votre statut d'étudiant avec l'envoi	de votre car
 			</value>
 		</property>
 	</bean>
+	 -->
 	
 
 </beans>

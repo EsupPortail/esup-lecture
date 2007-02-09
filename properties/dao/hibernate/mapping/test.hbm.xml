@@ -4,12 +4,12 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
-	<class name="testENUM" table="ENUM">
+	<class name="TestENUM" table="ENUM">
 		<id name="testENUMPK" type="long">
 			<column name="ENUMPK"/>
 			<generator class="native"/>
 		</id>
-		<property name="ItemDisplayMode" type="org.esupportail.lecture.dao.ItemDisplayModeUserType">
+		<property name="itemDisplayMode" type="org.esupportail.lecture.dao.ItemDisplayModeUserType">
 			<column name="ITEMDISPLAYMODE" not-null="true" length="32"/>
 		</property>
 	</class>

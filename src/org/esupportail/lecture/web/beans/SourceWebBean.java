@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 
 /**
  * @author bourges
@@ -26,6 +27,10 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 * "owner" --> The source is personal
 	 */
 	private AvailabilityMode type;
+	/**
+	 * the display form source Items
+	 */
+	private ItemDisplayMode itemDisplayMode;
 	/**
 	 * List of items of source
 	 */
@@ -117,6 +122,20 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 */
 	public int compareTo(SourceWebBean o) {
 		return name.compareTo(o.name);
+	}
+	
+	/**
+	 * @return ItemDisplayMode
+	 */
+	public ItemDisplayMode getItemDisplayMode() {
+		return itemDisplayMode;
+	}
+	
+	/**
+	 * @param itemDisplayMode
+	 */
+	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) {
+		this.itemDisplayMode = itemDisplayMode;
 	}
 	
 }

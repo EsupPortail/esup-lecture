@@ -137,6 +137,14 @@
 	***************************************************
 				DAO SERVICE
 	***************************************************-->
+	<!-- 
+	<bean id="daoTestENUM" parent="hibernateSessionFactoryContainer"
+        class="org.esupportail.lecture.dao.DaoTestENUMImpl">
+        <description>Test DAO for validate ENUM and Hibernate</description>
+		<property name="hibernateTemplate" ref="hibernateTemplate" />
+	</bean>
+	 -->
+	
 	<bean id="daoServiceTest" class="org.esupportail.lecture.dao.DaoServiceStub">
 		<description>
 			This bean provides the dao service of the application, used by the 
@@ -184,21 +192,6 @@
         </property>
     </bean>  
      
-    <!--  Fin de mes ajouts -->
-    <!-- 
-	<bean 
-		id="daoServiceImpl" 
-		parent="hibernateSessionFactoryContainer"
-		class="org.esupportail.lecture.dao.HibernateDaoService" 
-		>
-		<description>
-			This bean is the DAO service, the interface used by the domain service to access 
-			the database. It must implement interface org.esupportail.lecture.dao.DaoService.
-		</description>
-		<property name="hibernateTemplate" ref="hibernateTemplate" />
-	</bean>
-     -->
-		
 	<bean 
 		id="transactionManager" 
 		parent="hibernateSessionFactoryContainer"

@@ -24,6 +24,7 @@ import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
@@ -263,11 +264,13 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 			sourceWebBean.setId(id);
 			sourceWebBean.setName(cause);
 			sourceWebBean.setType(AvailabilityMode.OBLIGED);
+			sourceWebBean.setItemDisplayMode(ItemDisplayMode.ALL);
 		}
 		else {
 			sourceWebBean.setId(sourceBean.getId());
 			sourceWebBean.setName(sourceBean.getName());
-			sourceWebBean.setType(sourceBean.getType());			
+			sourceWebBean.setType(sourceBean.getType());		
+			sourceWebBean.setItemDisplayMode(sourceBean.getItemDisplayMode());
 		}
 		return sourceWebBean;
 	}

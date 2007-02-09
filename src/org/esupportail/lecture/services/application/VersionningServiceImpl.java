@@ -26,8 +26,7 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	 * @see org.esupportail.commons.services.application.VersionningService#initDatabase()
 	 */
 	public void initDatabase() {
-		// TODO Auto-generated method stub
-		log.info("ici!!!!");
+		log.info("init database !");
 		HibernateUtils.create();
 		getDomainService().getConnectedUser("foo");
 		HibernateUtils.close(false);
@@ -44,7 +43,9 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	 * @see org.esupportail.commons.services.application.VersionningService#upgradeDatabase()
 	 */
 	public void upgradeDatabase() {
-		// TODO Auto-generated method stub
-		
+		log.info("update database !");
+		HibernateUtils.create();
+		getDomainService().getConnectedUser("foo");
+		HibernateUtils.close(false);		
 	}
 }

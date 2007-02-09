@@ -91,6 +91,8 @@ public class HomeController extends twoPanesController {
 			SourceWebBean src = getSourceByID(cat, srcId);
 			cat.setSelectedSource(src);
 			isSourceSelected = true;
+			//set controller itemDisplayMode to the select source itemDisplayMode
+			itemDisplayMode = src.getItemDisplayMode();
 		}
 		// set category focused by user as selected category in the context
 		ContextWebBean ctx = getContext();
@@ -109,6 +111,7 @@ public class HomeController extends twoPanesController {
 			if (selectedSource != null) {
 				try {
 					getFacadeService().marckItemDisplayMode(getUID(), selectedSource.getId(), itemDisplayMode);
+					selectedSource.setItemDisplayMode(itemDisplayMode);
 				} catch (Exception e) {
 					throw new WebException("Error in changeItemDisplayMode",e);
 				}
@@ -136,10 +139,10 @@ public class HomeController extends twoPanesController {
 	 * @param items List to sort
 	 * @return Sorted items list
 	 */
-	private List<ItemWebBean> sortedItems(List<ItemWebBean> items) {
-		if (itemDisplayMode == ItemDisplayMode.ALL) {
+	private List<ItemWebBean> sortedItems(List<ItemWebBean> items, ItemDisplayMode displayMode) {
+		if (displayMode == ItemDisplayMode.ALL) {
 			// nothing to do
-		} else if (itemDisplayMode == ItemDisplayMode.UNREAD) {
+		} else if (displayMode == ItemDisplayMode.UNREAD) {
 			if (items != null){
 				List<ItemWebBean> ret = new ArrayList<ItemWebBean>();
 				Iterator<ItemWebBean> iter = items.iterator();
@@ -151,7 +154,7 @@ public class HomeController extends twoPanesController {
 				}
 				return ret;
 			}
-		} else if (itemDisplayMode == ItemDisplayMode.UNREADFIRST) {
+		} else if (displayMode == ItemDisplayMode.UNREADFIRST) {
 			if (items != null){
 				List<ItemWebBean> ret = new ArrayList<ItemWebBean>();
 				// find unread
@@ -174,8 +177,7 @@ public class HomeController extends twoPanesController {
 			}
 
 		} else {
-			log.warn("Unknown itemDisplayMode value \""+itemDisplayMode+"\" in sortedItems function");
-			// nothing to do
+			log.warn("Unknown itemDisplayMode value \""+displayMode+"\" in sortedItems function");
 		}
 		return(items);
 	}
@@ -200,9 +202,11 @@ public class HomeController extends twoPanesController {
 		if (log.isDebugEnabled()) log.debug("getItems()");
 		List<ItemWebBean> ret = null;
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
+		ItemDisplayMode displayMode = ItemDisplayMode.ALL;
 		if (selectedCategory != null) {
 			SourceWebBean selectedSource = selectedCategory.getSelectedSource();
 			if (selectedSource != null) {
+				displayMode = selectedSource.getItemDisplayMode();
 				//Test if list in already in selected source				
 				if (selectedSource.getItems() != null) {
 					ret = selectedSource.getItems();
@@ -233,7 +237,7 @@ public class HomeController extends twoPanesController {
 				}
 			}			
 		}
-		return sortedItems(ret);
+		return sortedItems(ret, displayMode);
 	}
 
 	/**
@@ -245,7 +249,6 @@ public class HomeController extends twoPanesController {
 		ret = ctx.getDescription();
 		CategoryWebBean categoryWebBean = ctx.getSelectedCategory();
 		if (categoryWebBean != null) {
-			//TODO (RB) description not name
 			ret = categoryWebBean.getDescription();
 		}
 		return ret;
@@ -286,6 +289,7 @@ public class HomeController extends twoPanesController {
 	/**
 	 * @see org.esupportail.lecture.web.controllers.twoPanesController#getContextName()
 	 */
+	@SuppressWarnings("static-access")
 	@Override
 	protected String getContextName() {
 		return this.CONTEXT;

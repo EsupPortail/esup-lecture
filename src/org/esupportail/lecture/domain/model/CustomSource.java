@@ -165,7 +165,10 @@ public abstract class CustomSource implements CustomElement {
 			log.debug("id="+elementId+" - itemDisplayMode("+mode+")");
 		}
 		this.itemDisplayMode = mode;
-		DomainTools.getDaoService().updateCustomSource(this);
+		//TODO (GB <-- RB) do not call hibernate in a setter !
+		// This throws: HibernateException: Illegal attempt to associate a collection with two open sessions
+		//NB : with this next line commented. It work !
+		//DomainTools.getDaoService().updateCustomSource(this);
 	}
 	
 	/**
