@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.FacadeService;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
@@ -19,7 +20,6 @@ import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
-import org.springframework.util.Assert;
 
 /**
  * @author : Raymond 
@@ -41,15 +41,6 @@ public class HomeController extends twoPanesController {
 	 * Key used to store the context in virtual session
 	 */
 	static final String CONTEXT = "context";
-	/**
-	 * Controller constructor
-	 */
-	public HomeController() {
-		super();
-		//instatiate a virtual session
-		virtualSession = new VirtualSession();
-	}
-
 	/**
 	 * JSF action : toogle item from read to unread and unread to read
 	 * @return JSF from-outcome
@@ -119,20 +110,6 @@ public class HomeController extends twoPanesController {
 		}
 		return "OK";
 	}	
-
-	/**
-	 * @see org.esupportail.lecture.web.controllers.AbstractContextAwareController#afterPropertiesSet()
-	 */
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-		Assert.notNull(getFacadeService(), 
-				"property facadeService of class " + this.getClass().getName() + " can not be null");
-	}
-
-	/*
-	 * **************** internal  method ****************
-	 */
 
 	/**
 	 * sort items list in function of itemDisplayMode

@@ -42,16 +42,6 @@ public class EditController extends twoPanesController {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.web.controllers.AbstractContextAwareController#afterPropertiesSet()
-	 */
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-		Assert.notNull(getFacadeService(), 
-				"property facadeService of class " + this.getClass().getName() + " can not be null");
-	}
-
-	/**
 	 * JSF action : select a category or a source from the tree, use categoryID and sourceID valued by t:updateActionListener
 	 * @return JSF from-outcome
 	 */
@@ -105,15 +95,6 @@ public class EditController extends twoPanesController {
 	}
 	
 	/**
-	 * Controller constructor
-	 */
-	public EditController() {
-		super();
-		//instatiate a virtual session
-		virtualSession = new VirtualSession();
-	}
-
-	/**
 	 * @param categoryBean
 	 * @return list of visible sources
 	 * @throws DomainServiceException 
@@ -137,6 +118,13 @@ public class EditController extends twoPanesController {
 	 */
 	public void setHomeController(HomeController homeController) {
 		this.homeController = homeController;
+	}
+
+	@Override
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+		Assert.notNull(homeController, 
+				"property homeController of class " + this.getClass().getName() + " can not be null");
 	}
 	
 }

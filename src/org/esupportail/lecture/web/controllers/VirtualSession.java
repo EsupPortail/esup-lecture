@@ -1,7 +1,11 @@
 package org.esupportail.lecture.web.controllers;
 
 import java.util.Hashtable;
+
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.FacadeService;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.web.WebException;
 
 
 /**
@@ -21,9 +25,9 @@ public class VirtualSession {
 	private Hashtable<String,Hashtable<String,Object>> sessions;
 	
 	/**
-	 * Access to portlet services
+	 * context ID defined via the portlet preference "context"
 	 */
-	private FacadeService facadeService;
+	private String contextId;
 	
 	
 	/*
@@ -32,8 +36,9 @@ public class VirtualSession {
 	/**
 	 * Constructor
 	 */
-	public VirtualSession(){
+	public VirtualSession(String contextId){
 		sessions = new Hashtable<String,Hashtable<String,Object>>();
+		this.contextId = contextId;
 	}
 	
 	/*
@@ -76,36 +81,18 @@ public class VirtualSession {
 	 */
 	private Hashtable<String,Object> getCurrentVirtualSession() {
 		
-		String currentContextId = getCurrentContextId();
-		Hashtable<String,Object> currentVirtualSession = sessions.get(currentContextId);
+		Hashtable<String,Object> currentVirtualSession = sessions.get(contextId);
 		
 		if (currentVirtualSession == null) {
 			currentVirtualSession = new Hashtable<String,Object>();
-			sessions.put(currentContextId,currentVirtualSession);
+			sessions.put(contextId,currentVirtualSession);
 		}	
 		return currentVirtualSession;
-	}
-	
-	/**
-	 * @return the current context id of the channel
-	 */
-	private String getCurrentContextId() {
-		// while uportal bug not fixed
-		String currentContextId = "c1";
-		// TODO (GB later) String currentContextId = portletService.getPreferences(UserAttributes.CONTEXT);
-		return currentContextId;
 	}
 	
 	/*
 	 ************************** ACCESSORS ***********************************/
 	
-	/**
-	 * @param facadeService The portletService to set.
-	 */
-	public void setFacadeService(FacadeService facadeService) {
-		this.facadeService = facadeService;
-	}
-
 	/**
 	 * just used for debug trace
 	 * @return Hastable of sessions

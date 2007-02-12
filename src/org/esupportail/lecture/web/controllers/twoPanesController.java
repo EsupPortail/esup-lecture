@@ -33,6 +33,7 @@ import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
+import org.springframework.util.Assert;
 
 /**
  * @author : Raymond 
@@ -424,6 +425,21 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 			contextId = getFacadeService().getCurrentContextId();
 		}
 		return contextId;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.web.controllers.AbstractContextAwareController#afterPropertiesSet()
+	 */
+	@Override
+	public void afterPropertiesSet() {
+		super.afterPropertiesSet();
+		Assert.notNull(facadeService, 
+				"property facadeService of class " + this.getClass().getName() + " can not be null");
+		try {
+			virtualSession = new VirtualSession(facadeService.getCurrentContextId());
+		} catch (InternalExternalException e) {
+			throw new WebException("Error in afterPropertiesSet",e);
+		}
 	}
 
 }

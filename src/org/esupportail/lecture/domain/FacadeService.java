@@ -316,5 +316,12 @@ public class FacadeService implements InitializingBean {
 		this.externalService = externalService;
 	}
 
+	/**
+	 * @return ExternalService
+	 */
+	public ExternalService getExternalService() {
+		return externalService;
+	}
+
 
 }
