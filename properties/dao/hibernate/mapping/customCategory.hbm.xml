@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
-	<class name="CustomCategory" table="CUSTOMCATEGORY">
+	<class name="CustomCategory" table="LECT_CUSTOMCATEGORY">
 		<id name="customCategoryPK" type="long">
 			<column name="CUSTOMCATEGORYPK"/>
 			<generator class="native" />

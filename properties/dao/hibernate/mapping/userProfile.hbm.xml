@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
-	<class name="UserProfile" table="USERPROFILE">
+	<class name="UserProfile" table="LECT_USERPROFILE">
 		<id name="userProfilePK" type="long">
 			<column name="USERPROFILEPK"/>
 			<generator class="native" />

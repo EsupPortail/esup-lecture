@@ -4,7 +4,7 @@
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
-	<class name="CustomSource" table="CUSTOMSOURCE">
+	<class name="CustomSource" table="LECT_CUSTOMSOURCE">
 		<id name="customSourcePK" type="long">
 			<column name="CUSTOMSOURCEPK"/>
 			<generator class="native"/>
@@ -18,7 +18,7 @@
 		<property name="elementId" type="string">
 			<column name="ELEMENTID" length="250" not-null="true" unique="true"/>
 		</property>
-		<set name="readItems" table="READITEM" cascade="save-update,lock,merge">
+		<set name="readItems" table="LECT_READITEM" cascade="save-update,lock,merge">
 			<key foreign-key="FK_READITEM_CUSTOMSOURCE_CUSTOMSOURCEPK">
 				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true"/>
 			</key>

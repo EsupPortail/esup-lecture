@@ -26,20 +26,17 @@
         1</ulink></orgname>
       </affiliation>
     </author>
-
-    <revhistory>
-      <revision>
-        <revnumber>1.0</revnumber>
-
-        <date>29/11/2006</date>
-
-        <revdescription>
-          <para>First version of the home page of Esup Lecture Portlet project
-          web site</para>
-        </revdescription>
-      </revision>
-    </revhistory>
   </articleinfo>
+
+  <section>
+    <title>News</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>2007/02/12 : Version 0.7 released</para>
+      </listitem>
+    </itemizedlist>
+  </section>
 
   <section>
     <title>Introduction</title>
