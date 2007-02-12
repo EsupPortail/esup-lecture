@@ -34,7 +34,7 @@
 	    		The major number of the application (1 for version 1.2.3).
 	    	</description>
     	</property>
-    	<property name="versionMinorNumber" value="6" >
+    	<property name="versionMinorNumber" value="7" >
 	    	<description>
 	    		The minor number of the application (2 for version 1.2.3).
 	    	</description>
@@ -54,7 +54,7 @@
 	    		The vendor.
 	    	</description>
     	</property>
-    	<property name="latestVersionBaseUrl" value="http://sourcesup.cru.fr/esup-lecture" >
+    	<property name="latestVersionBaseUrl" value="http://sourcesup.cru.fr/projects/esup-lecture/" >
 	    	<description>
 	    		The base URL where the latest version number should be found.
 	    	</description>
