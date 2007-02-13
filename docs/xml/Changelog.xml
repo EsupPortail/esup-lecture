@@ -37,7 +37,8 @@
       </listitem>
 
       <listitem>
-        <para></para>
+        <para>Added: Used of table prefix in hbm files (Feature Request
+        #1933)</para>
       </listitem>
     </itemizedlist>
   </section>
