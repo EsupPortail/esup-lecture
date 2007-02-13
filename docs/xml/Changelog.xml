@@ -33,7 +33,11 @@
 
     <itemizedlist>
       <listitem>
-        <para>Version 0.7</para>
+        <para>Fixed: Duplicate entry 'default' for key 2 (bug #1937)</para>
+      </listitem>
+
+      <listitem>
+        <para></para>
       </listitem>
     </itemizedlist>
   </section>
@@ -43,16 +47,16 @@
 
     <itemizedlist>
       <listitem>
-        <para>Fixed : subscription now interact with normal mode and
+        <para>Fixed: Subscription now interact with normal mode and
         domain</para>
       </listitem>
 
       <listitem>
-        <para>Added : Item Display Mode management</para>
+        <para>Added: Item Display Mode management</para>
       </listitem>
 
       <listitem>
-        <para>Improved : Categories and sources removal from configuration
+        <para>Improved: Categories and sources removal from configuration
         file</para>
       </listitem>
     </itemizedlist>

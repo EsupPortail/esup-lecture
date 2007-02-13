@@ -59,7 +59,7 @@ Pour plus d'informations voir le
 		name="categorie1 : no trust cat"
 		
 		id="cp1"
-		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
+		urlCategory="http://localhost:8080/data/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
@@ -78,7 +78,7 @@ Pour plus d'informations voir le
 		name="categorie2 : no trust cat"
 		
 		id="cp2"
-		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
+		urlCategory="http://localhost:8080/data/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
@@ -96,7 +96,7 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="categorie3 : trust cat"
 		id="cp3"
-		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
+		urlCategory="http://localhost:8080/data/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" >
@@ -114,7 +114,7 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="categorie4  : trust cat"
 		id="cp4"
-		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
+		urlCategory="http://localhost:8080/data/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" > 
@@ -131,7 +131,7 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="categorie5  : trust cat"
 		id="cp5"
-		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
+		urlCategory="http://localhost:8080/data/categoryTest.xml"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600" > 
@@ -149,7 +149,7 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="Categorie de démo 1"
 		id="demo1"
-		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo1.xml"
+		urlCategory="file:///d:/tmp/conf_lecture_gwe_ray/demo1.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" > 
@@ -167,8 +167,8 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="Categorie de démo 2"
 		id="demo2"
-		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo2.xml"
-		trustCategory="no"
+		urlCategory="http://localhost:8080/data/demo2.xml"
+		trustCategory="yes"
 		access="public"
 		ttl = "3600" > 
 		<visibility>
@@ -185,7 +185,7 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="Categorie de démo 3"
 		id="demo3"
-		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo3.xml"
+		urlCategory="http://localhost:8080/data/demo3.xml"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600" > 
@@ -203,7 +203,7 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="Categorie de démo 4"
 		id="demo4"
-		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo4.xml"
+		urlCategory="http://localhost:8080/data/demo4.xml"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600" > 

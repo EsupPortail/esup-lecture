@@ -149,7 +149,7 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="Categorie de démo 1"
 		id="demo1"
-		urlCategory="http://localhost:8080/data/demo1.xml"
+		urlCategory="file:///d:/tmp/conf_lecture_gwe_ray/demo1.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" > 

@@ -16,7 +16,7 @@
 			<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
 		</many-to-one>
 		<property name="elementId" type="string">
-			<column name="ELEMENTID" length="250" not-null="true" unique="true"/>
+			<column name="ELEMENTID" length="250" not-null="true"/>
 		</property>
 		<set name="readItems" table="LECT_READITEM" cascade="save-update,lock,merge">
 			<key foreign-key="FK_READITEM_CUSTOMSOURCE_CUSTOMSOURCEPK">

@@ -13,7 +13,7 @@
 			<column name="TREEWINWIDTH" not-null="true"/>
 		</property>
 		<property name="elementId" type="string">
-			<column name="ELEMENTID" length="250" not-null="true" unique="true"/>
+			<column name="ELEMENTID" length="250" not-null="true"/>
 		</property>
 		<many-to-one name="userProfile" class="UserProfile">
 			<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
