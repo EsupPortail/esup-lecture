@@ -10,7 +10,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
+import org.esupportail.lecture.exceptions.web.WebException;
 
 
 /**
@@ -158,7 +160,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			
 		if(getAccess() == Accessibility.PUBLIC) {
 			// managed Source Profile => single or globalSource
-			Source source = DomainTools.getDaoService().getSource(this);
+			Source source;
+			try {
+				source = DomainTools.getDaoService().getSource(this);
+			} catch (TimeoutException e) {
+				// TODO (GB <-- RB) manage this exception in dummyCategory
+				throw new WebException("timeout exceeded",e);
+			}
 			setElement(source);
 				
 		} else if (getAccess() == Accessibility.CAS) {

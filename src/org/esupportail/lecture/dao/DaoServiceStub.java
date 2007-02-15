@@ -15,6 +15,7 @@ import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
+import org.esupportail.lecture.exceptions.dao.TimeoutException;
 /**
  * Stub Service to Data Access Object : use to test upper layers, instead of using 
  * a database for example
@@ -54,7 +55,7 @@ public class DaoServiceStub  implements DaoService {
 	
 	/* Remote Data */
 	
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws TimeoutException {
 		log.debug("getManagedCategory("+profile.getId()+")");
 		return remoteXMLService.getManagedCategory(profile);
 	}
@@ -64,7 +65,7 @@ public class DaoServiceStub  implements DaoService {
 		return null;
 	}
 	
-	public Source getSource(ManagedSourceProfile profile) {
+	public Source getSource(ManagedSourceProfile profile) throws TimeoutException {
 		return this.remoteXMLService.getSource(profile);
 	}
 

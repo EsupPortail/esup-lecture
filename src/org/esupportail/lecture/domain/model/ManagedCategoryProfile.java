@@ -12,9 +12,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
+import org.esupportail.lecture.exceptions.web.WebException;
 
 /**
  * Managed category profile element. It references a managedCategory
@@ -135,7 +137,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			log.debug("id="+this.getId()+" - loadCategory(externalService)");
 		}
 		if(getAccess() == Accessibility.PUBLIC) {
-			setElement(DomainTools.getDaoService().getManagedCategory(this)); 
+			try {
+				setElement(DomainTools.getDaoService().getManagedCategory(this));
+			} catch (TimeoutException e) {
+				// TODO (GB <-- RB) manage this exception in dummyCategory
+				throw new WebException("timeout exceeded",e);
+			} 
 			
 		} else if (getAccess() == Accessibility.CAS) {
 			String ptCas = ex.getUserProxyTicketCAS();

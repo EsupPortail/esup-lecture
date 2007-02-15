@@ -13,6 +13,7 @@ import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
+import org.esupportail.lecture.exceptions.dao.TimeoutException;
 
 /**
  * @author bourges
@@ -33,9 +34,10 @@ public class DaoServiceImpl implements DaoService {
 	private DaoServiceHibernate hibernateService;
 
 	/**
+	 * @throws TimeoutException 
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile)
 	 */
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws TimeoutException {
 		return remoteXMLService.getManagedCategory(profile);
 	}
 
@@ -49,9 +51,10 @@ public class DaoServiceImpl implements DaoService {
 	}
 
 	/**
+	 * @throws TimeoutException 
 	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
 	 */
-	public Source getSource(ManagedSourceProfile profile) {
+	public Source getSource(ManagedSourceProfile profile) throws TimeoutException {
 		return remoteXMLService.getSource(profile);
 	}
 

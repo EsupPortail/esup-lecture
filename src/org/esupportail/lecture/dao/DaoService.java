@@ -7,6 +7,7 @@ import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
+import org.esupportail.lecture.exceptions.dao.TimeoutException;
 
 /**
  * Interface Service to Data Access Object
@@ -21,8 +22,9 @@ public interface DaoService {
 	 * Get a managed category from a remote place
 	 * @param profile of the category to get
 	 * @return the managedCategory
+	 * @throws TimeoutException 
 	 */
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile);
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws TimeoutException;
 
 	/**
 	 * Get a managed category from a remote place
@@ -36,8 +38,9 @@ public interface DaoService {
 	 * get a source from a remote place
 	 * @param profile of the source to get
 	 * @return the source
+	 * @throws TimeoutException 
 	 */
-	public Source getSource(ManagedSourceProfile profile);
+	public Source getSource(ManagedSourceProfile profile) throws TimeoutException;
 	
 	/**
 	 * get a source from a remote place

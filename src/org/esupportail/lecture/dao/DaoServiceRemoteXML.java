@@ -22,7 +22,9 @@ import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.domain.model.VisibilitySets;
+import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
+import org.esupportail.lecture.test.drivers.FooThread;
 import org.springmodules.cache.CachingModel;
 import org.springmodules.cache.provider.CacheProviderFacade;
 
@@ -59,9 +61,10 @@ public class DaoServiceRemoteXML {
 	/**
 	 * @param profile 
 	 * @return a managedCategory
+	 * @throws TimeoutException 
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(ManagedCategoryProfile)
 	 */
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws TimeoutException {
 
 		/* *************************************
 		 * Cache logic :
@@ -125,72 +128,36 @@ public class DaoServiceRemoteXML {
 	 * get a managed category from the web without cache
 	 * @param profile ManagedCategoryProfile of Managed category to get
 	 * @return Managed category
+	 * @throws TimeoutException 
 	 */
 	@SuppressWarnings("unchecked")
-	private ManagedCategory getFreshManagedCategory(ManagedCategoryProfile profile) {
+	private ManagedCategory getFreshManagedCategory(ManagedCategoryProfile profile) throws TimeoutException {
 		//TODO (RB) refactoring of exceptions
 		if (log.isDebugEnabled()) {
 			log.debug("in getFreshManagedCategory");
 		}
 		ManagedCategory ret = new ManagedCategory();
+		//start a Thread to get FreshManagedCategory
+		FreshManagedCategoryThread thread = new FreshManagedCategoryThread(profile);
+		thread.start();
 		try {
-			//get the XML
-			SAXReader reader = new SAXReader();
-			String categoryURL = profile.getUrlCategory();
-			Document document = reader.read(categoryURL);
-			Element root = document.getRootElement();
-			// Category properties
-			ret.setName(root.valueOf("@name"));
-			ret.setDescription(root.valueOf("/category/description"));
-			ret.setProfileId(profile.getId());
-			// SourceProfiles loop
-			Hashtable<String, SourceProfile> sourceProfiles = new Hashtable<String,SourceProfile>();
-			List<Node> srcProfiles = root.selectNodes("/category/sourceProfiles/sourceProfile");
-			for (Node srcProfile : srcProfiles) {
-				ManagedSourceProfile sp = new ManagedSourceProfile(profile);
-				sp.setFileId(srcProfile.valueOf("@id"));
-				sp.setName(srcProfile.valueOf("@name"));
-				sp.setSourceURL(srcProfile.valueOf("@url"));
-				sp.setTtl(Integer.parseInt(srcProfile.valueOf("@ttl")));
-				String specificUserContentValue = srcProfile.valueOf("@specificUserContent");
-				if (specificUserContentValue.equals("yes")) {
-					sp.setSpecificUserContent(true);
-				}
-				else {
-					sp.setSpecificUserContent(false);
-				}
-				sp.setXsltURL(srcProfile.valueOf("@xsltFile"));
-				sp.setItemXPath(srcProfile.valueOf("@itemXPath"));
-				String access = srcProfile.valueOf("@access");
-				if (access.equalsIgnoreCase("public")) {
-					sp.setAccess(Accessibility.PUBLIC);
-				} else if (access.equalsIgnoreCase("cas")) {
-					sp.setAccess(Accessibility.CAS);
-				}
-				// SourceProfile visibility
-				VisibilitySets visibilitySets = new VisibilitySets();  
-				// foreach (allowed / autoSubscribed / Obliged)
-				visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(srcProfile.selectSingleNode("visibility/allowed")));
-				visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(srcProfile.selectSingleNode("visibility/obliged")));
-				visibilitySets.setAutoSubscribed(XMLUtil.loadDefAndContentSets(srcProfile.selectSingleNode("visibility/autoSubscribed")));
-				sp.setVisibility(visibilitySets);
-				sp.setTtl(profile.getTtl());
-				sourceProfiles.put(sp.getId(),sp);				
+			thread.join(defaultTimeout);
+			Exception e = thread.getException();
+			if (e != null) {
+//				TODO RB --> throw new Exception(msg,e);
 			}
-			ret.setSourceProfilesHash(sourceProfiles);
-			// Category visibility
-			VisibilitySets visibilitySets = new VisibilitySets();  
-			// foreach (allowed / autoSubscribed / Obliged)
-			visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(root.selectSingleNode("/category/visibility/allowed")));
-			visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(root.selectSingleNode("/category/visibility/obliged")));
-			visibilitySets.setAutoSubscribed(XMLUtil.loadDefAndContentSets(root.selectSingleNode("/category/visibility/autoSubscribed")));
-			ret.setVisibility(visibilitySets);
-		} catch (DocumentException e) {
-			String profileId = (profile != null ? profile.getId() : "null");
-			String msg = "getFreshManagedCategory("+profileId+"). Can't read configuration file.";
-			log.error(msg);
-			throw new XMLParseException(msg ,e);
+			ret = thread.getManagedCategory();
+		} catch (InterruptedException e) {
+			String msg = "Thread interrupted";
+			log.warn(msg);
+			//TODO RB --> throw new Exception(msg,e);
 		}
+        if (thread.isAlive()) {
+    		thread.interrupt();
+			String msg = "Category not loaded in "+defaultTimeout+" milliseconds";
+			log.warn(msg);
+			throw new TimeoutException(msg);
+        }	
 		return ret;
 	}
 
@@ -198,8 +165,9 @@ public class DaoServiceRemoteXML {
 	 * get a source form cache
 	 * @param sourceProfile source profile of source to get
 	 * @return the source
+	 * @throws TimeoutException 
 	 */
-	public Source getSource(SourceProfile sourceProfile) {
+	public Source getSource(SourceProfile sourceProfile) throws TimeoutException {
 		Source ret = new GlobalSource();
 //		not yet implemented
 //		if (sourceProfile.isSpecificUserContent()) { 
@@ -242,62 +210,40 @@ public class DaoServiceRemoteXML {
 	 * get a source form the Web (without cache)
 	 * @param sourceProfile source profile of source to get
 	 * @return the source
+	 * @throws TimeoutException 
 	 */
-	private Source getFreshSource(SourceProfile sourceProfile) {
-		Source ret = new GlobalSource();
-		try {
-			String dtd = null;
-			String root = null;
-			String rootNamespace = null;
-			String xmltype = null;
-			String xml = null;
-
-			//get the XML
-			SAXReader reader = new SAXReader();
-			String sourceURL = sourceProfile.getSourceURL();
-			Document document = reader.read(sourceURL);
-			//find the dtd
-			DocumentType doctype = document.getDocType();
-			if (doctype != null) {
-				dtd = doctype.getSystemID();				
-			}
-			//find root Element
-			Element rootElement = document.getRootElement();
-			root = rootElement.getName();
-			//find xmlns on root element
-			Namespace ns = rootElement.getNamespace();
-			if (!ns.getURI().equals("")) {
-				rootNamespace = ns.getURI();				
-			}
-			//find XML Schema URL
-			Namespace xmlSchemaNameSpace = rootElement.getNamespaceForURI("http://www.w3.org/2001/XMLSchema-instance");
-			if (xmlSchemaNameSpace != null) {
-				String xmlSchemaNameSpacePrefix = xmlSchemaNameSpace.getPrefix();
-				for ( Iterator i = rootElement.attributeIterator(); i.hasNext(); ) {
-					Attribute attribute = (Attribute) i.next();
-					if (attribute.getQName().getNamespacePrefix().equals(xmlSchemaNameSpacePrefix) && attribute.getName().equals("schemaLocation")) {
-						xmltype = attribute.getValue();
-					}
-				}				
-			}
-			//get XML as String
-			xml = document.asXML();
-			ret.setDtd(dtd);
-			ret.setRootElement(root);
-			ret.setXmlns(rootNamespace);
-			ret.setXmlStream(xml);
-			ret.setXmlType(xmltype);
-			ret.setURL(sourceURL);
-//			ret.setItemXPath(sourceProfile.getItemXPath());
-//			ret.setXsltURL(sourceProfile.getXsltURL());
-		} catch (DocumentException e) {
-			String msg = "getSource with url="+sourceProfile.getSourceURL()+". Is it a valid XML Source ?";
-			log.error(msg);
-			throw new XMLParseException(msg ,e);
+	private Source getFreshSource(SourceProfile sourceProfile) throws TimeoutException {
+		//TODO (RB) refactoring of exceptions
+		if (log.isDebugEnabled()) {
+			log.debug("in getFreshSource");
 		}
+		Source ret = new GlobalSource();
+		//start a Thread to get FreshSource
+		FreshSourceThread thread = new FreshSourceThread(sourceProfile);
+		thread.start();
+		try {
+			thread.join(defaultTimeout);
+			Exception e = thread.getException();
+			if (e != null) {
+//				TODO RB --> throw new Exception(msg,e);
+			}			
+			ret = thread.getSource();
+		} catch (InterruptedException e) {
+			String msg = "Thread interrupted";
+			log.warn(msg);
+			//TODO RB --> throw new Exception(msg,e);
+		}
+        if (thread.isAlive()) {
+    		thread.interrupt();
+			String msg = "Category not loaded in "+defaultTimeout+" milliseconds";
+			log.warn(msg);
+			throw new TimeoutException(msg);
+        }	
 		return ret;
 	}
 
+	
+	
 	/**
 	 * used by Spring at init
 	 * @param cacheProviderFacade to set
@@ -312,5 +258,12 @@ public class DaoServiceRemoteXML {
 	 */
 	public void setCachingModel(CachingModel cachingModel) {
 		this.cachingModel = cachingModel;
+	}
+
+	/**
+	 * @param defaultTimeout
+	 */
+	public void setDefaultTimeout(int defaultTimeout) {
+		this.defaultTimeout = defaultTimeout;
 	}
 }
