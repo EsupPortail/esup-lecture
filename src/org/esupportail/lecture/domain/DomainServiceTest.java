@@ -147,9 +147,8 @@ public class DomainServiceTest implements DomainService {
 		return items;
 	}
 
-
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#marckItemAsRead(java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
 	public void marckItemReadMode(String uid, String itemId, String sourceId, boolean isRead) {
 		// TODO Auto-generated method stub

@@ -11,7 +11,6 @@ import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.hibernate.LockMode;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -31,6 +30,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	private static final boolean useFlush = false;
 
 	/**
+	 * @param userId 
+	 * @return UserProfile
 	 * @see org.esupportail.lecture.dao.DaoService#getUserProfile(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
@@ -55,6 +56,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param userProfile 
+	 * @return UserProfile
 	 * @see org.esupportail.lecture.dao.DaoService#refreshUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public UserProfile refreshUserProfile(UserProfile userProfile) {
@@ -68,6 +71,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param userProfile 
 	 * @see org.esupportail.lecture.dao.DaoService#saveUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void saveUserProfile(UserProfile userProfile) {
@@ -82,6 +86,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param userProfile 
 	 * @see org.esupportail.lecture.dao.DaoService#deleteUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void deleteUserProfile(UserProfile userProfile) {
@@ -95,6 +100,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param userProfile 
 	 * @see org.esupportail.lecture.dao.DaoService#updateUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void updateUserProfile(UserProfile userProfile) {
@@ -109,6 +115,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param customContext 
 	 * @see org.esupportail.lecture.dao.DaoService#updateCustomContext(org.esupportail.lecture.domain.model.CustomContext)
 	 */
 	public void updateCustomContext(CustomContext customContext) {
@@ -120,6 +127,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param cco 
 	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomContext(org.esupportail.lecture.domain.model.CustomContext)
 	 */
 	public void deleteCustomContext(CustomContext cco) {
@@ -133,6 +141,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param cca 
 	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomCategory(org.esupportail.lecture.domain.model.CustomCategory)
 	 */
 	public void deleteCustomCategory(CustomCategory cca) {
@@ -146,6 +155,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param cca 
 	 * @see org.esupportail.lecture.dao.DaoService#updateCustomCategory(org.esupportail.lecture.domain.model.CustomCategory)
 	 */
 	public void updateCustomCategory(CustomCategory cca) {
@@ -160,6 +170,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param cs 
 	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomSource(org.esupportail.lecture.domain.model.CustomSource)
 	 */
 	public void deleteCustomSource(CustomSource cs) {
@@ -173,6 +184,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param source 
 	 * @see org.esupportail.lecture.dao.DaoService#updateCustomSource(org.esupportail.lecture.domain.model.CustomSource)
 	 */
 	public void updateCustomSource(CustomSource source) {

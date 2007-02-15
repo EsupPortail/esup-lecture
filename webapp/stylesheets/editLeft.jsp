@@ -25,7 +25,11 @@
 							<t:updateActionListener property="#{editController.categoryId}"
 								value="#{cat.id}" />
 						</h:commandButton>
-						<h:outputText value="#{cat.name}" />
+						<h:commandButton action="#{editController.selectElement}" alt="#{cat.name}"
+							title="#{cat.name}" value="#{cat.name}" styleClass="elementButton">
+							<t:updateActionListener property="#{editController.categoryId}"
+								value="#{cat.id}" />
+						</h:commandButton>
 					</t:htmlTag>
 				</t:dataList>
 			</t:htmlTag>

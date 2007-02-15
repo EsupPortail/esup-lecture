@@ -29,7 +29,7 @@
   </articleinfo>
 
   <section>
-    <title>Current</title>
+    <title>Version 0.7.1</title>
 
     <itemizedlist>
       <listitem>
@@ -44,6 +44,11 @@
       <listitem>
         <para>Added: Used of table prefix in hbm files (Feature Request
         #1933)</para>
+      </listitem>
+
+      <listitem>
+        <para>Added: Category and Source name can be used to select them
+        (Feature Request #1772 and #1934)</para>
       </listitem>
     </itemizedlist>
   </section>

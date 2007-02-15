@@ -56,6 +56,11 @@ li ul li {
 list-style: none;	
 margin-left: -30px;
 }
+.elementButton {
+	background: transparent;
+    border: none;
+    cursor: pointer;
+}
 
 /* Articles Style */
 div.toggleButton {

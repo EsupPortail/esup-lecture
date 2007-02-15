@@ -33,7 +33,11 @@
 							<t:updateActionListener property="#{homeController.categoryId}"
 								value="#{cat.id}" />
 						</h:commandButton>
-						<h:outputText value="#{cat.name}" />
+						<h:commandButton action="#{homeController.selectElement}" alt="#{cat.name}"
+							title="#{cat.name}" value="#{cat.name}" styleClass="elementButton">
+							<t:updateActionListener property="#{homeController.sourceId}" value="0" />
+							<t:updateActionListener property="#{homeController.categoryId}" value="#{cat.id}" />
+						</h:commandButton>
 						<t:htmlTag value="ul" rendered="#{!cat.folded}">
 							<!-- Souces -->
 							<t:dataList value="#{cat.sources}" var="src" layout="simple">
@@ -45,17 +49,13 @@
 										<t:updateActionListener property="#{homeController.categoryId}"
 											value="#{cat.id}" />
 									</h:commandButton>
-									<!-- TODO
-									<t:htmlTag value="span" styleClass="portlet-section-alternate"
-										rendered="#{src.withUnread}">
-									 -->
-										<h:outputText value="#{src.name}" />
-									<!-- 
-									</t:htmlTag>
-									 -->
-									 <!-- TODO
-									<h:outputText value="#{src.name}" rendered="#{!src.withUnread}" />
-									  -->
+									<h:commandButton action="#{homeController.selectElement}"
+										alt="#{src.name}" title="#{src.name}" value="#{src.name}" styleClass="elementButton">
+										<t:updateActionListener property="#{homeController.sourceId}"
+											value="#{src.id}" />
+										<t:updateActionListener property="#{homeController.categoryId}"
+											value="#{cat.id}" />
+									</h:commandButton>
 								</t:htmlTag>
 							</t:dataList>
 						</t:htmlTag>
