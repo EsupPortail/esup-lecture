@@ -2,7 +2,6 @@ package org.esupportail.lecture.dao;
 
 import java.util.List;
 
-import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Node;

@@ -1,8 +1,6 @@
 package org.esupportail.lecture.dao;
 
-import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -12,16 +10,10 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentType;
 import org.dom4j.Element;
 import org.dom4j.Namespace;
-import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
-import org.esupportail.lecture.domain.model.Accessibility;
 import org.esupportail.lecture.domain.model.GlobalSource;
-import org.esupportail.lecture.domain.model.ManagedCategory;
-import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
-import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.SourceProfile;
-import org.esupportail.lecture.domain.model.VisibilitySets;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
 
 /**
@@ -34,12 +26,25 @@ public class FreshSourceThread extends Thread {
 	 * Log instance 
 	 */
 	private static final Log log = LogFactory.getLog(FreshSourceThread.class);
+	/**
+	 * Exception generated in this Thread
+	 */
 	private Exception exception;
+	/**
+	 * Source to return by this Thread
+	 */
 	private Source source;
-	private SourceProfile sourceProfile;
+	/**
+	 * SourceProfile used to return a Source
+	 */
+	private SourceProfile profile;
 
+	/**
+	 * Constructor
+	 * @param sourceProfile used to return a Source
+	 */
 	public FreshSourceThread(SourceProfile sourceProfile) {
-		this.sourceProfile = sourceProfile;
+		this.profile = sourceProfile;
 		this.exception = null;
 	}
 
@@ -50,7 +55,7 @@ public class FreshSourceThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			this.source = getFreshSource(sourceProfile);
+			this.source = getFreshSource(profile);
 		} catch (XMLParseException e) {
 			this.exception = e;
 		}
@@ -117,10 +122,16 @@ public class FreshSourceThread extends Thread {
 		return ret;
 	}
 
+	/**
+	 * @return exception thowed during run
+	 */
 	public Exception getException() {
 		return exception;
 	}
 
+	/**
+	 * @return Source genereted during run
+	 */
 	public Source getSource() {
 		return source;
 	}

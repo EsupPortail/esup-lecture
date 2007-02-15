@@ -38,6 +38,7 @@ public class DaoServiceImpl implements DaoService {
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile)
 	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws TimeoutException {
+		if (log.isDebugEnabled()) log.debug("in getManagedCategory");
 		return remoteXMLService.getManagedCategory(profile);
 	}
 

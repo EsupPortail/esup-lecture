@@ -28,10 +28,23 @@ public class FreshManagedCategoryThread extends Thread {
 	 * Log instance 
 	 */
 	private static final Log log = LogFactory.getLog(FreshManagedCategoryThread.class);
+	/**
+	 * ManagedCategory to return by this Thread
+	 */
 	private ManagedCategory managedCategory = null;
+	/**
+	 * ManagedCategoryProfile used to return a ManagedCategory
+	 */
 	private ManagedCategoryProfile managedCategoryProfile;
+	/**
+	 * Exception generated in this Thread
+	 */
 	private Exception exception;
 	
+	/**
+	 * Constructor
+	 * @param profile used to return a ManagedCategory
+	 */
 	public FreshManagedCategoryThread(ManagedCategoryProfile profile) {
 		this.managedCategoryProfile = profile;
 		this.exception = null;
@@ -131,6 +144,9 @@ public class FreshManagedCategoryThread extends Thread {
 		return managedCategory;
 	}
 
+	/**
+	 * @return exception thowed during run
+	 */
 	public Exception getException() {
 		return exception;
 	}
