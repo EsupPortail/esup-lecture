@@ -164,7 +164,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			try {
 				source = DomainTools.getDaoService().getSource(this);
 			} catch (TimeoutException e) {
-				// TODO (GB <-- RB) manage this exception in dummyCategory
+				// TODO (GB <-- RB) manage this exception in dummySource
 				throw new WebException("timeout exceeded",e);
 			}
 			setElement(source);
