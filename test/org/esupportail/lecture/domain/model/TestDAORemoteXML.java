@@ -33,8 +33,7 @@ public class TestDAORemoteXML {
 
 		DaoService dao = (DaoService)factory.getBean("daoService");
 		ManagedCategoryProfile test = new ManagedCategoryProfile();
-		String url = "http://perso.univ-rennes1.fr/raymond.bourges/categoryTest.xml";
-//		String url = "ht//persorrr.univ-rennes1.fr/raymond.bourges/TOTO.xml";
+		String url = "http://localhost:8080/data/demo2.xml";
 		test.setUrlCategory(url);
 		//test.init();
 		test.setTtl(100);

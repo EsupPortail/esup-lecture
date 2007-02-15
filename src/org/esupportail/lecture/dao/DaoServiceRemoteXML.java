@@ -1,12 +1,9 @@
 package org.esupportail.lecture.dao;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Hashtable;
 import java.util.Iterator;
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.XMLConfiguration;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Attribute;
@@ -15,6 +12,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.DocumentType;
 import org.dom4j.Element;
 import org.dom4j.Namespace;
+import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.esupportail.lecture.domain.model.Accessibility;
 import org.esupportail.lecture.domain.model.GlobalSource;
@@ -53,14 +51,18 @@ public class DaoServiceRemoteXML {
 	 * hash of last last Access in milliseconds by url of Source
 	 */
 	private Hashtable<String, Long> sourceLastAccess = new Hashtable<String, Long>();
-	
+	/**
+	 * Default timeout used for http connection
+	 */
+	private int defaultTimeout = 3000;
+
 	/**
 	 * @param profile 
 	 * @return a managedCategory
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(ManagedCategoryProfile)
 	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) {
-	
+
 		/* *************************************
 		 * Cache logic :
 		 * hash of (url, lastDate)
@@ -124,42 +126,42 @@ public class DaoServiceRemoteXML {
 	 * @param profile ManagedCategoryProfile of Managed category to get
 	 * @return Managed category
 	 */
+	@SuppressWarnings("unchecked")
 	private ManagedCategory getFreshManagedCategory(ManagedCategoryProfile profile) {
 		//TODO (RB) refactoring of exceptions
 		if (log.isDebugEnabled()) {
 			log.debug("in getFreshManagedCategory");
 		}
-		URL url;
 		ManagedCategory ret = new ManagedCategory();
 		try {
-			url = new URL(profile.getUrlCategory());
-			XMLConfiguration xml = new XMLConfiguration(url);
-			xml.setValidating(true);
-			xml.load();
+			//get the XML
+			SAXReader reader = new SAXReader();
+			String categoryURL = profile.getUrlCategory();
+			Document document = reader.read(categoryURL);
+			Element root = document.getRootElement();
 			// Category properties
-			ret.setName(xml.getString("[@name]"));
-			ret.setDescription(xml.getString("description"));
+			ret.setName(root.valueOf("@name"));
+			ret.setDescription(root.valueOf("/category/description"));
 			ret.setProfileId(profile.getId());
-			//ret.setTtl(profile.getTtl());
 			// SourceProfiles loop
-
 			Hashtable<String, SourceProfile> sourceProfiles = new Hashtable<String,SourceProfile>();
-
-			int max = xml.getMaxIndex("sourceProfiles(0).sourceProfile");
-			for(int i = 0; i <= max;i++ ){
-				Configuration subxml = xml.subset("sourceProfiles(0).sourceProfile("+i+")");
-				// SourceProfile properties
-
+			List<Node> srcProfiles = root.selectNodes("/category/sourceProfiles/sourceProfile");
+			for (Node srcProfile : srcProfiles) {
 				ManagedSourceProfile sp = new ManagedSourceProfile(profile);
-
-				sp.setFileId(subxml.getString("[@id]"));
-				sp.setName(subxml.getString("[@name]"));
-				sp.setSourceURL(subxml.getString("[@url]"));
-				sp.setTtl(subxml.getInt("[@ttl]"));
-				sp.setSpecificUserContent(subxml.getBoolean("[@specificUserContent]"));
-				sp.setXsltURL(subxml.getString("[@xsltFile]"));
-				sp.setItemXPath(subxml.getString("[@itemXPath]"));
-				String access = subxml.getString("[@access]");
+				sp.setFileId(srcProfile.valueOf("@id"));
+				sp.setName(srcProfile.valueOf("@name"));
+				sp.setSourceURL(srcProfile.valueOf("@url"));
+				sp.setTtl(Integer.parseInt(srcProfile.valueOf("@ttl")));
+				String specificUserContentValue = srcProfile.valueOf("@specificUserContent");
+				if (specificUserContentValue.equals("yes")) {
+					sp.setSpecificUserContent(true);
+				}
+				else {
+					sp.setSpecificUserContent(false);
+				}
+				sp.setXsltURL(srcProfile.valueOf("@xsltFile"));
+				sp.setItemXPath(srcProfile.valueOf("@itemXPath"));
+				String access = srcProfile.valueOf("@access");
 				if (access.equalsIgnoreCase("public")) {
 					sp.setAccess(Accessibility.PUBLIC);
 				} else if (access.equalsIgnoreCase("cas")) {
@@ -167,37 +169,31 @@ public class DaoServiceRemoteXML {
 				}
 				// SourceProfile visibility
 				VisibilitySets visibilitySets = new VisibilitySets();  
-				// foreach (allowed / autoSubscribed / Obliged
-				visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).allowed(0)"));
-				visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).obliged(0)"));
-				visibilitySets.setAutoSubscribed(XMLUtil.loadDefAndContentSets(xml, "sourceProfiles(0).sourceProfile("+i+").visibility(0).autoSubscribed(0)"));
+				// foreach (allowed / autoSubscribed / Obliged)
+				visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(srcProfile.selectSingleNode("visibility/allowed")));
+				visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(srcProfile.selectSingleNode("visibility/obliged")));
+				visibilitySets.setAutoSubscribed(XMLUtil.loadDefAndContentSets(srcProfile.selectSingleNode("visibility/autoSubscribed")));
 				sp.setVisibility(visibilitySets);
 				sp.setTtl(profile.getTtl());
-				sourceProfiles.put(sp.getId(),sp);
+				sourceProfiles.put(sp.getId(),sp);				
 			}
 			ret.setSourceProfilesHash(sourceProfiles);
 			// Category visibility
 			VisibilitySets visibilitySets = new VisibilitySets();  
-			// foreach (allowed / autoSubscribed / Obliged
-			visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(xml, "visibility(0).allowed(0)"));
-			visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(xml, "visibility(0).obliged(0)"));
-			visibilitySets.setAutoSubscribed(XMLUtil.loadDefAndContentSets(xml, "visibility(0).autoSubscribed(0)"));
+			// foreach (allowed / autoSubscribed / Obliged)
+			visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(root.selectSingleNode("/category/visibility/allowed")));
+			visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(root.selectSingleNode("/category/visibility/obliged")));
+			visibilitySets.setAutoSubscribed(XMLUtil.loadDefAndContentSets(root.selectSingleNode("/category/visibility/autoSubscribed")));
 			ret.setVisibility(visibilitySets);
-		} catch (MalformedURLException e) {
-			String profileId = (profile != null ? profile.getId() : "null");
-			String urlValue = (profile != null ? profile.getUrlCategory() : "unknown");
-			String msg = "getFreshManagedCategory("+profileId+") with url = "+urlValue;
-			log.error(msg);
-			throw new org.esupportail.lecture.exceptions.dao.MalformedURLException(msg, e);
-		} catch (ConfigurationException e) {
+		} catch (DocumentException e) {
 			String profileId = (profile != null ? profile.getId() : "null");
 			String msg = "getFreshManagedCategory("+profileId+"). Can't read configuration file.";
 			log.error(msg);
-			throw new XMLParseException(msg, e);
-		} 
+			throw new XMLParseException(msg ,e);
+		}
 		return ret;
 	}
-	
+
 	/**
 	 * get a source form cache
 	 * @param sourceProfile source profile of source to get
@@ -205,38 +201,38 @@ public class DaoServiceRemoteXML {
 	 */
 	public Source getSource(SourceProfile sourceProfile) {
 		Source ret = new GlobalSource();
-// not yet implemented
+//		not yet implemented
 //		if (sourceProfile.isSpecificUserContent()) { 
-//			ret = getFreshSource(sourceProfile);
+//		ret = getFreshSource(sourceProfile);
 //		}
 //		else {
-			System.currentTimeMillis();
-			String urlSource = sourceProfile.getSourceURL();
-			Long lastSrcAccess = sourceLastAccess.get(urlSource);
-			Long currentTimeMillis = System.currentTimeMillis();
-			if (lastSrcAccess != null) {
-				if (lastSrcAccess + (sourceProfile.getTtl() * 1000) > currentTimeMillis) {
-					ret = (Source)cacheProviderFacade.getFromCache(urlSource, cachingModel);
-					if (ret == null) { // not in cache !
-						ret = getFreshSource(sourceProfile);
-						cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
-						sourceLastAccess.put(urlSource, currentTimeMillis);
-						if (log.isWarnEnabled()) {
-							log.warn("Source from url "+urlSource+" can't be found in cahe --> change cache size ?");
-						}
-					}				
-				}
-				else{
+		System.currentTimeMillis();
+		String urlSource = sourceProfile.getSourceURL();
+		Long lastSrcAccess = sourceLastAccess.get(urlSource);
+		Long currentTimeMillis = System.currentTimeMillis();
+		if (lastSrcAccess != null) {
+			if (lastSrcAccess + (sourceProfile.getTtl() * 1000) > currentTimeMillis) {
+				ret = (Source)cacheProviderFacade.getFromCache(urlSource, cachingModel);
+				if (ret == null) { // not in cache !
 					ret = getFreshSource(sourceProfile);
 					cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
 					sourceLastAccess.put(urlSource, currentTimeMillis);
-				}
+					if (log.isWarnEnabled()) {
+						log.warn("Source from url "+urlSource+" can't be found in cahe --> change cache size ?");
+					}
+				}				
 			}
-			else {
+			else{
 				ret = getFreshSource(sourceProfile);
 				cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
 				sourceLastAccess.put(urlSource, currentTimeMillis);
 			}
+		}
+		else {
+			ret = getFreshSource(sourceProfile);
+			cacheProviderFacade.putInCache(urlSource, cachingModel, ret);
+			sourceLastAccess.put(urlSource, currentTimeMillis);
+		}
 //		}
 		return ret;
 
@@ -248,8 +244,6 @@ public class DaoServiceRemoteXML {
 	 * @return the source
 	 */
 	private Source getFreshSource(SourceProfile sourceProfile) {
-		//TODO (RB) refactoring of exceptions
-		//log.debug("URL de la source : "+urlSource);
 		Source ret = new GlobalSource();
 		try {
 			String dtd = null;
@@ -257,7 +251,7 @@ public class DaoServiceRemoteXML {
 			String rootNamespace = null;
 			String xmltype = null;
 			String xml = null;
-			
+
 			//get the XML
 			SAXReader reader = new SAXReader();
 			String sourceURL = sourceProfile.getSourceURL();

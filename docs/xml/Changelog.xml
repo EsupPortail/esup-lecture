@@ -37,6 +37,11 @@
       </listitem>
 
       <listitem>
+        <para>Fixed: log4j.properties with a bad default file name (bug
+        #1936)</para>
+      </listitem>
+
+      <listitem>
         <para>Added: Used of table prefix in hbm files (Feature Request
         #1933)</para>
       </listitem>

@@ -1,8 +1,11 @@
 package org.esupportail.lecture.dao;
 
+import java.util.List;
+
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.Node;
 import org.esupportail.lecture.domain.model.DefinitionSets;
 import org.esupportail.lecture.domain.model.RegularOfSet;
 
@@ -17,29 +20,38 @@ public class XMLUtil {
 	protected static final Log log = LogFactory.getLog(XMLUtil.class);
 	
 	/**
-	 * return DefinitionSets from a part of XML
-	 * @param xmlFile the XML file to parse
-	 * @param fatherPath location of definition in the XMl
+	 * return DefinitionSets from a dom4j node
+	 * @param node 
 	 * @return DefinitionSets the this part of XML
 	 */
-	public static DefinitionSets loadDefAndContentSets(XMLConfiguration xmlFile, String fatherPath){
+	@SuppressWarnings("unchecked")
+	public static DefinitionSets loadDefAndContentSets(Node node){
 		if (log.isDebugEnabled()){
-			log.debug("loadDefAndContentSets("+fatherPath+")");
+			String path = "null";
+			if (node != null) path= node.getPath();
+			log.debug("loadDefAndContentSets("+path+")");
 		}
 		DefinitionSets defAndContentSets = new DefinitionSets();
-		
-		// Definition by group enumeration
-		int nbGroups = xmlFile.getMaxIndex(fatherPath + ".group");
-		for (int i=0;i<=nbGroups;i++){
-			defAndContentSets.addGroup(xmlFile.getString(fatherPath + ".group("+i+")[@name]"));
-		}
-		// Definition by regular 
-		int nbRegulars = xmlFile.getMaxIndex(fatherPath + ".regular");   	
-		for (int i=0;i<=nbRegulars;i++){
-			RegularOfSet regular = new RegularOfSet();
-			regular.setAttribute(xmlFile.getString(fatherPath + ".regular("+i+")[@attribute]"));
-			regular.setValue(xmlFile.getString(fatherPath + ".regular("+i+")[@value]"));	
-			defAndContentSets.addRegular(regular);
+		if (node != null) {
+			// Definition by group enumeration
+			List<Node> groups = node.selectNodes("group");
+			for (Node group : groups) {
+				String name = group.valueOf("@name");
+				if (log.isDebugEnabled()) log.debug("name = "+name);
+				defAndContentSets.addGroup(name);
+			}
+			// Definition by regular 
+			List<Node> regulars = node.selectNodes("regular");
+			for (Node regular : regulars) {
+				String attribute = regular.valueOf("@attribute");
+				if (log.isDebugEnabled()) log.debug("attribute = "+attribute);
+				String value = regular.valueOf("@value");
+				if (log.isDebugEnabled()) log.debug("value = "+value);
+				RegularOfSet regularOfSet = new RegularOfSet();
+				regularOfSet.setAttribute(attribute);
+				regularOfSet.setValue(value);	
+				defAndContentSets.addRegular(regularOfSet);
+			}
 		}
 		return defAndContentSets;
 	}
