@@ -44,6 +44,7 @@ import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
 import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
@@ -268,10 +269,11 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotLoadedException 
+	 * @throws SourceTimeOutException 
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<ItemBean> getItems(String uid, String sourceId,ExternalService ex) 
-		throws SourceNotLoadedException, InternalDomainException, CategoryNotLoadedException {
+		throws SourceNotLoadedException, InternalDomainException, CategoryNotLoadedException, SourceTimeOutException {
 		if (log.isDebugEnabled()){
 			log.debug("getItems("+uid+","+sourceId+",externalService)");
 		}

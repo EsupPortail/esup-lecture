@@ -19,6 +19,7 @@ import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundE
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 
 /**
@@ -96,9 +97,10 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws SourceTimeOutException 
 	 */
 	public List<Item> getItems(ExternalService ex) 
-		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException  {
+		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException  {
 		if (log.isDebugEnabled()){
 			log.debug("id="+elementId+" - getItems(externalService)");
 		}

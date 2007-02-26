@@ -11,7 +11,9 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
+import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
+import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 import org.esupportail.lecture.exceptions.web.WebException;
 
 
@@ -150,10 +152,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * Load the source referenced by this ManagedSourceProfile
 	 * @param ex access to externalService
 	 * @throws ComputeFeaturesException
+	 * @throws SourceTimeOutException 
 	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	synchronized protected void loadSource(ExternalService ex) throws ComputeFeaturesException {
+	synchronized protected void loadSource(ExternalService ex) throws ComputeFeaturesException, SourceTimeOutException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - loadSource(externalService)");
 		}
@@ -164,8 +167,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			try {
 				source = DomainTools.getDaoService().getSource(this);
 			} catch (TimeoutException e) {
-				// TODO (GB <-- RB) manage this exception in dummySource
-				throw new WebException("timeout exceeded",e);
+				String errorMsg = "The source"+ this.getId()+"is impossible to load because of a TimeoutException";
+				log.error(errorMsg);
+				throw new SourceTimeOutException(errorMsg,e);
 			}
 			setElement(source);
 				

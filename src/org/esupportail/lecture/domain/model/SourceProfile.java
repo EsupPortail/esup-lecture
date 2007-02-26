@@ -14,6 +14,7 @@ import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 
 /**
@@ -84,8 +85,9 @@ public abstract class SourceProfile implements ElementProfile {
 	 * Load the source referenced by this SourceProfile
 	 * @param ex
 	 * @throws ComputeFeaturesException
+	 * @throws SourceTimeOutException 
 	 */
-	protected abstract void loadSource(ExternalService ex) throws ComputeFeaturesException ; 
+	protected abstract void loadSource(ExternalService ex) throws ComputeFeaturesException, SourceTimeOutException ; 
 	
 	
 	/**
@@ -96,16 +98,17 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @throws MappingNotFoundException
 	 * @throws ComputeItemsException
 	 * @throws Xml2HtmlException
+	 * @throws SourceTimeOutException 
 	 */
 	synchronized protected List<Item> getItems(ExternalService ex) 
-		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException  {
+		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException, SourceTimeOutException  {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+this.id+" - getItems(externalService)");
     	}
 		try {
 			loadSource(ex);
-			Source source = getElement();
-			return source.getItems();
+			Source s = getElement();
+			return s.getItems();
 		} catch (ComputeFeaturesException e) {
 			String errorMsg = "Impossible to loadSource on sourceProfile "+ getId() + " impossible to compute features";
 			log.error(errorMsg);

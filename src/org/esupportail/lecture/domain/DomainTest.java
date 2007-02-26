@@ -30,6 +30,7 @@ import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.VisibilityNotFoundException;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
@@ -337,8 +338,9 @@ public class DomainTest {
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws SourceTimeOutException 
 	 */
-	private static void testGetItems() throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException  {
+	private static void testGetItems() throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException  {
 		printIntro("getItems");
 		System.out.println(" **** source "+sourceId+" **********");
 		List<ItemBean> items = facadeService.getItems(userId,sourceId);
@@ -357,8 +359,9 @@ public class DomainTest {
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws SourceTimeOutException 
 	 */
-	private static void testMarkItemReadMode() throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException {
+	private static void testMarkItemReadMode() throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException {
 		printIntro("markItemReadMode");
 		System.out.println("Marquage de l'item "+itemId+" comme lu");
 		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId,true);

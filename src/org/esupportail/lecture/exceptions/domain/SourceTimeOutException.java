@@ -9,14 +9,14 @@ import org.esupportail.lecture.exceptions.dao.TimeoutException;
 
 /**
  * @author gbouteil
- * Remote server providing category is in Time Out.
+ * Remote server providing source is in Time Out.
+ * 
  */
-public class CategoryTimeOutException extends InfoDomainException {
+public class SourceTimeOutException extends InfoDomainException {
 
-	public CategoryTimeOutException(String errorMsg, Exception e) {
+	public SourceTimeOutException(String errorMsg, Exception e) {
 		super(errorMsg,e);
 	}
 	
-
 
 }
