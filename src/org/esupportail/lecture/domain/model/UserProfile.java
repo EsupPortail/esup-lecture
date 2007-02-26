@@ -9,7 +9,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
@@ -124,9 +126,10 @@ public class UserProfile {
 	 * @throws CategoryNotVisibleException 
 	 * @throws CustomCategoryNotFoundException 
 	 * @throws InternalDomainException 
+	 * @throws CategoryTimeOutException 
 	 */
 	public CustomCategory getCustomCategory(String categoryId,ExternalService ex) 
-		throws  CategoryNotVisibleException, CustomCategoryNotFoundException, InternalDomainException {
+		throws  CategoryNotVisibleException, CustomCategoryNotFoundException, InternalDomainException, CategoryTimeOutException {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+userId+" - getCustomCategory("+categoryId+")");
     	}
@@ -153,9 +156,12 @@ public class UserProfile {
 	 * @param ex access to externalService
 	 * @throws CategoryNotVisibleException
 	 * @throws InternalDomainException 
+	 * @throws CategoryTimeOutException 
+	 * @throws TimeoutException 
+	 * @throws TimeoutException 
 	 */
 	protected void updateCustomContextsForOneManagedCategory(String categoryProfileId,ExternalService ex) 
-		throws  CategoryNotVisibleException, InternalDomainException {
+		throws  CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+userId+" - updateCustomContextsForOneManagedCategory("+categoryProfileId+",ex)");
     	}
@@ -493,6 +499,7 @@ public class UserProfile {
 		return customContexts;
 	}
 
+	
 	/**
 	 * @param customContexts
 	 */

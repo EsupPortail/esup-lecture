@@ -26,9 +26,11 @@ import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.ProfileAvailability;
 import org.esupportail.lecture.domain.model.UserProfile;
+import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
@@ -186,10 +188,11 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws InternalDomainException 
+	 * @throws CategoryTimeOutException 
 	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getAvailableSources(String uid, String categoryId,ExternalService ex) 
-		throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, CategoryNotLoadedException, InternalDomainException  {
+		throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, CategoryNotLoadedException, InternalDomainException, CategoryTimeOutException  {
 		if (log.isDebugEnabled()){
 			log.debug("getAvailableSources("+uid+","+categoryId+",externalService)");
 		}
@@ -453,9 +456,10 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws InternalDomainException 
+	 * @throws CategoryTimeOutException 
 	 */
 	public List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) 
-		throws CategoryNotVisibleException, CategoryNotLoadedException, UserNotSubscribedToCategoryException, InternalDomainException {
+		throws CategoryNotVisibleException, CategoryNotLoadedException, UserNotSubscribedToCategoryException, InternalDomainException, CategoryTimeOutException {
 		if (log.isDebugEnabled()) {
 			log.debug("getVisibleSources("+uid+","+categoryId+",ex)");
 		}
@@ -504,10 +508,11 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException
 	 * @throws InternalDomainException 
+	 * @throws CategoryTimeOutException 
 	 */
 	public void subscribeToSource(String uid, String categoryId, String sourceId, ExternalService ex) 
 		throws UserNotSubscribedToCategoryException, CategoryNotVisibleException,
-		CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, InternalDomainException {
+		CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, InternalDomainException, CategoryTimeOutException {
 		if (log.isDebugEnabled()){
 			log.debug("subscribeToSource("+uid+","+categoryId+","+sourceId+", externalService)");
 		}
@@ -545,10 +550,11 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws InternalDomainException 
 	 * @throws SourceObligedException 
 	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryTimeOutException 
 	 */
 	public void unsubscribeToSource(String uid, String categoryId, String sourceId, ExternalService ex) 
 		throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, InternalDomainException, 
-		CategoryNotLoadedException, SourceObligedException {
+		CategoryNotLoadedException, SourceObligedException, CategoryTimeOutException {
 		if (log.isDebugEnabled()){
 			log.debug("subscribeToSource("+uid+","+categoryId+","+sourceId+", externalService)");
 		}

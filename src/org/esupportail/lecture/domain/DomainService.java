@@ -16,6 +16,7 @@ import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
@@ -68,10 +69,11 @@ public interface DomainService {
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws UserNotSubscribedToCategoryException 
+	 * @throws CategoryTimeOutException 
 	 * @see FacadeService#getAvailableSources(String, String)
 	 */
 	List<SourceBean> getAvailableSources(String uid,String categoryId,ExternalService ex)  
-		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException, UserNotSubscribedToCategoryException ;
+		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException, UserNotSubscribedToCategoryException, CategoryTimeOutException ;
 
 	/**
 	 * @param sourceId 
@@ -119,10 +121,11 @@ public interface DomainService {
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws UserNotSubscribedToCategoryException 
+	 * @throws CategoryTimeOutException 
 	 * @see FacadeService#getVisibleSources(String, String)
 	 */
 	List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) 
-		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException, UserNotSubscribedToCategoryException ;
+		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException, UserNotSubscribedToCategoryException, CategoryTimeOutException ;
 	
 	/**
 	 * @param uid
@@ -165,12 +168,13 @@ public interface DomainService {
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
+	 * @throws CategoryTimeOutException 
 	 * @see FacadeService#subscribeToSource(String, String, String)
 	 */
 	void subscribeToSource(String uid, String categorieId, String sourceId, ExternalService ex) 
 		throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, 
 		CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, 
-		InternalDomainException ;
+		InternalDomainException, CategoryTimeOutException ;
 	/**
 	 * @param uid 
 	 * @param categorieId 
@@ -183,11 +187,12 @@ public interface DomainService {
 	 * @throws SourceObligedException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
+	 * @throws CategoryTimeOutException 
 	 * @see FacadeService#unsubscribeToSource(String, String, String)
 	 */	
 	void unsubscribeToSource(String uid, String categorieId, String sourceId, ExternalService ex) 
 		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
-		InternalDomainException, CategoryProfileNotFoundException, CategoryNotLoadedException, SourceObligedException;
+		InternalDomainException, CategoryProfileNotFoundException, CategoryNotLoadedException, SourceObligedException, CategoryTimeOutException;
 	
 	
 	

@@ -74,7 +74,7 @@ public class DomainTools {
 	 * @param value - string where we try to find user attribute to replace
 	 * @return value with {attribute} replaced by this attribute according to current connected user
 	 */
-	// TODO (GB --> RB) Peux tu compléter la javadoc ?
+	// TODO (RB <-- GB) Peux tu compléter la javadoc ?
 	public static String replaceWithUserAttributes(String value) {
 		if (log.isDebugEnabled()){
 			log.debug("replaceWithUserAttributes("+value+")");

@@ -63,6 +63,10 @@ public class CustomManagedSource extends CustomSource{
 	/*
 	 ************************** METHODS *********************************/	
 	
+	
+	
+	/* MISCELLANEOUS */
+	
 	/**
 	 * Returns the ManagedSourceProfile of this CustomManagedSource
 	 * @throws SourceProfileNotFoundException 

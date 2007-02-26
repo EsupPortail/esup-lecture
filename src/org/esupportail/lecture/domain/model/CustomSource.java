@@ -85,31 +85,6 @@ public abstract class CustomSource implements CustomElement {
 	 ************************** METHODS **********************************/
 	
 	/**
-	 * The SourceProfile associated to this CustomSource
-	 * @return the SourceProfile 
-	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 */
-	public abstract SourceProfile getProfile() throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException;
-	
-
-	/**
-	 * The name of the source profile associated to this CustomSource
-	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
-	 */
-	public String getName() throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException{
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - getName()");
-		}
-		return getProfile().getName();
-	}
-	
-
-	/**
 	 * Returns the list of items contained in the source referred by this customSource
 	 * Items are ready to be displayed
 	 * @param ex access to externalService
@@ -129,6 +104,22 @@ public abstract class CustomSource implements CustomElement {
 		}
 		return getProfile().getItems(ex);
 	}
+
+	/**
+	 * The name of the source profile associated to this CustomSource
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
+	 */
+	public String getName() throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException{
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - getName()");
+		}
+		return getProfile().getName();
+	}
+
+
 	
 	/**
 	 * @param itemId id of the item to set as read
@@ -202,6 +193,21 @@ public abstract class CustomSource implements CustomElement {
 		return this.getElementId().hashCode();
 	}
 	
+
+	/* 
+	 ************************** ABSTRACT METHODS **********************************/
+
+	/**
+	 * The SourceProfile associated to this CustomSource
+	 * @return the SourceProfile 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 */
+	public abstract SourceProfile getProfile() throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException;
+	
+
+
 	/* 
 	 ************************** ACCESSORS **********************************/
 	/**

@@ -73,7 +73,7 @@ public class EditController extends twoPanesController {
 				type = AvailabilityMode.NOTSUBSCRIBED;
 			}
 		} catch (DomainServiceException e) {
-			// TODO (GB --> RB) à traiter
+			// TODO (RB <-- GB) à traiter
 		}
 		if (type != null) {
 			src.setType(type);

@@ -11,6 +11,8 @@ import java.util.Iterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.dao.TimeoutException;
+import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
@@ -93,8 +95,9 @@ public class Context {
 	 * defined in this Context, according to managedCategory visibilities
 	 * @param customContext customContext to update
 	 * @param ex access to external service for visibility evaluation
+	 * @throws TimeoutException 
 	 */
-	synchronized protected void updateCustom(CustomContext customContext, ExternalService ex)  {
+	synchronized protected void updateCustom(CustomContext customContext, ExternalService ex) {
 		if (log.isDebugEnabled()){
 			log.debug("id="+id+" - updateCustom("+customContext.getElementId()+",externalService)");
 		}
@@ -106,7 +109,11 @@ public class Context {
 			} catch (ComputeFeaturesException e) {
 				log.error("Impossible to update CustomContext associated to context "+ getId()
 						+" for managedCategoryProfile "+mcp.getId()+" because a compute feature error occured",e);
+			} catch (CategoryTimeOutException e) {
+				log.error("Impossible to update CustomContext associated to context "+ getId()
+						+" for managedCategoryProfile "+mcp.getId()+" because the remote category is in Time Out",e);
 			}	
+			
 		}
 	}
 

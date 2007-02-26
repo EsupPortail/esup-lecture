@@ -14,8 +14,10 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
 import org.esupportail.lecture.exceptions.web.WebException;
 
 /**
@@ -116,9 +118,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param ex access to externalService to evaluate visibility
 	 * @return true if the category is visible by the userProfile
 	 * @throws ComputeFeaturesException 
+	 * @throws CategoryTimeOutException 
 	 */
 	synchronized protected VisibilityMode updateCustomContext(CustomContext customContext,ExternalService ex) 
-		throws ComputeFeaturesException {
+		throws ComputeFeaturesException, CategoryTimeOutException{
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - updateCustomContext("+customContext.getElementId()+"externalService)");
 		}
@@ -130,9 +133,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 *  Load the category referenced by this ManagedCategoryProfile
 	 *  @param ex access to externalservice to get proxy ticket CAS
+	 * @throws CategoryTimeOutException 
+	 * @throws TimeoutException 
 	 */
 	@Override
-	synchronized protected void loadCategory(ExternalService ex)  {
+	synchronized protected void loadCategory(ExternalService ex) throws CategoryTimeOutException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - loadCategory(externalService)");
 		}
@@ -140,10 +145,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			try {
 				setElement(DomainTools.getDaoService().getManagedCategory(this));
 			} catch (TimeoutException e) {
-				// TODO (GB <-- RB) manage this exception in dummyCategory
-				throw new WebException("timeout exceeded",e);
-			} 
-			
+				String errorMsg = "the managedCategory"+ this.getId()+"is impossible to load because of a TimeoutException";
+				log.error(errorMsg);
+				throw new CategoryTimeOutException(errorMsg,e);
+			}
+						
 		} else if (getAccess() == Accessibility.CAS) {
 			String ptCas = ex.getUserProxyTicketCAS();
 			setElement(DomainTools.getDaoService().getManagedCategory(this,ptCas));
@@ -401,7 +407,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - getSourceProfileById("+id+")");
 		}
-//		 TODO (GB ?) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
+//		 TODO (GB) ? on pourrait faire un loadCategory ou autre chose ou ailleurs ?
 		return (ManagedSourceProfile) getElement().getSourceProfileById(id);
 
 	}

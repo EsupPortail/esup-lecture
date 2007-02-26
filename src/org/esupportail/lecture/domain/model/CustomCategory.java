@@ -9,9 +9,11 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
@@ -73,7 +75,42 @@ public abstract class CustomCategory implements CustomElement {
 	/* 
 	 ************************** METHODS **********************************/
 	
+	/**
+	 * The used name of the categoryProfile
+	 * @throws CategoryProfileNotFoundException 
+	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
+	 */
+	public String getName() throws CategoryProfileNotFoundException  {
+		if (log.isDebugEnabled()){
+			log.debug("id="+elementId+" - getName()");
+		}
+		return getProfile().getName();
+	}
+	
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null) return false;
+		if (!(o instanceof CustomCategory)) return false;
+		final CustomCategory customCategory = (CustomCategory) o;
+		if (!customCategory.getElementId().equals(this.getElementId())) return false;
+		return true;
+	}
 
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return this.getElementId().hashCode();
+	}
+
+	/* 
+	 ************************** ABSTRACT METHODS **********************************/
+	
 	/**
 	 * Return the list of sorted customSources displayed by this customCategory
 	 * @param ex access to external service 
@@ -82,8 +119,11 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryNotVisibleException
 	 * @throws CategoryNotLoadedException
 	 * @throws InternalDomainException 
+	 * @throws CategoryTimeOutException 
+	 * @throws TimeoutException 
 	 */
-	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException;
+	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) 
+	throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException, CategoryTimeOutException;
 
 	/**
 	 * remove a CustomManegedSource displayed in this CustomCategory
@@ -110,23 +150,11 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws InternalDomainException 
+	 * @throws CategoryTimeOutException 
+	 * @throws TimeoutException 
 	 */
 	public abstract List<ProfileAvailability> getVisibleSources(ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException;
-
-	
-	
-	/**
-	 * The used name of the categoryProfile
-	 * @throws CategoryProfileNotFoundException 
-	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
-	 */
-	public String getName() throws CategoryProfileNotFoundException  {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - getName()");
-		}
-		return getProfile().getName();
-	}
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException, CategoryTimeOutException;
 	
 	/**
 	 * For a customManagedCategory, it subscribes sourceId, but for a customPersonalcategory, 
@@ -157,28 +185,6 @@ public abstract class CustomCategory implements CustomElement {
 	 */
 	public abstract void unsubscribeToSource(String sourceId, ExternalService ex) 
 		throws CategoryProfileNotFoundException, CategoryNotLoadedException, ComputeFeaturesException, SourceObligedException;
-
-	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null) return false;
-		if (!(o instanceof CustomCategory)) return false;
-		final CustomCategory customCategory = (CustomCategory) o;
-		if (!customCategory.getElementId().equals(this.getElementId())) return false;
-		return true;
-	}
-
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return this.getElementId().hashCode();
-	}
-	
 	
 	/**
 	 * @param sourceId Id for customManagedSource

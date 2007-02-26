@@ -8,7 +8,9 @@ package org.esupportail.lecture.domain.model;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
@@ -48,8 +50,9 @@ public abstract class CategoryProfile implements ElementProfile {
 	/**
 	 * Load the category referenced by this CategoryProfile
 	 * @param ex
+	 * @throws CategoryTimeOutException 
 	 */
-	protected abstract void loadCategory(ExternalService ex);
+	protected abstract void loadCategory(ExternalService ex) throws CategoryTimeOutException ;
 	
 	/**
 	 * Return the name of the referenced category. When the category is not loaded, it returns
@@ -92,7 +95,7 @@ public abstract class CategoryProfile implements ElementProfile {
 			log.debug("id="+id+" - getElement()");
 		}
 		if (category==null){
-			// TODO (GB ?) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
+			// TODO (GB) ? on pourrait faire un loadCategory ou autre chose ou ailleurs ?
 			String errorMsg = "Category "+id+" is not loaded in profile";
 			log.error(errorMsg);
 			throw new CategoryNotLoadedException(errorMsg);
