@@ -155,15 +155,15 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @param mode item display mode to set
 	 */
-	public void setItemDisplayMode(ItemDisplayMode mode){
+	public void modifyItemDisplayMode(ItemDisplayMode mode){
 		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - itemDisplayMode("+mode+")");
+			log.debug("id="+elementId+" - modifyItemDisplayMode("+mode+")");
 		}
+		/* old name was setItemDisplayMode but it has been changed to prevent 
+		 * loop by calling dao
+		 */
 		this.itemDisplayMode = mode;
-		//TODO (GB <-- RB) do not call hibernate in a setter !
-		// This throws: HibernateException: Illegal attempt to associate a collection with two open sessions
-		//NB : with this next line commented. It work !
-		//DomainTools.getDaoService().updateCustomSource(this);
+		DomainTools.getDaoService().updateCustomSource(this);
 	}
 	
 	/**
@@ -271,6 +271,11 @@ public abstract class CustomSource implements CustomElement {
 		this.elementId = elementId;
 	}
 	
-
+	/**
+	 * @param mode
+	 */
+	public void setItemDisplayMode(ItemDisplayMode mode){
+		this.itemDisplayMode = mode;
+	}
 	
 }

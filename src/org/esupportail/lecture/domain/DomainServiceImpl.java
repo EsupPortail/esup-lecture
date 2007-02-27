@@ -373,7 +373,7 @@ public class DomainServiceImpl implements DomainService {
 			UserProfile userProfile = channel.getUserProfile(uid);
 			CustomSource customSource;
 			customSource = userProfile.getCustomSource(sourceId);
-			customSource.setItemDisplayMode(mode);
+			customSource.modifyItemDisplayMode(mode);
 		} catch (CustomSourceNotFoundException e) {
 			String errorMsg = "CustomSourceNotFoundException for service 'markItemDisplayMode(user "+uid+", source "+sourceId+ ", mode "+mode+ ")";
 			log.error(errorMsg);

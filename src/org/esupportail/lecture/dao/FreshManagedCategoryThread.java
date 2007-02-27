@@ -75,6 +75,7 @@ public class FreshManagedCategoryThread extends Thread {
 		if (log.isDebugEnabled()) {
 			log.debug("in getFreshManagedCategory");
 		}
+		// TODO (RB <-- GB) gestion des attributs xml IMPLIED 
 		ManagedCategory ret = new ManagedCategory();
 		try {
 			//get the XML
@@ -94,9 +95,10 @@ public class FreshManagedCategoryThread extends Thread {
 				sp.setFileId(srcProfile.valueOf("@id"));
 				sp.setName(srcProfile.valueOf("@name"));
 				sp.setSourceURL(srcProfile.valueOf("@url"));
+				
+				// TODO (RB <-- GB) ce sont mes tests pour gestion des attributs xml IMPLIED : à retirer quand tu veux 
 				String timeout = srcProfile.valueOf("@timeout");
-				if (timeout!=""){
-					
+				if (timeout!=""){					
 					sp.setTimeOut(Integer.parseInt(timeout));
 					if(log.isTraceEnabled()){
 						log.trace("1 getFreshManagedCategory : first vcalue of timeout (string) : "+timeout);
