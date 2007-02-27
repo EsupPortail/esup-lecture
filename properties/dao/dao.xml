@@ -156,7 +156,7 @@
 		</property>
 	</bean>
 
-	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceImpl">
+	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceImpl" lazy-init="true">
 		<description>
 			This bean provides the dao service of the application, used by the 
 			domain.model.

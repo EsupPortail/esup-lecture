@@ -127,10 +127,12 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		/* Features that can be herited by the managedCategoryProfile */
 		Accessibility setAccess;
 		VisibilitySets setVisib;
+		int setTimeOut;
 		
 		if (categoryProfile.getTrustCategory()) {		
 			setAccess = access;
 			setVisib = visibility;
+			setTimeOut = super.timeOut;
 			
 			if (setAccess == null) {
 				setAccess = categoryProfile.getAccess();
@@ -138,13 +140,18 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			if (setVisib == null) {
 				setVisib = categoryProfile.getVisibility();
 			}
+			if (setTimeOut == 0) {
+				setTimeOut = categoryProfile.getTimeOut();
+			}
 
 		}else {
 			setAccess = categoryProfile.getAccess();
 			setVisib = categoryProfile.getVisibility();
+			setTimeOut = categoryProfile.getTimeOut();
+			
 		}
 				
-		features.update(setVisib,setAccess);
+		features.update(setVisib,setAccess,setTimeOut);
 		
 	}
 
@@ -329,6 +336,34 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			log.debug("id="+this.getId()+" - setVisibility(visibility)");
 		}
 		this.visibility = visibility;
+		features.setIsComputed(false);
+	}
+	
+	/**
+	 * Compute timeOut value from features and returns it
+	 * @return timeOut
+	 * @throws ComputeFeaturesException 
+	 */
+	public int getTimeOut() throws ComputeFeaturesException  {
+		if (log.isDebugEnabled()){
+			log.debug("id="+this.getId()+" - getTimeOut()");
+		}
+		if (log.isTraceEnabled()){
+			log.trace("timeOut : "+features.getTimeOut());
+		}
+		return features.getTimeOut();
+	}
+
+
+	
+	/**
+	 * @see org.esupportail.lecture.domain.model.SourceProfile#setTimeOut(int)
+	 */
+	synchronized public void setTimeOut(int timeOut) {
+		if (log.isDebugEnabled()){
+			log.debug("id="+this.getId()+" - setTimeOut("+timeOut+")");
+		}
+		super.timeOut = timeOut;
 		features.setIsComputed(false);
 	}
 	

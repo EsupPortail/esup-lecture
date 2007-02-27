@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
@@ -104,6 +105,7 @@ public abstract class CustomSource implements CustomElement {
 		if (log.isDebugEnabled()){
 			log.debug("id="+elementId+" - getItems(externalService)");
 		}
+	
 		return getProfile().getItems(ex);
 	}
 

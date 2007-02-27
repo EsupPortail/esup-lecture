@@ -10,6 +10,7 @@ import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.springmodules.cache.CachingModel;
 import org.springmodules.cache.provider.CacheProviderFacade;
 
@@ -39,7 +40,7 @@ public class DaoServiceRemoteXML {
 	 */
 	private Hashtable<String, Long> sourceLastAccess = new Hashtable<String, Long>();
 	/**
-	 * Default timeout used for http connection
+	 * Default timeout used for http connection (normally, it should be not used)
 	 */
 	private int defaultTimeout = 3000;
 
@@ -125,8 +126,9 @@ public class DaoServiceRemoteXML {
 		//start a Thread to get FreshManagedCategory
 		FreshManagedCategoryThread thread = new FreshManagedCategoryThread(profile);
 		thread.start();
+		int timeOut = profile.getTimeOut();
 		try {
-			thread.join(defaultTimeout);
+			thread.join(timeOut);
 			Exception e = thread.getException();
 			if (e != null) {
 //				TODO RB --> throw new Exception(msg,e);
@@ -139,7 +141,7 @@ public class DaoServiceRemoteXML {
 		}
         if (thread.isAlive()) {
     		thread.interrupt();
-			String msg = "Category not loaded in "+defaultTimeout+" milliseconds";
+			String msg = "Category not loaded in "+timeOut+" milliseconds";
 			log.warn(msg);
 			throw new TimeoutException(msg);
         }	
@@ -206,8 +208,14 @@ public class DaoServiceRemoteXML {
 		//start a Thread to get FreshSource
 		FreshSourceThread thread = new FreshSourceThread(sourceProfile);
 		thread.start();
+		int timeOut = defaultTimeout;
 		try {
-			thread.join(defaultTimeout);
+			timeOut = sourceProfile.getTimeOut();
+		} catch (ComputeFeaturesException e1) {
+			log.warn("getFreshSource : using defaultTimeout because Timeout is not defined for sourceProfile "+sourceProfile.getId());
+		}
+		try {
+			thread.join(timeOut);
 			Exception e = thread.getException();
 			if (e != null) {
 //				TODO RB --> throw new Exception(msg,e);
@@ -220,7 +228,7 @@ public class DaoServiceRemoteXML {
 		}
         if (thread.isAlive()) {
     		thread.interrupt();
-			String msg = "Category not loaded in "+defaultTimeout+" milliseconds";
+			String msg = "Category not loaded in "+timeOut+" milliseconds";
 			log.warn(msg);
 			throw new TimeoutException(msg);
         }	

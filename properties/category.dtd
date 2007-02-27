@@ -13,7 +13,8 @@
     xslt CDATA #IMPLIED
     xpath CDATA #IMPLIED
     access (public|cas) #IMPLIED
-    specificUserContent (yes|no) "no">
+    specificUserContent (yes|no) "no"
+    timeout CDATA #IMPLIED>
 
 <!ELEMENT visibility (allowed,autoSubscribed,obliged)>
 

@@ -12,8 +12,9 @@ import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 
 /**
  * Class that contains features of a source needed to be computed
- * because of inheritance rules between Source and managedSourceProfile :
- * Interested feature are : visibility,access
+ * because of inheritance rules between Source and managedSourceProfile,
+ * depending on trustCategory parameter :
+ * Interested feature are : visibility, access, timeOut
  * @author gbouteil
  * @see ManagedElementFeatures
  *
@@ -29,9 +30,12 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	protected static final Log log = LogFactory.getLog(ManagedSourceFeatures.class);
 	/**
 	 * Access mode on the Source
-	 * Its values depends on trustCategory parameter 
 	 */	
 	private Accessibility access;
+	/**
+	 * timeOut to get the Source
+	 */	
+	private int timeOut;
 	
 	
 	/*
@@ -57,13 +61,15 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	 * It only sets value in parameters
 	 * @param visib the visibility feature to update
 	 * @param acces the access mode to update
+	 * @param to timeOut to update
 	 */
-	synchronized protected void update(VisibilitySets visib, Accessibility acces) {
+	synchronized protected void update(VisibilitySets visib, Accessibility acces, int to) {
 		if (log.isDebugEnabled()){
 			log.debug("update(setVisib,setAccess)");
 		}
 		super.update(visib);
 		access = acces;
+		timeOut = to;
 	}
 
 	/**
@@ -84,6 +90,26 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 			}
 		}
 		return access;
+	}
+	
+	/**
+	 * @return Returns the timeOut (feature is automatically computed if needed).
+	 * @throws ComputeFeaturesException 
+	 */
+	synchronized protected int getTimeOut() throws ComputeFeaturesException{
+		if (log.isDebugEnabled()){
+			log.debug("getTimeOut()");
+		}
+		if (!super.isComputed()){
+			try {
+				super.compute();
+			} catch (CategoryNotLoadedException e) {
+				String errorMsg = "Impossible to compute features on element "+ super.mep.getId() + "because Category is not loaded";
+				log.error(errorMsg);
+				throw new ComputeFeaturesException(errorMsg,e);
+			}
+		}
+		return timeOut;
 	}
 	
 

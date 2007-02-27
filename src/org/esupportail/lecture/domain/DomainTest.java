@@ -73,14 +73,14 @@ public class DomainTest {
 //			testGetAvailableSourceAlternativeWay(); 
 			
 			/* Test normal behavior */
-			testGetConnectedUser();
-			testGetContext();
-			testGetAvailableCategories();
-			testGetAvailableSources();
-			testGetItems();
+//			testGetConnectedUser();
+//			testGetContext();
+//			testGetAvailableCategories();
+//			testGetAvailableSources();
+//			testGetItems();
 		
 			/* small actions */
-			testMarkItemReadMode();
+//			testMarkItemReadMode();
 //			testSetTreeSize();
 //			testFoldCategory();
 //			testSetItemDisplayMode();
@@ -89,8 +89,14 @@ public class DomainTest {
 //			testGetConnectedUser();
 //			testGetContext();
 //			testGetVisibleSources();
-			testSubUnSubscribeToSource();
+//			testSubUnSubscribeToSource();
 			
+			/* test timeout values */
+			testGetConnectedUser();
+			testGetContext();
+			testGetAvailableCategories();
+			testGetAvailableSources();
+			testTimeOutValues();
 		
 			
 			
@@ -334,21 +340,31 @@ public class DomainTest {
 	/**
 	 * Test of service "getItems"
 	 * @throws InternalDomainException 
+	 * @throws SourceTimeOutException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws SourceNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws InternalDomainException 
 	 * @throws SourceNotLoadedException 
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceTimeOutException 
 	 */
-	private static void testGetItems() throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException  {
-		printIntro("getItems");
-		System.out.println(" **** source "+sourceId+" **********");
-		List<ItemBean> items = facadeService.getItems(userId,sourceId);
-		for(ItemBean it : items){
-			System.out.println("  **** item ****");
-			System.out.println(it.toString());
-			itemId = it.getId();
-		}
+	private static void testTimeOutValues() throws ManagedCategoryProfileNotFoundException, SourceNotLoadedException, CategoryNotLoadedException, SourceTimeOutException, InternalDomainException {
+		printIntro("testTimeOutValues");
+		System.out.println(" ** category CP1 ( no trust category) **********");
+		System.out.println(" ***** source un (timeout present) **********");
+		facadeService.getItems(userId,"m:cp1:un");
+		System.out.println(" ***** source deux (timeout abscent) ********");
+		facadeService.getItems(userId,"m:cp1:deux");
+		System.out.println("\n");
+		System.out.println(" ** category CP5 ( trust category) **********");
+		System.out.println(" ***** source un (timeout present) **********");
+		facadeService.getItems(userId,"m:cp5:un");
+		System.out.println(" ***** source deux (timeout abscent) ********");
+		facadeService.getItems(userId,"m:cp5:deux");
+		
 		
 	}
 	
@@ -416,6 +432,23 @@ public class DomainTest {
 		
 	}
 
+	/**
+	 * Test of timeOut Values
+	 */
+	private static void testGetItems() throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException  {
+		printIntro("getItems");
+		System.out.println(" **** source "+sourceId+" **********");
+		List<ItemBean> items = facadeService.getItems(userId,sourceId);
+		for(ItemBean it : items){
+			System.out.println("  **** item ****");
+			System.out.println(it.toString());
+			itemId = it.getId();
+		}
+		
+	}
+	
+	
+	
 	
 	/**
 	 * Affichage du service à tester

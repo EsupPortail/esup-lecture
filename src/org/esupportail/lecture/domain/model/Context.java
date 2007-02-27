@@ -95,7 +95,6 @@ public class Context {
 	 * defined in this Context, according to managedCategory visibilities
 	 * @param customContext customContext to update
 	 * @param ex access to external service for visibility evaluation
-	 * @throws TimeoutException 
 	 */
 	synchronized protected void updateCustom(CustomContext customContext, ExternalService ex) {
 		if (log.isDebugEnabled()){

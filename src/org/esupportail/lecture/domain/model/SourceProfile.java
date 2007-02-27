@@ -71,6 +71,11 @@ public abstract class SourceProfile implements ElementProfile {
 	 */
 	private int ttl;
 	
+	/**
+	 * timeOut to get the remote source
+	 */
+	protected int timeOut;
+	
 
 
 	/*
@@ -261,6 +266,18 @@ public abstract class SourceProfile implements ElementProfile {
 	synchronized public void setTtl(int ttl) {
 		this.ttl = ttl;
 	}
+
+	/**
+	 * @return timeOut
+	 * @exception ComputeFeaturesException
+	 */
+	public abstract int getTimeOut() throws ComputeFeaturesException;
+
+
+	/**
+	 * @param timeOut
+	 */
+	public abstract void setTimeOut(int timeOut);
 
 
 

@@ -120,7 +120,6 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryNotLoadedException
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
-	 * @throws TimeoutException 
 	 */
 	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) 
 	throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException, CategoryTimeOutException;
@@ -151,7 +150,6 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryNotLoadedException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
-	 * @throws TimeoutException 
 	 */
 	public abstract List<ProfileAvailability> getVisibleSources(ExternalService ex) 
 		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException, CategoryTimeOutException;

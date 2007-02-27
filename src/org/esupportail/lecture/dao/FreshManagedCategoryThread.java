@@ -17,6 +17,7 @@ import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.domain.model.VisibilitySets;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
+import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 
 /**
  * Get a Freash Managed Category from a distinct Thread
@@ -51,7 +52,6 @@ public class FreshManagedCategoryThread extends Thread {
 	}
 
 	/**
-	 * @throws XMLParseException 
 	 * @see java.lang.Thread#run()
 	 */
 	@Override
@@ -94,7 +94,27 @@ public class FreshManagedCategoryThread extends Thread {
 				sp.setFileId(srcProfile.valueOf("@id"));
 				sp.setName(srcProfile.valueOf("@name"));
 				sp.setSourceURL(srcProfile.valueOf("@url"));
-				sp.setTtl(Integer.parseInt(srcProfile.valueOf("@ttl")));
+				String timeout = srcProfile.valueOf("@timeout");
+				if (timeout!=""){
+					
+					sp.setTimeOut(Integer.parseInt(timeout));
+					if(log.isTraceEnabled()){
+						log.trace("1 getFreshManagedCategory : first vcalue of timeout (string) : "+timeout);
+						log.trace("2 getFreshManagedCategory : value of timeout in xml :"+srcProfile.valueOf("@timeout"));
+						log.trace("3 getFreshManagedCategory : value of timeout in Integer :"+Integer.parseInt(srcProfile.valueOf("@timeout")));
+						
+					}
+				}else {
+					log.trace("4 getFreshManagedCategory : timeout (string) is empty");
+				}
+				
+				
+				
+				
+				//sp.setTimeOut(Integer.parseInt(srcProfile.valueOf("@timeout")));
+				
+				
+						
 				String specificUserContentValue = srcProfile.valueOf("@specificUserContent");
 				if (specificUserContentValue.equals("yes")) {
 					sp.setSpecificUserContent(true);

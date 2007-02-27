@@ -22,7 +22,8 @@
     trustCategory (yes|no) "no"
     edit (all|personal|managed|no) "no"
     access (public|cas) "public"
-    ttl CDATA #REQUIRED>	
+    ttl CDATA #REQUIRED
+    timeout CDATA #REQUIRED>	
     
 <!ELEMENT visibility (allowed,autoSubscribed,obliged)>
 

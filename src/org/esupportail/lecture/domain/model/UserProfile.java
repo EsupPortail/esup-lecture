@@ -157,8 +157,6 @@ public class UserProfile {
 	 * @throws CategoryNotVisibleException
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
-	 * @throws TimeoutException 
-	 * @throws TimeoutException 
 	 */
 	protected void updateCustomContextsForOneManagedCategory(String categoryProfileId,ExternalService ex) 
 		throws  CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException {

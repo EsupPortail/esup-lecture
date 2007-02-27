@@ -211,6 +211,7 @@ public class ChannelConfig  {
 			//TODO (GB later) c.setEdit(...) param edit
 			mcp.setTrustCategory(xmlFile.getBoolean(pathCategoryProfile+ "[@trustCategory]"));
 			mcp.setTtl(xmlFile.getInt(pathCategoryProfile+ "[@ttl]"));
+			mcp.setTimeOut(xmlFile.getInt(pathCategoryProfile+ "[@timeout]"));
 			
 		    // Accessibility
 		    String access = xmlFile.getString(pathCategoryProfile+"[@access]");

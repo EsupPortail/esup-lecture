@@ -82,6 +82,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	private int ttl;
 	
+	/**
+	 * timeOut to get the remote managedCategory
+	 */
+	private int timeOut;
 
 	/**
 	 * Contexts where these profiles category are referenced
@@ -134,7 +138,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 *  Load the category referenced by this ManagedCategoryProfile
 	 *  @param ex access to externalservice to get proxy ticket CAS
 	 * @throws CategoryTimeOutException 
-	 * @throws TimeoutException 
 	 */
 	@Override
 	synchronized protected void loadCategory(ExternalService ex) throws CategoryTimeOutException {
@@ -523,6 +526,21 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		this.ttl = ttl;
 	}
 
+	/**
+	 * @return timeOut
+	 * @see ManagedCategoryProfile#timeOut
+	 */
+	public int getTimeOut(){
+		return timeOut;
+	}
+	
+	/**
+	 * @param timeOut
+	 * @see ManagedCategoryProfile#timeOut
+	 */
+	synchronized public void setTimeOut(int timeOut) {
+		this.timeOut = timeOut;
+	}
 	/**
 	 * @return contextSets
 	 */
