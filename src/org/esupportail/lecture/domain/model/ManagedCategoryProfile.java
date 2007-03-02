@@ -17,8 +17,6 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
-import org.esupportail.lecture.exceptions.web.WebException;
 
 /**
  * Managed category profile element. It references a managedCategory

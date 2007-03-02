@@ -50,7 +50,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		else {
 			String msg = "userId is null: can't find it in database";
 			log.error(msg);
-			//TODO RB --> throw new InfoDaoException(msg);
+			//TODO (RB) --> throw new InfoDaoException(msg);
 		}
 		return ret;
 	}

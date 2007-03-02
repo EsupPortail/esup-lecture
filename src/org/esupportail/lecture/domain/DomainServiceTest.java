@@ -21,7 +21,6 @@ import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundE
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
-import org.esupportail.lecture.exceptions.domain.VisibilityNotFoundException;
 
 /**
  * @author bourges
@@ -218,6 +217,9 @@ public class DomainServiceTest implements DomainService {
 			
 	}
 
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#markItemDisplayMode(java.lang.String, java.lang.String, org.esupportail.lecture.domain.model.ItemDisplayMode)
+	 */
 	public void markItemDisplayMode(String uid, String sourceId, ItemDisplayMode mode) throws InternalDomainException {
 		// TODO Auto-generated method stub
 				

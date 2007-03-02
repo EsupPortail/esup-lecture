@@ -8,7 +8,6 @@ package org.esupportail.lecture.domain.model;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
@@ -106,12 +105,12 @@ public abstract class CategoryProfile implements ElementProfile {
 	/**
 	 * Returns the sourceProfile identified by id, accessible by CategoryProfile
 	 * (Defined in Category referred by this categoryProfile
-	 * @param id id of the sourceProfile
+	 * @param sourceProfileId id of the sourceProfile
 	 * @return the sourceProfile
 	 * @throws CategoryNotLoadedException 
 	 * @throws SourceProfileNotFoundException 
 	 */
-	protected abstract SourceProfile getSourceProfileById(String id) throws CategoryNotLoadedException, SourceProfileNotFoundException ;
+	protected abstract SourceProfile getSourceProfileById(String sourceProfileId) throws CategoryNotLoadedException, SourceProfileNotFoundException ;
 
 	
 	

@@ -6,7 +6,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.dao.DaoServiceRemoteXML;
-import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
@@ -37,6 +36,9 @@ public class DaoServiceStub  implements DaoService {
 	 */
 	Hashtable<String,UserProfile> userProfiles;
 
+	/**
+	 *  Access to DaoServiceRemoteXml
+	 */
 	private DaoServiceRemoteXML remoteXMLService;	
 	
 	
@@ -86,7 +88,7 @@ public class DaoServiceStub  implements DaoService {
 		return userProfiles.get(userId);
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.esupportail.lecture.dao.DaoService#refreshUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public UserProfile refreshUserProfile(UserProfile userProfile) {

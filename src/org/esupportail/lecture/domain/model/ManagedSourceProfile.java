@@ -11,10 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
-import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
-import org.esupportail.lecture.exceptions.web.WebException;
 
 
 /**
@@ -344,6 +342,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @return timeOut
 	 * @throws ComputeFeaturesException 
 	 */
+	@Override
 	public int getTimeOut() throws ComputeFeaturesException  {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - getTimeOut()");
@@ -359,6 +358,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * @see org.esupportail.lecture.domain.model.SourceProfile#setTimeOut(int)
 	 */
+	@Override
 	synchronized public void setTimeOut(int timeOut) {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - setTimeOut("+timeOut+")");
