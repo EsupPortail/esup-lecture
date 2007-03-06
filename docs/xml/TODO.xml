@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//UR1//DTD docbookAllegeEsup//FR"
+"http://www.esup-portail.org/consortium/espace/docbook/xxe/dtd/docbook_allege_esup.dtd">
+<article lang="FR">
+  <title>Esup Lecture Portlet - TODO</title>
+
+  <articleinfo>
+    <mediaobject>
+      <imageobject>
+        <imagedata fileref="media/logoCLectureV1.jpg"></imagedata>
+      </imageobject>
+    </mediaobject>
+
+    <abstract>
+      <para>XML aggregation portlet. Use French word “Lecture” in his
+      name.</para>
+    </abstract>
+
+    <author>
+      <firstname>Bourges</firstname>
+
+      <surname>Raymond - Bouteille Gwenaëlle</surname>
+
+      <affiliation>
+        <orgname><ulink url="http://www.univ-rennes1.fr">University of Rennes
+        1</ulink></orgname>
+      </affiliation>
+    </author>
+  </articleinfo>
+
+  <section>
+    <title>TODOS PRIORITAIRE (classé par ordre de priorité)</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>memorisation l''objet sélectionné dans la fenetre de
+        droite</para>
+      </listitem>
+
+      <listitem>
+        <para>reordonner_categories dans un context</para>
+      </listitem>
+
+      <listitem>
+        <para>reordonner_sources dans une category</para>
+      </listitem>
+
+      <listitem>
+        <para>préabonné des cat</para>
+      </listitem>
+
+      <listitem>
+        <para>préabonné des sources</para>
+      </listitem>
+
+      <listitem>
+        <para>url variables</para>
+      </listitem>
+
+      <listitem>
+        <para>abonnement categories</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>FONCTIONNALITE</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>internationnalisation</para>
+      </listitem>
+
+      <listitem>
+        <para>rafraichir_config_canal</para>
+      </listitem>
+
+      <listitem>
+        <para>existance nom de groupe, nom d''attribut : vis a vis de la
+        déclaration dans le portlet.xml</para>
+
+        <para>(à faire qd on aura fait la déclaration) est-ce possible ou non
+        de le faire ?</para>
+      </listitem>
+
+      <listitem>
+        <para>tri initial des categories et sources controlés par l''ordre
+        dans le fichier de config</para>
+      </listitem>
+
+      <listitem>
+        <para>acces CAS sur les sources et catégories</para>
+      </listitem>
+
+      <listitem>
+        <para>deplacer_categorie, affichage ordonné des categories</para>
+      </listitem>
+
+      <listitem>
+        <para>deplacer_source, $affichage ordonné des source</para>
+      </listitem>
+
+      <listitem>
+        <para>gestion des personnals</para>
+      </listitem>
+
+      <listitem>
+        <para>prevoir la conservation en base des customEltDied<itemizedlist>
+            <listitem>
+              <para>recherche en base avant la creation d''un nouveau
+              custom</para>
+            </listitem>
+
+            <listitem>
+              <para>couper les référence mais pas de delete en base</para>
+            </listitem>
+
+            <listitem>
+              <para>faire tourner un demon pour supprimer les vieux
+              custom</para>
+            </listitem>
+
+            <listitem>
+              <para>mettre la date de création / died en base</para>
+            </listitem>
+
+            <listitem>
+              <para>dans la config :</para>
+
+              <para>&lt;autoDelCustom&gt;yes =&gt; effacer le custom +
+              log.error no =&gt; log.error (outils admin dispo pour effacer
+              les custom de id ID)</para>
+            </listitem>
+          </itemizedlist></para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
+    <title>REFACTORING</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>externalisation</para>
+      </listitem>
+
+      <listitem>
+        <para>mettre la lecture du fichier de config dans un dao</para>
+      </listitem>
+
+      <listitem>
+        <para>optimiser l''évaluation des visibilités des catégories</para>
+      </listitem>
+
+      <listitem>
+        <para>optimiser l''évaluation des visibilités des sources</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+</article>
