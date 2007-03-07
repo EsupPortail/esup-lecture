@@ -71,7 +71,6 @@ public class FreshManagedCategoryThread extends Thread {
 	 */
 	@SuppressWarnings("unchecked")
 	private synchronized ManagedCategory getFreshManagedCategory(ManagedCategoryProfile profile) throws XMLParseException {
-		//TODO (RB) refactoring of exceptions
 		if (log.isDebugEnabled()) {
 			log.debug("in getFreshManagedCategory");
 		}

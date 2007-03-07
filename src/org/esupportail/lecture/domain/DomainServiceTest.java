@@ -150,7 +150,7 @@ public class DomainServiceTest implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
 	public void marckItemReadMode(String uid, String itemId, String sourceId, boolean isRead) {
-		// TODO Auto-generated method stub
+		// nothing
 
 	}
 
@@ -167,24 +167,21 @@ public class DomainServiceTest implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(java.lang.String, java.lang.String, int)
 	 */
 	public void setTreeSize(String uid, String contextId, int size) {
-		// TODO Auto-generated method stub
-		
+		// nothing	
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#foldCategory(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void foldCategory(String uid, String cxtId, String catId) {
-		// TODO Auto-generated method stub
-		
+		// nothing
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#unfoldCategory(java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void unfoldCategory(String uid, String cxtId, String catId) {
-		// TODO Auto-generated method stub
-		
+		// nothing
 	}
 
 	/**
@@ -194,9 +191,7 @@ public class DomainServiceTest implements DomainService {
 		throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, 
 		CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, 
 		InternalDomainException {
-		
-		// TODO Auto-generated method stub
-		
+		// nothing
 	}
 	
 	/**
@@ -205,24 +200,21 @@ public class DomainServiceTest implements DomainService {
 	 * @param sourceId
 	 */
 	public void unsubscribeToSource(String uid, String categorieId, String sourceId) {
-		// TODO Auto-generated method stub
-		
+		// nothing
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToSource(java.lang.String, java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public void unsubscribeToSource(String uid, String categorieId, String sourceId, ExternalService ex) {
-		// TODO Auto-generated method stub
-			
+		// nothing
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#markItemDisplayMode(java.lang.String, java.lang.String, org.esupportail.lecture.domain.model.ItemDisplayMode)
 	 */
 	public void markItemDisplayMode(String uid, String sourceId, ItemDisplayMode mode) throws InternalDomainException {
-		// TODO Auto-generated method stub
-				
+		// nothing
 	}
 
 		

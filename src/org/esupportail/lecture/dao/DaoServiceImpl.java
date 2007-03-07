@@ -47,7 +47,7 @@ public class DaoServiceImpl implements DaoService {
 	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile,
 			String ptCas) {
-		// TODO Auto-generated method stub
+		// TODO (RB) manage category and CAS
 		return null;
 	}
 
@@ -63,7 +63,7 @@ public class DaoServiceImpl implements DaoService {
 	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile, java.lang.String)
 	 */
 	public Source getSource(ManagedSourceProfile profile, String ptCas) {
-		// TODO Auto-generated method stub
+		// TODO (RB) manage source abd CAS
 		return null;
 	}
 

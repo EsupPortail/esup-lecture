@@ -320,16 +320,14 @@ public class DomainTest {
 		categoryIds.add("cp1");
 		categoryIds.add("cp2");
 		for(String catId : categoryIds){
-		System.out.println(" **** cat "+catId+" **********");
-		List<SourceBean> sources = facadeService.getAvailableSources(userId, catId);
-		for(SourceBean so : sources){
-			System.out.println("  **** source ****");
-			System.out.println(so.toString());
-			sourceId = so.getId();
+			System.out.println(" **** cat "+catId+" **********");
+			List<SourceBean> sources = facadeService.getAvailableSources(userId, catId);
+			for(SourceBean so : sources){
+				System.out.println("  **** source ****");
+				System.out.println(so.toString());
+				sourceId = so.getId();
+			}
 		}
-	}
-		// TODO Auto-generated method stub
-		
 	}
 
 

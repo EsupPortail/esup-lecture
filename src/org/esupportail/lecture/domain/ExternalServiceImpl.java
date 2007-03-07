@@ -113,7 +113,6 @@ public class ExternalServiceImpl implements ExternalService {
 	    if (log.isDebugEnabled()) {
 			log.debug("getUserProxyTicketCAS() - not yet implemented");
 		}
-		// TODO Auto-generated method stub
 		return null;
 	}
 

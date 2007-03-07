@@ -36,7 +36,7 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	 * @see org.esupportail.commons.services.application.VersionningService#checkVersion(boolean, boolean)
 	 */
 	public void checkVersion(boolean throwException, boolean printLatestVersion) throws ConfigException {
-		// TODO Auto-generated method stub
+		// nothing
 	}
 
 	/**

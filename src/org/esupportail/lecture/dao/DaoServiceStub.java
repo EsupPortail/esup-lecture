@@ -63,7 +63,6 @@ public class DaoServiceStub  implements DaoService {
 	}
 	
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile, String ptCas) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -72,7 +71,6 @@ public class DaoServiceStub  implements DaoService {
 	}
 
 	public Source getSource(ManagedSourceProfile profile, String ptCas) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

@@ -118,7 +118,6 @@ public class DaoServiceRemoteXML {
 	 */
 	@SuppressWarnings("unchecked")
 	private ManagedCategory getFreshManagedCategory(ManagedCategoryProfile profile) throws TimeoutException {
-		//TODO (RB) refactoring of exceptions
 		if (log.isDebugEnabled()) {
 			log.debug("in getFreshManagedCategory");
 		}
@@ -202,7 +201,6 @@ public class DaoServiceRemoteXML {
 	 * @throws TimeoutException 
 	 */
 	private Source getFreshSource(SourceProfile sourceProfile) throws TimeoutException {
-		//TODO (RB) refactoring of exceptions
 		if (log.isDebugEnabled()) {
 			log.debug("in getFreshSource");
 		}
