@@ -131,13 +131,15 @@ public class DaoServiceRemoteXML {
 			thread.join(timeOut);
 			Exception e = thread.getException();
 			if (e != null) {
-//				TODO (RB) --> throw new Exception(msg,e);
+				String msg = "Error during execution of Thread getting Category";
+				log.error(msg);
+				throw new RuntimeException(msg,e);
 			}
 			ret = thread.getManagedCategory();
 		} catch (InterruptedException e) {
-			String msg = "Thread interrupted";
-			log.warn(msg);
-			//TODO (RB) --> throw new Exception(msg,e);
+			String msg = "Thread getting Category interrupted";
+			log.error(msg);
+			throw new RuntimeException(msg,e);
 		}
         if (thread.isAlive()) {
     		thread.interrupt();
@@ -218,13 +220,15 @@ public class DaoServiceRemoteXML {
 			thread.join(timeOut);
 			Exception e = thread.getException();
 			if (e != null) {
-//				TODO (RB) --> throw new Exception(msg,e);
+				String msg = "Error during execution of Thread getting Source";
+				log.error(msg);
+				throw new RuntimeException(msg,e);
 			}			
 			ret = thread.getSource();
 		} catch (InterruptedException e) {
-			String msg = "Thread interrupted";
+			String msg = "Thread getting Source interrupted";
 			log.warn(msg);
-			//TODO (RB) --> throw new Exception(msg,e);
+			throw new RuntimeException(msg,e);
 		}
         if (thread.isAlive()) {
     		thread.interrupt();

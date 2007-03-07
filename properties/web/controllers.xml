@@ -68,16 +68,8 @@
 				interface Resettable.
 			</description>
 			<list>
-			<!-- 
-				<value>sessionController</value>
-				<value>administratorsController</value>
-				<value>departmentsController</value>
-				<value>thingsController</value>
-				<value>filesController</value>
-				<value>preferencesController</value>
-				<value>welcomeController</value>
-				<value>ldapSearchController</value>
-			 -->
+				<value>homeController</value>
+				<value>editController</value>
 			</list>
 		</property>
 	</bean>

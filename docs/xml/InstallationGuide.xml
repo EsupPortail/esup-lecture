@@ -318,7 +318,8 @@
    urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo1.xml"
    trustCategory="no"
    access="public"
-   ttl = "3600" &gt; 
+   ttl = "3600" 
+   timeout = "3000"&gt; 
    &lt;visibility&gt; ... &lt;/visibility&gt;
 &lt;/categoryProfile&gt;</programlisting>Here are defined category profile
             <emphasis>id</emphasis>, <emphasis>name</emphasis>, and</para>
@@ -347,8 +348,13 @@
                 </listitem>
 
                 <listitem>
-                  <para><emphasis>ttl</emphasis> (second) : time to live of
+                  <para><emphasis>ttl</emphasis> (seconds) : time to live of
                   the remote category and its sources</para>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>timeout</emphasis> (milliseconds) : time
+                  trying to get the category</para>
                 </listitem>
 
                 <listitem>
@@ -483,6 +489,12 @@
                 <listitem>
                   <para><emphasis>url</emphasis> : url to get xml stream of
                   the source</para>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>timeout</emphasis> (milliseconds) : Time
+                  trying to get the source. Parent category timeout is used is
+                  it is not defined here</para>
                 </listitem>
 
                 <listitem>

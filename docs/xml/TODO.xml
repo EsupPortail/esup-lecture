@@ -33,7 +33,7 @@
 
     <itemizedlist>
       <listitem>
-        <para>memorisation l''objet sélectionné dans la fenetre de
+        <para>mémorisation l''objet sélectionné dans la fenetre de
         droite</para>
       </listitem>
 
@@ -54,7 +54,7 @@
       </listitem>
 
       <listitem>
-        <para>url variables</para>
+        <para>url variables (pour les sources)</para>
       </listitem>
 
       <listitem>
@@ -67,6 +67,10 @@
     <title>FONCTIONNALITE</title>
 
     <itemizedlist>
+      <listitem>
+        <para>url variables (pour les catégories)</para>
+      </listitem>
+
       <listitem>
         <para>internationnalisation</para>
       </listitem>

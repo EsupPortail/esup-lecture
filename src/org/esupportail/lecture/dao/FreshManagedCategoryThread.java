@@ -95,8 +95,6 @@ public class FreshManagedCategoryThread extends Thread {
 				sp.setFileId(srcProfile.valueOf("@id"));
 				sp.setName(srcProfile.valueOf("@name"));
 				sp.setSourceURL(srcProfile.valueOf("@url"));
-				
-				// TODO (RB <-- GB) ce sont mes tests pour gestion des attributs xml IMPLIED : à retirer quand tu veux 
 				String timeout = srcProfile.valueOf("@timeout");
 				if (timeout!=""){					
 					sp.setTimeOut(Integer.parseInt(timeout));
@@ -104,19 +102,10 @@ public class FreshManagedCategoryThread extends Thread {
 						log.trace("1 getFreshManagedCategory : first vcalue of timeout (string) : "+timeout);
 						log.trace("2 getFreshManagedCategory : value of timeout in xml :"+srcProfile.valueOf("@timeout"));
 						log.trace("3 getFreshManagedCategory : value of timeout in Integer :"+Integer.parseInt(srcProfile.valueOf("@timeout")));
-						
 					}
 				}else {
 					log.trace("4 getFreshManagedCategory : timeout (string) is empty");
 				}
-				
-				
-				
-				
-				//sp.setTimeOut(Integer.parseInt(srcProfile.valueOf("@timeout")));
-				
-				
-						
 				String specificUserContentValue = srcProfile.valueOf("@specificUserContent");
 				if (specificUserContentValue.equals("yes")) {
 					sp.setSpecificUserContent(true);
@@ -124,6 +113,7 @@ public class FreshManagedCategoryThread extends Thread {
 				else {
 					sp.setSpecificUserContent(false);
 				}
+				//TODO (RB) change xslt attributes here when this feature will be suported in sourceprofile
 				sp.setXsltURL(srcProfile.valueOf("@xsltFile"));
 				sp.setItemXPath(srcProfile.valueOf("@itemXPath"));
 				String access = srcProfile.valueOf("@access");

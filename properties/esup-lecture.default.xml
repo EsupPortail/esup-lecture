@@ -62,7 +62,8 @@ Pour plus d'informations voir le
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" >
+		ttl = "3600"
+		timeout = "3000" >
 		<visibility>
 	 	<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
@@ -81,7 +82,8 @@ Pour plus d'informations voir le
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" >
+		ttl = "3600"
+		timeout = "3000">
 	 	<visibility>
 	 	<!-- allowed and autoSubscribed not yet supported -->
 	 		<allowed/>
@@ -94,12 +96,13 @@ Pour plus d'informations voir le
 	</categoryProfile>
 	
 	<categoryProfile 
-		name="categorie3 : trust cat"
+		name="categorie3 : no trust cat"
 		id="cp3"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" >
+		ttl = "3600"
+		timeout = "3000"  >
 		<visibility>
 	 	<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/> 
@@ -112,19 +115,20 @@ Pour plus d'informations voir le
 		</visibility>
 	</categoryProfile>
 	<categoryProfile 
-		name="categorie4  : trust cat"
+		name="categorie4  : no trust cat"
 		id="cp4"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" > 
+		ttl = "3600"
+		timeout = "3000"  > 
 		<visibility>
 		<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
 				<group
-					name="local.10"/>
+					name="local.0"/>
 			</obliged>	
 		</visibility>
 	</categoryProfile>
@@ -134,14 +138,15 @@ Pour plus d'informations voir le
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="yes"
 		access="public"
-		ttl = "3600" > 
+		ttl = "3600"
+		timeout = "3000"  > 
 		<visibility>
 		<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
 				<group
-					name="local.10"/>
+					name="local.0"/>
 			</obliged>	
 		</visibility>
 	</categoryProfile>
@@ -152,7 +157,8 @@ Pour plus d'informations voir le
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo1.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" > 
+		ttl = "3600" 
+		timeout = "3000" > 
 		<visibility>
 			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
@@ -170,7 +176,8 @@ Pour plus d'informations voir le
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo2.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" > 
+		ttl = "3600" 
+		timeout = "3000" > 
 		<visibility>
 			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
@@ -188,7 +195,8 @@ Pour plus d'informations voir le
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo3.xml"
 		trustCategory="yes"
 		access="public"
-		ttl = "3600" > 
+		ttl = "3600"
+		timeout = "3000"  > 
 		<visibility>
 			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
@@ -206,7 +214,8 @@ Pour plus d'informations voir le
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo4.xml"
 		trustCategory="yes"
 		access="public"
-		ttl = "3600" > 
+		ttl = "3600"
+		timeout = "3000"  > 
 		<visibility>
 			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>

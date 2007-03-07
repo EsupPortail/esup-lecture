@@ -442,4 +442,16 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 		}
 	}
 
+	/**
+	 * @see org.esupportail.lecture.web.controllers.AbstractDomainAwareBean#reset()
+	 */
+	@Override
+	public void reset() {
+		if (log.isDebugEnabled()) log.debug("reset the controller");
+		if (virtualSession != null) {
+			String contextName = getContextName();
+			virtualSession.remove(contextName);
+		}
+	}
+
 }

@@ -70,11 +70,11 @@ public class DomainTools {
 	 *************************** METHODS ******************************** */	
 
 	/**
-	 *
+	 * replace user attibute in a String. Example a user with name "Toto" and age "25" 
+	 * if param="{name} is  {age} years old" then return value is "Toto is 25 years old" 
 	 * @param value - string where we try to find user attribute to replace
 	 * @return value with {attribute} replaced by this attribute according to current connected user
 	 */
-	// TODO (RB <-- GB) Peux tu compléter la javadoc ?
 	public static String replaceWithUserAttributes(String value) {
 		if (log.isDebugEnabled()){
 			log.debug("replaceWithUserAttributes("+value+")");

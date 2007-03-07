@@ -11,10 +11,8 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.FacadeService;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
@@ -254,13 +252,6 @@ public class HomeController extends twoPanesController {
 	 */
 	public void setItem(ItemWebBean item) {
 		this.item = item;
-	}
-
-	/**
-	 * @see org.esupportail.commons.web.controllers.Resettable#reset()
-	 */
-	public void reset() {
-		// TODO Auto-generated method stub
 	}
 
 	/**

@@ -62,7 +62,8 @@ Pour plus d'informations voir le
 		urlCategory="http://localhost:8080/data/categoryTest.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" >
+		ttl = "3600"
+		timeout = "3000" >
 		<visibility>
 	 	<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
@@ -81,7 +82,8 @@ Pour plus d'informations voir le
 		urlCategory="http://localhost:8080/data/categoryTest.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" >
+		ttl = "3600"
+		timeout = "3000">
 	 	<visibility>
 	 	<!-- allowed and autoSubscribed not yet supported -->
 	 		<allowed/>
@@ -99,7 +101,8 @@ Pour plus d'informations voir le
 		urlCategory="http://localhost:8080/data/categoryTest.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" >
+		ttl = "3600"
+		timeout = "3000"  >
 		<visibility>
 	 	<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/> 
@@ -117,7 +120,8 @@ Pour plus d'informations voir le
 		urlCategory="http://localhost:8080/data/categoryTest.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" > 
+		ttl = "3600"
+		timeout = "3000"  > 
 		<visibility>
 		<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
@@ -134,7 +138,8 @@ Pour plus d'informations voir le
 		urlCategory="http://localhost:8080/data/categoryTest.xml"
 		trustCategory="yes"
 		access="public"
-		ttl = "3600" > 
+		ttl = "3600"
+		timeout = "3000"  > 
 		<visibility>
 		<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
@@ -152,7 +157,8 @@ Pour plus d'informations voir le
 		urlCategory="file:///d:/tmp/conf_lecture_gwe_ray/demo1.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" > 
+		ttl = "3600" 
+		timeout = "3000" > 
 		<visibility>
 			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
@@ -170,7 +176,8 @@ Pour plus d'informations voir le
 		urlCategory="http://localhost:8080/data/demo2.xml"
 		trustCategory="yes"
 		access="public"
-		ttl = "3600" > 
+		ttl = "3600" 
+		timeout = "3000" > 
 		<visibility>
 			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
@@ -188,7 +195,8 @@ Pour plus d'informations voir le
 		urlCategory="http://localhost:8080/data/demo3.xml"
 		trustCategory="yes"
 		access="public"
-		ttl = "3600" > 
+		ttl = "3600"
+		timeout = "3000"  > 
 		<visibility>
 			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
@@ -206,7 +214,8 @@ Pour plus d'informations voir le
 		urlCategory="http://localhost:8080/data/demo4.xml"
 		trustCategory="yes"
 		access="public"
-		ttl = "3600" > 
+		ttl = "3600"
+		timeout = "3000"  > 
 		<visibility>
 			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>

@@ -13,6 +13,7 @@ import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
+import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
@@ -34,13 +35,6 @@ public class EditController extends twoPanesController {
 	 * HomeController injected by Spring
 	 */
 	private HomeController homeController;
-	/**
-	 * @see org.esupportail.commons.web.controllers.Resettable#reset()
-	 */
-	public void reset() {
-		// TODO Auto-generated method stub
-	}
-
 	/**
 	 * JSF action : select a category or a source from the tree, use categoryID and sourceID valued by t:updateActionListener
 	 * @return JSF from-outcome
@@ -73,7 +67,7 @@ public class EditController extends twoPanesController {
 				type = AvailabilityMode.NOTSUBSCRIBED;
 			}
 		} catch (DomainServiceException e) {
-			// TODO (RB <-- GB) à traiter
+			throw new WebException("Error in toogleSourceSubcribtion",e);
 		}
 		if (type != null) {
 			src.setType(type);
