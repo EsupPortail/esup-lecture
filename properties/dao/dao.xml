@@ -13,6 +13,36 @@
 		This file is referenced by /properties/applicationContext.xml.
 	-->
 
+	<!-- Database manager store -->
+
+	<bean 
+		id="databaseManagerStore" 
+		class="org.esupportail.commons.services.database.BasicDatabaseManagerStoreImpl"
+		>
+		<description>
+			This bean is the sore of database managers.
+		</description>
+		<property name="databaseManagers">
+			<list>
+				<ref bean="databaseManager" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- Database managers -->
+
+	<bean 
+		id="databaseManager" 
+		class="org.esupportail.commons.services.database.hibernate.UpdatableHibernateDatabaseManagerImpl"
+		>
+		<description>
+			This bean is the database manager.
+		</description>
+		<property name="sessionFactoryBeanName" value="sessionFactory" />
+		<property name="createSessionFactoryBeanName" value="createSessionFactory" />
+		<property name="updateSessionFactoryBeanName" value="updateSessionFactory" />
+	</bean>
+
 	<!-- Session factories -->
 	<bean 
 		id="abstractHibernateSessionFactory" 
@@ -69,7 +99,7 @@
 	</bean>
 
 	<bean 
-		id="hibernateCreateSessionFactory"
+		id="createSessionFactory"
 		parent="abstractHibernateSessionFactory"
 		lazy-init="true"
 		>
@@ -86,7 +116,7 @@
 	</bean>
 
 	<bean 
-		id="hibernateUpdateSessionFactory"
+		id="updateSessionFactory"
 		parent="abstractHibernateSessionFactory"
 		lazy-init="true"
 		>
@@ -101,6 +131,7 @@
 			</props>
 		</property>
 	</bean>
+	
 	<!-- end of the session factories -->
 	<bean 
 		id="hibernateSessionFactoryContainer" 

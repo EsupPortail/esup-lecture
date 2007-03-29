@@ -8,9 +8,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.web.controllers.AbstractDomainAwareBean;
-import org.esupportail.commons.dao.HibernateUtils;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.application.VersionningService;
+import org.esupportail.commons.services.database.DatabaseUtils;
 
 /**
  * A bean for versionning management.
@@ -27,9 +27,9 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	 */
 	public void initDatabase() {
 		log.info("init database !");
-		HibernateUtils.create();
+		DatabaseUtils.create();
 		getDomainService().getConnectedUser("foo");
-		HibernateUtils.close(false);
+		DatabaseUtils.close(false);
 	}
 
 	/**
@@ -44,8 +44,8 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	 */
 	public void upgradeDatabase() {
 		log.info("update database !");
-		HibernateUtils.create();
+		DatabaseUtils.create();
 		getDomainService().getConnectedUser("foo");
-		HibernateUtils.close(false);		
+		DatabaseUtils.close(false);		
 	}
 }
