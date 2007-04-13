@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
-<!DOCTYPE channelConfig[
-<!ENTITY % lecture SYSTEM "esup-lecture.dtd" >
-%lecture;
-<!ENTITY repConf "file:///d:/tmp/conf_lecture_gwe_ray/" >
-]>
-<!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" >
- -->
 <!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" [
 <!ENTITY repConf "file:///d:/tmp/conf_lecture_gwe_ray/" >
 ]>
@@ -27,7 +19,7 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 	</context>
 
 	<categoryProfile name="Les liens utiles au CRI" id="liens"
-		urlCategory="&repConf;demo1.xml"
+		urlCategory="&repConf;liens.xml"
 		trustCategory="no" access="public" ttl="3600" timeout="3000">
 		<visibility>
 			<allowed />
@@ -40,7 +32,7 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 	</categoryProfile>
 
 	<categoryProfile name="Les rss utiles au CRI" id="rss"
-		urlCategory="&repConf;demo2.xml"
+		urlCategory="&repConf;rss.xml"
 		trustCategory="no" access="public" ttl="3600" timeout="3000">
 		<visibility>
 			<allowed />

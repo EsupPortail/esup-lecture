@@ -63,7 +63,7 @@
     		see above.
     	</description>
         <property name="address" value="Raymond.Bourges@univ-rennes1.fr" />
-        <property name="personal" value="My Name" />
+        <property name="personal" value="Raymond" />
     </bean>
     
     <bean 

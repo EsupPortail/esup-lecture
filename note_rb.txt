@@ -1,7 +1,0 @@
-esup-lecture specific config file
-ehcache.xml
-domain.xml
-exceptionHandling.xml
-i18n.xml
-ldap.xml
-hibernate.cfg.xml
