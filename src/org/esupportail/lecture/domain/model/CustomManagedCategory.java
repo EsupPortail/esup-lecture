@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -360,8 +361,12 @@ public class CustomManagedCategory extends CustomCategory {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getElementId()+" - removeSubscriptions()");
 		}
-		
+		// TODO (GB <-- RB) chercher ce bug partout ailleurs. Ici : cloner keySet (a cause des ConcurrentModificationException)
+		List<String> sids = new ArrayList<String>();
 		for (String sourceId : subscriptions.keySet()){
+			sids.add(sourceId);
+		}
+		for (String sourceId : sids){
 			removeCustomManagedSourceFromProfile(sourceId);
 		}
 		
