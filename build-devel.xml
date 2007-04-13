@@ -119,24 +119,23 @@
 			<arg value="test-domain"/>
 	    </java>
 	</target>
-	
+
 	<target name="use-default-conf" description="use default ESUP-Lecture configuration files">
 		<antcall target="copy-conf">
 			<param name="conf-type" value="default"/>
 		</antcall>
 	</target>
 	
-	<target name="use-local-conf" description="use ESUP-Lecture configuration files for local data">
+	<target name="use-test-conf" description="use test ESUP-Lecture configuration files">
 		<antcall target="copy-conf">
-			<param name="conf-type" value="local"/>
+			<param name="conf-type" value="test"/>
 		</antcall>
 	</target>
-	
+
 	<target name="copy-conf">
 		<copy file="properties/esup-lecture.${conf-type}.xml" tofile="properties/esup-lecture.xml" overwrite="true" verbose="true"/>
 		<copy file="properties/mappings.${conf-type}.xml" tofile="properties/mappings.xml" overwrite="true" verbose="true"/>
 	</target>
-
 	
 </project>
 

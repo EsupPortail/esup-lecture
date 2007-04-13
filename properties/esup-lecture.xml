@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" >
+<!-- 
+<!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" [
+<!ENTITY repConf "file:///d:/path/" >
+]>
+ -->
 <channelConfig>
 	<!-- user attribute to define a user Id -->
 	<userId>username</userId>
@@ -43,7 +48,6 @@ Pour plus d'informations voir le
   	  <refCategoryProfile refId="demo2"/>
   	  <refCategoryProfile refId="demo3"/>
   	  <refCategoryProfile refId="demo4"/>
-  	  <refCategoryProfile refId="monde"/>
 	</context>
 
 	<context 
@@ -60,7 +64,7 @@ Pour plus d'informations voir le
 		name="categorie1 : no trust cat"
 		
 		id="cp1"
-		urlCategory="http://localhost:8080/data/categoryTest.xml"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
@@ -80,7 +84,7 @@ Pour plus d'informations voir le
 		name="categorie2 : no trust cat"
 		
 		id="cp2"
-		urlCategory="http://localhost:8080/data/categoryTest.xml"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
@@ -97,9 +101,9 @@ Pour plus d'informations voir le
 	</categoryProfile>
 	
 	<categoryProfile 
-		name="categorie3 : trust cat"
+		name="categorie3 : no trust cat"
 		id="cp3"
-		urlCategory="http://localhost:8080/data/categoryTest.xml"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
@@ -116,9 +120,9 @@ Pour plus d'informations voir le
 		</visibility>
 	</categoryProfile>
 	<categoryProfile 
-		name="categorie4  : trust cat"
+		name="categorie4  : no trust cat"
 		id="cp4"
-		urlCategory="http://localhost:8080/data/categoryTest.xml"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
@@ -129,14 +133,14 @@ Pour plus d'informations voir le
 			<autoSubscribed/>
 			<obliged>	
 				<group
-					name="local.10"/>
+					name="local.0"/>
 			</obliged>	
 		</visibility>
 	</categoryProfile>
 	<categoryProfile 
 		name="categorie5  : trust cat"
 		id="cp5"
-		urlCategory="http://localhost:8080/data/categoryTest.xml"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
@@ -147,7 +151,7 @@ Pour plus d'informations voir le
 			<autoSubscribed/>
 			<obliged>	
 				<group
-					name="local.10"/>
+					name="local.0"/>
 			</obliged>	
 		</visibility>
 	</categoryProfile>
@@ -155,7 +159,7 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="Categorie de démo 1"
 		id="demo1"
-		urlCategory="file:///d:/tmp/conf_lecture_gwe_ray/demo1.xml"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo1.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" 
@@ -174,8 +178,8 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="Categorie de démo 2"
 		id="demo2"
-		urlCategory="http://localhost:8080/data/demo2.xml"
-		trustCategory="yes"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo2.xml"
+		trustCategory="no"
 		access="public"
 		ttl = "3600" 
 		timeout = "3000" > 
@@ -193,7 +197,7 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="Categorie de démo 3"
 		id="demo3"
-		urlCategory="http://localhost:8080/data/demo3.xml"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo3.xml"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
@@ -212,27 +216,8 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="Categorie de démo 4"
 		id="demo4"
-		urlCategory="http://localhost:8080/data/demo4.xml"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo4.xml"
 		trustCategory="yes"
-		access="public"
-		ttl = "3600"
-		timeout = "3000"  > 
-		<visibility>
-			<!-- allowed and autoSubscribed not yet supported -->
-			<allowed/>
-			<autoSubscribed/>
-			<obliged>	
-				<group
-					name="local.0"/>
-			</obliged>	
-		</visibility>
-	</categoryProfile>
-		
-	<categoryProfile 
-		name="Le Monde"
-		id="monde"
-		urlCategory="http://localhost:8080/data/monde.xml"
-		trustCategory="no"
 		access="public"
 		ttl = "3600"
 		timeout = "3000"  > 

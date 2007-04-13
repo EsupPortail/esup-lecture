@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+<!DOCTYPE channelConfig[
+<!ENTITY % lecture SYSTEM "esup-lecture.dtd" >
+%lecture;
+<!ENTITY repConf "file:///d:/tmp/conf_lecture_gwe_ray/" >
+]>
+<!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" >
+ -->
+<!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" [
+<!ENTITY repConf "file:///d:/tmp/conf_lecture_gwe_ray/" >
+]>
+<channelConfig>
+
+	<!-- user attribute to define a user Id -->
+	<userId>username</userId>
+
+	<context name="CRI" id="default">
+		<description>
+			<![CDATA[
+<h1>Portlet Lecture du CRI</h1>
+Version de test. Merci de signaler tout problème à <a title="Envoyer un mail à raymond.bourges@univ-rennes1.fr" href="mailto:raymond.bourges@univ-rennes1.fr">raymond.bourges@univ-rennes1.fr</a>
+]]>
+		</description>
+		<refCategoryProfile refId="liens" />
+		<refCategoryProfile refId="rss" />
+	</context>
+
+	<categoryProfile name="Les liens utiles au CRI" id="liens"
+		urlCategory="&repConf;demo1.xml"
+		trustCategory="no" access="public" ttl="3600" timeout="3000">
+		<visibility>
+			<allowed />
+			<autoSubscribed />
+			<obliged>
+				<regular attribute="username" value="admin"/>
+				<group name="pags.PERS_957" />
+			</obliged>
+		</visibility>
+	</categoryProfile>
+
+	<categoryProfile name="Les rss utiles au CRI" id="rss"
+		urlCategory="&repConf;demo2.xml"
+		trustCategory="no" access="public" ttl="3600" timeout="3000">
+		<visibility>
+			<allowed />
+			<autoSubscribed />
+			<obliged>
+				<regular attribute="username" value="admin"/>
+				<group name="pags.PERS_957" />
+			</obliged>
+		</visibility>
+	</categoryProfile>
+
+</channelConfig>
