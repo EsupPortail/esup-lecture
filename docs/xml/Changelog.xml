@@ -29,6 +29,22 @@
   </articleinfo>
 
   <section>
+    <title>Version 0.7.2</title>
+
+    <para><itemizedlist>
+        <listitem>
+          <para>***** Change in database management - dao.xml (used of
+          esup-commons 0.13)</para>
+        </listitem>
+
+        <listitem>
+          <para>***** New timeout parameter in esup-lecture.dtd and
+          category.dtd</para>
+        </listitem>
+      </itemizedlist></para>
+  </section>
+
+  <section>
     <title>Version 0.7.1</title>
 
     <itemizedlist>
