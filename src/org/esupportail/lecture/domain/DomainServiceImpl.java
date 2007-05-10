@@ -10,6 +10,8 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.exceptions.ConfigException;
+import org.esupportail.commons.services.application.Version;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.CategoryDummyBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
@@ -26,6 +28,7 @@ import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.ProfileAvailability;
 import org.esupportail.lecture.domain.model.UserProfile;
+import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
@@ -47,6 +50,7 @@ import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
 import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.util.Assert;
 
 /**
@@ -605,6 +609,53 @@ public class DomainServiceImpl implements DomainService {
 	}
 
 
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getDatabaseVersion()
+	 */
+	public Version getDatabaseVersion() throws ConfigException {
+		VersionManager versionManager = getVersionManager();
+		if (versionManager == null) {
+			return null;
+		}
+		return new Version(versionManager.getVersion());
+	}
+
+	/**
+	 * @return the first (and only) VersionManager instance of the database.
+	 * @throws ConfigException 
+	 */
+	private VersionManager getVersionManager() throws ConfigException {
+		List<VersionManager> versionManagers = null;
+		try {
+			versionManagers = DomainTools.getDaoService().getVersionManagers();
+		} catch (BadSqlGrammarException e) {
+			throw new ConfigException("your database is not initialized, please run 'ant init'", e);
+		}
+		if (versionManagers.isEmpty()) {
+			return null;
+		}
+		return versionManagers.get(0);
+	}
 
 
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#setDatabaseVersion(java.lang.String)
+	 */
+	public void setDatabaseVersion(String version) {
+		if (log.isDebugEnabled()) {
+			log.debug("setting database version to '" + version + "'...");
+		}
+		VersionManager versionManager = getVersionManager();
+		if (versionManager == null) {
+			versionManager = new VersionManager();
+			versionManager.setVersion(version);
+			DomainTools.getDaoService().addVersionManager(versionManager);
+		} else {
+			versionManager.setVersion(version);
+			DomainTools.getDaoService().updateVersionManager(versionManager);
+		}
+		if (log.isDebugEnabled()) {
+			log.debug("database version set to '" + version + "'.");
+		}
+	}
 }

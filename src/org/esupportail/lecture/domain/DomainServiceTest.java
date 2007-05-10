@@ -7,6 +7,8 @@ package org.esupportail.lecture.domain;
 
 import java.util.List;
 
+import org.esupportail.commons.exceptions.ConfigException;
+import org.esupportail.commons.services.application.Version;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
@@ -215,6 +217,22 @@ public class DomainServiceTest implements DomainService {
 	 */
 	public void markItemDisplayMode(String uid, String sourceId, ItemDisplayMode mode) throws InternalDomainException {
 		// nothing
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getDatabaseVersion()
+	 */
+	public Version getDatabaseVersion() throws ConfigException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#setDatabaseVersion(java.lang.String)
+	 */
+	public void setDatabaseVersion(String version) {
+		// TODO Auto-generated method stub
+		
 	}
 
 		

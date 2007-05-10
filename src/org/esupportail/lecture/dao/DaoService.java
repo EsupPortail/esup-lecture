@@ -1,4 +1,6 @@
 package org.esupportail.lecture.dao;
+import java.util.List;
+
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
@@ -7,6 +9,7 @@ import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
+import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 
 /**
@@ -129,5 +132,21 @@ public interface DaoService {
 	 */
 	public void updateCustomSource(CustomSource source);
 
+	/**
+	 * @return all the VersionManager instances of the database.
+	 */
+	List<VersionManager> getVersionManagers();
+
+	/**
+	 * Add a versionManaer.
+	 * @param versionManager
+	 */
+	void addVersionManager(VersionManager versionManager);
+
+	/**
+	 * Update a VersionManager.
+	 * @param versionManager
+	 */
+	void updateVersionManager(VersionManager versionManager);
 		
 }

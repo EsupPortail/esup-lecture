@@ -3,8 +3,11 @@
  */
 package org.esupportail.lecture.dao;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.dao.AbstractHibernateDaoService;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
@@ -13,6 +16,7 @@ import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
+import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 
 /**
@@ -45,7 +49,9 @@ public class DaoServiceImpl implements DaoService {
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile, java.lang.String)
 	 */
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile,
+	public ManagedCategory getManagedCategory(@SuppressWarnings("unused")
+			ManagedCategoryProfile profile,
+			@SuppressWarnings("unused")
 			String ptCas) {
 		// TODO (RB) manage category and CAS
 		return null;
@@ -62,7 +68,8 @@ public class DaoServiceImpl implements DaoService {
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile, java.lang.String)
 	 */
-	public Source getSource(ManagedSourceProfile profile, String ptCas) {
+	public Source getSource(@SuppressWarnings("unused") ManagedSourceProfile profile,
+			@SuppressWarnings("unused") String ptCas) {
 		// TODO (RB) manage source abd CAS
 		return null;
 	}
@@ -160,5 +167,25 @@ public class DaoServiceImpl implements DaoService {
 		this.remoteXMLService = remoteXMLService;
 	}
 
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getVersionManagers()
+	 */
+	public List<VersionManager> getVersionManagers() {
+		return hibernateService.getVersionManagers();
+	}
+
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#addVersionManager(org.esupportail.lecture.domain.model.VersionManager)
+	 */
+	public void addVersionManager(VersionManager versionManager) {
+		hibernateService.addVersionManager(versionManager);
+	}
+
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(org.esupportail.lecture.domain.model.VersionManager)
+	 */
+	public void updateVersionManager(VersionManager versionManager) {
+		hibernateService.updateVersionManager(versionManager);
+	}
 	
 }

@@ -11,7 +11,10 @@ import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.UserProfile;
+import org.esupportail.lecture.domain.model.VersionManager;
 import org.hibernate.LockMode;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -198,4 +201,29 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		} 
 	}
 
+	/**
+	 * @return all the VersionManager instances of the database.
+	 */
+	@SuppressWarnings("unchecked")
+	public List<VersionManager> getVersionManagers() {
+		DetachedCriteria criteria = DetachedCriteria.forClass(VersionManager.class);
+		criteria.addOrder(Order.asc("id"));
+		return getHibernateTemplate().findByCriteria(criteria);
+	}
+
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#addVersionManager(org.esupportail.lecture.domain.model.VersionManager)
+	 */
+	public void addVersionManager(VersionManager versionManager) {
+		getHibernateTemplate().save(versionManager);
+	}
+
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(org.esupportail.lecture.domain.model.VersionManager)
+	 */
+	public void updateVersionManager(VersionManager versionManager) {
+		getHibernateTemplate().save(versionManager);
+	}
+
+	
 }

@@ -33,8 +33,13 @@
 
     <itemizedlist>
       <listitem>
-        <para>mémorisation l''objet sélectionné dans la fenetre de
-        droite</para>
+        <para>persistance en base de données de la taille de la fenêtre de
+        gauche</para>
+      </listitem>
+
+      <listitem>
+        <para>persistance en base de données de l'objet sélectionné dans la
+        fenêtre de droite</para>
       </listitem>
 
       <listitem>
@@ -64,7 +69,7 @@
   </section>
 
   <section>
-    <title>FONCTIONNALITE</title>
+    <title>FONCTIONNALITÉ</title>
 
     <itemizedlist>
       <listitem>
@@ -80,24 +85,24 @@
       </listitem>
 
       <listitem>
-        <para>existance nom de groupe, nom d''attribut : vis a vis de la
+        <para>existence nom de groupe, nom d'attribut : vis a vis de la
         déclaration dans le portlet.xml</para>
 
-        <para>(à faire qd on aura fait la déclaration) est-ce possible ou non
-        de le faire ?</para>
+        <para>(à faire quand on aura fait la déclaration) est-ce possible ou
+        non de le faire ?</para>
       </listitem>
 
       <listitem>
-        <para>tri initial des categories et sources controlés par l''ordre
+        <para>tri initial des catégories et sources contrôlées par l'ordre
         dans le fichier de config</para>
       </listitem>
 
       <listitem>
-        <para>acces CAS sur les sources et catégories</para>
+        <para>accès CAS sur les sources et catégories</para>
       </listitem>
 
       <listitem>
-        <para>deplacer_categorie, affichage ordonné des categories</para>
+        <para>deplacer_categorie, affichage ordonné des catégories</para>
       </listitem>
 
       <listitem>
@@ -109,9 +114,9 @@
       </listitem>
 
       <listitem>
-        <para>prevoir la conservation en base des customEltDied<itemizedlist>
+        <para>prévoir la conservation en base des customEltDied<itemizedlist>
             <listitem>
-              <para>recherche en base avant la creation d''un nouveau
+              <para>recherche en base avant la création d'un nouveau
               custom</para>
             </listitem>
 
@@ -120,7 +125,7 @@
             </listitem>
 
             <listitem>
-              <para>faire tourner un demon pour supprimer les vieux
+              <para>faire tourner un démon pour supprimer les vieux
               custom</para>
             </listitem>
 
@@ -153,11 +158,11 @@
       </listitem>
 
       <listitem>
-        <para>optimiser l''évaluation des visibilités des catégories</para>
+        <para>optimiser l'évaluation des visibilités des catégories</para>
       </listitem>
 
       <listitem>
-        <para>optimiser l''évaluation des visibilités des sources</para>
+        <para>optimiser l'évaluation des visibilités des sources</para>
       </listitem>
     </itemizedlist>
   </section>

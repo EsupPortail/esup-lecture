@@ -7,12 +7,15 @@ package org.esupportail.lecture.domain;
 
 import java.util.List;
 
+import org.esupportail.commons.exceptions.ConfigException;
+import org.esupportail.commons.services.application.Version;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
@@ -195,8 +198,17 @@ public interface DomainService {
 	void unsubscribeToSource(String uid, String categorieId, String sourceId, ExternalService ex) 
 		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
 		InternalDomainException, CategoryProfileNotFoundException, CategoryNotLoadedException, SourceObligedException, CategoryTimeOutException;
-	
-	
-	
+
+	/**
+	 * @return the database version.
+	 * @throws ConfigException when the database is not initialized
+	 */
+	Version getDatabaseVersion() throws ConfigException;
+
+	/**
+	 * Set the database version.
+	 * @param version 
+	 */
+	void setDatabaseVersion(String version);
 
 }

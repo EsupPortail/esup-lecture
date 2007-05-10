@@ -1,6 +1,7 @@
 package org.esupportail.lecture.dao;
 
 import java.util.Hashtable;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,6 +15,7 @@ import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
+import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 /**
  * Stub Service to Data Access Object : use to test upper layers, instead of using 
@@ -177,6 +179,30 @@ public class DaoServiceStub  implements DaoService {
 	 */
 	public DaoServiceRemoteXML getRemoteXMLService() {
 		return remoteXMLService;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getVersionManagers()
+	 */
+	public List<VersionManager> getVersionManagers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#addVersionManager(org.esupportail.lecture.domain.model.VersionManager)
+	 */
+	public void addVersionManager(VersionManager versionManager) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(org.esupportail.lecture.domain.model.VersionManager)
+	 */
+	public void updateVersionManager(VersionManager versionManager) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

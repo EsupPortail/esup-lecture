@@ -25,7 +25,7 @@
 			jdbc:mysql://localhost/test
 		</property>
 		<property name="hibernate.connection.username">root</property>
-		<property name="hibernate.connection.password">admin</property>
+		<property name="hibernate.connection.password"></property>
 		<property name="hibernate.dialect">
 			org.hibernate.dialect.MySQLDialect
 		</property>
