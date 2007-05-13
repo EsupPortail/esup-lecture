@@ -42,7 +42,7 @@ public class CategoryBean {
 	 *************************** INIT ************************************** */	
 			
 	/**
-	 * Default Constructor
+	 * Default Constructor.
 	 */
 	public CategoryBean(){}
 	
