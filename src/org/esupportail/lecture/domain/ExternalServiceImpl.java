@@ -30,24 +30,24 @@ public class ExternalServiceImpl implements ExternalService {
 	 *************************** PROPERTIES ******************************** */	
 
 	/**
-	 * the logger for this class
+	 * the logger for this class.
 	 */
 	protected static final Log log = LogFactory.getLog(ExternalServiceImpl.class);
 
 	/**
-	 * portlet version of ExternalService
+	 * portlet version of ExternalService.
 	 */
 	//TODO (RB) inject by spring (gb : => so no more static)
 	static PortletService portletService = new PortletService();
 
 	/**
-	 * servlet version of ExternalService
+	 * servlet version of ExternalService.
 	 */
 	//TODO (RB) inject by spring (gb : => so no more static)
 	static ServletService servletService = new ServletService();
 	
 	/**
-	 * default version of ExternalService
+	 * default version of ExternalService.
 	 */
 	//TODO (RB) inject by spring (gb : => so no more static)
 	static ServletService defaultService = servletService;
@@ -67,8 +67,7 @@ public class ExternalServiceImpl implements ExternalService {
 		return getUserAttribute(DomainTools.USER_ID);
 	}
 	/**
-	 * 
-	 * Return ID of the current context (from channel instantiation : portlet preference with name "context"))
+	 * Return ID of the current context (from channel instantiation : portlet preference with name "context")).
 	 * @throws InternalExternalException 
 	 * @throws NoExternalValueException 
 	 * @see org.esupportail.lecture.domain.ExternalService#getCurrentContextId()
@@ -82,11 +81,11 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @throws NoExternalValueException 
 	 * @see org.esupportail.lecture.domain.ExternalService#getPreferences(java.lang.String)
 	 */
-	public String getPreferences(String name) throws NoExternalValueException, InternalExternalException {
+	public String getPreferences(final String name) throws NoExternalValueException, InternalExternalException {
 	     String ret = getModeService().getPreference(name);
 	 
 	     if (log.isTraceEnabled()) {
-			log.trace("getPreferences("+name+") return "+ret);
+			log.trace("getPreferences(" + name + ") return " + ret);
 		}
  
         return ret;
@@ -97,11 +96,12 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @throws NoExternalValueException 
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserAttribute(java.lang.String)
 	 */
-	public String getUserAttribute(String attribute) throws NoExternalValueException, InternalExternalException {
+	public String getUserAttribute(final String attribute) 
+		throws NoExternalValueException, InternalExternalException {
 		String ret = getModeService().getUserAttribute(attribute);
 		
 		if (log.isTraceEnabled()) {
-			log.trace("getUserAttribute("+attribute+") return "+ret);
+			log.trace("getUserAttribute(" + attribute + ") return " + ret);
 		}
 		return ret;
 	}
@@ -120,17 +120,18 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @throws InternalExternalException 
 	 * @see org.esupportail.lecture.domain.ExternalService#isUserInGroup(java.lang.String)
 	 */
-	public boolean isUserInGroup(String group) throws InternalExternalException {
+	public boolean isUserInGroup(final String group) throws InternalExternalException {
 	    boolean ret = getModeService().isUserInGroup(group);
 	   
         if (log.isDebugEnabled()) {
-			log.debug("isUserInRole("+group+") return "+ret);
+			log.debug("isUserInRole(" + group + ") return " + ret);
 		}
 		return ret;
 	}
 
 	/**
-	 * Get the current mode service : 
+	 * Get the current mode service.
+	 * It can be : 
 	 * 	- portletService
 	 *  - servletService
 	 *  - defaultService
