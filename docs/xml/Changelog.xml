@@ -29,6 +29,25 @@
   </articleinfo>
 
   <section>
+    <title>Current</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>Added : It uses esup-commons 0.15.2</para>
+      </listitem>
+
+      <listitem>
+        <para>Added : store left tree size in database</para>
+      </listitem>
+
+      <listitem>
+        <para>Fixed : Hibernate message: "reassociated object has dirty
+        collection reference"</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
     <title>Version 0.7.2</title>
 
     <para><itemizedlist>

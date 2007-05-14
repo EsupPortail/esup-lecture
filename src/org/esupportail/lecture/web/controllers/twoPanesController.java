@@ -27,7 +27,9 @@ import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
+import org.esupportail.lecture.exceptions.domain.ExternalServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
@@ -94,14 +96,14 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 */	
 	/**
 	 * JSF action : change treesize.
-	 * @param e JSF ActionEvent used to know which button is used 
+	 * @param actionEvent JSF ActionEvent used to know which button is used 
 	 */
-	public void adjustTreeSize(final ActionEvent e) {
+	public void adjustTreeSize(final ActionEvent actionEvent) {
 		if (log.isDebugEnabled()) {
 			log.debug("In adjustTreeSize");
 		}
 		FacesContext ctx = FacesContext.getCurrentInstance();
-		String id = e.getComponent().getClientId(ctx);
+		String id = actionEvent.getComponent().getClientId(ctx);
 		if (id.equals("home:leftSubview:treeSmallerButton")) {
 			if (treeSize > 10) {
 				treeSize -= 5;
@@ -111,6 +113,13 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 			if (treeSize < 90) {
 				treeSize += 5;
 			}
+		}
+		try {
+			getFacadeService().setTreeSize(getUID(), getContextId(), treeSize);
+		} catch (DomainServiceException e) {
+			throw new WebException("Error in getContext", e);
+		} catch (InternalExternalException e) {
+			throw new WebException("Error in getContext", e);
 		}
 	}
 	
