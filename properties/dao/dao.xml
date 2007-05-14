@@ -33,14 +33,14 @@
 
 	<bean 
 		id="databaseManager" 
-		class="org.esupportail.commons.services.database.hibernate.UpdatableHibernateDatabaseManagerImpl"
+		class="org.esupportail.commons.services.database.hibernate.UpgradableHibernateDatabaseManagerImpl"
 		>
 		<description>
 			This bean is the database manager.
 		</description>
 		<property name="sessionFactoryBeanName" value="sessionFactory" />
 		<property name="createSessionFactoryBeanName" value="createSessionFactory" />
-		<property name="updateSessionFactoryBeanName" value="updateSessionFactory" />
+		<property name="upgradeSessionFactoryBeanName" value="upgradeSessionFactory" />
 	</bean>
 
 	<!-- Session factories -->
@@ -119,7 +119,7 @@
 	</bean>
 
 	<bean 
-		id="updateSessionFactory"
+		id="upgradeSessionFactory"
 		parent="abstractHibernateSessionFactory"
 		lazy-init="true"
 		>

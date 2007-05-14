@@ -80,7 +80,7 @@
 		</property>
 	</bean>
 
-	<bean id="ldapTemplate" class="net.sf.ldaptemplate.LdapTemplate">
+	<bean id="ldapTemplate" class="org.springframework.ldap.LdapTemplate">
 		<description>
 			The LDAP template used to acces the LDAP directory. See
 			http://ldaptemplate.sourceforge.net.
@@ -93,7 +93,7 @@
 	</bean>
 
 	<bean id="contextSource"
-		class="net.sf.ldaptemplate.support.LdapContextSource">
+		class="org.springframework.ldap.support.LdapContextSource">
 		<description>
 			This bean describes the physical acces to the LDAP
 			directory. In the example below, anonymous and unsecured

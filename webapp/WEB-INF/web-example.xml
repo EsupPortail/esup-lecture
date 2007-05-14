@@ -60,55 +60,6 @@
 		</listener-class>
 	</listener>
 
-<!-- 
-	<filter>
-		<description>
-			This filter is in charge of managing the Hibernate sessions.
-		</description>
-		<display-name>OpenSessionInViewFilter</display-name>
-		<filter-name>OpenSessionInViewFilter</filter-name>
-		<filter-class>
-			org.springframework.orm.hibernate3.support.OpenSessionInViewFilter
-		</filter-class>
-		<init-param>
-			<param-name>singleSession</param-name>
-			<param-value>true</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>OpenSessionInViewFilter</filter-name>
-		<servlet-name>Faces Servlet</servlet-name>		
-	</filter-mapping>
- -->
-
-<!-- 
-	<filter>
-		<description>
-			This filter is needed to use some Tomahawk extentions.
-		</description>
-		<display-name>MyFacesExtensionsFilter</display-name>
-		<filter-name>MyFacesExtensionsFilter</filter-name>
-		<filter-class>
-			org.apache.myfaces.webapp.filter.ExtensionsFilter
-		</filter-class>
-		<init-param>
-			<description>
-				The maximum size of uploaded files.
-			</description>
-			<param-name>maxFileSize</param-name>
-			<param-value>20m</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>MyFacesExtensionsFilter</filter-name>
-		<servlet-name>Faces Servlet</servlet-name>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>MyFacesExtensionsFilter</filter-name>
-		<url-pattern>/faces/myFacesExtensionResource/*</url-pattern>
-	</filter-mapping>
- -->
-
 	<servlet>
 		<description>
 			The main servlet of the application. This class inherits from 
@@ -120,7 +71,10 @@
 		<servlet-class>
 			org.esupportail.commons.web.servlet.FacesServlet
 		</servlet-class>
-		<!-- <load-on-startup>1</load-on-startup> -->
+		<init-param>
+			<param-name>default-view</param-name>
+			<param-value>/stylesheets/home.faces</param-value>
+		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
@@ -132,7 +86,7 @@
 		<display-name>esup-lecture</display-name>
 		<servlet-name>esup-lecture</servlet-name>
 		<servlet-class>
-			org.esupportail.commons.web.portlet.PortletServlet
+			org.apache.pluto.core.PortletServlet
 		</servlet-class>
 		<init-param>
 			<param-name>portlet-class</param-name>

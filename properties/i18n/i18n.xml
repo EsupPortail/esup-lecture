@@ -30,6 +30,7 @@
 				<value>properties/i18n/bundles/Custom</value>
 			</list>
 		</property>
+		<property name="cacheManager" ref="cacheManager" />
 	</bean>
 
 </beans>

@@ -86,7 +86,7 @@
 		<display-name>esup-lecture</display-name>
 		<servlet-name>esup-lecture</servlet-name>
 		<servlet-class>
-			org.esupportail.commons.web.portlet.PortletServlet
+			org.apache.pluto.core.PortletServlet
 		</servlet-class>
 		<init-param>
 			<param-name>portlet-class</param-name>
