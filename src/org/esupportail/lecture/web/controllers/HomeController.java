@@ -24,23 +24,23 @@ import org.esupportail.lecture.web.beans.SourceWebBean;
  */
 public class HomeController extends twoPanesController {
 	/**
-	 * Log instance 
-	 */
-	protected static final Log log = LogFactory.getLog(HomeController.class);
-	/**
-	 * Display mode for item (all | unread | unreadfirst)
-	 */
-	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.ALL;
-	/**
-	 *  item used by t:updateActionListener
-	 */
-	private ItemWebBean item;
-	/**
-	 * Key used to store the context in virtual session
+	 * Key used to store the context in virtual session.
 	 */
 	static final String CONTEXT = "context";
 	/**
-	 * JSF action : toogle item from read to unread and unread to read
+	 * Log instance.
+	 */
+	protected static final Log log = LogFactory.getLog(HomeController.class);
+	/**
+	 * Display mode for item (all | unread | unreadfirst).
+	 */
+	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.ALL;
+	/**
+	 *  item used by t:updateActionListener.
+	 */
+	private ItemWebBean item;
+	/**
+	 * JSF action : toogle item from read to unread and unread to read.
 	 * @return JSF from-outcome
 	 */
 	public String toggleItemReadState() {
@@ -48,25 +48,29 @@ public class HomeController extends twoPanesController {
 			log.debug("In toggleItemReadState");
 		}
 		if (log.isDebugEnabled()) {
-			log.debug("itemID = "+item.getId());
+			log.debug("itemID = " + item.getId());
 		}
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		try {
-			getFacadeService().marckItemReadMode(getUID(), selectedCategory.getSelectedSource().getId(), item.getId(), !item.isRead());
+			getFacadeService().marckItemReadMode(getUID(), 
+					selectedCategory.getSelectedSource().getId(), item.getId(), !item.isRead());
 			
 		} catch (Exception e) {
-			throw new WebException("Error in toggleItemReadState",e);
+			throw new WebException("Error in toggleItemReadState", e);
 		}
 		item.setRead(!item.isRead());
 		return "OK";
 	}
 
 	/**
-	 * JSF action : select a category or a source from the tree, use categoryID and sourceID valued by t:updateActionListener
+	 * JSF action : select a category or a source from the tree.
+	 * Use categoryID and sourceID valued by t:updateActionListener.
 	 * @return JSF from-outcome
 	 */
 	public String selectElement() {
-		if (log.isDebugEnabled()) log.debug("in selectElement");
+		if (log.isDebugEnabled()) {
+			log.debug("in selectElement");
+		}
 		String catID = this.categoryId;
 		String srcId = this.sourceId;
 		CategoryWebBean cat = getCategorieByID(catID);
@@ -74,8 +78,7 @@ public class HomeController extends twoPanesController {
 			//toggle expanded status
 			cat.setFolded(!cat.isFolded());
 			isSourceSelected = false;
-		} 
-		else {
+		} else {
 			//set source focused by user as selected source in the category
 			SourceWebBean src = getSourceByID(cat, srcId);
 			cat.setSelectedSource(src);
@@ -90,7 +93,7 @@ public class HomeController extends twoPanesController {
 	}
 
 	/**
-	 * JSF action : Change display mode, nothing todo because itemDisplayMode is valued by JSF
+	 * JSF action : Change display mode, nothing todo because itemDisplayMode is valued by JSF.
 	 * @return JSF from-outcome
 	 */
 	public String changeItemDisplayMode() {
@@ -99,10 +102,11 @@ public class HomeController extends twoPanesController {
 			SourceWebBean selectedSource = selectedCategory.getSelectedSource();
 			if (selectedSource != null) {
 				try {
-					getFacadeService().marckItemDisplayMode(getUID(), selectedSource.getId(), itemDisplayMode);
+					getFacadeService().marckItemDisplayMode(getUID(),
+						selectedSource.getId(), itemDisplayMode);
 					selectedSource.setItemDisplayMode(itemDisplayMode);
 				} catch (Exception e) {
-					throw new WebException("Error in changeItemDisplayMode",e);
+					throw new WebException("Error in changeItemDisplayMode", e);
 				}
 			}
 		}
@@ -110,15 +114,15 @@ public class HomeController extends twoPanesController {
 	}	
 
 	/**
-	 * sort items list in function of itemDisplayMode
+	 * sort items list in function of itemDisplayMode.
 	 * @param items List to sort
 	 * @return Sorted items list
 	 */
-	private List<ItemWebBean> sortedItems(List<ItemWebBean> items, ItemDisplayMode displayMode) {
+	private List<ItemWebBean> sortedItems(final List<ItemWebBean> items, final ItemDisplayMode displayMode) {
 		if (displayMode == ItemDisplayMode.ALL) {
 			// nothing to do
 		} else if (displayMode == ItemDisplayMode.UNREAD) {
-			if (items != null){
+			if (items != null) {
 				List<ItemWebBean> ret = new ArrayList<ItemWebBean>();
 				Iterator<ItemWebBean> iter = items.iterator();
 				while (iter.hasNext()) {
@@ -130,7 +134,7 @@ public class HomeController extends twoPanesController {
 				return ret;
 			}
 		} else if (displayMode == ItemDisplayMode.UNREADFIRST) {
-			if (items != null){
+			if (items != null) {
 				List<ItemWebBean> ret = new ArrayList<ItemWebBean>();
 				// find unread
 				Iterator<ItemWebBean> iter = items.iterator();
@@ -152,13 +156,13 @@ public class HomeController extends twoPanesController {
 			}
 
 		} else {
-			log.warn("Unknown itemDisplayMode value \""+displayMode+"\" in sortedItems function");
+			log.warn("Unknown itemDisplayMode value \"" + displayMode + "\" in sortedItems function");
 		}
-		return(items);
+		return items;
 	}
 	
 	/**
-	 * Remove Context cache from the virtual session
+	 * Remove Context cache from the virtual session.
 	 */
 	protected void flushContextFormVirtualSession() {
 		//virtualSession is a HomeCrontroller local variable
@@ -174,7 +178,9 @@ public class HomeController extends twoPanesController {
 	 * @return the list of items to dysplay for current selection (category/source) and displayMode
 	 */
 	public List<ItemWebBean> getItems() {
-		if (log.isDebugEnabled()) log.debug("getItems()");
+		if (log.isDebugEnabled()) {
+			log.debug("getItems()");
+		}
 		List<ItemWebBean> ret = null;
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		ItemDisplayMode displayMode = ItemDisplayMode.ALL;
@@ -185,14 +191,15 @@ public class HomeController extends twoPanesController {
 				//Test if list in already in selected source				
 				if (selectedSource.getItems() != null) {
 					ret = selectedSource.getItems();
-				}
-				else{
-					if (log.isDebugEnabled()) log.debug("Put items in selected source");
+				} else {
+					if (log.isDebugEnabled()) {
+						log.debug("Put items in selected source");
+					}
 					List<ItemBean> items;
 					try {
 						items = getFacadeService().getItems(getUID(), selectedSource.getId());
 					} catch (Exception e) {
-						throw new WebException("Error in getItems",e);
+						throw new WebException("Error in getItems", e);
 					}
 					ret = new ArrayList<ItemWebBean>();
 					if (items != null) {
@@ -208,7 +215,6 @@ public class HomeController extends twoPanesController {
 						//Put items in selected source
 						selectedSource.setItems(ret);
 					}
-
 				}
 			}			
 		}
@@ -218,7 +224,7 @@ public class HomeController extends twoPanesController {
 	/**
 	 * @return desciption of current selected element (category or source)
 	 */
-	public String getSelectedElementDescription(){
+	public String getSelectedElementDescription() {
 		String ret = null;
 		ContextWebBean ctx = getContext();
 		ret = ctx.getDescription();
@@ -233,24 +239,28 @@ public class HomeController extends twoPanesController {
 	 * @return Display mode form items
 	 */
 	public ItemDisplayMode getItemDisplayMode() {
-		if (log.isDebugEnabled()) log.debug("getItemDisplayMode()="+itemDisplayMode);
+		if (log.isDebugEnabled()) {
+			log.debug("getItemDisplayMode()=" + itemDisplayMode);
+		}
 		return itemDisplayMode;
 	}
 
 	/**
-	 * set the item display mode
+	 * set the item display mode.
 	 * @param itemDisplayMode
 	 */
-	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) {
-		if (log.isDebugEnabled()) log.debug("setItemDisplayMode("+itemDisplayMode+")");
+	public void setItemDisplayMode(final ItemDisplayMode itemDisplayMode) {
+		if (log.isDebugEnabled()) {
+			log.debug("setItemDisplayMode(" + itemDisplayMode + ")");
+		}
 		this.itemDisplayMode = itemDisplayMode;
 	}
 
 	/**
-	 * set item from t:updateActionListener in JSF view
+	 * set item from t:updateActionListener in JSF view.
 	 * @param item
 	 */
-	public void setItem(ItemWebBean item) {
+	public void setItem(final ItemWebBean item) {
 		this.item = item;
 	}
 
