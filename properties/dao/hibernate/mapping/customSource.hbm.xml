@@ -26,7 +26,7 @@
 				<column name="ITEMID" not-null="true"/>
 			</element>
 		</set>
-		<property name="ItemDisplayMode" type="org.esupportail.lecture.dao.ItemDisplayModeUserType">
+		<property name="itemDisplayMode" type="org.esupportail.lecture.dao.ItemDisplayModeUserType">
 			<column name="ITEMDISPLAYMODE" not-null="true" length="32"/>
 		</property>
 		<subclass name="CustomManagedSource" discriminator-value="M">

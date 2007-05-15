@@ -33,16 +33,20 @@
 
     <itemizedlist>
       <listitem>
-        <para>Added : It uses esup-commons 0.15.2</para>
+        <para>Added: It uses esup-commons 0.15.2</para>
       </listitem>
 
       <listitem>
-        <para>Added : store left tree size in database</para>
+        <para>Added: store left tree size in database</para>
       </listitem>
 
       <listitem>
-        <para>Fixed : Hibernate message: "reassociated object has dirty
+        <para>Fixed: Hibernate message: "reassociated object has dirty
         collection reference"</para>
+      </listitem>
+
+      <listitem>
+        <para>Fixed: left tree size button doesn't work in edit mode</para>
       </listitem>
     </itemizedlist>
   </section>

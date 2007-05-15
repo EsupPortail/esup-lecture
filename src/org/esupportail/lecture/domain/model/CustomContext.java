@@ -353,6 +353,28 @@ public class CustomContext implements CustomElement {
 		return this.getElementId().hashCode();
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		StringBuffer string = new StringBuffer(getClass().getSimpleName() + "#" + hashCode() 
+				+ "[elementId=[" + elementId
+				+ "], customContextPK=[" + customContextPK 
+				+ "], treeSize=[" + treeSize 
+				+ "], userProfile.id=[" + userProfile.getUserId() + "],");
+		// subscriptions
+		string.append("\n subscriptions=[");
+		for (String key : subscriptions.keySet()) {
+			string.append(key).append(", ");
+		}
+		// unfolded categories
+		string.append("\n unfolded categories=[");
+		for (String cat : unfoldedCategories) {
+			string.append(cat).append(", ");
+		}
+		string.append("]\n]");
+		return string.toString();
+	}
 	
 	/* 
 	 ************************** ACCESSORS **********************************/

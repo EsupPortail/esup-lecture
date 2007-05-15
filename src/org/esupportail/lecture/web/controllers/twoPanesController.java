@@ -45,6 +45,18 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 */
 	protected static final Log log = LogFactory.getLog(twoPanesController.class);
 	/**
+	 * min value for tree size.
+	 */
+	private static final int MIN_TREE_SIZE = 20;
+	/**
+	 * max value for tree size.
+	 */
+	private static final int MAX_TREE_SIZE = 90;
+	/**
+	 * increment value when changing tree size.
+	 */
+	private static final int TREE_SIZE_STEP = 5;
+	/**
 	 * Access to multiple instance of channel in a one session (contexts).
 	 */
 	protected VirtualSession virtualSession;
@@ -60,10 +72,6 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 *  sourceID used by t:updateActionListener
 	 */
 	protected String sourceId;
-	/**
-	 * default tree size. 
-	 */
-	private int treeSize = 20;
 	/**
 	 * is tree is visible or not.
 	 */
@@ -102,24 +110,27 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 		if (log.isDebugEnabled()) {
 			log.debug("In adjustTreeSize");
 		}
+		int treeSize = getTreeSize();
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		String id = actionEvent.getComponent().getClientId(ctx);
-		if (id.equals("home:leftSubview:treeSmallerButton")) {
-			if (treeSize > 10) {
-				treeSize -= 5;
+		if (id.equals("home:leftSubview:treeSmallerButton") 
+			|| id.equals("edit:leftSubview:treeSmallerButton")) {
+			if (treeSize > MIN_TREE_SIZE) {
+				treeSize -= TREE_SIZE_STEP;
 			}
 		}
-		if (id.equals("home:leftSubview:treeLargerButton")) {
-			if (treeSize < 90) {
-				treeSize += 5;
+		if (id.equals("home:leftSubview:treeLargerButton") 
+			|| id.equals("edit:leftSubview:treeLargerButton")) {
+			if (treeSize < MAX_TREE_SIZE) {
+				treeSize += TREE_SIZE_STEP;
 			}
 		}
 		try {
 			getFacadeService().setTreeSize(getUID(), getContextId(), treeSize);
 		} catch (DomainServiceException e) {
-			throw new WebException("Error in getContext", e);
+			throw new WebException("Error in adjustTreeSize", e);
 		} catch (InternalExternalException e) {
-			throw new WebException("Error in getContext", e);
+			throw new WebException("Error in adjustTreeSize", e);
 		}
 	}
 	
@@ -150,7 +161,19 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 * @return the size of left tree
 	 */
 	public int getTreeSize() {
-		return treeSize;
+		int ret = 0;
+		//TODO (RB) aller lire le treesize dans le contextBean. Ne pas oublier d'enlever toutes mes méthodes getTReeSize de facade, domain, etc.
+//		try {
+//			ret = getFacadeService().getTreeSize(getUID(), getContextId());
+//		} catch (DomainServiceException e) {
+//			throw new WebException("Error in getTreeSize", e);
+//		} catch (InternalExternalException e) {
+//			throw new WebException("Error in getTreeSize", e);
+//		}
+		if (ret == 0) {
+			ret = MIN_TREE_SIZE;
+		}
+		return ret;
 	}
 
 	/**

@@ -40,7 +40,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	@SuppressWarnings("unchecked")
 	public UserProfile getUserProfile(String userId) {
 		if (log.isDebugEnabled()) {
-			log.debug("getUserProfile("+userId+")");			
+			log.debug("getUserProfile(" + userId + ")");			
 		}
 		UserProfile ret = null;
 		if (userId != null) {
@@ -59,17 +59,17 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
-	 * @param userProfile 
-	 * @return UserProfile
 	 * @see org.esupportail.lecture.dao.DaoService#refreshUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
-	public UserProfile refreshUserProfile(UserProfile userProfile) {
+	public UserProfile refreshUserProfile(final UserProfile userProfile) {
+		//TODO (RB) renommer en attachCleanUserProfile
 		if (log.isDebugEnabled()) {
-			log.debug("refreshUserProfile("+(userProfile != null ? userProfile.getUserId() : "null")+")");			
+			log.debug("refreshUserProfile(" 
+				+ userProfile + ")");			
 		}
 		UserProfile ret = userProfile;
-		//getHibernateTemplate().lock(userProfile, LockMode.NONE);
-		ret = (UserProfile)getHibernateTemplate().merge(userProfile);
+		getHibernateTemplate().lock(userProfile, LockMode.NONE);
+		//ret = (UserProfile) getHibernateTemplate().merge(userProfile);
 		return ret;
 	}
 
@@ -77,11 +77,12 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 * @param userProfile 
 	 * @see org.esupportail.lecture.dao.DaoService#saveUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
-	public void saveUserProfile(UserProfile userProfile) {
+	public void saveUserProfile(final UserProfile userProfile) {
+		//TODO (RB/GB) Pourquoi n'existe-t-il pas de saveCustomContrxt, saveCustomCategory, saveCustomSource ? 
 		if (log.isDebugEnabled()) {
-			log.debug("saveUserProfile PK="+userProfile.getUserProfilePK());			
+			log.debug("saveUserProfile PK=" + userProfile.getUserProfilePK());			
 		}
-		//userProfile = (UserProfile)getHibernateTemplate().merge(userProfile);
+		//Object merged = getHibernateTemplate().merge(userProfile);
 		getHibernateTemplate().saveOrUpdate(userProfile);
 		if (useFlush) {
 			getHibernateTemplate().flush();
@@ -94,7 +95,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void deleteUserProfile(UserProfile userProfile) {
 		if (log.isDebugEnabled()) {
-			log.debug("deleteUserProfile PK="+userProfile.getUserProfilePK());			
+			log.debug("deleteUserProfile PK=" + userProfile.getUserProfilePK());			
 		}
 		getHibernateTemplate().delete(userProfile);
 		if (useFlush) {
@@ -108,9 +109,9 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void updateUserProfile(UserProfile userProfile) {
 		if (log.isDebugEnabled()) {
-			log.debug("updateUserProfile PK="+userProfile.getUserProfilePK());			
+			log.debug("updateUserProfile(" + userProfile + ")");			
 		}
-		//userProfile = (UserProfile)getHibernateTemplate().merge(userProfile);
+		//Object merged = getHibernateTemplate().merge(userProfile);
 		getHibernateTemplate().saveOrUpdate(userProfile);
 		if (useFlush) {
 			getHibernateTemplate().flush();
@@ -123,9 +124,9 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void updateCustomContext(CustomContext customContext) {
 		if (log.isDebugEnabled()) {
-			log.debug("updateCustomContext PK="+customContext.getCustomContextPK());			
+			log.debug("updateCustomContext PK=" + customContext.getCustomContextPK());			
 		}
-		//customContext = (CustomContext)getHibernateTemplate().merge(customContext);
+		//Object merged = getHibernateTemplate().merge(customContext);
 		getHibernateTemplate().saveOrUpdate(customContext);
 	}
 
@@ -135,7 +136,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void deleteCustomContext(CustomContext cco) {
 		if (log.isDebugEnabled()) {
-			log.debug("deleteCustomContext PK="+cco.getCustomContextPK());			
+			log.debug("deleteCustomContext PK=" + cco.getCustomContextPK());			
 		}
 		getHibernateTemplate().delete(cco);
 		if (useFlush) {
@@ -149,7 +150,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void deleteCustomCategory(CustomCategory cca) {
 		if (log.isDebugEnabled()) {
-			log.debug("deleteCustomCategory PK="+cca.getCustomCategoryPK());			
+			log.debug("deleteCustomCategory PK=" + cca.getCustomCategoryPK());			
 		}
 		getHibernateTemplate().delete(cca);
 		if (useFlush) {
@@ -163,9 +164,9 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void updateCustomCategory(CustomCategory cca) {
 		if (log.isDebugEnabled()) {
-			log.debug("updateCustomCategory PK="+cca.getCustomCategoryPK());			
+			log.debug("updateCustomCategory PK=" + cca.getCustomCategoryPK());			
 		}
-		//cca = (CustomCategory)getHibernateTemplate().merge(cca);
+		//Object merged = getHibernateTemplate().merge(cca);
 		getHibernateTemplate().saveOrUpdate(cca);
 		if (useFlush) {
 			getHibernateTemplate().flush();
@@ -178,7 +179,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void deleteCustomSource(CustomSource cs) {
 		if (log.isDebugEnabled()) {
-			log.debug("deleteCustomSource PK="+cs.getCustomSourcePK());			
+			log.debug("deleteCustomSource PK=" + cs.getCustomSourcePK());			
 		}
 		getHibernateTemplate().delete(cs);
 		if (useFlush) {
@@ -192,9 +193,9 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void updateCustomSource(CustomSource source) {
 		if (log.isDebugEnabled()) {
-			log.debug("updateCustomSource PK="+source.getElementId());			
+			log.debug("updateCustomSource PK=" + source.getElementId());			
 		}
-		//source = (CustomSource)getHibernateTemplate().merge(source);
+		//Object merged = getHibernateTemplate().merge(source);
 		getHibernateTemplate().saveOrUpdate(source);
 		if (useFlush) {
 			getHibernateTemplate().flush();
@@ -206,6 +207,9 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<VersionManager> getVersionManagers() {
+		if (log.isDebugEnabled()) {
+			log.debug("getVersionManagers()");			
+		}
 		DetachedCriteria criteria = DetachedCriteria.forClass(VersionManager.class);
 		criteria.addOrder(Order.asc("id"));
 		return getHibernateTemplate().findByCriteria(criteria);
@@ -215,6 +219,9 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 * @see org.esupportail.lecture.dao.DaoService#addVersionManager(org.esupportail.lecture.domain.model.VersionManager)
 	 */
 	public void addVersionManager(VersionManager versionManager) {
+		if (log.isDebugEnabled()) {
+			log.debug("addVersionManager(" + versionManager + ")");			
+		}
 		getHibernateTemplate().save(versionManager);
 	}
 
@@ -222,6 +229,9 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(org.esupportail.lecture.domain.model.VersionManager)
 	 */
 	public void updateVersionManager(VersionManager versionManager) {
+		if (log.isDebugEnabled()) {
+			log.debug("updateVersionManager(" + versionManager + ")");			
+		}
 		getHibernateTemplate().save(versionManager);
 	}
 

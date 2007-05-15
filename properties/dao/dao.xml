@@ -206,8 +206,7 @@
 
 	<bean id="daoServiceRemoteXML" 
         class="org.esupportail.lecture.dao.DaoServiceRemoteXML">
-        <property name="cacheProviderFacade" ref="cacheProviderFacade" />
-		<property name="cachingModel" ref="cachingModel" />
+		<property name="cacheManager" ref="cacheManager" />
 		<property name="defaultTimeout" value="3000">
 			<description>Timeout used when getting a category or a source from URL in milliseconds</description>
 		</property>
@@ -218,17 +217,6 @@
 		<property name="hibernateTemplate" ref="hibernateTemplate" />
 	</bean>
 
-    <bean id="cacheProviderFacade"
-        class="org.springmodules.cache.provider.ehcache.EhCacheFacade">
-        <property name="cacheManager" ref="cacheManager" />
-    </bean>
-   
-    <bean id="cachingModel" class="org.springmodules.cache.provider.ehcache.EhCacheCachingModel">
-        <property name="cacheName">
-            <value>org.esupportail.lecture.dao.DaoServiceRemoteXML</value>
-        </property>
-    </bean>  
-     
 	<bean 
 		id="transactionManager" 
 		parent="hibernateSessionFactoryContainer"

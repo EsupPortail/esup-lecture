@@ -7,7 +7,6 @@ package org.esupportail.lecture.domain.utils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.DomainServiceImpl;
 
 /**
  * @author gbouteil
@@ -21,7 +20,7 @@ public class ServletService implements ModeService {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(DomainServiceImpl.class);
+	protected static final Log log = LogFactory.getLog(ServletService.class);
 
 	/* 
 	 ************************** INIT ****************************************/

@@ -18,6 +18,7 @@ import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
@@ -233,6 +234,14 @@ public class DomainServiceTest implements DomainService {
 	public void setDatabaseVersion(String version) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getTreeSize(java.lang.String, java.lang.String)
+	 */
+	public int getTreeSize(final String uid, final String contextId) throws ContextNotFoundException {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 		

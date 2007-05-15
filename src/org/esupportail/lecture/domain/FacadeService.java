@@ -49,7 +49,7 @@ public class FacadeService implements InitializingBean {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(DomainServiceImpl.class);
+	protected static final Log log = LogFactory.getLog(FacadeService.class);
 	/**
 	 * External service  : used to access information from external service like portlet or servlet (or else)
 	 */
@@ -206,16 +206,28 @@ public class FacadeService implements InitializingBean {
 	}
 	
 	/**
-	 * Set the tree size of the customContext
+	 * Set the tree size of the customContext.
 	 * @param uid user ID
 	 * @param contextId context ID 
 	 * @param size size of the tree between 0 - 100
 	 * @throws TreeSizeErrorException 
 	 * @throws ContextNotFoundException 
-	 * @throws TreeSizeErrorException 
 	 */
-	public void setTreeSize(String uid, String contextId, int size) throws ContextNotFoundException, TreeSizeErrorException {
-		domainService.setTreeSize(uid,contextId, size);
+	public void setTreeSize(final String uid, final String contextId, final int size) 
+		throws ContextNotFoundException, TreeSizeErrorException {
+		domainService.setTreeSize(uid, contextId, size);
+	}
+
+	/**
+	 * Get the tree size of the customContext.
+	 * @param uid user ID
+	 * @param contextId context ID 
+	 * @return tree size
+	 * @throws ContextNotFoundException 
+	 */
+	public int getTreeSize(final String uid, final String contextId) 
+		throws ContextNotFoundException {
+		return domainService.getTreeSize(uid, contextId);
 	}
 
 	/**

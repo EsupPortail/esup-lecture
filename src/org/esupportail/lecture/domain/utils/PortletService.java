@@ -14,7 +14,6 @@ import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
@@ -30,7 +29,7 @@ public class PortletService implements ModeService {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(DomainServiceImpl.class);
+	protected static final Log log = LogFactory.getLog(PortletService.class);
 
 	/* 
 	 ************************** INIT ****************************************/

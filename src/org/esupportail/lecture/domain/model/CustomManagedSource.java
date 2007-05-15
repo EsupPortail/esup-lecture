@@ -129,6 +129,24 @@ public class CustomManagedSource extends CustomSource{
 		return this.getElementId().hashCode();
 	}
 	
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		StringBuffer string = new StringBuffer(getClass().getSimpleName() + "#" + hashCode() 
+				+ "[elementId=[" + getElementId()
+				+ "], customSourcePK=[" + getCustomSourcePK() 
+				+ "], userProfile.id=[" + getUserProfile().getUserId() 
+				+ "], ItemDisplayMode=[" + getItemDisplayMode()
+				+ "],");
+		// readItems
+		string.append("\n readItems=[");
+		for (String it : getReadItems()) {
+			string.append(it).append(", ");
+		}
+		string.append("]\n]");
+		return string.toString();
+	}
 	
 	
 	/*

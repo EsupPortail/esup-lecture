@@ -65,6 +65,7 @@ import org.springframework.util.Assert;
  *
  */
 public class DomainServiceImpl implements DomainService {
+	//TODO (GB <-- RB) CheckStyle ?
 	
 	/*
 	 ************************** PROPERTIES ******************************** */	
@@ -387,7 +388,7 @@ public class DomainServiceImpl implements DomainService {
 	
 	
 	/**
-	 * Set the tree size of the customContext
+	 * Set the tree size of the customContext.
 	 * @param uid user Id for user uid
 	 * @param contextId context Id
 	 * @param size size to set
@@ -395,18 +396,29 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws TreeSizeErrorException
 	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(java.lang.String, java.lang.String, int)
 	 */
-	public void setTreeSize(String uid, String contextId, int size) throws TreeSizeErrorException, ContextNotFoundException {
-		if (log.isDebugEnabled()){
-			log.debug("setTreeSize("+uid+","+contextId+","+size+")");
+	public void setTreeSize(final String uid, final String contextId, final int size)
+		throws TreeSizeErrorException, ContextNotFoundException {
+		if (log.isDebugEnabled()) {
+			log.debug("setTreeSize(" + uid + "," + contextId + "," + size + ")");
 		}
-		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomContext customContext = userProfile.getCustomContext(contextId);
-		customContext.modifyTreeSize(size);
-		
+		customContext.modifyTreeSize(size);	
 	}
 
+	/**
+	 * @throws ContextNotFoundException 
+	 * @see org.esupportail.lecture.domain.DomainService#getTreeSize(java.lang.String, java.lang.String)
+	 */
+	public int getTreeSize(final String uid, final String contextId) throws ContextNotFoundException {
+		if (log.isDebugEnabled()) {
+			log.debug("getTreeSize(" + uid + "," + contextId + ")");
+		}
+		UserProfile userProfile = channel.getUserProfile(uid);
+		CustomContext customContext = userProfile.getCustomContext(contextId);
+		return customContext.getTreeSize();	
+	}
 
 	/**
 	 * Set category identified by catId as fold in the customContext ctxId
@@ -490,9 +502,9 @@ public class DomainServiceImpl implements DomainService {
 			String errorMsg = "CategoryProfileNotFoundException for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")";
 			log.error(errorMsg);
 			userProfile.cleanCustomSourceFromProfile(categoryId);
-			throw new InternalDomainException(errorMsg,e);
-		}catch (CustomCategoryNotFoundException e) {
-			String errorMsg = "CustomCategoryNotFound for service 'getVisibleSources(user "+uid+", category "+categoryId+ ")" +
+			throw new InternalDomainException(errorMsg, e);
+		} catch (CustomCategoryNotFoundException e) {
+			String errorMsg = "CustomCategoryNotFound for service 'getVisibleSources(user " + uid+", category "+categoryId+ ")" +
 			"User "+uid+" is not subscriber of Category "+categoryId;
 			log.error(errorMsg);
 			throw new UserNotSubscribedToCategoryException(errorMsg,e);
@@ -658,4 +670,5 @@ public class DomainServiceImpl implements DomainService {
 			log.debug("database version set to '" + version + "'.");
 		}
 	}
+
 }

@@ -419,6 +419,22 @@ public class CustomManagedCategory extends CustomCategory {
 		
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		StringBuffer string = new StringBuffer(getClass().getSimpleName() + "#" + hashCode() 
+				+ "[elementId=[" + getElementId()
+				+ "], customCategoryPK=[" + getCustomCategoryPK() 
+				+ "], userProfile.id=[" + userProfile.getUserId() + "],");
+		// subscriptions
+		string.append("\n subscriptions=[");
+		for (String key : subscriptions.keySet()) {
+			string.append(key).append(", ");
+		}
+		string.append("]\n]");
+		return string.toString();
+	}
 	
 	/*
 	 ************************** ACCESSORS *********************************/	

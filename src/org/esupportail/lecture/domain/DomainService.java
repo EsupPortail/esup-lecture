@@ -211,4 +211,9 @@ public interface DomainService {
 	 */
 	void setDatabaseVersion(String version);
 
+	/**
+	 * @see FacadeService#getTreeSize(String, String)
+	 */
+	int getTreeSize(String uid, String contextId) throws ContextNotFoundException;
+
 }

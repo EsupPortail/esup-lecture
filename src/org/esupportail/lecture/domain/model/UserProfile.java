@@ -2,6 +2,7 @@ package org.esupportail.lecture.domain.model;
 
 
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -471,6 +472,34 @@ public class UserProfile {
 		return this.getUserId().hashCode();
 	}
 
+	public String toString() {
+		StringBuffer string = new StringBuffer(getClass().getSimpleName() + "#" + hashCode() 
+			+ "[userId=[" + userId + "], userProfilePK=[" + userProfilePK + "], ");
+		// customContexts
+		string.append("\n customContexts=[");
+		for (String key : customContexts.keySet()) {
+			string.append("\n  ");
+			string.append(customContexts.get(key)).append(", ");
+		}
+		string.append("], ");
+		// customCategories
+		string.append("\n customCategories=[");
+		for (String key : customCategories.keySet()) {
+			string.append("\n  ");
+			string.append(customCategories.get(key)).append(", ");
+		}
+		string.append("], ");
+		// customSources
+		string.append("\n customSources=[");
+		for (String key : customSources.keySet()) {
+			string.append("\n  ");
+			string.append(customSources.get(key)).append(", ");
+		}
+		string.append("]\n]");
+		return string.toString();
+	}
+	
+	
 	/* ************************** ACCESSORS ********************************* */
 
 

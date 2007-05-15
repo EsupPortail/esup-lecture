@@ -252,7 +252,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @return a set of read items ID
 	 */
-	private Set<String> getReadItems() {
+	protected Set<String> getReadItems() {
 		return readItems;
 	}
 
