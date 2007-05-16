@@ -408,19 +408,6 @@ public class DomainServiceImpl implements DomainService {
 	}
 
 	/**
-	 * @throws ContextNotFoundException 
-	 * @see org.esupportail.lecture.domain.DomainService#getTreeSize(java.lang.String, java.lang.String)
-	 */
-	public int getTreeSize(final String uid, final String contextId) throws ContextNotFoundException {
-		if (log.isDebugEnabled()) {
-			log.debug("getTreeSize(" + uid + "," + contextId + ")");
-		}
-		UserProfile userProfile = channel.getUserProfile(uid);
-		CustomContext customContext = userProfile.getCustomContext(contextId);
-		return customContext.getTreeSize();	
-	}
-
-	/**
 	 * Set category identified by catId as fold in the customContext ctxId
 	 * for user uid
 	 * @param uid user Id

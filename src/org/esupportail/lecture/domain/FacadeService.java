@@ -219,18 +219,6 @@ public class FacadeService implements InitializingBean {
 	}
 
 	/**
-	 * Get the tree size of the customContext.
-	 * @param uid user ID
-	 * @param contextId context ID 
-	 * @return tree size
-	 * @throws ContextNotFoundException 
-	 */
-	public int getTreeSize(final String uid, final String contextId) 
-		throws ContextNotFoundException {
-		return domainService.getTreeSize(uid, contextId);
-	}
-
-	/**
 	 * Set category identified by catId as fold in the customContext ctxId
 	 * for user uid
 	 * @param uid  user ID

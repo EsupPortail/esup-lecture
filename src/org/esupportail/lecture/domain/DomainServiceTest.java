@@ -236,16 +236,6 @@ public class DomainServiceTest implements DomainService {
 		
 	}
 
-	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getTreeSize(java.lang.String, java.lang.String)
-	 */
-	public int getTreeSize(final String uid, final String contextId) throws ContextNotFoundException {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-		
-
 	/*
 	 *************************** ACCESSORS ******************************** */	
 

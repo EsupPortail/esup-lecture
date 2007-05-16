@@ -126,6 +126,9 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 			}
 		}
 		try {
+			//for current session:
+			getContext().setTreeSize(treeSize);
+			//store in database:
 			getFacadeService().setTreeSize(getUID(), getContextId(), treeSize);
 		} catch (DomainServiceException e) {
 			throw new WebException("Error in adjustTreeSize", e);
@@ -161,15 +164,7 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 * @return the size of left tree
 	 */
 	public int getTreeSize() {
-		int ret = 0;
-		//TODO (RB) aller lire le treesize dans le contextBean. Ne pas oublier d'enlever toutes mes méthodes getTReeSize de facade, domain, etc.
-//		try {
-//			ret = getFacadeService().getTreeSize(getUID(), getContextId());
-//		} catch (DomainServiceException e) {
-//			throw new WebException("Error in getTreeSize", e);
-//		} catch (InternalExternalException e) {
-//			throw new WebException("Error in getTreeSize", e);
-//		}
+		int ret = getContext().getTreeSize();
 		if (ret == 0) {
 			ret = MIN_TREE_SIZE;
 		}
@@ -248,6 +243,7 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 				context.setName(contextBean.getName());
 				context.setId(contextBean.getId());
 				context.setDescription(contextBean.getDescription());
+				context.setTreeSize(contextBean.getTreeSize());
 				//find categories in this context
 				List<CategoryBean> categories = getCategories(ctxId);
 				List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();

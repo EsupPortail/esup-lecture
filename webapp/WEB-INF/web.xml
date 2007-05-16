@@ -60,6 +60,7 @@
 		</listener-class>
 	</listener>
 
+<!-- 
 	<servlet>
 		<description>
 			The main servlet of the application. This class inherits from 
@@ -80,6 +81,7 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.faces</url-pattern>
 	</servlet-mapping>
+ -->
 
 	<servlet>
 		<description>The esup-lecture portlet servlet</description>
@@ -91,7 +93,7 @@
 		<init-param>
 			<param-name>portlet-class</param-name>
 			<param-value>
-				org.esupportail.commons.web.portlet.FacesPortlet
+				org.esupportail.lecture.portlet.FacesPortlet
 			</param-value>
 		</init-param>
 		<init-param>
