@@ -29,11 +29,11 @@
   </articleinfo>
 
   <section>
-    <title>Current</title>
+    <title>Version 0.8.0</title>
 
     <itemizedlist>
       <listitem>
-        <para>Added: It uses esup-commons 0.15.2</para>
+        <para>Added: It uses esup-commons 0.16.0</para>
       </listitem>
 
       <listitem>
@@ -41,12 +41,7 @@
       </listitem>
 
       <listitem>
-        <para>Fixed: Hibernate message: "reassociated object has dirty
-        collection reference"</para>
-      </listitem>
-
-      <listitem>
-        <para>Fixed: left tree size button doesn't work in edit mode</para>
+        <para>Added: esup-commons version management</para>
       </listitem>
     </itemizedlist>
   </section>
