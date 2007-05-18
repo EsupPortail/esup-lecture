@@ -18,6 +18,7 @@ import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
+import org.springframework.beans.factory.InitializingBean;
 
 /**
  * @author : Raymond 

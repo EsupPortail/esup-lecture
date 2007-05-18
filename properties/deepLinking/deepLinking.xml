@@ -13,6 +13,21 @@
 		It should not be modified but by the developers.
 	-->
 
+	<!-- 
+	<bean 
+		id="deepLinkingRedirector" 
+		class="org.esupportail.lecture.web.deepLinking.DeepLinkingRedirectorImpl"
+		lazy-init="true"
+		>
+		<description>
+			This bean is used to redirect to some pages of the application when deep
+			link parameters are provided. It must implement interface 
+			org.esupportail.commons.web.deepLinking.DeepLinkingRedirector.
+		</description>
+		<property name="homeController" ref="homeController" />
+	</bean>
+	 -->
+
 	<bean 
 		id="deepLinkingRedirector" 
 		class="org.esupportail.commons.web.deepLinking.VoidDeepLinkingRedirectorImpl"

@@ -15,6 +15,12 @@
 			<name>default-view</name>
 			<value>/stylesheets/home.jsp</value>
 		</init-param>
+		<!-- 
+		<init-param>
+			<name>default-view-selector</name>
+			<value>org.esupportail.commons.web.deepLinking.UportalDefaultViewSelector</value>
+		</init-param>
+		 -->
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
@@ -25,17 +31,17 @@
 			<keywords>esup blank</keywords>
 		</portlet-info>
 	</portlet>
-	
+
 	<user-attribute>
 		<description>the username of the portal user</description>
 		<name>username</name>
 	</user-attribute>
-	
+
 	<user-attribute>
 		<description>the displayName of the portal user</description>
 		<name>displayName</name>
 	</user-attribute>
-	
+
 	<user-attribute>
 		<description>the sn of the portal user</description>
 		<name>sn</name>
