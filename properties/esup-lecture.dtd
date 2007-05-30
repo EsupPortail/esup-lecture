@@ -2,6 +2,7 @@
 <!ELEMENT channelConfig (userId,context*, categoryProfile*)>
 
 <!ELEMENT userId (#PCDATA)>
+<!ELEMENT guestUser (#PCDATA)>
 <!ELEMENT context (description,refCategoryProfile*)>
 <!ATTLIST context
     name CDATA #REQUIRED

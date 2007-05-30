@@ -33,7 +33,7 @@ public class ExternalServiceTest implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
 	 */
 	public String getConnectedUserId() {
-		return getUserAttribute(DomainTools.USER_ID);
+		return getUserAttribute(DomainTools.getUserID());
 	}
 
 	/**
@@ -57,7 +57,7 @@ public class ExternalServiceTest implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserAttribute(java.lang.String)
 	 */
 	public String getUserAttribute(String attribute) {
-		if (attribute.equalsIgnoreCase(DomainTools.USER_ID)){
+		if (attribute.equalsIgnoreCase(DomainTools.getUserID())){
 			return "bourges";
 		}else if (attribute.equalsIgnoreCase("")){
 			return "";

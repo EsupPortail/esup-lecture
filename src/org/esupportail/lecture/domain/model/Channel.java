@@ -207,6 +207,9 @@ public class Channel implements InitializingBean {
 			/*Loading user attributes name for user id */
 			ChannelConfig.loadUserId();
 			
+			/*Loading guest user name */
+			ChannelConfig.loadGuestUser();
+			
 			/* Loading managed category profiles */
 			ChannelConfig.loadManagedCategoryProfiles(this);
 				

@@ -236,6 +236,13 @@ public class DomainServiceTest implements DomainService {
 		
 	}
 
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#isGuestMode()
+	 */
+	public boolean isGuestMode() {
+		return false;
+	}
+
 	/*
 	 *************************** ACCESSORS ******************************** */	
 

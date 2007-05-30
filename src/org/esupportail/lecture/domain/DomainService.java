@@ -210,5 +210,10 @@ public interface DomainService {
 	 * @param version 
 	 */
 	void setDatabaseVersion(String version);
+	
+	/**
+	 * @return if application is used in guest mode
+	 */
+	boolean isGuestMode();
 
 }

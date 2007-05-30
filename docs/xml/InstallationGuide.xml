@@ -26,28 +26,6 @@
         1</ulink></orgname>
       </affiliation>
     </author>
-
-    <revhistory>
-      <revision>
-        <revnumber>1.0</revnumber>
-
-        <date>2006-11-29</date>
-
-        <revdescription>
-          <para>First version of the installation Guide</para>
-        </revdescription>
-      </revision>
-
-      <revision>
-        <revnumber>1.1</revnumber>
-
-        <date>2007-01-12</date>
-
-        <revdescription>
-          <para>installation Guide form Esup Lecture Portlet V0.6</para>
-        </revdescription>
-      </revision>
-    </revhistory>
   </articleinfo>
 
   <section>
@@ -117,7 +95,8 @@
       </listitem>
 
       <listitem>
-        <para>Initialize your database if necessary:<itemizedlist>
+        <para>Initialize your database if necessary (first
+        installation):<itemizedlist>
             <listitem>
               <para>ant init<note>
                   <para><emphasis role="bold">This Command will erase all

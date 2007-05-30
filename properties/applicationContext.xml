@@ -13,6 +13,11 @@
 		This file is referenced by /webapp/WEB-INF/web.xml.
 	-->
 
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location"
+			value="classpath:/properties/config.properties" />
+	</bean>
 	<bean
 		id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"

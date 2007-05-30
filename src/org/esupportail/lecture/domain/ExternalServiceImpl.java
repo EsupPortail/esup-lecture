@@ -64,7 +64,7 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
 	 */
 	public String getConnectedUserId() throws NoExternalValueException, InternalExternalException {
-		return getUserAttribute(DomainTools.USER_ID);
+		return getUserAttribute(DomainTools.getUserID());
 	}
 	/**
 	 * Return ID of the current context (from channel instantiation : portlet preference with name "context")).

@@ -38,7 +38,7 @@ public class UserProfile {
 	
 	/**
 	 * Id of the user, get from externalService request by USER_ID, defined in the channel config
-	 * @see org.esupportail.lecture.domain.DomainTools#USER_ID
+	 * @see org.esupportail.lecture.domain.DomainTools#userID
 	 * @see ChannelConfig#loadUserId()
 	 */
 	private String userId;
