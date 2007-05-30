@@ -204,7 +204,7 @@ public class ChannelConfig  {
 		if (guestUser == null || guestUser.equals("")) {
 			guestUser = "guest";
 		}
-		DomainTools.setUserID(guestUser);
+		DomainTools.setGuestUser(guestUser);
 	}
 
 	/**

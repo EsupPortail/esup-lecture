@@ -30,14 +30,14 @@
 				The 'from' address to use when sending emails.
 			</description>
 		</property>
-		<property name="interceptAddress" ref="smtpInterceptAddress" >
+		<property name="interceptAddress" ref="${smtp.interceptAddress.beanName}" >
 			<description>
 				The address to which _all_ the emails should be sent. This tag is particularly
 				useful when setting up the application to prevent from spam effects. When no tag 
 				is used, then all the emails are normally sent to their recipients.
 			</description>
 		</property>
-		<property name="testAddress" ref="smtpInterceptAddress" >
+		<property name="testAddress" ref="smtpTestAddress" >
 			<description>
 				The address to which test emails (sent by ant target tets-smtp) will be sent.
 			</description>
@@ -51,8 +51,8 @@
     	<description>
     		see above.
     	</description>
-        <property name="address" value="Raymond.Bourges@univ-rennes1.fr" />
-        <property name="personal" value="ESUP-Portail" />
+        <property name="address" value="${smtp.fromAddress.address}" />
+        <property name="personal" value="${smtp.fromAddress.personal}" />
     </bean>
     
     <bean 
@@ -62,8 +62,19 @@
     	<description>
     		see above.
     	</description>
-        <property name="address" value="Raymond.Bourges@univ-rennes1.fr" />
-        <property name="personal" value="Raymond" />
+        <property name="address" value="${smtp.interceptAddress.address}" />
+        <property name="personal" value="${smtp.interceptAddress.personal}" />
+    </bean>
+    
+    <bean 
+    	id="smtpTestAddress" 
+    	class="javax.mail.internet.InternetAddress"
+    	>
+    	<description>
+    		see above.
+    	</description>
+        <property name="address" value="${smtp.testAddress.address}" />
+        <property name="personal" value="${smtp.testAddress.personal}" />
     </bean>
     
     <bean 
@@ -73,22 +84,22 @@
     	<description>
     		This beans describes a SMTP server.
     	</description>
-        <property name="host" value="smtp.univ-rennes1.fr" >
+        <property name="host" value="${smtpServer.host}" >
 			<description>
 				The host name or IP number of the server, defaults to localhost.
 			</description>
         </property>
-        <property name="port" value="25" >
+        <property name="port" value="${smtpServer.port}" >
 			<description>
 				The port number the SMTP server is running on (defaults to 25).
 			</description>
         </property>
-		<property name="user" value="" >
+		<property name="user" value="${smtpServer.user}" >
 			<description>
 				The SMTP user (comment or leave empty for an anonymous connection).
 			</description>
         </property>
-		<property name="password" value="" >
+		<property name="password" value="${smtpServer.password}" >
 			<description>
 				The SMTP password (ignored for an anonymous connection).
 			</description>

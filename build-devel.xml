@@ -10,23 +10,20 @@
 		webapp/WEB-INF/**/*example*
 		webapp/WEB-INF/lib/*
 		properties/**/*example*
-		properties/dao/hibernate/mapping/*
 		properties/dao/dao.xml
+		properties/dao/hibernate/hibernate.cfg.xml
+		properties/dao/hibernate/mapping/*
 		properties/i18n/bundles/*.properties
 		properties/misc/abstractBeans.xml
 		properties/misc/application.xml
+		properties/smtp/smtp.xml
+		properties/exceptionHandling/exceptionHandling.xml
 		properties/web/controllers.xml
 		properties/web/converters.xml
 		properties/applicationContext.xml
 		properties/jsf/application.xml
 		properties/jsf/managed-beans.xml
 		properties/jsf/navigation-rules.xml
-	" />            
-	<property name="app.zip-files.include" value="
-		${app.zip-files.shared.include}
-		build-example.properties
-		webapp/WEB-INF/web.xml
-		webapp/WEB-INF/portlet.xml
 		properties/cache/*.xml
 		properties/deepLinking/deepLinking.xml
 		properties/i18n/i18n.xml
@@ -43,6 +40,12 @@
 		properties/*.dtd
 		properties/mappings.xml
 		properties/esup-lecture.xml
+	" />            
+	<property name="app.zip-files.include" value="
+		${app.zip-files.shared.include}
+		build-example.properties
+		webapp/WEB-INF/web.xml
+		webapp/WEB-INF/portlet.xml
 	" />
 	<property name="app.zip-files.quick-start.include" value="
 		${app.zip-files.shared.include}

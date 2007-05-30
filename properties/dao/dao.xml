@@ -79,6 +79,15 @@
 				 -->
 			</list>
 		</property>
+		<property name="hibernateProperties">
+			<value>
+				hibernate.connection.url=${hibernate.connection.url}
+				hibernate.connection.username=${hibernate.connection.username}
+				hibernate.connection.password=${hibernate.connection.password}
+				hibernate.connection.driver_class=${hibernate.connection.driver_class}
+				hibernate.dialect=${hibernate.dialect}
+			</value>
+		</property>
 	</bean>
 	
 	<bean 

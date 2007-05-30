@@ -30,7 +30,6 @@
 			mailing lists, please help them to improve the application by sending them 
 			the exception reports. Thanks!
 		</description>
-		<property name="doNotSendExceptionReportsToDevelopers" value="false"/>
 		<property name="smtpService" ref="smtpService" >
 			<description>
 				The service used to send exception reports.
@@ -42,7 +41,7 @@
 				fill exception reports.
 			</description>
 		</property>
-		<property name="recipientEmail" value="my.name@domain.edu" >
+		<property name="recipientEmail" value="${exceptionHandling.recipientEmail}" >
 			<description>
 				The email address the exception reports will be sent to. This property is
 				optional; if the tag is ommited or empty, then no mail is sent.
@@ -58,6 +57,7 @@
 				The name of the cache, optional.
 			</description>
 		</property>
+		<property name="doNotSendExceptionReportsToDevelopers" value="${exceptionHandling.doNotSendExceptionReportsToDevelopers}" />
 	</bean>
 
 </beans>
