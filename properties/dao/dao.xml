@@ -79,15 +79,6 @@
 				 -->
 			</list>
 		</property>
-		<property name="hibernateProperties">
-			<value>
-				hibernate.connection.url=${hibernate.connection.url}
-				hibernate.connection.username=${hibernate.connection.username}
-				hibernate.connection.password=${hibernate.connection.password}
-				hibernate.connection.driver_class=${hibernate.connection.driver_class}
-				hibernate.dialect=${hibernate.dialect}
-			</value>
-		</property>
 	</bean>
 	
 	<bean 
@@ -98,6 +89,15 @@
 		<description>
 			This bean is the 'normal' session factory used by the application.
 		</description>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.connection.url">${hibernate.connection.url}</prop>
+				<prop key="hibernate.connection.username">${hibernate.connection.username}</prop>
+				<prop key="hibernate.connection.password">${hibernate.connection.password}</prop>
+				<prop key="hibernate.connection.driver_class">${hibernate.connection.driver_class}</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+			</props>
+		</property>
 	</bean>
 
 	<bean 
@@ -108,6 +108,15 @@
 		<description>
 			This bean is the 'normal' session factory used by the application.
 		</description>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.connection.url">${hibernate.connection.url}</prop>
+				<prop key="hibernate.connection.username">${hibernate.connection.username}</prop>
+				<prop key="hibernate.connection.password">${hibernate.connection.password}</prop>
+				<prop key="hibernate.connection.driver_class">${hibernate.connection.driver_class}</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+			</props>
+		</property>
 	</bean>
 
 	<bean 
@@ -122,6 +131,11 @@
 		</description>
 		<property name="hibernateProperties">
 			<props>
+				<prop key="hibernate.connection.url">${hibernate.connection.url}</prop>
+				<prop key="hibernate.connection.username">${hibernate.connection.username}</prop>
+				<prop key="hibernate.connection.password">${hibernate.connection.password}</prop>
+				<prop key="hibernate.connection.driver_class">${hibernate.connection.driver_class}</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
 				<prop key="hibernate.hbm2ddl.auto">create</prop>
 			</props>
 		</property>
@@ -139,6 +153,11 @@
 		</description>
 		<property name="hibernateProperties">
 			<props>
+				<prop key="hibernate.connection.url">${hibernate.connection.url}</prop>
+				<prop key="hibernate.connection.username">${hibernate.connection.username}</prop>
+				<prop key="hibernate.connection.password">${hibernate.connection.password}</prop>
+				<prop key="hibernate.connection.driver_class">${hibernate.connection.driver_class}</prop>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 			</props>
 		</property>
