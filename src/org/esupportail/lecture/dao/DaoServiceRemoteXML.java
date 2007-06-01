@@ -177,11 +177,6 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @return the source
 	 * @throws TimeoutException 
 	 */
-	/**
-	 * @param sourceProfile
-	 * @return
-	 * @throws TimeoutException
-	 */
 	public Source getSource(final SourceProfile sourceProfile) throws TimeoutException {
 		Source ret = new GlobalSource();
 //		not yet implemented

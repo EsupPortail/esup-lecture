@@ -43,6 +43,15 @@
       <listitem>
         <para>Added: esup-commons version management</para>
       </listitem>
+
+      <listitem>
+        <para>***** All technical configuration in just one file :
+        config.properties</para>
+      </listitem>
+
+      <listitem>
+        <para>Tested with uP-1040 patch for multi-instanced portlet</para>
+      </listitem>
     </itemizedlist>
   </section>
 

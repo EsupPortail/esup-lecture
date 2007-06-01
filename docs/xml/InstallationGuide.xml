@@ -55,8 +55,8 @@
       </listitem>
 
       <listitem>
-        <para>Adapt properties/exceptionHandling/exceptionHandling.xml for
-        exception handling configuration.</para>
+        <para>Adapt properties/config.properties for exception handling
+        configuration, SMTP configuration and database confuguration.</para>
 
         <para><note>
             <para>By default, exception reports are also sent to an archived
@@ -67,15 +67,6 @@
             the exceptions to be sent to this list, you can manually set
             property doNotSendExceptionReportsToDevelopers to true.</para>
           </note></para>
-      </listitem>
-
-      <listitem>
-        <para>Adapt properties/smtp/smtp.xml for SMTP configuration.</para>
-      </listitem>
-
-      <listitem>
-        <para>Adapt properties/dao/hibernate/hibernate.cfg.xml for database
-        confuguration.</para>
       </listitem>
 
       <listitem>
@@ -102,7 +93,7 @@
                   <para><emphasis role="bold">This Command will erase all
                   existing data in your database !!!!</emphasis></para>
 
-                  <para>Your database (configured in hibernate.cfg.xml) must
+                  <para>Your database (configured in config.properties) must
                   exists.</para>
                 </note></para>
             </listitem>
@@ -129,7 +120,7 @@
 
       <listitem>
         <para>Configure your portal to reference this portlet. For example
-        with uPortal you can use cannel manager as shown here:</para>
+        with uPortal you can use channel manager as shown here:</para>
 
         <mediaobject>
           <imageobject>
@@ -147,7 +138,70 @@
             <para>If you don't use this default value you have to adap the
             "portlet-guid" parameter of "The esup-lecture portlet servlet"
             servlet in the WEB-INF/web.xml too.</para>
+          </note><note>
+            <para>You can specify a preference with name "context" here too.
+            See chapter 2.2.1 about context id for more information about
+            this.</para>
           </note></para>
+
+        <para>If you don’t use channel manager you can use a xml Portlet
+        definition file. You can use this file with an uPortal ant target like
+        <command>ant uportal.pubchan -Dchannel=lecture-portlet.xml</command>.
+        For this, you have to save a <command>lecture-portlet.xml</command>
+        file in the folder <command>properties/chanpub</command> of your
+        uPortal distribution. This is an example of lecture-portlet.xml file
+        :</para>
+
+        <para><programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+
+&lt;!DOCTYPE channel-definition SYSTEM "channelDefinition.dtd"&gt;
+
+&lt;channel-definition&gt;
+
+    &lt;title&gt;lecture-portlet&lt;/title&gt;
+    &lt;name&gt;lecture-portlet&lt;/name&gt;
+    &lt;fname&gt;lecture&lt;/fname&gt;
+    &lt;desc&gt;Esup-Portail lecture portlet&lt;/desc&gt;
+    &lt;type&gt;Portlet&lt;/type&gt;
+    &lt;class&gt;org.jasig.portal.channels.portlet.CPortletAdapter&lt;/class&gt;
+    &lt;timeout&gt;15000&lt;/timeout&gt;
+    
+    &lt;hasedit&gt;N&lt;/hasedit&gt;
+    &lt;hashelp&gt;N&lt;/hashelp&gt;
+    &lt;hasabout&gt;N&lt;/hasabout&gt;
+
+    &lt;secure&gt;N&lt;/secure&gt;
+    &lt;locale&gt;en_US&lt;/locale&gt;
+    
+    &lt;categories&gt;
+        &lt;category&gt;Applications&lt;/category&gt;
+    &lt;/categories&gt;
+    
+    &lt;groups&gt;
+        &lt;group&gt;Everyone&lt;/group&gt;
+    &lt;/groups&gt;
+    
+    &lt;parameters&gt;
+
+        &lt;!-- The syntax of the portletDefinitionId is [portlet-context-name].[portlet-name] --&gt;
+        &lt;parameter&gt;
+            &lt;name&gt;portletDefinitionId&lt;/name&gt;
+            &lt;value&gt;LecturePortlet.esup-lecture&lt;/value&gt;
+            &lt;description&gt;The syntax of the portletDefinitionId is [portlet-context-name].[portlet-name]&lt;/description&gt;
+            &lt;ovrd&gt;N&lt;/ovrd&gt;
+        &lt;/parameter&gt;
+
+        &lt;parameter&gt;
+            &lt;name&gt;PORTLET.context&lt;/name&gt;
+            &lt;value&gt;default&lt;/value&gt;
+            &lt;description&gt;The "context" Portlet preference in relationship with context@id of the esup-lecture.xml file&lt;/description&gt;
+            &lt;ovrd&gt;N&lt;/ovrd&gt;
+        &lt;/parameter&gt;
+
+    &lt;/parameters&gt;
+    
+&lt;/channel-definition&gt;
+</programlisting></para>
       </listitem>
     </itemizedlist>
   </section>
@@ -262,10 +316,13 @@
                   portlet then context with id “default” is used. With this
                   mechanism you can define many channels with many contexts
                   definitions in your portal environment with just one
-                  instance of the portlet. But in uPortal because of a bug
-                  (<ulink
-                  url="http://www.ja-sig.org/issues/browse/UP-1040">http://www.ja-sig.org/issues/browse/UP-1040</ulink>)
-                  you can't use this feature.)</para>
+                  instance of the portlet. </para>
+
+                  <para><note>
+                      <para>Before uPortal 2.5.4, because of a bug (<ulink
+                      url="http://www.ja-sig.org/issues/browse/UP-1040">http://www.ja-sig.org/issues/browse/UP-1040</ulink>)
+                      you can't use this feature.</para>
+                    </note></para>
                 </listitem>
 
                 <listitem>

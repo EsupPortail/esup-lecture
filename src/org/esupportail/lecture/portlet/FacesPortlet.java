@@ -69,7 +69,6 @@ public class FacesPortlet extends MyFacesGenericPortlet {
 	/**
 	 * Catch an exception.
 	 * @param exception
-	 * @param request 
 	 */
 	protected ExceptionService catchException(
 			final Exception exception) {
