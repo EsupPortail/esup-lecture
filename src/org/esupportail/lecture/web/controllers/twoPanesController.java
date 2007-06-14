@@ -27,6 +27,7 @@ import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
+import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
@@ -334,8 +335,24 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 */
 	protected List<SourceBean> getSources(final CategoryBean categoryBean) throws DomainServiceException {
 		//this method need to be overwrite in edit controller
-		List<SourceBean> sources = getFacadeService().getAvailableSources(getUID(), categoryBean.getId());
-		return sources;
+		List<SourceBean> ret = null;
+		String catId;
+		try {
+			catId = categoryBean.getId();
+			ret = getFacadeService().getAvailableSources(getUID(), catId);
+		} catch (ElementDummyBeanException e) {
+			if (log.isWarnEnabled()) {
+				//TODO (RB) : see again dummy management
+				if (categoryBean instanceof CategoryDummyBean) {
+					CategoryDummyBean categoryDummyBean = (CategoryDummyBean) categoryBean;
+					log.warn("Try to get sources on a CategoryDummyBean. DummyBean cause: " 
+						+ categoryDummyBean.getCause());
+				} else {
+					log.error("Unable to cast as a CategoryDummyBean current object.");
+				}
+			}
+		}		
+		return ret;
 	}
 
 	/**

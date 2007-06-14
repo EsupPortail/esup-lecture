@@ -13,6 +13,7 @@ import org.esupportail.lecture.domain.model.ProfileAvailability;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
+import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
@@ -72,7 +73,7 @@ public class SourceBean {
 	}
 
 	/**
-	 * constructor initializing object with ProfileAvailability
+	 * constructor initializing object with ProfileAvailability.
 	 * @param profAv ProfileAvailability
 	 */
 	public SourceBean(ProfileAvailability profAv) {
@@ -90,56 +91,59 @@ public class SourceBean {
 
 	/**
 	 * @return name of source
-	 * @throws DomainServiceException 
+	 * @throws ElementDummyBeanException 
 	 */
-	public String getName() throws DomainServiceException {
+	public String getName() throws ElementDummyBeanException {
 		return name;
 	}
 	
 	/**
 	 * @param name
-	 * @throws DomainServiceException 
+	 * @throws ElementDummyBeanException 
 	 */
-	public void setName(String name) throws DomainServiceException {
+	public void setName(String name) throws ElementDummyBeanException {
 		this.name = name;
 	}
 	/**
 	 * @return id of source
+	 * @throws ElementDummyBeanException 
 	 */
-	public String getId()  throws DomainServiceException{
+	public String getId()  throws ElementDummyBeanException {
 		return id;
 	}
 	/**
 	 * @param id
+	 * @throws ElementDummyBeanException 
 	 */
-	public void setId(String id)  throws DomainServiceException{
+	public void setId(String id)  throws ElementDummyBeanException{
 		this.id = id;
 	}
 	/**
 	 * @return type of source
+	 * @throws ElementDummyBeanException 
 	 */
-	public AvailabilityMode getType()  throws DomainServiceException{
+	public AvailabilityMode getType()  throws ElementDummyBeanException {
 		return type;
 	}
 	/**
 	 * @param type
-	 * @throws DomainServiceException 
+	 * @throws ElementDummyBeanException 
 	 */
-	public void setType(AvailabilityMode type) throws DomainServiceException {
+	public void setType(AvailabilityMode type) throws ElementDummyBeanException {
 		this.type = type;
 	}
 	
 	/**
 	 * @return item display mode
 	 */
-	public ItemDisplayMode getItemDisplayMode() throws DomainServiceException {
+	public ItemDisplayMode getItemDisplayMode() throws ElementDummyBeanException {
 		return itemDisplayMode;
 	}
 
 	/**
 	 * @param itemDisplayMode
 	 */
-	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) throws DomainServiceException {
+	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) throws ElementDummyBeanException {
 		this.itemDisplayMode = itemDisplayMode;
 	}
 	/*
@@ -148,12 +152,12 @@ public class SourceBean {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		String string = "";
 		string += "     Id = " + id.toString() + "\n";
 		string += "     Name = " + name.toString() + "\n";
 		string += "     Type = "; 
-		if (type != null){
+		if (type != null) {
 			string += type;
 		}
 		string += "\n     displayMode = " + itemDisplayMode.toString() + "\n";

@@ -11,6 +11,7 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
+import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 
 /**
  * used to store category informations
@@ -67,58 +68,58 @@ public class CategoryBean {
 	
 	/**
 	 * @return description of the category
-	 * @throws DomainServiceException 
+	 * @throws ElementDummyBeanException 
 	 */
-	public String getDescription() throws DomainServiceException {
+	public String getDescription() throws ElementDummyBeanException {
 		return description;
 	}
 	/**
 	 * @param description description of the category
-	 * @throws DomainServiceException 
+	 * @throws ElementDummyBeanException 
 	 */
-	public void setDescription(String description) throws DomainServiceException {
+	public void setDescription(String description) throws ElementDummyBeanException {
 		this.description = description;
 	}
 	/**
 	 * @return if category is folded or not
-	 * @throws DomainServiceException 
+	 * @throws ElementDummyBeanException 
 	 */
-	public boolean isFolded() throws DomainServiceException {
+	public boolean isFolded() throws ElementDummyBeanException {
 		return folded;
 	}
 	/**
 	 * @param folded
-	 * @throws DomainServiceException 
+	 * @throws ElementDummyBeanException 
 	 */
-	public void setFolded(boolean folded) throws DomainServiceException {
+	public void setFolded(boolean folded) throws ElementDummyBeanException {
 		this.folded = folded;
 	}
 	/**
 	 * @return id of category
-	 * @throws DomainServiceException 
+	 * @throws ElementDummyBeanException 
 	 */
-	public String getId() throws DomainServiceException {
+	public String getId() throws ElementDummyBeanException {
 		return id;
 	}
 	/**
 	 * @param id
-	 * @throws DomainServiceException 
+	 * @throws ElementDummyBeanException 
 	 */
-	public void setId(String id) throws DomainServiceException {
+	public void setId(String id) throws ElementDummyBeanException {
 		this.id = id;
 	}
 	/**
 	 * @return name of category
-	 * @throws DomainServiceException 
+	 * @throws ElementDummyBeanException 
 	 */
-	public String getName() throws DomainServiceException {
+	public String getName() throws ElementDummyBeanException {
 		return name;
 	}
 	/**
 	 * @param name
-	 * @throws DomainServiceException 
+	 * @throws ElementDummyBeanException 
 	 */
-	public void setName(String name) throws DomainServiceException {
+	public void setName(String name) throws ElementDummyBeanException {
 		this.name = name;
 	}
 

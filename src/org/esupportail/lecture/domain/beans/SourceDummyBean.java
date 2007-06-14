@@ -8,15 +8,16 @@ package org.esupportail.lecture.domain.beans;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
+import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.UnknownException;
 
 /**
- * A DummyBean for a SourceBean : every methods are overriden from SourceBean throw the cause Exception
+ * A DummyBean for a SourceBean : every methods are overriden from SourceBean and throw an ElementDummyBeanException
  * @author gbouteil
  *
  */
 public class SourceDummyBean extends SourceBean implements DummyBean {
-	// TODO (GB later) :cf celui de CategoryDummyBean
+	// TODO (GB) : Add ElementDummyBeanException
 	
 	/* 
 	 *************************** PROPERTIES ******************************** */	
@@ -31,14 +32,14 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	/**
 	 * default constructor
 	 */
-	public SourceDummyBean(){
+	public SourceDummyBean() {
 		cause = new UnknownException();
 	}
 	/**
 	 * Constructor
 	 * @param e exception cause of dummyBean creation
 	 */
-	public SourceDummyBean(DomainServiceException e){
+	public SourceDummyBean(DomainServiceException e) {
 		cause = e;
 	}
 
@@ -55,48 +56,48 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#getName()
 	 */
 	@Override
-	public String getName() throws DomainServiceException {
-		throw cause;
+	public String getName() throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method getName() not available on a SourceDummyBean");
 	}
 		
 	/**
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#setName(java.lang.String)
 	 */
 	@Override
-	public void setName(String name) throws DomainServiceException {
-		throw cause;
+	public void setName(String name) throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method setName() not available on a SourceDummyBean");
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#getId()
 	 */
 	@Override
-	public String getId() throws DomainServiceException {
-		throw cause;
+	public String getId() throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method getId() not available on a SourceDummyBean");
 	}
 	
 	/**
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#setId(java.lang.String)
 	 */
 	@Override
-	public void setId(String id) throws DomainServiceException {
-		throw cause;
+	public void setId(String id) throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method setId() not available on a SourceDummyBean");
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#getType()
 	 */
 	@Override
-	public AvailabilityMode getType() throws DomainServiceException {
-		throw cause;
+	public AvailabilityMode getType() throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method getType() not available on a SourceDummyBean");
 	}
 	
 	/**
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#setType(org.esupportail.lecture.domain.model.AvailabilityMode)
 	 */
 	@Override
-	public void setType(AvailabilityMode type) throws DomainServiceException {
-		throw cause;
+	public void setType(AvailabilityMode type) throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method setType() not available on a SourceDummyBean");
 	}
 	
 	
@@ -104,8 +105,8 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#getItemDisplayMode()
 	 */
 	@Override
-	public ItemDisplayMode getItemDisplayMode() throws DomainServiceException {
-		throw cause;
+	public ItemDisplayMode getItemDisplayMode() throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method getItemDisplayMode() not available on a SourceDummyBean");
 	}
 
 
@@ -113,8 +114,8 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#setItemDisplayMode(org.esupportail.lecture.domain.model.ItemDisplayMode)
 	 */
 	@Override
-	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) throws DomainServiceException {
-		throw cause;
+	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method setItemDisplayMode() not available on a SourceDummyBean");
 	}
 	
 	
@@ -126,7 +127,7 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	 */
 	@Override
 	public String toString(){
-		return cause.getMessage();
+		return "SourceDummyBean created because: " + cause.getMessage();
 	}
 	
 	

@@ -96,20 +96,27 @@ public class Context {
 	 * @param ex access to external service for visibility evaluation
 	 */
 	synchronized protected void updateCustom(CustomContext customContext, ExternalService ex) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+id+" - updateCustom("+customContext.getElementId()+",externalService)");
+		if (log.isDebugEnabled()) {
+			log.debug("id=" + id + " - updateCustom(" + customContext.getElementId() + ",externalService)");
 		}
 		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
-		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet){
+		//TODO (GB) customContext mal mis à jour lors de la disparition d'une category dans le context 
+		//	(cf. http://sourcesup.cru.fr/tracker/index.php?func=detail&aid=3140&group_id=251&atid=1111) 
+		//	(ex : une category change de context => pas besoin de supprimer le customCategory du 
+		//	      userProfile, mais il ne doit plus etre référencé par le customContext)
+		
+		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet) {
 			try {
 				mcp.updateCustomContext(customContext, ex);
 			} catch (ComputeFeaturesException e) {
-				log.error("Impossible to update CustomContext associated to context "+ getId()
-						+" for managedCategoryProfile "+mcp.getId()+" because a compute feature error occured",e);
+				log.error("Impossible to update CustomContext associated to context " + getId()
+						+ " for managedCategoryProfile " + mcp.getId() 
+						+ " because a compute feature error occured", e);
 			} catch (CategoryTimeOutException e) {
-				log.error("Impossible to update CustomContext associated to context "+ getId()
-						+" for managedCategoryProfile "+mcp.getId()+" because the remote category is in Time Out",e);
+				log.error("Impossible to update CustomContext associated to context " + getId()
+						+ " for managedCategoryProfile " + mcp.getId()
+						+ " because the remote category is in Time Out", e);
 			}	
 			
 		}

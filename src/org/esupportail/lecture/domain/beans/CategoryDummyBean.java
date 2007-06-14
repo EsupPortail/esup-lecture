@@ -6,10 +6,11 @@
 package org.esupportail.lecture.domain.beans;
 
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
+import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.UnknownException;
 
 /**
- * A DummyBean for a CategoryBean : every methods are overriden from SourceBean throw the cause Exception
+ * A DummyBean for a CategoryBean : every methods are overriden from CategoryBean and throw an ElementDummyBeanException
  * @author gbouteil
  *
  */
@@ -55,8 +56,8 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#getDescription()
 	 */
 	@Override
-	public String getDescription() throws DomainServiceException {
-		throw cause;
+	public String getDescription() throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method getDescription() not available on a CategoryDummyBean");
 	}
 
 	
@@ -64,16 +65,16 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#setDescription(java.lang.String)
 	 */
 	@Override
-	public void setDescription(String description) throws DomainServiceException {
-		throw cause;
+	public void setDescription(String description) throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method setDescription() not available on a CategoryDummyBean");
 	}
 	
 	/**
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#isFolded()
 	 */
 	@Override
-	public boolean isFolded() throws DomainServiceException {
-		throw cause;
+	public boolean isFolded() throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method isFolded() not available on a CategoryDummyBean");
 	}
 	
 	
@@ -81,40 +82,40 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#setFolded(boolean)
 	 */
 	@Override
-	public void setFolded(boolean folded) throws DomainServiceException {
-		throw cause;
+	public void setFolded(boolean folded) throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method setFolded() not available on a CategoryDummyBean");
 	}
 	
 	/**
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#getId()
 	 */
 	@Override
-	public String getId() throws DomainServiceException {
-		throw cause;
+	public String getId() throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method getId() not available on a CategoryDummyBean");
 	}
 	
 	/**
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#setId(java.lang.String)
 	 */
 	@Override
-	public void setId(String id) throws DomainServiceException {
-		throw cause;
+	public void setId(String id) throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method setId() not available on a CategoryDummyBean");
 	}
 	
 	/**
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#getName()
 	 */
 	@Override
-	public String getName() throws DomainServiceException {
-		throw cause;
+	public String getName() throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method getName() not available on a CategoryDummyBean");
 	}
 	
 	/**
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#setName(java.lang.String)
 	 */
 	@Override
-	public void setName(String name) throws DomainServiceException {
-		throw cause;
+	public void setName(String name) throws ElementDummyBeanException {
+		throw new ElementDummyBeanException("Method setName() not available on a CategoryDummyBean");
 	}
 	
 	/*
@@ -125,7 +126,7 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	 */
 	@Override
 	public String toString(){
-		return cause.getMessage();
+		return "CategoryDummyBean created because: " + cause.getMessage();
 	}
 	
 	
