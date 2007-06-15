@@ -29,6 +29,31 @@
   </articleinfo>
 
   <section>
+    <title>Version 0.8.1</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>Fixed: Cache generate a NullPointerException in
+        DaoServiceRemoteXML.java:111 (bug #3120)</para>
+      </listitem>
+
+      <listitem>
+        <para>Fixed: Anable to start portlet with an other esup-commons porlet
+        - add of webAppRootKey in web.xml (bug #3139)</para>
+      </listitem>
+
+      <listitem>
+        <para>Workaround: of bug #3040 with a view patch. A complete fix is
+        expected in 0.8.2</para>
+      </listitem>
+
+      <listitem>
+        <para>Added: Minor changes in css</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
     <title>Version 0.8.0</title>
 
     <itemizedlist>
