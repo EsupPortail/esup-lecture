@@ -335,11 +335,19 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 */
 	protected List<SourceBean> getSources(final CategoryBean categoryBean) throws DomainServiceException {
 		//this method need to be overwrite in edit controller
-		List<SourceBean> ret = null;
+		List<SourceBean> tempListSourceBean = null;
+		List<SourceBean> ret = new ArrayList<SourceBean>();
 		String catId;
 		try {
 			catId = categoryBean.getId();
-			ret = getFacadeService().getAvailableSources(getUID(), catId);
+			tempListSourceBean = getFacadeService().getAvailableSources(getUID(), catId);
+			//Temporary: remove dummy form the list
+			for (Iterator iter = tempListSourceBean.iterator(); iter.hasNext();) {
+				SourceBean element = (SourceBean) iter.next();
+				if (!(element instanceof SourceDummyBean)) {
+					ret.add(element);				
+				}
+			}
 		} catch (ElementDummyBeanException e) {
 			if (log.isWarnEnabled()) {
 				//TODO (RB) : see again dummy management
@@ -362,9 +370,17 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	 * @throws ContextNotFoundException 
 	 */
 	protected List<CategoryBean> getCategories(final String ctxtId) throws ContextNotFoundException {
-		//this method need to be overwrite in edit controller
+		List<CategoryBean> ret = new ArrayList<CategoryBean>();
+		//Note: this method need to be overwrite in edit controller
 		List<CategoryBean> categories = getFacadeService().getAvailableCategories(getUID(), ctxtId);
-		return categories;
+		//Temporary: remove dummy form the list
+		for (Iterator iter = categories.iterator(); iter.hasNext();) {
+			CategoryBean element = (CategoryBean) iter.next();
+			if (!(element instanceof CategoryDummyBean)) {
+				ret.add(element);				
+			}
+		}
+		return ret;
 	}
 
 	/**

@@ -13,6 +13,11 @@
 	<display-name>esup-lecture</display-name>
 
 	<context-param>
+    	<param-name>webAppRootKey</param-name>
+		<param-value>esup-lecture</param-value>
+	</context-param>
+
+	<context-param>
 		<description>
 			The location of log4j config file. 
 		</description>

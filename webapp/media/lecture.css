@@ -28,8 +28,9 @@
 	vertical-align: bottom;
 }
 .menuButton ul {
- 	list-style-type:none;
-	display:block;
+     list-style-type:none;
+    display:block;
+	text-align: right;
 } 
 .menuButton li {
 	display:inline;
