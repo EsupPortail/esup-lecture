@@ -108,8 +108,8 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		Long currentTimeMillis = System.currentTimeMillis();
 		if (lastcatAccess != null) {
 			if (lastcatAccess + (profile.getTtl() * MILLIS_PER_SECOND) > currentTimeMillis) {
-				ret = (ManagedCategory) cache.get(cacheKey).getObjectValue();
-				if (ret == null) { 
+				Element element = cache.get(cacheKey);
+				if (element == null) { 
 					// not in cache !
 					ret = getFreshManagedCategory(profile);
 					cache.put(new Element(cacheKey, ret));
@@ -118,7 +118,9 @@ public class DaoServiceRemoteXML implements InitializingBean {
 						log.warn("ManagedCategory from url " + url 
 							+ " can't be found in cahe --> change cache size ?");
 					}
-				}				
+				} else {
+					ret = (ManagedCategory) element.getObjectValue();
+				}
 			} else {
 				ret = getFreshManagedCategory(profile);
 				cache.put(new Element(cacheKey, ret));
@@ -190,8 +192,8 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		Long currentTimeMillis = System.currentTimeMillis();
 		if (lastSrcAccess != null) {
 			if (lastSrcAccess + (sourceProfile.getTtl() * MILLIS_PER_SECOND) > currentTimeMillis) {
-				ret = (Source) cache.get(urlSource).getObjectValue();
-				if (ret == null) { 
+				Element element = cache.get(urlSource);
+				if (element == null) { 
 					// not in cache !
 					ret = getFreshSource(sourceProfile);
 					cache.put(new Element(urlSource, ret));
@@ -200,7 +202,9 @@ public class DaoServiceRemoteXML implements InitializingBean {
 						log.warn("Source from url " + urlSource 
 							+ " can't be found in cahe --> change cache size ?");
 					}
-				}				
+				} else {
+					ret = (Source) element.getObjectValue();
+				}
 			} else {
 				ret = getFreshSource(sourceProfile);
 				cache.put(new Element(urlSource, ret));
