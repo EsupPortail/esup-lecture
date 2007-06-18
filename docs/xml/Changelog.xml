@@ -29,6 +29,16 @@
   </articleinfo>
 
   <section>
+    <title>Current</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>Fixed: Manage recover.previous-versions</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
     <title>Version 0.8.1</title>
 
     <itemizedlist>
