@@ -54,7 +54,7 @@ public abstract class Source implements Element, Serializable {
 	/**
 	 * log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(Source.class); 
+	protected static final Log LOG = LogFactory.getLog(Source.class); 
 
 	/**
 	 * xmlStream (XML content) of the source.
@@ -64,7 +64,7 @@ public abstract class Source implements Element, Serializable {
 	/**
 	 * URL of the source (also used by xslt mapping to find ItemXpath and Xslt File).
 	 */
-	private String URL = "";
+	private String url = "";
 
 	/**
 	 * profile Id of the source.
@@ -105,12 +105,12 @@ public abstract class Source implements Element, Serializable {
 	/**
 	 * flag used to know if computeXslt() used one time or not.
 	 */
-	private boolean isXsltComputed = false;
+	private boolean isXsltComputed;
 
 	/**
 	 * flag used to know if computeItems() used one time or not.  
 	 */
-	private boolean isItemComputed = false;
+	private boolean isItemComputed;
 	
 	/**
 	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI).
@@ -137,27 +137,27 @@ public abstract class Source implements Element, Serializable {
 	 * @throws MappingNotFoundException 
 	 */
 	private synchronized void computeXslt() throws MappingNotFoundException {
-	   	if (log.isDebugEnabled()) {
-    		log.debug("id=" + this.profileId + " - computeXslt()");
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - computeXslt()");
     	}
 		
 		Channel channel = DomainTools.getChannel();
 		
-		if (log.isDebugEnabled()) {
-			log.debug("Source::computeXslt() : " + profileId);
-			log.debug("DTD : " + dtd);
-			log.debug("xmlType : " + xmlType);		
-			log.debug("xmlns : " + xmlns);
-			log.debug("rootElement : " + rootElement);			
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Source::computeXslt() : " + profileId);
+			LOG.debug("DTD : " + dtd);
+			LOG.debug("xmlType : " + xmlType);		
+			LOG.debug("xmlns : " + xmlns);
+			LOG.debug("rootElement : " + rootElement);			
 		}
 		
 		if (xsltURL == null || itemXPath == null || XPathNameSpaces.size() == 0) {
 			Mapping m = new Mapping();
-			if (URL != null) {
+			if (url != null) {
 				//Try to find a mapping from url
-				m = channel.getMappingBySourceURL(URL);
+				m = channel.getMappingBySourceURL(url);
 			} else {
-				log.error("Source " + this.profileId + "does not have any URL defined");
+				LOG.error("Source " + this.profileId + "does not have any URL defined");
 			}
 			if (m == null) {
 				//no mapping find from url so using XML content caracteristics
@@ -173,7 +173,7 @@ public abstract class Source implements Element, Serializable {
 							if (rootElement != null) {
 								m = channel.getMappingByRootElement(rootElement);
 							} else {
-								log.warn("Source " + profileId 
+								LOG.warn("Source " + profileId 
 									+ " does not have any entry key to find xslt information : " 
 									+ "no dtd, xmlType, xmlns, rootElement");
 							}
@@ -183,7 +183,7 @@ public abstract class Source implements Element, Serializable {
 			}
 			if (m == null) {
 				String errorMsg = "Mapping not found for source " + profileId;
-				log.error(errorMsg);
+				LOG.error(errorMsg);
 				throw new MappingNotFoundException("Mapping not found for source " + profileId);
 			}
 			if (xsltURL == null) {
@@ -208,8 +208,8 @@ public abstract class Source implements Element, Serializable {
 	@SuppressWarnings("unchecked")
 	private synchronized void computeItems() 
 		throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException {
-	   	if (log.isDebugEnabled()) {
-    		log.debug("id=" + this.profileId + " - computeItems()");
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - computeItems()");
     	}
 		if (!isXsltComputed) {
 			computeXslt();
@@ -228,15 +228,15 @@ public abstract class Source implements Element, Serializable {
 			while (iter.hasNext()) {
 				Node node = iter.next();
 				Item item = new Item();
-				StringBuffer XML = new StringBuffer("<?xml version=\"1.0\" encoding=\"");
-				XML.append(encoding);
-				XML.append("\" ?>");
-				XML.append(node.asXML());
-				String XMLasString = XML.toString();
-				String htmlContent = xml2html(XMLasString, getXsltURL());
+				StringBuffer xml = new StringBuffer("<?xml version=\"1.0\" encoding=\"");
+				xml.append(encoding);
+				xml.append("\" ?>");
+				xml.append(node.asXML());
+				String xmlAsString = xml.toString();
+				String htmlContent = xml2html(xmlAsString, getXsltURL(), encoding);
 				item.setHtmlContent(htmlContent);
 				//find MD5 of item content for his ID
-				byte[] hash = MessageDigest.getInstance("MD5").digest(XMLasString.getBytes());
+				byte[] hash = MessageDigest.getInstance("MD5").digest(xmlAsString.getBytes());
 				StringBuffer hashString = new StringBuffer();
 				for (int i = 0; i < hash.length; ++i) {
 					String hex = Integer.toHexString(hash[i]);
@@ -252,15 +252,15 @@ public abstract class Source implements Element, Serializable {
 			}
 		} catch (DocumentException e) {
 			String errorMsg = "Error parsing XML content of the source";
-			log.error(errorMsg);
+			LOG.error(errorMsg);
 			throw new ComputeItemsException(errorMsg, e);
 		} catch (NoSuchAlgorithmException e) {
 			String errorMsg = "MD5 algorithm not supported";
-			log.error(errorMsg);
+			LOG.error(errorMsg);
 			throw new ComputeItemsException(errorMsg, e);
 		} catch (XPathException e) {
 			String errorMsg = "Xpath with NameSpace not specified in mappings.xml";
-			log.error(errorMsg);
+			LOG.error(errorMsg);
 			throw new ComputeItemsException(errorMsg, e);
 		}
 		isItemComputed = true;
@@ -270,14 +270,16 @@ public abstract class Source implements Element, Serializable {
 	 * transform a xml String in a html String with an XSLT.
 	 * @param xml to transform
 	 * @param xsltFileURL URL of XSLT file
+	 * @param encoding of xml to transform
 	 * @return html content
 	 * @throws Xml2HtmlException 
 	 */
-	private synchronized String xml2html(final String xml, final String xsltFileURL) throws Xml2HtmlException {
-	   	if (log.isDebugEnabled()) {
-    		log.debug("id=" + this.profileId + " - xml2html(xml,xsltFileURL)");
+	private synchronized String xml2html(final String xml, final String xsltFileURL,
+			final String encoding) throws Xml2HtmlException {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - xml2html(xml,xsltFileURL)");
     	}
-		log.debug("voici le xsltFileUrl : " + xsltFileURL);
+		LOG.debug("voici le xsltFileUrl : " + xsltFileURL);
 		String ret = null;
 		try {
 			//		 1. Instantiate a TransformerFactory.
@@ -285,12 +287,12 @@ public abstract class Source implements Element, Serializable {
 			//		2. Use the TransformerFactory to process the stylesheet Source and
 			//		generate a Transformer.
 			Transformer transformer;
-			URL url = new URL(xsltFileURL);
-			StreamSource streamSource = new StreamSource(url.openStream());
+			URL url2 = new URL(xsltFileURL);
+			StreamSource streamSource = new StreamSource(url2.openStream());
 			transformer = tFactory.newTransformer(streamSource);
 			//		3. Use the Transformer to transform an XML Source and send the
 			//		output to a Result object.
-			ByteArrayInputStream inputStream = new ByteArrayInputStream(xml.getBytes());
+			ByteArrayInputStream inputStream = new ByteArrayInputStream(xml.getBytes(encoding));
 			StreamSource source = new StreamSource(inputStream);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			StreamResult result = new StreamResult(outputStream);
@@ -298,15 +300,15 @@ public abstract class Source implements Element, Serializable {
 			ret = outputStream.toString("UTF-8");
 		} catch (TransformerConfigurationException e) {
 			String errorMsg = "Error in XSTL Transformation configuration";
-			log.error(errorMsg);
+			LOG.error(errorMsg);
 			throw new Xml2HtmlException(errorMsg, e);
 		} catch (TransformerException e) {
 			String errorMsg = "Error in XSTL Transformation";
-			log.error(errorMsg);
+			LOG.error(errorMsg);
 			throw new Xml2HtmlException(errorMsg, e);
 		} catch (IOException e) {
 			String errorMsg = "IO Error in xml2html";
-			log.error(errorMsg);
+			LOG.error(errorMsg);
 			throw new Xml2HtmlException(errorMsg, e);
 		}
 		return ret;
@@ -317,8 +319,8 @@ public abstract class Source implements Element, Serializable {
 	 * @throws MappingNotFoundException 
 	 */
 	private String getItemXPath() throws MappingNotFoundException {
-	   	if (log.isDebugEnabled()) {
-    		log.debug("id=" + this.profileId + " - getItemXPath()");
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - getItemXPath()");
     	}
 		if (!isXsltComputed) {
 			computeXslt();
@@ -330,8 +332,8 @@ public abstract class Source implements Element, Serializable {
 	 * @param itemXPath The itemXPath to set.
 	 */
 	private synchronized void setItemXPath(final String itemXPath) {
-	   	if (log.isDebugEnabled()) {
-    		log.debug("id=" + this.profileId + " - setItemXPath(" + itemXPath + ")");
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - setItemXPath(" + itemXPath + ")");
     	}
 		this.itemXPath = itemXPath;
 		isXsltComputed = false;
@@ -342,8 +344,8 @@ public abstract class Source implements Element, Serializable {
 	 * @throws MappingNotFoundException 
 	 */
 	private String getXsltURL() throws MappingNotFoundException {
-	   	if (log.isDebugEnabled()) {
-    		log.debug("id=" + this.profileId + " - getXsltURL()");
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - getXsltURL()");
     	}
 		if (!isXsltComputed) {
 			computeXslt();
@@ -355,8 +357,8 @@ public abstract class Source implements Element, Serializable {
 	 * @param xsltURL The xsltURL to set.
 	 */
 	private synchronized void setXsltURL(final String xsltURL) {
-	   	if (log.isDebugEnabled()) {
-    		log.debug("id=" + this.profileId + " - setXsltURL(" + xsltURL + ")");
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - setXsltURL(" + xsltURL + ")");
     	}
 		this.xsltURL = xsltURL;
 		isXsltComputed = false;
@@ -367,8 +369,8 @@ public abstract class Source implements Element, Serializable {
 	 * @throws MappingNotFoundException
 	 */
 	private HashMap<String, String> getXPathNameSpaces() throws MappingNotFoundException {
-	   	if (log.isDebugEnabled()) {
-    		log.debug("id=" + this.profileId + " - getXPathNameSpaces()");
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - getXPathNameSpaces()");
     	}
 		if (!isXsltComputed) {
 			computeXslt();
@@ -381,8 +383,8 @@ public abstract class Source implements Element, Serializable {
 	 * @param pathNameSpaces
 	 */
 	private synchronized void setXPathNameSpaces(final HashMap<String, String> pathNameSpaces) {
-	   	if (log.isDebugEnabled()) {
-    		log.debug("id=" + this.profileId + " - setXPathNameSpaces(" + pathNameSpaces + ")");
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - setXPathNameSpaces(" + pathNameSpaces + ")");
     	}
 		XPathNameSpaces = pathNameSpaces;
 		isXsltComputed = false;
@@ -396,8 +398,8 @@ public abstract class Source implements Element, Serializable {
 	 * @throws MappingNotFoundException 
 	 */
 	protected List<Item> getItems() throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException {
-	   	if (log.isDebugEnabled()) {
-    		log.debug("id=" + this.profileId + " - getItems()");
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - getItems()");
     	}
 		if (!isItemComputed) {
 			computeItems();
@@ -515,8 +517,8 @@ public abstract class Source implements Element, Serializable {
 	 * set the Source URL.
 	 * @param url
 	 */
-	public void setURL(final String url) {
-		URL = url;
+	public void setUrl(final String url) {
+		this.url = url;
 	}
 
 

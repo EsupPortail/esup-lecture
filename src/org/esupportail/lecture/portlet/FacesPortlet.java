@@ -164,8 +164,8 @@ public class FacesPortlet extends MyFacesGenericPortlet {
 				}
 				return;
 			} catch (Exception e) {
-				catchException(e);
 				DatabaseUtils.close();
+				catchException(e);
 			}
 		}
 		try {
@@ -178,8 +178,9 @@ public class FacesPortlet extends MyFacesGenericPortlet {
 		} catch (Exception e) {
 			logger.error("An exception was caught while rendering an exception, giving up", e);
 			handleExceptionFromLifecycle(e);
+		} finally {
+			ContextUtils.unbindRequest(previousRequestAttributes);
 		}
-		ContextUtils.unbindRequest(previousRequestAttributes);
 	}
 
 	/**

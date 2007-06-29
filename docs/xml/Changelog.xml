@@ -35,6 +35,10 @@
       <listitem>
         <para>Fixed: Manage recover.previous-versions</para>
       </listitem>
+
+      <listitem>
+        <para>Fixed: Manage encoding of source (bug #2481)</para>
+      </listitem>
     </itemizedlist>
   </section>
 

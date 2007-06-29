@@ -111,7 +111,7 @@ public class FreshSourceThread extends Thread {
 			ret.setXmlns(rootNamespace);
 			ret.setXmlStream(xml);
 			ret.setXmlType(xmltype);
-			ret.setURL(sourceURL);
+			ret.setUrl(sourceURL);
 			//			ret.setItemXPath(sourceProfile.getItemXPath());
 			//			ret.setXsltURL(sourceProfile.getXsltURL());
 		} catch (DocumentException e) {

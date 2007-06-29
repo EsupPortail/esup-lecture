@@ -9,26 +9,28 @@ import org.esupportail.lecture.domain.model.DefinitionSets;
 import org.esupportail.lecture.domain.model.RegularOfSet;
 
 /**
- * Collection of statis method to parse xml file used by ESUp-Lecture
+ * Collection of statis method to parse xml file used by ESUP-Lecture.
  * @author bourges
  */
 public class XMLUtil {
 	/**
-	 * Log instance 
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(XMLUtil.class);
+	protected static final Log LOG = LogFactory.getLog(XMLUtil.class);
 	
 	/**
-	 * return DefinitionSets from a dom4j node
+	 * return DefinitionSets from a dom4j node.
 	 * @param node 
 	 * @return DefinitionSets the this part of XML
 	 */
 	@SuppressWarnings("unchecked")
-	public static DefinitionSets loadDefAndContentSets(Node node){
-		if (log.isDebugEnabled()){
+	public static DefinitionSets loadDefAndContentSets(final Node node) {
+		if (LOG.isDebugEnabled()) {
 			String path = "null";
-			if (node != null) path= node.getPath();
-			log.debug("loadDefAndContentSets("+path+")");
+			if (node != null) {
+				path = node.getPath();
+			}
+			LOG.debug("loadDefAndContentSets(" + path + ")");
 		}
 		DefinitionSets defAndContentSets = new DefinitionSets();
 		if (node != null) {
@@ -36,16 +38,22 @@ public class XMLUtil {
 			List<Node> groups = node.selectNodes("group");
 			for (Node group : groups) {
 				String name = group.valueOf("@name");
-				if (log.isDebugEnabled()) log.debug("name = "+name);
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("name = " + name);
+				}
 				defAndContentSets.addGroup(name);
 			}
 			// Definition by regular 
 			List<Node> regulars = node.selectNodes("regular");
 			for (Node regular : regulars) {
 				String attribute = regular.valueOf("@attribute");
-				if (log.isDebugEnabled()) log.debug("attribute = "+attribute);
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("attribute = " + attribute);
+				}
 				String value = regular.valueOf("@value");
-				if (log.isDebugEnabled()) log.debug("value = "+value);
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("value = " + value);
+				}
 				RegularOfSet regularOfSet = new RegularOfSet();
 				regularOfSet.setAttribute(attribute);
 				regularOfSet.setValue(value);	
