@@ -29,7 +29,7 @@
   </articleinfo>
 
   <section>
-    <title>Current</title>
+    <title>Version 0.8.2</title>
 
     <itemizedlist>
       <listitem>
@@ -43,6 +43,11 @@
       <listitem>
         <para>Fixed: ant target test-portal no more ganerates error (bug
         #3081)</para>
+      </listitem>
+
+      <listitem>
+        <para>Fixed: smtp.interceptAddress.beanName of config.properties can
+        manage InterceptAddress or not (bug #3133)</para>
       </listitem>
     </itemizedlist>
   </section>

@@ -67,6 +67,13 @@
     </bean>
     
     <bean 
+    	id="noSmtpInterceptAddress" 
+    	class="org.esupportail.lecture.utils.NullFactory"
+    	factory-method="createNull"
+    	>
+    </bean>
+    
+    <bean 
     	id="smtpTestAddress" 
     	class="javax.mail.internet.InternetAddress"
     	>
