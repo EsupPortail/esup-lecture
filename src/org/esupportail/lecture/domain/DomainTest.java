@@ -33,7 +33,7 @@ import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * Class to test calls to facadeService instead of web interface or command-line
+ * Class to test calls to facadeService instead of web interface or command-line.
  * @author gbouteil
  *
  */
@@ -41,7 +41,7 @@ public class DomainTest {
 	/*
 	 ************************** PROPERTIES ******************************** */	
 
-	protected static final Log log = LogFactory.getLog(DomainTest.class); 
+	protected static final Log LOG = LogFactory.getLog(DomainTest.class); 
 	private static FacadeService facadeService;
 
 	/* Controller local variables */
@@ -59,11 +59,11 @@ public class DomainTest {
 	 * @param args non argumet needed
 	 */
 	public static void main(String[] args)  {
-		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
-		XmlBeanFactory factory = new XmlBeanFactory(res);
-		facadeService = (FacadeService)factory.getBean("facadeService");
+//		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
+//		XmlBeanFactory factory = new XmlBeanFactory(res);
+//		facadeService = (FacadeService)factory.getBean("facadeService");
 		
-		try {
+//		try {
 			/* Test alternative behavior */
 //			testGetContextBis("c1");
 //			testGetAvailableSourceAlternativeWay(); 
@@ -88,31 +88,31 @@ public class DomainTest {
 //			testSubUnSubscribeToSource();
 			
 			/* test timeout values */
-			testGetConnectedUser();
-			testGetContext();
-			testGetAvailableCategories();
-			testGetAvailableSources();
-			testTimeOutValues();
+//			testGetConnectedUser();
+//			testGetContext();
+//			testGetAvailableCategories();
+//			testGetAvailableSources();
+//			testTimeOutValues();
 		
 			
 			
-		} catch (InternalExternalException e) {
-			System.out.println("\n!!! EXCEPTION !!!");
-			System.out.println("\n!!! Catching InternalExternalException");
-			e.printStackTrace();
-		}catch (InfoDomainException e) {
-			System.out.println("\n!!! EXCEPTION !!!");
-			System.out.println("\n!!! Catching InfoDomainException");
-			e.printStackTrace();
-		} catch (InternalDomainException e) {
-			System.out.println("\n!!! EXCEPTION !!!");
-			System.out.println("\n!!! Catching InternalDomainException");
-			e.printStackTrace();
-		} catch (DomainServiceException e) {
-			System.out.println("\n!!! EXCEPTION !!!");
-			System.out.println("\n!!! Catching DomainServiceException");
-			e.printStackTrace();
-		} 
+//		} catch (InternalExternalException e) {
+//			System.out.println("\n!!! EXCEPTION !!!");
+//			System.out.println("\n!!! Catching InternalExternalException");
+//			e.printStackTrace();
+//		}catch (InfoDomainException e) {
+//			System.out.println("\n!!! EXCEPTION !!!");
+//			System.out.println("\n!!! Catching InfoDomainException");
+//			e.printStackTrace();
+//		} catch (InternalDomainException e) {
+//			System.out.println("\n!!! EXCEPTION !!!");
+//			System.out.println("\n!!! Catching InternalDomainException");
+//			e.printStackTrace();
+//		} catch (DomainServiceException e) {
+//			System.out.println("\n!!! EXCEPTION !!!");
+//			System.out.println("\n!!! Catching DomainServiceException");
+//			e.printStackTrace();
+//		} 
 		
 
 	

@@ -47,6 +47,10 @@
 	    </java>
 	</target>
 
+	<target name="test-portal" description="test the portal connection"> 
+		<echo message="This appliction doesn't use an portal WebService: Test OK."/>
+	</target>	
+
 	<target name="compile" depends="commons-compile" description="compile the project" />
 
 	<target name="deploy" depends="commons-deploy" description="deploy the application"/>
