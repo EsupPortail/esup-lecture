@@ -20,6 +20,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.WindowState;
 
 import org.apache.myfaces.context.ReleaseableExternalContext;
 import org.apache.myfaces.context.portlet.PortletExternalContextImpl;
@@ -109,6 +110,9 @@ public class FacesPortlet extends MyFacesGenericPortlet {
     		final RenderResponse response, 
     		final String view)
             throws PortletException {
+		if (logger.isDebugEnabled()) {
+			logger.debug("==== BEGIN nonFacesRequest with view \"" + view + "\" ====");
+		}
     	 // do this in case nonFacesRequest is called by a subclass
 		setContentType(request, response);
         ApplicationFactory appFactory =
@@ -146,40 +150,48 @@ public class FacesPortlet extends MyFacesGenericPortlet {
 			final RenderRequest request, 
 			final RenderResponse response) 
 	throws PortletException, IOException {
-		if (logger.isDebugEnabled()) {
-			logger.debug("==== BEGIN facesRender ====");
+		WindowState state = null;
+		if (request != null) {
+			state = request.getWindowState();			
+		} else {
+			logger.error("parameter \"request\" is null in fonction facesRender");
 		}
-		PortletRequestAttributes previousRequestAttributes = 
-			ContextUtils.bindRequestAndContext(request, getPortletContext());
-		if (!ExceptionUtils.exceptionAlreadyCaught()) {
-			try {
-				DatabaseUtils.open();
-				DatabaseUtils.begin();
-				super.facesRender(request, response);
-				DatabaseUtils.commit();
-				DatabaseUtils.close();
-				ContextUtils.unbindRequest(previousRequestAttributes);
-				if (logger.isDebugEnabled()) {
-					logger.debug("==== END facesRender ====");
+		if (state != null && !state.equals(WindowState.MINIMIZED)) {
+			if (logger.isDebugEnabled()) {
+				logger.debug("==== BEGIN facesRender in WindowState " + state + " ====");
+			}
+			PortletRequestAttributes previousRequestAttributes = 
+				ContextUtils.bindRequestAndContext(request, getPortletContext());
+			if (!ExceptionUtils.exceptionAlreadyCaught()) {
+				try {
+					DatabaseUtils.open();
+					DatabaseUtils.begin();
+					super.facesRender(request, response);
+					DatabaseUtils.commit();
+					DatabaseUtils.close();
+					ContextUtils.unbindRequest(previousRequestAttributes);
+					if (logger.isDebugEnabled()) {
+						logger.debug("==== END facesRender ====");
+					}
+					return;
+				} catch (Exception e) {
+					DatabaseUtils.close();
+					catchException(e);
 				}
-				return;
+			}
+			try {
+				ExceptionService exceptionService = ExceptionUtils.getMarkedExceptionService();
+				if (exceptionService == null) {
+					logger.error("An exception was thrown but no exception service was found!");
+				} else {
+					nonFacesRequest(request, response, exceptionService.getExceptionView());
+				}
 			} catch (Exception e) {
-				DatabaseUtils.close();
-				catchException(e);
+				logger.error("An exception was caught while rendering an exception, giving up", e);
+				handleExceptionFromLifecycle(e);
+			} finally {
+				ContextUtils.unbindRequest(previousRequestAttributes);
 			}
-		}
-		try {
-			ExceptionService exceptionService = ExceptionUtils.getMarkedExceptionService();
-			if (exceptionService == null) {
-				logger.error("An exception was thrown but no exception service was found!");
-			} else {
-				nonFacesRequest(request, response, exceptionService.getExceptionView());
-			}
-		} catch (Exception e) {
-			logger.error("An exception was caught while rendering an exception, giving up", e);
-			handleExceptionFromLifecycle(e);
-		} finally {
-			ContextUtils.unbindRequest(previousRequestAttributes);
 		}
 	}
 

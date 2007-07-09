@@ -18,6 +18,13 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 		<refCategoryProfile refId="rss" />
 	</context>
 
+	<context 
+	  name = "Contexte d'exemple"
+	  id = "context">
+	  <description>Test Context used in servlet mode (NOT NORMAL MODE!)</description> 
+  	  <refCategoryProfile refId="demo2"/>
+	</context>
+
 	<categoryProfile name="Les liens utiles au CRI" id="liens"
 		urlCategory="&repConf;liens.xml"
 		trustCategory="no" access="public" ttl="3600" timeout="3000">
@@ -44,4 +51,23 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 		</visibility>
 	</categoryProfile>
 
+	<categoryProfile 
+		name="Categorie de démo 2"
+		id="demo2"
+		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo2.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600" 
+		timeout = "3000" > 
+		<visibility>
+			<!-- allowed and autoSubscribed not yet supported -->
+			<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group
+					name="local.0"/>
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+		
 </channelConfig>

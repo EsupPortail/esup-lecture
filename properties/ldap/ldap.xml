@@ -13,11 +13,11 @@
 	-->
 
 	<bean id="ldapService"
-		class="org.esupportail.commons.services.ldap.CachingLdapServiceImpl" >
+		class="org.esupportail.commons.services.ldap.SearchableLdapUserServiceImpl" >
 		<description>
 			This bean provides LDAP facilities to all the other beans.
 			It must implement interface
-			org.esupportail.commons.services.ldap.LdapService. This service is
+			org.esupportail.commons.services.ldap.LdapUserService. This service is
 			used both for searching the attributes of connected users
 			and also for searchin users (get their id from a part of
 			their identity). In the example below, if "smith" is the
@@ -36,34 +36,40 @@
 				The LDAP template used to access the LDAP directory.
 			</description>
 		</property>
-		<property name="uidAttribute" value="uid">
+		<property name="dnSubPath" value="ou=people">
+			<description>The DN sub path.</description>
+		</property>
+		<property name="idAttribute" value="uid">
 			<description>
 				The LDAP attribute that stores the unique identifier of
 				users in the LDAP directory (optional, "uid" by
 				default).
 			</description>
 		</property>
-		<property name="searchAttribute" value="cn">
-			<description>The LDAP attribute to search for.</description>
-		</property>
-		<property name="searchDisplayedAttributes">
+		<property name="attributes">
 			<description>
-				The LDAP attributes to display when several entries are
-				found (at least one is needed).
+				The LDAP attributes to retrieve.
 			</description>
 			<list>
 				<value>cn</value>
 				<value>displayName</value>
 				<value>employeeType</value>
 				<value>departmentNumber</value>
+				<value>homeDirectory</value>
 			</list>
 		</property>
-		<property name="otherAttributes">
+		<property name="searchAttribute" value="cn">
+			<description>The LDAP attribute to search for.</description>
+		</property>
+		<property name="searchDisplayedAttributes">
 			<description>
-				The other LDAP attributes to retrieve (not displayed in search results).
+				The LDAP attributes to display when searching for users.
 			</description>
 			<list>
-				<value>homeDirectory</value>
+				<value>cn</value>
+				<value>displayName</value>
+				<value>employeeType</value>
+				<value>departmentNumber</value>
 			</list>
 		</property>
 		<property name="cacheManager" ref="cacheManager">
@@ -103,7 +109,7 @@
 			http://ldaptemplate.sourceforge.net.
 		</description>
 		<property name="url"
-			value="ldap://ldap.univ.fr:389">
+			value="ldap://ldap.esup-portail.org:389">
 			<description>The LDAP URL of the directory.</description>
 		</property>
 		<property name="userName" value="">
@@ -117,7 +123,7 @@
 			</description>
 		</property>
 		<property name="base"
-			value="ou=people,dc=univ,dc=fr">
+			value="dc=esup-portail,dc=org">
 			<description>The search base (mandatory).</description>
 		</property>
 		<property name="baseEnvironmentProperties">
