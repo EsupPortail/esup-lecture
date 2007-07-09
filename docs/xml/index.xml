@@ -130,7 +130,15 @@
         </listitem>
 
         <listitem>
+          <para><ulink url="TODO.html">TODO</ulink></para>
+        </listitem>
+
+        <listitem>
           <para><ulink url="../api/index.html">API</ulink></para>
+        </listitem>
+
+        <listitem>
+          <para><ulink url="../uml">UML developer documentation</ulink></para>
         </listitem>
       </itemizedlist></para>
   </section>
