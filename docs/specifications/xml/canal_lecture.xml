@@ -1,0 +1,1595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//UR1//DTD docGeneric//FR"
+"http://outils.univ-rennes1.fr/xxe/dtd/docGeneric.dtd">
+<article lang="FR">
+  <title>Projet CANAL LECTURE - Spécifications globales</title>
+
+  <subtitle>Canal Lecture ou autre chose on verra.</subtitle>
+
+  <articleinfo>
+    <copyright>
+      <year>17/01/06</year>
+
+      <holder>Gwénaelle Bouteille</holder>
+    </copyright>
+
+    <releaseinfo>
+      <remark><productname></productname>&#160;-&#160;<productnumber></productnumber></remark>
+    </releaseinfo>
+
+    <abstract>
+      <para>Description des étapes pour le projet Canal Lecture</para>
+
+      <para>Analyse générale pour toutes les versions.</para>
+    </abstract>
+  </articleinfo>
+
+  <formalpara>
+    <title>Introduction</title>
+
+    <para> L'idée de départ est de séparer le canal "Annonces" en deux
+    :<itemizedlist>
+        <listitem>
+          <para>gestion de la saisie des annonces : le canal annonce</para>
+        </listitem>
+
+        <listitem>
+          <para>gestion de la consultation pour diverses sources d'information
+          en format XML : le canal lecture. Voici des exemples de ce qu'il
+          permet de consulter :<itemizedlist>
+              <listitem>
+                <para>annonces du portail</para>
+              </listitem>
+
+              <listitem>
+                <para>annonces CMS</para>
+              </listitem>
+
+              <listitem>
+                <para>flux RSS externes</para>
+              </listitem>
+
+              <listitem>
+                <para>site web de formation (concept site d'appui)</para>
+              </listitem>
+
+              <listitem>
+                <para>signets de groupes</para>
+              </listitem>
+            </itemizedlist></para>
+        </listitem>
+      </itemizedlist>Le canal lecture permettra d'afficher des annonces
+    classées par thème eux mêmes situés dans des catégories. On envisage de
+    généraliser ce système à l'affichage de sources d'informations au format
+    XML. Voici la correspondance des termes utilisés (Généralité --&gt;
+    exemple des annonces) :<itemizedlist>
+        <listitem>
+          <para>Catégorie --&gt; catégorie</para>
+        </listitem>
+
+        <listitem>
+          <para>Thème d'annonce --&gt; source XML</para>
+        </listitem>
+
+        <listitem>
+          <para>annonce --&gt; item</para>
+        </listitem>
+      </itemizedlist></para>
+  </formalpara>
+
+  <caution>
+    <para></para>
+  </caution>
+
+  <section>
+    <title>Expression et analyse des besoins</title>
+
+    <para></para>
+
+    <section>
+      <title>Définitions </title>
+
+      <para>Voici les différents objets manipulés par le canal lecture
+      :<itemizedlist>
+          <listitem>
+            <para><emphasis>un item</emphasis> : c'est une unité d'information
+            indépendante "autonome" diffusée sous la forme d'un élément XML de
+            format libre.</para>
+
+            <para>exemple : une annonce de l'université, un item RSS</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>un flux XML</emphasis> : c'est un ensemble d'items
+            destinés à être affiché par le Canal Lecture par le biais d'une
+            feuille xslt.</para>
+
+            <para>exemple de flux XML utilisés : un flux RSS externe, un flux
+            RSS généré par un CMS d'un site web de formation</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>une source XML</emphasis> : c'est l'élément
+            définissant les informations nécessaires à l'obtention et
+            l'affichage d'un <emphasis>flux XML</emphasis>.</para>
+
+            <para>exemple : un thème d'annonce du canal "saisie
+            d'annonce"</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>un profil de source</emphasis> : il définit les
+            caractéristiques d'une source (localisation, droits
+            d'accès,...).</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>une catégorie</emphasis> : C'est l'élément
+            englobant d'un ensemble de <emphasis>profils de
+            sources</emphasis>.</para>
+
+            <para>exemple : "les annonces de l'université", site
+            d'appui</para>
+          </listitem>
+
+          <listitem>
+            <para><emphasis>un profil de catégorie</emphasis> : il définit les
+            caractéristiques d'une <emphasis>catégorie</emphasis>
+            (localisation, droits d'accès,...).</para>
+          </listitem>
+
+          <listitem>
+            <para>un <emphasis>contexte</emphasis> : c'est l'élément englobant
+            d'un ensemble de <emphasis>profils de catégories</emphasis>. Cette
+            notion est utilisée pour l'interface graphique. Un
+            <emphasis>context</emphasis> est lié à un fragment du portail :
+            lors de la configuration du canal dans le portail, on instanciera
+            un canal Lecture à un fragment donné, avec le contexte fourni en
+            paramètre.</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+
+    <section>
+      <title>Description des objets manipulés</title>
+
+      <para></para>
+
+      <section>
+        <title>Un item</title>
+
+        <para>Un <emphasis>item</emphasis> n'a pas de contrainte de
+        caractéristique. "item" est un nom générique pour un élément XML. Le
+        nom de cet élément XML n'est pas connu à priori. Seule la
+        <emphasis>feuille XSLT</emphasis> (relative à
+        <emphasis>l'item</emphasis>) connait ses spécificités. Si on veut
+        effectuer un zoom sur un <emphasis>item</emphasis>, celui-ci devra
+        contenir un lien vers une URL générant le zoom.</para>
+      </section>
+
+      <section>
+        <title>Une source</title>
+
+        <para>Elle se caractérise par :<itemizedlist>
+            <listitem>
+              <para>un <emphasis>flux XML</emphasis> contenant un ensemble
+              d'<emphasis>item</emphasis>s. L'affichage des items se fait
+              grâce à une feuille XSLT conforme au format de l'item. Le
+              repérage de l'item se fait grâce à la définition xpath de
+              l'item.</para>
+            </listitem>
+
+            <listitem>
+              <para>les items d'une source sont marqués "lus" ou "non
+              lus"</para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>une <emphasis>source</emphasis> qui peut être
+        <emphasis>personnelle</emphasis> ou <emphasis>contrôlée</emphasis>
+        :<itemizedlist>
+            <listitem>
+              <para><emphasis>une source personnelle</emphasis> : la
+              <emphasis>source XML</emphasis> provient de la personnalisation
+              du canal lecture par la saisie libre de l'utilisateur.</para>
+            </listitem>
+
+            <listitem>
+              <para><emphasis>une source contrôlée</emphasis> : la
+              <emphasis>source XML</emphasis> provient de l'ensemble des
+              <emphasis>sources</emphasis> rendues disponibles par
+              l'administrateur du canal. Une <emphasis>source
+              contrôlée</emphasis> à des caractéristiques
+              supplémentaires.</para>
+            </listitem>
+          </itemizedlist></para>
+      </section>
+
+      <section>
+        <title>Un profil de Source </title>
+
+        <orderedlist>
+          <listitem>
+            <para>Le profil d'une <emphasis>source XML personnelle</emphasis>,
+            se définit par : <itemizedlist>
+                <listitem>
+                  <para>la saisie IHM de :<itemizedlist>
+                      <listitem>
+                        <para>le <emphasis>nom</emphasis></para>
+                      </listitem>
+
+                      <listitem>
+                        <para><emphasis>l'URL</emphasis> du <emphasis>flux XML
+                        : l'adresse générant le flux </emphasis></para>
+                      </listitem>
+                    </itemizedlist></para>
+                </listitem>
+
+                <listitem>
+                  <para>la recherche automatique de :<itemizedlist>
+                      <listitem>
+                        <para>la <emphasis>feuille XSLT</emphasis></para>
+                      </listitem>
+
+                      <listitem>
+                        <para><emphasis>l'xpath</emphasis> de l'item</para>
+                      </listitem>
+                    </itemizedlist>grâce à un <emphasis>fichier de mapping
+                  DTD-XSLT</emphasis>-<emphasis>path</emphasis> présent au
+                  niveau de la config du canal.</para>
+                </listitem>
+              </itemizedlist></para>
+          </listitem>
+
+          <listitem>
+            <para>Le <emphasis>profil d'une</emphasis> <emphasis>source XML
+            contrôlée</emphasis>, est récupéré dans le fichier XML de sa
+            <emphasis>catégorie</emphasis> d'appartenance (cf. catégorie) qui
+            fournit :<itemizedlist>
+                <listitem>
+                  <para>le <emphasis>nom</emphasis> de la
+                  <emphasis>source</emphasis></para>
+                </listitem>
+
+                <listitem>
+                  <para>l' <emphasis>URL du flux XML</emphasis> : (exemple :
+                  url d'un thème d'annonce du portail, url d'un CMS ). Cette
+                  URL peut être exprimée à l'aide de variables pour permettre
+                  l'utilisation d'URL spécifiques à un utilisateur.</para>
+
+                  <para>Exemple :
+                  http://cms.univ-rennes1.fr/RSS/{ur1Composante}</para>
+
+                  <para>La variable peut être multivaluée et représente ainsi
+                  plusieurs URL, d'où la définition simultanée de plusieurs
+                  <emphasis>sources XML</emphasis>.</para>
+
+                  <para>Exemple : http://cms.univ-rennes1.fr/RSS/{ur1Etape}.
+                  Pour un étudiant inscrit à plusieurs étapes, on aura
+                  plusieurs URL.</para>
+                </listitem>
+
+                <listitem>
+                  <para>le <emphasis>contenu individualisé</emphasis> : oui ou
+                  non - Dans la mesure où la requète est authentifié, le flux
+                  XML généré est-il spécifique de l'utilisateur ? Cette
+                  information va être utile pour l'optimisation des
+                  performances.</para>
+                </listitem>
+
+                <listitem>
+                  <para>les autres caractéristiques y sont indiquées ou prise
+                  en compte facultaivement (cf. chapitre "origine des
+                  données") :<itemizedlist>
+                      <listitem>
+                        <para>l'URL de la <emphasis>feuille XSLTet l'xpath. Si
+                        </emphasis>l'URL de la <emphasis>feuille
+                        XSLT</emphasis> et <emphasis>l'xpath</emphasis> de
+                        l'item ne sont pas indiqués, on utilise le
+                        <emphasis>fichier de mapping DTD-XLST-xpath</emphasis>
+                        présent au niveau de la config du canal.</para>
+                      </listitem>
+
+                      <listitem>
+                        <para><emphasis>l'accessibilité</emphasis> :
+                        <emphasis>publique</emphasis> ou
+                        <emphasis>authentifié</emphasis> - ouverte à tous ou
+                        restreinte via une authentification (ex : CAS).
+                        </para>
+                      </listitem>
+
+                      <listitem>
+                        <para>les <emphasis>ensembles de visibilité</emphasis>
+                        : les ensembles désignés ci-dessous constituent
+                        l'ensemble des personnes ayant une visibilité sur la
+                        <emphasis>source XML</emphasis> :<itemizedlist>
+                            <listitem>
+                              <para><emphasis>libres</emphasis> : un utilisateur
+                              de cet ensemble a le droit de s'abonner et de se
+                              désabonner de la <emphasis>source</emphasis>.</para>
+                            </listitem>
+
+                            <listitem>
+                              <para><emphasis>préabonnés</emphasis> : en plus du
+                              droit d'abonnement et désabonnement, un utilisateur
+                              de cet ensemble est abonné automatiquement à la
+                              <emphasis>source</emphasis>.</para>
+                            </listitem>
+
+                            <listitem>
+                              <para><emphasis>forcés</emphasis> : un utilisateur
+                              de cet ensemble est automatiquement abonné à la
+                              <emphasis>source</emphasis> et ne peut pas se
+                              désabonner.</para>
+                            </listitem>
+                          </itemizedlist></para>
+
+                        <para>Le contenu de ces ensembles peut être défini par
+                        l'énumération de groupes existants et/ou par l'énoncé
+                        d'une règle d'appartenance, exemple :</para>
+
+                        <para><emphasis>libres</emphasis> = {groupe Portail
+                        "Personnels du CRI"} union {les personnes telles que
+                        "EmployeeType"="student"}</para>
+                      </listitem>
+
+                      <listitem>
+                        <para>le <emphasis>timeout</emphasis> : c'est le temps
+                        maximum d'attente pour l'obtention d'un flux
+                        XML.</para>
+                      </listitem>
+                    </itemizedlist></para>
+                </listitem>
+              </itemizedlist></para>
+          </listitem>
+
+          <listitem>
+            <para>L'élément &lt;source-profile&gt; est défini dans la dtd de
+            la category (category.dtd).</para>
+          </listitem>
+        </orderedlist>
+      </section>
+
+      <section>
+        <title>Une catégorie</title>
+
+        <orderedlist>
+          <listitem>
+            <para>Elle se caractérise par :<itemizedlist>
+                <listitem>
+                  <para>un nom</para>
+                </listitem>
+
+                <listitem>
+                  <para>une description</para>
+                </listitem>
+
+                <listitem>
+                  <para>un ensemble de profils de source<emphasis> XML
+                  </emphasis></para>
+                </listitem>
+
+                <listitem>
+                  <para>une catégorie peut être
+                  <emphasis>personnelle</emphasis> ou
+                  <emphasis>contrôlée</emphasis> :<itemizedlist>
+                      <listitem>
+                        <para>une <emphasis>catégorie personnelle</emphasis> :
+                        elle est crée par l'utilisateur dans la
+                        personnalisation du canal lecture</para>
+                      </listitem>
+
+                      <listitem>
+                        <para>une <emphasis>catégorie contrôlée</emphasis> :
+                        elle provient des <emphasis>catégorie</emphasis>s
+                        rendues disponibles par l'administrateur du
+                        canal.</para>
+
+                        <para>Une <emphasis>catégorie contrôlée</emphasis> à
+                        des caractéristiques supplémentaires :<itemizedlist>
+                            <listitem>
+                              <para><emphasis>l'éditabilité</emphasis> :
+                              <emphasis>modifiable</emphasis> ou
+                              <emphasis>figée</emphasis> : (facultatif : cf.
+                              chapitre "origine des données") possibilité pour
+                              l'utilisateur d'y ajouter des <emphasis>sources XML
+                              (cf. spécifications générales - mise en forme
+                              détaillée des besoins)</emphasis></para>
+                            </listitem>
+
+                            <listitem>
+                              <para>les <emphasis>ensembles de
+                              visibilité</emphasis> : (facultatif : cf. chapitre
+                              "origine des données") les ensembles désignés
+                              ci-dessous constituent l'ensemble des personnes
+                              ayant une visibilité sur la
+                              <emphasis>catégorie</emphasis> :<itemizedlist>
+                                  <listitem>
+                                    <para><emphasis>libres</emphasis> : un utilisateur
+                                    de cet ensemble a le droit de s'abonner et de se
+                                    désabonner de la
+                                    <emphasis>catégorie</emphasis></para>
+                                  </listitem>
+
+                                  <listitem>
+                                    <para><emphasis>préabonnés</emphasis> : en plus du
+                                    droit d'abonnement et de désabonnement, un
+                                    utilisateur de cet ensemble est automatiquement
+                                    abonné à la <emphasis>catégorie</emphasis></para>
+                                  </listitem>
+
+                                  <listitem>
+                                    <para><emphasis>forcés</emphasis> : un utilisateur
+                                    de cet ensemble est automatiquement abonné à la
+                                    <emphasis>catégorie</emphasis> et ne peut pas se
+                                    désabonner</para>
+                                  </listitem>
+                                </itemizedlist></para>
+                            </listitem>
+                          </itemizedlist></para>
+                      </listitem>
+                    </itemizedlist></para>
+                </listitem>
+              </itemizedlist></para>
+          </listitem>
+
+          <listitem>
+            <para>L'élément &lt;Category&gt; est défini dans la dtd de la
+            category (category.dtd). </para>
+          </listitem>
+        </orderedlist>
+      </section>
+
+      <section>
+        <title>Un profil de catégorie</title>
+
+        <orderedlist>
+          <listitem>
+            <para>Pour une <emphasis>catégorie personnelle</emphasis>, il n'y
+            a rien à préciser : le profil est vide.</para>
+          </listitem>
+
+          <listitem>
+            <para>Pour une <emphasis>catégorie contrôlée</emphasis>, on
+            définit son <emphasis>profil</emphasis> au niveau de la config du
+            canal. Le <emphasis>profil d'une catégorie</emphasis> doit
+            contenir :<itemizedlist>
+                <listitem>
+                  <para>le <emphasis>nom</emphasis> de la
+                  <emphasis>catégorie</emphasis></para>
+                </listitem>
+
+                <listitem>
+                  <para>l'URL du fichier XML de la catégorie (avec possibilité
+                  de variables)</para>
+                </listitem>
+
+                <listitem>
+                  <para><emphasis>l'accessibilité </emphasis></para>
+                </listitem>
+
+                <listitem>
+                  <para>le <emphasis>trust-category</emphasis> (faire
+                  confiance à la catégorie) qui définit pour les
+                  caractéristiques suivantes quelle est la priorité des
+                  définitions (cf. chapitre "origine des données") : si
+                  <emphasis>trust-catégory</emphasis> est à "vrai", les
+                  valeurs définies par la <emphasis>catégorie</emphasis> sont
+                  prioritaires mais facultatives, celles définies par le
+                  <emphasis>profil</emphasis> sont les valeurs par défaut. Si
+                  <emphasis>trust-catégory</emphasis> est à "faux", seules les
+                  valeurs définies par le <emphasis>profil</emphasis> sont
+                  prises en compte.</para>
+                </listitem>
+
+                <listitem>
+                  <para>le <emphasis>ttl</emphasis> : temps de
+                  rafraichissement d'une donnée distante</para>
+                </listitem>
+
+                <listitem>
+                  <para>les caractéristiques liées à
+                  <emphasis>trust-category</emphasis> : <itemizedlist>
+                      <listitem>
+                        <para><emphasis>l'éditabilité</emphasis></para>
+                      </listitem>
+
+                      <listitem>
+                        <para><emphasis>les ensembles de
+                        visibilité</emphasis></para>
+                      </listitem>
+
+                      <listitem>
+                        <para>le <emphasis>timeout</emphasis></para>
+                      </listitem>
+                    </itemizedlist></para>
+                </listitem>
+              </itemizedlist></para>
+          </listitem>
+
+          <listitem>
+            <para>L'élément &lt;categoryPdérofile&gt; est défini dans la dtd
+            de la configuration du canal (esup-lecture.dtd)</para>
+          </listitem>
+        </orderedlist>
+      </section>
+
+      <section>
+        <title>Un contexte</title>
+
+        <para>On définit un context au niveau de la config du canal. Il doit
+        contenir :<itemizedlist>
+            <listitem>
+              <para>le nom du contexte</para>
+            </listitem>
+
+            <listitem>
+              <para>une description du contexte</para>
+            </listitem>
+
+            <listitem>
+              <para>un ensemble de références sur des profils de catégories
+              définis dans le même canal.</para>
+            </listitem>
+
+            <listitem>
+              <para>l'éditabilité du contexte (création/suppression,
+              abonnement/désabonnement de catégories ) </para>
+            </listitem>
+          </itemizedlist></para>
+
+        <para>L'accessibilité et les ensembles de visibilité du context sont
+        gérés au niveau portail : par le biais du fragment associé au
+        contexte.</para>
+
+        <para>L'élément contexte est défini dans la dtd de la configuration du
+        canal (esup-lecture.dtd).</para>
+      </section>
+    </section>
+
+    <section>
+      <title>Origine des données : récapitulatif</title>
+
+      <para>Voici un schéma récapitulatif sur les données manipulées :</para>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata
+          fileref="media/donnees.gif">ManipluManipulatyyiin</imagedata>
+        </imageobject>
+
+        <caption>tab.1 : Manipulation des données par le canal et le serveur
+        distant</caption>
+      </mediaobject>
+
+      <para>Voici trois tableaux récapitulant la récupération des informations
+      pour les profils de sources XML et de catégories :<mediaobject>
+          <imageobject>
+            <imagedata fileref="media/tab_categorie.gif"></imagedata>
+          </imageobject>
+
+          <caption>tab.1 : Origine des données concernant les
+          catégories</caption>
+        </mediaobject><mediaobject>
+          <imageobject>
+            <imagedata fileref="media/tab_source.gif"></imagedata>
+          </imageobject>
+
+          <caption>tab. 2 : Origine des données concernant les sources
+          XML</caption>
+        </mediaobject><mediaobject>
+          <imageobject>
+            <imagedata fileref="media/trust-cat.gif">tab3</imagedata>
+          </imageobject>
+
+          <caption>tab. 3 : (*) Priorité sur la définition des paramètres liés
+          à &lt;trust-category&gt;</caption>
+        </mediaobject></para>
+
+      <para>Evaluation des ensembles de visibilté : une personne peut
+      apparaître dans deux ensembles de visibilité simultanément. Afin de
+      respecter les priorités, il faut évaluer le contenu des ensembles dans
+      l'ordre suivant : forcés, préabonnés, libres.</para>
+
+      <para>La configuration du canal doit contenir les informations suivantes
+      :<itemizedlist>
+          <listitem>
+            <para>la définition des profils de <emphasis>catégories</emphasis>
+            (contrôlée).</para>
+          </listitem>
+
+          <listitem>
+            <para>la définition des contextes</para>
+          </listitem>
+
+          <listitem>
+            <para>la localisation du <emphasis>fichier de mapping
+            DTD-XSLT-xpath</emphasis> qui met en correspondance les feuilles
+            XSLT, les définition des items en xpath avec les DTD.</para>
+          </listitem>
+        </itemizedlist></para>
+
+      <para>Le fichier de conguration du canal pourrait être de la forme
+      :<programlisting>&lt;chanelConfig mappingFile=.../mon_fichier&gt;
+  &lt;context ...&gt; ... &lt;/context&gt;
+  &lt;context ...&gt; ... &lt;/context&gt;
+  ...
+  &lt;categoryProfile ...&gt; ... &lt;/categoryProfile&gt;
+  &lt;categoryProfile ...&gt; ... &lt;/categoryProfile&gt;
+  ...
+&lt;canal&gt;</programlisting></para>
+    </section>
+
+    <section>
+      <title>Personalisations de l'utilisateur</title>
+
+      <para>Tout ce qui est propre à un utilisateur, concernant les catégories
+      et les sources sera enregistré dans le profil de l'utilisateur. Le
+      profil utilisateur contient :<itemizedlist>
+          <listitem>
+            <para>L'état de visualisation des sources et catégories :
+            pliées/selectionnée ou non</para>
+          </listitem>
+
+          <listitem>
+            <para>Le marquage d'un item lu ou non lu. Le marquage d'une source
+            ayant des items non lus. Le marquage d'une catégorie ayant de
+            items non lus</para>
+          </listitem>
+
+          <listitem>
+            <para>L'ordre de visualisation des sources dans la catégorie, des
+            catégories dans le contexte</para>
+          </listitem>
+
+          <listitem>
+            <para>Le mode de visualisation des items</para>
+          </listitem>
+
+          <listitem>
+            <para>Le zoom sur la source</para>
+          </listitem>
+
+          <listitem>
+            <para>La dimension de la fenêtre de l'arborescence</para>
+          </listitem>
+
+          <listitem>
+            <para>Les sources et catégories personnelles, les abonnements aux
+            sources et catégories contrôlées, les importations de sources et
+            catégories controlées</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+
+    <section>
+      <title>Gestion de la dynamique des données</title>
+
+      <para><itemizedlist>
+          <listitem>
+            <para>Rafraichissement des profils de <emphasis>sources
+            XML</emphasis> = rafraichir les catégories</para>
+
+            <para>Catégorie contrôllée : à chaque affichage de catégorie, si
+            le ttl de la <emphasis>catégorie</emphasis> est dépassé, les
+            profils de sources XML sont rafraichies.</para>
+
+            <para>Catégorie personnelle : à chaque session utilisateur, tous
+            les profils de sources (personnels et controllés) sont
+            rafraîchis</para>
+
+            <para>(Plus un bouton Refresh pour l'utilisateur ? )</para>
+          </listitem>
+
+          <listitem>
+            <para>Rafraichissement d'un <emphasis>flux XML</emphasis> (d'une
+            <emphasis>source XML</emphasis>) = rafraichir les sources</para>
+
+            <para>source contrôllée : à chaque affichage de la source, si le
+            <emphasis>ttl</emphasis> de la source est dépassé, la source est
+            rafraichie.</para>
+
+            <para>source personnelle : à chaque session utilisateur, la source
+            est rafraîchie</para>
+
+            <para>(Plus un bouton Refresh pour l'utilisateur ?)</para>
+          </listitem>
+
+          <listitem>
+            <para>Rafraichissement des contexts et profils de catégories :
+            lecture du fichier de configuration du canal. Il est lu à chaque
+            démarrage du canal. Puis lors de l'ouverture de chaque session
+            utilisateur, on vérifie la date de dernière modification de la
+            config et on recharge si besoin.</para>
+          </listitem>
+
+          <listitem>
+            <para>la gestion de cache sera précisée plus tard.</para>
+          </listitem>
+
+          <listitem>
+            <para>Tout ce qui est commun à plusieurs utilisateurs (catégories
+            et sources controllées) sera enregistré dans un cache global. Les
+            profils utilisateurs auront des pointeurs vers le cache
+            global.</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+
+    <section>
+      <title>Informations supplémentaires</title>
+
+      <orderedlist>
+        <listitem>
+          <para>La conception du canal inclura l'internationnalisation</para>
+        </listitem>
+
+        <listitem>
+          <para>Toutes les URL mises à disposition par le Canal Annonce sont
+          cassifiées. Le canal Lecture sera donc proxy CAS.</para>
+        </listitem>
+
+        <listitem>
+          <para>La BDD du canal Lecture ne contient aucun contenu de
+          source.</para>
+        </listitem>
+
+        <listitem>
+          <para>Interface graphique</para>
+
+          <para>A un fragment ou canal sera associé un contexte qui proposera
+          des catégories. Après sélection d'une catégorie, on accède à un
+          ensemble de <emphasis>sources</emphasis>. Par défaut, les sources
+          seront dépliées.</para>
+
+          <para>Le canal lecture pourrait être un canal transversal : sous un
+          fragment donné, on pourrait avoir un contexte dans lequel une seule
+          (ou plusieurs) <emphasis>catégorie</emphasis> est disponible, dans
+          un autre fragment, on aurait aussi le canal lecture seul mais avec
+          un autre contexte proposant d'autres (ou pas)
+          <emphasis>catégories</emphasis> (utilisable pour les souscription
+          forcées à des thèmes d'annonces par exemple).</para>
+
+          <para>L' affichage d'image, le téléchargement de fichiers en lien
+          avec une annonce est géré par le zoom sur un
+          <emphasis>item</emphasis>.</para>
+
+          <para>Pour consulter les informations diffusées par le canal
+          lecture, l'utilisateur dispose de deux modes (on utilisera les 2
+          modes des portlets) :<itemizedlist>
+              <listitem>
+                <para>mode <emphasis>view</emphasis> : <itemizedlist>
+                    <listitem>
+                      <para>Plier ou non les sources et catégories</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>Marquer un item lu ou non lu.</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>Choisir le mode de visualisation des items</para>
+                    </listitem>
+
+                    <listitem>
+                      <para>Zoomer sur la source</para>
+                    </listitem>
+                  </itemizedlist></para>
+              </listitem>
+
+              <listitem>
+                <para>mode <emphasis>edit</emphasis> : <itemizedlist>
+                    <listitem>
+                      <para>gestion de la pagination : ordonner les
+                      <emphasis>sources</emphasis> et les
+                      <emphasis>catégories</emphasis></para>
+                    </listitem>
+
+                    <listitem>
+                      <para>Les sources et catégories personnelles, les
+                      abonnements aux sources et catégories contrôlées, les
+                      importations de sources et catégories controlées</para>
+                    </listitem>
+                  </itemizedlist></para>
+              </listitem>
+            </itemizedlist></para>
+        </listitem>
+      </orderedlist>
+    </section>
+
+    <section>
+      <title>Interaction du canal avec le système</title>
+
+      <para><mediaobject>
+          <imageobject>
+            <imagedata fileref="media/global.gif">FonctionnF</imagedata>
+          </imageobject>
+
+          <caption>Fonctionnement du canal lecture en interaction avec le
+          système</caption>
+        </mediaobject></para>
+
+      <para>(Le schéma ci-dessus n'intègre pas la notion de
+      <emphasis>catégorie</emphasis> pour simplifier la
+      représentation.)</para>
+
+      <orderedlist>
+        <listitem>
+          <para>Modèle producteur/consommateur</para>
+
+          <para>Le canal de saisie d'annonce et le canal lecture sont
+          dissociés l'un de l'autre et utilisent des bases de données
+          séparées. Ils fonctionnent ensemble sur un modèle de
+          producteur/consommateur.</para>
+
+          <para>Problématique conception "producteur-consommateur" /
+          performances (contexte : producteur = canal Annonce, consommateur =
+          canal lecture) : cf. échange de mails.</para>
+        </listitem>
+
+        <listitem>
+          <para>Pré-requis attendus pour le canal de saisie des
+          annonces</para>
+
+          <para>Le nouveau canal de saisie des annonces devrait être en mesure
+          de mettre à disposition les données suivantes (via des
+          URL):<itemizedlist>
+              <listitem>
+                <para>des <emphasis>catégorie</emphasis>s (contenant des
+                profils de<emphasis> sources</emphasis>) :
+                &lt;category&gt;...&lt;/category&gt;</para>
+              </listitem>
+
+              <listitem>
+                <para>le flux XML d'une <emphasis>source</emphasis> (ex : un
+                thème d'annonce avec ses annonces au format RSS ou autre
+                XML)</para>
+              </listitem>
+
+              <listitem>
+                <para>le zoom d'un <emphasis>item</emphasis></para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Chaque <emphasis>item</emphasis> fourni dans un flux XML d'une
+          <emphasis>source</emphasis>, devra contenir un lien pointant vers
+          l'URL du zoom de l'<emphasis>item</emphasis>.</para>
+
+          <para>Pour pouvoir accéder à la <emphasis>feuille XSLT</emphasis>,
+          le serveur de <emphasis>flux XML</emphasis> devrait fournir l'un des
+          éléments suivants :<itemizedlist>
+              <listitem>
+                <para>l'URL pointant vers la feuille XSLT (défini dans le
+                profil de la <emphasis>source</emphasis>) et la définition
+                xpath de l'item</para>
+              </listitem>
+
+              <listitem>
+                <para>ou indiquer la DTD du flux XML</para>
+
+                <para>Cette dernière possibilité semble préférable car elle
+                laisse la main au canal Lecture pour le style de
+                l'affichage.</para>
+              </listitem>
+            </itemizedlist></para>
+
+          <para>Le canal Annonce ordonne les items d'une source dans le flux
+          XML. Il propose aussi un ordre par défaut pour les sources.</para>
+
+          <para>Toutes les URL mises à disposition par le nouveau canal
+          Annonce devraient être cassifiées.</para>
+
+          <para>Ergonomie pour le publicateur : la saisie des annonces et la
+          consultation deviennent séparées, il faut malgré tout permettre au
+          rédacteur un moyen de passer aisément de la vue rédacteur à la vue
+          utilisateur : le nouceau canal Annonce pourrait appeler l'URL
+          générant le zoom d'un <emphasis>item</emphasis>.</para>
+        </listitem>
+
+        <listitem>
+          <para>De la même manière, le canal Signet pourrait aussi exporter un
+          ensemble de signets sous forme de <emphasis>source
+          XML</emphasis>.</para>
+        </listitem>
+
+        <listitem>
+          <para>Site d'appui</para>
+
+          <para>Dans le contexte du canal lecture, la notion de site d'appui
+          s'implémente par l'abonnement obligatoire à toutes les
+          <emphasis>sources</emphasis> concernées par la formation (ou
+          plusieurs) de l'utilisateur.</para>
+
+          <para>Via les attributs de l'ENT, on pourrait obtenir les étapes
+          APOGEE sur lesquelles l'étudiant est inscrit afin de composer les
+          URL des sites web de(s) la (les) formation(s).</para>
+
+          <para>(cf spécif romuald)</para>
+        </listitem>
+      </orderedlist>
+    </section>
+  </section>
+
+  <section>
+    <title>Analyse des besoins</title>
+
+    <para></para>
+
+    <section>
+      <title>Glossaire métier</title>
+
+      <para>cf "expression des besoins"</para>
+    </section>
+
+    <section>
+      <title>Les acteurs</title>
+
+      <para><itemizedlist>
+          <listitem>
+            <para>Utilisateur du canal (utilisateur)</para>
+          </listitem>
+
+          <listitem>
+            <para>le portail (portail)</para>
+          </listitem>
+
+          <listitem>
+            <para>l'administrateur du canal (admin)</para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+
+    <section>
+      <title>Les cas d'utilisation</title>
+
+      <para>Voici l'énumération des cas d'utilisations concernant les
+      catégories :<itemizedlist>
+          <listitem>
+            <para>créer_catégorie</para>
+          </listitem>
+
+          <listitem>
+            <para>ajouter_categorie</para>
+          </listitem>
+
+          <listitem>
+            <para>supprimer_categorie</para>
+          </listitem>
+
+          <listitem>
+            <para>modifier_vue_categorie <itemizedlist>
+                <listitem>
+                  <para>choisir_mode_visu_categorie</para>
+                </listitem>
+
+                <listitem>
+                  <para>deplacer_source</para>
+                </listitem>
+              </itemizedlist></para>
+          </listitem>
+
+          <listitem>
+            <para>éditer_catégorie</para>
+          </listitem>
+
+          <listitem>
+            <para>abonner_categorie</para>
+          </listitem>
+
+          <listitem>
+            <para>importer_categorie</para>
+          </listitem>
+
+          <listitem>
+            <para>desabonner_categorie</para>
+          </listitem>
+
+          <listitem>
+            <para>enlever_categorie</para>
+          </listitem>
+
+          <listitem>
+            <para>afficher_categorie</para>
+          </listitem>
+
+          <listitem>
+            <para>deplier_categorie</para>
+          </listitem>
+
+          <listitem>
+            <para>replier_categorie</para>
+          </listitem>
+
+          <listitem>
+            <para>rafraichir_categorie</para>
+          </listitem>
+
+          <listitem>
+            <para>rafraichir_toutes_categories</para>
+          </listitem>
+        </itemizedlist></para>
+
+      <para>Voici l'énumération des cas d'utilisations concernant les sources
+      :<itemizedlist>
+          <listitem>
+            <para>creer_source</para>
+          </listitem>
+
+          <listitem>
+            <para>ajouter_source</para>
+          </listitem>
+
+          <listitem>
+            <para>supprimer_source</para>
+          </listitem>
+
+          <listitem>
+            <para>modifier_vue_source<itemizedlist>
+                <listitem>
+                  <para>choisir_mode_visu_source</para>
+                </listitem>
+
+                <listitem>
+                  <para>marquer_item_lu/non_lu</para>
+                </listitem>
+
+                <listitem>
+                  <para>zoomer/dezoomer_source</para>
+                </listitem>
+              </itemizedlist></para>
+          </listitem>
+
+          <listitem>
+            <para>editer_source</para>
+          </listitem>
+
+          <listitem>
+            <para>abonner_source</para>
+          </listitem>
+
+          <listitem>
+            <para>importer_source</para>
+          </listitem>
+
+          <listitem>
+            <para>desabonner_source</para>
+          </listitem>
+
+          <listitem>
+            <para>enlever_source</para>
+          </listitem>
+
+          <listitem>
+            <para>afficher_source</para>
+          </listitem>
+
+          <listitem>
+            <para>rafraichir_source</para>
+          </listitem>
+
+          <listitem>
+            <para>deplier_source</para>
+          </listitem>
+
+          <listitem>
+            <para>replier_source</para>
+          </listitem>
+
+          <listitem>
+            <para>recherche_xslt</para>
+          </listitem>
+        </itemizedlist></para>
+
+      <para>Concernant le contexte :</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>afficher_contexte</para>
+        </listitem>
+
+        <listitem>
+          <para>editer_contexte (ajout/création/suppression de
+          catégories)</para>
+        </listitem>
+
+        <listitem>
+          <para>modifier_vue_contexte<itemizedlist>
+              <listitem>
+                <para>deplacer_categorie</para>
+              </listitem>
+            </itemizedlist></para>
+        </listitem>
+
+        <listitem>
+          <para>rafraichir_contexte</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Autres :<itemizedlist>
+          <listitem>
+            <para>dimensionner_arbre</para>
+          </listitem>
+
+          <listitem>
+            <para>authentification</para>
+          </listitem>
+
+          <listitem>
+            <para>recuperer_pt_cas</para>
+          </listitem>
+
+          <listitem>
+            <para>rafraichir_config_canal</para>
+          </listitem>
+        </itemizedlist></para>
+
+      <para>C'est une première énumération des cas d'utilisation apparu
+      nécessaire. Ils seront complétés, modifiés lors de la spécification
+      générale.</para>
+
+      <para>Concernant les cas d'utilisations dont la mise en oeuvre est
+      manuelle, voici :</para>
+
+      <itemizedlist>
+        <listitem>
+          <para>Définir un profil de catégorie contrôlée dans un
+          contexte(&lt;profil-catgory&gt;) par l'édition de la config du
+          canal</para>
+        </listitem>
+
+        <listitem>
+          <para>Modifier le profil d'une catégorie contrôlée : édition de la
+          config du canal</para>
+        </listitem>
+
+        <listitem>
+          <para>Supprimer un profil de catégorie contrôlée : édition de la
+          config du canal</para>
+        </listitem>
+
+        <listitem>
+          <para>Définir un contexte : édition de la config du canal</para>
+        </listitem>
+
+        <listitem>
+          <para>Supprimer un contexte : édition de la config du canal</para>
+        </listitem>
+
+        <listitem>
+          <para>Ordonner un contexte : édition de la config du canal (l'ordre
+          des catégories est l'ordre de définition dans la config)</para>
+        </listitem>
+      </itemizedlist>
+    </section>
+  </section>
+
+  <section>
+    <title>Spécifications générales</title>
+
+    <para></para>
+
+    <section>
+      <title>Mise en forme détaillée des besoins</title>
+
+      <para>Cf. "expression des besoins" : les modifications y ont été
+      ajoutées au fur et à mesure.</para>
+
+      <para>Concernant l'éditabilité des contextes et catégories, le droit d'y
+      créer ses propres catégories ou sources, le droit d'y ajouter des
+      catégories ou sources controllées existantes, rend le système assez
+      complexe. Voici un shéma regroupant toutes les possibilités et les cas
+      que nous avons retenus :</para>
+
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="media/contexte-cat-sources.gif"></imagedata>
+        </imageobject>
+
+        <caption>Différents cas possibles de personnalisation d'un
+        contexte</caption>
+      </mediaobject>
+
+      <para>Légende :<itemizedlist>
+          <listitem>
+            <para>1 : Deux possibilités :<itemizedlist>
+                <listitem>
+                  <para>action = s'abonner à une catégorie controlée (aucune
+                  condition)</para>
+                </listitem>
+
+                <listitem>
+                  <para>action = importer une catégorie controlée (condition :
+                  context.edit = managed | all)</para>
+                </listitem>
+              </itemizedlist>Un contexte peut être vide : il ne peut être
+            relié à aucune catégorie contrôlée. Ainsi cela fournit un contexte
+            entièrement personnalisable pour l'utilisateur du canal.</para>
+          </listitem>
+
+          <listitem>
+            <para>2 : personnalisation</para>
+
+            <para>action = créer ou ajouter (si déjà existante) une catégorie
+            personnelle ( si context.edit = personal | all )</para>
+          </listitem>
+
+          <listitem>
+            <para>3 : s'abonner ou importer une catégorie controlée : cf. 7 ou
+            8</para>
+
+            <para>Une catégorie contrôlée peut elle n'avoir aucune source
+            contrôlée : peut elle être vide ? Oui ? Pour plus de souplesse (ou
+            robustesse) vis à vis du serveur distant qui fournit les catégorie
+            ?</para>
+          </listitem>
+
+          <listitem>
+            <para>4 : personalisation</para>
+
+            <para>cf.9 (si categorie : edit = all | personal)</para>
+          </listitem>
+
+          <listitem>
+            <para>5 : cas usuel : créer une source personnelle dans une
+            catégorie personnelle (pas de condition)</para>
+
+            <para>action = cf. 9</para>
+          </listitem>
+
+          <listitem>
+            <para>6 :</para>
+
+            <para>action = importer une source contrôlée (rendue disponible
+            par le canal) (pas de condition) + cf.10</para>
+          </listitem>
+
+          <listitem>
+            <para>7 : Cas usuel</para>
+
+            <para>action = s'abonner à une source contrôlée de la catégorie
+            courante (aucune condition)</para>
+          </listitem>
+
+          <listitem>
+            <para>8 : personnalisation</para>
+
+            <para>action = importer source contrôlée (hors catégorie courante)
+            (si categorie.edit = managed | all )</para>
+          </listitem>
+
+          <listitem>
+            <para>9 : personnalisation</para>
+
+            <para>action = créer ou ajouter (si déjà existante) une source
+            personnelle</para>
+
+            <para>une source personnelle est indépendante d'un contexte. Elle
+            peut existé même si elle n'apparaît dans aucun contexte</para>
+          </listitem>
+
+          <listitem>
+            <para>10 : on choisit de pouvoir imorter une source contrôlée
+            qu'elle soit ou non définie (via une catégorie contrôlée du
+            contexte) dans le contexte courant : on rend disponible les
+            sources controlées définies dans des catégories controlées non
+            disponibles dans le contexte courant.</para>
+
+            <para>action = s'abonner à une source contrôlée (rendue disponible
+            par le canal) (si contexte : "edit" = "all")</para>
+          </listitem>
+
+          <listitem>
+            <para>11 : Concernant les sources contrôlées n'appartenant pas à
+            la catégorie contrôlée courante, comme en 10, elles peuvent
+            provenir de différents contextes.</para>
+          </listitem>
+
+          <listitem>
+            <para>12 : Toutes les sources contrôlées rendues disponibles
+            doivent obligatoriement être rattachées à un contexte. On peut
+            imaginer créer un contexte proposant diverses catégories
+            contrôlées, mais qui ne serait pas présenté dans le canal. Ce
+            contexte servirait de "réservoir" à catégories contrôlées pour les
+            personnalisations.</para>
+          </listitem>
+        </itemizedlist></para>
+
+      <para>Modification de la caractéristique <emphasis>edit </emphasis>:
+      <itemizedlist>
+          <listitem>
+            <para>niveau contexte : <table>
+                <tgroup cols="5">
+                  <tbody>
+                    <row>
+                      <entry>Edit =</entry>
+
+                      <entry>no</entry>
+
+                      <entry>personal</entry>
+
+                      <entry>managed</entry>
+
+                      <entry>all</entry>
+                    </row>
+
+                    <row>
+                      <entry>comportement du contexte</entry>
+
+                      <entry>Contexte non éditable <itemizedlist>
+                          <listitem>
+                            <para>abonnement/désabonnement possible de cat.
+                            contrôlée du contexte courant</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>pas d'ajout/création de catégorie
+                            personnelle</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>pas d'importation de catégories
+                            controlées</para>
+                          </listitem>
+                        </itemizedlist></entry>
+
+                      <entry>Contexte éditable : <itemizedlist>
+                          <listitem>
+                            <para>abonnement/désabonnement possible de cat.
+                            contrôlée du contexte courant</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>ajout/création possible de catégorie
+                            personnelle</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>pas d'importation de catégories
+                            controlées</para>
+                          </listitem>
+                        </itemizedlist></entry>
+
+                      <entry>Contexte éditable : <itemizedlist>
+                          <listitem>
+                            <para>abonnement/désabonnement possible de cat.
+                            contrôlée du contexte courant</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>pas d'ajout/création de catégorie
+                            personnelle</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>importation possible de catégories
+                            controlées</para>
+                          </listitem>
+                        </itemizedlist></entry>
+
+                      <entry>Contexte éditable : <itemizedlist>
+                          <listitem>
+                            <para>abonnement/désabonnement possible de cat.
+                            contrôlée du contexte courant</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>ajout/création possible de catégorie
+                            personnelle</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>importation possible de catégories
+                            controlées</para>
+                          </listitem>
+                        </itemizedlist></entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </table></para>
+          </listitem>
+
+          <listitem>
+            <para>niveau catégorie controlée:<table>
+                <tgroup cols="5">
+                  <tbody>
+                    <row>
+                      <entry>Edit =</entry>
+
+                      <entry>no</entry>
+
+                      <entry>personal</entry>
+
+                      <entry>managed</entry>
+
+                      <entry>all</entry>
+                    </row>
+
+                    <row>
+                      <entry>comportement d'une catégorie contrôlée</entry>
+
+                      <entry>Catégorie non éditable :<itemizedlist>
+                          <listitem>
+                            <para>abonnement/désabonnement possible de sources
+                            contrôlées de la cat. courante</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>pas d'ajout/création de sources
+                            personnelle</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>pas d'importation de sources controlées</para>
+                          </listitem>
+                        </itemizedlist></entry>
+
+                      <entry><para>Catégorie éditable :</para><itemizedlist>
+                          <listitem>
+                            <para>abonnement/désabonnement possible de sources
+                            contrôlées de la cat. courante</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>d'ajout/création possible de sources
+                            personnelle</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>pas d'importation de sources controlées</para>
+                          </listitem>
+                        </itemizedlist></entry>
+
+                      <entry><para>Catégorie éditable :</para><itemizedlist>
+                          <listitem>
+                            <para>abonnement/désabonnement possible de sources
+                            contrôlées de la cat. courante</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>pas d'ajout/création de sources
+                            personnelle</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>importation possible de sources
+                            controlées</para>
+                          </listitem>
+                        </itemizedlist></entry>
+
+                      <entry><para>Catégorie éditable :</para><itemizedlist>
+                          <listitem>
+                            <para>abonnement/désabonnement possible de sources
+                            contrôlées de la cat. courante</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>ajout/création possible de sources
+                            personnelles</para>
+                          </listitem>
+
+                          <listitem>
+                            <para>importation possible de sources
+                            controlées</para>
+                          </listitem>
+                        </itemizedlist></entry>
+                    </row>
+                  </tbody>
+                </tgroup>
+              </table></para>
+          </listitem>
+
+          <listitem>
+            <para>niveau catégorie personnelle : on peut toujours
+            créer/ajouter des sources personnelles et importer des sources
+            controlées : pas de type edit.</para>
+          </listitem>
+        </itemizedlist></para>
+
+      <para></para>
+    </section>
+
+    <section>
+      <title>Diagrammes uses-cases</title>
+
+      <para>Les diagrammes suivants contiennent la description des uses cases
+      ainsi que les relations entre eux : <ulink
+      url="../../uses-cases/uses-cases-contexte/index.html">uses-cases-contexte</ulink>
+      (actions relatives au contexte), <ulink
+      url="../../uses-cases/uses-cases-category/index.html">uses-cases-category</ulink>
+      (actions relatives aux catégories) et <ulink
+      url="../../uses-cases/uses-cases-source/index.html">uses-cases-source</ulink>
+      (actions relatives aux sources). Le diagramme <ulink
+      url="../../uses-cases/uses-cases-rafraichir/index.html">uses-cases-rafraichir</ulink>
+      reprend tous les enchainements de cas d'utilisations concernant la mise
+      à jour des données.</para>
+    </section>
+  </section>
+
+  <section>
+    <title>Spécifications détaillées</title>
+
+    <para></para>
+
+    <section>
+      <title>Diagrammes UML</title>
+
+      <para><itemizedlist>
+          <listitem>
+            <para>Diagrammes de classe :</para>
+
+            <para>Les diagrammes suivants contiennent une première description
+            statique du canal lecture :<itemizedlist>
+                <listitem>
+                  <para>environnement global du canal, catégories et sources,
+                  contrôlées et personnelles : <ulink
+                  url="../../diag-classes/global-env1/index.html">global-env1</ulink></para>
+                </listitem>
+
+                <listitem>
+                  <para>personnalisations d'un profil utilisateur : <ulink
+                  url="../../diag-classes/profil-utilisateur1/index.html">profil-utilisateur1</ulink></para>
+                </listitem>
+
+                <listitem>
+                  <para>personnalisations des catégories personnelles : <ulink
+                  url="../../diag-classes/perso-cat1/index.html">perso-cat1</ulink></para>
+                </listitem>
+
+                <listitem>
+                  <para>personnalisations des catégories contrôlées : <ulink
+                  url="../../diag-classes/managed-cat1/index.html">managed-cat1</ulink></para>
+                </listitem>
+
+                <listitem>
+                  <para>personnalisations des sources personnelles : <ulink
+                  url="../../diag-classes/perso-sources1/index.html">perso-sources1</ulink></para>
+                </listitem>
+
+                <listitem>
+                  <para>personnalisations des sources contrôlées : <ulink
+                  url="../../diag-classes/managed-sources1/index.html">managed-sources1</ulink></para>
+                </listitem>
+              </itemizedlist></para>
+          </listitem>
+
+          <listitem>
+            <para>Diagramme de uses-cases :</para>
+
+            <para>Les diagrammes suivants contiennent la description des uses
+            cases ainsi que les relations entre eux : <ulink
+            url="../../uses-cases/uses-cases-contexte/index.html">uses-cases-contexte</ulink>
+            (actions relatives au contexte), <ulink
+            url="../../uses-cases/uses-cases-category/index.html">uses-cases-category</ulink>
+            (actions relatives aux catégories) et <ulink
+            url="../../uses-cases/uses-cases-source/index.html">uses-cases-source</ulink>
+            (actions relatives aux sources). Le diagramme <ulink
+            url="../../uses-cases/uses-cases-rafraichir/index.html">uses-cases-rafraichir</ulink>
+            reprend tous les enchainements de cas d'utilisations concernant la
+            mise à jour des données.</para>
+
+            <para>Voici quelques précisions :<itemizedlist>
+                <listitem>
+                  <para>Action globale : le contexte du canal est en mémoire
+                  ainsi que les profils des catégories.</para>
+                </listitem>
+
+                <listitem>
+                  <para>Action utilisateur : le profil de l'utilisateur vient
+                  s'ajouter au contexte du canal et aux profils de
+                  catégories.</para>
+                </listitem>
+
+                <listitem>
+                  <para>Une catégorie contrôllée définie dans un profil
+                  utilisateur implique la définition de son profil dans le
+                  contexte du canal. Une source contrôllée définie dans un
+                  profil utilisateur implique la définition de son profil dans
+                  une catégorie contrôllée elle même définie dans le contexte
+                  du canal.</para>
+                </listitem>
+              </itemizedlist></para>
+          </listitem>
+        </itemizedlist></para>
+    </section>
+  </section>
+</article>
