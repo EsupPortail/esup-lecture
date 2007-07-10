@@ -7,7 +7,7 @@
   <articleinfo>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="media/logoCLectureV1.jpg"></imagedata>
+        <imagedata fileref="images/logoCLectureV1.jpg"></imagedata>
       </imageobject>
     </mediaobject>
 
@@ -124,7 +124,7 @@
 
         <mediaobject>
           <imageobject>
-            <imagedata fileref="media/channelManager.gif"></imagedata>
+            <imagedata fileref="images/channelManager.gif"></imagedata>
           </imageobject>
         </mediaobject>
 
@@ -316,7 +316,7 @@
                   portlet then context with id “default” is used. With this
                   mechanism you can define many channels with many contexts
                   definitions in your portal environment with just one
-                  instance of the portlet. </para>
+                  instance of the portlet.</para>
 
                   <para><note>
                       <para>Before uPortal 2.5.4, because of a bug (<ulink

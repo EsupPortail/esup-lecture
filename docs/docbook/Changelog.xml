@@ -7,7 +7,7 @@
   <articleinfo>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="media/logoCLectureV1.jpg"></imagedata>
+        <imagedata fileref="images/logoCLectureV1.jpg"></imagedata>
       </imageobject>
     </mediaobject>
 
@@ -27,6 +27,16 @@
       </affiliation>
     </author>
   </articleinfo>
+
+  <section>
+    <title>Current</title>
+
+    <para><itemizedlist>
+        <listitem>
+          <para>Added: It uses esup-commons 0.17.0</para>
+        </listitem>
+      </itemizedlist></para>
+  </section>
 
   <section>
     <title>Version 0.8.2</title>

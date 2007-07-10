@@ -7,7 +7,7 @@
   <articleinfo>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="media/logoCLectureV1.jpg"></imagedata>
+        <imagedata fileref="images/logoCLectureV1.jpg"></imagedata>
       </imageobject>
     </mediaobject>
 
@@ -66,7 +66,7 @@
 
     <para><mediaobject>
         <imageobject>
-          <imagedata fileref="media/logo_esupportail.jpg"></imagedata>
+          <imagedata fileref="images/logo_esupportail.jpg"></imagedata>
         </imageobject>
       </mediaobject></para>
 

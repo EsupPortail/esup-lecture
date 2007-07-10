@@ -7,7 +7,7 @@
   <articleinfo>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="media/logoCLectureV1.jpg"></imagedata>
+        <imagedata fileref="images/logoCLectureV1.jpg"></imagedata>
       </imageobject>
     </mediaobject>
 
@@ -167,7 +167,7 @@
 
     <para><mediaobject>
         <imageobject>
-          <imagedata fileref="media/IHM-V5-CLecture.gif"></imagedata>
+          <imagedata fileref="images/IHM-V5-CLecture.gif"></imagedata>
         </imageobject>
       </mediaobject><itemizedlist>
         <listitem>
