@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE article PUBLIC "-//UR1//DTD docGeneric//FR"
 "http://outils.univ-rennes1.fr/xxe/dtd/docGeneric.dtd">
 <article lang="FR">
-  <title>Projet CANAL LECTURE version 1.00</title>
+  <title>Projet CANAL LECTURE SpÃ©cifications dÃ©taillÃ©es version 1.00</title>
 
   <subtitle>Canal lecture : affichage des annonces</subtitle>
 
@@ -10,7 +10,7 @@
     <copyright>
       <year>11 avril 2006</year>
 
-      <holder>Gwénaelle Bouteille</holder>
+      <holder>GwÃ©naelle Bouteille</holder>
     </copyright>
 
     <releaseinfo>
@@ -18,8 +18,8 @@
     </releaseinfo>
 
     <abstract>
-      <para>Description des étapes pour le projet Canal Lecture version 1.00
-      depuis les "spécifications détaillées"</para>
+      <para>Description des Ã©tapes pour le projet Canal Lecture version 1.00
+      des "spÃ©cifications dÃ©taillÃ©es"</para>
     </abstract>
   </articleinfo>
 
@@ -31,11 +31,11 @@
         <listitem>
           <para>niveau source :<itemizedlist>
               <listitem>
-                <para>abonner_source (mode edit) : à faire</para>
+                <para>abonner_source (mode edit) : Ã  faire</para>
               </listitem>
 
               <listitem>
-                <para>desabonner_source (mode edit) : à faire</para>
+                <para>desabonner_source (mode edit) : Ã  faire</para>
               </listitem>
 
               <listitem>
@@ -57,11 +57,11 @@
         </listitem>
 
         <listitem>
-          <para>niveau catégorie :</para>
+          <para>niveau catÃ©gorie :</para>
 
           <para><itemizedlist>
               <listitem>
-                <para>deplacer_source (mode edit) : à faire plus tard</para>
+                <para>deplacer_source (mode edit) : Ã  faire plus tard</para>
               </listitem>
 
               <listitem>
@@ -89,7 +89,7 @@
               </listitem>
 
               <listitem>
-                <para>deplacer_categorie (mode edit) : à faire plus
+                <para>deplacer_categorie (mode edit) : Ã  faire plus
                 tard</para>
               </listitem>
 
@@ -118,7 +118,7 @@
               </listitem>
 
               <listitem>
-                <para>afficher_aide (icone "Aide du canal") : à faire plus
+                <para>afficher_aide (icone "Aide du canal") : Ã  faire plus
                 tard</para>
               </listitem>
             </itemizedlist></para>
@@ -128,12 +128,12 @@
 
   <caution>
     <para>L'analyse pour la version 1.00 s'appuie sur l'analyse globale. Les
-    modifications apportées ne seront pas répercutées dans l'analyse global
-    que l'on considère comme terminée.</para>
+    modifications apportÃ©es ne seront pas rÃ©percutÃ©es dans l'analyse global
+    que l'on considÃ¨re comme terminÃ©e.</para>
   </caution>
 
   <section>
-    <title>Spécifications détaillées</title>
+    <title>SpÃ©cifications dÃ©taillÃ©es</title>
 
     <para></para>
 
@@ -142,141 +142,75 @@
 
       <para><itemizedlist>
           <listitem>
-            <para>Diagrammes de classe :</para>
+            <para>Diagrammes de classe : Il faut se rÃ©fÃ©rer aux diagrammes UML
+            de conception/dÃ©veloppement, prÃ©sents dans le rÃ©pertoire
+            docs/uml/classes du projet. </para>
+          </listitem>
 
-            <para>Les diagrammes suivants contiennent la description statique
-            du canal lecture, issue de l'analyse globale et de la
-            spécification détaillée pour la version 1.00 du canal lecture
+          <listitem>
+            <para>Diagrammes d'activitÃ©s (traitements nominaux et alternatifs,
+            traitement d'exception, logs) : ils dÃ©crivent les cas
+            d'utilisation indiquÃ©s. Ils sont accessibles depuis le fichier
+            index.html dans les rÃ©pertoires suivants (dans
+            <emphasis>docs/specifications/diag-activites</emphasis>)
             :<itemizedlist>
                 <listitem>
-                  <para>environnement global du canal, catégories et sources,
-                  contrôlées et personnelles : <ulink
-                  url="../../diag-classes/global-env1/index.html">global-env1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para>personnalisations d'un profil utilisateur : <ulink
-                  url="../../diag-classes/profil-utilisateur1/index.html">profil-utilisateur1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para>personnalisations des catégories personnelles : <ulink
-                  url="../../diag-classes/perso-cat1/index.html">perso-cat1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para>personnalisations des catégories contrôlées : <ulink
-                  url="../../diag-classes/managed-cat1/index.html">managed-cat1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para>personnalisations des sources personnelles : <ulink
-                  url="../../diag-classes/perso-sources1/index.html">source-sources1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para>personnalisations des sources contrôlées : <ulink
-                  url="../../diag-classes/managed-sources1/index.html">managed-sources1</ulink></para>
-                </listitem>
-              </itemizedlist></para>
-          </listitem>
-
-          <listitem>
-            <para>Diagramme de uses-cases : leur contenu va être revu au fur
-            et à mesure de la création des diagrammes d'activité.<itemizedlist>
-                <listitem>
-                  <para><ulink
-                  url="../../uses-cases/v1/uses-cases-contexte-v1/index.html">uses-cases-contexte-v1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para><ulink
-                  url="../../uses-cases/v1/uses-cases-category-v1/index.html">uses-cases-category-v1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para><ulink
-                  url="../../uses-cases/v1/uses-cases-source-v1/index.html">uses-cases-source-v1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para><ulink
-                  url="../../uses-cases/v1/uses-cases-rafraichir-v1/index.html">uses-cases-rafraichir-v1</ulink></para>
-                </listitem>
-              </itemizedlist></para>
-          </listitem>
-
-          <listitem>
-            <para>Description des "uses cases" : Diagrammes d'activités
-            (traitements nominaux et alternatifs, traitement d'exception,
-            logs), ils décrivent les cas d'utilisation indiqués :<itemizedlist>
-                <listitem>
-                  <para><ulink
-                  url="../../diag-activites/act-rafraichir_config_canal-v1/index.html">act-rafraichir_config_canal-v1</ulink>
-                  : Rafraichir_config_canal, charger_tous_contextes,
-                  charger_tous_profils_categories,
+                  <para><emphasis>act-rafraichir_config_canal-v1</emphasis>:
+                  charger_tous_contextes, charger_tous_profils_categories,
                   forcer_timer_categorie</para>
                 </listitem>
 
                 <listitem>
-                  <para><ulink
-                  url="../../diag-activites/act-rafraichir_categorie_controlee-v1/index.html">act-rafraichir_categorie_controlee-v1</ulink>
-                  : rafraichir_categorie_controlée, enregistrer_source,
+                  <para><emphasis>act-rafraichir_categorie_controlee-v1</emphasis>:
+                  rafraichir_categorie_controlÃ©e, enregistrer_source,
                   recuperer_pt_cas, effacer_source,
                   forcer_time_source_globale,
                   forcer_time_source_individuelle</para>
                 </listitem>
 
                 <listitem>
-                  <para><ulink
-                  url="../../diag-activites/act-afficher_context-v1/index.html">act-afficher_contexte-v1</ulink>
-                  : afficher_contexte, enregistrer_categorie,
+                  <para><emphasis>act-afficher_contexte-v1</emphasis> :
+                  afficher_contexte, enregistrer_categorie,
                   rafraichir_context, effacer_categorie,
-                  forcer_timer_categorie, afficher_contexte_selectionné</para>
+                  forcer_timer_categorie, afficher_contexte_selectionnÃ©</para>
                 </listitem>
 
                 <listitem>
-                  <para><ulink
-                  url="../../diag-activites/act-afficher_categorie-v1/index.html">act-afficher_categorie-v1</ulink>
-                  : afficher_categorie, afficher_catégorie_sélectionnée,
-                  afficher_catégorie_dépliée</para>
+                  <para><emphasis>act-afficher_categorie-v1</emphasis> :
+                  afficher_categorie, afficher_catÃ©gorie_sÃ©lectionnÃ©e,
+                  afficher_catÃ©gorie_dÃ©pliÃ©e</para>
                 </listitem>
 
                 <listitem>
-                  <para><ulink
-                  url="../../diag-activites/act-afficher_source-v1/index.html">act-afficher_source-v1</ulink>
-                  : afficher_source, afficher_source_sélectionnée,
+                  <para><emphasis>act-afficher_source-v1</emphasis> :
+                  afficher_source, afficher_source_sÃ©lectionnÃ©e,
                   rafraichir_source, recherche_xslt_xpath</para>
                 </listitem>
 
                 <listitem>
-                  <para><ulink
-                  url="../../diag-activites/act-divers_contexte-v1/index.html">act-divers_contexte-v1</ulink>
-                  : modifier_vue_contexte, selectionner_contexte,
+                  <para><emphasis>act-divers_contexte-v1</emphasis> :
+                  modifier_vue_contexte, selectionner_contexte,
                   dimensionner_arbre, editer_contexte, selectionner_categorie,
                   deplacer_categorie</para>
                 </listitem>
 
                 <listitem>
-                  <para><ulink
-                  url="../../diag-activites/act-divers_categorie-v1/index.html">act-divers_categorie-v1</ulink>
-                  : abonner_source, modifier_vue_categorie, editer_categorie,
-                  désabonner_source, plier/deplier_categorie, deplacer_source,
-                  sélectionner_source</para>
+                  <para><emphasis>act-divers_categorie-v1</emphasis> :
+                  abonner_source, modifier_vue_categorie, editer_categorie,
+                  dÃ©sabonner_source, plier/deplier_categorie, deplacer_source,
+                  sÃ©lectionner_source</para>
                 </listitem>
 
                 <listitem>
-                  <para><ulink
-                  url="../../diag-activites/act-divers_source-v1/index.html">act-divers_source-v1</ulink>
-                  : modifier_vue_source, choisir_mode_visu_source,
+                  <para><emphasis>act-divers_source-v1</emphasis> :
+                  modifier_vue_source, choisir_mode_visu_source,
                   zoomer/dezoomer_source, marquer_item_lu/non_lu</para>
                 </listitem>
 
                 <listitem>
-                  <para><ulink
-                  url="../../diag-activites/act-charger_element-v1/index.html">act-charger_element-v1</ulink>
-                  : charger_element, charger_source_individuelle,
-                  charger_source_globale, charger_catégorie</para>
+                  <para><emphasis>act-charger_element-v1</emphasis> :
+                  charger_element, charger_source_individuelle,
+                  charger_source_globale, charger_catÃ©gorie</para>
                 </listitem>
               </itemizedlist></para>
           </listitem>
@@ -291,49 +225,49 @@
       <section>
         <title>Mode "view"</title>
 
-        <para>Voici les maquettes d'écrans du mode "View" (<ulink
-        url="../ecrans/Ecrans_mode-view.ppt">Ecrans_mode-view.ppt</ulink>)
-        :</para>
+        <para>Voici les maquettes d'Ã©crans du mode "View"
+        (docs/specifications/ecrans/Ecrans_mode-view.ppt) :</para>
 
         <para><mediaobject>
             <imageobject>
-              <imagedata fileref="media/view-contexte_num.gif"></imagedata>
+              <imagedata
+              fileref="../ecrans/mode-view/view-contexte_num.gif"></imagedata>
             </imageobject>
           </mediaobject></para>
 
-        <para>Description de l'écran (+ Références au diagramme de
+        <para>Description de l'Ã©cran (+ RÃ©fÃ©rences au diagramme de
         classe):<itemizedlist>
             <listitem>
-              <para>1.1 : Nom du contexte, désigné par la config du portail.
-              Règle de bon usage : utiliser le même nom que dans la config du
+              <para>1.1 : Nom du contexte, dÃ©signÃ© par la config du portail.
+              RÃ¨gle de bon usage : utiliser le mÃªme nom que dans la config du
               canal Lecture</para>
             </listitem>
 
             <listitem>
-              <para>1.2 : Nom du contexte, désigné par la config du canal
+              <para>1.2 : Nom du contexte, dÃ©signÃ© par la config du canal
               Lecture.</para>
             </listitem>
 
             <listitem>
-              <para>1.3 : </para>
+              <para>1.3 :</para>
 
-              <para>Fenêtre gauche : contexte sélectionné =&gt; définit
-              l'affichage de la fenêtre droite</para>
+              <para>FenÃªtre gauche : contexte sÃ©lectionnÃ© =&gt; dÃ©finit
+              l'affichage de la fenÃªtre droite</para>
 
-              <para>Fenêtre droite : Affichage de la description du
+              <para>FenÃªtre droite : Affichage de la description du
               contexte</para>
             </listitem>
 
             <listitem>
-              <para>1.4 : Elargir la fenêtre gauche, qui contient
-              l'arborescence des données, au dépend de celle de droite. Un
-              clic agrandit la fenêtre d'un pas de 5%</para>
+              <para>1.4 : Elargir la fenÃªtre gauche, qui contient
+              l'arborescence des donnÃ©es, au dÃ©pend de celle de droite. Un
+              clic agrandit la fenÃªtre d'un pas de 5%</para>
             </listitem>
           </itemizedlist></para>
 
-        <para>Actions de l'écran :<itemizedlist>
+        <para>Actions de l'Ã©cran :<itemizedlist>
             <listitem>
-              <para>1.2 : selectionner_contexte </para>
+              <para>1.2 : selectionner_contexte</para>
             </listitem>
 
             <listitem>
@@ -341,108 +275,45 @@
             </listitem>
           </itemizedlist></para>
 
-        <para>Controles de cohérences :<itemizedlist>
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-          </itemizedlist></para>
-
-        <para>Controles de saisie :<itemizedlist>
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-          </itemizedlist></para>
-
         <para><mediaobject>
             <imageobject>
-              <imagedata fileref="media/view-categorie_num.gif"></imagedata>
+              <imagedata
+              fileref="../ecrans/mode-view/view-categorie_num.gif"></imagedata>
             </imageobject>
           </mediaobject></para>
 
-        <para>Données de l'écran - références aux diagramme de classe
+        <para>Description de l'Ã©cran - rÃ©fÃ©rences aux diagramme de classe
         :<itemizedlist>
             <listitem>
               <para>2.1 :</para>
 
-              <para>Fenêtre gauche : catégorie sélectionnée =&gt; définit
-              l'affichage de la fenêtre droite</para>
+              <para>FenÃªtre gauche : catÃ©gorie sÃ©lectionnÃ©e =&gt; dÃ©finit
+              l'affichage de la fenÃªtre droite</para>
 
-              <para>Fenêtre droite : Affichage de la description de la
-              catégorie sélectionnée</para>
+              <para>FenÃªtre droite : Affichage de la description de la
+              catÃ©gorie sÃ©lectionnÃ©e</para>
             </listitem>
 
             <listitem>
-              <para>2.2 : Catégorie contenant des sources dont tous les items
-              ont été marqués "lus" ("tout a été lu")</para>
+              <para>2.2 : CatÃ©gorie contenant des sources dont tous les items
+              ont Ã©tÃ© marquÃ©s "lus" ("tout a Ã©tÃ© lu")</para>
             </listitem>
 
             <listitem>
-              <para>2.3 : Catégorie contenant des sources avec des items
-              marqués "non lus" ("tout n'a pas été lu")</para>
+              <para>2.3 : CatÃ©gorie contenant des sources avec des items
+              marquÃ©s "non lus" ("tout n'a pas Ã©tÃ© lu")</para>
             </listitem>
 
             <listitem>
-              <para>2.4 : catégorie pliée</para>
+              <para>2.4 : catÃ©gorie pliÃ©e</para>
             </listitem>
 
             <listitem>
-              <para>2.5 : Catégorie dépliée</para>
+              <para>2.5 : CatÃ©gorie dÃ©pliÃ©e</para>
             </listitem>
           </itemizedlist></para>
 
-        <para>Actions de l'écran :<itemizedlist>
+        <para>Actions de l'Ã©cran :<itemizedlist>
             <listitem>
               <para>2.1 : selectionner_categorie</para>
             </listitem>
@@ -456,100 +327,37 @@
             </listitem>
           </itemizedlist></para>
 
-        <para>Controles de cohérences :<itemizedlist>
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-          </itemizedlist></para>
-
-        <para>Controles de saisie :<itemizedlist>
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-          </itemizedlist></para>
-
         <para><mediaobject>
             <imageobject>
-              <imagedata fileref="media/view-source_num.gif"></imagedata>
+              <imagedata
+              fileref="../ecrans/mode-view/view-source_num.gif"></imagedata>
             </imageobject>
           </mediaobject></para>
 
-        <para>Données de l'écran ( + références aux diagramme de classe
+        <para>DonnÃ©es de l'Ã©cran ( + rÃ©fÃ©rences aux diagramme de classe
         )<itemizedlist>
             <listitem>
               <para>3.1 :</para>
 
-              <para>Fenêtre gauche : source sélectionnée =&gt; définit
-              l'affichage de la fenêtre droite</para>
+              <para>FenÃªtre gauche : source sÃ©lectionnÃ©e =&gt; dÃ©finit
+              l'affichage de la fenÃªtre droite</para>
 
-              <para>Fenêtre droite : Affichage de la source
-              sélectionnée</para>
+              <para>FenÃªtre droite : Affichage de la source
+              sÃ©lectionnÃ©e</para>
             </listitem>
 
             <listitem>
-              <para>3.2 : Source dont tous les items ont été marqués "lus"
-              ("tout a été lu")</para>
+              <para>3.2 : Source dont tous les items ont Ã©tÃ© marquÃ©s "lus"
+              ("tout a Ã©tÃ© lu")</para>
             </listitem>
 
             <listitem>
-              <para>3.3 : Source contenant des items marqués "non lus" ("tout
-              n'a pas été lu")</para>
+              <para>3.3 : Source contenant des items marquÃ©s "non lus" ("tout
+              n'a pas Ã©tÃ© lu")</para>
             </listitem>
 
             <listitem>
-              <para>3.4 : Menu déroulant permettant de choisir le mode
+              <para>3.4 : Menu dÃ©roulant permettant de choisir le mode
               d'affichage de la source : tous les items / les items non lus /
               les items non lus en premier</para>
             </listitem>
@@ -559,26 +367,26 @@
             </listitem>
 
             <listitem>
-              <para>3.6 : Demander l'affichage de la source en plein écran
-              (sans la fenêtre de gauche)</para>
+              <para>3.6 : Demander l'affichage de la source en plein Ã©cran
+              (sans la fenÃªtre de gauche)</para>
             </listitem>
 
             <listitem>
-              <para>4.3 Item marqué "lu"</para>
+              <para>4.3 Item marquÃ© "lu"</para>
             </listitem>
 
             <listitem>
-              <para>4.4 Item marqué "non lu"</para>
+              <para>4.4 Item marquÃ© "non lu"</para>
             </listitem>
           </itemizedlist></para>
 
         <para>L'affichage d'un nouvel item est automatiquement "non lu".
-        Lorsque tous les items d'une source ont été marqué "lu", la source se
-        met dans l'état "tout a été lu". Lorsque toutes les sources d'une
-        catégorie sont dans cet état, la catégorie se met dans l'état "tout a
-        été lu".</para>
+        Lorsque tous les items d'une source ont Ã©tÃ© marquÃ© "lu", la source se
+        met dans l'Ã©tat "tout a Ã©tÃ© lu". Lorsque toutes les sources d'une
+        catÃ©gorie sont dans cet Ã©tat, la catÃ©gorie se met dans l'Ã©tat "tout a
+        Ã©tÃ© lu".</para>
 
-        <para>Actions de l'écran :<itemizedlist>
+        <para>Actions de l'Ã©cran :<itemizedlist>
             <listitem>
               <para>3.1 : selectionner_source</para>
             </listitem>
@@ -600,197 +408,53 @@
             </listitem>
           </itemizedlist></para>
 
-        <para>Controles de cohérences :<itemizedlist>
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-          </itemizedlist></para>
-
-        <para>Controles de saisie :<itemizedlist>
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-
-            <listitem>
-              <para></para>
-            </listitem>
-          </itemizedlist></para>
+        <para><mediaobject>
+            <imageobject>
+              <imagedata
+              fileref="../ecrans/mode-view/view-source-plein-ecran_num.gif"></imagedata>
+            </imageobject>
+          </mediaobject></para>
       </section>
 
       <section>
-        <title>Mode "edit" dégradé</title>
+        <title>Mode "edit" dÃ©gradÃ©</title>
 
-        <para>Voici les écrans :</para>
+        <para>Voici les maquettes d'Ã©crans du mode "View"
+        (docs/specifications/ecrans/Ecrans_mode-edit-degrade.ppt) :</para>
 
-        <itemizedlist>
-          <listitem>
-            <para></para>
-          </listitem>
-
-          <listitem>
-            <para></para>
-          </listitem>
-
-          <listitem>
-            <para></para>
-          </listitem>
-        </itemizedlist>
+        <para><mediaobject>
+            <imageobject>
+              <imagedata
+              fileref="../ecrans/mode-edit-degrade/edit-degrade_num.gif"></imagedata>
+            </imageobject>
+          </mediaobject></para>
       </section>
     </section>
 
     <section>
       <title>Format des fichiers</title>
 
-      <para>Le canal utilise différents fichiers XML, voici leurs DTD
-      :<itemizedlist>
+      <para>RÃ©fÃ©rez vous aux DTD des fichiers XML :<itemizedlist>
           <listitem>
-            <para>Fichier de configuration du canal
-            (CLecture.DTD):<programlisting>&lt;!ELEMENT channelConfig (context+, categoryProfile+)&gt;
-&lt;!ATTLIST channelConfig 
-    mappingFile CDATA #REQUIRED&gt;
-
-&lt;!ELEMENT context (description,refCategoryProfile+)&gt;
-&lt;!ATTLIST context
-    name CDATA #REQUIRED
-     edit (all|personal|managed|no) "no"&gt;
-
-&lt;!ELEMENT description (#PCDATA)&gt;
-
-&lt;!ELEMENT refCategoryProfile EMPTY&gt;
-&lt;!ATTLIST refCategoryProfile 
-    ref CDATA #REQUIRED&gt;
-
-&lt;!ELEMENT categoryProfile (visibility)&gt;
-&lt;!ATTLIST categoryProfile
-    xml:id ID #REQUIRED
-    url CDATA #REQUIRED
-    display (all|push-end|read|not-read) "all"	
-    trustCategory (yes|no) "no"
-    edit (all|personal|managed|no) "no"
-    access (public|cas) "public"
-    ttl CDATA #REQUIRED&gt;	
-    
-&lt;!ELEMENT visibility (allowed?,autoSubscribed?,obliged?)&gt;
-
-&lt;!ELEMENT allowed (regular*, group*)&gt;
-&lt;!ELEMENT autoSubscribed (regular*, group*)&gt;
-&lt;!ELEMENT obliged (regular*, group*)&gt;
-
-&lt;!ELEMENT regular EMPTY&gt;
-&lt;!ATTLIST regular 
-    attribute CDATA #REQUIRED
-    value CDATA #REQUIRED&gt;
-
-&lt;!ELEMENT group EMPTY&gt;
-&lt;!ATTLIST group 
-    name CDATA #REQUIRED&gt; </programlisting></para>
+            <para>Fichier de configuration du canal : esup-lecture.dtd.</para>
           </listitem>
 
           <listitem>
-            <para>Fichier de mapping DTD-xslt-xpath (mappingFile.DTD)
-            :<programlisting>&lt;!ELEMENT mappings (mapping+)&gt;
-
-&lt;!ELEMENT mapping EMPTY&gt;
-&lt;!ATTLIST mapping 
-    dtd CDATA #REQUIRED
-    xmlns CDATA #REQUIRED
-    xmlType CDATA #REQUIRED
-    xsltFile CDATA #REQUIRED
-    itemXPath CDATA #REQUIRED&gt;</programlisting></para>
+            <para>Fichier de mapping DTD-xslt-xpath : mappings.dtd.</para>
           </listitem>
 
           <listitem>
-            <para>Fichier &lt;category&gt; émis par un serveur distant pour
-            fournir les profils des sources contenues dans une catégorie
-            (category.DTD) :<programlisting>&lt;!ELEMENT category (description,sourceProfiles, visibility?)&gt;
-&lt;!ATTLIST category 
-    name CDATA #REQUIRED
-    edit (all|personal|managed|no) #IMPLIED
-    ttl CDATA #IMPLIED&gt;
-&lt;!ELEMENT description (#PCDATA)&gt;     
-&lt;!ELEMENT sourceProfiles (sourceProfile+)&gt;
-
-&lt;!ELEMENT sourceProfile (visibility?)&gt;
-&lt;!ATTLIST sourceProfile 
-    name CDATA #REQUIRED
-    url CDATA #REQUIRED
-    display (all|push-end|read|not-read) #IMPLIED
-    xslt CDATA #IMPLIED
-    xpath CDATA #IMPLIED
-    access (public|cas) #IMPLIED
-    ttl CDATA #IMPLIED
-    specificUserContent (yes|no) "no"&gt;
-
-&lt;!ELEMENT visibility (allowed?,autoSubscribed?,obliged?)&gt;
-
-&lt;!ELEMENT allowed (regular*, group*)&gt;
-&lt;!ELEMENT autoSubscribed (regular*, group*)&gt;
-&lt;!ELEMENT obliged (regular*, group*)&gt;
-
-&lt;!ELEMENT regular EMPTY&gt;
-&lt;!ATTLIST regular 
-    attribute CDATA #REQUIRED
-    value CDATA #REQUIRED&gt;
-
-&lt;!ELEMENT group EMPTY&gt;
-&lt;!ATTLIST group 
-name CDATA #REQUIRED&gt;</programlisting></para>
+            <para>Fichier &lt;category&gt; Ã©mis par un serveur distant
+            contenant les profils des sources contenues dans une catÃ©gorie :
+            category.dtd.</para>
           </listitem>
         </itemizedlist></para>
 
-      <para>Concernant les groupes de visibilité, il existe deux moyens de
-      définir leur contenus : l'expression d'une règle définissant le contenu
-      et l'énumération de groupes du portails.</para>
+      <para>Concernant les groupes de visibilitÃ©, il existe deux moyens de
+      dÃ©finir leur contenus : l'expression d'une rÃ¨gle dÃ©finissant le contenu
+      et l'Ã©numÃ©ration de groupes du portails.</para>
 
-      <para>Voici un exemple de définition du groupe de visibilité "obliged".
+      <para>Voici un exemple de dÃ©finition du groupe de visibilitÃ© "obliged".
       Il contient toutes les personnes du groupe "toto" ainsi que tous les
       gens dont l'attribut portail (venant de LDAP) "departmentnumber" vaut
       957 :<programlisting>&lt;obliged&gt;
@@ -801,37 +465,37 @@ name CDATA #REQUIRED&gt;</programlisting></para>
     </section>
 
     <section>
-      <title>Le traitement des erreurs</title>
+      <title>Traitement des erreurs</title>
 
-      <para>cf. diagrammes d'activité : chaque cas d'utilisation contient 4
-      états définissant le niveau d'erreur à traiter :<itemizedlist>
+      <para>cf. diagrammes d'activitÃ© : chaque cas d'utilisation contient 4
+      Ã©tats dÃ©finissant le niveau d'erreur Ã  traiter :<itemizedlist>
           <listitem>
-            <para><emphasis>Warning</emphasis> : problème mineur non
+            <para><emphasis>Warning</emphasis> : problÃ¨me mineur non
             bloquant</para>
           </listitem>
 
           <listitem>
-            <para><emphasis>Récupération</emphasis> : problème bloquant avec
-            demande d'info pour récupérer l'erreur et poursuivre le cas
+            <para><emphasis>RÃ©cupÃ©ration</emphasis> : problÃ¨me bloquant avec
+            demande d'info pour rÃ©cupÃ©rer l'erreur et poursuivre le cas
             d'utilisation</para>
           </listitem>
 
           <listitem>
-            <para><emphasis>Erreur</emphasis> : problème bloquant nécessitant
+            <para><emphasis>Erreur</emphasis> : problÃ¨me bloquant nÃ©cessitant
             l'abandon du cas d'utilisation en cours</para>
           </listitem>
 
           <listitem>
-            <para><emphasis>Fatal</emphasis> : problème bloquant nécessitant
-            l'arrêt du canal</para>
+            <para><emphasis>Fatal</emphasis> : problÃ¨me bloquant nÃ©cessitant
+            l'arrÃªt du canal</para>
           </listitem>
         </itemizedlist></para>
     </section>
 
     <section>
-      <title>Spécification des logs</title>
+      <title>SpÃ©cification des logs</title>
 
-      <para>Voici les différents niveaux de logs :<itemizedlist>
+      <para>Voici les diffÃ©rents niveaux de logs :<itemizedlist>
           <listitem>
             <para><emphasis>Fatal</emphasis> : correspond au traitement
             d'erreur "fatal"</para>
@@ -844,18 +508,18 @@ name CDATA #REQUIRED&gt;</programlisting></para>
 
           <listitem>
             <para><emphasis>Warning</emphasis> : correspond au traitement
-            d'erreur "warning" et "récupération"</para>
+            d'erreur "warning" et "rÃ©cupÃ©ration"</para>
           </listitem>
 
           <listitem>
             <para><emphasis>Info</emphasis> : contient toutes les actions
-            utilisateurs avec leurs paramètres (champs de formulaires) et
+            utilisateurs avec leurs paramÃ¨tres (champs de formulaires) et
             toutes les variables de session.</para>
           </listitem>
 
           <listitem>
-            <para><emphasis>Debug</emphasis> : toutes les activités et plus
-            (pour l'usage du développeur)</para>
+            <para><emphasis>Debug</emphasis> : toutes les activitÃ©s et plus
+            (pour l'usage du dÃ©veloppeur)</para>
           </listitem>
         </itemizedlist></para>
     </section>
@@ -863,7 +527,7 @@ name CDATA #REQUIRED&gt;</programlisting></para>
     <section>
       <title>Description des contraintes</title>
 
-      <para>Utilisation d'une portlet pour l'intégration au canal</para>
+      <para>Utilisation d'une portlet pour l'intÃ©gration au canal</para>
 
       <para>Utilisation de Spring</para>
 
@@ -874,36 +538,38 @@ name CDATA #REQUIRED&gt;</programlisting></para>
       <para>Internationnalisation : i18n</para>
 
       <para>Framework de cache : Whirly Cache, EH Cache</para>
+
+      <para>Utilisation de ESup-commons</para>
     </section>
 
     <section>
-      <title>Infos supplémentaires</title>
+      <title>Infos supplÃ©mentaires</title>
 
       <para><itemizedlist>
           <listitem>
-            <para>Désignation des items</para>
+            <para>DÃ©signation des items</para>
 
             <para>Utiliser un algorithme de hachage pour fabriquer des
             empruntes sur des items</para>
           </listitem>
 
           <listitem>
-            <para>Déterminer le xslt et le xpath</para>
+            <para>DÃ©terminer le xslt et le xpath</para>
 
             <para>se baser sur : xmlns, DTD fourni par le XML</para>
 
-            <para>S'ils ne sont pas fournis, faire choisir le type du XML à
+            <para>S'ils ne sont pas fournis, faire choisir le type du XML Ã 
             l'utilisateur (-&gt; modifier fichier de mapping et uses cases)
-            parmis ceux proposés par le fichier de mapping</para>
+            parmis ceux proposÃ©s par le fichier de mapping</para>
           </listitem>
 
           <listitem>
-            <para>Prévoir le cas de l'utilisateur anonyme</para>
+            <para>PrÃ©voir le cas de l'utilisateur anonyme</para>
           </listitem>
         </itemizedlist></para>
 
       <section>
-        <title>Lexique Français/anglais</title>
+        <title>Lexique FranÃ§ais/anglais</title>
 
         <para><itemizedlist>
             <listitem>
@@ -935,19 +601,19 @@ name CDATA #REQUIRED&gt;</programlisting></para>
             </listitem>
 
             <listitem>
-              <para>catégorie personnelle : personal</para>
+              <para>catÃ©gorie personnelle : personal</para>
             </listitem>
 
             <listitem>
-              <para>catégorie controlée : managed category</para>
+              <para>catÃ©gorie controlÃ©e : managed category</para>
             </listitem>
 
             <listitem>
-              <para>accès : access</para>
+              <para>accÃ¨s : access</para>
             </listitem>
 
             <listitem>
-              <para>ensemble de visibilité : set of visibility</para>
+              <para>ensemble de visibilitÃ© : set of visibility</para>
             </listitem>
 
             <listitem>
@@ -955,15 +621,15 @@ name CDATA #REQUIRED&gt;</programlisting></para>
             </listitem>
 
             <listitem>
-              <para>préabonné : auto subscribed</para>
+              <para>prÃ©abonnÃ© : auto subscribed</para>
             </listitem>
 
             <listitem>
-              <para>forcé : obliged</para>
+              <para>forcÃ© : obliged</para>
             </listitem>
 
             <listitem>
-              <para>contenu individualisé : spécific user content</para>
+              <para>contenu individualisÃ© : spÃ©cific user content</para>
             </listitem>
 
             <listitem>
@@ -1016,254 +682,66 @@ name CDATA #REQUIRED&gt;</programlisting></para>
     <section>
       <title>Jeu de tests fonctionnels</title>
 
-      <para>Scénarios de tests pour "context" : à partir des diagrammes
-      d'activité et du cahier des charges</para>
-
-      <para>A partir des diagrammes d'activité : tests à effectuer dans
-      l'ordre suivant (avec les diagrammes d'activités ):<itemizedlist>
+      <para>Voici les scÃ©narios de tests dÃ©finis Ã  partir des diagrammes
+      d'activitÃ© et du cahier des charges (contenus dans le rÃ©pertoire
+      <emphasis>docs/specifications/tests-de-qualif</emphasis> )
+      :<itemizedlist>
           <listitem>
-            <para>act-rafraichir_config_canal-v1 : <ulink
-            url="../../tests/tests de qualif">rafraichir_config_canal-v1-tests.xls</ulink>
-            (A : rafraichir_config_canal,charger_tous_contextes,
+            <para>rafraichir_config_canal-v1-tests.xls :
+            act-rafraichir_config_canal-v1 (A :
+            rafraichir_config_canal,charger_tous_contextes,
             charger_tous_profils_categories, forcer_timer_categorie)</para>
           </listitem>
 
           <listitem>
-            <para>act-afficher_context-v1 : <ulink
-            url="../../tests/tests de qualif">afficher_context-v1-tests.xls</ulink>
-            (B : rafraichir_context, enregistrer_categorie, effacer_categorie,
-            C : afficher_context, afficher_context_selectionne)</para>
+            <para>afficher_context-v1-tests.xls : act-afficher_context-v1(B :
+            rafraichir_context, enregistrer_categorie, effacer_categorie, C :
+            afficher_context, afficher_context_selectionne)</para>
           </listitem>
 
           <listitem>
-            <para>act-rafraichir_categorie_controlee-v1 : <ulink
-            url="../../tests/tests de qualif">rafraichir_categorie_controlee-v1-tests.xls</ulink>
-            (D: rafraichir_categorie_controlée, E : recuperer_pt_cas, F :
+            <para>rafraichir_categorie_controlee-v1-tests.xls :
+            act-rafraichir_categorie_controlee-v1 (D:
+            rafraichir_categorie_controlÃ©e, E : recuperer_pt_cas, F :
             enregistrer_source, effacer_source, forcer_time_source_globale,
             forcer_time_source_individuelle)</para>
           </listitem>
 
           <listitem>
-            <para>act-afficher_categorie-v1 : <ulink
-            url="../../tests/tests de qualif">afficher_categorie-v1-tests.xls</ulink>
-            (G : afficher_categorie, afficher_catégorie_sélectionnée,
-            afficher_catégorie_dépliée)</para>
+            <para>afficher_categorie-v1-tests.xls :
+            act-afficher_categorie-v1(G : afficher_categorie,
+            afficher_catÃ©gorie_sÃ©lectionnÃ©e,
+            afficher_catÃ©gorie_dÃ©pliÃ©e)</para>
           </listitem>
 
           <listitem>
-            <para>act-afficher_source-v1 : <ulink
-            url="../../tests/tests de qualif">afficher_source-v1-tests.xls</ulink>
-            (H : afficher_source, rafraichir_source, I :
+            <para>afficher_source-v1-tests.xls : act-afficher_source-v1 (H :
+            afficher_source, rafraichir_source, I :
             afficher_source_selectionnee, J : recherche_xslt_xpath)</para>
           </listitem>
 
           <listitem>
-            <para>act-charger_element-v1 : <ulink
-            url="../../tests/tests de qualif">charger_element-v1-tests.xls</ulink>
-            (K : charger_element, charger_categorie, charger_source)</para>
+            <para>charger_element-v1-tests.xls : act-charger_element-v1 (K :
+            charger_element, charger_categorie, charger_source)</para>
           </listitem>
 
           <listitem>
-            <para>act-divers_contexte/categorie/source-v1 : <ulink
-            url="../../tests/tests de qualif">divers_actions-v1-tests.xls</ulink>
-            (selectionner_contexte, modifier_vue_contexte,
-            modifer_vue_categorie, modifier_vue_source)</para>
+            <para>divers_actions-v1-tests.xls :
+            act-divers_contexte/categorie/source-v1 (selectionner_contexte,
+            modifier_vue_contexte, modifer_vue_categorie,
+            modifier_vue_source)</para>
           </listitem>
         </itemizedlist></para>
 
-      <para>Autres tests de qualifications complémentaires, à partir du cahier
-      des charges : <ulink
-      url="../../tests/tests de qualif">autres_fonctionnalités-v1-tests.xls</ulink></para>
+      <para>Autres tests de qualifications complÃ©mentaires, Ã  partir du cahier
+      des charges : autres_fonctionnalitÃ©s-v1-tests.xls</para>
     </section>
   </section>
 
   <section>
-    <title>Modélisation</title>
+    <title>Conception / DÃ©veloppement</title>
 
-    <para></para>
-
-    <section>
-      <title>Aspects transversaux et choix des technologies</title>
-
-      <para></para>
-
-      <section>
-        <title>Choix des technos</title>
-
-        <para><itemizedlist>
-            <listitem>
-              <para>Codage : Langage JAVA</para>
-            </listitem>
-
-            <listitem>
-              <para>Framework Spring</para>
-            </listitem>
-
-            <listitem>
-              <para>intégration au portail avec une portlet</para>
-            </listitem>
-
-            <listitem>
-              <para>Accès aux données : Hibernate</para>
-            </listitem>
-
-            <listitem>
-              <para>GEstion des logs : Log4J</para>
-            </listitem>
-
-            <listitem>
-              <para>Présentation : JSF</para>
-            </listitem>
-          </itemizedlist></para>
-      </section>
-
-      <section>
-        <title>Aspects transversaux</title>
-
-        <para><itemizedlist>
-            <listitem>
-              <para>intégration au portail : implémenter l'interface
-              <emphasis>IChannel</emphasis>.</para>
-            </listitem>
-
-            <listitem>
-              <para>Faire apparaitre l'aspect portlet dans un diagramme de
-              classe</para>
-            </listitem>
-          </itemizedlist></para>
-      </section>
-    </section>
-
-    <section>
-      <title>Recherche de DP et enrichissements des diagrammes UML</title>
-
-      <para></para>
-    </section>
-
-    <section>
-      <title>Définition de la couche métier</title>
-
-      <para></para>
-
-      <section>
-        <title>conception systémique</title>
-
-        <para><itemizedlist>
-            <listitem>
-              <para>Organisation en sous systèmes : organisation des packages
-              selon esup :</para>
-
-              <para>src org.esupportail.lecture dao =&gt; les interfaces des
-              DAO (ACCES AUX DONNEES) hibernate =&gt; implémentation hibernate
-              des dao domain (METIER) model =&gt; objets métiers service =&gt;
-              interfaces des services impl =&gt; implémentation des services
-              utils web (PRESENTATION)</para>
-            </listitem>
-          </itemizedlist></para>
-      </section>
-
-      <section>
-        <title>conception détaillée</title>
-
-        <para></para>
-      </section>
-    </section>
-
-    <section>
-      <title>Définition des couches "présentation" et "application"</title>
-
-      <para></para>
-
-      <section>
-        <title>sous sous section B</title>
-
-        <para></para>
-      </section>
-    </section>
-
-    <section>
-      <title>Définition de la couche "accès aux données" (couches
-      "persistance" et "mapping")</title>
-
-      <para></para>
-
-      <section>
-        <title>sous sous section B</title>
-
-        <para></para>
-      </section>
-    </section>
-
-    <section>
-      <title>Vérification des aspects transversaux</title>
-
-      <para></para>
-
-      <section>
-        <title>sous sous section B</title>
-
-        <para></para>
-      </section>
-    </section>
-
-    <section>
-      <title>Traitement des erreurs + logs</title>
-
-      <para></para>
-
-      <section>
-        <title>sous sous section B</title>
-
-        <para></para>
-      </section>
-    </section>
-
-    <section>
-      <title>Externalisation de la configuration</title>
-
-      <para></para>
-
-      <section>
-        <title>sous sous section B</title>
-
-        <para></para>
-      </section>
-    </section>
-
-    <section>
-      <title>Internationnalisation</title>
-
-      <para></para>
-
-      <section>
-        <title>sous sous section B</title>
-
-        <para></para>
-      </section>
-    </section>
-
-    <section>
-      <title>Prise en compte de la techno utilisée</title>
-
-      <para></para>
-
-      <section>
-        <title>sous sous section B</title>
-
-        <para></para>
-      </section>
-    </section>
-
-    <section>
-      <title>Informations supplémentaires</title>
-
-      <para></para>
-
-      <section>
-        <title>sous sous section B</title>
-
-        <para></para>
-      </section>
-    </section>
+    <para>La documentation de conception et dÃ©veloppement est accessible dans
+    le rÃ©pertoire docs/ du projet.</para>
   </section>
 </article>

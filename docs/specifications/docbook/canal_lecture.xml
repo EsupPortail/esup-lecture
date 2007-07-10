@@ -568,26 +568,38 @@
           <para>Voici trois tableaux récapitulant la récupération des
           informations pour les profils de sources XML et de catégories
           :<mediaobject>
+              <objectinfo>
+                <title>tab.1 : Origine des données concernant les
+                catégories</title>
+              </objectinfo>
+
               <imageobject>
                 <imagedata fileref="../images/tab_categorie.gif"></imagedata>
               </imageobject>
 
-              <caption>tab.1 : Origine des données concernant les
-              catégories</caption>
+              <caption></caption>
             </mediaobject><mediaobject>
+              <objectinfo>
+                <title>tab. 2 : Origine des données concernant les sources
+                XML</title>
+              </objectinfo>
+
               <imageobject>
                 <imagedata fileref="../images/tab_source.gif"></imagedata>
               </imageobject>
 
-              <caption>tab. 2 : Origine des données concernant les sources
-              XML</caption>
+              <caption></caption>
             </mediaobject><mediaobject>
+              <objectinfo>
+                <title>tab. 3 : (*) Priorité sur la définition des paramètres
+                liés à &lt;trust-category&gt;</title>
+              </objectinfo>
+
               <imageobject>
-                <imagedata fileref="media/trust-cat.gif">tab3</imagedata>
+                <imagedata fileref="../images/trust-cat.gif">tab3</imagedata>
               </imageobject>
 
-              <caption>tab. 3 : (*) Priorité sur la définition des paramètres
-              liés à &lt;trust-category&gt;</caption>
+              <caption></caption>
             </mediaobject></para>
         </listitem>
 
@@ -1474,18 +1486,28 @@
       <title>Diagrammes uses-cases</title>
 
       <para>Les diagrammes suivants contiennent la description des uses cases
-      ainsi que les relations entre eux : <ulink
-      url="../uses-cases/uses-cases-contexte/index.html">uses-cases-contexte</ulink>
-      (actions relatives au contexte), <ulink
-      url="../uses-cases/uses-cases-category/index.html">uses-cases-category</ulink>
-      (actions relatives aux catégories) et <ulink
-      url="../uses-cases/uses-cases-source/index.html">uses-cases-source</ulink>
-      (actions relatives aux sources). Le diagramme <ulink
-      url="../uses-cases/uses-cases-rafraichir/index.html">uses-cases-rafraichir</ulink>
-      reprend tous les enchainements de cas d'utilisations concernant la mise
-      à jour des données.</para>
+      ainsi que les relations entre eux : <itemizedlist>
+          <listitem>
+            <para>actions relatives au contexte : uses cases du fichier
+            docs/specifications/uses-cases/uses-cases-context/index.html</para>
+          </listitem>
 
-      <para>Voici quelques précisions :<itemizedlist>
+          <listitem>
+            <para>actions relatives aux catégories : uses cases du fichier
+            docs/specifications/uses-cases/uses-cases-category/index.html</para>
+          </listitem>
+
+          <listitem>
+            <para>actions relatives aux sources : uses cases du fichier
+            docs/specifications/uses-cases/uses-cases-source/index.html</para>
+          </listitem>
+
+          <listitem>
+            <para>tous les enchainements relatifs à la mise à jour des données
+            : uses cases du fichier
+            docs/specifications/uses-cases/uses-cases-rafraichir/index.html</para>
+          </listitem>
+        </itemizedlist>Voici quelques précisions :<itemizedlist>
           <listitem>
             <para>Action globale : le contexte du canal est en mémoire ainsi
             que les profils des catégories.</para>
@@ -1511,7 +1533,8 @@
       <title>Diagrammes de classe</title>
 
       <para>Il faut se référer aux diagrammes UML de conception/développement,
-      présents dans le répertoire docs/uml/classes du projet.</para>
+      présents dans le répertoire <emphasis>docs/uml/classes du
+      projet.</emphasis></para>
     </section>
   </section>
 </article>
