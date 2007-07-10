@@ -433,7 +433,7 @@ public class CustomContext implements CustomElement {
 	/**
 	 * @return hash of subscribed categories
 	 */
-	private Map<String, CustomManagedCategory> getSubscriptions() {
+	protected Map<String, CustomManagedCategory> getSubscriptions() {
 		return subscriptions;
 	}
 

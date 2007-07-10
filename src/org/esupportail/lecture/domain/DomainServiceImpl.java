@@ -183,7 +183,8 @@ public class DomainServiceImpl implements DomainService {
 			} catch (CategoryProfileNotFoundException e) {
 				LOG.warn("Warning on service 'getAvailableCategories(user " 
 					+ userId + ", context " + contextId + ") : clean custom source ");
-				userProfile.cleanCustomCategoryFromProfile(customCategory.getElementId());
+				//userProfile.cleanCustomCategoryFromProfile(customCategory.getElementId());
+				userProfile.removeCustomCategoryFromProfile(customCategory.getElementId());
 			} catch (InfoDomainException e) {
 				LOG.error("Error on service 'getAvailableCategories(user " 
 					+ userId + ", context " + contextId + ") : creation of a CategoryDummyBean");
@@ -232,7 +233,7 @@ public class DomainServiceImpl implements DomainService {
 				} catch (SourceProfileNotFoundException e) {
 					LOG.warn("Warning on service 'getAvailableSources(user " 
 						+ uid + ", category " + categoryId + ") : clean custom source ");
-					userProfile.cleanCustomSourceFromProfile(customSource.getElementId());
+					userProfile.removeCustomSourceFromProfile(customSource.getElementId());
 				} catch (InfoDomainException e) {
 					LOG.error("Error on service 'getAvailableSources(user "
 						+ uid + ", category " + categoryId + ") : creation of a SourceDummyBean");
@@ -244,7 +245,8 @@ public class DomainServiceImpl implements DomainService {
 			String errorMsg = "CategoryProfileNotFoundException for service 'getAvailableSources(user "
 				+ uid + ", category " + categoryId + ")";
 			LOG.error(errorMsg);
-			userProfile.cleanCustomSourceFromProfile(categoryId);
+			//userProfile.cleanCustomCategoryFromProfile(categoryId);
+			userProfile.removeCustomCategoryFromProfile(categoryId);
 			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'getAvailableSources(user "
@@ -299,13 +301,14 @@ public class DomainServiceImpl implements DomainService {
 			LOG.error(errorMsg);
 			CustomManagedSource customManagedSource = (CustomManagedSource) customSource;
 			String categoryId = customManagedSource.getManagedSourceProfileParentId();
-			userProfile.cleanCustomCategoryFromProfile(categoryId);
+			//userProfile.cleanCustomCategoryFromProfile(categoryId);
+			userProfile.removeCustomCategoryFromProfile(categoryId);
 			throw new InternalDomainException(errorMsg,e);
 		} catch	(SourceProfileNotFoundException e) {
 			String errorMsg = "SourceProfileNotFoundException for service 'getItems(user "
 				+ uid + ", source " + sourceId + ")";
 			LOG.error(errorMsg);
-			userProfile.cleanCustomSourceFromProfile(sourceId);
+			userProfile.removeCustomSourceFromProfile(sourceId);
 			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomSourceNotFoundException e) {
 			String errorMsg = "CustomSourceNotFoundException for service 'getItems(user "
@@ -491,7 +494,8 @@ public class DomainServiceImpl implements DomainService {
 			String errorMsg = "CategoryProfileNotFoundException for service 'getVisibleSources(user "
 				+ uid + ", category " + categoryId + ")";
 			LOG.error(errorMsg);
-			userProfile.cleanCustomSourceFromProfile(categoryId);
+			//userProfile.cleanCustomCategoryFromProfile(categoryId);
+			userProfile.removeCustomCategoryFromProfile(categoryId);
 			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'getVisibleSources(user " 
@@ -535,7 +539,8 @@ public class DomainServiceImpl implements DomainService {
 			String errorMsg = "CategoryProfileNotFoundException for service 'subscribeToSource(user "
 				+ uid + ", category " + categoryId + ", source " + sourceId + ", externalService)";
 			LOG.error(errorMsg);
-			userProfile.cleanCustomSourceFromProfile(categoryId);
+			//userProfile.cleanCustomCategoryFromProfile(categoryId);
+			userProfile.removeCustomCategoryFromProfile(categoryId);
 			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'subscribeToSource(user "
@@ -581,7 +586,8 @@ public class DomainServiceImpl implements DomainService {
 			String errorMsg = "CategoryProfileNotFoundException for service 'unsubscribeToSource(user "
 				+ uid + ", category " + categoryId + ", source " + sourceId + ", externalService)";
 			LOG.error(errorMsg);
-			userProfile.cleanCustomSourceFromProfile(categoryId);
+			//userProfile.cleanCustomCategoryFromProfile(categoryId);
+			userProfile.removeCustomCategoryFromProfile(categoryId);
 			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'unsubscribeToSource(user "

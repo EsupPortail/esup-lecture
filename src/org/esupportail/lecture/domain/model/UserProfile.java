@@ -201,7 +201,8 @@ public class UserProfile {
 		} catch (ManagedCategoryProfileNotFoundException e) {
 			String errorMsg = "Unable to updateCustomContextsForOneManagedCategory(categoryId="+categoryProfileId+") because of a ManagedCategoryProfileNotFoundException";
 			log.error(errorMsg);
-			cleanCustomCategoryFromProfile(categoryProfileId);
+			//cleanCustomCategoryFromProfile(categoryProfileId);
+			removeCustomCategoryFromProfile(categoryProfileId);
 			throw new InternalDomainException(errorMsg,e);
 		}
 		if (!categoryIsVisible){
@@ -276,40 +277,41 @@ public class UserProfile {
 	/* REMOVE/CLEAN CUSTOM ELEMENTS FROM PROFILE */
 	
 	/**
-	 * Cleans all the userProfile content for customCategory categoryId. It means, if option
+	 * Cleans the userProfile content for customCategory categoryId. It means, if option
 	 * "autoDelCustom" in channel config is ( no option for now : it is yes all the time)
 	 * - yes => it removes it
 	 * - no => it not removes it, the admin will have to remove it manually with command tools
-	 * @param categoryId customCatgeory ID
+	 * @param categoryId customCategory ID
 	 */
-	public void cleanCustomCategoryFromProfile(String categoryId) {
+	public void cleanCustomCategory(String categoryId) {
 		if (log.isDebugEnabled()){
-			log.debug("cleanCustomCategoryFromProfile("+categoryId+")");
+			log.debug("cleanCustomCategory("+categoryId+")");
 		}
-		if (true) { // TODO (GB later) remplacer true par la valeur de l'option autoDelCustom
-			removeCustomCategoryFromProfile(categoryId);
+		if (true) { // TODO (GB later) remplacer true par la valeur de l'option autoDelCustom (sinon : marquer l'objet)
+			removeCustomCategory(categoryId);
 			log.info("customCatgeory "+categoryId+" has been removed from userProfile "+this.getUserId());
 		}else {
-			log.error("customCatgeory "+categoryId+" NEEDS TO BE REMOVED from userProfile "+this.getUserId());
+			log.info("customCatgeory "+categoryId+" NEEDS TO BE REMOVED from userProfile "+this.getUserId());
 		}
 	}
 	
 	/**
-	 * Cleans all the userProfile content for customSource sourceId. It means, if option
+	 * Cleans the userProfile content for customSource sourceId. It means, if option
 	 * "autoDelCustom" in channel config is ( no option for now : it is yes all the time)
 	 * - yes => it removes it
 	 * - no => it not removes it, the admin will have to remove it manually with command tools
 	 * @param sourceId customSource ID
 	 */
-	public void cleanCustomSourceFromProfile(String sourceId) {
+	public void cleanCustomSource(String sourceId) {
 		if (log.isDebugEnabled()){
-			log.debug("cleanCustomSourceFromProfile("+sourceId+")");
+			log.debug("cleanCustomSource("+sourceId+")");
 		}
-		if (true) { // TODO (GB later) remplacer true par la valeur de l'option autoDelCustom
-			removeCustomSourceFromProfile(sourceId);
+		// TODO (GB later) : ici ou dans removeCustomSource le 
+		if (true) { // TODO (GB later) remplacer true par la valeur de l'option autoDelCustom (sinon : marquer l'objet)
+			removeCustomSource(sourceId);
 			log.info("CustomSource "+sourceId+" has been removed from userProfile "+this.getUserId());
 		}else {
-			log.error("CustomSource "+sourceId+" NEEDS TO BE REMOVED from userProfile "+this.getUserId());
+			log.info("CustomSource "+sourceId+" NEEDS TO BE REMOVED from userProfile "+this.getUserId());
 		}
 	}
 	
@@ -328,7 +330,7 @@ public class UserProfile {
 				custom.removeCustomCategory(categoryId);
 			}
 		}
-		removeCustomCategory(categoryId);
+		cleanCustomCategory(categoryId);
 	}
 	
 	/**
@@ -347,8 +349,30 @@ public class UserProfile {
 				custom.removeCustomManagedCategory(categoryId);
 			}
 		}
-		removeCustomCategory(categoryId); // TODO (GB) pourquoi pas un removeCustomManagedCategory ?
+		cleanCustomCategory(categoryId); 
 	}
+	
+	/**
+	 * Remove the customManagedCategory categoryId only if it is not refered in any customContext
+	 * @param categoryId customManagedCategory ID
+	 */
+	public void removeCustomManagedCategoryIfOrphan(String categoryId) {
+		if (log.isDebugEnabled()){
+			log.debug("removeCustomManagedCategoryIfOrphan("+categoryId+")");
+		}
+		boolean isOrphan = true;
+		for (CustomContext custom : customContexts.values()){
+			if (custom.containsCustomManagedCategory(categoryId)){
+				isOrphan = false;
+				break;
+			}
+		}
+		if (isOrphan){
+			cleanCustomCategory(categoryId);
+		}
+	}
+
+	
 	
 	/**
 	 * Remove the customSource sourceId in all the profile (this object and in customCategories)
@@ -364,7 +388,7 @@ public class UserProfile {
 				custom.removeCustomSource(sourceId);
 			}
 		}
-		removeCustomSource(sourceId);
+		cleanCustomSource(sourceId);
 	}
 	/**
 	 * Remove the customManagedSource sourceId in all the profile (this object and in customCategories)
@@ -382,7 +406,7 @@ public class UserProfile {
 				custom.removeCustomManagedSource(sourceId);
 			}
 		}
-		removeCustomSource(sourceId); // TODO (GB) pourquoi pas un removeCustomManagedSource ?
+		cleanCustomSource(sourceId); // TODO (GB) pourquoi pas un removeCustomManagedSource ?
 	}
 	
 	/* REMOVE CUSTOM ELEMENTS : ATOMIC METHODS */
@@ -409,7 +433,7 @@ public class UserProfile {
 	 * Remove a customCategory from this userProfile only
 	 * @param categoryId
 	 */
-	protected void removeCustomCategory(String categoryId){
+	private void removeCustomCategory(String categoryId){
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+userId+" - removeCustomCategory("+categoryId+")");
     	}
@@ -427,7 +451,7 @@ public class UserProfile {
 	 * Remove a customCategory from this userProfile only
 	 * @param sourceId
 	 */
-	protected void removeCustomSource(String sourceId){
+	private void removeCustomSource(String sourceId){
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+userId+" - removeCustomSource("+sourceId+")");
     	}
@@ -575,6 +599,7 @@ public class UserProfile {
 	private void setCustomSources(Map<String, CustomSource> customSources) {
 		this.customSources = customSources;
 	}
+
 
 	
 

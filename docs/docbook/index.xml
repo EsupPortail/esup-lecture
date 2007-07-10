@@ -140,6 +140,13 @@
         <listitem>
           <para><ulink url="../uml">UML developer documentation</ulink></para>
         </listitem>
+
+        <listitem>
+          <para>Specifications are available in <emphasis>docs/specifications/
+          project</emphasis> directory (canal-lecture.html for globals
+          specifications ans canal-lecture-v1.html for detailed specifications
+          of version 1).</para>
+        </listitem>
       </itemizedlist></para>
   </section>
 </article>

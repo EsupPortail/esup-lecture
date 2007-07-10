@@ -147,7 +147,7 @@ public abstract class SourceProfile implements ElementProfile {
     		log.debug("id="+this.id+" - getElement()");
     	}
 		if (source == null){
-			// TODO (GB) ? on pourrait faire un loadSource ou autre chose ou ailleurs ?
+			// TODO (GB) -x- ? on pourrait faire un loadSource ou autre chose ou ailleurs ?
 			String errorMsg = "Source "+id+" is not loaded in profile";
 			log.error(errorMsg);
 			throw new SourceNotLoadedException(errorMsg);

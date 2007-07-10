@@ -5,7 +5,9 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Iterator;
 import org.apache.commons.logging.Log;
@@ -101,11 +103,12 @@ public class Context {
 		}
 		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
-		//TODO (GB) customContext mal mis à jour lors de la disparition d'une category dans le context 
+		//TODO (GB) -x- customContext mal mis à jour lors de la disparition d'une category dans le context 
 		//	(cf. http://sourcesup.cru.fr/tracker/index.php?func=detail&aid=3140&group_id=251&atid=1111) 
 		//	(ex : une category change de context => pas besoin de supprimer le customCategory du 
 		//	      userProfile, mais il ne doit plus etre référencé par le customContext)
 		
+		// update for managedCategories defined in context
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet) {
 			try {
 				mcp.updateCustomContext(customContext, ex);
@@ -117,11 +120,34 @@ public class Context {
 				log.error("Impossible to update CustomContext associated to context " + getId()
 						+ " for managedCategoryProfile " + mcp.getId()
 						+ " because the remote category is in Time Out", e);
-			}	
-			
+			}				
+		}
+		// update for managedCategories not anymore in context
+		List<String> cids = new ArrayList<String>();
+		for (String categoryId : customContext.getSubscriptions().keySet()){
+			cids.add(categoryId);
+		}
+		for (String categoryId : cids) {
+			if (!containsCategory(categoryId)){
+				customContext.removeCustomManagedCategory(categoryId);
+				UserProfile user = customContext.getUserProfile();
+				user.removeCustomManagedCategoryIfOrphan(categoryId);
+			}
 		}
 	}
 
+	/**
+	 * @param categoryId
+	 * @return true if this context refers the category identified by categoryId
+	 */
+	public boolean containsCategory(String categoryId) {
+	   	if (log.isDebugEnabled()){
+    		log.debug("id="+id+" - containsCategory("+id+")");
+    	}
+		return refIdManagedCategoryProfilesSet.contains(categoryId);
+	}
+	
+	
 	/**
 	 * Add a managed category profile id to this context
 	 * @param s the id to add

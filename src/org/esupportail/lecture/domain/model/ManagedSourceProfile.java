@@ -240,7 +240,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			// Nothing to do
 			return mode;
 		} 
-		// TODO (GB later) retirer les customSource du user profile qui correspondent à des profiles 
+		// TODO (GB later) -x- retirer les customSource du user profile qui correspondent à des profiles 
 		// de sources  disparus	
 		
 		// ELSE not Visible

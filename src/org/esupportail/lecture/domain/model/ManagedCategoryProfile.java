@@ -206,7 +206,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			// Nothing to do
 			return mode;
 		} 
-		// TODO (GB later) retirer les customCat du user profile qui correspondent à des profiles 
+		// TODO (GB later) -x- retirer les customCat du user profile qui correspondent à des profiles 
 		// de catégories disparus
 		
 		// ELSE not Visible

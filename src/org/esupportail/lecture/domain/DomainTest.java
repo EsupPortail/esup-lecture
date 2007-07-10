@@ -59,21 +59,21 @@ public class DomainTest {
 	 * @param args non argumet needed
 	 */
 	public static void main(String[] args)  {
-//		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
-//		XmlBeanFactory factory = new XmlBeanFactory(res);
-//		facadeService = (FacadeService)factory.getBean("facadeService");
+		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
+		XmlBeanFactory factory = new XmlBeanFactory(res);
+		facadeService = (FacadeService)factory.getBean("facadeService");
 		
-//		try {
+		try {
 			/* Test alternative behavior */
 //			testGetContextBis("c1");
 //			testGetAvailableSourceAlternativeWay(); 
 			
 			/* Test normal behavior */
-//			testGetConnectedUser();
-//			testGetContext();
-//			testGetAvailableCategories();
-//			testGetAvailableSources();
-//			testGetItems();
+			testGetConnectedUser();
+			testGetContext();
+			testGetAvailableCategories();
+			testGetAvailableSources();
+			testGetItems();
 		
 			/* small actions */
 //			testMarkItemReadMode();
@@ -96,23 +96,23 @@ public class DomainTest {
 		
 			
 			
-//		} catch (InternalExternalException e) {
-//			System.out.println("\n!!! EXCEPTION !!!");
-//			System.out.println("\n!!! Catching InternalExternalException");
-//			e.printStackTrace();
-//		}catch (InfoDomainException e) {
-//			System.out.println("\n!!! EXCEPTION !!!");
-//			System.out.println("\n!!! Catching InfoDomainException");
-//			e.printStackTrace();
-//		} catch (InternalDomainException e) {
-//			System.out.println("\n!!! EXCEPTION !!!");
-//			System.out.println("\n!!! Catching InternalDomainException");
-//			e.printStackTrace();
-//		} catch (DomainServiceException e) {
-//			System.out.println("\n!!! EXCEPTION !!!");
-//			System.out.println("\n!!! Catching DomainServiceException");
-//			e.printStackTrace();
-//		} 
+		} catch (InternalExternalException e) {
+			System.out.println("\n!!! EXCEPTION !!!");
+			System.out.println("\n!!! Catching InternalExternalException");
+			e.printStackTrace();
+		}catch (InfoDomainException e) {
+			System.out.println("\n!!! EXCEPTION !!!");
+			System.out.println("\n!!! Catching InfoDomainException");
+			e.printStackTrace();
+		} catch (InternalDomainException e) {
+			System.out.println("\n!!! EXCEPTION !!!");
+			System.out.println("\n!!! Catching InternalDomainException");
+			e.printStackTrace();
+		} catch (DomainServiceException e) {
+			System.out.println("\n!!! EXCEPTION !!!");
+			System.out.println("\n!!! Catching DomainServiceException");
+			e.printStackTrace();
+		} 
 		
 
 	

@@ -108,7 +108,7 @@ public class CustomManagedCategory extends CustomCategory {
 		} catch (CategoryNotLoadedException e) {
 			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 			profile.updateCustom(this,ex);
-			// TODO (GB) il y a encore un CategoryNotLoaded à catcher : que fait on ?
+			// TODO (GB) -x- il y a encore un CategoryNotLoaded à catcher : que fait on ?
 		}
 		
 //		DomainTools.getDaoService().updateCustomCategory(this);
@@ -149,7 +149,7 @@ public class CustomManagedCategory extends CustomCategory {
 		} catch (CategoryNotLoadedException e) {
 			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this,ex);
-			// TODO (GB) il y a encore un CategoryNotLoaded à catcher : que fait on ?
+			// TODO (GB) -x- il y a encore un CategoryNotLoaded à catcher : que fait on ?
 		}
 		
 //		DomainTools.getDaoService().updateCustomCategory(this);

@@ -37,7 +37,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * The userprofile owner 
 	 */
 	protected UserProfile userProfile;
-	// TODO GB pourquoi ne pas mettre le userPRofile en private comme dans customSource ?
+	// TODO (GB) pourquoi ne pas mettre le userPRofile en private comme dans customSource ?
 	/**
 	 * The Id of the categoryProfile referring by this CustomCategory
 	 */
