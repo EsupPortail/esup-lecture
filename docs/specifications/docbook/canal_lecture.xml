@@ -2,7 +2,7 @@
 <!DOCTYPE article PUBLIC "-//UR1//DTD docGeneric//FR"
 "http://outils.univ-rennes1.fr/xxe/dtd/docGeneric.dtd">
 <article lang="FR">
-  <title>Projet CANAL LECTURE - Spécifications globales</title>
+  <title>Projet CANAL LECTURE - Analyse globale</title>
 
   <subtitle>Canal Lecture ou autre chose on verra.</subtitle>
 
@@ -27,7 +27,7 @@
   <formalpara>
     <title>Introduction</title>
 
-    <para> L'idée de départ est de séparer le canal "Annonces" en deux
+    <para>L'idée de départ est de séparer le canal "Annonces" en deux
     :<itemizedlist>
         <listitem>
           <para>gestion de la saisie des annonces : le canal annonce</para>
@@ -87,7 +87,7 @@
     <para></para>
 
     <section>
-      <title>Définitions </title>
+      <title>Définitions</title>
 
       <para>Voici les différents objets manipulés par le canal lecture
       :<itemizedlist>
@@ -206,7 +206,7 @@
       </section>
 
       <section>
-        <title>Un profil de Source </title>
+        <title>Un profil de Source</title>
 
         <orderedlist>
           <listitem>
@@ -294,8 +294,7 @@
                         <para><emphasis>l'accessibilité</emphasis> :
                         <emphasis>publique</emphasis> ou
                         <emphasis>authentifié</emphasis> - ouverte à tous ou
-                        restreinte via une authentification (ex : CAS).
-                        </para>
+                        restreinte via une authentification (ex : CAS).</para>
                       </listitem>
 
                       <listitem>
@@ -435,7 +434,7 @@
 
           <listitem>
             <para>L'élément &lt;Category&gt; est défini dans la dtd de la
-            category (category.dtd). </para>
+            category (category.dtd).</para>
           </listitem>
         </orderedlist>
       </section>
@@ -534,8 +533,8 @@
 
             <listitem>
               <para><emphasis>l'éditabilité</emphasis> du contexte
-              (création/suppression, abonnement/désabonnement de catégories )
-              </para>
+              (création/suppression, abonnement/désabonnement de catégories
+              )</para>
             </listitem>
           </itemizedlist></para>
 
@@ -557,7 +556,7 @@
           :<mediaobject>
               <imageobject>
                 <imagedata
-                fileref="media/donnees.gif">ManipluManipulatyyiin</imagedata>
+                fileref="../images/donnees.gif">ManipluManipulatyyiin</imagedata>
               </imageobject>
 
               <caption>tab.1 : Manipulation des données par le canal et le
@@ -570,14 +569,14 @@
           informations pour les profils de sources XML et de catégories
           :<mediaobject>
               <imageobject>
-                <imagedata fileref="media/tab_categorie.gif"></imagedata>
+                <imagedata fileref="../images/tab_categorie.gif"></imagedata>
               </imageobject>
 
               <caption>tab.1 : Origine des données concernant les
               catégories</caption>
             </mediaobject><mediaobject>
               <imageobject>
-                <imagedata fileref="media/tab_source.gif"></imagedata>
+                <imagedata fileref="../images/tab_source.gif"></imagedata>
               </imageobject>
 
               <caption>tab. 2 : Origine des données concernant les sources
@@ -674,7 +673,7 @@
 
       <mediaobject>
         <imageobject>
-          <imagedata fileref="media/contexte-cat-sources.gif"></imagedata>
+          <imagedata fileref="../images/contexte-cat-sources.gif"></imagedata>
         </imageobject>
 
         <caption>Différents cas possibles de personnalisation d'un
@@ -1117,7 +1116,7 @@
 
       <para><mediaobject>
           <imageobject>
-            <imagedata fileref="media/global.gif">FonctionnF</imagedata>
+            <imagedata fileref="../images/global.gif">FonctionnF</imagedata>
           </imageobject>
 
           <caption>Fonctionnement du canal lecture en interaction avec le
@@ -1226,7 +1225,7 @@
   </section>
 
   <section>
-    <title>Spécifications détaillées </title>
+    <title>Spécifications détaillées</title>
 
     <para></para>
 
@@ -1433,7 +1432,7 @@
         </itemizedlist></para>
 
       <para>C'est une première énumération des cas d'utilisation apparu
-      nécessaire. Ils seront complétés, modifiés lors de la spécification
+      nécessaire. Ils seront complétés, modifiés ...lors de la spécification
       générale.</para>
 
       <para>Concernant les cas d'utilisations dont la mise en oeuvre est
@@ -1476,13 +1475,13 @@
 
       <para>Les diagrammes suivants contiennent la description des uses cases
       ainsi que les relations entre eux : <ulink
-      url="../../uses-cases/uses-cases-contexte/index.html">uses-cases-contexte</ulink>
+      url="../uses-cases/uses-cases-contexte/index.html">uses-cases-contexte</ulink>
       (actions relatives au contexte), <ulink
-      url="../../uses-cases/uses-cases-category/index.html">uses-cases-category</ulink>
+      url="../uses-cases/uses-cases-category/index.html">uses-cases-category</ulink>
       (actions relatives aux catégories) et <ulink
-      url="../../uses-cases/uses-cases-source/index.html">uses-cases-source</ulink>
+      url="../uses-cases/uses-cases-source/index.html">uses-cases-source</ulink>
       (actions relatives aux sources). Le diagramme <ulink
-      url="../../uses-cases/uses-cases-rafraichir/index.html">uses-cases-rafraichir</ulink>
+      url="../uses-cases/uses-cases-rafraichir/index.html">uses-cases-rafraichir</ulink>
       reprend tous les enchainements de cas d'utilisations concernant la mise
       à jour des données.</para>
 
@@ -1507,55 +1506,12 @@
           </listitem>
         </itemizedlist></para>
     </section>
-  </section>
-
-  <section>
-    <title>Spécifications détaillées</title>
-
-    <para></para>
 
     <section>
-      <title>Diagrammes UML</title>
+      <title>Diagrammes de classe</title>
 
-      <para><itemizedlist>
-          <listitem>
-            <para>Diagrammes de classe :</para>
-
-            <para>Les diagrammes suivants contiennent une première description
-            statique du canal lecture :<itemizedlist>
-                <listitem>
-                  <para>environnement global du canal, catégories et sources,
-                  contrôlées et personnelles : <ulink
-                  url="../../diag-classes/global-env1/index.html">global-env1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para>personnalisations d'un profil utilisateur : <ulink
-                  url="../../diag-classes/profil-utilisateur1/index.html">profil-utilisateur1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para>personnalisations des catégories personnelles : <ulink
-                  url="../../diag-classes/perso-cat1/index.html">perso-cat1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para>personnalisations des catégories contrôlées : <ulink
-                  url="../../diag-classes/managed-cat1/index.html">managed-cat1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para>personnalisations des sources personnelles : <ulink
-                  url="../../diag-classes/perso-sources1/index.html">perso-sources1</ulink></para>
-                </listitem>
-
-                <listitem>
-                  <para>personnalisations des sources contrôlées : <ulink
-                  url="../../diag-classes/managed-sources1/index.html">managed-sources1</ulink></para>
-                </listitem>
-              </itemizedlist></para>
-          </listitem>
-        </itemizedlist></para>
+      <para>Il faut se référer aux diagrammes UML de conception/développement,
+      présents dans le répertoire docs/uml/classes du projet.</para>
     </section>
   </section>
 </article>

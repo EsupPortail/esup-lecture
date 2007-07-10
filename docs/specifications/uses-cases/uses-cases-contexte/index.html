@@ -1,0 +1,77 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" type="text/css" media="screen" href="uml_uml-initial_uses-cases-contexte_uud.css">
+   </head>
+   <body>
+      <table bgcolor="#CCCCFF" border="0" cellpadding="1" cellspacing="3" table-layout="fixed" width="100%"><tbody>
+         <tr bgColor="#CCCCFF" width="100%">
+            <td bgColor="#00008B" width="72" align="center"><span style="color:#FFFFFF; font-weight:bold">Diagramme</span></td>
+            <td>&nbsp;</td>
+         </tr></tbody>
+      </table>
+      <hr>
+      <h1><img src="icons/usecase_diagram.gif"><b>&nbsp;uses-cases-contexte</b></h1><br><br><img border="0" src="uml_uml-initial_uses-cases-contexte_uud.jpg"><br><br><br><h2><u><b>&Eacute;tude de Cas : editer_contexte</b></u></h2>
+      <p>Action utilisateur : modification du contexte</p><br><b>Pr&eacute;condition :</b><p>contexte est d&eacute;fini dans la config &amp; charg&eacute; en m&eacute;moire &amp; &eacute;ditable (edit&lt;&gt;no)</p><br><b>Flux Normal :</b><p>D&eacute;roulement d'une action modifiant le context puis appel de "afficher_contexte".</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : afficher_contexte</b></u></h2>
+      <p>Action utilisateur : affichage du context avec ses cat&eacute;gories.</p><br><b>Pr&eacute;condition :</b><p>contexte d&eacute;fini dans la config</p><br><b>Flux Normal :</b><p>Appel de rafraichir_context ; 
+         puis affichage du context ;
+         puis appel de "selectionner_categorie" pour toutes ses cat&eacute;gories ; 
+         
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : selectionner_categorie</b></u></h2>
+      <p>cf. uses-cases-category </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : creer_categorie</b></u></h2>
+      <p>cf. uses-cases-category </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : supprimer_categorie</b></u></h2>
+      <p>cf. uses-cases-category </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : rafraichir_config_canal</b></u></h2>
+      <p>Action globale.</p><br><b>Flux Normal :</b><p>Charge le fichier de config du canal en m&eacute;moire et appel de "charger_tous_profils_categories" puis de "charger_tous_contexts"
+         
+         au d&eacute;marrage du canal et &agrave; l'ouverture d'une session utilisateur si le fichier de config a &eacute;t&eacute; modifi&eacute; depuis son dernier
+         chargement en m&eacute;moire. 
+         V&eacute;rifie que le fichier de mapping DTD-XSLT-xpath existe.
+      </p><br><b>Flux Alternatif1 :</b><p>Erreur si le fichier de config du canal n'existe pas ou si le fichier de mapping non plus.</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : charger_tous_profils_categories</b></u></h2>
+      <p>cf. uses-cases-category </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : charger_tous_contextes</b></u></h2>
+      <p>Action globale</p><br><b>Flux Normal :</b><p>Charge en m&eacute;moire tous les contexts d&eacute;finis dans la config du canal.</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : rafraichir_context</b></u></h2>
+      <p>Action utilisateur : relit le context de l'utilisateur (= context global + personnalisations)</p><br><b>Pr&eacute;condition :</b><p>context charg&eacute; en m&eacute;moire</p><br><b>Flux Normal :</b><p>Evaluation de l'appartenance de l'utilisateur dans les groupes de visibilt&eacute; de chaque cat&eacute;gorie :
+         	-- si il appartient &agrave; une cat&eacute;gorie "forc&eacute;e", abscente de son profil
+         		alors appel de "enregistrer_categorie" ;
+         	-- si il appartient &agrave; une nouvelle cat&eacute;gorie "pr&eacute;abonn&eacute;e" 
+         		alors appel de "enregistrer_categorie" ;
+         	-- si une cat&eacute;gorie est dans le profil utilisateur alors qu'elle n'est dans aucun des groupes de visibilit&eacute;
+         		alors appel de "effacer_categorie".
+         
+         Si "context.edit" devient &lt;&gt; "all,managed" alors appel de "enlever_categorie" pour toutes les cat&eacute;gories import&eacute;es.
+         Si "contexte.edit devient &lt;&gt; "all,personal" alors appel de "supprimer_categorie" pour toutes les cat&eacute;gories cr&eacute;es/ajout&eacute;es.
+           
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : enregistrer_categorie</b></u></h2>
+      <p>cf. uses-cases-category </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : effacer_categorie</b></u></h2>
+      <p>cf. uses-cases-category </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : ajouter_categorie</b></u></h2>
+      <p>cf. uses-cases-category</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : importer_categorie</b></u></h2>
+      <p>cf. uses-cases-category</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : enlever_categorie</b></u></h2>
+      <p>cf. uses-cases-category</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : dimensionner_arbre</b></u></h2>
+      <p>Action utilisateur : redimensionner en largeur la fen&ecirc;tre d'arborescence des cat&eacute;gories.</p><br><b>Pr&eacute;condition :</b><p>Utilisateur d&eacute;fini</p><br><b>Flux Normal :</b><p>Enregistre la largeur de la fen&ecirc;tre d'arborescence  dans le profil de l'utilisateur</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : modifier_vue_contexte</b></u></h2>
+      <p>Action utilisateur : modification de l'affichage du contexte</p><br><b>Pr&eacute;condition :</b><p>contexte d&eacute;fini</p><br><b>Flux Normal :</b><p>Enregistrement des personnalisations dans le profil de l'utilisateur</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : deplacer_categorie</b></u></h2>
+      <p>Action utilisateur : d&eacute;placer la cat&eacute;gorie dans le contexte de l'utilisateur.</p><br><b>Pr&eacute;condition :</b><p>cf. modifier_vue_contexte &amp; categorie d&eacute;finie dans le contexte</p><br><b>Flux Normal :</b><p>Enregistrer la position relative de la cat&eacute;gorie dans le contexte </p><br><hr>
+      <h4><b>Liens :</b></h4>
+      <hr><br><table bgcolor="#CCCCFF" border="0" cellpadding="1" cellspacing="3" table-layout="fixed" width="100%"><tbody>
+         <tr bgColor="#CCCCFF" width="100%">
+            <td bgColor="#00008B" width="72" align="center"><span style="color:#FFFFFF; font-weight:bold">Diagramme</span></td>
+            <td>&nbsp;</td>
+         </tr></tbody>
+      </table>
+      <hr><br><br><center><span style="font-size:xx-small">This documentation has been generated by EclipseUML.</span></center><br></body>
+</html>

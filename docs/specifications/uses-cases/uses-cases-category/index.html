@@ -1,0 +1,151 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <link rel="stylesheet" type="text/css" media="screen" href="uml_uml-initial_uses-cases-category_uud.css">
+   </head>
+   <body>
+      <table bgcolor="#CCCCFF" border="0" cellpadding="1" cellspacing="3" table-layout="fixed" width="100%"><tbody>
+         <tr bgColor="#CCCCFF" width="100%">
+            <td bgColor="#00008B" width="72" align="center"><span style="color:#FFFFFF; font-weight:bold">Diagramme</span></td>
+            <td>&nbsp;</td>
+         </tr></tbody>
+      </table>
+      <hr>
+      <h1><img src="icons/usecase_diagram.gif"><b>&nbsp;uses-cases-category</b></h1><br><br><img border="0" src="uml_uml-initial_uses-cases-category_uud.jpg"><br><br><br><h2><u><b>&Eacute;tude de Cas : deplier_categorie</b></u></h2>
+      <p>Action utilisateur</p><br><b>Pr&eacute;condition :</b><p>cat&eacute;gorie pli&eacute;e </p><br><b>Flux Normal :</b><p>Mettre son &eacute;tat &agrave; "d&eacute;pli&eacute;" dans le profil utilisateur puis appel de "afficher_categorie_depliee"</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : replier_categorie</b></u></h2>
+      <p>Action utilisateur</p><br><b>Pr&eacute;condition :</b><p>la cat&eacute;gorie est d&eacute;pli&eacute;e </p><br><b>Flux Normal :</b><p>mettre son &eacute;tat &agrave; "pli&eacute;" dans le profil de l'utilisateur puis appel de "afficher_categorie_pliee"</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : creer_categorie</b></u></h2>
+      <p>Action utilisateur : cr&eacute;er une cat&eacute;gorie personnelle dans le contexte courant.</p><br><b>Pr&eacute;condition :</b><p>cf. "editer_context"</p><br><b>Flux Normal :</b><p>Saisie IHM du nom (non d&eacute;j&agrave; existant), saisie de la description puis appel de "enregistrer_categorie".</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : abonner_categorie</b></u></h2>
+      <p>Action utilisateur : s'abonner &agrave; une cat&eacute;gorie controll&eacute;e du contexte courant.</p><br><b>Flux Normal :</b><p>Proposition d'un ensemble de cat&eacute;gories controll&eacute;es disponibles (&eacute;valuation des visibilit&eacute;s) dans le contexte.
+         Puis s&eacute;lection IHM du nom puis appel de "enregistrer_categorie".
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : supprimer_categorie</b></u></h2>
+      <p>Action utilisateur : supprimer une cat&eacute;gorie personnelle.</p><br><b>Pr&eacute;condition :</b><p>si action manuelle alors context.edit = personal,all &amp; cat&eacute;gorie d&eacute;finie dans le profil utilisateur </p><br><b>Flux Normal :</b><p>Retire la categorie personnelle du contexte. 
+         Si c'est sa seule d&eacute;finition dans tout le profil utilisateur : si c'est une action manuelle alors demande une confirmation
+         puis
+         appel de "effacer_categorie" sinon rien.
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : desabonner_categorie</b></u></h2>
+      <p>Action utilisateur : se d&eacute;sabonner d'une cat&eacute;gorie controll&eacute;e du contexte courant.</p><br><b>Pr&eacute;condition :</b><p>cat&eacute;gorie controll&eacute;e non forc&eacute;e  &amp; d&eacute;finie dans le profil utilisateur</p><br><b>Flux Normal :</b><p>Retire la categorie control&eacute;e du contexte pour l'utilisateur. 
+         Si c'est sa seule d&eacute;finition dans tout le profil utilisateur : demande une confirmation puis
+         appel de "effacer_categorie".
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : editer_categorie</b></u></h2>
+      <p>Action utilisateur</p><br><b>Pr&eacute;condition :</b><p>cat&eacute;gorie d&eacute;finie dans le profil utilisateur  &amp; &eacute;ditable(edit&lt;&gt;no) ou personnelle</p><br><b>Flux Normal :</b><p>D&eacute;roulement d'une action de modification de la cat&eacute;gorie ;
+         Puis enregistre les modifications de la cat&eacute;gorie ;
+         Puis appel de "forcer_timer_categorie" ;
+         Puis appel de "selectionner_categorie" si on n'est pas en train de faire "enregistrer_categorie".
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : afficher_categorie_depliee</b></u></h2>
+      <p>Action utilisateur</p><br><b>Pr&eacute;condition :</b><p>cat&eacute;gorie d&eacute;pli&eacute;e &amp; d&eacute;finie dans le profil utilisateur</p><br><b>Flux Normal :</b><p>si ttl d&eacute;pass&eacute; (cat. controll&eacute;e) ou nouvelle session (cat.pers) alors appel de "rafraichir_categorie" ;
+         Affiche le nom de la cat&eacute;gorie ;
+         puis pour chacun des profils de sources d&eacute;finis, appel de "selectionner_source".
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : afficher_categorie_pliee</b></u></h2>
+      <p>Action utilisateur</p><br><b>Pr&eacute;condition :</b><p>cat&eacute;gorie pli&eacute;e &amp; d&eacute;finie dans le profil utilisateur</p><br><b>Flux Normal :</b><p>Affichage du nom de la cat&eacute;gorie.</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : selectionner_source</b></u></h2>
+      <p>cf. uses-cases-source</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : rafraichir_categorie</b></u></h2>
+      <p>Action utilisateur : rafraichir une cat&eacute;gorie controll&eacute;e.</p><br><b>Pr&eacute;condition :</b><p>cat&eacute;gorie d&eacute;finie dans le profil utilisateur &amp; visible </p><br><b>Flux Normal :</b><p>Si la cat&eacute;gorie est controll&eacute;e et  d'accessibilit&eacute; CAS alors appel de "recuperer_pt_cas", 
+         puis appel de "charger_categorie" en lui donnant le proxy ticket ;
+         Evalue l'appartenance de l'utilisateur dans les groupes de visibilt&eacute; de chaque source :
+         Si il appartient &agrave; une source "forc&eacute;e" abscente de son profil alors appel de "enregistrer_source"  ;
+         Si il appartient &agrave; nouvelle source "pr&eacute;abonn&eacute;e" abscente de son profil alors appel de "enregistrer_source" ;
+         Si une source invisible est dans le profil utilisateur alors appel de "effacer_source" .
+         
+         Si "cat.edit" devient &lt;&gt; ",managed,all" alors appel de "enlever_source" pour toutes les sources import&eacute;es.
+         Si "cat.edit" devient &lt;&gt; "personal,all" alors appel de "supprimer_source" pour toutes les sources cr&eacute;es/ajout&eacute;es.
+         
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : charger_tous_profils_categories</b></u></h2>
+      <p>Action globale : charger tous les profils de cat&eacute;gories controll&eacute;es.</p><br><b>Pr&eacute;condition :</b><p>config du canal charg&eacute; en m&eacute;moire</p><br><b>Flux Normal :</b><p>Pour toutes les cat&eacute;gories (controll&eacute;es) d&eacute;finies dans le canal, 
+         charger la cat&eacute;gorie en m&eacute;moire puis appel de "forcer_timer_categorie"
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : enregistrer_categorie</b></u></h2>
+      <p>Action utilisateur </p><br><b>Pr&eacute;condition :</b><p>cat&eacute;gorie d&eacute;finie dans le contexte &amp; cat. visible si controll&eacute;e.</p><br><b>Flux Normal :</b><p>Modifie le profil utilisateur pour cette cat&eacute;gorie dans le profil utilisateur ;
+         puis appel de "forcer_timer_categorie" si cat&eacute;gorie control&eacute;e ; 
+         puis proposition de "editer_categorie" si la cat&eacute;gorie est &eacute;ditable ;
+         puis appelle "afficher_contexte".
+         
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : effacer_categorie</b></u></h2>
+      <p>Action utilisateur</p><br><b>Pr&eacute;condition :</b><p>Cat&eacute;gorie d&eacute;finie dans le profil utilisateur &amp; non forc&eacute;e si controll&eacute;e</p><br><b>Flux Normal :</b><p>Effacer la cat&eacute;gorie du profil utilisateur ; 
+         Appel de "afficher_contexte"
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : afficher_contexte</b></u></h2>
+      <p>cf. uses-cases-contexte</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : selectionner_categorie</b></u></h2>
+      <p>Action utilisateur</p><br><b>Pr&eacute;condition :</b><p>cat&eacute;gorie d&eacute;finie dans le profil utilisateur</p><br><b>Flux Normal :</b><p>Si la cat&eacute;gorie est d&eacute;pli&eacute;e, alors appel de "afficher_categorie_depliee" ;
+         sinon appel de "afficher_categorie_pliee".
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : enregister_source</b></u></h2>
+      <p>cf. uses-cases-source</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : effacer_source</b></u></h2>
+      <p>cf. uses-cases-source</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : deplacer_source</b></u></h2>
+      <p>Action utilisateur : d&eacute;placer la source dans la cat&eacute;gorie de l'utilisateur.</p><br><b>Pr&eacute;condition :</b><p>cf. "editer_categorie"  &amp; source d&eacute;finie dans la cat&eacute;gorie</p><br><b>Flux Normal :</b><p>Enregistrer la position relative de la source dans la cat&eacute;gorie.
+         
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : choisir_mode_visu_categorie</b></u></h2>
+      <p>Action utilisateur </p><br><b>Pr&eacute;condition :</b><p>cf. "modifier_vue_categorie"</p><br><b>Flux Normal :</b><p>Choisir le mode de visualisation par d&eacute;faut des items les sources de la cat&eacute;gorie.
+         (tous, tous et lus  mis en fin, lus, non lus) et enregistre les modifiations
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : renommer_categorie</b></u></h2>
+      <p>Action utilisateur : renommer une cat&eacute;gorie personnelle.</p><br><b>Pr&eacute;condition :</b><p>cf. "editer_categorie" </p><br><b>Flux Normal :</b><p>Renommer la cat&eacute;gorie (nom non existant) et enregistrer</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : creer_source</b></u></h2>
+      <p>cf. uses-cases-sources</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : supprimer_source</b></u></h2>
+      <p>cf. uses-cases-sources</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : recuperer_pt_cas</b></u></h2>
+      <p>action utilisateur</p><br><b>Flux Normal :</b><p>Authentification de l'utilisateur si besoin ;
+         Puis r&eacute;cup&eacute;ration du proxy ticket CAS de l'utilisateur 
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : forcer_timer_categorie</b></u></h2>
+      <p>Action globale : forcer le timer d'une cat&eacute;gorie controll&eacute;e.</p><br><b>Pr&eacute;condition :</b><p>cat&eacute;gorie d&eacute;finie dans le profil utilisateur</p><br><b>Flux Normal :</b><p>Forcer le timer utilisateur de la cat&eacute;gorie afin que le ttl soit d&eacute;pass&eacute;.</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : forcer_timer_source</b></u></h2>
+      <p>cf. uses-cases-source</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : charger_categorie</b></u></h2>
+      <p>Action globale : charger le xml d'une cat&eacute;gorie controll&eacute;e.</p><br><b>Pr&eacute;condition :</b><p>cat&eacute;gorie d&eacute;finie</p><br><b>Flux Normal :</b><p>Acc&egrave;de au serveur distant en acc&egrave;s public ou CAS ; 
+         Si c'est CAS, il lui fournit le proxy_ticket ;
+         Charge le XML de la cat&eacute;gorie en m&eacute;moire ;
+         Remet le timer  de la cat&eacute;gorie &agrave; 0 ;
+         Puis pour chaque profil de source d&eacute;fini appel de "forcer_timer_source".
+         
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : ajouter_categorie</b></u></h2>
+      <p>Action utilisateur : ajouter une cat&eacute;gorie personnelle existante au contexte courant.</p><br><b>Pr&eacute;condition :</b><p>cf. "editer_context"</p><br><b>Flux Normal :</b><p>S&eacute;lection du nom de la cat&eacute;gorie personnelle parmis toutes celles de du profil de l'utilisateur.
+         Puis appel de "enregistrer_categorie".
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : ajouter_source</b></u></h2>
+      <p>cf. uses-cases-sources</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : importer_categorie</b></u></h2>
+      <p>Action utilisateur : importer une cat&eacute;gorie contr&ocirc;l&eacute;e depuis un autre contexte.</p><br><b>Pr&eacute;condition :</b><p>cf. "editer_context" &amp; context.edit = all,managed</p><br><b>Flux Normal :</b><p>Proposition de toutes les cat&eacute;gories controll&eacute;es disponibles (&eacute;valuation des visibilit&eacute;s et rattachement &agrave; un contexte) hors
+         contexte courant.
+         Puis selection IHM du nom puis appel de "enregistrer_categorie".
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : importer_source</b></u></h2>
+      <p>cf. uses-cases-sources</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : enlever_categorie</b></u></h2>
+      <p>Action utilisateur : enlever une cat&eacute;gorie controll&eacute;e n'&eacute;tant pas fournie par le contexte courant.</p><br><b>Pr&eacute;condition :</b><p>si manuelle alors context.edit = all,managed &amp; d&eacute;finie dans le profil utilisateur</p><br><b>Flux Normal :</b><p>Retire la categorie control&eacute;e du contexte pour l'utilisateur. 
+         Si c'est son seul abonnement dans tout le profil utilisateur : si c'est une action manuelle alors demande une confirmation
+         puis
+         appel de "effacer_categorie" sinon appel de "effacer_categorie".
+      </p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : enlever_source</b></u></h2>
+      <p>cf. uses-cases-sources</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : modifier_vue_categorie</b></u></h2>
+      <p>Action utilisateur : modification de l'affichage de la cat&eacute;gorie.</p><br><b>Pr&eacute;condition :</b><p>categorie d&eacute;finie dans le profil utilisateur</p><br><b>Flux Normal :</b><p>Enregistrement des personnalisations dans le profil de l'utilisateur</p><br><hr>
+      <h2><u><b>&Eacute;tude de Cas : changer_description</b></u></h2>
+      <p>Action utilisateur : modifier la description d'une cat&eacute;gorie personnelle.</p><br><b>Pr&eacute;condition :</b><p>cf. "editer_categorie" </p><br><b>Flux Normal :</b><p>Modifier la description de la cat&eacute;gorie et enregistrer</p><br><hr>
+      <h4><b>Liens :</b></h4>
+      <hr><br><table bgcolor="#CCCCFF" border="0" cellpadding="1" cellspacing="3" table-layout="fixed" width="100%"><tbody>
+         <tr bgColor="#CCCCFF" width="100%">
+            <td bgColor="#00008B" width="72" align="center"><span style="color:#FFFFFF; font-weight:bold">Diagramme</span></td>
+            <td>&nbsp;</td>
+         </tr></tbody>
+      </table>
+      <hr><br><br><center><span style="font-size:xx-small">This documentation has been generated by EclipseUML.</span></center><br></body>
+</html>
