@@ -15,7 +15,6 @@ import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
@@ -119,11 +118,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param customContext the customContext to update
 	 * @param ex access to externalService to evaluate visibility
 	 * @return true if the category is visible by the userProfile
-	 * @throws ComputeFeaturesException 
 	 * @throws CategoryTimeOutException 
+	 * @throws CategoryNotLoadedException 
 	 */
 	synchronized protected VisibilityMode updateCustomContext(CustomContext customContext,ExternalService ex) 
-		throws ComputeFeaturesException, CategoryTimeOutException{
+		throws CategoryTimeOutException, CategoryNotLoadedException{
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - updateCustomContext("+customContext.getElementId()+"externalService)");
 		}
@@ -164,10 +163,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param ex access to externalService to evaluate visibility
 	 * @param customContext customContext to set up
 	 * @return true if the mcp is visible by the user of the customContext (in Obliged or in autoSubscribed, or in Allowed), else return false 
-	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
 	 */
 	synchronized private VisibilityMode setUpCustomContextVisibility(CustomContext customContext, ExternalService ex) 
-		throws ComputeFeaturesException {
+		throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - setUpCustomContextVisibility("+customContext.getElementId()+",externalService)");
 		}
@@ -288,10 +287,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Compute visibility value from features and returns it
 	 * @return Visibility
-	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
 	 * @see ManagedCategoryProfile#visibility
 	 */
-	public VisibilitySets getVisibility() throws ComputeFeaturesException{
+	public VisibilitySets getVisibility() throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - getVisibility()");
 		}
@@ -441,19 +440,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 //	/**
 //	 * @return allowed visibility group 
-//	 * @throws ComputeFeaturesException 
 //	 */
-//	public DefinitionSets getVisibilityAllowed() throws ComputeFeaturesException  {
+//	public DefinitionSets getVisibilityAllowed() {
 //		return getVisibility().getAllowed();
 //	}
 //
 //
 //	/** 
 //	 * @return autoSubscribed group visibility
-//	 * @throws ComputeFeaturesException 
 //	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAutoSubscribed()
 //	 */
-//	public DefinitionSets getVisibilityAutoSubscribed() throws ComputeFeaturesException  {
+//	public DefinitionSets getVisibilityAutoSubscribed() {
 //		return getVisibility().getAutoSubscribed();
 //	}
 //
@@ -463,7 +460,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 //	 * @throws ElementNotLoadedException 
 //	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityObliged()
 //	 */
-//	public DefinitionSets getVisibilityObliged() throws ComputeFeaturesException {
+//	public DefinitionSets getVisibilityObliged()  {
 //		return getVisibility().getObliged();
 //		
 //	}

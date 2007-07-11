@@ -8,7 +8,6 @@ package org.esupportail.lecture.domain.model;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 
 /**
  * Class that contains features of a managed element needed to be computed
@@ -64,9 +63,8 @@ public abstract class ManagedElementFeatures {
 	/**
 	 * Compute features 
 	 * @throws CategoryNotLoadedException 
-	 * @throws ComputeFeaturesException 
 	 */
-	synchronized protected void compute() throws CategoryNotLoadedException, ComputeFeaturesException   {
+	synchronized protected void compute() throws CategoryNotLoadedException   {
 		if (log.isDebugEnabled()){
 			log.debug("compute()");
 		}
@@ -88,16 +86,16 @@ public abstract class ManagedElementFeatures {
 	
 	/**
 	 * @return Returns the visibility (feature is automatically computed if needed).
-	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized protected VisibilitySets getVisibility() throws ComputeFeaturesException {
+	synchronized protected VisibilitySets getVisibility() throws CategoryNotLoadedException {
 		if (!isComputed){
 			try {
 				compute();
 			} catch (CategoryNotLoadedException e) {
 				String errorMsg = "Impossible to compute features on element "+ mep.getId() + "because Category is not loaded";
 				log.error(errorMsg);
-				throw new ComputeFeaturesException(errorMsg,e);
+				throw e;
 			}
 		}
 		return visibility;

@@ -90,7 +90,6 @@ public abstract class CustomSource implements CustomElement {
 	 * Items are ready to be displayed
 	 * @param ex access to externalService
 	 * @return the list of items
-	 * @throws SourceNotLoadedException
 	 * @throws MappingNotFoundException
 	 * @throws ComputeItemsException
 	 * @throws Xml2HtmlException
@@ -98,9 +97,12 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceTimeOutException 
+	 * @throws SourceNotLoadedException 
 	 */
 	public List<Item> getItems(ExternalService ex) 
-		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException  {
+		throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
+		ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
+		SourceTimeOutException, SourceNotLoadedException  {
 		if (log.isDebugEnabled()){
 			log.debug("id="+elementId+" - getItems(externalService)");
 		}

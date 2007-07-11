@@ -16,6 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 
@@ -113,7 +114,8 @@ public class CustomContext implements CustomElement {
 		// TODO (GB later) rewrite with custom personnal category (+ sorted display)
 	
 		/* update this customContext with context */
-		getContext().updateCustom(this,ex);
+		Context context = getContext();
+		context.updateCustom(this,ex);
 		
 //		DomainTools.getDaoService().updateCustomContext(this);
 //		DomainTools.getDaoService().updateUserProfile(userProfile);

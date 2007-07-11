@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
@@ -89,10 +89,10 @@ public abstract class SourceProfile implements ElementProfile {
 	/**
 	 * Load the source referenced by this SourceProfile
 	 * @param ex
-	 * @throws ComputeFeaturesException
 	 * @throws SourceTimeOutException 
+	 * @throws CategoryNotLoadedException 
 	 */
-	protected abstract void loadSource(ExternalService ex) throws ComputeFeaturesException, SourceTimeOutException ; 
+	protected abstract void loadSource(ExternalService ex) throws SourceTimeOutException, CategoryNotLoadedException ; 
 	
 	
 	/**
@@ -104,22 +104,16 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @throws ComputeItemsException
 	 * @throws Xml2HtmlException
 	 * @throws SourceTimeOutException 
+	 * @throws CategoryNotLoadedException 
 	 */
 	synchronized protected List<Item> getItems(ExternalService ex) 
-		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException, SourceTimeOutException  {
+		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException, SourceTimeOutException, CategoryNotLoadedException  {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+this.id+" - getItems(externalService)");
     	}
-		try {
-			loadSource(ex);
-			Source s = getElement();
-			return s.getItems();
-		} catch (ComputeFeaturesException e) {
-			String errorMsg = "Impossible to loadSource on sourceProfile "+ getId() + " impossible to compute features";
-			log.error(errorMsg);
-			throw new SourceNotLoadedException(errorMsg,e);
-		} 
-		
+		loadSource(ex);
+		Source s = getElement();
+		return s.getItems();
 	}
 
 	/**
@@ -268,9 +262,9 @@ public abstract class SourceProfile implements ElementProfile {
 
 	/**
 	 * @return timeOut
-	 * @exception ComputeFeaturesException
+	 * @exception CategoryNotLoadedException
 	 */
-	public abstract int getTimeOut() throws ComputeFeaturesException;
+	public abstract int getTimeOut() throws CategoryNotLoadedException;
 
 
 	/**

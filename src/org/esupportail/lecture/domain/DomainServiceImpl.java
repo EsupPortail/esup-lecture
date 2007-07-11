@@ -34,7 +34,6 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
@@ -275,8 +274,7 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<ItemBean> getItems(final String uid, final String sourceId, final ExternalService ex) 
-			throws SourceNotLoadedException, InternalDomainException, 
-			CategoryNotLoadedException, SourceTimeOutException {
+			throws SourceNotLoadedException, InternalDomainException, CategoryNotLoadedException, SourceTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getItems(" + uid + "," + sourceId + ",externalService)");
 		}
@@ -285,9 +283,7 @@ public class DomainServiceImpl implements DomainService {
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomSource customSource = null;
 		try {
-			
 			/* Get current user profile and customCoategory */
-			
 			customSource = userProfile.getCustomSource(sourceId);
 			List<Item> listItems;
 			listItems = customSource.getItems(ex);
@@ -549,13 +545,7 @@ public class DomainServiceImpl implements DomainService {
 				+ "User " + uid + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);
 			throw new UserNotSubscribedToCategoryException(errorMsg, e);
-		} catch (ComputeFeaturesException e) {
-			String errorMsg = "ComputeFeaturesException for service 'subscribeToSource(user "
-				+ uid + ", category " + categoryId + ", source " + sourceId + ", externalService).\n" 
-				+ "Impossible to subscribe because the visibility of source is inaccessible";
-			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg, e);
-		}
+		} 
 	}
 
 	/**
@@ -596,13 +586,7 @@ public class DomainServiceImpl implements DomainService {
 				+ "User " + uid + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);
 			throw new UserNotSubscribedToCategoryException(errorMsg, e);
-		} catch (ComputeFeaturesException e) {
-			String errorMsg = "ComputeFeaturesException for service 'subscribeToSource(user "
-				+ uid + ", category " + categoryId + ", source " + sourceId + ", externalService).\n" 
-				+ "Impossible to subscribe because the visibility of source is inaccessible";
-			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg, e);
-		} 		
+		} 	
 	}
 	
 	/*

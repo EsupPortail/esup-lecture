@@ -13,8 +13,8 @@ import java.util.Iterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 /**
@@ -97,7 +97,7 @@ public class Context {
 	 * @param customContext customContext to update
 	 * @param ex access to external service for visibility evaluation
 	 */
-	synchronized protected void updateCustom(CustomContext customContext, ExternalService ex) {
+	synchronized protected void updateCustom(CustomContext customContext, ExternalService ex){
 		if (log.isDebugEnabled()) {
 			log.debug("id=" + id + " - updateCustom(" + customContext.getElementId() + ",externalService)");
 		}
@@ -107,17 +107,16 @@ public class Context {
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet) {
 			try {
 				mcp.updateCustomContext(customContext, ex);
-			} catch (ComputeFeaturesException e) {
-				log.error("Impossible to update CustomContext associated to context " + getId()
-						+ " for managedCategoryProfile " + mcp.getId() 
-						+ " because a compute feature error occured", e);
 			} catch (CategoryTimeOutException e) {
 				log.error("Impossible to update CustomContext associated to context " + getId()
 						+ " for managedCategoryProfile " + mcp.getId()
 						+ " because the remote category is in Time Out", e);
-			}				
+			} catch (CategoryNotLoadedException e){
+				log.error("Impossible to update CustomContext associated to context " + getId()
+						+ " for managedCategoryProfile " + mcp.getId()
+						+ " because it category is not loaded : very strange because a loadCategory has been called ...", e);
+			}
 		}
-		
 		// update for managedCategories not anymore in this context
 		updateCustomForVanishedSubscriptions(customContext);
 	}

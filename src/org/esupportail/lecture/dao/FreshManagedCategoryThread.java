@@ -17,7 +17,6 @@ import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.domain.model.VisibilitySets;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 
 /**
  * Get a Freash Managed Category from a distinct Thread

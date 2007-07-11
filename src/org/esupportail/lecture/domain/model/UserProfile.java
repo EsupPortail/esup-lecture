@@ -10,9 +10,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
@@ -127,16 +128,25 @@ public class UserProfile {
 	 * @throws CustomCategoryNotFoundException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
+	 * @throws CategoryOutOfReachException 
 	 */
 	public CustomCategory getCustomCategory(String categoryId,ExternalService ex) 
-		throws  CategoryNotVisibleException, CustomCategoryNotFoundException, InternalDomainException, CategoryTimeOutException {
+		throws  CategoryNotVisibleException, CustomCategoryNotFoundException, InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+userId+" - getCustomCategory("+categoryId+")");
     	}
 		// TODO (GB later) revoir avec customManagedCategory et customPersonalCategory
 		CustomCategory customCategory = customCategories.get(categoryId);
 		if (customCategory == null){
-			updateCustomContextsForOneManagedCategory(categoryId,ex);
+			try {
+				updateCustomContextsForOneManagedCategory(categoryId,ex);
+			} catch (CategoryNotLoadedException e) {
+				// Dans ce cas : la managedCategory n'est pointé par aucun 
+				// customContext du userProfile => supression ?
+				removeCustomManagedCategoryIfOrphan(categoryId);
+				throw new CategoryOutOfReachException("ManagedCategory "+categoryId+
+						"is not refered by any customContext in userProfile "+getUserId());
+			}
 			customCategory = customCategories.get(categoryId);
 			if (customCategory == null){
 				String errorMsg = "CustomCategory associated to category "+categoryId
@@ -157,9 +167,10 @@ public class UserProfile {
 	 * @throws CategoryNotVisibleException
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
+	 * @throws CategoryNotLoadedException 
 	 */
 	protected void updateCustomContextsForOneManagedCategory(String categoryProfileId,ExternalService ex) 
-		throws  CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException {
+		throws  CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException, CategoryNotLoadedException {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+userId+" - updateCustomContextsForOneManagedCategory("+categoryProfileId+",ex)");
     	}
@@ -191,10 +202,7 @@ public class UserProfile {
 					} catch (ContextNotFoundException e) {
 						log.error("Impossible to get CustomContext associated to context "+ contextId
 							+" for managedCategoryProfile "+mcp.getId()+" because context not found",e);
-					} catch (ComputeFeaturesException e) {
-						log.error("Impossible to update CustomContext associated to context "+ contextId
-							+" for managedCategoryProfile "+mcp.getId()+"because an error occured when computing features",e);
-					}
+					} 
 				}
 			}
 		

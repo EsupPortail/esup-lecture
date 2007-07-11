@@ -8,7 +8,6 @@ package org.esupportail.lecture.domain.model;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 
 /**
  * Class that contains features of a source needed to be computed
@@ -74,9 +73,9 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 
 	/**
 	 * @return Returns the accessibility mode (feature is automatically computed if needed).
-	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized protected Accessibility getAccess() throws ComputeFeaturesException{
+	synchronized protected Accessibility getAccess() throws CategoryNotLoadedException{
 		if (log.isDebugEnabled()){
 			log.debug("getAccess()");
 		}
@@ -86,7 +85,7 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 			} catch (CategoryNotLoadedException e) {
 				String errorMsg = "Impossible to compute features on element "+ super.mep.getId() + "because Category is not loaded";
 				log.error(errorMsg);
-				throw new ComputeFeaturesException(errorMsg,e);
+				throw e;
 			}
 		}
 		return access;
@@ -94,9 +93,9 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	
 	/**
 	 * @return Returns the timeOut (feature is automatically computed if needed).
-	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized protected int getTimeOut() throws ComputeFeaturesException{
+	synchronized protected int getTimeOut() throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("getTimeOut()");
 		}
@@ -106,7 +105,7 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 			} catch (CategoryNotLoadedException e) {
 				String errorMsg = "Impossible to compute features on element "+ super.mep.getId() + "because Category is not loaded";
 				log.error(errorMsg);
-				throw new ComputeFeaturesException(errorMsg,e);
+				throw e;
 			}
 		}
 		return timeOut;

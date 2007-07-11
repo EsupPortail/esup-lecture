@@ -15,7 +15,7 @@ import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StringUtils;
 
@@ -235,7 +235,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		int timeOut = defaultTimeout;
 		try {
 			timeOut = sourceProfile.getTimeOut();
-		} catch (ComputeFeaturesException e1) {
+		} catch (CategoryNotLoadedException e1) {
 			log.warn("getFreshSource : using defaultTimeout because "
 				+ "Timeout is not defined for sourceProfile "
 				+ sourceProfile.getId());

@@ -72,10 +72,11 @@ public class CustomManagedSource extends CustomSource{
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.CustomSource#getProfile()
 	 */
 	@Override
-	public SourceProfile getProfile() throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException {
+	public SourceProfile getProfile() throws SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+super.getElementId()+" - getProfile()");
 		}

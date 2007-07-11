@@ -14,7 +14,6 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
@@ -163,7 +162,6 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws SourceProfileNotFoundException 
 	 * @throws SourceNotVisibleException 
-	 * @throws ComputeFeaturesException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
@@ -172,7 +170,7 @@ public abstract class CustomCategory implements CustomElement {
 	// TODO (GB later) faire le throw SubcriptionInPersonalImpossibleException pour le personal
 	public abstract void subscribeToSource(String sourceId, ExternalService ex) 
 		throws CategoryProfileNotFoundException, SourceProfileNotFoundException, 
-		SourceNotVisibleException, ComputeFeaturesException, CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException, CategoryOutOfReachException;
+		SourceNotVisibleException, CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException, CategoryOutOfReachException;
 
 
 	/**
@@ -181,7 +179,6 @@ public abstract class CustomCategory implements CustomElement {
 	 * @param sourceId source ID
 	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
-	 * @throws ComputeFeaturesException 
 	 * @throws SourceObligedException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryOutOfReachException 
@@ -189,7 +186,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws InternalDomainException 
 	 */
 	public abstract void unsubscribeToSource(String sourceId, ExternalService ex) 
-		throws CategoryProfileNotFoundException, ComputeFeaturesException, SourceObligedException, CategoryOutOfReachException, CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException;
+		throws CategoryProfileNotFoundException, SourceObligedException, CategoryOutOfReachException, CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException;
 	
 	/**
 	 * @param sourceId Id for customManagedSource

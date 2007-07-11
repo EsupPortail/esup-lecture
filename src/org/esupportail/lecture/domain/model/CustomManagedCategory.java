@@ -20,7 +20,6 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
@@ -108,12 +107,12 @@ public class CustomManagedCategory extends CustomCategory {
 			profile.updateCustom(this,ex);
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
-			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 			try {
+				userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 				profile.updateCustom(this,ex);
 			} catch (CategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointé par aucun 
-				// customContext du userProfile => supression ?
+				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
 				throw new CategoryOutOfReachException("ManagedCategory "+getElementId()+
 						"is not refered by any customContext in userProfile "+userProfile.getUserId());
@@ -157,8 +156,8 @@ public class CustomManagedCategory extends CustomCategory {
 			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this,ex);
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
-			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 			try {
+				userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 				couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this,ex);
 			} catch (CategoryNotLoadedException e2) {
 				throw new CategoryOutOfReachException("ManagedCategory "+getElementId()+
@@ -200,7 +199,6 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryOutOfReachException 
 	 * @throws SourceNotVisibleException 
-	 * @throws ComputeFeaturesException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
@@ -209,19 +207,22 @@ public class CustomManagedCategory extends CustomCategory {
 	@Override
 	public void subscribeToSource(String sourceId, ExternalService ex) 
 		throws CategoryProfileNotFoundException, CategoryOutOfReachException, SourceProfileNotFoundException, SourceNotVisibleException, 
-		ComputeFeaturesException, CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException {
+		CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException {
 		if (log.isDebugEnabled()){
 			log.debug("subscribeToSource("+sourceId+",externalService)");
 		}
 		ManagedCategoryProfile catProfile = getProfile();
 		ManagedSourceProfile soProfile = null;
+		VisibilityMode mode = null;
 		try {
 			soProfile = catProfile.getSourceProfileById(sourceId);
+			mode = soProfile.updateCustomCategory(this, ex);
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
-			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 			try {
+				userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 				soProfile= catProfile.getSourceProfileById(sourceId);
+				mode = soProfile.updateCustomCategory(this, ex);
 			} catch (CategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointé par aucun 
 				// customContext du userProfile => supression ?
@@ -230,7 +231,6 @@ public class CustomManagedCategory extends CustomCategory {
 						"is not refered by any customContext in userProfile "+userProfile.getUserId());
 			}
 		}
-		VisibilityMode mode = soProfile.updateCustomCategory(this, ex);
 		
 		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
 			if (subscriptions.containsKey(sourceId)) {
@@ -263,13 +263,12 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryOutOfReachException 
-	 * @throws ComputeFeaturesException 
 	 * @throws SourceObligedException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#unsubscribeToSource(java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
 	public void unsubscribeToSource(String sourceId, ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryOutOfReachException, ComputeFeaturesException, CategoryNotVisibleException, 
+		throws CategoryProfileNotFoundException, CategoryOutOfReachException, CategoryNotVisibleException, 
 		CategoryTimeOutException, SourceObligedException, InternalDomainException {
 		if (log.isDebugEnabled()){
 			log.debug("unsubscribeToSource("+sourceId+",externalService)");
@@ -278,13 +277,16 @@ public class CustomManagedCategory extends CustomCategory {
 		try {
 			ManagedCategoryProfile catProfile = getProfile();
 			ManagedSourceProfile soProfile = null;
+			VisibilityMode mode = null;
 			try {
 				soProfile = catProfile.getSourceProfileById(sourceId);
+				mode = soProfile.updateCustomCategory(this, ex);
 			} catch (CategoryNotLoadedException e1) {
 				// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
-				userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 				try {
+					userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 					soProfile= catProfile.getSourceProfileById(sourceId);
+					mode = soProfile.updateCustomCategory(this, ex);
 				} catch (CategoryNotLoadedException e2) {
 					// Dans ce cas : la managedCategory n'est pointé par aucun 
 					// customContext du userProfile => supression ?
@@ -292,9 +294,7 @@ public class CustomManagedCategory extends CustomCategory {
 					throw new CategoryOutOfReachException("ManagedCategory "+getElementId()+
 							"is not refered by any customContext in userProfile "+userProfile.getUserId());
 				}
-			}
-			VisibilityMode mode = soProfile.updateCustomCategory(this, ex);
-			
+			}			
 			if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
 				if (!subscriptions.containsKey(sourceId)) {
 					log.warn("Nothing is done for UnsubscribeToSource requested on source "+sourceId+

@@ -30,7 +30,7 @@ public class SourceNotLoadedException extends ElementNotLoadedException {
 	 * @param errorMsg
 	 * @param e
 	 */
-	public SourceNotLoadedException(String errorMsg, ComputeFeaturesException e) {
+	public SourceNotLoadedException(String errorMsg, Exception e) {
 		super(errorMsg,e);
 	}
 

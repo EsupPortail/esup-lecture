@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
-import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 
 
@@ -98,10 +98,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @param customManagedCategory the customManagedCategory to update
 	 * @param ex access to externalService
 	 * @return true if the source is visible by the userProfile
-	 * @throws ComputeFeaturesException
+	 * @throws CategoryNotLoadedException 
 	 */
 	synchronized public VisibilityMode updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService ex) 
-		throws ComputeFeaturesException {
+		throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - updateCustomCategory("+customManagedCategory.getElementId()+"externalService)");
 		}
@@ -115,9 +115,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * Computes rights on parameters shared between parent ManagedCategory and managedSourceProfile
 	 * ManagedCategory (edit, visibility,access)
-	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized public void computeFeatures() throws ComputeFeaturesException {
+	synchronized public void computeFeatures() throws CategoryNotLoadedException   {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - computeFeatures()");
 		}
@@ -156,12 +156,12 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * Load the source referenced by this ManagedSourceProfile
 	 * @param ex access to externalService
-	 * @throws ComputeFeaturesException
 	 * @throws SourceTimeOutException 
+	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	synchronized protected void loadSource(ExternalService ex) throws ComputeFeaturesException, SourceTimeOutException {
+	synchronized protected void loadSource(ExternalService ex) throws SourceTimeOutException, CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - loadSource(externalService)");
 		}
@@ -197,11 +197,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @param ex access to externalService to evaluate visibility
 	 * @param customManagedCategory customManagedCategory to set up
 	 * @return true if sourceProfile is visible by user (in Obliged or in autoSubscribed, or in Allowed)
-	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
 	 */
 	
 	synchronized private VisibilityMode setUpCustomCategoryVisibility(CustomManagedCategory customManagedCategory,ExternalService ex) 
-	throws ComputeFeaturesException {
+	throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - setUpCustomCategoryVisibility("+customManagedCategory.getElementId()+",externalService)");
 		}
@@ -250,10 +250,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**	
 	 * Compute access value from feature and returns it
 	 * @return access
-	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getAccess()
 	 */
-	synchronized public Accessibility getAccess() throws ComputeFeaturesException {
+	synchronized public Accessibility getAccess() throws CategoryNotLoadedException  {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - getAccess()");
 		}
@@ -275,10 +275,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * Compute visibility value from features and returns it
 	 * @return visibility
-	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
 	 */
-	public VisibilitySets getVisibility() throws ComputeFeaturesException  {
+	public VisibilitySets getVisibility() throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - getVisibility()");
 		}
@@ -301,10 +301,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * Compute timeOut value from features and returns it
 	 * @return timeOut
-	 * @throws ComputeFeaturesException 
+	 * @throws CategoryNotLoadedException 
 	 */
 	@Override
-	public int getTimeOut() throws ComputeFeaturesException  {
+	public int getTimeOut() throws CategoryNotLoadedException  {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - getTimeOut()");
 		}
@@ -341,11 +341,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 //	}
 //
 //	/**
-//	 * @throws ComputeFeaturesException 
 //	 * @throws ElementNotLoadedException 
 //	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAllowed()
 //	 */
-//	public DefinitionSets getVisibilityAllowed() throws ComputeFeaturesException  {
+//	public DefinitionSets getVisibilityAllowed() {
 //		if (log.isDebugEnabled()){
 //			log.debug("getVisibilityAllowed()");
 //		}
@@ -364,11 +363,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 //	}
 //
 //	/**
-//	 * @throws ComputeFeaturesException 
 //	 * @throws ElementNotLoadedException 
 //	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAutoSubscribed()
 //	 */
-//	public DefinitionSets getVisibilityAutoSubscribed() throws ComputeFeaturesException {
+//	public DefinitionSets getVisibilityAutoSubscribed(){
 //		if (log.isDebugEnabled()){
 //			log.debug("getVisibilityAutoSubscribed()");
 //		}
@@ -388,11 +386,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 //	}
 //
 //	/**
-//	 * @throws ComputeFeaturesException 
 //	 * @throws ElementNotLoadedException 
 //	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityObliged()
 //	 */
-//	public DefinitionSets getVisibilityObliged() throws ComputeFeaturesException  {
+//	public DefinitionSets getVisibilityObliged() {
 //		if (log.isDebugEnabled()){
 //			log.debug("getVisibilityObliged()");
 //		}
