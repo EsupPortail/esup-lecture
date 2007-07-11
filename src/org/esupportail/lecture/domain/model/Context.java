@@ -119,6 +119,14 @@ public class Context {
 		}
 		
 		// update for managedCategories not anymore in this context
+		updateCustomForVanishedSubscriptions(customContext);
+	}
+
+	/**
+	 * Update customContext for managedCategories not anymore in this context
+	 * @param customContext
+	 */
+	synchronized private void updateCustomForVanishedSubscriptions(CustomContext customContext) {
 		List<String> cids = new ArrayList<String>();
 		for (String categoryId : customContext.getSubscriptions().keySet()){
 			cids.add(categoryId);
@@ -136,7 +144,7 @@ public class Context {
 	 * @param categoryId
 	 * @return true if this context refers the category identified by categoryId
 	 */
-	public boolean containsCategory(String categoryId) {
+	synchronized public boolean containsCategory(String categoryId) {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+id+" - containsCategory("+categoryId+")");
     	}

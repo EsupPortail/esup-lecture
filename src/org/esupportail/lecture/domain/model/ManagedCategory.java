@@ -147,7 +147,7 @@ public class ManagedCategory extends Category {
 	 * @param sourceId
 	 * @return true if this managedCategory contains the source identified by sourceId
 	 */
-	public boolean containsSource(String sourceId) {
+	synchronized public boolean containsSource(String sourceId) {
 	   	if (log.isDebugEnabled()){
     		log.debug("profileId="+super.getProfileId()+" - containsSource("+sourceId+")");
     	}
