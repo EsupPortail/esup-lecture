@@ -122,6 +122,7 @@ public class Context {
 						+ " because the remote category is in Time Out", e);
 			}				
 		}
+		
 		// update for managedCategories not anymore in context
 		List<String> cids = new ArrayList<String>();
 		for (String categoryId : customContext.getSubscriptions().keySet()){

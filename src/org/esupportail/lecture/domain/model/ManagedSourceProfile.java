@@ -240,50 +240,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			// Nothing to do
 			return mode;
 		} 
-		// TODO (GB later) -x- retirer les customSource du user profile qui correspondent à des profiles 
-		// de sources  disparus	
-		
+
 		// ELSE not Visible
 		customManagedCategory.removeCustomManagedSourceFromProfile(this.getId());
 		mode = VisibilityMode.NOVISIBLE;
 		return mode;
-		
-//
-//			boolean isInObliged = false;
-//			boolean isInAutoSubscribed = false;
-//			boolean isInAllowed = false;
-//						
-//		/* ---OBLIGED SET--- */
-//			log.debug("Evaluation DefinitionSets(obliged) de la source profile : "+this.getId()+" pour la cat : "+customManagedCategory.getElementId());
-//			isInObliged = getVisibilityObliged().evaluateVisibility(ex);
-//			log.debug("IsInObliged : "+isInObliged);
-//			if (isInObliged) {
-//				log.debug("Is in obliged");
-//				customManagedCategory.addSubscription(this);
-//			
-//			} else {
-//		/* ---AUTOSUBSCRIBED SET--- */	
-//				// en attendant : isInAutoSubscribed = false 
-//				
-//				if(isInAutoSubscribed) {
-//					// customManagedCategory.addManagedCustomSource(this);
-//				
-//				} else {
-//		/* ---ALLOWED SET--- */
-//					log.debug("Evaluation DefinitionSets(allowed) de la source profile : "+this.getId()+" pour la cat : "+customManagedCategory.getElementId());
-//					isInAllowed = getVisibilityAllowed().evaluateVisibility(ex);
-//					
-//					if (!isInAllowed) { // If isInAllowed : nothing to do
-//		/* ---CATEGORY NOT VISIBLE FOR USER--- */
-//						customManagedCategory.removeCustomManagedSource(this);
-//						return false;
-//					}
-//					
-//				}	
-//			}
-//			
-//			return true;
-//		}
 	}
 
 	/**	

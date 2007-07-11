@@ -206,52 +206,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			// Nothing to do
 			return mode;
 		} 
-		// TODO (GB later) -x- retirer les customCat du user profile qui correspondent à des profiles 
-		// de catégories disparus
 		
 		// ELSE not Visible
 		customContext.removeCustomManagedCategoryFromProfile(this.getId());
 
 		mode = VisibilityMode.NOVISIBLE;
 		return mode;
-		
-//		boolean isInObliged = false;
-//		boolean isInAutoSubscribed = false;
-//		boolean isInAllowed = false;
-		
-//		boolean isVisible = false;
-//		
-//		
-//	/* ---OBLIGED SET--- */
-//	//	log.trace("Appel de evaluate sur DefenitionSets(obliged) de la cat : "+ getId());
-//		isInObliged =  getVisibilityObliged().evaluateVisibility(ex);
-//	//	log.debug("IsInObliged : "+isInObliged);
-//		if (isInObliged) {
-//			customContext.addSubscription(this);
-//			isVisible = true;
-//		
-//		} else {
-//	/* ---AUTOSUBSCRIBED SET--- */
-//			// en attendant : isInAutoSubscribed = false 			
-//			if(isInAutoSubscribed) {
-//				
-//				// customContext.addCustomCategory(mcp);
-//				// isVisible = true;
-//			
-//			} else {
-//	/* ---ALLOWED SET--- */
-//				log.debug("Appel de evaluate sur DefenitionSets(allowed) de la cat : "+ getId());
-//				isInAllowed =  getVisibilityAllowed().evaluateVisibility(ex);
-//				isVisible = true;
-//				
-//				if (!isInAllowed) { // If isInAllowed : nothing to do
-//	/* ---CATEGORY NOT VISIBLE FOR USER--- */
-//					customContext.removeCustomManagedCategory(this);
-//					isVisible = false;
-//				}			
-//			}	
-//		}
-//		return isVisible;
 	}
 	
 		

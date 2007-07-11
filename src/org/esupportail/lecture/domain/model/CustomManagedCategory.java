@@ -106,6 +106,7 @@ public class CustomManagedCategory extends CustomCategory {
 		try {
 			profile.updateCustom(this,ex);
 		} catch (CategoryNotLoadedException e) {
+			// Dans quel cas de figure sommes nous ?
 			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 			profile.updateCustom(this,ex);
 			// TODO (GB) -x- il y a encore un CategoryNotLoaded à catcher : que fait on ?
