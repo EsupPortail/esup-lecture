@@ -148,7 +148,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @return list of ProfileAvailability
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryOutOfReachException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 */
@@ -162,14 +162,17 @@ public abstract class CustomCategory implements CustomElement {
 	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
 	 * @throws SourceNotVisibleException 
 	 * @throws ComputeFeaturesException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryTimeOutException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryOutOfReachException 
 	 */
 	// TODO (GB later) faire le throw SubcriptionInPersonalImpossibleException pour le personal
 	public abstract void subscribeToSource(String sourceId, ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
-		SourceNotVisibleException, ComputeFeaturesException;
+		throws CategoryProfileNotFoundException, SourceProfileNotFoundException, 
+		SourceNotVisibleException, ComputeFeaturesException, CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException, CategoryOutOfReachException;
 
 
 	/**

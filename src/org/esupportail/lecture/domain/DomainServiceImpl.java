@@ -519,14 +519,14 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws CategoryNotVisibleException 
 	 * @throws SourceNotVisibleException 
 	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException
+	 * @throws CategoryOutOfReachException
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 */
 	public void subscribeToSource(final String uid, final String categoryId, 
 			final String sourceId, final ExternalService ex) 
 			throws UserNotSubscribedToCategoryException, CategoryNotVisibleException,
-			CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException,
+			CategoryOutOfReachException, SourceProfileNotFoundException, SourceNotVisibleException,
 			InternalDomainException, CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + uid + "," + categoryId 

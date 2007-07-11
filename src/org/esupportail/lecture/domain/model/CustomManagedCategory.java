@@ -198,19 +198,37 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryOutOfReachException 
 	 * @throws SourceNotVisibleException 
 	 * @throws ComputeFeaturesException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryTimeOutException 
+	 * @throws CategoryNotVisibleException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#subscribeToSource(java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
 	public void subscribeToSource(String sourceId, ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, ComputeFeaturesException {
+		throws CategoryProfileNotFoundException, CategoryOutOfReachException, SourceProfileNotFoundException, SourceNotVisibleException, ComputeFeaturesException, CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException {
 		if (log.isDebugEnabled()){
 			log.debug("subscribeToSource("+sourceId+",externalService)");
 		}
 		ManagedCategoryProfile catProfile = getProfile();
-		ManagedSourceProfile soProfile = catProfile.getSourceProfileById(sourceId);
+		ManagedSourceProfile soProfile = null;
+		try {
+			soProfile= catProfile.getSourceProfileById(sourceId);
+		} catch (CategoryNotLoadedException e1) {
+			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
+			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
+			try {
+				soProfile= catProfile.getSourceProfileById(sourceId);
+			} catch (CategoryNotLoadedException e2) {
+				// Dans ce cas : la managedCategory n'est pointé par aucun 
+				// customContext du userProfile => supression ?
+				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
+				throw new CategoryOutOfReachException("ManagedCategory "+getElementId()+
+						"is not refered by any customContext in userProfile "+userProfile.getUserId());
+			}
+		}
 		VisibilityMode mode = soProfile.updateCustomCategory(this, ex);
 		
 		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {

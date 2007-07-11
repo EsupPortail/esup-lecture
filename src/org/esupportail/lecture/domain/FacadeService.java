@@ -299,14 +299,14 @@ public class FacadeService implements InitializingBean {
 	 * @throws SourceProfileNotFoundException
 	 * @throws CategoryNotVisibleException 
 	 * @throws UserNotSubscribedToCategoryException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws CategoryTimeOutException 
 	 */
 	public void subscribeToSource(final String uid, final String categorieId, final String sourceId) 
 			throws ManagedCategoryProfileNotFoundException, CategoryProfileNotFoundException, 
-			CategoryNotLoadedException, UserNotSubscribedToCategoryException, 
+			CategoryOutOfReachException, UserNotSubscribedToCategoryException, 
 			CategoryNotVisibleException, SourceProfileNotFoundException,
 			SourceNotVisibleException, InternalDomainException, CategoryTimeOutException {
 		domainService.subscribeToSource(uid, categorieId, sourceId, externalService);

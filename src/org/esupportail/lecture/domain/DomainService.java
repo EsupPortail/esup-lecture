@@ -170,16 +170,16 @@ public interface DomainService {
 	 * @throws CategoryNotVisibleException 
 	 * @throws SourceNotVisibleException 
 	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
+	 * @throws CategoryOutOfReachException 
 	 * @see FacadeService#subscribeToSource(String, String, String)
 	 */
 	void subscribeToSource(String uid, String categorieId, String sourceId, ExternalService ex) 
 		throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, 
-		CategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceNotVisibleException, 
-		InternalDomainException, CategoryTimeOutException ;
+		CategoryProfileNotFoundException, SourceProfileNotFoundException, SourceNotVisibleException, 
+		InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException ;
 	/**
 	 * @param uid 
 	 * @param categorieId 
