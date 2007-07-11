@@ -81,18 +81,8 @@ public class ManagedCategory extends Category {
 			}
 		}
 		
-		// update for managedSources not anymore in this managedCategory
-		List<String> sids = new ArrayList<String>();
-		for (String sourceId : customManagedCategory.getSubscriptions().keySet()){
-			sids.add(sourceId);
-		}
-		for (String sourceId : sids) {
-			if (!containsSource(sourceId)){
-				customManagedCategory.removeCustomManagedSource(sourceId);
-				UserProfile user = customManagedCategory.getUserProfile();
-				user.removeCustomManagedSourceIfOrphan(sourceId);
-			}
-		}
+		// update managedSources not anymore in this managedCategory
+		updateCustomForVanishedSubscriptions(customManagedCategory);
 	}
 	
 	/**
@@ -111,6 +101,8 @@ public class ManagedCategory extends Category {
 		}
 		List<ProfileVisibility> couplesVisib = new Vector<ProfileVisibility>();
 		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
+		
+		// update and get managedSources defined in this managedCategory 
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
 			ProfileVisibility couple;
@@ -125,7 +117,29 @@ public class ManagedCategory extends Category {
 						"associated to category profile "+super.getProfileId() ,e);
 			}
 		}
+		
+		// update managedSources not anymore in this managedCategory
+		updateCustomForVanishedSubscriptions(customManagedCategory);
+		
 		return couplesVisib;
+	}
+
+	/**
+	 * Update CustomManagedCategory for managedSources not anymore in subscriptions
+	 * @param customManagedCategory element to update
+	 */
+	synchronized private void updateCustomForVanishedSubscriptions(CustomManagedCategory customManagedCategory) {
+		List<String> sids = new ArrayList<String>();
+		for (String sourceId : customManagedCategory.getSubscriptions().keySet()){
+			sids.add(sourceId);
+		}
+		for (String sourceId : sids) {
+			if (!containsSource(sourceId)){
+				customManagedCategory.removeCustomManagedSource(sourceId);
+				UserProfile user = customManagedCategory.getUserProfile();
+				user.removeCustomManagedSourceIfOrphan(sourceId);
+			}
+		}
 	}
 
 	
