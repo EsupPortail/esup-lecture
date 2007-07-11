@@ -17,6 +17,7 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
@@ -89,14 +90,14 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @return the list of customSource
 	 * @throws CategoryProfileNotFoundException
 	 * @throws CategoryNotVisibleException
-	 * @throws CategoryNotLoadedException
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
+	 * @throws CategoryOutOfReachException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
 	public List<CustomSource> getSortedCustomSources(ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException, CategoryTimeOutException {
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+super.getElementId()+" - getSortedCustomSources(externalService)");
 		}
@@ -105,11 +106,18 @@ public class CustomManagedCategory extends CustomCategory {
 		ManagedCategoryProfile profile = getProfile();
 		try {
 			profile.updateCustom(this,ex);
-		} catch (CategoryNotLoadedException e) {
-			// Dans quel cas de figure sommes nous ?
+		} catch (CategoryNotLoadedException e1) {
+			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
-			profile.updateCustom(this,ex);
-			// TODO (GB) -x- il y a encore un CategoryNotLoaded à catcher : que fait on ?
+			try {
+				profile.updateCustom(this,ex);
+			} catch (CategoryNotLoadedException e2) {
+				// Dans ce cas : la managedCategory n'est pointé par aucun 
+				// customContext du userProfile => supression ?
+				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
+				throw new CategoryOutOfReachException("ManagedCategory "+getElementId()+
+						"is not refered by any customContext in userProfile "+userProfile.getUserId());
+			}
 		}
 		
 //		DomainTools.getDaoService().updateCustomCategory(this);
@@ -131,14 +139,14 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @return list of ProfileAvailability
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryOutOfReachException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getVisibleSources(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
 	public List<ProfileAvailability> getVisibleSources(ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException, CategoryTimeOutException {
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException, CategoryTimeOutException {
 		if (log.isDebugEnabled()) {
 			log.debug("id="+super.getElementId()+" - getVisibleSources(ex)");
 		}
@@ -147,10 +155,15 @@ public class CustomManagedCategory extends CustomCategory {
 		List<ProfileVisibility> couplesVisib;
 		try {
 			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this,ex);
-		} catch (CategoryNotLoadedException e) {
+		} catch (CategoryNotLoadedException e1) {
+			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
-			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this,ex);
-			// TODO (GB) -x- il y a encore un CategoryNotLoaded à catcher : que fait on ?
+			try {
+				couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this,ex);
+			} catch (CategoryNotLoadedException e2) {
+				throw new CategoryOutOfReachException("ManagedCategory "+getElementId()+
+						"is not refered by any customContext in userProfile "+userProfile.getUserId());
+			}
 		}
 		
 //		DomainTools.getDaoService().updateCustomCategory(this);

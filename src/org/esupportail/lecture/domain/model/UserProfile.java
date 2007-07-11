@@ -135,7 +135,7 @@ public class UserProfile {
     	}
 		// TODO (GB later) revoir avec customManagedCategory et customPersonalCategory
 		CustomCategory customCategory = customCategories.get(categoryId);
-		if(customCategory == null){
+		if (customCategory == null){
 			updateCustomContextsForOneManagedCategory(categoryId,ex);
 			customCategory = customCategories.get(categoryId);
 			if (customCategory == null){

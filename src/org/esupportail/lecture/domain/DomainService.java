@@ -15,9 +15,9 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
@@ -71,13 +71,13 @@ public interface DomainService {
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
-	 * @throws CategoryNotLoadedException 
 	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws CategoryTimeOutException 
+	 * @throws CategoryOutOfReachException 
 	 * @see FacadeService#getAvailableSources(String, String)
 	 */
 	List<SourceBean> getAvailableSources(String uid,String categoryId,ExternalService ex)  
-		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException, UserNotSubscribedToCategoryException, CategoryTimeOutException ;
+		throws CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, UserNotSubscribedToCategoryException, CategoryTimeOutException, CategoryOutOfReachException ;
 
 	/**
 	 * @param sourceId 
@@ -124,13 +124,13 @@ public interface DomainService {
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryOutOfReachException 
 	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws CategoryTimeOutException 
 	 * @see FacadeService#getVisibleSources(String, String)
 	 */
 	List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) 
-		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryNotLoadedException, UserNotSubscribedToCategoryException, CategoryTimeOutException ;
+		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, CategoryProfileNotFoundException, InternalDomainException, CategoryOutOfReachException, UserNotSubscribedToCategoryException, CategoryTimeOutException ;
 	
 	/**
 	 * @param uid

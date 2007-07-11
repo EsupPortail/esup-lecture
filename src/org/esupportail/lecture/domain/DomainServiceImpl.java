@@ -31,6 +31,7 @@ import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
@@ -206,14 +207,14 @@ public class DomainServiceImpl implements DomainService {
 	 * @param categoryId id of the category to display sources
 	 * @return a list of sourceBean
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryNotLoadedException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
+	 * @throws CategoryOutOfReachException 
 	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getAvailableSources(final String uid, final String categoryId, final ExternalService ex) 
 			throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
-			CategoryNotLoadedException, InternalDomainException, CategoryTimeOutException  {
+			InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException  {
 		if (LOG.isDebugEnabled()){
 			LOG.debug("getAvailableSources(" + uid + "," + categoryId + ",externalService)");
 		}
@@ -466,7 +467,7 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getVisibleSources(final String uid, final String categoryId, final ExternalService ex) 
-			throws CategoryNotVisibleException, CategoryNotLoadedException, 
+			throws CategoryNotVisibleException, CategoryOutOfReachException, 
 			UserNotSubscribedToCategoryException, InternalDomainException, CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getVisibleSources(" + uid + "," + categoryId + ",ex)");

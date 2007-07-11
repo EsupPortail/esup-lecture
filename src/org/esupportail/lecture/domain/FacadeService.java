@@ -16,6 +16,7 @@ import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
@@ -163,14 +164,14 @@ public class FacadeService implements InitializingBean {
 	 * @return List of SourceBean
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryProfileNotFoundException
 	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws CategoryTimeOutException 
+	 * @throws CategoryOutOfReachException 
 	 */
 	public List<SourceBean> getAvailableSources(final String uid, final String categoryId) 
 		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, 
-			CategoryNotLoadedException, UserNotSubscribedToCategoryException, CategoryTimeOutException {
+			UserNotSubscribedToCategoryException, CategoryTimeOutException, CategoryOutOfReachException {
 		return domainService.getAvailableSources(uid, categoryId, externalService);
 	}
 	
@@ -274,7 +275,7 @@ public class FacadeService implements InitializingBean {
 	 * @return List of SourceBean
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws UserNotSubscribedToCategoryException 
@@ -282,7 +283,7 @@ public class FacadeService implements InitializingBean {
 	 */
 	public List<SourceBean> getVisibleSources(final String uid, final String categoryId) 
 			throws ManagedCategoryProfileNotFoundException, CategoryProfileNotFoundException,
-				CategoryNotLoadedException, CategoryNotVisibleException, 
+			CategoryOutOfReachException, CategoryNotVisibleException, 
 				InternalDomainException, UserNotSubscribedToCategoryException, 
 				CategoryTimeOutException {
 		return domainService.getVisibleSources(uid, categoryId, externalService);

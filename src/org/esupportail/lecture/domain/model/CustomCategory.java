@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeFeaturesException;
@@ -117,12 +118,12 @@ public abstract class CustomCategory implements CustomElement {
 	 * @return the list of customSource
 	 * @throws CategoryProfileNotFoundException
 	 * @throws CategoryNotVisibleException
-	 * @throws CategoryNotLoadedException
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
+	 * @throws CategoryOutOfReachException 
 	 */
 	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) 
-	throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException, CategoryTimeOutException;
+	throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException;
 
 	/**
 	 * remove a CustomManegedSource displayed in this CustomCategory
@@ -152,7 +153,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryTimeOutException 
 	 */
 	public abstract List<ProfileAvailability> getVisibleSources(ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryNotLoadedException, InternalDomainException, CategoryTimeOutException;
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException, CategoryTimeOutException;
 	
 	/**
 	 * For a customManagedCategory, it subscribes sourceId, but for a customPersonalcategory, 
