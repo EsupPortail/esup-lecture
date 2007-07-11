@@ -444,7 +444,7 @@ public class CustomManagedCategory extends CustomCategory {
 	/**
 	 * @return source subcription of this category
 	 */
-	private Map<String, CustomManagedSource> getSubscriptions() {
+	protected Map<String, CustomManagedSource> getSubscriptions() {
 		return subscriptions;
 	}
 

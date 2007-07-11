@@ -103,12 +103,7 @@ public class Context {
 		}
 		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
-		//TODO (GB) -x- customContext mal mis à jour lors de la disparition d'une category dans le context 
-		//	(cf. http://sourcesup.cru.fr/tracker/index.php?func=detail&aid=3140&group_id=251&atid=1111) 
-		//	(ex : une category change de context => pas besoin de supprimer le customCategory du 
-		//	      userProfile, mais il ne doit plus etre référencé par le customContext)
-		
-		// update for managedCategories defined in context
+		// update for managedCategories defined in this context
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet) {
 			try {
 				mcp.updateCustomContext(customContext, ex);
@@ -123,7 +118,7 @@ public class Context {
 			}				
 		}
 		
-		// update for managedCategories not anymore in context
+		// update for managedCategories not anymore in this context
 		List<String> cids = new ArrayList<String>();
 		for (String categoryId : customContext.getSubscriptions().keySet()){
 			cids.add(categoryId);
@@ -143,7 +138,7 @@ public class Context {
 	 */
 	public boolean containsCategory(String categoryId) {
 	   	if (log.isDebugEnabled()){
-    		log.debug("id="+id+" - containsCategory("+id+")");
+    		log.debug("id="+id+" - containsCategory("+categoryId+")");
     	}
 		return refIdManagedCategoryProfilesSet.contains(categoryId);
 	}

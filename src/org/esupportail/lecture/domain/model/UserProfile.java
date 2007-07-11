@@ -224,9 +224,8 @@ public class UserProfile {
     		log.debug("id="+userId+" - getCustomSource("+sourceId+")");
     	}
 	   	// TODO (GB later) revoir avec customManagedSource et customPersonalSource
-		CustomSource customSource = 
-			customSources.get(sourceId);
-		if(customSource == null){
+		CustomSource customSource = customSources.get(sourceId);
+		if (customSource == null){
 			String errorMsg = "CustomSource "+sourceId+" is not found in userProfile "+this.userId;
 			log.error(errorMsg);
 			throw new CustomSourceNotFoundException(errorMsg);
@@ -390,6 +389,7 @@ public class UserProfile {
 		}
 		cleanCustomSource(sourceId);
 	}
+	
 	/**
 	 * Remove the customManagedSource sourceId in all the profile (this object and in customCategories)
 	 * @param sourceId customManagedSource ID
@@ -407,6 +407,27 @@ public class UserProfile {
 			}
 		}
 		cleanCustomSource(sourceId); // TODO (GB) pourquoi pas un removeCustomManagedSource ?
+	}
+	
+	
+	/**
+	 * Remove the customManagedSource sourceId only if it is not refered in any customCategory
+	 * @param sourceId customManagedSource ID
+	 */
+	public void removeCustomManagedSourceIfOrphan(String sourceId) {
+		if (log.isDebugEnabled()){
+			log.debug("removeCustomManagedSourceIfOrphan("+sourceId+")");
+		}
+		boolean isOrphan = true;
+		for (CustomCategory custom : customCategories.values()){
+			if (custom.containsCustomManagedSource(sourceId)){
+				isOrphan = false;
+				break;
+			}
+		}
+		if (isOrphan){
+			cleanCustomSource(sourceId);
+		}
 	}
 	
 	/* REMOVE CUSTOM ELEMENTS : ATOMIC METHODS */

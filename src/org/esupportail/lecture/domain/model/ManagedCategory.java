@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -67,6 +69,7 @@ public class ManagedCategory extends Category {
 		}
 		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
 		
+		// update for managedSources defined in this managedCategory
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
 			log.trace("Managed Source profile ok");
@@ -75,6 +78,19 @@ public class ManagedCategory extends Category {
 			} catch (ComputeFeaturesException e) {
 				log.error("Impossible to update CustomCategory associated to category profile "+super.getProfileId()
 						+" for managedSourceProfile "+msp.getId(),e);
+			}
+		}
+		
+		// update for managedSources not anymore in this managedCategory
+		List<String> sids = new ArrayList<String>();
+		for (String sourceId : customManagedCategory.getSubscriptions().keySet()){
+			sids.add(sourceId);
+		}
+		for (String sourceId : sids) {
+			if (!containsSource(sourceId)){
+				customManagedCategory.removeCustomManagedSource(sourceId);
+				UserProfile user = customManagedCategory.getUserProfile();
+				user.removeCustomManagedSourceIfOrphan(sourceId);
 			}
 		}
 	}
@@ -97,7 +113,6 @@ public class ManagedCategory extends Category {
 		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
-			log.trace("Managed Source profile ok");
 			ProfileVisibility couple;
 			try {
 				VisibilityMode mode = msp.updateCustomCategory(customManagedCategory,ex);
@@ -113,6 +128,22 @@ public class ManagedCategory extends Category {
 		return couplesVisib;
 	}
 
+	
+	/**
+	 * @param sourceId
+	 * @return true if this managedCategory contains the source identified by sourceId
+	 */
+	public boolean containsSource(String sourceId) {
+	   	if (log.isDebugEnabled()){
+    		log.debug("profileId="+super.getProfileId()+" - containsSource("+sourceId+")");
+    	}
+	   	Hashtable<String,SourceProfile> hashSourceProfile = getSourceProfilesHash();
+	   	
+	   	boolean result = hashSourceProfile.containsKey(sourceId);
+	   	return result;
+	}
+	
+	
 	/*
 	 *********************** ACCESSORS**************************************/ 
 
