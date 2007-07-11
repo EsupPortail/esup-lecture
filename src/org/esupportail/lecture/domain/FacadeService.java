@@ -321,13 +321,13 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryNotVisibleException 
 	 * @throws InternalDomainException 
 	 * @throws SourceObligedException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryTimeOutException 
 	 */
 	public void unsubscribeToSource(final String uid, final String categorieId, final String sourceId) 
 			throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
-			CategoryProfileNotFoundException, CategoryNotLoadedException, 
+			CategoryProfileNotFoundException, CategoryOutOfReachException, 
 			SourceObligedException, InternalDomainException, CategoryTimeOutException {
 		domainService.unsubscribeToSource(uid, categorieId, sourceId, externalService);
 	}

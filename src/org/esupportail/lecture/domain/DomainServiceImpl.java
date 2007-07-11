@@ -568,13 +568,13 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws InternalDomainException 
 	 * @throws SourceObligedException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryTimeOutException 
 	 */
 	public void unsubscribeToSource(final String uid, final String categoryId, 
 			final String sourceId, final ExternalService ex) 
 			throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, InternalDomainException, 
-			CategoryNotLoadedException, SourceObligedException, CategoryTimeOutException {
+			CategoryOutOfReachException, SourceObligedException, CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + uid + "," + categoryId + "," 
 				+ sourceId + ", externalService)");

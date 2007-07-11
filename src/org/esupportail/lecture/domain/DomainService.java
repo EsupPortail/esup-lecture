@@ -190,14 +190,14 @@ public interface DomainService {
 	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws InternalDomainException 
 	 * @throws SourceObligedException 
-	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryTimeOutException 
+	 * @throws CategoryOutOfReachException 
 	 * @see FacadeService#unsubscribeToSource(String, String, String)
 	 */	
 	void unsubscribeToSource(String uid, String categorieId, String sourceId, ExternalService ex) 
 		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
-		InternalDomainException, CategoryProfileNotFoundException, CategoryNotLoadedException, SourceObligedException, CategoryTimeOutException;
+		InternalDomainException, CategoryProfileNotFoundException, SourceObligedException, CategoryTimeOutException, CategoryOutOfReachException;
 
 	/**
 	 * @return the database version.
