@@ -12,7 +12,6 @@ import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.ProfileAvailability;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;

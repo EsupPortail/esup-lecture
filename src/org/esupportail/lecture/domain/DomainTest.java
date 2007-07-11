@@ -340,7 +340,6 @@ public class DomainTest {
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
 	 * @throws SourceNotLoadedException 
-	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceTimeOutException 

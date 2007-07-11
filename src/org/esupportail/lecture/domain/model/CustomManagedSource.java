@@ -70,7 +70,6 @@ public class CustomManagedSource extends CustomSource{
 	/**
 	 * Returns the ManagedSourceProfile of this CustomManagedSource
 	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.CustomSource#getProfile()

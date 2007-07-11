@@ -225,7 +225,7 @@ public class CustomManagedCategory extends CustomCategory {
 				mode = soProfile.updateCustomCategory(this, ex);
 			} catch (CategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointé par aucun 
-				// customContext du userProfile => supression ?
+				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
 				throw new CategoryOutOfReachException("ManagedCategory "+getElementId()+
 						"is not refered by any customContext in userProfile "+userProfile.getUserId());
@@ -289,7 +289,7 @@ public class CustomManagedCategory extends CustomCategory {
 					mode = soProfile.updateCustomCategory(this, ex);
 				} catch (CategoryNotLoadedException e2) {
 					// Dans ce cas : la managedCategory n'est pointé par aucun 
-					// customContext du userProfile => supression ?
+					// context correspondant à des customContext du userProfile => supression ?
 					userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
 					throw new CategoryOutOfReachException("ManagedCategory "+getElementId()+
 							"is not refered by any customContext in userProfile "+userProfile.getUserId());
