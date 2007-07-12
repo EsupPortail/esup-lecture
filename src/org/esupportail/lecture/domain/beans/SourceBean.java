@@ -52,7 +52,9 @@ public class SourceBean {
 	/**
 	 * default constructor
 	 */
-	public SourceBean(){}
+	public SourceBean(){
+		// empty
+	}
 	
 	/**
 	 * constructor initializing object with a customSource
@@ -92,6 +94,7 @@ public class SourceBean {
 	 * @return name of source
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public String getName() throws ElementDummyBeanException {
 		return name;
 	}
@@ -100,6 +103,7 @@ public class SourceBean {
 	 * @param name
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public void setName(String name) throws ElementDummyBeanException {
 		this.name = name;
 	}
@@ -107,6 +111,7 @@ public class SourceBean {
 	 * @return id of source
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public String getId()  throws ElementDummyBeanException {
 		return id;
 	}
@@ -114,34 +119,43 @@ public class SourceBean {
 	 * @param id
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public void setId(String id)  throws ElementDummyBeanException{
 		this.id = id;
 	}
+	
 	/**
 	 * @return type of source
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public AvailabilityMode getType()  throws ElementDummyBeanException {
 		return type;
 	}
+	
 	/**
 	 * @param type
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public void setType(AvailabilityMode type) throws ElementDummyBeanException {
 		this.type = type;
 	}
 	
 	/**
 	 * @return item display mode
+	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public ItemDisplayMode getItemDisplayMode() throws ElementDummyBeanException {
 		return itemDisplayMode;
 	}
 
 	/**
 	 * @param itemDisplayMode
+	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) throws ElementDummyBeanException {
 		this.itemDisplayMode = itemDisplayMode;
 	}

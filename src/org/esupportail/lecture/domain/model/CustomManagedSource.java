@@ -132,6 +132,7 @@ public class CustomManagedSource extends CustomSource{
 	/**
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
 		StringBuffer string = new StringBuffer(getClass().getSimpleName() + "#" + hashCode() 
 				+ "[elementId=[" + getElementId()

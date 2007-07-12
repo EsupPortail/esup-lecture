@@ -59,6 +59,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param userProfile 
+	 * @return userProfile
 	 * @see org.esupportail.lecture.dao.DaoService#refreshUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public UserProfile refreshUserProfile(final UserProfile userProfile) {
@@ -216,6 +218,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param versionManager 
 	 * @see org.esupportail.lecture.dao.DaoService#addVersionManager(org.esupportail.lecture.domain.model.VersionManager)
 	 */
 	public void addVersionManager(VersionManager versionManager) {
@@ -226,6 +229,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	}
 
 	/**
+	 * @param versionManager 
 	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(org.esupportail.lecture.domain.model.VersionManager)
 	 */
 	public void updateVersionManager(VersionManager versionManager) {

@@ -229,13 +229,13 @@ public abstract class CustomCategory implements CustomElement {
 	}
 	
 
-	/**
-	 * Sets userProfile
-	 * @param userProfile
-	 */
-	private void setUserProfile(UserProfile userProfile) {
-		this.userProfile = userProfile;
-	}
+//	/**
+//	 * Sets userProfile
+//	 * @param userProfile
+//	 */
+//	private void setUserProfile(UserProfile userProfile) {
+//		this.userProfile = userProfile;
+//	}
 	
 	/**
 	 * @return id of the profile category referred by this customCategory

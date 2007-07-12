@@ -23,6 +23,7 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
     
     /**
      * Constructor
+     * @param c 
      */
     protected EnumUserType(Class<E> c) { 
         this.clazz = c; 
@@ -43,7 +44,7 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
     /**
      * @see org.hibernate.usertype.UserType#returnedClass()
      */
-    public Class returnedClass() { 
+    public Class<E> returnedClass() { 
         return clazz; 
     } 
  

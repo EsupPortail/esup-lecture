@@ -41,7 +41,9 @@ public class ContextBean {
 	/**
 	 * default contructor
 	 */
-	public ContextBean(){}
+	public ContextBean(){
+		// empty
+	}
 	
 	/**
 	 * Constructor initializing object

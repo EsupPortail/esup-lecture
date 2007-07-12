@@ -232,7 +232,7 @@ public abstract class SourceProfile implements ElementProfile {
 	/**
 	 * @return itemXPath
 	 */
-	private String getItemXPath() {
+	public String getItemXPath() {
 		return itemXPath;
 	}
 
@@ -240,6 +240,7 @@ public abstract class SourceProfile implements ElementProfile {
 	/**
 	 * @return xsltURL
 	 */
+	@SuppressWarnings("unused")
 	private String getXsltURL() {
 		return xsltURL;
 	}

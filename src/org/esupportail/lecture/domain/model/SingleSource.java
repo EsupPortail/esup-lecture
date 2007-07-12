@@ -12,6 +12,7 @@ package org.esupportail.lecture.domain.model;
  * @author gbouteil
  *
  */
+@SuppressWarnings("serial")
 public class SingleSource extends Source {
 
 

@@ -47,7 +47,8 @@ public class ServletService implements ModeService {
 	/**
 	 * @see org.esupportail.lecture.domain.utils.ModeService#isUserInGroup(java.lang.String)
 	 */
-	public boolean isUserInGroup(String group) {
+	public boolean isUserInGroup(@SuppressWarnings("unused")
+	String group) {
 //		default return value in case of serlvet use case (not normal mode)
 		return false;
 	}

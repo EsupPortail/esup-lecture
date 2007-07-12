@@ -44,7 +44,9 @@ public class CategoryBean {
 	/**
 	 * Default Constructor.
 	 */
-	public CategoryBean(){}
+	public CategoryBean(){
+		// empty
+	}
 	
 	/**
 	 * Constructor initializing object
@@ -69,6 +71,7 @@ public class CategoryBean {
 	 * @return description of the category
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public String getDescription() throws ElementDummyBeanException {
 		return description;
 	}
@@ -76,6 +79,7 @@ public class CategoryBean {
 	 * @param description description of the category
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public void setDescription(String description) throws ElementDummyBeanException {
 		this.description = description;
 	}
@@ -83,6 +87,7 @@ public class CategoryBean {
 	 * @return if category is folded or not
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public boolean isFolded() throws ElementDummyBeanException {
 		return folded;
 	}
@@ -90,6 +95,7 @@ public class CategoryBean {
 	 * @param folded
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public void setFolded(boolean folded) throws ElementDummyBeanException {
 		this.folded = folded;
 	}
@@ -97,6 +103,7 @@ public class CategoryBean {
 	 * @return id of category
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public String getId() throws ElementDummyBeanException {
 		return id;
 	}
@@ -104,6 +111,7 @@ public class CategoryBean {
 	 * @param id
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public void setId(String id) throws ElementDummyBeanException {
 		this.id = id;
 	}
@@ -111,6 +119,7 @@ public class CategoryBean {
 	 * @return name of category
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public String getName() throws ElementDummyBeanException {
 		return name;
 	}
@@ -118,6 +127,7 @@ public class CategoryBean {
 	 * @param name
 	 * @throws ElementDummyBeanException 
 	 */
+	@SuppressWarnings("unused")
 	public void setName(String name) throws ElementDummyBeanException {
 		this.name = name;
 	}

@@ -10,4 +10,6 @@ package org.esupportail.lecture.domain.model;
  * @author gbouteil
  *
  */
-public interface Element {}
+public interface Element {
+	// empty
+}

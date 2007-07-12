@@ -24,6 +24,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
  * @see Category
  *
  */
+@SuppressWarnings("serial")
 public class ManagedCategory extends Category {
 
 	/*

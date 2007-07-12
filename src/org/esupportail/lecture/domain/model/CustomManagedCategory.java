@@ -472,6 +472,7 @@ public class CustomManagedCategory extends CustomCategory {
 	/**
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
 		StringBuffer string = new StringBuffer(getClass().getSimpleName() + "#" + hashCode() 
 				+ "[elementId=[" + getElementId()
@@ -497,12 +498,12 @@ public class CustomManagedCategory extends CustomCategory {
 		return subscriptions;
 	}
 
-	/**
-	 * @param subscriptions
-	 */
-	private void setSubscriptions(Map<String, CustomManagedSource> subscriptions) {
-		this.subscriptions = subscriptions;
-	}
+//	/**
+//	 * @param subscriptions
+//	 */
+//	private void setSubscriptions(Map<String, CustomManagedSource> subscriptions) {
+//		this.subscriptions = subscriptions;
+//	}
 
 	
 }

@@ -65,7 +65,8 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#setDescription(java.lang.String)
 	 */
 	@Override
-	public void setDescription(String description) throws ElementDummyBeanException {
+	public void setDescription(@SuppressWarnings("unused")
+	String description) throws ElementDummyBeanException {
 		throw new ElementDummyBeanException("Method setDescription() not available on a CategoryDummyBean");
 	}
 	
@@ -82,7 +83,8 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#setFolded(boolean)
 	 */
 	@Override
-	public void setFolded(boolean folded) throws ElementDummyBeanException {
+	public void setFolded(@SuppressWarnings("unused")
+	boolean folded) throws ElementDummyBeanException {
 		throw new ElementDummyBeanException("Method setFolded() not available on a CategoryDummyBean");
 	}
 	
@@ -98,7 +100,8 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#setId(java.lang.String)
 	 */
 	@Override
-	public void setId(String id) throws ElementDummyBeanException {
+	public void setId(@SuppressWarnings("unused")
+	String id) throws ElementDummyBeanException {
 		throw new ElementDummyBeanException("Method setId() not available on a CategoryDummyBean");
 	}
 	
@@ -114,7 +117,8 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#setName(java.lang.String)
 	 */
 	@Override
-	public void setName(String name) throws ElementDummyBeanException {
+	public void setName(@SuppressWarnings("unused")
+	String name) throws ElementDummyBeanException {
 		throw new ElementDummyBeanException("Method setName() not available on a CategoryDummyBean");
 	}
 	

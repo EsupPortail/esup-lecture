@@ -28,7 +28,6 @@ import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
-import org.esupportail.lecture.exceptions.domain.VisibilityNotFoundException;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
 
@@ -41,14 +40,35 @@ public class DomainTest {
 	/*
 	 ************************** PROPERTIES ******************************** */	
 
+	/**
+	 * Log instance 
+	 */
 	protected static final Log LOG = LogFactory.getLog(DomainTest.class); 
+	/**
+	 * Access to facadeService
+	 */
 	private static FacadeService facadeService;
 
 	/* Controller local variables */
+	/**
+	 * user ID for tests
+	 */
 	private static String userId = "bourges";
+	/**
+	 * context ID for tests
+	 */
 	private static String contextId;
+	/**
+	 * list of category IDs for tests
+	 */
 	private static List<String> categoryIds;
+	/**
+	 * item ID for tests
+	 */
 	private static String itemId;
+	/**
+	 * source ID for tests
+	 */
 	private static String sourceId;
 	
 	
@@ -148,6 +168,7 @@ public class DomainTest {
 	 * @param cid
 	 * @throws ContextNotFoundException
 	 */
+	@SuppressWarnings("unused")
 	private static void testGetContextBis(String cid) throws ContextNotFoundException  {
 		printIntro("getContext");
 		ContextBean context = facadeService.getContext(userId,cid);
@@ -193,6 +214,7 @@ public class DomainTest {
 	 * Test of service "getVisibleSources"
 	 * @throws DomainServiceException 
 	 */
+	@SuppressWarnings("unused")
 	private static void testGetVisibleSources() throws DomainServiceException {
 		printIntro("getVisibleSources");
 		categoryIds = new ArrayList<String>();
@@ -220,10 +242,8 @@ public class DomainTest {
 	/**
 	 * Test of service "subscribeToSource" and "unsubscribeToSource"
 	 * @throws DomainServiceException 
-	 * @throws DomainServiceException 
-	 * @throws DomainServiceException 
-	 * @throws VisibilityNotFoundException 
 	 */
+	@SuppressWarnings("unused")
 	private static void testSubUnSubscribeToSource() throws DomainServiceException  {
 		printIntro("getSubscribeToSource");
 		
@@ -310,9 +330,8 @@ public class DomainTest {
 	 *  - the parent category has not been got before
 	 * @throws InternalExternalException 
 	 * @throws DomainServiceException 
-	 * @throws InternalExternalException 
-	 * @throws DomainServiceException 
 	 */
+	@SuppressWarnings("unused")
 	private static void testGetAvailableSourceAlternativeWay() throws InternalExternalException, DomainServiceException  {	
 		testGetContext();	
 		printIntro("getAvailableSources - alternative way");
@@ -333,17 +352,13 @@ public class DomainTest {
 
 	/**
 	 * Test of service "getItems"
-	 * @throws InternalDomainException 
-	 * @throws SourceTimeOutException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws SourceNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws InternalDomainException 
 	 * @throws SourceNotLoadedException 
 	 * @throws CategoryNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceTimeOutException 
+	 * @throws InternalDomainException 
 	 */
+	@SuppressWarnings("unused")
 	private static void testTimeOutValues() throws ManagedCategoryProfileNotFoundException, SourceNotLoadedException, CategoryNotLoadedException, SourceTimeOutException, InternalDomainException {
 		printIntro("testTimeOutValues");
 		System.out.println(" ** category CP1 ( no trust category) **********");
@@ -370,6 +385,7 @@ public class DomainTest {
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceTimeOutException 
 	 */
+	@SuppressWarnings("unused")
 	private static void testMarkItemReadMode() throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException {
 		printIntro("markItemReadMode");
 		System.out.println("Marquage de l'item "+itemId+" comme lu");
@@ -382,6 +398,10 @@ public class DomainTest {
 		
 	}
 
+	/**
+	 * @throws DomainServiceException
+	 */
+	@SuppressWarnings("unused")
 	private static void testSetItemDisplayMode() throws DomainServiceException {
 		printIntro("markItemDisplayMode");
 		System.out.println("Marquage de la source 'm:cp5:un' comme UNREADFIRST");
@@ -395,8 +415,8 @@ public class DomainTest {
 	 * @throws TreeSizeErrorException 
 	 * @throws ContextNotFoundException 
 	 * @throws InternalExternalException 
-	 * @throws InternalExternalException 
 	 */
+	@SuppressWarnings("unused")
 	private static void testSetTreeSize() throws ContextNotFoundException, TreeSizeErrorException, InternalExternalException {
 		printIntro("setTreeSize");
 		int newTreeSize = 10;
@@ -409,8 +429,8 @@ public class DomainTest {
 	/**
 	 * Test of service foldCategory and unfoldCategory
 	 * @throws DomainServiceException 
-	 * @throws DomainServiceException 
 	 */
+	@SuppressWarnings("unused")
 	private static void testFoldCategory() throws DomainServiceException {
 		printIntro("foldCategory");
 		System.out.println("Pliage de la categorie cp1 (deja pliée) => WARN");
@@ -427,7 +447,14 @@ public class DomainTest {
 
 	/**
 	 * Test of timeOut Values
+	 * @throws SourceNotLoadedException
+	 * @throws InternalDomainException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws SourceProfileNotFoundException 
+	 * @throws SourceTimeOutException 
 	 */
+	@SuppressWarnings("unused")
 	private static void testGetItems() throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException  {
 		printIntro("getItems");
 		System.out.println(" **** source "+sourceId+" **********");

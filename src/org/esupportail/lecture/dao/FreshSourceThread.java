@@ -49,7 +49,6 @@ public class FreshSourceThread extends Thread {
 	}
 
 	/**
-	 * @throws XMLParseException 
 	 * @see java.lang.Thread#run()
 	 */
 	@Override
@@ -97,7 +96,7 @@ public class FreshSourceThread extends Thread {
 			Namespace xmlSchemaNameSpace = rootElement.getNamespaceForURI("http://www.w3.org/2001/XMLSchema-instance");
 			if (xmlSchemaNameSpace != null) {
 				String xmlSchemaNameSpacePrefix = xmlSchemaNameSpace.getPrefix();
-				for ( Iterator i = rootElement.attributeIterator(); i.hasNext(); ) {
+				for (Iterator i = rootElement.attributeIterator(); i.hasNext(); ) {
 					Attribute attribute = (Attribute) i.next();
 					if (attribute.getQName().getNamespacePrefix().equals(xmlSchemaNameSpacePrefix) && attribute.getName().equals("schemaLocation")) {
 						xmltype = attribute.getValue();
@@ -112,6 +111,7 @@ public class FreshSourceThread extends Thread {
 			ret.setXmlStream(xml);
 			ret.setXmlType(xmltype);
 			ret.setUrl(sourceURL);
+			// TODO (GB --> RB) Pourquoi as tu commenté ces deux lignes ?
 			//			ret.setItemXPath(sourceProfile.getItemXPath());
 			//			ret.setXsltURL(sourceProfile.getXsltURL());
 		} catch (DocumentException e) {

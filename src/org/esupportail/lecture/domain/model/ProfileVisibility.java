@@ -29,7 +29,9 @@ public class ProfileVisibility {
 	/**
 	 * Constructor
 	 */
-	public ProfileVisibility() {}
+	public ProfileVisibility() {
+		// empty
+	}
 
 	
 	/**

@@ -2,7 +2,6 @@ package org.esupportail.lecture.domain.model;
 
 
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -39,7 +38,6 @@ public class UserProfile {
 	
 	/**
 	 * Id of the user, get from externalService request by USER_ID, defined in the channel config
-	 * @see org.esupportail.lecture.domain.DomainTools#userID
 	 * @see ChannelConfig#loadUserId()
 	 */
 	private String userId;
@@ -525,6 +523,10 @@ public class UserProfile {
 		return this.getUserId().hashCode();
 	}
 
+	/**
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
 	public String toString() {
 		StringBuffer string = new StringBuffer(getClass().getSimpleName() + "#" + hashCode() 
 			+ "[userId=[" + userId + "], userProfilePK=[" + userProfilePK + "], ");
@@ -571,35 +573,35 @@ public class UserProfile {
 		this.userId = userId;
 	}
 
-	/**
-	 * @return customContexts
-	 */
-	private Map<String, CustomContext> getCustomContexts() {
-		return customContexts;
-	}
+//	/**
+//	 * @return customContexts
+//	 */
+//	private Map<String, CustomContext> getCustomContexts() {
+//		return customContexts;
+//	}
 
 	
-	/**
-	 * @param customContexts
-	 */
-	private void setCustomContexts(Map<String, CustomContext> customContexts) {
-		this.customContexts = customContexts;
-	}
+//	/**
+//	 * @param customContexts
+//	 */
+//	private void setCustomContexts(Map<String, CustomContext> customContexts) {
+//		this.customContexts = customContexts;
+//	}
 
-	/**
-	 * @return customManagedCategories
-	 */
-	private Map<String, CustomCategory> getCustomCategories() {
-		return customCategories;
-	}
+//	/**
+//	 * @return customManagedCategories
+//	 */
+//	private Map<String, CustomCategory> getCustomCategories() {
+//		return customCategories;
+//	}
 
-	/**
-	 * @param customCategories 
-	 */
-	private void setCustomCategories(
-			Map<String, CustomCategory> customCategories) {
-		this.customCategories = customCategories;
-	}
+//	/**
+//	 * @param customCategories 
+//	 */
+//	private void setCustomCategories(
+//			Map<String, CustomCategory> customCategories) {
+//		this.customCategories = customCategories;
+//	}
 
 	/**
 	 * @return database primary Key
@@ -615,19 +617,19 @@ public class UserProfile {
 		this.userProfilePK = userProfilePK;
 	}
 
-	/**
-	 * @return custom sources from this userProfile
-	 */
-	private Map<String, CustomSource> getCustomSources() {
-		return customSources;
-	}
+//	/**
+//	 * @return custom sources from this userProfile
+//	 */
+//	private Map<String, CustomSource> getCustomSources() {
+//		return customSources;
+//	}
 
-	/**
-	 * @param customSources
-	 */
-	private void setCustomSources(Map<String, CustomSource> customSources) {
-		this.customSources = customSources;
-	}
+//	/**
+//	 * @param customSources
+//	 */
+//	private void setCustomSources(Map<String, CustomSource> customSources) {
+//		this.customSources = customSources;
+//	}
 
 
 	

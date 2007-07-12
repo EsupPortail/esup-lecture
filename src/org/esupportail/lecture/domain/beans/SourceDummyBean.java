@@ -64,7 +64,8 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#setName(java.lang.String)
 	 */
 	@Override
-	public void setName(String name) throws ElementDummyBeanException {
+	public void setName(@SuppressWarnings("unused")
+	String name) throws ElementDummyBeanException {
 		throw new ElementDummyBeanException("Method setName() not available on a SourceDummyBean");
 	}
 
@@ -80,7 +81,8 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#setId(java.lang.String)
 	 */
 	@Override
-	public void setId(String id) throws ElementDummyBeanException {
+	public void setId(@SuppressWarnings("unused")
+	String id) throws ElementDummyBeanException {
 		throw new ElementDummyBeanException("Method setId() not available on a SourceDummyBean");
 	}
 
@@ -96,7 +98,8 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#setType(org.esupportail.lecture.domain.model.AvailabilityMode)
 	 */
 	@Override
-	public void setType(AvailabilityMode type) throws ElementDummyBeanException {
+	public void setType(@SuppressWarnings("unused")
+	AvailabilityMode type) throws ElementDummyBeanException {
 		throw new ElementDummyBeanException("Method setType() not available on a SourceDummyBean");
 	}
 	
@@ -114,7 +117,8 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.SourceBean#setItemDisplayMode(org.esupportail.lecture.domain.model.ItemDisplayMode)
 	 */
 	@Override
-	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) throws ElementDummyBeanException {
+	public void setItemDisplayMode(@SuppressWarnings("unused")
+	ItemDisplayMode itemDisplayMode) throws ElementDummyBeanException {
 		throw new ElementDummyBeanException("Method setItemDisplayMode() not available on a SourceDummyBean");
 	}
 	

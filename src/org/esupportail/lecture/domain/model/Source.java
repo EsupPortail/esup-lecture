@@ -328,16 +328,16 @@ public abstract class Source implements Element, Serializable {
 		return itemXPath;
 	}
 
-	/**
-	 * @param itemXPath The itemXPath to set.
-	 */
-	private synchronized void setItemXPath(final String itemXPath) {
-	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("id=" + this.profileId + " - setItemXPath(" + itemXPath + ")");
-    	}
-		this.itemXPath = itemXPath;
-		isXsltComputed = false;
-	}
+//	/**
+//	 * @param itemXPath The itemXPath to set.
+//	 */
+//	private synchronized void setItemXPath(final String itemXPath) {
+//	   	if (LOG.isDebugEnabled()) {
+//    		LOG.debug("id=" + this.profileId + " - setItemXPath(" + itemXPath + ")");
+//    	}
+//		this.itemXPath = itemXPath;
+//		isXsltComputed = false;
+//	}
 
 	/**
 	 * @return Returns the xsltURL.
@@ -353,42 +353,42 @@ public abstract class Source implements Element, Serializable {
 		return xsltURL;
 	}
 
-	/**
-	 * @param xsltURL The xsltURL to set.
-	 */
-	private synchronized void setXsltURL(final String xsltURL) {
-	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("id=" + this.profileId + " - setXsltURL(" + xsltURL + ")");
-    	}
-		this.xsltURL = xsltURL;
-		isXsltComputed = false;
-	}
+//	/**
+//	 * @param xsltURL The xsltURL to set.
+//	 */
+//	private synchronized void setXsltURL(final String xsltURL) {
+//	   	if (LOG.isDebugEnabled()) {
+//    		LOG.debug("id=" + this.profileId + " - setXsltURL(" + xsltURL + ")");
+//    	}
+//		this.xsltURL = xsltURL;
+//		isXsltComputed = false;
+//	}
 
-	/**
-	 * @return a hash of XPathNameSpace of this source
-	 * @throws MappingNotFoundException
-	 */
-	private HashMap<String, String> getXPathNameSpaces() throws MappingNotFoundException {
-	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("id=" + this.profileId + " - getXPathNameSpaces()");
-    	}
-		if (!isXsltComputed) {
-			computeXslt();
-		}
-		return XPathNameSpaces;
-	}
+//	/**
+//	 * @return a hash of XPathNameSpace of this source
+//	 * @throws MappingNotFoundException
+//	 */
+//	private HashMap<String, String> getXPathNameSpaces() throws MappingNotFoundException {
+//	   	if (LOG.isDebugEnabled()) {
+//    		LOG.debug("id=" + this.profileId + " - getXPathNameSpaces()");
+//    	}
+//		if (!isXsltComputed) {
+//			computeXslt();
+//		}
+//		return XPathNameSpaces;
+//	}
 
-	/**
-	 * Sets the hash of XPathNameSpace of this source.
-	 * @param pathNameSpaces
-	 */
-	private synchronized void setXPathNameSpaces(final HashMap<String, String> pathNameSpaces) {
-	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("id=" + this.profileId + " - setXPathNameSpaces(" + pathNameSpaces + ")");
-    	}
-		XPathNameSpaces = pathNameSpaces;
-		isXsltComputed = false;
-	}
+//	/**
+//	 * Sets the hash of XPathNameSpace of this source.
+//	 * @param pathNameSpaces
+//	 */
+//	private synchronized void setXPathNameSpaces(final HashMap<String, String> pathNameSpaces) {
+//	   	if (LOG.isDebugEnabled()) {
+//    		LOG.debug("id=" + this.profileId + " - setXPathNameSpaces(" + pathNameSpaces + ")");
+//    	}
+//		XPathNameSpaces = pathNameSpaces;
+//		isXsltComputed = false;
+//	}
 
 	/**
 	 * get Items list of this source.

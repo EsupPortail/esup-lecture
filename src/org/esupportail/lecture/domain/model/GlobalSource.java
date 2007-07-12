@@ -14,6 +14,7 @@ package org.esupportail.lecture.domain.model;
  * @see Source
  *
  */ 
+@SuppressWarnings("serial")
 public class GlobalSource extends Source {
 
 	

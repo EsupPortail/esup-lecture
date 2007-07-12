@@ -110,11 +110,12 @@ public abstract class CustomSource implements CustomElement {
 		List<Item> listItems = null;
 		try {
 			listItems = profile.getItems(ex);
+			// pas de catch de categoryNotLoaded : cela entraine trop de compliaction
 		} catch (SourceNotLoadedException e){
 			// Dans ce cas : la mise à jour du customCategory n'a pas été effectué
 			log.error("Impossible to update getItems for customSource " + getElementId()
 					+ " because its source is not loaded - " 
-					+ " It is very strange because loadSource() has been called before in profile.getItems() ...", e);
+					+ " It is very strange because loadSource() has been called before in mcp.updateCustomContext() ...", e);
 			throw e;
 		}
 		return listItems;
@@ -254,12 +255,12 @@ public abstract class CustomSource implements CustomElement {
 		this.customSourcePK = customSourcePK;
 	}
 
-	/**
-	 * @param userProfile
-	 */
-	private void setUserProfile(UserProfile userProfile) {
-		this.userProfile = userProfile;
-	}
+//	/**
+//	 * @param userProfile
+//	 */
+//	private void setUserProfile(UserProfile userProfile) {
+//		this.userProfile = userProfile;
+//	}
 
 	/**
 	 * @return a set of read items ID
@@ -268,12 +269,12 @@ public abstract class CustomSource implements CustomElement {
 		return readItems;
 	}
 
-	/**
-	 * @param readItems
-	 */
-	private void setReadItems(Set<String> readItems) {
-		this.readItems = readItems;
-	}
+//	/**
+//	 * @param readItems
+//	 */
+//	private void setReadItems(Set<String> readItems) {
+//		this.readItems = readItems;
+//	}
 
 	/**
 	 * @param elementId

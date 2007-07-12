@@ -113,8 +113,7 @@ public class CustomContext implements CustomElement {
 		// TODO (GB later) rewrite with custom personnal category (+ sorted display)
 	
 		/* update this customContext with context */
-		Context context = getContext();
-		context.updateCustom(this,ex);
+		getContext().updateCustom(this,ex);
 		
 //		DomainTools.getDaoService().updateCustomContext(this);
 //		DomainTools.getDaoService().updateUserProfile(userProfile);
@@ -357,6 +356,7 @@ public class CustomContext implements CustomElement {
 	/**
 	 * @see java.lang.Object#toString()
 	 */
+	@Override
 	public String toString() {
 		StringBuffer string = new StringBuffer(getClass().getSimpleName() + "#" + hashCode() 
 				+ "[elementId=[" + elementId
@@ -438,28 +438,28 @@ public class CustomContext implements CustomElement {
 		return subscriptions;
 	}
 
-	/**
-	 * Sets Map of subscriptions
-	 * @param subscriptions
-	 */
-	private void setSubscriptions(
-			Map<String, CustomManagedCategory> subscriptions) {
-		this.subscriptions = subscriptions;
-	}
+//	/**
+//	 * Sets Map of subscriptions
+//	 * @param subscriptions
+//	 */
+//	private void setSubscriptions(
+//			Map<String, CustomManagedCategory> subscriptions) {
+//		this.subscriptions = subscriptions;
+//	}
 
-	/**
-	 * @return a set of folded categories ID 
-	 */
-	private Set<String> getUnfoldedCategories() {
-		return unfoldedCategories;
-	}
+//	/**
+//	 * @return a set of folded categories ID 
+//	 */
+//	private Set<String> getUnfoldedCategories() {
+//		return unfoldedCategories;
+//	}
 
-	/**
-	 * @param foldedCategories - set of olded categories ID 
-	 */
-	private void setUnfoldedCategories(Set<String> foldedCategories) {
-		this.unfoldedCategories = foldedCategories;
-	}
+//	/**
+//	 * @param foldedCategories - set of olded categories ID 
+//	 */
+//	private void setUnfoldedCategories(Set<String> foldedCategories) {
+//		this.unfoldedCategories = foldedCategories;
+//	}
 
 	/**
 	 * @param elementId

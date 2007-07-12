@@ -59,20 +59,36 @@ public class DaoServiceStub  implements DaoService {
 	
 	/* Remote Data */
 	
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile)
+	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws TimeoutException {
 		log.debug("getManagedCategory("+profile.getId()+")");
 		return remoteXMLService.getManagedCategory(profile);
 	}
 	
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile, String ptCas) {
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile, java.lang.String)
+	 */
+	public ManagedCategory getManagedCategory(@SuppressWarnings("unused")
+	ManagedCategoryProfile profile, @SuppressWarnings("unused")
+	String ptCas) {
 		return null;
 	}
 	
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
+	 */
 	public Source getSource(ManagedSourceProfile profile) throws TimeoutException {
 		return this.remoteXMLService.getSource(profile);
 	}
 
-	public Source getSource(ManagedSourceProfile profile, String ptCas) {
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile, java.lang.String)
+	 */
+	public Source getSource(@SuppressWarnings("unused")
+	ManagedSourceProfile profile, @SuppressWarnings("unused")
+	String ptCas) {
 		return null;
 	}
 	
@@ -98,6 +114,9 @@ public class DaoServiceStub  implements DaoService {
 		return userProfile;
 	}
 
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#saveUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 */
 	public void saveUserProfile(UserProfile userProfile) {
 		if (log.isDebugEnabled()){
 			log.debug("saveUserProfile("+userProfile.getUserId()+")");
@@ -105,6 +124,9 @@ public class DaoServiceStub  implements DaoService {
 		userProfiles.put(userProfile.getUserId(),userProfile);
 	}
 	
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#deleteUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 */
 	public void deleteUserProfile(UserProfile userProfile) {
 		if (log.isDebugEnabled()){
 			log.debug("deleteUserProfile("+userProfile.getUserId()+")");
@@ -113,6 +135,9 @@ public class DaoServiceStub  implements DaoService {
 		
 	}
 	
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#updateUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 */
 	public void updateUserProfile(UserProfile userProfile) {
 		if (log.isDebugEnabled()){
 			log.debug("updateUserProfile("+userProfile.getUserId()+")");
@@ -121,12 +146,18 @@ public class DaoServiceStub  implements DaoService {
 
 	/* CustomContext */
 	
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#updateCustomContext(org.esupportail.lecture.domain.model.CustomContext)
+	 */	
 	public void updateCustomContext(CustomContext customContext) {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustomContext("+customContext.getElementId()+")");
 		}
 	}
 
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomContext(org.esupportail.lecture.domain.model.CustomContext)
+	 */
 	public void deleteCustomContext(CustomContext cco) {
 		if (log.isDebugEnabled()){
 			log.debug("deleteCustomContext("+cco.getElementId()+")");
@@ -135,26 +166,39 @@ public class DaoServiceStub  implements DaoService {
 
 	/* CustomCategory */
 	
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#updateCustomCategory(org.esupportail.lecture.domain.model.CustomCategory)
+	 */
 	public void updateCustomCategory(CustomCategory cca) {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustomCategory("+cca.getElementId()+"");
 		}
 	}
 
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomCategory(org.esupportail.lecture.domain.model.CustomCategory)
+	 */
 	public void deleteCustomCategory(CustomCategory cca) {
 		if (log.isDebugEnabled()){
 			log.debug("deleteCustomCategory("+cca.getElementId()+")");
 		}
 	}
-
+	
 	/* CustomSource */
 	
+
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomSource(org.esupportail.lecture.domain.model.CustomSource)
+	 */
 	public void deleteCustomSource(CustomSource cs) {
 		if (log.isDebugEnabled()){
 			log.debug("deleteCustomSource("+cs.getElementId()+")");
 		}
 	}
 
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#updateCustomSource(org.esupportail.lecture.domain.model.CustomSource)
+	 */
 	public void updateCustomSource(CustomSource source) {
 		if (log.isDebugEnabled()){
 			log.debug("updateCustomSource("+source.getElementId()+")");
@@ -167,8 +211,9 @@ public class DaoServiceStub  implements DaoService {
 	 *************************** ACCESSORS *********************************/	
 	
 
-
-
+	/**
+	 * @param remoteXML
+	 */
 	public void setRemoteXMLService(DaoServiceRemoteXML remoteXML) {
 		this.remoteXMLService = remoteXML;
 	}
@@ -185,22 +230,22 @@ public class DaoServiceStub  implements DaoService {
 	 * @see org.esupportail.lecture.dao.DaoService#getVersionManagers()
 	 */
 	public List<VersionManager> getVersionManagers() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#addVersionManager(org.esupportail.lecture.domain.model.VersionManager)
 	 */
-	public void addVersionManager(VersionManager versionManager) {
+	public void addVersionManager(@SuppressWarnings("unused")
+	VersionManager versionManager) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(org.esupportail.lecture.domain.model.VersionManager)
 	 */
-	public void updateVersionManager(VersionManager versionManager) {
+	public void updateVersionManager(@SuppressWarnings("unused")
+	VersionManager versionManager) {
 		// TODO Auto-generated method stub
 		
 	}

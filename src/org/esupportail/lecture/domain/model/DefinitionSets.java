@@ -53,19 +53,20 @@ public class DefinitionSets {
 	 * Not ready to use without modification
 	 * @deprecated
 	 */
+	@SuppressWarnings("deprecation")
 	@Deprecated
 	synchronized protected void checkNamesExistence(){
 	   	if (log.isDebugEnabled()){
     		log.debug("checkNamesExistence()");
     	}
-		Iterator<String> iteratorString;
-		iteratorString = groups.iterator();
-		for(String group = null; iteratorString.hasNext();){
-			group = iteratorString.next();
+//		Iterator<String> iteratorString;
+//		iteratorString = groups.iterator();
+//		for(String group = null; iteratorString.hasNext();){
+//			group = iteratorString.next();
 //			 TODO (GB later) vérification de l'existence du groupe dans le portail
 			// si PB : log.warn();
 			// PAs sure que c'est par là qu'on le fasse 
-		}
+//		}
 		
 		Iterator<RegularOfSet> iteratorReg = regulars.iterator();
 		for(RegularOfSet reg = null; iteratorReg.hasNext();){

@@ -221,7 +221,6 @@ public class DomainServiceImpl implements DomainService {
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
 		UserProfile userProfile = channel.getUserProfile(uid);
 		try {
-			
 			CustomCategory customCategory = userProfile.getCustomCategory(categoryId, ex);
 			List<CustomSource> customSources = customCategory.getSortedCustomSources(ex);
 				
