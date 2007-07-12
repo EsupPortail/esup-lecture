@@ -113,8 +113,8 @@ public class Context {
 						+ " because the remote category is in Time Out", e);
 			} catch (CategoryNotLoadedException e){
 				log.error("Impossible to update CustomContext associated to context " + getId()
-						+ " for managedCategoryProfile " + mcp.getId()
-						+ " because it category is not loaded : very strange because a loadCategory has been called ...", e);
+						+ " for managedCategoryProfile " + mcp.getId()+ " because its category is not loaded - " 
+						+ " It is very strange because loadCategory() has been called before in mcp.updateCustomContext() ...", e);
 			}
 		}
 		// update for managedCategories not anymore in this context

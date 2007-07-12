@@ -157,6 +157,8 @@ public class CustomManagedCategory extends CustomCategory {
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
+				// Dans ce cas : la managedCategory n'est pointé par aucun 
+				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
 				couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this,ex);
 			} catch (CategoryNotLoadedException e2) {

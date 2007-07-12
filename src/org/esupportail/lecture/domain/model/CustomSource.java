@@ -106,8 +106,18 @@ public abstract class CustomSource implements CustomElement {
 		if (log.isDebugEnabled()){
 			log.debug("id="+elementId+" - getItems(externalService)");
 		}
-	
-		return getProfile().getItems(ex);
+		SourceProfile profile = getProfile();
+		List<Item> listItems = null;
+		try {
+			listItems = profile.getItems(ex);
+		} catch (SourceNotLoadedException e){
+			// Dans ce cas : la mise à jour du customCategory n'a pas été effectué
+			log.error("Impossible to update getItems for customSource " + getElementId()
+					+ " because its source is not loaded - " 
+					+ " It is very strange because loadSource() has been called before in profile.getItems() ...", e);
+			throw e;
+		}
+		return listItems;
 	}
 
 	/**
