@@ -89,7 +89,7 @@
         <para>Initialize your database if necessary (first
         installation):<itemizedlist>
             <listitem>
-              <para>ant init<note>
+              <para>ant init-data<note>
                   <para><emphasis role="bold">This Command will erase all
                   existing data in your database !!!!</emphasis></para>
 

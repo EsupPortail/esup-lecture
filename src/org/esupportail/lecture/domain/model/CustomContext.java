@@ -20,7 +20,7 @@ import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 
 /**
- * Customizations on a context for a user profile 
+ * Customizations on a context for a user profile.
  * @author gbouteil
  * @see CustomElement
  *
@@ -31,42 +31,57 @@ public class CustomContext implements CustomElement {
 	 ************************** PROPERTIES *********************************/	
 	
 	/**
-	 * Log instance
+	 * Max tree size.
 	 */
-	protected static final Log log = LogFactory.getLog(CustomContext.class);
+	private static final int MAXTREESIZE = 100;
+
+	/**
+	 * Default tree size.
+	 */
+	private static final int DEFAULTTREESIZE = 20;
+
+	/**
+	 * ID string for log.
+	 */
+	private static final String ID = "id=";
+
+	/**
+	 * Log instance.
+	 */
+	private static final Log LOG = LogFactory.getLog(CustomContext.class);
 	
 	/**
-	 * The context Id of this CustomContext refers to
+	 * The context Id of this CustomContext refers to.
 	 */
 	private String elementId;
 
 	/**
-	 * The context of this customization referred to, corresponding to the contextId
+	 * The context of this customization referred to, corresponding to the contextId.
 	 */
 	private Context context;
 	
 	/**
-	 * Subscriptions of CustomManagedCategory
+	 * Subscriptions of CustomManagedCategory.
 	 */
-	private Map<String,CustomManagedCategory> subscriptions = new Hashtable<String,CustomManagedCategory>();
+	private Map<String, CustomManagedCategory> subscriptions = new Hashtable<String, CustomManagedCategory>();
 	
 	/**
-	 * The userprofile owner
+	 * The userprofile owner.
 	 */
 	private UserProfile userProfile;
 	
 	/**
-	 * Tree size of the customContext
+	 * Tree size of the customContext.
 	 */
 	private int treeSize;
 	
 	/**
-	 * Set of id corresponding to unfolded categories
+	 * Set of id corresponding to unfolded categories.
 	 */
 	private Set<String> unfoldedCategories = new HashSet<String>();
 
 	/**
-	 * Database Primary Key
+	 * Database Primary Key.
 	 */
 	private long customContextPK; 
 
@@ -75,25 +90,25 @@ public class CustomContext implements CustomElement {
 	 ************************** INIT *********************************/	
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param contextId id of the context refered by this CustomContext
 	 * @param user owner of this CustomContext
 	 */
-	protected CustomContext(String contextId, UserProfile user) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+contextId+" - CustomContext("+contextId+","+user.getUserId()+")");
+	protected CustomContext(final String contextId, final UserProfile user) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + contextId + " - CustomContext(" + contextId + "," + user.getUserId() + ")");
 		}
 		this.elementId = contextId;
 		this.userProfile = user;
-		treeSize = 20;
+		treeSize = DEFAULTTREESIZE;
 	}
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	protected CustomContext() {
-		if (log.isDebugEnabled()){
-			log.debug("CustomContext()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("CustomContext()");
 		}
 	}
 	
@@ -101,25 +116,26 @@ public class CustomContext implements CustomElement {
 	 *************************** METHODS ************************************/
 
 	/**
-	 * Return the list of sorted customCategories displayed by this customContext
+	 * Return the list of sorted customCategories displayed by this customContext.
 	 * @param ex access to externalService
 	 * @return the list of customCategories 
 	 * @throws ContextNotFoundException 
 	 */
-	public List<CustomCategory> getSortedCustomCategories(ExternalService ex) throws ContextNotFoundException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - getSortedCustomCategories(externalService)");
+	public List<CustomCategory> getSortedCustomCategories(final ExternalService ex) 
+			throws ContextNotFoundException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - getSortedCustomCategories(externalService)");
 		}
 		// TODO (GB later) rewrite with custom personnal category (+ sorted display)
 	
 		/* update this customContext with context */
-		getContext().updateCustom(this,ex);
+		getContext().updateCustom(this, ex);
 		
 //		DomainTools.getDaoService().updateCustomContext(this);
 //		DomainTools.getDaoService().updateUserProfile(userProfile);
 		
 		List<CustomCategory> listCustomCategories = new Vector<CustomCategory>();
-		for(CustomManagedCategory customCat : subscriptions.values()){
+		for (CustomManagedCategory customCat : subscriptions.values()) {
 			// later : add other custom elements (imported et personal)
 			listCustomCategories.add(customCat);
 		}
@@ -130,20 +146,20 @@ public class CustomContext implements CustomElement {
 	/* ADD ELEMENTS */
 
 	/**
-	 * Add a subscription category to this custom context (if no exists, else do nothing) 
+	 * Add a subscription category to this custom context (if no exists, else do nothing). 
 	 * and creates the corresponding customManagedCategory with the given profile
 	 * This new customManagedCategory is also added to the userProfile (owner of all customElements)
 	 * @param profile the managed category profile to subscribe
 	 */
-	protected void addSubscription(ManagedCategoryProfile profile) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - addSubscription("+profile.getId()+")");
+	protected void addSubscription(final ManagedCategoryProfile profile) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - addSubscription(" + profile.getId() + ")");
 		}
 		String profileId = profile.getId();
 		
-		if (!subscriptions.containsKey(profileId)){
-			CustomManagedCategory customManagedCategory = new CustomManagedCategory(profileId,userProfile);
-			subscriptions.put(profileId,customManagedCategory);
+		if (!subscriptions.containsKey(profileId)) {
+			CustomManagedCategory customManagedCategory = new CustomManagedCategory(profileId, userProfile);
+			subscriptions.put(profileId, customManagedCategory);
 			DomainTools.getDaoService().updateCustomContext(this);
 			userProfile.addCustomCategory(customManagedCategory);
 		}
@@ -153,13 +169,13 @@ public class CustomContext implements CustomElement {
 	/* REMOVE ELEMENTS */
 	
 	/**
-	 * remove a CustomManagedCategory displayed in this CustomContext
+	 * remove a CustomManagedCategory displayed in this CustomContext.
 	 * and also removes every occcurence in userProfile
 	 * @param profileId the managedCategoryProfile ID associated to the CustomManagedCategory to remove
 	 */
-	protected void removeCustomManagedCategoryFromProfile(String profileId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - removeCustomManagedSourceFromProfile("+profileId+")");
+	protected void removeCustomManagedCategoryFromProfile(final String profileId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - removeCustomManagedSourceFromProfile(" + profileId + ")");
 		}
 		getUserProfile().removeCustomManagedCategoryFromProfile(profileId);
 		
@@ -167,23 +183,23 @@ public class CustomContext implements CustomElement {
 	// TODO (GB later)  removeCustomPersonalCategory()
 	
 	/**
-	 * Remove the customCategory categoryId in ths customContext only
+	 * Remove the customCategory categoryId in ths customContext only.
 	 * @param categoryId ID for customCategory
 	 */
-	public void removeCustomCategory(String categoryId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - removeCustomCategory("+categoryId+")");
+	public void removeCustomCategory(final String categoryId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - removeCustomCategory(" + categoryId + ")");
 		}
 		removeCustomManagedCategory(categoryId);
 	}
 	
 	/**
-	 * Remove the customManagedCategory categoryId in ths customContext only
+	 * Remove the customManagedCategory categoryId in ths customContext only.
 	 * @param categoryId ID for customManagedCategory
 	 */
-	public void removeCustomManagedCategory(String categoryId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - removeCustomManagedCategory("+categoryId+")");
+	public void removeCustomManagedCategory(final String categoryId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - removeCustomManagedCategory(" + categoryId + ")");
 		}
 		CustomCategory cs = subscriptions.get(categoryId);
 		if (cs != null) {
@@ -196,11 +212,11 @@ public class CustomContext implements CustomElement {
 	 * Remove every subscriptions (customManagedCategories) of this customContext.
 	 */
 	public void removeSubscriptions() {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - removeSubscriptions()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - removeSubscriptions()");
 		}
 		
-		for (String sourceId : subscriptions.keySet()){
+		for (String sourceId : subscriptions.keySet()) {
 			removeCustomManagedCategoryFromProfile(sourceId);
 		}
 		
@@ -209,13 +225,13 @@ public class CustomContext implements CustomElement {
 	/* MISCELLANEOUS */
 	
 	/**
-	 * Returns the Context associated to this customContext
+	 * Returns the Context associated to this customContext.
 	 * @return context 
 	 * @throws ContextNotFoundException 
 	 */
 	public Context getContext() throws ContextNotFoundException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - getContext()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - getContext()");
 		}
 		if (context == null) {
 			context = DomainTools.getChannel().getContext(elementId);
@@ -224,66 +240,68 @@ public class CustomContext implements CustomElement {
 	}
 	
 	/**
-	 * Returns the name of this context
+	 * Returns the name of this context.
 	 * @throws ContextNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
 	public String getName() throws ContextNotFoundException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - getName()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - getName()");
 		}
 		return getContext().getName();
 	}
 	
 	/**
-	 * Modify the tree size of this customContext by checking
+	 * Modify the tree size of this customContext by checking.
 	 * min and max treeSize
 	 * @param size
 	 * @throws TreeSizeErrorException
 	 */
-	public void modifyTreeSize(int size)throws TreeSizeErrorException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - modifyTreeSize(size "+size+")");
+	public void modifyTreeSize(final int size)throws TreeSizeErrorException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - modifyTreeSize(size " + size + ")");
 		}
 		/* old name was setTreesize but it has been changed to prevent 
 		 * loop by calling dao
 		 */
 		// TODO (GB later) externaliser les bornes
-		if ((size >=0) && (size <=100)){
+		if ((size >= 0) && (size <= MAXTREESIZE)) {
 			treeSize = size;
 			DomainTools.getDaoService().updateCustomContext(this);
-		}else {
+		} else {
 			String errorMsg = "TreeSize must be into 0 and 100";
-			log.error(errorMsg);
+			LOG.error(errorMsg);
 			throw new TreeSizeErrorException(errorMsg);
 		}
 	}
 
 	/**
-	 * mark a customCategory contained in this CustomContext as folded
+	 * mark a customCategory contained in this CustomContext as folded.
 	 * @param catId id of the profile category associated to the customCategory
 	 */
-	public void foldCategory(String catId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - foldCategory(catId"+catId+")");
+	public void foldCategory(final String catId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - foldCategory(catId" + catId + ")");
 		}
-		if (!unfoldedCategories.remove(catId)){
-			log.warn("foldCategory("+catId+") is called in customContext "+elementId+" but this category is yet folded");
+		if (!unfoldedCategories.remove(catId)) {
+			LOG.warn("foldCategory(" + catId + ") is called in customContext " + elementId 
+					+ " but this category is yet folded");
 		} else {
 			DomainTools.getDaoService().updateCustomContext(this);
 		}
 	}
 	
 	/**
-	 * mark a customCategory contained in this CustomContext as unfolded
+	 * mark a customCategory contained in this CustomContext as unfolded.
 	 * @param catId id of the profile category associated to the customCategory
 	 */
-	public void unfoldCategory(String catId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - unfoldCategory(catId"+catId+")");
+	public void unfoldCategory(final String catId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - unfoldCategory(catId" + catId + ")");
 		}
-		if(!unfoldedCategories.add(catId)){
-			log.warn("unfoldCategory("+catId+") is called in customContext "+elementId+" but this category is yet unfolded");
+		if (!unfoldedCategories.add(catId)) {
+			LOG.warn("unfoldCategory(" + catId + ") is called in customContext " + elementId
+					+ " but this category is yet unfolded");
 		} else {
 			DomainTools.getDaoService().updateCustomContext(this);
 		}
@@ -294,9 +312,9 @@ public class CustomContext implements CustomElement {
 	 * @param categoryId ID for customManagedCategory
 	 * @return true if this customContext has a reference on customManagedCategory categoryId
 	 */
-	public boolean containsCustomManagedCategory(String categoryId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - containsCustomManagedCategory("+categoryId+")");
+	public boolean containsCustomManagedCategory(final String categoryId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - containsCustomManagedCategory(" + categoryId+")");
 		}
 		return subscriptions.containsKey(categoryId);
 		
@@ -306,27 +324,27 @@ public class CustomContext implements CustomElement {
 	 * @param categoryId ID for customCategory
 	 * @return true if this customContext has a reference on customCategory categoryId
 	 */
-	public boolean containsCustomCategory(String categoryId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - containsCustomCategory("+categoryId+")");
+	public boolean containsCustomCategory(final String categoryId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - containsCustomCategory(" + categoryId + ")");
 		}
 		return containsCustomManagedCategory(categoryId);
 		
 	}
 	
 	/**
-	 * Return true if the customCategory is folded in this customContext
+	 * Return true if the customCategory is folded in this customContext.
 	 * @param catId
 	 * @return if category is folded or not
 	 */
-	public boolean isCategoryFolded(String catId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - isCategoryFolded(catId"+catId+")");
+	public boolean isCategoryFolded(final String catId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + elementId + " - isCategoryFolded(catId" + catId + ")");
 		}
 		boolean ret = false;
-		if(unfoldedCategories.contains(catId)){
+		if (unfoldedCategories.contains(catId)) {
 			ret = false;
-		}else {
+		} else {
 			ret = true;
 		}
 		return ret;
@@ -336,12 +354,20 @@ public class CustomContext implements CustomElement {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null) return false;
-		if (!(o instanceof CustomContext)) return false;
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null) {
+			return false;
+		}
+		if (!(o instanceof CustomContext)) {
+			return false;
+		}
 		final CustomContext customContext = (CustomContext) o;
-		if (!customContext.getElementId().equals(this.getElementId())) return false;
+		if (!customContext.getElementId().equals(this.getElementId())) {
+			return false;
+		}
 		return true;
 	}
 
@@ -397,7 +423,7 @@ public class CustomContext implements CustomElement {
 	/**
 	 * @param size
 	 */
-	protected void setTreeSize(int size) {
+	protected void setTreeSize(final int size) {
 		treeSize = size;
 	}
 
@@ -420,14 +446,14 @@ public class CustomContext implements CustomElement {
 	/**
 	 * @param customContextPK - database Primary Key
 	 */
-	public void setCustomContextPK(long customContextPK) {
+	public void setCustomContextPK(final long customContextPK) {
 		this.customContextPK = customContextPK;
 	}
 
 	/**
 	 * @param userProfile
 	 */
-	protected void setUserProfile(UserProfile userProfile) {
+	protected void setUserProfile(final UserProfile userProfile) {
 		this.userProfile = userProfile;
 	}
 
@@ -438,33 +464,36 @@ public class CustomContext implements CustomElement {
 		return subscriptions;
 	}
 
-//	/**
-//	 * Sets Map of subscriptions
-//	 * @param subscriptions
-//	 */
-//	private void setSubscriptions(
-//			Map<String, CustomManagedCategory> subscriptions) {
-//		this.subscriptions = subscriptions;
-//	}
+	/**
+	 * @return a set of folded categories ID. 
+	 */
+	@SuppressWarnings("unused")
+	private Set<String> getUnfoldedCategories() {
+		return unfoldedCategories;
+		//Needed by Hibernate
+	}
 
-//	/**
-//	 * @return a set of folded categories ID 
-//	 */
-//	private Set<String> getUnfoldedCategories() {
-//		return unfoldedCategories;
-//	}
-
-//	/**
-//	 * @param foldedCategories - set of olded categories ID 
-//	 */
-//	private void setUnfoldedCategories(Set<String> foldedCategories) {
-//		this.unfoldedCategories = foldedCategories;
-//	}
+	/**
+	 * @param foldedCategories - set of olded categories ID 
+	 */
+	@SuppressWarnings("unused")
+	private void setUnfoldedCategories(final Set<String> foldedCategories) {
+		this.unfoldedCategories = foldedCategories;
+		//Needed by Hibernate
+	}
 
 	/**
 	 * @param elementId
 	 */
-	public void setElementId(String elementId) {
+	public void setElementId(final String elementId) {
 		this.elementId = elementId;
+	}
+
+	/**
+	 * @param subscriptions the subscriptions to set
+	 */
+	public void setSubscriptions(final Map<String, CustomManagedCategory> subscriptions) {
+		this.subscriptions = subscriptions;
+		//Needed by Hibernate
 	}
 }

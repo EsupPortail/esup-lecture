@@ -37,21 +37,25 @@ import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
  */
 public class CustomManagedCategory extends CustomCategory {
 
+	/**
+	 * ID string for log.
+	 */
+	private static final String ID = "id=";
+
 	/*
 	 ************************** PROPERTIES *********************************/	
 	/**
-	 * logger
+	 * logger.
 	 */
-	protected static final Log log = LogFactory.getLog(CustomManagedCategory.class);
+	private static final Log LOG = LogFactory.getLog(CustomManagedCategory.class);
 
 	/**
-	 * Subscriptions of CustomManagedSources
+	 * Subscriptions of CustomManagedSources.
 	 */
-	private Map<String,CustomManagedSource> subscriptions = new Hashtable<String,CustomManagedSource>();
-	
+	private Map<String, CustomManagedSource> subscriptions = new Hashtable<String, CustomManagedSource>();
 	
 	/**
-	 * CategoryProfile associated to this customManagedCategory
+	 * CategoryProfile associated to this customManagedCategory.
 	 */
 	private ManagedCategoryProfile categoryProfile;
 	
@@ -62,20 +66,20 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @param profileId 
 	 * @param user
 	 */
-	protected CustomManagedCategory(String profileId,UserProfile user){
-		super(profileId,user);
-		if (log.isDebugEnabled()){
-			log.debug("CustomManagedCategory("+profileId+","+user.getUserId()+")");
+	protected CustomManagedCategory(final String profileId, final UserProfile user) {
+		super(profileId, user);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("CustomManagedCategory(" + profileId + "," + user.getUserId() + ")");
 		}
 	}
 
 	/**
-	 * default constructor
+	 * default constructor.
 	 */
-	protected CustomManagedCategory(){
+	protected CustomManagedCategory() {
 		super();
-		if (log.isDebugEnabled()){
-			log.debug("CustomManagedCategory()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("CustomManagedCategory()");
 		}
 	}
 
@@ -83,7 +87,7 @@ public class CustomManagedCategory extends CustomCategory {
 	 ************************** METHODS *********************************/	
 	
 	/**
-	 * Return the list of sorted customSources displayed by this customCategory
+	 * Return the list of sorted customSources displayed by this customCategory.
 	 * and update it
 	 * @param ex access to external service 
 	 * @return the list of customSource
@@ -95,27 +99,30 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	public List<CustomSource> getSortedCustomSources(ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+super.getElementId()+" - getSortedCustomSources(externalService)");
+	public List<CustomSource> getSortedCustomSources(final ExternalService ex) 
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, 
+			CategoryTimeOutException, CategoryOutOfReachException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + super.getElementId() + " - getSortedCustomSources(externalService)");
 		}
-	// TODO (GB later) à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
+		// TODO (GB later) à redéfinir avec les custom personnal 
+		// category : en fonction de l'ordre d'affichage peut etre.
 		
 		ManagedCategoryProfile profile = getProfile();
 		try {
-			profile.updateCustom(this,ex);
+			profile.updateCustom(this, ex);
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
-				userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
-				profile.updateCustom(this,ex);
+				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), ex);
+				profile.updateCustom(this, ex);
 			} catch (CategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointé par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
-				throw new CategoryOutOfReachException("ManagedCategory "+getElementId()+
-						"is not refered by any customContext in userProfile "+userProfile.getUserId());
+				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
+					+ "is not refered by any customContext in userProfile " 
+					+ userProfile.getUserId());
 			}
 		}
 		
@@ -123,17 +130,17 @@ public class CustomManagedCategory extends CustomCategory {
 //		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
 		
 		List<CustomSource> listSources = new Vector<CustomSource>();
-		for(CustomSource customSource : subscriptions.values()){
+		for (CustomSource customSource : subscriptions.values()){
 			listSources.add(customSource);
-			log.trace("Add source");
+			LOG.trace("Add source");
 		}
 	
 		return listSources;
 	}
 	
 	/**
-	 * Return a list of <SourceProfile,AvailabilityMode> corresponding to visible sources for user, 
-	 * in this customCategory and update it
+	 * Return a list of "SourceProfile, AvailabilityMode" corresponding to visible sources for user, 
+	 * in this customCategory and update it.
 	 * @param ex access to external service 
 	 * @return list of ProfileAvailability
 	 * @throws CategoryProfileNotFoundException 
@@ -145,25 +152,28 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	@Override
 	public List<ProfileAvailability> getVisibleSources(ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException, CategoryTimeOutException {
-		if (log.isDebugEnabled()) {
-			log.debug("id="+super.getElementId()+" - getVisibleSources(ex)");
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, 
+			InternalDomainException, CategoryTimeOutException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + super.getElementId() + " - getVisibleSources(ex)");
 		}
-//		 TODO (GB later) à redéfinir avec les custom personnal category : en fonction de l'ordre d'affichage peut etre.
+		// TODO (GB later) à redéfinir avec les custom personnal 
+		// category : en fonction de l'ordre d'affichage peut etre.
 		ManagedCategoryProfile profile = getProfile();
 		List<ProfileVisibility> couplesVisib;
 		try {
-			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this,ex);
+			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this, ex);
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
 				// Dans ce cas : la managedCategory n'est pointé par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
-				userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
-				couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this,ex);
+				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), ex);
+				couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this, ex);
 			} catch (CategoryNotLoadedException e2) {
-				throw new CategoryOutOfReachException("ManagedCategory "+getElementId()+
-						"is not refered by any customContext in userProfile "+userProfile.getUserId());
+				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
+					+ "is not refered by any customContext in userProfile " 
+					+ userProfile.getUserId());
 			}
 		}
 		
@@ -171,30 +181,30 @@ public class CustomManagedCategory extends CustomCategory {
 //		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
 		
 		List<ProfileAvailability> couplesAvail = new Vector<ProfileAvailability>();
-		for(ProfileVisibility coupleV : couplesVisib){
+		for (ProfileVisibility coupleV : couplesVisib) {
 			// Every couple is not NOTVISBLE
 			ProfileAvailability coupleA;
 			SourceProfile sourceProfile = (SourceProfile) coupleV.getProfile();
 			
 			if (coupleV.getMode() == VisibilityMode.OBLIGED ) {
-				coupleA = new ProfileAvailability(sourceProfile,AvailabilityMode.OBLIGED);
-			
-			} else { // It must be ALLOWED OR AUTOSUBSRIBED
-				if (subscriptions.containsKey(sourceProfile.getId())){
-					coupleA = new ProfileAvailability(sourceProfile,AvailabilityMode.SUBSCRIBED);
+				coupleA = new ProfileAvailability(sourceProfile, AvailabilityMode.OBLIGED);
+			} else { 
+				// It must be ALLOWED OR AUTOSUBSRIBED
+				if (subscriptions.containsKey(sourceProfile.getId())) {
+					coupleA = new ProfileAvailability(sourceProfile, AvailabilityMode.SUBSCRIBED);
 				} else {
-					coupleA = new ProfileAvailability(sourceProfile,AvailabilityMode.NOTSUBSCRIBED);
+					coupleA = new ProfileAvailability(sourceProfile, 
+						AvailabilityMode.NOTSUBSCRIBED);
 				}
 			}
 			couplesAvail.add(coupleA);
-			log.trace("Add source and availability");
+			LOG.trace("Add source and availability");
 		}
-		
 		return couplesAvail;
 	}
 	
 	/**
-	 * after checking visibility rights, subcribe user to the source sourceId in this CustomMAnagedCategory
+	 * after checking visibility rights, subcribe user to the source sourceId in this CustomMAnagedCategory.
 	 * @param sourceId source ID
 	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
@@ -207,11 +217,11 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#subscribeToSource(java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	public void subscribeToSource(String sourceId, ExternalService ex) 
+	public void subscribeToSource(final String sourceId, final ExternalService ex) 
 		throws CategoryProfileNotFoundException, CategoryOutOfReachException, SourceProfileNotFoundException, SourceNotVisibleException, 
 		CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException {
-		if (log.isDebugEnabled()){
-			log.debug("subscribeToSource("+sourceId+",externalService)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("subscribeToSource(" + sourceId + ",externalService)");
 		}
 		ManagedCategoryProfile catProfile = getProfile();
 		ManagedSourceProfile soProfile = null;
@@ -222,37 +232,43 @@ public class CustomManagedCategory extends CustomCategory {
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
-				userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
-				soProfile= catProfile.getSourceProfileById(sourceId);
+				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), ex);
+				soProfile = catProfile.getSourceProfileById(sourceId);
 				mode = soProfile.updateCustomCategory(this, ex);
 			} catch (CategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointé par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
-				throw new CategoryOutOfReachException("ManagedCategory "+getElementId()+
-						"is not refered by any customContext in userProfile "+userProfile.getUserId());
+				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
+					+ "is not refered by any customContext in userProfile "
+					+ userProfile.getUserId());
 			}
 		}
 		
 		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
 			if (subscriptions.containsKey(sourceId)) {
-				log.warn("Nothing is done for SubscribeToSource requested on source "+sourceId+
-					" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is already in subscriptions");
+				LOG.warn("Nothing is done for SubscribeToSource requested on source " + sourceId
+					+ " in category " + this.getElementId() + "\nfor user " 
+					+ getUserProfile().getUserId() 
+					+ " because this source is already in subscriptions");
 			} else {
 				addSubscription(soProfile);
 //				DomainTools.getDaoService().updateCustomCategory(this);
 //				DomainTools.getDaoService().updateUserProfile(userProfile);
-				log.debug("addSubscription to source "+sourceId);
+				LOG.debug("addSubscription to source " + sourceId);
 			}
 			
-		} else if (mode == VisibilityMode.OBLIGED){
-			log.warn("Nothing is done for SubscribeToSource requested on source "+sourceId+
-					" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is OBLIGED in this case");
+		} else if (mode == VisibilityMode.OBLIGED) {
+			LOG.warn("Nothing is done for SubscribeToSource requested on source " + sourceId 
+					+ " in category " + this.getElementId() + "\nfor user "
+					+ getUserProfile().getUserId()
+					+ " because this source is OBLIGED in this case");
 			
 		} else if (mode == VisibilityMode.NOVISIBLE) {
-			String errorMsg = "SubscribeToSource("+sourceId+") is impossible because this source is NOT VISIBLE for user "
-				+getUserProfile().getUserId()+"in category "+getElementId();
-			log.error(errorMsg);
+			String errorMsg = "SubscribeToSource(" + sourceId
+			 	+ ") is impossible because this source is NOT VISIBLE for user "
+				+ getUserProfile().getUserId() + "in category " + getElementId();
+			LOG.error(errorMsg);
 			throw new SourceNotVisibleException(errorMsg);
 		}
 		
@@ -260,7 +276,7 @@ public class CustomManagedCategory extends CustomCategory {
 	
 	
 	/**
-	 * after checking visibility rights, unsubcribe user to the source sourceId in this CustomMAnagedCategory
+	 * after checking visibility rights, unsubcribe user to the source sourceId in this CustomMAnagedCategory.
 	 * @param sourceId source ID
 	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
@@ -269,13 +285,12 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#unsubscribeToSource(java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	public void unsubscribeToSource(String sourceId, ExternalService ex) 
+	public void unsubscribeToSource(final String sourceId, final ExternalService ex) 
 		throws CategoryProfileNotFoundException, CategoryOutOfReachException, CategoryNotVisibleException, 
 		CategoryTimeOutException, SourceObligedException, InternalDomainException {
-		if (log.isDebugEnabled()){
-			log.debug("unsubscribeToSource("+sourceId+",externalService)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("unsubscribeToSource(" + sourceId + ",externalService)");
 		}
-
 		try {
 			ManagedCategoryProfile catProfile = getProfile();
 			ManagedSourceProfile soProfile = null;
@@ -286,68 +301,69 @@ public class CustomManagedCategory extends CustomCategory {
 			} catch (CategoryNotLoadedException e1) {
 				// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 				try {
-					userProfile.updateCustomContextsForOneManagedCategory(getElementId(),ex);
-					soProfile= catProfile.getSourceProfileById(sourceId);
+					userProfile.updateCustomContextsForOneManagedCategory(getElementId(), ex);
+					soProfile = catProfile.getSourceProfileById(sourceId);
 					mode = soProfile.updateCustomCategory(this, ex);
 				} catch (CategoryNotLoadedException e2) {
 					// Dans ce cas : la managedCategory n'est pointé par aucun 
 					// context correspondant à des customContext du userProfile => supression ?
 					userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
-					throw new CategoryOutOfReachException("ManagedCategory "+getElementId()+
-							"is not refered by any customContext in userProfile "+userProfile.getUserId());
+					throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
+						+ "is not refered by any customContext in userProfile "
+						+ userProfile.getUserId());
 				}
 			}			
 			if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
 				if (!subscriptions.containsKey(sourceId)) {
-					log.warn("Nothing is done for UnsubscribeToSource requested on source "+sourceId+
-						" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is not in subscriptions");
+					LOG.warn("Nothing is done for UnsubscribeToSource requested on source " 
+						+ sourceId + " in category " + this.getElementId() + "\nfor user "
+						+ getUserProfile().getUserId() 
+						+ " because this source is not in subscriptions");
 				} else {
 					removeCustomManagedSourceFromProfile(sourceId);
 //					DomainTools.getDaoService().updateCustomCategory(this);
 //					DomainTools.getDaoService().updateUserProfile(userProfile);
-					log.trace("removeCustomManagedSource to source "+sourceId);
+					LOG.trace("removeCustomManagedSource to source " + sourceId);
 				}
 				
-			} else if (mode == VisibilityMode.OBLIGED){
-				String errorMsg = "UnsubscribeToSource("+sourceId+") is impossible because this source is OBLIGED for user "
-					+getUserProfile().getUserId()+"in category "+getElementId();
-				log.error(errorMsg);
+			} else if (mode == VisibilityMode.OBLIGED) {
+				String errorMsg = "UnsubscribeToSource(" + sourceId
+					+ ") is impossible because this source is OBLIGED for user "
+					+ getUserProfile().getUserId() + "in category " + getElementId();
+				LOG.error(errorMsg);
 				throw new SourceObligedException(errorMsg);
-				
-				
-				
 			} else if (mode == VisibilityMode.NOVISIBLE) {
-				log.warn("Nothing is done for UnsubscribeToSource requested on source "+sourceId+
-						" in category "+this.getElementId()+"\nfor user "+getUserProfile().getUserId()+" because this source is NOVISIBLE in this case");
+				LOG.warn("Nothing is done for UnsubscribeToSource requested on source "
+					+ sourceId + " in category " + this.getElementId() + "\nfor user " 
+					+ getUserProfile().getUserId()
+					+ " because this source is NOVISIBLE in this case");
 			}
 		} catch (SourceProfileNotFoundException e) {
 			removeCustomManagedSourceFromProfile(sourceId);
 //			DomainTools.getDaoService().updateCustomCategory(this);
 //			DomainTools.getDaoService().updateUserProfile(userProfile);
-			log.trace("removeCustomManagedSource to source "+sourceId);
+			LOG.trace("removeCustomManagedSource to source " + sourceId);
 		}
-		
 	}
-	
-	
 	
 	/* ADD ELEMENTS */
 	
 	/**
-	 * Add a subscription source to this custom category (if no exists, else do nothing) 
+	 * Add a subscription source to this custom category (if no exists, else do nothing). 
 	 * and creates the corresponding customManagedSource with the given managedSourceProfile
 	 * This new customManagedSource is also added to the userProfile (owner of all customElements)
 	 * @param managedSourceProfile the source profile to subscribe
 	 */
-	protected void addSubscription(ManagedSourceProfile managedSourceProfile) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+super.getElementId()+" - addSubscription("+managedSourceProfile.getId()+")");
+	protected void addSubscription(final ManagedSourceProfile managedSourceProfile) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + super.getElementId() + " - addSubscription(" 
+				+ managedSourceProfile.getId() + ")");
 		}
 		String profileId = managedSourceProfile.getId();
-		
-		if (!subscriptions.containsKey(profileId)){
-			CustomManagedSource customManagedSource = new CustomManagedSource(managedSourceProfile, getUserProfile());
-			subscriptions.put(profileId,customManagedSource);
+		if (!subscriptions.containsKey(profileId)) {
+			CustomManagedSource customManagedSource = 
+				new CustomManagedSource(managedSourceProfile, getUserProfile());
+			subscriptions.put(profileId, customManagedSource);
 			DomainTools.getDaoService().updateCustomCategory(this);
 			getUserProfile().addCustomSource(customManagedSource);
 		}
@@ -357,42 +373,42 @@ public class CustomManagedCategory extends CustomCategory {
 
 	/**
 	 * remove a CustomManagedSource displayed in this CustomManagedCategory
-	 * and also removes every occcurence in userProfile
+	 * and also removes every occcurence in userProfile.
 	 * Used to remove a subscription or an importation indifferently
 	 * @param profileId the managedSourceProfile ID associated to the CustomManagedSource to remove
 	 */
 	@Override
-	protected void removeCustomManagedSourceFromProfile(String profileId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+super.getElementId()+" - removeCustomManagedSourceFromProfile("+profileId+")");
+	protected void removeCustomManagedSourceFromProfile(final String profileId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + super.getElementId()
+				+ " - removeCustomManagedSourceFromProfile(" + profileId + ")");
 		}
 		getUserProfile().removeCustomManagedSourceFromProfile(profileId);
-		
 	}
 	
 	/**
-	 * Remove the customSource sourceId in this customManagedCategory only
+	 * Remove the customSource sourceId in this customManagedCategory only.
 	 * @param sourceId ID for customManagedSource
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#removeCustomSource(java.lang.String)
 	 */
 	@Override
-	public void removeCustomSource(String sourceId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+getElementId()+" - removeCustomSource("+sourceId+")");
+	public void removeCustomSource(final String sourceId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + getElementId() + " - removeCustomSource(" + sourceId + ")");
 		}
 		removeCustomManagedSource(sourceId);
 		// TODO (GB later ajouter pour les personnal)
 	}
 	
 	/**
-	 * Remove the customManagedSource sourceId in this customManagedCategory only
+	 * Remove the customManagedSource sourceId in this customManagedCategory only.
 	 * @param sourceId ID for customManagedSource
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#removeCustomManagedSource(java.lang.String)
 	 */
 	@Override
-	public void removeCustomManagedSource(String sourceId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+getElementId()+" - removeCustomManagedSource("+sourceId+")");
+	public void removeCustomManagedSource(final String sourceId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + getElementId() + " - removeCustomManagedSource(" + sourceId + ")");
 		}
 		CustomSource cs = subscriptions.get(sourceId);
 		if (cs != null) {
@@ -408,15 +424,16 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	@Override
 	public void removeSubscriptions() {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getElementId()+" - removeSubscriptions()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + this.getElementId() + " - removeSubscriptions()");
 		}
-		// TODO (GB <-- RB) chercher ce bug partout ailleurs. Ici : cloner keySet (a cause des ConcurrentModificationException)
+		// TODO (GB <-- RB) chercher ce bug partout ailleurs. 
+		// Ici : cloner keySet (a cause des ConcurrentModificationException)
 		List<String> sids = new ArrayList<String>();
-		for (String sourceId : subscriptions.keySet()){
+		for (String sourceId : subscriptions.keySet()) {
 			sids.add(sourceId);
 		}
-		for (String sourceId : sids){
+		for (String sourceId : sids) {
 			removeCustomManagedSourceFromProfile(sourceId);
 		}
 		
@@ -425,15 +442,15 @@ public class CustomManagedCategory extends CustomCategory {
 	/* MISCELLANEOUS */
 
 	/**
-	 * Returns the ManagedCategoryProfile associated to this CustomManagedCategory
+	 * Returns the ManagedCategoryProfile associated to this CustomManagedCategory.
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getProfile()
 	 */
 	@Override
 	public ManagedCategoryProfile getProfile() throws CategoryProfileNotFoundException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+super.getElementId()+" - getProfile()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + super.getElementId() + " - getProfile()");
 		}
-		if (categoryProfile == null){
+		if (categoryProfile == null) {
 			Channel channel = DomainTools.getChannel();
 			categoryProfile = channel.getManagedCategoryProfile(getElementId());
 		}
@@ -446,9 +463,9 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#containsCustomManagedSource(java.lang.String)
 	 */
 	@Override
-	public boolean containsCustomManagedSource(String sourceId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+getElementId()+" - containsCustomManagedSource("+sourceId+")");
+	public boolean containsCustomManagedSource(final String sourceId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + getElementId() + " - containsCustomManagedSource(" + sourceId + ")");
 		}
 		return subscriptions.containsKey(sourceId);
 		
@@ -460,9 +477,9 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#containsCustomSource(java.lang.String)
 	 */
 	@Override
-	public boolean containsCustomSource(String sourceId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+getElementId()+" - containsCustomSource("+sourceId+")");
+	public boolean containsCustomSource(final String sourceId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + getElementId() + " - containsCustomSource(" + sourceId + ")");
 		}
 		return containsCustomManagedSource(sourceId);
 		// TODO (GB later ajouter pour les personnal)
@@ -498,12 +515,13 @@ public class CustomManagedCategory extends CustomCategory {
 		return subscriptions;
 	}
 
-//	/**
-//	 * @param subscriptions
-//	 */
-//	private void setSubscriptions(Map<String, CustomManagedSource> subscriptions) {
-//		this.subscriptions = subscriptions;
-//	}
+	/**
+	 * @param subscriptions
+	 */
+	private void setSubscriptions(final Map<String, CustomManagedSource> subscriptions) {
+		this.subscriptions = subscriptions;
+		//Needed by Hibernate
+	}
 
 	
 }

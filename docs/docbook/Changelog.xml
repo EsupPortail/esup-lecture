@@ -35,6 +35,10 @@
         <listitem>
           <para>Added: It uses esup-commons 0.17.0</para>
         </listitem>
+
+        <listitem>
+          <para>Fixed: CategoryNotLoadedException (bug #3140 and #3141)</para>
+        </listitem>
       </itemizedlist></para>
   </section>
 

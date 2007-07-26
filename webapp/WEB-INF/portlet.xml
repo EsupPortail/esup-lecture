@@ -21,7 +21,15 @@
 			<value>org.esupportail.commons.web.deepLinking.UportalDefaultViewSelector</value>
 		</init-param>
 		 -->
-		<expiration-cache>0</expiration-cache>
+		<expiration-cache>-1</expiration-cache>
+		<!-- 
+        <supports>
+			<mime-type>text/html</mime-type>
+            <portlet-mode>VIEW</portlet-mode>
+            <portlet-mode>EDIT</portlet-mode>
+            <portlet-mode>HELP</portlet-mode>
+		</supports>
+		 -->
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>

@@ -255,12 +255,13 @@ public abstract class CustomSource implements CustomElement {
 		this.customSourcePK = customSourcePK;
 	}
 
-//	/**
-//	 * @param userProfile
-//	 */
-//	private void setUserProfile(UserProfile userProfile) {
-//		this.userProfile = userProfile;
-//	}
+	/**
+	 * @param userProfile
+	 */
+	private void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+		//Needed by Hibernate
+	}
 
 	/**
 	 * @return a set of read items ID
@@ -269,12 +270,13 @@ public abstract class CustomSource implements CustomElement {
 		return readItems;
 	}
 
-//	/**
-//	 * @param readItems
-//	 */
-//	private void setReadItems(Set<String> readItems) {
-//		this.readItems = readItems;
-//	}
+	/**
+	 * @param readItems
+	 */
+	private void setReadItems(Set<String> readItems) {
+		this.readItems = readItems;
+		//Needed by Hibernate
+	}
 
 	/**
 	 * @param elementId

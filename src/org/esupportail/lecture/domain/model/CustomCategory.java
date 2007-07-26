@@ -20,7 +20,7 @@ import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 
 /**
- * Customizations on a CategoryProfile for a user profile 
+ * Customizations on a CategoryProfile for a user profile. 
  * @author gbouteil
  * @see CustomElement
  */
@@ -229,13 +229,14 @@ public abstract class CustomCategory implements CustomElement {
 	}
 	
 
-//	/**
-//	 * Sets userProfile
-//	 * @param userProfile
-//	 */
-//	private void setUserProfile(UserProfile userProfile) {
-//		this.userProfile = userProfile;
-//	}
+	/**
+	 * Sets userProfile
+	 * @param userProfile
+	 */
+	private void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+		//Needed by Hibernate
+	}
 	
 	/**
 	 * @return id of the profile category referred by this customCategory

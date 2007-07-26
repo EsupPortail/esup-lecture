@@ -157,6 +157,15 @@ public class FacesPortlet extends MyFacesGenericPortlet {
 			logger.error("parameter \"request\" is null in fonction facesRender");
 		}
 		if (state != null && !state.equals(WindowState.MINIMIZED)) {
+//for (int i = 1; i < 10; i++) {
+//	try {
+//		Thread.sleep(500);
+//	} catch (InterruptedException e) {
+//		// TODO Auto-generated catch block
+//		e.printStackTrace();
+//	}
+//	System.out.println(request.getScheme());
+//}
 			if (logger.isDebugEnabled()) {
 				logger.debug("==== BEGIN facesRender in WindowState " + state + " ====");
 			}

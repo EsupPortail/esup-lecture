@@ -22,7 +22,7 @@ import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundE
 
 
 /**
- * Class where are defined user profile (and customizations ...)
+ * Class where are defined user profile (and customizations ...).
  * @author gbouteil
  *
  */
@@ -32,12 +32,17 @@ public class UserProfile {
 	 ************************** PROPERTIES *********************************/	
 	
 	/**
-	 * Log instance
+	 * ID string for log.
 	 */
-	protected static final Log log = LogFactory.getLog(UserProfile.class);
+	private static final String ID = "id=";
+
+	/**
+	 * Log instance.
+	 */
+	private static final Log LOG = LogFactory.getLog(UserProfile.class);
 	
 	/**
-	 * Id of the user, get from externalService request by USER_ID, defined in the channel config
+	 * Id of the user, get from externalService request by USER_ID, defined in the channel config.
 	 * @see ChannelConfig#loadUserId()
 	 */
 	private String userId;
@@ -45,19 +50,20 @@ public class UserProfile {
 	/**
 	 * Hashtable of CustomContexts defined for the user, indexed by contexID.
 	 */
-	private Map<String,CustomContext> customContexts = new Hashtable<String,CustomContext>();
+	private Map<String, CustomContext> customContexts = new Hashtable<String, CustomContext>();
 
 	/**
 	 * Hashtable of CustomManagedCategory defined for the user, indexed by ManagedCategoryProfilID.
 	 */
-	private Map<String,CustomCategory> customCategories = new Hashtable<String, CustomCategory>();
+	private Map<String, CustomCategory> customCategories = new Hashtable<String, CustomCategory>();
 
 	/**
 	 * Hashtable of CustomSource defined for the user, indexed by SourceProfilID.
 	 */
-	private Map<String,CustomSource> customSources = new Hashtable<String,CustomSource>();
+	private Map<String, CustomSource> customSources = new Hashtable<String, CustomSource>();
+	
 	/**
-	 * Database Primary Key
+	 * Database Primary Key.
 	 */
 	private long userProfilePK;
 
@@ -66,22 +72,22 @@ public class UserProfile {
 	 ************************** Initialization ************************************/
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param userId
 	 */
-	public UserProfile(String userId){
-	   	if (log.isDebugEnabled()){
-    		log.debug("UserProfile("+userId+")");
+	public UserProfile(final String userId) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("UserProfile(" + userId + ")");
     	}
 		this.setUserId(userId);
 	}
 
 	/**
-	 * Default Constructor
+	 * Default Constructor.
 	 */
-	public UserProfile(){
-		if (log.isDebugEnabled()){
-    		log.debug("UserProfile("+userId+")");
+	public UserProfile() {
+		if (LOG.isDebugEnabled()) {
+    		LOG.debug("UserProfile(" + userId + ")");
     	}
 	}
 
@@ -98,18 +104,18 @@ public class UserProfile {
 	 * @return customContext (or null)
 	 * @throws ContextNotFoundException 
 	 */
-	public CustomContext getCustomContext(String contextId) throws ContextNotFoundException{
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - getCustomContext("+contextId+")");
+	public CustomContext getCustomContext(final String contextId) throws ContextNotFoundException {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug(ID + userId + " - getCustomContext(" + contextId + ")");
     	}
 		CustomContext customContext = customContexts.get(contextId);
-		if (customContext == null){
+		if (customContext == null) {
 			if (!DomainTools.getChannel().isThereContext(contextId)) {
-				String errorMsg = "Context "+contextId+ " is not found in Channel";
-				log.error(errorMsg);
+				String errorMsg = "Context " + contextId + " is not found in Channel";
+				LOG.error(errorMsg);
 				throw new ContextNotFoundException(errorMsg);
 			}
-			customContext = new CustomContext(contextId,this);
+			customContext = new CustomContext(contextId, this);
 			addCustomContext(customContext);
 		}
 		
@@ -128,30 +134,32 @@ public class UserProfile {
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryOutOfReachException 
 	 */
-	public CustomCategory getCustomCategory(String categoryId,ExternalService ex) 
-		throws  CategoryNotVisibleException, CustomCategoryNotFoundException, InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException {
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - getCustomCategory("+categoryId+")");
+	public CustomCategory getCustomCategory(final String categoryId, final ExternalService ex) 
+		throws  CategoryNotVisibleException, CustomCategoryNotFoundException, InternalDomainException, 
+		CategoryTimeOutException, CategoryOutOfReachException {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug(ID + userId + " - getCustomCategory(" + categoryId + ")");
     	}
 		// TODO (GB later) revoir avec customManagedCategory et customPersonalCategory
 		CustomCategory customCategory = customCategories.get(categoryId);
-		if (customCategory == null){
+		if (customCategory == null) {
 			try {
-				updateCustomContextsForOneManagedCategory(categoryId,ex);
+				updateCustomContextsForOneManagedCategory(categoryId, ex);
 			} catch (CategoryNotLoadedException e) {
 				// Dans ce cas : la managedCategory n'est pointé par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				removeCustomManagedCategoryIfOrphan(categoryId);
-				throw new CategoryOutOfReachException("ManagedCategory "+categoryId+
-						"is not refered by any customContext in userProfile "+getUserId());
+				throw new CategoryOutOfReachException("ManagedCategory " + categoryId 
+						+ "is not refered by any customContext in userProfile " + getUserId());
 			}
 			customCategory = customCategories.get(categoryId);
-			if (customCategory == null){
-				String errorMsg = "CustomCategory associated to category "+categoryId
-					+" is not found in user profile "+userId+"\nwhereas an updateCustomContextForOneManagedCategory " +
-							"has done and category seems visible to user profile "+userId
-							+".\nPerhaps this categoryProfile is not defined in current context.";
-				log.error(errorMsg);
+			if (customCategory == null) {
+				String errorMsg = "CustomCategory associated to category " + categoryId
+					+ " is not found in user profile " + userId
+					+ "\nwhereas an updateCustomContextForOneManagedCategory " 
+					+ "has done and category seems visible to user profile " + userId
+					+ ".\nPerhaps this categoryProfile is not defined in current context.";
+				LOG.error(errorMsg);
 				throw new CustomCategoryNotFoundException(errorMsg);
 			}
 		}
@@ -159,7 +167,7 @@ public class UserProfile {
 	}
 	
 	/**
-	 * Update every customContext of this userProfile for (only one)categoryProfile identified by categoryProfileId
+	 * Update every customContext of this userProfile for (only one)categoryProfile identified by categoryProfileId.
 	 * @param categoryProfileId
 	 * @param ex access to externalService
 	 * @throws CategoryNotVisibleException
@@ -167,25 +175,29 @@ public class UserProfile {
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotLoadedException 
 	 */
-	protected void updateCustomContextsForOneManagedCategory(String categoryProfileId,ExternalService ex) 
-		throws  CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException, CategoryNotLoadedException {
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - updateCustomContextsForOneManagedCategory("+categoryProfileId+",ex)");
+	protected void updateCustomContextsForOneManagedCategory(final String categoryProfileId,
+			final ExternalService ex) 
+		throws  CategoryNotVisibleException, InternalDomainException, 
+		CategoryTimeOutException, CategoryNotLoadedException {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug(ID + userId + " - updateCustomContextsForOneManagedCategory(" + categoryProfileId + ",ex)");
     	}
 		
 //		} catch (ManagedCategoryProfileNotFoundException e) {
-//			String errorMsg = "Unable to getCustomCategory(categoryId="+categoryId+") because of a ManagedCategoryProfileNotFoundException";
+//			String errorMsg = "Unable to getCustomCategory(categoryId=" + categoryId 
+//	   			+ ") because of a ManagedCategoryProfileNotFoundException";
 //			log.error(errorMsg);
 //			cleanCustomCategoryFromProfile(categoryId);
 //			throw new InternalDomainException(errorMsg,e);
 //		}
 	   	boolean categoryIsVisible = true;
 		try {
-			ManagedCategoryProfile mcp = DomainTools.getChannel().getManagedCategoryProfile(categoryProfileId);
+			ManagedCategoryProfile mcp = 
+				DomainTools.getChannel().getManagedCategoryProfile(categoryProfileId);
 			Set<Context> contexts = mcp.getContextsSet();
 			
 			// For all contexts refered by the managedCategoryProfile
-			for(Context context : contexts){
+			for (Context context : contexts) {
 				String contextId = context.getId();
 				// Update on customContexts existing in userProfile
 				if (containsCustomContext(contextId)) {
@@ -193,47 +205,50 @@ public class UserProfile {
 					try {
 						customContext = getCustomContext(contextId);
 				
-						VisibilityMode mode = mcp.updateCustomContext(customContext,ex);
-						if (mode != VisibilityMode.NOVISIBLE){
+						VisibilityMode mode = mcp.updateCustomContext(customContext, ex);
+						if (mode != VisibilityMode.NOVISIBLE) {
 							categoryIsVisible = false;
 						} 
 					} catch (ContextNotFoundException e) {
-						log.error("Impossible to get CustomContext associated to context "+ contextId
-							+" for managedCategoryProfile "+mcp.getId()+" because context not found",e);
+						LOG.error("Impossible to get CustomContext associated to context " 
+							+ contextId + " for managedCategoryProfile " + mcp.getId()
+							+ " because context not found", e);
 					} 
 				}
 			}
 		
 		} catch (ManagedCategoryProfileNotFoundException e) {
-			String errorMsg = "Unable to updateCustomContextsForOneManagedCategory(categoryId="+categoryProfileId+") because of a ManagedCategoryProfileNotFoundException";
-			log.error(errorMsg);
+			String errorMsg = "Unable to updateCustomContextsForOneManagedCategory(categoryId="
+				+ categoryProfileId + ") because of a ManagedCategoryProfileNotFoundException";
+			LOG.error(errorMsg);
 			//cleanCustomCategoryFromProfile(categoryProfileId);
 			removeCustomCategoryFromProfile(categoryProfileId);
-			throw new InternalDomainException(errorMsg,e);
+			throw new InternalDomainException(errorMsg, e);
 		}
-		if (!categoryIsVisible){
-			String errorMsg = "Category "+categoryProfileId+" is not visible for user profile "+userId;
-			log.error(errorMsg);
+		if (!categoryIsVisible) {
+			String errorMsg = "Category " + categoryProfileId 
+				+ " is not visible for user profile " + userId;
+			LOG.error(errorMsg);
 			throw new CategoryNotVisibleException(errorMsg);
 		}
 		
 	}
 	
 	/**
-	 * Return the customSource identified by the source Id
+	 * Return the customSource identified by the source Id.
 	 * @param sourceId identifier of the source refered by the customSource
 	 * @return customSource
 	 * @throws CustomSourceNotFoundException 
 	 */
-	public CustomSource getCustomSource(String sourceId) throws CustomSourceNotFoundException {
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - getCustomSource("+sourceId+")");
+	public CustomSource getCustomSource(final String sourceId) throws CustomSourceNotFoundException {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug(ID + userId + " - getCustomSource(" + sourceId + ")");
     	}
 	   	// TODO (GB later) revoir avec customManagedSource et customPersonalSource
 		CustomSource customSource = customSources.get(sourceId);
-		if (customSource == null){
-			String errorMsg = "CustomSource "+sourceId+" is not found in userProfile "+this.userId;
-			log.error(errorMsg);
+		if (customSource == null) {
+			String errorMsg = "CustomSource " + sourceId + " is not found in userProfile " + this.userId;
+			LOG.error(errorMsg);
 			throw new CustomSourceNotFoundException(errorMsg);
 		}
 		
@@ -243,39 +258,39 @@ public class UserProfile {
 	/* ADD CUSTOM ELEMENTS */
 	
 	/**
-	 * Add a customContext to this userProfile
+	 * Add a customContext to this userProfile.
 	 * @param customContext
 	 */
-	protected void addCustomContext(CustomContext customContext){
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - addCustomContext("+customContext.getElementId()+")");
+	protected void addCustomContext(final CustomContext customContext) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug(ID + userId + " - addCustomContext(" + customContext.getElementId() + ")");
     	}
-		customContexts.put(customContext.getElementId(),customContext);
+		customContexts.put(customContext.getElementId(), customContext);
 		DomainTools.getDaoService().updateUserProfile(this);
 	}
 	
 	/**
-	 * Add a customCategory to this userProfile
+	 * Add a customCategory to this userProfile.
 	 * @param customCategory customCategory to add
 	 */
-	protected void addCustomCategory(CustomCategory customCategory){
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - addCustomCategory("+customCategory.getElementId()+")");
+	protected void addCustomCategory(final CustomCategory customCategory) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug(ID + userId + " - addCustomCategory(" + customCategory.getElementId() + ")");
     	}
 		String id = customCategory.getElementId();
-		customCategories.put(id,customCategory);
+		customCategories.put(id, customCategory);
 		DomainTools.getDaoService().updateUserProfile(this);
 	}
 	
 	/**
-	 * Add a customSource to this userProfile
+	 * Add a customSource to this userProfile.
 	 * @param customSource customSource to add
 	 */
-	protected void addCustomSource(CustomSource customSource){
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - addCustomSource("+customSource.getElementId()+")");
+	protected void addCustomSource(final CustomSource customSource) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug(ID + userId + " - addCustomSource(" + customSource.getElementId() + ")");
     	}
-		customSources.put(customSource.getElementId(),customSource);
+		customSources.put(customSource.getElementId(), customSource);
 		DomainTools.getDaoService().updateUserProfile(this);
 	}
 	
@@ -288,15 +303,19 @@ public class UserProfile {
 	 * - no => it not removes it, the admin will have to remove it manually with command tools
 	 * @param categoryId customCategory ID
 	 */
-	public void cleanCustomCategory(String categoryId) {
-		if (log.isDebugEnabled()){
-			log.debug("cleanCustomCategory("+categoryId+")");
+	public void cleanCustomCategory(final String categoryId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("cleanCustomCategory(" + categoryId + ")");
 		}
-		if (true) { // TODO (GB later) remplacer true par la valeur de l'option autoDelCustom (sinon : marquer l'objet)
+		if (true) { 
+			// TODO (GB later) remplacer true par la valeur de l'option 
+			// autoDelCustom (sinon : marquer l'objet)
 			removeCustomCategory(categoryId);
-			log.info("customCatgeory "+categoryId+" has been removed from userProfile "+this.getUserId());
-		}else {
-			log.info("customCatgeory "+categoryId+" NEEDS TO BE REMOVED from userProfile "+this.getUserId());
+			LOG.info("customCatgeory " + categoryId + " has been removed from userProfile " 
+				+ this.getUserId());
+		} else {
+			LOG.info("customCatgeory " + categoryId + " NEEDS TO BE REMOVED from userProfile "
+				+ this.getUserId());
 		}
 	}
 	
@@ -307,30 +326,33 @@ public class UserProfile {
 	 * - no => it not removes it, the admin will have to remove it manually with command tools
 	 * @param sourceId customSource ID
 	 */
-	public void cleanCustomSource(String sourceId) {
-		if (log.isDebugEnabled()){
-			log.debug("cleanCustomSource("+sourceId+")");
+	public void cleanCustomSource(final String sourceId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("cleanCustomSource(" + sourceId + ")");
 		}
 		// TODO (GB later) : ici ou dans removeCustomSource le 
-		if (true) { // TODO (GB later) remplacer true par la valeur de l'option autoDelCustom (sinon : marquer l'objet)
+		if (true) { 
+			// TODO (GB later) remplacer true par la valeur de l'option 
+			// autoDelCustom (sinon : marquer l'objet)
 			removeCustomSource(sourceId);
-			log.info("CustomSource "+sourceId+" has been removed from userProfile "+this.getUserId());
-		}else {
-			log.info("CustomSource "+sourceId+" NEEDS TO BE REMOVED from userProfile "+this.getUserId());
+			LOG.info("CustomSource " + sourceId + " has been removed from userProfile " + this.getUserId());
+		} else {
+			LOG.info("CustomSource " + sourceId + " NEEDS TO BE REMOVED from userProfile " 
+				+ this.getUserId());
 		}
 	}
 	
 	/**
-	 * Remove the customCategory categoryId in all the profile (this object and in customContexts)
+	 * Remove the customCategory categoryId in all the profile (this object and in customContexts).
 	 * @param categoryId customCategory ID
 	 */
-	public void removeCustomCategoryFromProfile(String categoryId) {
-		if (log.isDebugEnabled()){
-			log.debug("removeCustomCategoryFromProfile("+categoryId+")");
+	public void removeCustomCategoryFromProfile(final String categoryId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("removeCustomCategoryFromProfile(" + categoryId + ")");
 		}
 		
-		for (CustomContext custom : customContexts.values()){
-			if (custom.containsCustomCategory(categoryId)){
+		for (CustomContext custom : customContexts.values()) {
+			if (custom.containsCustomCategory(categoryId)) {
 				// For all parent customContexts
 				custom.removeCustomCategory(categoryId);
 			}
@@ -339,17 +361,17 @@ public class UserProfile {
 	}
 	
 	/**
-	 * Remove the customManagedCategory categoryId in all the profile (this object and in customContexts)
+	 * Remove the customManagedCategory categoryId in all the profile (this object and in customContexts).
 	 * @param categoryId customManagedCategory ID
 	 */
-	public void removeCustomManagedCategoryFromProfile(String categoryId) {
+	public void removeCustomManagedCategoryFromProfile(final String categoryId) {
 		//TODO (GB) A qoui sert il celui ci ?
-		if (log.isDebugEnabled()){
-			log.debug("removeCustomManagedCategoryFromProfile("+categoryId+")");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("removeCustomManagedCategoryFromProfile(" + categoryId + ")");
 		}
 		
-		for (CustomContext custom : customContexts.values()){
-			if (custom.containsCustomManagedCategory(categoryId)){
+		for (CustomContext custom : customContexts.values()) {
+			if (custom.containsCustomManagedCategory(categoryId)) {
 				// For all parent customContexts
 				custom.removeCustomManagedCategory(categoryId);
 			}
@@ -358,38 +380,36 @@ public class UserProfile {
 	}
 	
 	/**
-	 * Remove the customManagedCategory categoryId only if it is not refered in any customContext
+	 * Remove the customManagedCategory categoryId only if it is not refered in any customContext.
 	 * @param categoryId customManagedCategory ID
 	 */
-	public void removeCustomManagedCategoryIfOrphan(String categoryId) {
-		if (log.isDebugEnabled()){
-			log.debug("removeCustomManagedCategoryIfOrphan("+categoryId+")");
+	public void removeCustomManagedCategoryIfOrphan(final String categoryId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("removeCustomManagedCategoryIfOrphan(" + categoryId + ")");
 		}
 		boolean isOrphan = true;
-		for (CustomContext custom : customContexts.values()){
-			if (custom.containsCustomManagedCategory(categoryId)){
+		for (CustomContext custom : customContexts.values()) {
+			if (custom.containsCustomManagedCategory(categoryId)) {
 				isOrphan = false;
 				break;
 			}
 		}
-		if (isOrphan){
+		if (isOrphan) {
 			cleanCustomCategory(categoryId);
 		}
-	}
-
-	
+	}	
 	
 	/**
-	 * Remove the customSource sourceId in all the profile (this object and in customCategories)
+	 * Remove the customSource sourceId in all the profile (this object and in customCategories).
 	 * @param sourceId customSource ID
 	 */
-	public void removeCustomSourceFromProfile(String sourceId) {
-		if (log.isDebugEnabled()){
-			log.debug("removeCustomSourceFromProfile("+sourceId+")");
+	public void removeCustomSourceFromProfile(final String sourceId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("removeCustomSourceFromProfile(" + sourceId + ")");
 		}
 		
-		for (CustomCategory custom : customCategories.values()){
-			if (custom.containsCustomSource(sourceId)){
+		for (CustomCategory custom : customCategories.values()) {
+			if (custom.containsCustomSource(sourceId)) {
 				custom.removeCustomSource(sourceId);
 			}
 		}
@@ -397,41 +417,42 @@ public class UserProfile {
 	}
 	
 	/**
-	 * Remove the customManagedSource sourceId in all the profile (this object and in customCategories)
+	 * Remove the customManagedSource sourceId in all the profile (this object and in customCategories).
 	 * @param sourceId customManagedSource ID
 	 */
-	public void removeCustomManagedSourceFromProfile(String sourceId) {
+	public void removeCustomManagedSourceFromProfile(final String sourceId) {
 		//TODO (GB) A qoui sert il celui ci ?
-		if (log.isDebugEnabled()){
-			log.debug("removeCustomManagedSourceFromProfile("+sourceId+")");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("removeCustomManagedSourceFromProfile(" + sourceId + ")");
 		}
 		
-		for (CustomCategory custom : customCategories.values()){
-			if (custom.containsCustomManagedSource(sourceId)){
+		for (CustomCategory custom : customCategories.values()) {
+			if (custom.containsCustomManagedSource(sourceId)) {
 			// For all parent customCategories
 				custom.removeCustomManagedSource(sourceId);
 			}
 		}
-		cleanCustomSource(sourceId); // TODO (GB) pourquoi pas un removeCustomManagedSource ?
+		cleanCustomSource(sourceId); 
+		// TODO (GB) pourquoi pas un removeCustomManagedSource ?
 	}
 	
 	
 	/**
-	 * Remove the customManagedSource sourceId only if it is not refered in any customCategory
+	 * Remove the customManagedSource sourceId only if it is not refered in any customCategory.
 	 * @param sourceId customManagedSource ID
 	 */
-	public void removeCustomManagedSourceIfOrphan(String sourceId) {
-		if (log.isDebugEnabled()){
-			log.debug("removeCustomManagedSourceIfOrphan("+sourceId+")");
+	public void removeCustomManagedSourceIfOrphan(final String sourceId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("removeCustomManagedSourceIfOrphan(" + sourceId + ")");
 		}
 		boolean isOrphan = true;
-		for (CustomCategory custom : customCategories.values()){
-			if (custom.containsCustomManagedSource(sourceId)){
+		for (CustomCategory custom : customCategories.values()) {
+			if (custom.containsCustomManagedSource(sourceId)) {
 				isOrphan = false;
 				break;
 			}
 		}
-		if (isOrphan){
+		if (isOrphan) {
 			cleanCustomSource(sourceId);
 		}
 	}
@@ -439,15 +460,15 @@ public class UserProfile {
 	/* REMOVE CUSTOM ELEMENTS : ATOMIC METHODS */
 	
 	/**
-	 * Remove a customContext from this userProfile only
+	 * Remove a customContext from this userProfile only.
 	 * @param contextId id of the customContext to add
 	 */
-	protected void removeCustomContext(String contextId){
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - removeCustomContext("+contextId+")");
+	protected void removeCustomContext(final String contextId) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug(ID + userId + " - removeCustomContext(" + contextId + ")");
     	}
 	   	CustomContext custom = customContexts.get(contextId);
-	   	if (custom!= null){
+	   	if (custom != null) {
 	   		custom.removeSubscriptions();
 	   		customContexts.remove(contextId);
 			DomainTools.getDaoService().deleteCustomContext(custom);
@@ -457,16 +478,16 @@ public class UserProfile {
 	
 
 	/**
-	 * Remove a customCategory from this userProfile only
+	 * Remove a customCategory from this userProfile only.
 	 * @param categoryId
 	 */
-	private void removeCustomCategory(String categoryId){
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - removeCustomCategory("+categoryId+")");
+	private void removeCustomCategory(final String categoryId) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug(ID + userId + " - removeCustomCategory(" + categoryId + ")");
     	}
 	   	
 	   	CustomCategory custom = customCategories.get(categoryId);
-	   	if (custom != null){
+	   	if (custom != null) {
 	   		custom.removeSubscriptions();
 	   		customCategories.remove(categoryId);
 	   		DomainTools.getDaoService().deleteCustomCategory(custom);
@@ -475,12 +496,12 @@ public class UserProfile {
 	}
 	
 	/**	 * 
-	 * Remove a customCategory from this userProfile only
+	 * Remove a customCategory from this userProfile only.
 	 * @param sourceId
 	 */
-	private void removeCustomSource(String sourceId){
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - removeCustomSource("+sourceId+")");
+	private void removeCustomSource(final String sourceId) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug(ID + userId + " - removeCustomSource(" + sourceId + ")");
     	}
 		CustomSource cs = customSources.remove(sourceId);
 		if (cs != null) {
@@ -495,9 +516,9 @@ public class UserProfile {
 	 * @param contextId
 	 * @return true if this userProfile contains the customContext identified by contextId
 	 */
-	public boolean containsCustomContext(String contextId) {
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+userId+" - containsCustomContext("+contextId+")");
+	public boolean containsCustomContext(final String contextId) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug(ID + userId + " - containsCustomContext(" + contextId + ")");
     	}
 		return customContexts.containsKey(contextId);
 	}
@@ -506,12 +527,20 @@ public class UserProfile {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null) return false;
-		if (!(o instanceof UserProfile)) return false;
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null) {
+			return false;
+		}
+		if (!(o instanceof UserProfile)) {
+			return false;
+		}
 		final UserProfile userprofile = (UserProfile) o;
-		if (!userprofile.getUserId().equals(this.getUserId())) return false;
+		if (!userprofile.getUserId().equals(this.getUserId())) {
+			return false;
+		}
 		return true;
 	}
 
@@ -569,39 +598,28 @@ public class UserProfile {
 	/**
 	 * @param userId The userId to set.
 	 */
-	public void setUserId(String userId) {
+	public void setUserId(final String userId) {
 		this.userId = userId;
 	}
 
-//	/**
-//	 * @return customContexts
-//	 */
-//	private Map<String, CustomContext> getCustomContexts() {
-//		return customContexts;
-//	}
+	/**
+	 * @return customContexts
+	 */
+	@SuppressWarnings("unused")
+	private Map<String, CustomContext> getCustomContexts() {
+		return customContexts;
+		//Needed by Hibernate
+	}
 
 	
-//	/**
-//	 * @param customContexts
-//	 */
-//	private void setCustomContexts(Map<String, CustomContext> customContexts) {
-//		this.customContexts = customContexts;
-//	}
-
-//	/**
-//	 * @return customManagedCategories
-//	 */
-//	private Map<String, CustomCategory> getCustomCategories() {
-//		return customCategories;
-//	}
-
-//	/**
-//	 * @param customCategories 
-//	 */
-//	private void setCustomCategories(
-//			Map<String, CustomCategory> customCategories) {
-//		this.customCategories = customCategories;
-//	}
+	/**
+	 * @param customContexts
+	 */
+	@SuppressWarnings("unused")
+	private void setCustomContexts(final Map<String, CustomContext> customContexts) {
+		this.customContexts = customContexts;
+		//Needed by Hibernate
+	}
 
 	/**
 	 * @return database primary Key
@@ -613,23 +631,45 @@ public class UserProfile {
 	/**
 	 * @param userProfilePK - database Primary Key
 	 */
-	public void setUserProfilePK(long userProfilePK) {
+	public void setUserProfilePK(final long userProfilePK) {
 		this.userProfilePK = userProfilePK;
 	}
 
-//	/**
-//	 * @return custom sources from this userProfile
-//	 */
-//	private Map<String, CustomSource> getCustomSources() {
-//		return customSources;
-//	}
+	/**
+	 * @return the customCategories
+	 */
+	@SuppressWarnings("unused")
+	private Map<String, CustomCategory> getCustomCategories() {
+		return customCategories;
+		//Needed by Hibernate
+	}
 
-//	/**
-//	 * @param customSources
-//	 */
-//	private void setCustomSources(Map<String, CustomSource> customSources) {
-//		this.customSources = customSources;
-//	}
+	/**
+	 * @param customCategories the customCategories to set
+	 */
+	@SuppressWarnings("unused")
+	private void setCustomCategories(final Map<String, CustomCategory> customCategories) {
+		this.customCategories = customCategories;
+		//Needed by Hibernate
+	}
+
+	/**
+	 * @return custom sources from this userProfile
+	 */
+	@SuppressWarnings("unused")
+	private Map<String, CustomSource> getCustomSources() {
+		return customSources;
+		//Needed by Hibernate
+	}
+
+	/**
+	 * @param customSources
+	 */
+	@SuppressWarnings("unused")
+	private void setCustomSources(final Map<String, CustomSource> customSources) {
+		this.customSources = customSources;
+		//Needed by Hibernate
+	}
 
 
 	
