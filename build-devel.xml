@@ -72,7 +72,7 @@
 		
 	<target name="_restart" depends="_commons-restart" description="deploy and restart Tomcat" />
 
-	<target name="_dist" depends="_commons-dist" description="build ZIP archives">
+	<target name="_dist" depends="_doc,_commons-dist" description="build ZIP archives">
 	</target>	 
 
 	<!--
@@ -82,8 +82,16 @@
 		</zip>
 	</target>
 	-->
-	
-	<target name="_doc" depends="_commons-doc" description="build the web site" />
+
+	<target name="_doc" depends="_commons-doc"
+		description="build the web site">
+		<copy todir="${website.dir}/uml">
+			<fileset dir="${doc.dir}/uml" />
+		</copy>
+		<copy todir="${website.dir}/api">
+			<fileset dir="${doc.dir}/api" />
+		</copy>
+	</target>
 
 	<target name="_upload-doc" depends="_doc,_commons-upload-doc" description="update the web site" />
 

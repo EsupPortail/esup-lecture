@@ -54,7 +54,7 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 	<categoryProfile 
 		name="Categorie de démo 2"
 		id="demo2"
-		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo2.xml"
+		urlCategory="&repConf;demo2.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600" 

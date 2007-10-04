@@ -228,14 +228,14 @@ public class Channel implements InitializingBean {
 	/**
 	 * Initialize every channel properties that are set up by loading channel configuration file
 	 */
-	synchronized private void resetChannelConfigProperties(){
-		if (log.isDebugEnabled()){
+	synchronized private void resetChannelConfigProperties() {
+		if (log.isDebugEnabled()) {
 			log.debug("resetChannelConfigProperties()");
 		}
 		
 		// TODO (GB later) UserAttributes.init();
-		contextsHash = new Hashtable<String,Context>();
-		managedCategoryProfilesHash = new Hashtable<String,ManagedCategoryProfile>();
+		contextsHash = new Hashtable<String, Context>();
+		managedCategoryProfilesHash = new Hashtable<String, ManagedCategoryProfile>();
 	}
 	
 	/**

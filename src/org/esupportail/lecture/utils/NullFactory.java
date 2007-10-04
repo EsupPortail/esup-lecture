@@ -1,7 +1,7 @@
 package org.esupportail.lecture.utils;
 
 /**
- * This factory is used ti created null objects for spring configuration file.
+ * This factory is used to create null objects for spring configuration file.
  * @author bourges
  */
 public final class NullFactory {
