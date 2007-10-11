@@ -33,6 +33,7 @@ import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
+// test svn
 
 /**
  * The facade service.
