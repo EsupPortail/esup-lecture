@@ -89,11 +89,11 @@ public class DomainTest {
 //			testGetAvailableSourceAlternativeWay(); 
 			
 			/* Test normal behavior */
-			testGetConnectedUser();
-			testGetContext();
-			testGetAvailableCategories();
-			testGetAvailableSources();
-			testGetItems();
+//			testGetConnectedUser();
+//			testGetContext();
+//			testGetAvailableCategories();
+//			testGetAvailableSources();
+//			testGetItems();
 		
 			/* small actions */
 //			testMarkItemReadMode();
@@ -102,10 +102,13 @@ public class DomainTest {
 //			testSetItemDisplayMode();
 			
 			/* test mode EDIT */
-//			testGetConnectedUser();
-//			testGetContext();
-//			testGetVisibleSources();
-//			testSubUnSubscribeToSource();
+			testGetConnectedUser();
+			testGetContext();
+			testGetVisibleCategories();
+			testGetVisibleSources();
+			testSubUnSubscribeToSource();
+
+		
 			
 			/* test timeout values */
 //			testGetConnectedUser();
@@ -124,10 +127,10 @@ public class DomainTest {
 			System.out.println("\n!!! EXCEPTION !!!");
 			System.out.println("\n!!! Catching InfoDomainException");
 			e.printStackTrace();
-		} catch (InternalDomainException e) {
-			System.out.println("\n!!! EXCEPTION !!!");
-			System.out.println("\n!!! Catching InternalDomainException");
-			e.printStackTrace();
+//		} catch (InternalDomainException e) {
+//			System.out.println("\n!!! EXCEPTION !!!");
+//			System.out.println("\n!!! Catching InternalDomainException");
+//			e.printStackTrace();
 		} catch (DomainServiceException e) {
 			System.out.println("\n!!! EXCEPTION !!!");
 			System.out.println("\n!!! Catching DomainServiceException");
@@ -141,6 +144,9 @@ public class DomainTest {
 
 	/*
 	 ************************** Méthodes de Test ******************************** */	
+
+	
+
 
 	/**
 	 * Test of servide "getConnectedUser"
@@ -211,6 +217,25 @@ public class DomainTest {
 	}
 	
 	/**
+	 * Test of service "getVisibleCategories"
+	 * @throws DomainServiceException 
+	 */
+	@SuppressWarnings("unused")
+	private static void testGetVisibleCategories()  {
+		printIntro("getVisibleCategories");
+		List<CategoryBean> cats;
+		try {
+			cats = facadeService.getVisibleCategories(userId, contextId);
+			for(CategoryBean ca : cats){
+				System.out.println("  **** category ****");
+				System.out.println(ca.toString());
+			}	
+		} catch (ContextNotFoundException e) {
+			System.out.println("ContextNotFoundException !!!! sur context "+contextId);
+		}
+	}
+	
+	/**
 	 * Test of service "getVisibleSources"
 	 * @throws DomainServiceException 
 	 */
@@ -268,6 +293,7 @@ public class DomainTest {
 			e.printStackTrace();
 		}
 		
+		testGetVisibleSources();
 		try {
 			/* source obliged */
 			System.out.println(" **** category cp5 : UNsubscribe to source 'un' **********");

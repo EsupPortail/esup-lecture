@@ -145,7 +145,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			try {
 				setElement(DomainTools.getDaoService().getManagedCategory(this));
 			} catch (TimeoutException e) {
-				String errorMsg = "The managedCategory"+ this.getId()+"is impossible to load because of a TimeoutException";
+				String errorMsg = "The managedCategory "+ this.getId()+" is impossible to load because of a TimeoutException";
 				log.error(errorMsg);
 				throw new CategoryTimeOutException(errorMsg,e);
 			}

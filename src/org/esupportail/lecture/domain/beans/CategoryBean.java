@@ -188,6 +188,10 @@ public class CategoryBean {
 		if (description != null){
 			string += description.toString() + "\n";
 		}
+		string += "     Type = "; 
+		if (type != null) {
+			string += type;
+		}		
 		string += "     Folded = "+ folded + "\n";
 		
 		return string;

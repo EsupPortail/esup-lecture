@@ -16,6 +16,7 @@ package org.esupportail.lecture.domain.model;
  * @author gbouteil
  *
  */
+// TODO (GB) later : A renommer (subscribeMode ?)
 public enum AvailabilityMode {
 	
 	/**

@@ -129,11 +129,14 @@ Pour plus d'informations voir le
 		timeout = "3000"  > 
 		<visibility>
 		<!-- allowed and autoSubscribed not yet supported -->
-			<allowed/>
-			<autoSubscribed/>
-			<obliged>	
-				<group
+			<allowed>
+			</allowed>					
+			<autoSubscribed>
+			
+			<group
 					name="local.0"/>
+			</autoSubscribed>
+			<obliged>
 			</obliged>	
 		</visibility>
 	</categoryProfile>
