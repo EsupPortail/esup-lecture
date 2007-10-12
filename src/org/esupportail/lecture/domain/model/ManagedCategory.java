@@ -95,7 +95,7 @@ public class ManagedCategory extends Category {
 	 */
 	synchronized protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(CustomManagedCategory customManagedCategory, ExternalService ex) throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
-			log.debug("id="+this.getProfileId()+" - getVisibleSourcesAndUpdateCustom("+customManagedCategory.getElementId()+",externalService)");
+			log.debug("id="+this.getProfileId()+" - getVisibleSourcesAndUpdateCustom("+getProfileId()+",externalService)");
 		}
 		List<ProfileVisibility> couplesVisib = new Vector<ProfileVisibility>();
 		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
@@ -111,7 +111,7 @@ public class ManagedCategory extends Category {
 			}
 		}
 		
-		// update managedSources not anymore in this managedCategory
+		// update for managedSources not anymore in this managedCategory
 		updateCustomForVanishedSubscriptions(customManagedCategory);
 		
 		return couplesVisib;

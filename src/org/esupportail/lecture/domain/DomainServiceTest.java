@@ -18,6 +18,7 @@ import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
@@ -169,6 +170,16 @@ public class DomainServiceTest implements DomainService {
 	}
 
 	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 */
+	public List<CategoryBean> getVisibleCategories(String uid, String contextId, ExternalService ex) throws ContextNotFoundException {
+		List<CategoryBean> ret = null;
+		ret = categories;
+		return ret;
+	}
+	
+	
+	/**
 	 * @param uid 
 	 * @param categoryId 
 	 * @param ex 
@@ -259,6 +270,8 @@ public class DomainServiceTest implements DomainService {
 	public boolean isGuestMode() {
 		return false;
 	}
+
+	
 
 	/*
 	 *************************** ACCESSORS ******************************** */	

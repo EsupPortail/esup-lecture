@@ -113,6 +113,17 @@ public interface DomainService {
 	 */
 	void markItemDisplayMode(String uid, String sourceId, ItemDisplayMode mode) throws InternalDomainException;
 	
+	
+	/**
+	 * @param uid
+	 * @param contextId
+	 * @param ex
+	 * @return List<CategoryBean>
+	 * @throws ContextNotFoundException 
+	 * @see FacadeService#getVisibleCategories(String, String)
+	 */
+	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId, final ExternalService ex) throws ContextNotFoundException ;
+	
 	/**
 	 * @param categoryId 
 	 * @param uid 

@@ -16,7 +16,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
+import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 
 /**
@@ -141,6 +147,50 @@ public class CustomContext implements CustomElement {
 		}
 		return listCustomCategories;
 	}
+	
+	/**
+	 * Return a list of "CategoryProfile, AvailabilityMode" corresponding to visible categories for user, 
+	 * in this customContext and update it.
+	 * @param ex access to external service 
+	 * @return list of ProfileAvailability
+	 * @throws ContextNotFoundException 
+	 */
+	public List<ProfileAvailability> getVisibleCategories(ExternalService ex) throws ContextNotFoundException  {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + getElementId() + " - getVisibleCategories(ex)");
+		}
+		// TODO (GB later) à redéfinir avec les custom personnal 
+		// category : en fonction de l'ordre d'affichage peut etre.
+		Context cxt = getContext();
+		List<ProfileVisibility> couplesVisib;
+		couplesVisib = cxt.getVisibleCategoriesAndUpdateCustom(this, ex);
+			
+//		DomainTools.getDaoService().updateCustomContext(this);
+//		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
+		
+		List<ProfileAvailability> couplesAvail = new Vector<ProfileAvailability>();
+		for (ProfileVisibility coupleV : couplesVisib) {
+			// Every couple is not NOTVISIBLE (= visible)
+			ProfileAvailability coupleA;
+			CategoryProfile categoryProfile = (CategoryProfile) coupleV.getProfile();
+			
+			if (coupleV.getMode() == VisibilityMode.OBLIGED ) {
+				coupleA = new ProfileAvailability(categoryProfile, AvailabilityMode.OBLIGED);
+			} else { 
+				// It must be ALLOWED OR AUTOSUBSRIBED
+				if (subscriptions.containsKey(categoryProfile.getId())) {
+					coupleA = new ProfileAvailability(categoryProfile, AvailabilityMode.SUBSCRIBED);
+				} else {
+					coupleA = new ProfileAvailability(categoryProfile, 
+						AvailabilityMode.NOTSUBSCRIBED);
+				}
+			}
+			couplesAvail.add(coupleA);
+			LOG.trace("Add category and availability");
+		}
+		return couplesAvail;
+	}
+	
 	
 	
 	/* ADD ELEMENTS */
@@ -496,4 +546,6 @@ public class CustomContext implements CustomElement {
 		this.subscriptions = subscriptions;
 		//Needed by Hibernate
 	}
+
+
 }

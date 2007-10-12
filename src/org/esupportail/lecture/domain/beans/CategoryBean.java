@@ -5,9 +5,12 @@
 */
 package org.esupportail.lecture.domain.beans;
 
+import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.CategoryProfile;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.ElementProfile;
+import org.esupportail.lecture.domain.model.ProfileAvailability;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
@@ -36,7 +39,15 @@ public class CategoryBean {
 	/**
 	 * store if category is folded or not
 	 */
-	private boolean folded = true;
+	private boolean folded = true;	
+	/**
+	 * type of category
+	 * "subscribed" --> The category is alloweb and subscribed by the user
+	 * "notSubscribed" --> The category is alloweb and not yet subscribed by the user (used in edit mode)
+	 * "obliged" --> The category is obliged: user can't subscribe or unsubscribe this source
+	 * "owner" --> For personnal categories
+	 */
+	private AvailabilityMode type;
 	
 	/*
 	 *************************** INIT ************************************** */	
@@ -62,6 +73,18 @@ public class CategoryBean {
 		this.description = profile.getDescription();
 		this.id = profile.getId();
 		this.folded = customContext.isCategoryFolded(id);
+	}
+	
+	/**
+	 * constructor initializing object with ProfileAvailability.
+	 * @param profAv ProfileAvailability
+	 */
+	public CategoryBean(ProfileAvailability profAv) {
+		ElementProfile elt = profAv.getProfile();
+		this.name = elt.getName();
+		this.id = elt.getId();
+		this.type = profAv.getMode();
+		
 	}
 	
 	/*
@@ -132,6 +155,24 @@ public class CategoryBean {
 		this.name = name;
 	}
 
+	/**
+	 * @return type of category
+	 * @throws ElementDummyBeanException 
+	 */
+	@SuppressWarnings("unused")
+	public AvailabilityMode getType()  throws ElementDummyBeanException {
+		return type;
+	}
+	
+	/**
+	 * @param type
+	 * @throws ElementDummyBeanException 
+	 */
+	@SuppressWarnings("unused")
+	public void setType(AvailabilityMode type) throws ElementDummyBeanException {
+		this.type = type;
+	}
+	
 	/*
 	 *************************** METHODS *********************************** */	
 

@@ -343,7 +343,7 @@ public class UserProfile {
 	}
 	
 	/**
-	 * Remove the customCategory categoryId in all the profile (this object and in customContexts).
+	 * Remove the customCategory categoryId in all the user profile (this object and in customContexts).
 	 * @param categoryId customCategory ID
 	 */
 	public void removeCustomCategoryFromProfile(final String categoryId) {

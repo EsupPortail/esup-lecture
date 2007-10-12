@@ -35,8 +35,10 @@ import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
+import org.esupportail.lecture.exceptions.domain.ContextNotDefinedInUserProfileException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
+import org.esupportail.lecture.exceptions.domain.CustomContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
@@ -459,6 +461,41 @@ public class DomainServiceImpl implements DomainService {
 	 ************************** Methodes - services - mode EDIT ************************************/
 	
 	/**
+	 * @throws ContextNotFoundException 
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 */
+	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId, final ExternalService ex) throws ContextNotFoundException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getVisibleCategories(" + uid + "," + contextId + ",ex)");
+		}
+		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
+		UserProfile userProfile = channel.getUserProfile(uid);
+		CustomContext customContext = userProfile.getCustomContext(contextId);
+		// TODO (GB) ** ici
+		List<ProfileAvailability> couples = customContext.getVisibleCategories(ex);
+		for (ProfileAvailability couple : couples) {
+			CategoryBean category;
+			category = new CategoryBean(couple);
+			listCategoryBean.add(category);
+		}	
+		// Inutile ici car le context est appelé par la couche supérieure et non de façon automatique par le métier
+			/*
+		} catch	(ContextNotFoundException e) {
+			String errorMsg = "ContextNotFoundException for service 'getVisibleCategories(user "
+				+ uid + ", context "+contextId + ")";
+			LOG.error(errorMsg);
+			// TODO (GB) ** où sont ils effacés ailleurs ? quel sens cela a t il ici ?
+			userProfile.removeContextFromProfile(contextId);
+			throw new InternalDomainException(errorMsg, e);
+		}
+		 */	
+		return listCategoryBean;
+
+	}
+
+
+
+	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getVisibleSources(final String uid, final String categoryId, final ExternalService ex) 
@@ -503,6 +540,10 @@ public class DomainServiceImpl implements DomainService {
 		 return listSourceBean;
 		
 	}
+	
+
+	
+	
 
 	/**
 	 * subscribe user uid to source sourceId in categoryId, if user is already subscriber of categoryId.

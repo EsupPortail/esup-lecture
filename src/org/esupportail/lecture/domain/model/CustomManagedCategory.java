@@ -182,7 +182,7 @@ public class CustomManagedCategory extends CustomCategory {
 		
 		List<ProfileAvailability> couplesAvail = new Vector<ProfileAvailability>();
 		for (ProfileVisibility coupleV : couplesVisib) {
-			// Every couple is not NOTVISBLE
+			// Every couple is not NOTVISIBLE (= visible)
 			ProfileAvailability coupleA;
 			SourceProfile sourceProfile = (SourceProfile) coupleV.getProfile();
 			

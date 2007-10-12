@@ -234,7 +234,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	
 	/**
 	 * Return a list of <SourceProfile,VisibilityMode> corresponding to visible sources for user, 
-	 * in this CustomManagedCategory and update it (like methode updateCustom): 
+	 * in this ManagedCategory and update its related custom (like methode updateCustom): 
 	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles
 	 * defined in ManagedCategory of this Profile, according to managedSourceProfiles visibility
 	 * @param customManagedCategory custom to update
@@ -246,7 +246,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	synchronized protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(CustomManagedCategory customManagedCategory, ExternalService ex) 
 		throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - getVisibleSourcesAndUpdateCustom("+customManagedCategory.getElementId()+",externalService)");
+			log.debug("id="+this.getId()+" - getVisibleSourcesAndUpdateCustom("+this.getId()+",externalService)");
 		}
 		ManagedCategory category = (ManagedCategory) getElement();
 		return category.getVisibleSourcesAndUpdateCustom(customManagedCategory, ex);
@@ -367,7 +367,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - getSourceProfileById("+id+")");
 		}
-//		 TODO (GB) ? on pourrait faire un loadCategory ou autre chose ou ailleurs ?
+//		 TODO (GB) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
 		return (ManagedSourceProfile) getElement().getSourceProfileById(id);
 
 	}

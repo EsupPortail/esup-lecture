@@ -264,8 +264,21 @@ public class FacadeService implements InitializingBean {
 			throws ContextNotFoundException {
 		domainService.unfoldCategory(uid, cxtId, catId);
 	}
-	
 
+
+
+	/** 
+	 * Return visible categories.
+	 * Obliged, subscribed, obliged for managed category or personal category.
+	 * This for a contextId for user uid (for EDIT mode)
+	 * @param uid
+	 * @param contextId
+	 * @return List of CategoryBean
+	 * @throws ContextNotFoundException
+	 */
+	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId) throws ContextNotFoundException {
+		return domainService.getVisibleCategories(uid, contextId, externalService);
+	}
 	
 	/**
 	 * Return visible sources.

@@ -10,6 +10,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.Iterator;
+import java.util.Vector;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
@@ -140,6 +142,52 @@ public class Context {
 	}
 
 	/**
+	 * Return a list of <CategoryProfile,VisibilityMode> corresponding to visible categories for user, 
+	 * in this Context and update its related custom (like methode updateCustom): 
+	 * It sets up subscriptions of customContext on managedCategoriesProfiles
+	 * defined in this Context, according to managedCategoriesProfiles visibility
+	 * @param customContext custom to update
+	 * @param ex access to externalService
+	 * @return list of <ProfileVisibility>
+	 * @see Context#updateCustom(CustomContext, ExternalService)
+	 */
+	synchronized protected List<ProfileVisibility> getVisibleCategoriesAndUpdateCustom(CustomContext customContext, ExternalService ex) {
+			// TODO (GB) * vérifeir avaec context.updateCustom
+		if (log.isDebugEnabled()){
+			log.debug("id="+this.getId()+" - getVisibleCategoriesAndUpdateCustom("+this.getId()+",externalService)");
+		}
+		List<ProfileVisibility> couplesVisib = new Vector<ProfileVisibility>();
+		Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
+		
+		// update and get managedSources defined in this managedCategory 
+		while (iterator.hasNext()) {
+			ManagedCategoryProfile mcp = iterator.next();
+			ProfileVisibility couple;
+			try {				
+				VisibilityMode mode = mcp.updateCustomContext(customContext,ex);
+				if (mode != VisibilityMode.NOVISIBLE){
+					couple = new ProfileVisibility(mcp,mode);
+					couplesVisib.add(couple);
+				}
+			} catch (CategoryNotLoadedException e) {
+				log.error("Impossible to update CustomContext associated to context " + getId()
+						+ " for managedCategoryProfile " + mcp.getId()+ " because its category is not loaded - " 
+						+ " It is very strange because loadCategory() has been called before in mcp.updateCustomContext() ...", e);
+			} catch (CategoryTimeOutException e) {
+				log.error("Impossible to update CustomContext associated to context " + getId()
+						+ " for managedCategoryProfile " + mcp.getId()
+						+ " because the remote category is in Time Out", e);
+			}
+		}
+		
+		// update for managedCategories not anymore in this Context
+		updateCustomForVanishedSubscriptions(customContext);
+		
+		return couplesVisib;
+	}
+	
+
+	/**
 	 * @param categoryId
 	 * @return true if this context refers the category identified by categoryId
 	 */
@@ -253,6 +301,8 @@ public class Context {
 	synchronized protected void setId(String id) {
 		this.id = id;
 	}
+
+
 	
 // later
 //	protected Editability getEdit() {
