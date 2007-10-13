@@ -29,6 +29,16 @@
   </articleinfo>
 
   <section>
+    <title>Version 0.8.4 - In work</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>Added: It uses esup-commons 0.17.2</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
     <title>Version 0.8.3</title>
 
     <para><itemizedlist>

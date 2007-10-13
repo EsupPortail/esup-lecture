@@ -1,0 +1,79 @@
+<project name="esup-lecture" default="compile" basedir=".">
+
+	<property name="recover.previous-versions" value="0.8.3,0.8.2,0.8.1,0.8.0" />
+	<property name="app.recover.files"
+		value="
+		properties/init/init.xml
+		properties/domain/domain.xml
+		properties/domain/portal.xml
+		properties/i18n/bundles/Custom_*.properties
+		" />
+	<property name="batch-class"
+		value="org.esupportail.lecture.batch.Batch" />
+	<import file="${basedir}/build-commons.xml" />
+	
+	<target name="check-shared-config" depends="commons-check-shared-config" >
+		<property name="init.config" value="${props.dir}/init/init.xml"/>
+		<if>
+			<not>
+				<available file="${init.config}"/>
+			</not>
+			<then>
+				<fail message="${init.config} not found." />	
+			</then>
+		</if>
+	</target>
+
+	<target name="check-web-config" depends="commons-check-web-config,check-shared-config" />
+
+	<target name="check-batch-config" depends="commons-check-batch-config,check-shared-config" />
+
+	<target name="test-config" depends="check-batch-config,check-web-config,compile" description="test the configuration" >
+		<java fork="true" dir="${build.dir}" classname="${batch-class}">
+			<classpath refid="batch.classpath" />
+			<sysproperty key="log4j.configuration" value="file:${log4j.batch-config}" />
+			<arg value="test-beans"/>
+	    </java>
+	</target>
+
+	<target name="test-config-batch" depends="check-batch-config,compile-batch" description="test the configuration for a batch only" >
+		<java fork="true" dir="${build.dir}" classname="${batch-class}">
+			<classpath refid="batch.classpath" />
+			<sysproperty key="log4j.configuration" value="file:${log4j.batch-config}" />
+			<arg value="test-beans"/>
+	    </java>
+	</target>
+
+	<target name="prepare" depends="commons-prepare" />
+
+	<target name="compile-shared" depends="check-shared-config,prepare,commons-compile-shared" />
+
+	<target name="compile-batch" depends="compile-shared,commons-compile-batch" description="compile the project for a batch only" />
+
+	<target name="compile-web" depends="compile-shared,commons-compile-web" description="compile the project for the web" />
+
+	<target name="compile" depends="compile-web,compile-batch" description="compile the project" />
+
+	<target name="deploy" depends="compile-web,commons-deploy" description="deploy the application" />
+
+	<target name="clean" depends="commons-clean" description="clean the project" />
+
+	<target name="recover-config" depends="commons-recover-config" description="recover configuration files from an older version" />
+
+	<target name="init" >
+		<fail message="target init is deprecated, please use target init-data instead"/>
+	</target>
+
+	<target name="init-data" depends="compile-batch,check-batch-config,commons-init-data" description="initialize the database" />
+
+	<target name="upgrade" depends="compile-batch,check-batch-config,commons-upgrade" description="upgrade the database" /> 
+	
+	<target name="check-version" depends="compile-batch,check-batch-config,commons-check-version" description="check the database version" /> 
+
+	<target name="start" depends="deploy,check-web-config,commons-start-tomcat" description="Start the application" />
+
+	<target name="stop" depends="commons-stop-tomcat" description="Stop the application" />
+
+</project>
+
+
