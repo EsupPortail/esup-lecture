@@ -16,14 +16,10 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.WindowState;
 
-import org.apache.myfaces.context.ReleaseableExternalContext;
-import org.apache.myfaces.context.portlet.PortletExternalContextImpl;
 import org.apache.myfaces.context.servlet.ServletFacesContextImpl;
 import org.apache.myfaces.portlet.MyFacesGenericPortlet;
 import org.esupportail.commons.services.application.VersionningUtils;
@@ -32,10 +28,7 @@ import org.esupportail.commons.services.exceptionHandling.ExceptionService;
 import org.esupportail.commons.services.exceptionHandling.ExceptionUtils;
 import org.esupportail.commons.services.logging.Logger;
 import org.esupportail.commons.services.logging.LoggerImpl;
-import org.esupportail.commons.utils.BeanUtils;
 import org.esupportail.commons.utils.ContextUtils;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.portlet.context.PortletRequestAttributes;
 
 /**
