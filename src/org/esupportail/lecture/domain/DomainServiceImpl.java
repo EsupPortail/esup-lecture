@@ -31,14 +31,13 @@ import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
-import org.esupportail.lecture.exceptions.domain.ContextNotDefinedInUserProfileException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
-import org.esupportail.lecture.exceptions.domain.CustomContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
@@ -566,28 +565,8 @@ public class DomainServiceImpl implements DomainService {
 		CustomContext customContext;
 		customContext = userProfile.getCustomContext(contextId);
 		customContext.subscribeToCategory(categoryId,externalService);
-		
-		
-		
-		/*
-		} catch	(CategoryProfileNotFoundException e) {
-			String errorMsg = "CategoryProfileNotFoundException for service 'subscribeToSource(user "
-				+ uid + ", category " + categoryId + ", source " + sourceId + ", externalService)";
-			LOG.error(errorMsg);
-			//userProfile.cleanCustomCategoryFromProfile(categoryId);
-			userProfile.removeCustomCategoryFromProfile(categoryId);
-			throw new InternalDomainException(errorMsg, e);
-		} catch (CustomCategoryNotFoundException e) {
-			String errorMsg = "CustomCategoryNotFound for service 'subscribeToSource(user "
-				+ uid + ", category " + categoryId + ", source " + sourceId + ", externalService).\n" 
-				+ "User " + uid + " is not subscriber of Category " + categoryId;
-			LOG.error(errorMsg);
-			throw new UserNotSubscribedToCategoryException(errorMsg, e);
-		} 
-		*/
 	}
 
-	
 	
 
 	/**
@@ -632,6 +611,33 @@ public class DomainServiceImpl implements DomainService {
 			throw new UserNotSubscribedToCategoryException(errorMsg, e);
 		} 
 	}
+	
+	/**
+	 * unsubscribe user uid to category categoryId in context contextId
+	 * @param uid user ID
+	 * @param contextId context ID
+	 * @param categoryId category ID
+	 * @param externalService access to externalService
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryOutOfReachException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryTimeOutException 
+	 * @throws CategoryObligedException 
+	 * 
+	 */
+	public void unsubscribeToCategory(String uid, String contextId, String categoryId, ExternalService externalService) 
+		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, CategoryTimeOutException, 
+		CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException, CategoryObligedException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("unsubscribeToCategory(" + uid + "," + contextId + "," + categoryId + ")");
+		}
+		UserProfile userProfile = channel.getUserProfile(uid);			
+		CustomContext customContext;
+		customContext = userProfile.getCustomContext(contextId);
+		customContext.unsubscribeToCategory(categoryId,externalService);
+	}
 
 	/**
 	 * unsubscribe user uid to source sourceId in categoryId, if user is already subscriber of categoryId
@@ -674,6 +680,9 @@ public class DomainServiceImpl implements DomainService {
 		} 	
 	}
 	
+	
+	
+
 	/*
 	 ************************** Accessors ************************************/
 	
@@ -758,6 +767,8 @@ public class DomainServiceImpl implements DomainService {
 		return ret;
 	}
 
+
+	
 
 
 

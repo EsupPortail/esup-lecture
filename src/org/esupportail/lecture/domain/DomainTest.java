@@ -121,7 +121,7 @@ public class DomainTest {
 //			testGetAvailableSources();
 //			testTimeOutValues();
 		
-			
+			// TODO (GB) later : tester pour un user OBLIGED et ALLOWED opour une source : le OBLIGED est prioritaire
 			
 		} catch (InternalExternalException e) {
 			System.out.println("\n!!! EXCEPTION !!!");
@@ -380,8 +380,18 @@ public class DomainTest {
 			System.out.println("Exception : "+e.getMessage()); 
 		}
 		try {
+			/* category autosubscribed*/
+			System.out.println(" **** subscribe to category 'cp1' **********");
+			facadeService.subscribeToCategory(userId, contextId, "cp1");
+			System.out.println(" **** subscribe to category 'cp1' **********");
+			facadeService.subscribeToCategory(userId, contextId, "cp1");
+		} catch (DomainServiceException e) {
+			System.out.println("DomainServiceException !!!! ");
+			System.out.println("Exception : "+e.getMessage()); 
+		}
+		try {
 			/* category no visible */
-			System.out.println(" **** subscribe to category 'cp' **********");
+			System.out.println(" **** subscribe to category 'cp3' **********");
 			facadeService.subscribeToCategory(userId, contextId, "cp3");
 		} catch (DomainServiceException e) {
 			System.out.println("DomainServiceException !!!! ");

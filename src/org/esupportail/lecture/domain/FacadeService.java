@@ -16,6 +16,7 @@ import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
@@ -342,6 +343,25 @@ public class FacadeService implements InitializingBean {
 			CategoryNotVisibleException, SourceProfileNotFoundException,
 			SourceNotVisibleException, InternalDomainException, CategoryTimeOutException {
 		domainService.subscribeToSource(uid, categorieId, sourceId, externalService);
+	}
+	
+	/** 
+	 * Unsubscribes category categoryId in Context contextId to user uid.
+	 * @param uid
+	 * @param contextId id of the context containing category
+	 * @param categoryId id of the categoy
+	 * @throws InternalDomainException 
+	 * @throws CategoryOutOfReachException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryTimeOutException 
+	 * @throws ContextNotFoundException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CategoryObligedException 
+	 */
+	public void unsubscribeToCategory(final String uid, final String contextId, final String categoryId) 
+		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, CategoryTimeOutException, 
+		CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException, CategoryObligedException {
+		domainService.unsubscribeToCategory(uid, contextId, categoryId, externalService);
 	}
 
 	/**

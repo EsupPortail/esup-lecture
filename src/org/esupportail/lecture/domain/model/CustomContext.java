@@ -18,6 +18,7 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
@@ -25,6 +26,7 @@ import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 
@@ -260,7 +262,71 @@ public class CustomContext implements CustomElement {
 		
 	}
 	
-	
+	/**
+	 * after checking visibility rights, unsubcribe user to the category categoryId in this CustomContext
+	 * @param categoryId category ID
+	 * @param externalService
+	 * @throws ContextNotFoundException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CategoryTimeOutException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryOutOfReachException 
+	 * @throws CategoryObligedException 
+	 */
+	public void unsubscribeToCategory(String categoryId, ExternalService externalService) 
+		throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, CategoryTimeOutException, 
+		CategoryNotVisibleException, InternalDomainException, CategoryOutOfReachException, CategoryObligedException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("subscribeToCategory(" + categoryId + ", externalService)");
+		}
+		context = getContext();
+		ManagedCategoryProfile catProfile = null;
+		VisibilityMode mode = null;
+		try {
+			catProfile = context.getCatProfileById(categoryId);
+			mode = catProfile.updateCustomContext(this, externalService);
+		} catch (CategoryNotLoadedException e1) {
+			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
+			try {
+				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), externalService);
+				catProfile = context.getCatProfileById(categoryId);
+				mode = catProfile.updateCustomContext(this, externalService);
+			} catch (CategoryNotLoadedException e2) {
+				// Dans ce cas : la managedCategory n'est pointé par aucun 
+				// context correspondant à des customContext du userProfile => supression ?
+				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
+				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
+					+ "is not refered by any customContext in userProfile "
+					+ userProfile.getUserId());
+			}
+		}
+		
+		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
+			if (!subscriptions.containsKey(categoryId)) {
+				LOG.warn("Nothing is done for unsubscribeToCategory requested on category " + categoryId
+					+ " in context " + this.getElementId() + "\nfor user " 
+					+ getUserProfile().getUserId() 
+					+ " because this category is not in subscriptions");
+			} else {
+				removeCustomManagedCategoryFromProfile(categoryId);
+				LOG.trace("removeCustomManagedSource to source " + categoryId);
+			}
+			
+		} else if (mode == VisibilityMode.OBLIGED) {
+			String errorMsg = "UnsubscribeToCategory(" + categoryId
+				+ ") is impossible because this category is OBLIGED for user "
+				+ getUserProfile().getUserId() + "in context " + getElementId();
+			LOG.error(errorMsg);
+			throw new CategoryObligedException(errorMsg);			
+			
+		} else if (mode == VisibilityMode.NOVISIBLE) {
+			LOG.warn("Nothing is done for unsubscribeToCategory requested on category "
+				+ categoryId + " in category " + this.getElementId() + "\nfor user " 
+				+ getUserProfile().getUserId()
+				+ " because this category is NOVISIBLE in this case");
+		}
+	}
 	
 	
 	
@@ -617,5 +683,7 @@ public class CustomContext implements CustomElement {
 		this.subscriptions = subscriptions;
 		//Needed by Hibernate
 	}
+
+	
 
 }

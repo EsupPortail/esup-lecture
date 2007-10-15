@@ -4,19 +4,17 @@
 * You may obtain a copy of the licence at http://www.esup-portail.org/license/
 */
 package org.esupportail.lecture.exceptions.domain;
+
 /**
- * The user is not subscribed to Category requested
- * @author gbouteil
- *
+ * Request impossible on an obliged category
  */
-public class ContextNotDefinedInUserProfileException extends Exception {
+public class CategoryObligedException extends InfoDomainException {
 
 	/**
 	 * @param errorMsg
-	 * @param e
 	 */
-	public ContextNotDefinedInUserProfileException(String errorMsg, Exception e) {
-		super(errorMsg,e);
+	public CategoryObligedException(String errorMsg) {
+		super(errorMsg);
 	}
-	
+
 }

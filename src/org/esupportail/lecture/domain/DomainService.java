@@ -17,6 +17,7 @@ import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
@@ -186,9 +187,26 @@ public interface DomainService {
 	 * @see FacadeService#subscribeToCategory(String, String, String)
 	 */
 	void subscribeToCategory(String uid, String contextId, String categoryId, ExternalService externalService) 
-		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException;
+		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, CategoryTimeOutException, 
+		CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException;
 
-	
+	/**
+	 * @param uid
+	 * @param contextId
+	 * @param categoryId
+	 * @param externalService
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryOutOfReachException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryTimeOutException 
+	 * @throws CategoryObligedException 
+	 * @see FacadeService#unsubscribeToCategory(String, String, String)
+	 */
+	void unsubscribeToCategory(String uid, String contextId, String categoryId, ExternalService externalService)
+		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, CategoryTimeOutException, 
+		CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException, CategoryObligedException;
 	/**
 	 * @param uid 
 	 * @param categorieId 
@@ -228,6 +246,8 @@ public interface DomainService {
 		throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
 		InternalDomainException, CategoryProfileNotFoundException, SourceObligedException, CategoryTimeOutException, CategoryOutOfReachException;
 
+	
+	
 	/**
 	 * @return the database version.
 	 * @throws ConfigException when the database is not initialized
@@ -244,4 +264,5 @@ public interface DomainService {
 	 * @return if application is used in guest mode
 	 */
 	boolean isGuestMode();
+	
 }
