@@ -303,6 +303,24 @@ public class FacadeService implements InitializingBean {
 		return domainService.getVisibleSources(uid, categoryId, externalService);
 	}
 	
+	/** 
+	 * Subscribes category categoryId in Context contextId to user uid.
+	 * @param uid
+	 * @param contextId id of the context containing category
+	 * @param categoryId id of the categoy
+	 * @throws InternalDomainException 
+	 * @throws CategoryOutOfReachException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryTimeOutException 
+	 * @throws ContextNotFoundException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 */
+	public void subscribeToCategory(final String uid, final String contextId, final String categoryId) 
+		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException {
+		domainService.subscribeToCategory(uid, contextId, categoryId, externalService);
+	}
+	
+	
 	/**
 	 * Subscribes user uid to source sourceId in Category categoryId.
 	 * @param uid - user ID
@@ -327,7 +345,7 @@ public class FacadeService implements InitializingBean {
 	}
 
 	/**
-	 * Unsubscribes user uid to source sourceId in Category categoryId.
+	 * Unsubscribes source sourceId in Category categoryId to user uid.
 	 * @param uid - user ID
 	 * @param categorieId - categorie ID
 	 * @param sourceId - Source ID

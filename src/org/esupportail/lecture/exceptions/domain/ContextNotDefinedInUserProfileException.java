@@ -15,7 +15,7 @@ public class ContextNotDefinedInUserProfileException extends Exception {
 	 * @param errorMsg
 	 * @param e
 	 */
-	public ContextNotDefinedInUserProfileException(String errorMsg, CustomContextNotFoundException e) {
+	public ContextNotDefinedInUserProfileException(String errorMsg, Exception e) {
 		super(errorMsg,e);
 	}
 	

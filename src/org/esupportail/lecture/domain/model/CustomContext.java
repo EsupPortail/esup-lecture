@@ -23,6 +23,9 @@ import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundExceptio
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 
 /**
@@ -190,6 +193,74 @@ public class CustomContext implements CustomElement {
 		}
 		return couplesAvail;
 	}
+	
+	/**
+	 * after checking visibility rights, subcribe user to the category categoryId in this CustomContext
+	 * @param categoryId category ID
+	 * @throws ContextNotFoundException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws CategoryTimeOutException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryOutOfReachException 
+	 */
+	public void subscribeToCategory(String categoryId,ExternalService ex) 
+		throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, 
+		CategoryTimeOutException, CategoryNotVisibleException, InternalDomainException, 
+		CategoryOutOfReachException {	
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("subscribeToCategory(" + categoryId + ", externalService)");
+		}
+		context = getContext();
+		ManagedCategoryProfile catProfile = null;
+		VisibilityMode mode = null;
+		try {
+			catProfile = context.getCatProfileById(categoryId);
+			mode = catProfile.updateCustomContext(this, ex);
+		} catch (CategoryNotLoadedException e1) {
+			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
+			try {
+				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), ex);
+				catProfile = context.getCatProfileById(categoryId);
+				mode = catProfile.updateCustomContext(this, ex);
+			} catch (CategoryNotLoadedException e2) {
+				// Dans ce cas : la managedCategory n'est pointé par aucun 
+				// context correspondant à des customContext du userProfile => supression ?
+				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
+				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
+					+ "is not refered by any customContext in userProfile "
+					+ userProfile.getUserId());
+			}
+		}
+		
+		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
+			if (subscriptions.containsKey(categoryId)) {
+				LOG.warn("Nothing is done for subscribeToCategory requested on category " + categoryId
+					+ " in context " + this.getElementId() + "\nfor user " 
+					+ getUserProfile().getUserId() 
+					+ " because this category is already in subscriptions");
+			} else {
+				addSubscription(catProfile);
+				LOG.debug("addSubscription to category " + categoryId);
+			}
+			
+		} else if (mode == VisibilityMode.OBLIGED) {
+			LOG.warn("Nothing is done for subscribeToCategory requested on category " + categoryId
+					+ " in context " + this.getElementId() + "\nfor user " 
+					+ getUserProfile().getUserId()
+					+ " because this category is OBLIGED in this case");
+			
+		} else if (mode == VisibilityMode.NOVISIBLE) {
+			String errorMsg = "subscribeToCategory(" + categoryId
+			 	+ ") is impossible because this category is NOT VISIBLE for user "
+				+ getUserProfile().getUserId() + "in context " + getElementId();
+			LOG.error(errorMsg);
+			throw new CategoryNotVisibleException(errorMsg);
+		}
+		
+	}
+	
+	
 	
 	
 	
@@ -546,6 +617,5 @@ public class CustomContext implements CustomElement {
 		this.subscriptions = subscriptions;
 		//Needed by Hibernate
 	}
-
 
 }

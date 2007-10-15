@@ -171,6 +171,24 @@ public interface DomainService {
 	 */
 	void unfoldCategory(String uid, String cxtId, String catId) throws ContextNotFoundException;
 	
+
+	/**
+	 * @param uid
+	 * @param contextId
+	 * @param categoryId
+	 * @param externalService
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryOutOfReachException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryTimeOutException 
+	 * @see FacadeService#subscribeToCategory(String, String, String)
+	 */
+	void subscribeToCategory(String uid, String contextId, String categoryId, ExternalService externalService) 
+		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException;
+
+	
 	/**
 	 * @param uid 
 	 * @param categorieId 
@@ -226,5 +244,4 @@ public interface DomainService {
 	 * @return if application is used in guest mode
 	 */
 	boolean isGuestMode();
-
 }

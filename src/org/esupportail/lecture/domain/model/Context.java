@@ -18,6 +18,7 @@ import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
  * Context element : it is the environnement context of an instance
@@ -247,6 +248,34 @@ public class Context {
 
 	/*
 	 * ************************** ACCESSORS ******************************** */
+
+	/**
+	 * Returns the managedCategoryProfile identified by id, referred by this Context 
+	 * @param categoryId id of the categoryProfile to get
+	 * @return the categoryProfile
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 */
+	protected ManagedCategoryProfile getCatProfileById(String categoryId) throws ManagedCategoryProfileNotFoundException {
+		if (log.isDebugEnabled()){
+			log.debug("id="+this.getId()+" - getCatProfileById("+categoryId+")");
+		}
+		
+		
+		if (refIdManagedCategoryProfilesSet.contains(categoryId)) {
+			Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
+			for (ManagedCategoryProfile m = null; iterator.hasNext();) {
+				m = iterator.next();
+				if (m.getId().equals(categoryId)){
+					return m;
+				}
+				
+			}
+		} 
+		String errorMsg = "ManagedCategoryProfile "+categoryId+" is not found in Context "+this.id;
+		log.error(errorMsg);
+		throw new ManagedCategoryProfileNotFoundException(errorMsg);
+	}
+	
 	
 	/**
 	 * Returns the name of the context 
@@ -301,6 +330,8 @@ public class Context {
 	synchronized protected void setId(String id) {
 		this.id = id;
 	}
+
+	
 
 
 	

@@ -229,7 +229,14 @@ public class DomainServiceTest implements DomainService {
 		// nothing
 	}
 	
-
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#subscribeToCategory(java.lang.String, java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 */
+	@SuppressWarnings("unused")
+	public void subscribeToCategory(String uid, String contextId, String categoryId, ExternalService externalService) {
+		// nothing
+	}
+	
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToSource(java.lang.String, java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
@@ -270,6 +277,8 @@ public class DomainServiceTest implements DomainService {
 	public boolean isGuestMode() {
 		return false;
 	}
+
+
 
 	
 

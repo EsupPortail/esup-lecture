@@ -36,6 +36,7 @@ import org.springframework.core.io.ClassPathResource;
  * @author gbouteil
  *
  */
+// TODO (gb) later : refaire un vrai driver des tests
 public class DomainTest {
 	/*
 	 ************************** PROPERTIES ******************************** */	
@@ -102,13 +103,16 @@ public class DomainTest {
 //			testSetItemDisplayMode();
 			
 			/* test mode EDIT */
+//			testGetConnectedUser();
+//			testGetContext();
+//			testGetVisibleCategories();
+//			testGetVisibleSources();
+//			testSubUnSubscribeToSource();
+
 			testGetConnectedUser();
 			testGetContext();
 			testGetVisibleCategories();
-			testGetVisibleSources();
-			testSubUnSubscribeToSource();
-
-		
+			testSubUnSubscribeToCategory();
 			
 			/* test timeout values */
 //			testGetConnectedUser();
@@ -144,6 +148,9 @@ public class DomainTest {
 
 	/*
 	 ************************** Méthodes de Test ******************************** */	
+
+	
+
 
 	
 
@@ -218,7 +225,6 @@ public class DomainTest {
 	
 	/**
 	 * Test of service "getVisibleCategories"
-	 * @throws DomainServiceException 
 	 */
 	@SuppressWarnings("unused")
 	private static void testGetVisibleCategories()  {
@@ -348,7 +354,44 @@ public class DomainTest {
 		testGetAvailableSources();
 	}
 	
+	/**
+	 * Test of service "subscribeToCategory" and "unsubscribeToCategory"
+	 * @throws DomainServiceException 
+	 */
+	private static void testSubUnSubscribeToCategory() {
+		printIntro("getSubscribeToCategory");
+		
+		try {
+			/* category obliged */
+			System.out.println(" **** subscribe to category 'cp2' **********");
+			facadeService.subscribeToCategory(userId, contextId, "cp2");
+		} catch (DomainServiceException e) {
+			System.out.println("DomainServiceException !!!! ");
+			System.out.println("Exception : "+e.getMessage()); 
+		}
+		try {
+			/* category allowed*/
+			System.out.println(" **** subscribe to category 'cp4' **********");
+			facadeService.subscribeToCategory(userId, contextId, "cp4");
+			System.out.println(" **** subscribe to category 'cp4' **********");
+			facadeService.subscribeToCategory(userId, contextId, "cp4");
+		} catch (DomainServiceException e) {
+			System.out.println("DomainServiceException !!!! ");
+			System.out.println("Exception : "+e.getMessage()); 
+		}
+		try {
+			/* category no visible */
+			System.out.println(" **** subscribe to category 'cp' **********");
+			facadeService.subscribeToCategory(userId, contextId, "cp3");
+		} catch (DomainServiceException e) {
+			System.out.println("DomainServiceException !!!! ");
+			System.out.println("Exception : "+e.getMessage()); 
+		}
 	
+			testGetVisibleCategories();
+		
+		
+	}
 	
 	
 	/**

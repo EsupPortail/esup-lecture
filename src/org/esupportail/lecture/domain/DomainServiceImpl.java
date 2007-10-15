@@ -541,6 +541,51 @@ public class DomainServiceImpl implements DomainService {
 		
 	}
 	
+	/**
+	 * subscribe user uid to category categoryId in context contextId
+	 * @param uid user ID
+	 * @param contextId context ID
+	 * @param categoryId category ID
+	 * @param externalService access to externalService
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryOutOfReachException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryTimeOutException 
+	 * 
+	 */
+	public void subscribeToCategory(final String uid, final String contextId, final String categoryId, ExternalService externalService) 
+		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException  {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("subscribeToCategory(" + uid + "," + contextId 
+				+ "," + categoryId + ")");
+		}
+		UserProfile userProfile = channel.getUserProfile(uid);
+		
+		CustomContext customContext;
+		customContext = userProfile.getCustomContext(contextId);
+		customContext.subscribeToCategory(categoryId,externalService);
+		
+		
+		
+		/*
+		} catch	(CategoryProfileNotFoundException e) {
+			String errorMsg = "CategoryProfileNotFoundException for service 'subscribeToSource(user "
+				+ uid + ", category " + categoryId + ", source " + sourceId + ", externalService)";
+			LOG.error(errorMsg);
+			//userProfile.cleanCustomCategoryFromProfile(categoryId);
+			userProfile.removeCustomCategoryFromProfile(categoryId);
+			throw new InternalDomainException(errorMsg, e);
+		} catch (CustomCategoryNotFoundException e) {
+			String errorMsg = "CustomCategoryNotFound for service 'subscribeToSource(user "
+				+ uid + ", category " + categoryId + ", source " + sourceId + ", externalService).\n" 
+				+ "User " + uid + " is not subscriber of Category " + categoryId;
+			LOG.error(errorMsg);
+			throw new UserNotSubscribedToCategoryException(errorMsg, e);
+		} 
+		*/
+	}
 
 	
 	
@@ -712,5 +757,8 @@ public class DomainServiceImpl implements DomainService {
 		}
 		return ret;
 	}
+
+
+
 
 }
