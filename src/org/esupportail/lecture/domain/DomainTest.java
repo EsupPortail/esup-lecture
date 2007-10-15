@@ -400,6 +400,44 @@ public class DomainTest {
 	
 			testGetVisibleCategories();
 		
+			try {
+				/* category obliged */
+				System.out.println(" **** unsubscribe to category 'cp2' **********");
+				facadeService.unsubscribeToCategory(userId, contextId, "cp2");
+			} catch (DomainServiceException e) {
+				System.out.println("DomainServiceException !!!! ");
+				System.out.println("Exception : "+e.getMessage()); 
+			}
+			try {
+				/* category allowed*/
+				System.out.println(" **** unsubscribe to category 'cp4' **********");
+				facadeService.unsubscribeToCategory(userId, contextId, "cp4");
+
+				System.out.println(" **** unsubscribe to category 'cp4' **********");
+				facadeService.unsubscribeToCategory(userId, contextId, "cp4");
+			} catch (DomainServiceException e) {
+				System.out.println("DomainServiceException !!!! ");
+				System.out.println("Exception : "+e.getMessage()); 
+			}
+			try {
+				/* category autosubscribed*/
+				System.out.println(" **** unsubscribe to category 'cp1' **********");
+				facadeService.unsubscribeToCategory(userId, contextId, "cp1");
+				System.out.println(" **** unsubscribe to category 'cp1' **********");
+				facadeService.unsubscribeToCategory(userId, contextId, "cp1");
+			} catch (DomainServiceException e) {
+				System.out.println("DomainServiceException !!!! ");
+				System.out.println("Exception : "+e.getMessage()); 
+			}
+			try {
+				/* category no visible */
+				System.out.println(" **** unsubscribe to category 'cp3' **********");
+				facadeService.unsubscribeToCategory(userId, contextId, "cp3");
+			} catch (DomainServiceException e) {
+				System.out.println("DomainServiceException !!!! ");
+				System.out.println("Exception : "+e.getMessage()); 
+			}
+			testGetVisibleCategories();
 		
 	}
 	
