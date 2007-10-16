@@ -69,6 +69,16 @@
 			It must implement interface org.esupportail.lecture.domain.ExternalService.
 		</description>
 		<property name="authenticationService" ref="authenticationService" />
+		<property name="portletService" ref="portletService" />
+		<property name="servletService" ref="servletService" />
+	</bean>
+	
+	<bean id="servletService" class="org.esupportail.lecture.domain.utils.ServletService">
+		<description>external service in servlet mode</description>
+	</bean>
+
+	<bean id="portletService" class="org.esupportail.lecture.domain.utils.PortletService">
+		<description>external service in portlet mode</description>
 	</bean>
 
 	<!-- 

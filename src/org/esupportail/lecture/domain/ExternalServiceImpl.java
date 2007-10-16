@@ -13,8 +13,6 @@ import org.apache.myfaces.portlet.PortletUtil;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.lecture.domain.utils.ModeService;
-import org.esupportail.lecture.domain.utils.PortletService;
-import org.esupportail.lecture.domain.utils.ServletService;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.springframework.beans.factory.InitializingBean;
@@ -40,20 +38,17 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	/**
 	 * portlet version of ExternalService.
 	 */
-	//TODO (RB) inject by spring (gb : => so no more static)
-	private static PortletService portletService = new PortletService();
+	private ModeService portletService;
 
 	/**
 	 * servlet version of ExternalService.
 	 */
-	//TODO (RB) inject by spring (gb : => so no more static)
-	private static ServletService servletService = new ServletService();
+	private ModeService servletService;
 	
 	/**
 	 * default version of ExternalService.
 	 */
-	//TODO (RB) inject by spring (gb : => so no more static)
-	private static ServletService defaultService = servletService;
+	private ModeService defaultService;
 
 	/**
 	 * The authentication Service.
@@ -75,7 +70,14 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 */
 	public void afterPropertiesSet() throws Exception {
 		Assert.notNull(authenticationService, "property authenticationService of class " 
-			+ this.getClass().getName() + " can not be null");
+				+ this.getClass().getName() + " can not be null");
+		Assert.notNull(servletService, "property servletService of class " 
+				+ this.getClass().getName() + " can not be null");
+		Assert.notNull(portletService, "property portletService of class " 
+				+ this.getClass().getName() + " can not be null");
+		if (defaultService == null) {
+			defaultService = servletService;
+		}
 	}	
 
 	/*
@@ -186,6 +188,27 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 */
 	public void setAuthenticationService(final AuthenticationService authenticationService) {
 		this.authenticationService = authenticationService;
+	}
+
+	/**
+	 * @param portletService the portletService to set
+	 */
+	public void setPortletService(final ModeService portletService) {
+		this.portletService = portletService;
+	}
+
+	/**
+	 * @param servletService the servletService to set
+	 */
+	public void setServletService(final ModeService servletService) {
+		this.servletService = servletService;
+	}
+
+	/**
+	 * @param defaultService the defaultService to set
+	 */
+	public void setDefaultService(final ModeService defaultService) {
+		this.defaultService = defaultService;
 	}
 
 }
