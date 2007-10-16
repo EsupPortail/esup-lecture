@@ -42,9 +42,8 @@
 			web interface and the command-line calls.
 			It must implement interface org.esupportail.lecture.domain.DomainService.
 		</description>
-		<property name="channel">
-			<ref bean="channel"/>
-		</property>
+		<property name="channel" ref="channel" />
+		<property name="authenticationService" ref="authenticationService" />
 	</bean> 
 
 	<!-- Main domain model class -->
@@ -69,6 +68,7 @@
 			web interface and the command-line calls.
 			It must implement interface org.esupportail.lecture.domain.ExternalService.
 		</description>
+		<property name="authenticationService" ref="authenticationService" />
 	</bean>
 
 	<!-- 

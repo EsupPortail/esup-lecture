@@ -7,7 +7,6 @@ package org.esupportail.lecture.domain;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.DomainTools;
 
 /**
  * @author bourges
@@ -17,13 +16,20 @@ public class ExternalServiceTest implements ExternalService {
 
 	/*
 	 *************************** PROPERTIES ******************************** */	
+	
 	/**
-	 * Log instance 
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(ExternalServiceTest.class); 
+	protected static final Log LOG = LogFactory.getLog(ExternalServiceTest.class); 
 
 	/*
 	 *************************** INIT ******************************** */	
+	/**
+	 * Default constructor.
+	 */
+	public ExternalServiceTest() {
+		super();
+	}
 
 	/*
 	 *************************** METHODS ******************************** */	
@@ -33,7 +39,7 @@ public class ExternalServiceTest implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
 	 */
 	public String getConnectedUserId() {
-		return getUserAttribute(DomainTools.getUserID());
+		return "bourges";
 	}
 
 	/**
@@ -46,8 +52,8 @@ public class ExternalServiceTest implements ExternalService {
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getPreferences(java.lang.String)
 	 */
-	public String getPreferences(String name) {
-		if (name.equalsIgnoreCase(DomainTools.CONTEXT)){
+	public String getPreferences(final String name) {
+		if (name.equalsIgnoreCase(DomainTools.CONTEXT)) {
 			return "c1";
 		}
 		return null;
@@ -56,12 +62,12 @@ public class ExternalServiceTest implements ExternalService {
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserAttribute(java.lang.String)
 	 */
-	public String getUserAttribute(String attribute) {
-		if (attribute.equalsIgnoreCase(DomainTools.getUserID())){
+	public String getUserAttribute(final String attribute) {
+		if (attribute.equalsIgnoreCase("uid")) {
 			return "bourges";
-		}else if (attribute.equalsIgnoreCase("")){
+		} else if (attribute.equalsIgnoreCase("")) {
 			return "";
-		}else if(attribute.equalsIgnoreCase("sn")){
+		} else if (attribute.equalsIgnoreCase("sn")) {
 			return "User";
 		}
 		return "";
@@ -78,10 +84,10 @@ public class ExternalServiceTest implements ExternalService {
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#isUserInGroup(java.lang.String)
 	 */
-	public boolean isUserInGroup(String group) {
-		if(group.equalsIgnoreCase("")){
+	public boolean isUserInGroup(final String group) {
+		if (group.equalsIgnoreCase("")) {
 			return false;
-		}else if(group.equalsIgnoreCase("local.0")){
+		} else if (group.equalsIgnoreCase("local.0")) {
 			return true;
 		}
 		return false;

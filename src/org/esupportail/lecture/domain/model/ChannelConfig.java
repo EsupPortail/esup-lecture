@@ -183,17 +183,6 @@ public class ChannelConfig  {
 	}
 
 	/**
-	 * Load attribute name provided by portlet request.
-	 * to identified user profiles (userId)
-	 */
-	protected static synchronized void loadUserId() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("loadUserId()");
-		}
-		DomainTools.setUserID(xmlFile.getString("userId"));
-	}
-
-	/**
 	 * Load attribute that identified guest user name (guestUser).
 	 */
 	protected static synchronized void loadGuestUser() {

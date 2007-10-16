@@ -56,12 +56,6 @@ public class DomainTools {
 	 * Constants definition */
 	
 	/**
-	 * Attribute name used to identified the user profile.
-	 * It is defined in the channel config
-	 */
-	private static String userID;
-	
-	/**
 	 * Attribute name used to identified the guset user.
 	 * It is defined in the channel config
 	 */
@@ -136,15 +130,6 @@ public class DomainTools {
 	/*
 	 ************************** ACCESSORS *********************************/	
 	/**
-	 * Set string that defines user ID in externalService.
-	 * @param userId
-	 * @see DomainTools#userID
-	 */
-	public static void setUserID(final String userId) {
-		userID = userId;
-	}
-	
-	/**
 	 * Return an instance of current DaoService initialised by Spring.
 	 * @return current DomainService
 	 */
@@ -189,13 +174,6 @@ public class DomainTools {
 	 */
 	public static void setExternalService(final ExternalService externalService) {
 		DomainTools.externalService = externalService;
-	}
-
-	/**
-	 * @return the userID
-	 */
-	public static String getUserID() {
-		return userID;
 	}
 
 	/**

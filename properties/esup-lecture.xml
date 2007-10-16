@@ -4,9 +4,6 @@
 ]>
 <channelConfig>
 
-	<!-- user attribute to define a user Id -->
-	<userId>username</userId>
-
 	<context name="CRI" id="default">
 		<description>
 			<![CDATA[

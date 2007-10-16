@@ -10,11 +10,14 @@ import javax.faces.context.FacesContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.myfaces.portlet.PortletUtil;
+import org.esupportail.commons.services.authentication.AuthenticationService;
+import org.esupportail.commons.utils.Assert;
 import org.esupportail.lecture.domain.utils.ModeService;
 import org.esupportail.lecture.domain.utils.PortletService;
 import org.esupportail.lecture.domain.utils.ServletService;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
+import org.springframework.beans.factory.InitializingBean;
 
 /**
  * @author bourges
@@ -24,7 +27,7 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
  * - servlet service
  * The modeService (portlet or servlet) is dynamically defined at every method calls
  */
-public class ExternalServiceImpl implements ExternalService {
+public class ExternalServiceImpl implements ExternalService, InitializingBean {
 
 	/* 
 	 *************************** PROPERTIES ******************************** */	
@@ -32,28 +35,48 @@ public class ExternalServiceImpl implements ExternalService {
 	/**
 	 * the logger for this class.
 	 */
-	protected static final Log log = LogFactory.getLog(ExternalServiceImpl.class);
+	protected static final Log LOG = LogFactory.getLog(ExternalServiceImpl.class);
 
 	/**
 	 * portlet version of ExternalService.
 	 */
 	//TODO (RB) inject by spring (gb : => so no more static)
-	static PortletService portletService = new PortletService();
+	private static PortletService portletService = new PortletService();
 
 	/**
 	 * servlet version of ExternalService.
 	 */
 	//TODO (RB) inject by spring (gb : => so no more static)
-	static ServletService servletService = new ServletService();
+	private static ServletService servletService = new ServletService();
 	
 	/**
 	 * default version of ExternalService.
 	 */
 	//TODO (RB) inject by spring (gb : => so no more static)
-	static ServletService defaultService = servletService;
+	private static ServletService defaultService = servletService;
+
+	/**
+	 * The authentication Service.
+	 */
+	private AuthenticationService authenticationService;
 	
 	/*
 	 *************************** INIT ************************************** */	
+	/**
+	 * Default constructor.
+	 */
+	public ExternalServiceImpl() {
+		super();
+		// needed by checkstyle
+	}
+
+	/**
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+	 */
+	public void afterPropertiesSet() throws Exception {
+		Assert.notNull(authenticationService, "property authenticationService of class " 
+			+ this.getClass().getName() + " can not be null");
+	}	
 
 	/*
 	 *************************** METHODS *********************************** */	
@@ -64,7 +87,7 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
 	 */
 	public String getConnectedUserId() throws NoExternalValueException, InternalExternalException {
-		return getUserAttribute(DomainTools.getUserID());
+		return authenticationService.getCurrentUserId();
 	}
 	/**
 	 * Return ID of the current context (from channel instantiation : portlet preference with name "context")).
@@ -84,8 +107,8 @@ public class ExternalServiceImpl implements ExternalService {
 	public String getPreferences(final String name) throws NoExternalValueException, InternalExternalException {
 	     String ret = getModeService().getPreference(name);
 	 
-	     if (log.isTraceEnabled()) {
-			log.trace("getPreferences(" + name + ") return " + ret);
+	     if (LOG.isTraceEnabled()) {
+			LOG.trace("getPreferences(" + name + ") return " + ret);
 		}
  
         return ret;
@@ -100,8 +123,8 @@ public class ExternalServiceImpl implements ExternalService {
 		throws NoExternalValueException, InternalExternalException {
 		String ret = getModeService().getUserAttribute(attribute);
 		
-		if (log.isTraceEnabled()) {
-			log.trace("getUserAttribute(" + attribute + ") return " + ret);
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("getUserAttribute(" + attribute + ") return " + ret);
 		}
 		return ret;
 	}
@@ -110,8 +133,8 @@ public class ExternalServiceImpl implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserProxyTicketCAS()
 	 */
 	public String getUserProxyTicketCAS() {
-	    if (log.isDebugEnabled()) {
-			log.debug("getUserProxyTicketCAS() - not yet implemented");
+	    if (LOG.isDebugEnabled()) {
+			LOG.debug("getUserProxyTicketCAS() - not yet implemented");
 		}
 		return null;
 	}
@@ -123,8 +146,8 @@ public class ExternalServiceImpl implements ExternalService {
 	public boolean isUserInGroup(final String group) throws InternalExternalException {
 	    boolean ret = getModeService().isUserInGroup(group);
 	   
-        if (log.isDebugEnabled()) {
-			log.debug("isUserInRole(" + group + ") return " + ret);
+        if (LOG.isDebugEnabled()) {
+			LOG.debug("isUserInRole(" + group + ") return " + ret);
 		}
 		return ret;
 	}
@@ -158,5 +181,11 @@ public class ExternalServiceImpl implements ExternalService {
 	/*
 	 *************************** ACCESSORS ********************************* */	
 
-	
+	/**
+	 * @param authenticationService the authenticationService to set
+	 */
+	public void setAuthenticationService(final AuthenticationService authenticationService) {
+		this.authenticationService = authenticationService;
+	}
+
 }

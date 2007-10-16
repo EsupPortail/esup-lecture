@@ -204,9 +204,6 @@ public class Channel implements InitializingBean {
 			/* Reset channel properties loaded from config */
 			resetChannelConfigProperties();
 			
-			/*Loading user attributes name for user id */
-			ChannelConfig.loadUserId();
-			
 			/*Loading guest user name */
 			ChannelConfig.loadGuestUser();
 			

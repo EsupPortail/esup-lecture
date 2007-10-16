@@ -12,6 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.application.Version;
+import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.CategoryDummyBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
@@ -51,6 +52,7 @@ import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
 import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.util.Assert;
 
@@ -61,11 +63,8 @@ import org.springframework.util.Assert;
  * To have a customContext defined in a userProfile, the service
  * getContext must have been called one time (over several user session)
  * @author gbouteil
- * 
- * 
- *
  */
-public class DomainServiceImpl implements DomainService {
+public class DomainServiceImpl implements DomainService, InitializingBean {
 	//TODO (GB <-- RB) CheckStyle ? 
 	// Note RB : j'ai fait plein de petites modifs pour avoir beaucoup moins de warning
 	
@@ -82,6 +81,11 @@ public class DomainServiceImpl implements DomainService {
 	 */
 	private static final Log LOG = LogFactory.getLog(DomainServiceImpl.class);
 
+	/**
+	 * The authentication Service.
+	 */
+	private AuthenticationService authenticationService;
+
 	/* 
 	 ************************** INIT **********************************/
 
@@ -97,7 +101,10 @@ public class DomainServiceImpl implements DomainService {
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
 	public void afterPropertiesSet() {
-		Assert.notNull(channel, "property channel can not be null");
+		Assert.notNull(channel, "property channel of class "
+				+ this.getClass().getName() + " can not be null");
+		Assert.notNull(authenticationService, "property authenticationService of class " 
+				+ this.getClass().getName() + " can not be null");
 	}
 
 	
@@ -215,7 +222,7 @@ public class DomainServiceImpl implements DomainService {
 	public List<SourceBean> getAvailableSources(final String uid, final String categoryId, final ExternalService ex) 
 			throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
 			InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException  {
-		if (LOG.isDebugEnabled()){
+		if (LOG.isDebugEnabled()) {
 			LOG.debug("getAvailableSources(" + uid + "," + categoryId + ",externalService)");
 		}
 		
@@ -300,7 +307,7 @@ public class DomainServiceImpl implements DomainService {
 			String categoryId = customManagedSource.getManagedSourceProfileParentId();
 			//userProfile.cleanCustomCategoryFromProfile(categoryId);
 			userProfile.removeCustomCategoryFromProfile(categoryId);
-			throw new InternalDomainException(errorMsg,e);
+			throw new InternalDomainException(errorMsg, e);
 		} catch	(SourceProfileNotFoundException e) {
 			String errorMsg = "SourceProfileNotFoundException for service 'getItems(user "
 				+ uid + ", source " + sourceId + ")";
@@ -344,7 +351,7 @@ public class DomainServiceImpl implements DomainService {
 	public void marckItemReadMode(final String uid, final String sourceId, 
 			final String itemId, final boolean isRead) 
 			throws InternalDomainException {
-		if (LOG.isDebugEnabled()){
+		if (LOG.isDebugEnabled()) {
 			LOG.debug("marckItemReadMode(" + uid + "," + sourceId + "," + itemId + "," + isRead + ")");
 		}
 		
@@ -386,9 +393,9 @@ public class DomainServiceImpl implements DomainService {
 			customSource.modifyItemDisplayMode(mode);
 		} catch (CustomSourceNotFoundException e) {
 			String errorMsg = "CustomSourceNotFoundException for service 'markItemDisplayMode(user "
-				+ uid + ", source " + sourceId+ ", mode " + mode + ")";
+				+ uid + ", source " + sourceId + ", mode " + mode + ")";
 			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg,e);
+			throw new InternalDomainException(errorMsg, e);
 		}
 		
 	}
@@ -463,7 +470,8 @@ public class DomainServiceImpl implements DomainService {
 	 * @throws ContextNotFoundException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId, final ExternalService ex) throws ContextNotFoundException {
+	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId, final ExternalService ex) 
+		throws ContextNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getVisibleCategories(" + uid + "," + contextId + ",ex)");
 		}
@@ -541,7 +549,7 @@ public class DomainServiceImpl implements DomainService {
 	}
 	
 	/**
-	 * subscribe user uid to category categoryId in context contextId
+	 * subscribe user uid to category categoryId in context contextId.
 	 * @param uid user ID
 	 * @param contextId context ID
 	 * @param categoryId category ID
@@ -564,7 +572,7 @@ public class DomainServiceImpl implements DomainService {
 		
 		CustomContext customContext;
 		customContext = userProfile.getCustomContext(contextId);
-		customContext.subscribeToCategory(categoryId,externalService);
+		customContext.subscribeToCategory(categoryId, externalService);
 	}
 
 	
@@ -613,7 +621,7 @@ public class DomainServiceImpl implements DomainService {
 	}
 	
 	/**
-	 * unsubscribe user uid to category categoryId in context contextId
+	 * unsubscribe user uid to category categoryId in context contextId.
 	 * @param uid user ID
 	 * @param contextId context ID
 	 * @param categoryId category ID
@@ -636,11 +644,11 @@ public class DomainServiceImpl implements DomainService {
 		UserProfile userProfile = channel.getUserProfile(uid);			
 		CustomContext customContext;
 		customContext = userProfile.getCustomContext(contextId);
-		customContext.unsubscribeToCategory(categoryId,externalService);
+		customContext.unsubscribeToCategory(categoryId, externalService);
 	}
 
 	/**
-	 * unsubscribe user uid to source sourceId in categoryId, if user is already subscriber of categoryId
+	 * unsubscribe user uid to source sourceId in categoryId, if user is already subscriber of categoryId.
 	 * @param uid user ID
 	 * @param categoryId category ID
 	 * @param sourceId source ID
@@ -759,12 +767,23 @@ public class DomainServiceImpl implements DomainService {
 	 */
 	public boolean isGuestMode() {
 		boolean ret;
-		if (getConnectedUser(DomainTools.getUserID()).equals(DomainTools.getGuestUser())) {
+		String connectedUser = authenticationService.getCurrentUserId();
+		if (connectedUser.equals(DomainTools.getGuestUser())) {
 			ret = true;
 		} else {
 			ret = false;
 		}
 		return ret;
+	}
+
+	/*
+	 *************************** ACCESSORS ********************************* */	
+	
+	/**
+	 * @param authenticationService the authenticationService to set
+	 */
+	public void setAuthenticationService(final AuthenticationService authenticationService) {
+		this.authenticationService = authenticationService;
 	}
 
 
