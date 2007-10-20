@@ -46,8 +46,7 @@ public class ChannelConfig  {
 	/**
 	 *  relative classpath of the file to load.
 	 */
-	private static String filePath = "/properties/esup-lecture.xml";
-	//TODO (GB later) externaliser filePath
+	private static String filePath;
 	
 	/**
 	 *  Base path of the file to load.
@@ -104,6 +103,19 @@ public class ChannelConfig  {
 	
 	/**
 	 * Return a singleton of this class used to load ChannelConfig file.
+	 * @param configFilePath file path of the channel config
+	 * @return an instance of the file to load (singleton)
+	 * @throws ChannelConfigException 
+	 * @see ChannelConfig#singleton
+	 */
+	protected static synchronized ChannelConfig getInstance(String configFilePath) throws ChannelConfigException {
+		filePath = configFilePath;
+		return getInstance();
+		
+	}
+	
+	/**
+	 * Return a singleton of this class used to load ChannelConfig file.
 	 * @return an instance of the file to load (singleton)
 	 * @throws ChannelConfigException 
 	 * @see ChannelConfig#singleton
@@ -111,6 +123,12 @@ public class ChannelConfig  {
 	protected static synchronized ChannelConfig getInstance() throws ChannelConfigException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getInstance()");
+		}
+	
+		if (filePath == null){
+			String errorMsg = "Config file path not defined, see in domain.xml file.";
+			LOG.error(errorMsg);
+			throw new ChannelConfigException(errorMsg);
 		}
 		modified = false;
 		
@@ -181,6 +199,18 @@ public class ChannelConfig  {
 		}
 		
 	}
+
+//	/**
+//	 * Load attribute name provided by portlet request.
+//	 * to identified user profiles (userId)
+//	 */
+//	protected static synchronized void loadUserId() {
+//		if (LOG.isDebugEnabled()) {
+//			LOG.debug("loadUserId()");
+//		}
+//		// TODO (RB<--GB) à retirer suite à l'auth cas via esup-commons ?
+//		DomainTools.setUserID(xmlFile.getString("userId"));
+//	}
 
 	/**
 	 * Load attribute that identified guest user name (guestUser).

@@ -89,10 +89,19 @@ public class Channel implements InitializingBean {
 	/* config and mapping files */
 	
 	/**
+	 * relative file path of the config file
+	 */
+	private String configFilePath;
+	
+	/**
 	 * configLoaded = true if channel config has ever been loaded in channel
 	 */
 	private boolean configLoaded = false;
 	
+	/**
+	 * relative file path of the mapping file
+	 */
+	private String mappingFilePath;
 	/**
 	 * mappingsLoaded = true if channel config has ever been loaded in channel
 	 */
@@ -131,6 +140,8 @@ public class Channel implements InitializingBean {
 		}
 		Assert.notNull(daoService,"property daoService can not be null");
 		Assert.notNull(externalService,"property externalService can not be null");
+		Assert.notNull(configFilePath,"property configFilePath cannot be null");
+		Assert.notNull(mappingFilePath,"property mappingFilePath cannot be null");
 		try {
 			startup();
 		} catch (PrivateException e) {
@@ -183,7 +194,7 @@ public class Channel implements InitializingBean {
 		
 		try {
 			//ChannelConfig config = 
-			ChannelConfig.getInstance();
+			ChannelConfig.getInstance(configFilePath);
 			// TODO (GB later)
 			// - utiliser l'objet config pour appeler les méthodes après (reset ...)
 			// 		et faire une classe FileToLoad avec ces méthodes en non static
@@ -248,7 +259,7 @@ public class Channel implements InitializingBean {
 		
 		try {
 			//MappingFile mappingFile = 
-			MappingFile.getInstance();
+			MappingFile.getInstance(mappingFilePath);
 			
 		} catch (MappingFileException e) {
 			// TODO (GB later)
@@ -648,6 +659,36 @@ public class Channel implements InitializingBean {
 	 */
 	public void setExternalService(ExternalService externalService) {
 		this.externalService = externalService;
+	}
+
+	/**
+	 * @return the file path of the config file
+	 */
+	public String getConfigFilePath() {
+		return configFilePath;
+	}
+
+	/**
+	 * set the file path of the config file
+	 * @param configFilePath 
+	 */
+	public void setConfigFilePath(String configFilePath) {
+		this.configFilePath = configFilePath;
+	}
+
+	/**
+	 * @return the fil path of the mapping file
+	 */
+	public String getMappingFilePath() {
+		return mappingFilePath;
+	}
+
+	/**
+	 * set the file path of the mapping file
+	 * @param mappingFilePath
+	 */
+	public void setMappingFilePath(String mappingFilePath) {
+		this.mappingFilePath = mappingFilePath;
 	}
 	
 //	/**
