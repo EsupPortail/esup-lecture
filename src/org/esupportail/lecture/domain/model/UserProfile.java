@@ -42,8 +42,7 @@ public class UserProfile {
 	private static final Log LOG = LogFactory.getLog(UserProfile.class);
 	
 	/**
-	 * Id of the user, get from externalService request by USER_ID, defined in the channel config.
-	 * @see ChannelConfig#loadUserId()
+	 * Id of the user, get from externalService 
 	 */
 	private String userId;
 	
