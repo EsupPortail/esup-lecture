@@ -397,7 +397,7 @@ public class CustomManagedCategory extends CustomCategory {
 			LOG.debug(ID + getElementId() + " - removeCustomSource(" + sourceId + ")");
 		}
 		removeCustomManagedSource(sourceId);
-		// TODO (GB later ajouter pour les personnal)
+		// TODO (GB later) ajouter pour les personnal
 	}
 	
 	/**
@@ -482,7 +482,7 @@ public class CustomManagedCategory extends CustomCategory {
 			LOG.debug(ID + getElementId() + " - containsCustomSource(" + sourceId + ")");
 		}
 		return containsCustomManagedSource(sourceId);
-		// TODO (GB later ajouter pour les personnal)
+		// TODO (GB later) ajouter pour les personnal
 		
 	}
 

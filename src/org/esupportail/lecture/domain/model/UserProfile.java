@@ -364,7 +364,7 @@ public class UserProfile {
 	 * @param categoryId customManagedCategory ID
 	 */
 	public void removeCustomManagedCategoryFromProfile(final String categoryId) {
-		//TODO (GB) A qoui sert il celui ci ?
+		//TODO (GB later) A qoui sert il celui ci ?
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("removeCustomManagedCategoryFromProfile(" + categoryId + ")");
 		}
@@ -420,7 +420,7 @@ public class UserProfile {
 	 * @param sourceId customManagedSource ID
 	 */
 	public void removeCustomManagedSourceFromProfile(final String sourceId) {
-		//TODO (GB) A qoui sert il celui ci ?
+		//TODO (GB later) A qoui sert il celui ci ?
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("removeCustomManagedSourceFromProfile(" + sourceId + ")");
 		}
@@ -432,7 +432,7 @@ public class UserProfile {
 			}
 		}
 		cleanCustomSource(sourceId); 
-		// TODO (GB) pourquoi pas un removeCustomManagedSource ?
+		// TODO (GB later) pourquoi pas un removeCustomManagedSource ?
 	}
 	
 	

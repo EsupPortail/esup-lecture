@@ -153,7 +153,6 @@ public class Context {
 	 * @see Context#updateCustom(CustomContext, ExternalService)
 	 */
 	synchronized protected List<ProfileVisibility> getVisibleCategoriesAndUpdateCustom(CustomContext customContext, ExternalService ex) {
-			// TODO (GB) * vérifeir avaec context.updateCustom
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - getVisibleCategoriesAndUpdateCustom("+this.getId()+",externalService)");
 		}

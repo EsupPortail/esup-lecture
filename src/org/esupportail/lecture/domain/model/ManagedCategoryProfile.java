@@ -367,7 +367,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - getSourceProfileById("+id+")");
 		}
-//		 TODO (GB) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
+//		 TODO (GB later) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
 		return (ManagedSourceProfile) getElement().getSourceProfileById(id);
 
 	}

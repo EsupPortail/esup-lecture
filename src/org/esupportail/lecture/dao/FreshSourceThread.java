@@ -111,7 +111,7 @@ public class FreshSourceThread extends Thread {
 			ret.setXmlStream(xml);
 			ret.setXmlType(xmltype);
 			ret.setUrl(sourceURL);
-			// TODO (GB --> RB) Pourquoi as tu commenté ces deux lignes ?
+			// TODO (RB <-- GB) Pourquoi as tu commenté ces deux lignes ?
 			//			ret.setItemXPath(sourceProfile.getItemXPath());
 			//			ret.setXsltURL(sourceProfile.getXsltURL());
 		} catch (DocumentException e) {

@@ -17,7 +17,6 @@ import org.esupportail.lecture.exceptions.domain.UnknownException;
  *
  */
 public class SourceDummyBean extends SourceBean implements DummyBean {
-	// TODO (GB) Add ElementDummyBeanException
 	
 	/* 
 	 *************************** PROPERTIES ******************************** */	

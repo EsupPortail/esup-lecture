@@ -62,6 +62,8 @@ import org.springframework.util.Assert;
  * he has a customContext defined in his userProfile.
  * To have a customContext defined in a userProfile, the service
  * getContext must have been called one time (over several user session)
+ * This class throws ContextNotFoundException because getting context is not an
+ * automatic research, it is leading by higher layer.
  * @author gbouteil
  */
 public class DomainServiceImpl implements DomainService, InitializingBean {
@@ -478,24 +480,12 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomContext customContext = userProfile.getCustomContext(contextId);
-		// TODO (GB) ** ici
 		List<ProfileAvailability> couples = customContext.getVisibleCategories(ex);
 		for (ProfileAvailability couple : couples) {
 			CategoryBean category;
 			category = new CategoryBean(couple);
 			listCategoryBean.add(category);
 		}	
-		// Inutile ici car le context est appelé par la couche supérieure et non de façon automatique par le métier
-			/*
-		} catch	(ContextNotFoundException e) {
-			String errorMsg = "ContextNotFoundException for service 'getVisibleCategories(user "
-				+ uid + ", context "+contextId + ")";
-			LOG.error(errorMsg);
-			// TODO (GB) ** où sont ils effacés ailleurs ? quel sens cela a t il ici ?
-			userProfile.removeContextFromProfile(contextId);
-			throw new InternalDomainException(errorMsg, e);
-		}
-		 */	
 		return listCategoryBean;
 
 	}

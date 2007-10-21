@@ -36,7 +36,7 @@ import org.springframework.core.io.ClassPathResource;
  * @author gbouteil
  *
  */
-// TODO (gb) later : refaire un vrai driver des tests
+// TODO (GB later) : refaire un vrai driver des tests
 public class DomainTest {
 	/*
 	 ************************** PROPERTIES ******************************** */	
@@ -121,7 +121,7 @@ public class DomainTest {
 //			testGetAvailableSources();
 //			testTimeOutValues();
 		
-			// TODO (GB) later : tester pour un user OBLIGED et ALLOWED opour une source : le OBLIGED est prioritaire
+			// TODO (GB later) : tester pour un user OBLIGED et ALLOWED opour une source : le OBLIGED est prioritaire
 			
 		} catch (InternalExternalException e) {
 			System.out.println("\n!!! EXCEPTION !!!");
