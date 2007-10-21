@@ -207,7 +207,7 @@
 	</bean>
 	 -->
 	
-	<bean id="daoServiceTest" class="org.esupportail.lecture.dao.DaoServiceStub">
+	<bean id="daoServiceStub" class="org.esupportail.lecture.dao.DaoServiceStub">
 		<description>
 			This bean provides the dao service of the application, used by the 
 			domain.model.

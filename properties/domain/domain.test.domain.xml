@@ -56,7 +56,7 @@
 			This bean is the main domain model class, used by the domainService.
 		</description>
 		<property name="daoService">
-			<ref bean="daoServiceTest"/>
+			<ref bean="daoServiceStub"/>
 		</property>	
 		<property name="externalService">
 			<ref bean="externalService"/>
@@ -69,7 +69,7 @@
 	<!-- 
 	<bean
 		id="domainService"
-		class="org.esupportail.lecture.domain.DomainServiceTest">
+		class="org.esupportail.lecture.domain.DomainServiceStub">
 		<description>
 			This bean provides the domain service of the application, used by the 
 			web interface and the command-line calls.
@@ -107,7 +107,7 @@
 	
 	<bean
 		id="externalService"
-		class="org.esupportail.lecture.domain.ExternalServiceTest"
+		class="org.esupportail.lecture.domain.ExternalServiceStub"
 		>
 		<description>
 			This bean provides the external (portlet and/or servlet) service of the application, used by the 

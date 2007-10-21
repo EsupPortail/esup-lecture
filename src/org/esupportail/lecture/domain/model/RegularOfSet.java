@@ -59,7 +59,7 @@ public class RegularOfSet {
 			return false;
 		} catch (InternalExternalException e) {
 			log.error("User attribute evaluation impossible (external service unavailable) : "+e.getMessage());
-			// TODO (GB) revoir ?
+			// TODO (GB later) revoir ?
 			return false;
 		}
 		// TODO (GB later) voir le cas ou il y est mais que le portail ne connait pas

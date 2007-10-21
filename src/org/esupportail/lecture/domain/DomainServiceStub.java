@@ -35,7 +35,7 @@ import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryExce
  * @author gbouteil
  *
  */
-public class DomainServiceTest implements DomainService {
+public class DomainServiceStub implements DomainService {
 
 	/*
 	 ************************** PROPERTIES ******************************** */	
@@ -67,7 +67,7 @@ public class DomainServiceTest implements DomainService {
 	 * @param sources
 	 * @param items
 	 */
-	public DomainServiceTest(ContextBean context, List<CategoryBean> categories, List<SourceBean> sources, List<ItemBean> items) {
+	public DomainServiceStub(ContextBean context, List<CategoryBean> categories, List<SourceBean> sources, List<ItemBean> items) {
 		super();
 		this.context = context;
 		this.categories = categories;

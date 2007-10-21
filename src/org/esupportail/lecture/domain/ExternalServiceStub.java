@@ -10,9 +10,9 @@ import org.apache.commons.logging.LogFactory;
 
 /**
  * @author bourges
- * an implementation of ExternalService for tests
+ * an implementation of ExternalService for domain tests
  */
-public class ExternalServiceTest implements ExternalService {
+public class ExternalServiceStub implements ExternalService {
 
 	/*
 	 *************************** PROPERTIES ******************************** */	
@@ -20,14 +20,14 @@ public class ExternalServiceTest implements ExternalService {
 	/**
 	 * Log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(ExternalServiceTest.class); 
+	protected static final Log LOG = LogFactory.getLog(ExternalServiceStub.class); 
 
 	/*
 	 *************************** INIT ******************************** */	
 	/**
 	 * Default constructor.
 	 */
-	public ExternalServiceTest() {
+	public ExternalServiceStub() {
 		super();
 	}
 
