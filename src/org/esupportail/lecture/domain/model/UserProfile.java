@@ -42,7 +42,7 @@ public class UserProfile {
 	private static final Log LOG = LogFactory.getLog(UserProfile.class);
 	
 	/**
-	 * Id of the user, get from externalService 
+	 * Id of the user, get from externalService.
 	 */
 	private String userId;
 	
@@ -64,7 +64,7 @@ public class UserProfile {
 	/**
 	 * Database Primary Key.
 	 */
-	private long userProfilePK;
+	private Long userProfilePK;
 
 	
 	/*
@@ -523,35 +523,6 @@ public class UserProfile {
 	}
 
 	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null) {
-			return false;
-		}
-		if (!(o instanceof UserProfile)) {
-			return false;
-		}
-		final UserProfile userprofile = (UserProfile) o;
-		if (!userprofile.getUserId().equals(this.getUserId())) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return this.getUserId().hashCode();
-	}
-
-	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -623,14 +594,14 @@ public class UserProfile {
 	/**
 	 * @return database primary Key
 	 */
-	public long getUserProfilePK() {
+	public Long getUserProfilePK() {
 		return userProfilePK;
 	}
 
 	/**
 	 * @param userProfilePK - database Primary Key
 	 */
-	public void setUserProfilePK(final long userProfilePK) {
+	public void setUserProfilePK(final Long userProfilePK) {
 		this.userProfilePK = userProfilePK;
 	}
 
@@ -668,6 +639,35 @@ public class UserProfile {
 	private void setCustomSources(final Map<String, CustomSource> customSources) {
 		this.customSources = customSources;
 		//Needed by Hibernate
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		final UserProfile other = (UserProfile) obj;
+		if (userProfilePK != other.userProfilePK) {
+			return false;
+		}
+		return true;
 	}
 
 
