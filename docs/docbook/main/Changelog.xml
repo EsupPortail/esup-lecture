@@ -29,11 +29,21 @@
   </articleinfo>
 
   <section>
-    <title>Version 0.8.4 - In work</title>
+    <title>Version 0.9.0</title>
 
     <itemizedlist>
       <listitem>
         <para>Added: It uses esup-commons 0.17.3</para>
+      </listitem>
+
+      <listitem>
+        <para>***** Now attribute used to find userID is uidPortalAttribute of
+        bean authenticationService in auth.xml and no more userId in
+        esup-lecture.xml</para>
+      </listitem>
+
+      <listitem>
+        <para>Added: Full servlet mode support</para>
       </listitem>
     </itemizedlist>
   </section>

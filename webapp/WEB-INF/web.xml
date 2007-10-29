@@ -149,7 +149,7 @@
 		</init-param>
 		<init-param>
 			<param-name>portlet-guid</param-name>
-			<param-value>LecturePortlet.esup-lecture</param-value>
+			<param-value>esup-lecture.esup-lecture</param-value>
 		</init-param>
 	</servlet>
 	<servlet-mapping>

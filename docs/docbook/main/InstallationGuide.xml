@@ -29,6 +29,16 @@
   </articleinfo>
 
   <section>
+    <title>Important note</title>
+
+    <para>Because of uPortal limitation before 2.6.1 release in session
+    objects management esup-lecture may produce null pointer exceptions
+    randomly. For this esup-lecture, since 0.9.0 release has a full support of
+    servlet mode. Please see “Servlet mode” section for more
+    information.</para>
+  </section>
+
+  <section>
     <title>Installation</title>
 
     <itemizedlist>
@@ -113,8 +123,8 @@
         with Tomcat create a LecturePortlet.xml file in the Toncat
         conf/Catalina/localhost subfolder with content like this:</para>
 
-        <para><screen>&lt;Context path="/LecturePortlet"
-        docBase="D:/esupdev/esupdev-2.5-esup-2/uPortal-quick-start/webapps/LecturePortlet"&gt;
+        <para><screen>&lt;Context path="/esup-lecture"
+        docBase="D:/esupdev/esupdev-2.5-esup-2/uPortal-quick-start/webapps/esup-lecture"&gt;
         &lt;/Context&gt;</screen></para>
       </listitem>
 
@@ -130,8 +140,8 @@
 
         <para><note>
             <para>Portlet definition ID is very important. Here it is
-            <emphasis>LecturePortlet.esup-lecture.</emphasis> LecturePortlet
-            must be equal to the appliation server context name and
+            <emphasis>esup-lecture.esup-lecture.</emphasis> Fisrt esup-lecture
+            must be equal to the appliation server context name and second
             esup-lecture must be equal to the portlet-name of the
             WEB-INF/portlet.xml file.</para>
 
@@ -186,7 +196,7 @@
         &lt;!-- The syntax of the portletDefinitionId is [portlet-context-name].[portlet-name] --&gt;
         &lt;parameter&gt;
             &lt;name&gt;portletDefinitionId&lt;/name&gt;
-            &lt;value&gt;LecturePortlet.esup-lecture&lt;/value&gt;
+            &lt;value&gt;esup-lecture.esup-lecture&lt;/value&gt;
             &lt;description&gt;The syntax of the portletDefinitionId is [portlet-context-name].[portlet-name]&lt;/description&gt;
             &lt;ovrd&gt;N&lt;/ovrd&gt;
         &lt;/parameter&gt;
@@ -233,7 +243,7 @@
 
       <itemizedlist>
         <listitem>
-          <para><command>esup-lecture.xml</command> : main configuration file.
+          <para><command>esup-lecture.xml</command>: main configuration file.
           Contexts and CategoryProfiles definition.</para>
 
           <para>It also deals with <command>&lt;category&gt;.xml</command> :
@@ -241,13 +251,17 @@
         </listitem>
 
         <listitem>
-          <para><command>mappings.xml</command> : declarations about xslt
+          <para><command>mappings.xml</command>: declarations about xslt
           transformation for interface display</para>
         </listitem>
 
         <listitem>
-          <para><command>portlet.xml</command> : it needs declaration of
-          portal user attributes used by Lecture Channel</para>
+          <para><command>portlet.xml</command>: it needs declaration of portal
+          user attributes used by Lecture Portlet</para>
+        </listitem>
+
+        <listitem>
+          <para><command>auth.xml</command>: auth configuration</para>
         </listitem>
       </itemizedlist>
 
@@ -270,9 +284,6 @@
 &lt;!DOCTYPE channelConfig SYSTEM "lecture-config.dtd" &gt;
 &lt;channelConfig&gt;
   
-  &lt;!-- user attribute to define a user Id --&gt;
-  &lt;userId&gt;displayName&lt;/userId&gt;
-  
   &lt;!-- contexts definition --&gt;
   &lt;context&gt; ... &lt;/context&gt;
   &lt;context&gt; ... &lt;/context&gt;
@@ -284,13 +295,6 @@
   ...
 
 &lt;/channelConfig&gt; </programlisting></para>
-          </listitem>
-
-          <listitem>
-            <para>element <command>userId</command> : it indicates which
-            portal user attribute is used to define userId in the channel.
-            Portal user attributes used must be defined in the portlet.xml -
-            see "portlet.xml" section.</para>
           </listitem>
 
           <listitem>
@@ -630,8 +634,8 @@
         <title>portlet.xml</title>
 
         <para>All portal user attributes used by portlet must be declared in
-        the <command>webapp/WEB-INF/portlet.xml</command>, here is an example
-        : <programlisting>&lt;user-attribute&gt;
+        the <command>webapp/WEB-INF/portlet.xml</command>, here is an example:
+        <programlisting>&lt;user-attribute&gt;
   &lt;description&gt;the username of the portal user&lt;/description&gt;
   &lt;name&gt;username&lt;/name&gt;
 &lt;/user-attribute&gt;
@@ -644,6 +648,73 @@
   &lt;name&gt;sn&lt;/name&gt;
 &lt;/user-attribute&gt;</programlisting></para>
       </section>
+
+      <section>
+        <title>auth.xlm</title>
+
+        <para>This file (<command>properties/auth.xml</command>) is used to
+        define auth mecanism. For example when using CAS in servlet mode or a
+        portal in portlet mode:</para>
+
+        <para><programlisting>&lt;bean id="authenticationService"
+  class="org.esupportail.commons.services.authentication.PortalOrCasFilterAuthenticator"&gt;
+  &lt;description&gt;The name of the Portal attribute that holds the uid of users, as set in portlet.xml.&lt;/description&gt;
+  &lt;property name="uidPortalAttribute" value="uid" /&gt;
+&lt;/bean&gt;
+</programlisting></para>
+      </section>
+    </section>
+  </section>
+
+  <section>
+    <title>Servlet mode</title>
+
+    <section>
+      <title>Introduction</title>
+
+      <para>You can used esup-lecture in servlet mode. In this mode you don’t
+      have the notion of Portlet preference and you can’t define more than one
+      context in your esup-lecture.xml file. In servlet mode this context must
+      have an id with value “context”. Example:<programlisting>&lt;context name="Simple context" <emphasis>id="context"</emphasis>&gt;
+  &lt;description&gt;Simple context&lt;/description&gt; 
+  &lt;refCategoryProfile refId="rss" /&gt;
+&lt;/context&gt;</programlisting></para>
+
+      <para>To used serlvet mode you just have to adapt
+      <command>buil.properties</command> with
+      <command>deploy.type=servlet</command> before using <command>ant
+      deploy</command>.</para>
+    </section>
+
+    <section>
+      <title>Authentication</title>
+
+      <para>In servlet mode you can’t used your portal for authentication. If
+      you used CAS you don’t have to modify the <command>auth.xml</command>
+      file but you have to adapt CAS parameters. For this, you will find
+      properties (<command>tomcat.host</command>,
+      <command>tomcat.port</command>, <command>cas.url</command>) in
+      <command>buil.properties</command> file. With these properties
+      <command>ant deploy</command> will automatically make appropriate
+      changes in your <command>web.xml</command> file.</para>
+    </section>
+
+    <section>
+      <title>Authorization</title>
+
+      <para>Authorizations defined in your <command>esup-lecture.xml</command>
+      file or provided by news portlet are based in attributes or groups
+      issued form uPortal. Of course, in servlet mode you don’t have access to
+      these informations naturally. So, you have to install (if not yet
+      present in your uPortal distribution) esup-portal-ws (see <ulink
+      url="http://sourcesup.cru.fr/projects/esup-portal-ws/">http://sourcesup.cru.fr/projects/esup-portal-ws/</ulink>).
+      After, you have to configure esup-lecture to used this Web Service. For
+      this, you have <command>portalService.url</command>,
+      <command>portalService.testUserId</command>,
+      <command>portalService.testGroupId</command>,
+      <command>portalService.testGroupName</command> properties in the
+      <command>config.properties</command> file. Finally, you can test the Web
+      Service with <command>ant test-portal</command>.</para>
     </section>
   </section>
 </article>
