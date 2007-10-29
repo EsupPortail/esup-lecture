@@ -54,6 +54,8 @@
 		</description>
 		<property name="daoService" ref="daoService"/>
 		<property name="externalService" ref="externalService"/>
+		<property name="configFilePath" value="/properties/esup-lecture.xml"/>
+		<property name="mappingFilePath" value="/properties/mappings.xml"/>		
 	</bean>
 	
 	<!-- 
@@ -75,6 +77,8 @@
 	
 	<bean id="servletService" class="org.esupportail.lecture.domain.utils.ServletService">
 		<description>external service in servlet mode</description>
+		<property name="portalService" ref="portalService" />
+		<property name="authenticationService" ref="authenticationService" />
 	</bean>
 
 	<bean id="portletService" class="org.esupportail.lecture.domain.utils.PortletService">

@@ -29,6 +29,7 @@
 		properties/i18n/i18n.xml
 		properties/ldap/ldap.xml
 		properties/auth/auth.xml
+		properties/portal/portal.xml
 		properties/urlGeneration/urlGeneration.xml
 		properties/domain/domain.xml
 		properties/portal/portal.xml

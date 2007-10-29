@@ -24,15 +24,22 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
  */
 public class PortletService implements ModeService {
 
+
 	/*
 	 ************************** PROPERTIES ******************************** */	
 	/**
-	 * Log instance 
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(PortletService.class);
+	protected static final Log LOG = LogFactory.getLog(PortletService.class);
 
 	/* 
 	 ************************** INIT ****************************************/
+	/**
+	 * Default constructor.
+	 */
+	public PortletService() {
+		super();
+	}
 
 	/* 
 	 ************************** METHODS *************************************/
@@ -41,9 +48,9 @@ public class PortletService implements ModeService {
 	 * @throws InternalExternalException,NoExternalValueException  
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getPreference(java.lang.String)
 	 */
-	public String getPreference(String name)throws InternalExternalException,NoExternalValueException  {
-		if (log.isDebugEnabled()){
-			log.debug("getPreference("+name+")");
+	public String getPreference(final String name)throws InternalExternalException  {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getPreference(" + name + ")");
 		}
 		String value;
 		try {
@@ -52,11 +59,12 @@ public class PortletService implements ModeService {
 			PortletRequest request = (PortletRequest) externalContext.getRequest();
 			PortletPreferences portletPreferences = request.getPreferences();
 			value = portletPreferences.getValue(name, "default");
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new InternalExternalException(e);
 		}
-		if (value == null){
-			throw new NoExternalValueException("No value for portlet preference '"+ name +"' returned by external service");
+		if (value == null) {
+			throw new NoExternalValueException("No value for portlet preference '"
+				+ name + "' returned by external service");
 		}
 		return value;
 		
@@ -66,22 +74,23 @@ public class PortletService implements ModeService {
 	 * @throws InternalExternalException,NoExternalValueException 
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getUserAttribute(java.lang.String)
 	 */
-	public String getUserAttribute(String attribute) throws InternalExternalException,NoExternalValueException {
-		if (log.isDebugEnabled()){
-			log.debug("getUserAttribute("+attribute+")");
+	public String getUserAttribute(final String attribute) throws InternalExternalException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getUserAttribute(" + attribute + ")");
 		}
 		String value; 
 		try {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = facesContext.getExternalContext();
 			PortletRequest request = (PortletRequest) externalContext.getRequest();
-			Map<String,String> userInfo = (Map)request.getAttribute(PortletRequest.USER_INFO);
+			Map<String, String> userInfo = (Map) request.getAttribute(PortletRequest.USER_INFO);
 			value = userInfo.get(attribute);
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new InternalExternalException(e);
 		}
 		if (value == null) {
-			throw new NoExternalValueException("User Attribute "+attribute+" not found ! See your portlet.xml file for user-attribute definition.");
+			throw new NoExternalValueException("User Attribute "
+				+ attribute + " not found ! See your portlet.xml file for user-attribute definition.");
 		}
 		return value;
 	}
@@ -90,9 +99,9 @@ public class PortletService implements ModeService {
 	 * @throws InternalExternalException 
 	 * @see org.esupportail.lecture.domain.utils.ModeService#isUserInGroup(java.lang.String)
 	 */
-	public boolean isUserInGroup(String group) throws InternalExternalException {
-		if (log.isDebugEnabled()){
-			log.debug("isUserInGroup("+group+")");
+	public boolean isUserInGroup(final String group) throws InternalExternalException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("isUserInGroup(" + group + ")");
 		}
 		boolean value = Boolean.FALSE;
 		try {			
@@ -102,7 +111,7 @@ public class PortletService implements ModeService {
 			if (request.isUserInRole(group)) {
 				value = Boolean.TRUE;
 			} 
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new InternalExternalException(e);
 		}
 		return value;

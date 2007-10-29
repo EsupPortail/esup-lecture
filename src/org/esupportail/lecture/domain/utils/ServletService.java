@@ -5,25 +5,55 @@
 */
 package org.esupportail.lecture.domain.utils;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.services.authentication.AuthenticationService;
+import org.esupportail.commons.utils.Assert;
+import org.esupportail.portal.ws.client.PortalService;
+import org.springframework.beans.factory.InitializingBean;
 
 /**
  * @author gbouteil
  * Access to external in serlvet mode
  */
-// TODO (GB/RB) make better
-public class ServletService implements ModeService {
+public class ServletService implements ModeService, InitializingBean {
 
 	/*
 	 ************************** PROPERTIES ******************************** */	
 	/**
-	 * Log instance 
+	 * Log instance. 
 	 */
-	protected static final Log log = LogFactory.getLog(ServletService.class);
+	protected static final Log LOG = LogFactory.getLog(ServletService.class);
+	/**
+	 * Portal service.
+	 */
+	private PortalService portalService;
+	/**
+	 * Authentication service.
+	 */
+	private AuthenticationService authenticationService;
 
 	/* 
 	 ************************** INIT ****************************************/
+	/**
+	 * Default constructor.
+	 */
+	public ServletService() {
+		super();
+	}
+
+	/**
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+	 */
+	public void afterPropertiesSet() throws Exception {
+		Assert.notNull(portalService, "property portalService of class " 
+				+ this.getClass().getName() + " can not be null");
+		Assert.notNull(authenticationService, "property authenticationService of class " 
+				+ this.getClass().getName() + " can not be null");
+	}
+
 
 	/* 
 	 ************************** METHODS *************************************/
@@ -31,30 +61,55 @@ public class ServletService implements ModeService {
 	/**
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getPreference(java.lang.String)
 	 */
-	public String getPreference(String name) {
-//		default return value in case of serlvet use case (not normal mode)
+	public String getPreference(final String name) {
+		// default return value in case of serlvet use case (because Preference have no sense in this mode)
 		return name;
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getUserAttribute(java.lang.String)
 	 */
-	public String getUserAttribute(String attribute) {
-//		default return value in case of serlvet use case (not normal mode)
-		return attribute;
+	public String getUserAttribute(final String attribute) {
+		String ret = null;
+		String userId = authenticationService.getCurrentUserId();
+		List<String> attributeList = portalService.getUserAttributeValues(userId, attribute);
+		if (attributeList.size() >= 1) {
+			ret = attributeList.get(0);
+			if (attributeList.size() > 1) {
+				LOG.warn("getUserAttribute(" + attribute + ") for userId " + userId
+						+ "return more than 1 value. Just first one is used !");
+			}
+		}
+		return ret;
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.utils.ModeService#isUserInGroup(java.lang.String)
 	 */
-	public boolean isUserInGroup(@SuppressWarnings("unused")
-	String group) {
-//		default return value in case of serlvet use case (not normal mode)
-		return false;
+	public boolean isUserInGroup(final String group) {
+		String userId = authenticationService.getCurrentUserId();
+		return portalService.isUserMemberOfGroup(userId, group);
 	}
-	
+
+
 	/* 
 	 ************************** ACCESSORS *************************************/
+	/**
+	 * @param portalService the portalService to set
+	 */
+	public void setPortalService(final PortalService portalService) {
+		this.portalService = portalService;
+	}
+
+	/**
+	 * @param authenticationService the authenticationService to set
+	 */
+	public void setAuthenticationService(final AuthenticationService authenticationService) {
+		this.authenticationService = authenticationService;
+	}
+
+
+	
 
 
 }

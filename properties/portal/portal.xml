@@ -14,19 +14,19 @@
 	-->
 
 	<bean 
-		id="portalService.portlet" 
+		id="portalService" 
 		class="org.esupportail.portal.ws.client.support.uportal.CachingUportalServiceImpl"
 		>
-		<property name="url" value="http://localhost/services/UportalService">
+		<property name="url" value="${portalService.url}">
 			<description>The URL that responds to the portal web service.</description>
 		</property>
-		<property name="testUserId" value="paubry">
+		<property name="testUserId" value="${portalService.testUserId}">
 			<description>A test user id, used by the ant target test-portal.</description>
 		</property>
-		<property name="testGroupId" value="local.0">
+		<property name="testGroupId" value="${portalService.testGroupId}">
 			<description>A test group id, used by the ant target test-portal.</description>
 		</property>
-		<property name="testGroupName" value="Tous les groupes de personnes">
+		<property name="testGroupName" value="${portalService.testGroupName}">
 			<description>A test group name, used by the ant target test-portal.</description>
 		</property>
 		<property name="cacheManager" ref="cacheManager">
