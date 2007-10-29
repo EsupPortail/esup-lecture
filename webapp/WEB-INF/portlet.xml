@@ -54,4 +54,9 @@
 		<description>the sn of the portal user</description>
 		<name>sn</name>
 	</user-attribute>
+
+	<user-attribute>
+		<description>the uid of the portal user</description>
+		<name>uid</name>
+	</user-attribute>
 </portlet-app>

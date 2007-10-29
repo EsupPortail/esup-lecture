@@ -21,8 +21,13 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 	<context 
 	  name = "Contexte d'exemple"
 	  id = "context">
-	  <description>Test Context used in servlet mode (NOT NORMAL MODE!)</description> 
-  	  <refCategoryProfile refId="demo2"/>
+		<description><![CDATA[
+<h1>Servlet Lecture du CRI</h1>
+Version de test. Merci de signaler tout problème à <a title="Envoyer un mail à raymond.bourges@univ-rennes1.fr" href="mailto:raymond.bourges@univ-rennes1.fr">raymond.bourges@univ-rennes1.fr</a>
+]]>
+		</description> 
+		<refCategoryProfile refId="liens" />
+		<refCategoryProfile refId="rss" />
 	</context>
 
 	<categoryProfile name="Les liens utiles au CRI" id="liens"
@@ -32,7 +37,7 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 			<allowed />
 			<autoSubscribed />
 			<obliged>
-				<regular attribute="username" value="admin"/>
+				<regular attribute="uid" value="admin"/>
 				<group name="pags.PERS_957" />
 			</obliged>
 		</visibility>
@@ -45,7 +50,7 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 			<allowed />
 			<autoSubscribed />
 			<obliged>
-				<regular attribute="username" value="admin"/>
+				<regular attribute="uid" value="admin"/>
 				<group name="pags.PERS_957" />
 			</obliged>
 		</visibility>

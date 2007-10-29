@@ -11,7 +11,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.utils.Assert;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.portal.ws.client.PortalService;
+import org.esupportail.portal.ws.client.exceptions.PortalGroupNotFoundException;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
@@ -69,16 +72,22 @@ public class ServletService implements ModeService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getUserAttribute(java.lang.String)
 	 */
-	public String getUserAttribute(final String attribute) {
+	public String getUserAttribute(final String attribute) throws InternalExternalException {
 		String ret = null;
 		String userId = authenticationService.getCurrentUserId();
 		List<String> attributeList = portalService.getUserAttributeValues(userId, attribute);
-		if (attributeList.size() >= 1) {
+		if (attributeList != null && attributeList.size() >= 1) {
 			ret = attributeList.get(0);
 			if (attributeList.size() > 1) {
 				LOG.warn("getUserAttribute(" + attribute + ") for userId " + userId
 						+ "return more than 1 value. Just first one is used !");
 			}
+		}
+		if (ret == null) {
+			throw new NoExternalValueException("User Attribute \""
+				+ attribute + "\" not found ! See your portal attributes definition " 
+				+ "(with ant test-portal for example)"
+				+ " and verify your \"regular\" tags in esup-lecture.xml config file.");
 		}
 		return ret;
 	}
@@ -88,7 +97,13 @@ public class ServletService implements ModeService, InitializingBean {
 	 */
 	public boolean isUserInGroup(final String group) {
 		String userId = authenticationService.getCurrentUserId();
-		return portalService.isUserMemberOfGroup(userId, group);
+		boolean ret = false;
+		try {
+			ret = portalService.isUserMemberOfGroup(userId, group);			
+		} catch (PortalGroupNotFoundException e) {
+			LOG.info("Group " + group + " not found. Return false in isUserInGroup().");
+		}
+		return ret;
 	}
 
 

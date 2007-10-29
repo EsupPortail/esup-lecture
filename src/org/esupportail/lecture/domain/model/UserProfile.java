@@ -494,7 +494,7 @@ public class UserProfile {
 	   	}
 	}
 	
-	/**	 * 
+	/**
 	 * Remove a customCategory from this userProfile only.
 	 * @param sourceId
 	 */

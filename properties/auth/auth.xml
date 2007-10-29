@@ -14,13 +14,23 @@
 	-->
 
 	<bean 
-		id="authenticationService"
+		id="authenticationService.sav"
 		class="org.esupportail.commons.services.authentication.PortalOrCasFilterAuthenticator"
 		>
 		<description>
 			The name of the Portal attribute that holds the uid of users, as set in portlet.xml.
 		</description>
 		<property name="uidPortalAttribute" value="username" />
+	</bean>
+
+	<bean 
+		id="authenticationService"
+		class="org.esupportail.commons.services.authentication.OfflineFixedUserAuthenticator"
+		>
+		<description>
+			The name of the Portal attribute that holds the uid of users, as set in portlet.xml.
+		</description>
+		<property name="userId" value="admin" />
 	</bean>
 
 </beans>

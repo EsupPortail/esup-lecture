@@ -54,7 +54,61 @@
 
 	<target name="compile" depends="compile-web,compile-batch" description="compile the project" />
 
-	<target name="deploy" depends="compile-web,commons-deploy" description="deploy the application" />
+	<target name="deploy" depends="compile-web,commons-deploy" description="deploy the application" >
+		<if>
+			<equals arg1="${deploy.type}" arg2="portlet" />
+			<then> <!-- portket -->
+			    <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false"
+	             	flags="g"
+	            	match=".!-- IS_PORTLET" 
+	               	replace="" /> 
+	    		<replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false" 
+	               	flags="g"
+	               	match="IS_PORTLET --." 
+	               	replace="" />
+			</then>
+			<else> <!-- servlet or quickstart -->
+				<if>
+					<not>
+						<isset property="use.cas" />
+					</not>
+					<then>
+						<property name="use.cas" value="true" />
+					</then>
+				</if>
+				<if>
+					<ispropertytrue property="use.cas" /> <!-- true by default -->
+					<then>
+					    <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false"
+					               flags="g"
+					               match=".!-- USE_CAS" 
+					               replace="" /> 
+					    <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false" 
+					               flags="g"
+					               match="USE_CAS --." 
+					               replace="" />
+					</then>
+				</if>
+			    <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false"
+			               flags="g"
+			               match=".!-- IS_SERVLET" 
+			               replace="" /> 
+			    <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false" 
+			               flags="g"
+			               match="IS_SERVLET --." 
+			               replace="" />
+			    <replace file="${deploy.home}/WEB-INF/web.xml" 
+			    	token="[CAS_URL]" 
+			        value="${cas.url}" />
+			    <replace file="${deploy.home}/WEB-INF/web.xml" 
+			    	token="[TOMCAT_HOST]" 
+			        value="${tomcat.host}" />
+			    <replace file="${deploy.home}/WEB-INF/web.xml"
+			    	token="[TOMCAT_PORT_STRING]" 
+			    	value="${tomcat.port.string}" />
+			</else>
+		</if>
+	</target>
 
 	<target name="clean" depends="commons-clean" description="clean the project" />
 
