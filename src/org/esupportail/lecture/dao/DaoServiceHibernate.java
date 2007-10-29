@@ -72,7 +72,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		UserProfile ret = userProfile;
 		//getHibernateTemplate().lock(userProfile, LockMode.NONE);
 		//ret = (UserProfile) getHibernateTemplate().merge(userProfile);
-		getHibernateTemplate().update(userProfile); // update object inthe hibernate session
+		// update object in the hibernate session
+		getHibernateTemplate().update(userProfile); 
 		return ret;
 	}
 
