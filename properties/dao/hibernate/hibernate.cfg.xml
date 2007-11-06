@@ -19,9 +19,7 @@
 		</property>
 		<property name="hibernate.connection.username">test</property>
 		<property name="hibernate.connection.password">test</property>
-		<property name="hibernate.dialect">
-			org.hibernate.dialect.MySQLDialect
-		</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
 		<property name="hibernate.c3p0.min_size">5</property>
 		<property name="hibernate.c3p0.max_size">20</property>
 		<property name="hibernate.c3p0.timeout">1800</property>

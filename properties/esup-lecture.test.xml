@@ -38,6 +38,7 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 			<autoSubscribed />
 			<obliged>
 				<regular attribute="uid" value="admin"/>
+				<regular attribute="uid" value="bourges"/>
 				<group name="pags.PERS_957" />
 			</obliged>
 		</visibility>
@@ -51,6 +52,7 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 			<autoSubscribed />
 			<obliged>
 				<regular attribute="uid" value="admin"/>
+				<regular attribute="uid" value="bourges"/>
 				<group name="pags.PERS_957" />
 			</obliged>
 		</visibility>

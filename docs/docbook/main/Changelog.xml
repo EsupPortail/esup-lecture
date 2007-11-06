@@ -7,7 +7,7 @@
   <articleinfo>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="images/logoCLectureV1.jpg"></imagedata>
+        <imagedata fileref="../images/logoCLectureV1.jpg"></imagedata>
       </imageobject>
     </mediaobject>
 
@@ -29,6 +29,16 @@
   </articleinfo>
 
   <section>
+    <title>Version 0.9.1</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>Fixed: hibernate Exception in servlet mode</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
     <title>Version 0.9.0</title>
 
     <itemizedlist>
@@ -44,6 +54,11 @@
 
       <listitem>
         <para>Added: Full servlet mode support</para>
+      </listitem>
+
+      <listitem>
+        <para>***** Default value for portlet-guid is now
+        esup-lecture.esup-lecture</para>
       </listitem>
     </itemizedlist>
   </section>

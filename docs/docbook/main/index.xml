@@ -7,7 +7,7 @@
   <articleinfo>
     <mediaobject>
       <imageobject>
-        <imagedata fileref="images/logoCLectureV1.jpg"></imagedata>
+        <imagedata fileref="../images/logoCLectureV1.jpg"></imagedata>
       </imageobject>
     </mediaobject>
 
@@ -32,6 +32,10 @@
     <title>News</title>
 
     <itemizedlist>
+      <listitem>
+        <para>2007-11-06: Version 0.9.1 released</para>
+      </listitem>
+
       <listitem>
         <para>2007-10-30: Version 0.9.0 released</para>
       </listitem>
@@ -74,7 +78,7 @@
 
     <para><mediaobject>
         <imageobject>
-          <imagedata fileref="images/logo_esupportail.jpg"></imagedata>
+          <imagedata fileref="../images/logo_esupportail.jpg"></imagedata>
         </imageobject>
       </mediaobject></para>
 

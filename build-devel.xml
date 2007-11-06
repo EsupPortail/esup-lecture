@@ -1,9 +1,13 @@
 <project name="esup-lecture-devel" default="_compile" basedir=".">
 
+	<property name="commons.zip-files.exclude" value="
+		webapp/index.jsp
+	" />
 	<property name="app.zip-files.shared.include" value="
     	build.xml 
 		version.properties
 		src/**/*.java src/**/*.html 
+		webapp/index.jsp
     	webapp/media/**/*
 		webapp/META-INF/MANIFEST.MF
 		webapp/stylesheets/**/*

@@ -158,9 +158,9 @@ public class FacesServlet extends HttpServlet {
     		LifecycleFactory lifecycleFactory = 
     			(LifecycleFactory) FactoryFinder.getFactory(FactoryFinder.LIFECYCLE_FACTORY);
     		lifecycle = lifecycleFactory.getLifecycle(getLifecycleId());
-    		ApplicationService applicationService = ApplicationUtils.createApplicationService();
-    		logger.info("starting " + applicationService.getName() + " v" 
-    				+ applicationService.getVersion() + "...");
+//    		ApplicationService applicationService = ApplicationUtils.createApplicationService();
+//    		logger.info("starting " + applicationService.getName() + " v" 
+//    				+ applicationService.getVersion() + "...");
     		defaultView = servletConfig.getInitParameter(DEFAULT_VIEW_PARAM);
     		if (!StringUtils.hasText(defaultView)) {
     			defaultView = DEFAULT_DEFAULT_VIEW;
@@ -303,6 +303,7 @@ public class FacesServlet extends HttpServlet {
                 return;
             }
             boolean openDatabases = true;
+            boolean closeDatabases = true;
             boolean checkVersion = true;
             boolean exceptionAlreadyCaught = ExceptionUtils.exceptionAlreadyCaught();
             if (exceptionAlreadyCaught) {
@@ -310,8 +311,9 @@ public class FacesServlet extends HttpServlet {
             	if (exceptionService != null) {
 	            	Exception exception = exceptionService.getException();
 	            	if (exception != null) {
-	            		if (exception instanceof DataAccessException) {
+	            		if (ExceptionUtils.hasCause(exception, DataAccessException.class)) {
 	            			openDatabases = false;
+	            			closeDatabases = false;
 	            		}
 	            		if (exception instanceof VersionException) {
 	            			checkVersion = false;
@@ -342,24 +344,25 @@ public class FacesServlet extends HttpServlet {
     		} else {
     			lifecycle.execute(facesContext);
     		}
-			if (openDatabases) {
-//				DatabaseUtils.commit();
-			}
 			lifecycle.render(facesContext);
+			if (openDatabases) {
+				DatabaseUtils.commit();
+			}
             if (openDatabases && ExceptionUtils.exceptionAlreadyCaught()) {
             	ExceptionService exceptionService = ExceptionUtils.getMarkedExceptionService();
-            	Exception exception = exceptionService.getException();
-            	if (exception != null && exception instanceof DataAccessException) {
-            		openDatabases = false;
+            	if (exceptionService != null) {
+	            	Exception exception = exceptionService.getException();
+	            	if (exception != null && ExceptionUtils.hasCause(exception, DataAccessException.class)) {
+	            		closeDatabases = false;
+	            	}
             	}
             }
-			if (openDatabases) {
-				DatabaseUtils.commit();//RB ????
+			if (closeDatabases) {
 				DatabaseUtils.close();
 			}
 		} catch (Exception e) {
-            DatabaseUtils.close();
 			catchException(e, request, response);
+            DatabaseUtils.close();
         } finally {
         	ContextUtils.unbindRequest(previousRequestAttributes);
         	if (facesContext != null) {
