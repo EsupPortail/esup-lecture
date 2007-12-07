@@ -38,7 +38,7 @@ import org.springframework.util.Assert;
 /**
  * @author : Raymond 
  */
-public abstract class twoPanesControllerTmp extends AbstractContextAwareController {
+public abstract class TwoPanesController extends AbstractContextAwareController {
 	/**
 	 * Log instance.
 	 */
@@ -94,7 +94,7 @@ public abstract class twoPanesControllerTmp extends AbstractContextAwareControll
 	/**
 	 * Controller constructor.
 	 */
-	public twoPanesControllerTmp() {
+	public TwoPanesController() {
 		super();
 	}
 
