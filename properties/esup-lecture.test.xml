@@ -3,9 +3,7 @@
 <!ENTITY repConf "file:///d:/tmp/conf_lecture_gwe_ray/" >
 ]>
 <channelConfig>
-
-	<!-- user attribute to define a user Id -->
-	<userId>username</userId>
+	<guestUser>admin</guestUser>
 
 	<context name="CRI" id="default">
 		<description>

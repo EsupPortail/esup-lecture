@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ELEMENT channelConfig (userId?,context*, categoryProfile*)>
+<!ELEMENT channelConfig (userId?, guestUser?, context*, categoryProfile*)>
 
 <!ELEMENT userId (#PCDATA)> <!-- deprecated since 0.8.4 -->
 <!ELEMENT guestUser (#PCDATA)>

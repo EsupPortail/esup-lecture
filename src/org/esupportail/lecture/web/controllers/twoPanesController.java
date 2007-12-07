@@ -518,4 +518,13 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 		}
 	}
 
+	/**
+	 * @return true if current is the guest user.
+	 * also we are in a guest mode
+	 * @see org.esupportail.lecture.domain.FacadeService#isGuestMode()
+	 */
+	public boolean isGuestMode() {
+		return facadeService.isGuestMode();
+	}
+
 }

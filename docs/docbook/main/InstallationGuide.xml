@@ -230,9 +230,42 @@
 
       <itemizedlist>
         <listitem>
-          <para>logging/log4j.properties for logging configuration</para>
+          <para><command>logging/log4j.properties</command> for logging
+          configuration</para>
+        </listitem>
+
+        <listitem>
+          <para><command>esup-lecture.xml</command> for global
+          configuration</para>
         </listitem>
       </itemizedlist>
+
+      <section>
+        <title>esup-lecture.xml</title>
+
+        <para>This file contents some global configuration properties:</para>
+
+        <itemizedlist>
+          <listitem>
+            <para>element <command>guestUser</command> in
+            <command>esup-lecture.xml</command>:</para>
+
+            <para><programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE channelConfig SYSTEM "lecture-config.dtd" &gt;
+&lt;channelConfig&gt;
+  &lt;guestUser&gt;guest&lt;/guestUser&gt;</programlisting><command>guestUser</command>
+            is an optional propertie. Default value is "guest".</para>
+
+            <para>If current connected user name equals
+            <command>guestUser</command> property then all controls used for
+            personalisation (change tree size buttons, mark an item as read
+            button, edit button, etc.) are hidden.</para>
+
+            <para>This is used in Portlet mode when esup-lecture is used in a
+            portal unauthenticated view.</para>
+          </listitem>
+        </itemizedlist>
+      </section>
     </section>
 
     <section>
@@ -273,14 +306,14 @@
       <section>
         <title>esup-lecture.xml and &lt;category&gt;.xml</title>
 
-        <para>it describes contexts, category profiles and userId definition.
-        Here is the structure of this file (for more information, look at dtd
-        <command>lecture-config.dtd</command>) :</para>
+        <para>These files describe contexts, category profiles and userId
+        definition. Here is the structure of this file (for more information,
+        look at dtd <command>lecture-config.dtd</command>):</para>
 
         <itemizedlist>
           <listitem>
             <para>element <command>channelConfig</command> in
-            <command>esup-lecture.xml</command> :<programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+            <command>esup-lecture.xml</command>:<programlisting>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;!DOCTYPE channelConfig SYSTEM "lecture-config.dtd" &gt;
 &lt;channelConfig&gt;
   
@@ -715,6 +748,15 @@
       <command>portalService.testGroupName</command> properties in the
       <command>config.properties</command> file. Finally, you can test the Web
       Service with <command>ant test-portal</command>.</para>
+    </section>
+
+    <section>
+      <title>Guest mode</title>
+
+      <para>If want to have a guest mode for esup-lecture in servlet mode you
+      have to define a new context in your application server. You have to
+      deploy a new esup-lecture in this new context. ???? In this context you
+      do not use CAS authentication mechanism ????? </para>
     </section>
   </section>
 </article>

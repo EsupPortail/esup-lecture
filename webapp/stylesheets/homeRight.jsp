@@ -9,12 +9,15 @@
 	<f:subview id="rightSubview">
 		<!-- MENU with Source name, sort list and zoom -->
 		<t:htmlTag value="div" id="menuRight" forceId="true">
-			<t:htmlTag value="div" styleClass="menuTitle">
+			<t:htmlTag value="p" styleClass="portlet-section-header" rendered="#{homeController.guestMode}">
+				<h:outputText value="#{homeController.selectionTitle}" />
+			</t:htmlTag>
+			<t:htmlTag value="div" styleClass="menuTitle" rendered="#{!homeController.guestMode}">
 				<t:htmlTag value="span" styleClass="portlet-section-header">
 					<h:outputText value="#{homeController.selectionTitle}" />
 				</t:htmlTag>
 			</t:htmlTag>
-			<t:htmlTag value="div" styleClass="menuButton">
+			<t:htmlTag value="div" styleClass="menuButton" rendered="#{!homeController.guestMode}">
 				<t:htmlTag value="ul">
 					<t:htmlTag value="li">
 						<h:outputText value="#{msgs['selectorLabel']}" />
@@ -45,13 +48,13 @@
 				<t:htmlTag value="div" styleClass="toggleButton">
 					<h:commandButton action="#{homeController.toggleItemReadState}"
 						image="/media/unread.png" alt="#{msgs['markAsRead']}"
-						title="#{msgs['markAsRead']}" rendered="#{!item.read}">
+						title="#{msgs['markAsRead']}" rendered="#{!item.read and !homeController.guestMode}">
 						<t:updateActionListener property="#{homeController.item}"
 							value="#{item}" />
 					</h:commandButton>
 					<h:commandButton action="#{homeController.toggleItemReadState}"
 						image="/media/read.png" alt="#{msgs['markAsUnread']}"
-						title="#{msgs['markAsUnread']}" rendered="#{item.read}">
+						title="#{msgs['markAsUnread']}" rendered="#{item.read and !homeController.guestMode}">
 						<t:updateActionListener property="#{homeController.item}"
 							value="#{item}" />
 					</h:commandButton>

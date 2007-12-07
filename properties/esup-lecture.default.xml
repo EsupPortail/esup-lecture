@@ -6,8 +6,7 @@
 ]>
  -->
 <channelConfig>
-	<!-- user attribute to define a user Id -->
-	<userId>username</userId>
+	<guestUser>guest</guestUser>
 	<context 
 	  name = "Très beau context1"
 	  id = "c1">

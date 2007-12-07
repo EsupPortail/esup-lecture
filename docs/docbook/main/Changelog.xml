@@ -29,6 +29,16 @@
   </articleinfo>
 
   <section>
+    <title>Version 0.10.0</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>Added: Support of guestMode</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
     <title>Version 0.9.1</title>
 
     <itemizedlist>

@@ -14,7 +14,7 @@
 	-->
 
 	<bean 
-		id="authenticationService"
+		id="authenticationService.sav"
 		class="org.esupportail.commons.services.authentication.PortalOrCasFilterAuthenticator"
 		>
 		<description>
@@ -24,7 +24,7 @@
 	</bean>
 
 	<bean 
-		id="authenticationService.sav"
+		id="authenticationService"
 		class="org.esupportail.commons.services.authentication.OfflineFixedUserAuthenticator"
 		>
 		<description>
