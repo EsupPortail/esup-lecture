@@ -38,11 +38,11 @@ import org.springframework.util.Assert;
 /**
  * @author : Raymond 
  */
-public abstract class twoPanesController extends AbstractContextAwareController {
+public abstract class twoPanesControllerTmp extends AbstractContextAwareController {
 	/**
 	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(twoPanesController.class);
+	protected static final Log log = LogFactory.getLog(TwoPanesController.class);
 	/**
 	 * min value for tree size.
 	 */
@@ -94,7 +94,7 @@ public abstract class twoPanesController extends AbstractContextAwareController 
 	/**
 	 * Controller constructor.
 	 */
-	public twoPanesController() {
+	public twoPanesControllerTmp() {
 		super();
 	}
 

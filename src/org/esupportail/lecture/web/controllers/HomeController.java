@@ -23,7 +23,7 @@ import org.springframework.beans.factory.InitializingBean;
 /**
  * @author : Raymond 
  */
-public class HomeController extends twoPanesController {
+public class HomeController extends TwoPanesController {
 	/**
 	 * Key used to store the context in virtual session.
 	 */
@@ -266,7 +266,7 @@ public class HomeController extends twoPanesController {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.web.controllers.twoPanesController#getContextName()
+	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#getContextName()
 	 */
 	@SuppressWarnings("static-access")
 	@Override
