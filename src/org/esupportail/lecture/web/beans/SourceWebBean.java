@@ -2,7 +2,6 @@ package org.esupportail.lecture.web.beans;
 
 import java.util.List;
 
-import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 
@@ -11,16 +10,17 @@ import org.esupportail.lecture.domain.model.ItemDisplayMode;
  * used to display source information in view
  */
 public class SourceWebBean  implements Comparable<SourceWebBean> {
+
 	/**
-	 * id of source
+	 * id of source.
 	 */
 	private String id;
 	/**
-	 * name of source
+	 * name of source.
 	 */
 	private String name;
 	/**
-	 * type of source
+	 * type of source.
 	 * "subscribed" --> The source is alloweb and subscribed by the user
 	 * "notSubscribed" --> The source is alloweb and not yet subscribed by the user (used in edit mode)
 	 * "obliged" --> The source is obliged: user can't subscribe or unsubscribe this source
@@ -28,13 +28,20 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 */
 	private AvailabilityMode type;
 	/**
-	 * the display form source Items
+	 * the display form source Items.
 	 */
 	private ItemDisplayMode itemDisplayMode;
 	/**
-	 * List of items of source
+	 * List of items of source.
 	 */
 	private List<ItemWebBean> items;
+
+	/**
+	 * Default constructor.
+	 */
+	public SourceWebBean() {
+		super();
+	}
 	/**
 	 * @return name of source
 	 */
@@ -44,7 +51,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	/**
 	 * @param name
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	/**
@@ -56,7 +63,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	/**
 	 * @param id
 	 */
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 	/**
@@ -68,7 +75,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	/**
 	 * @param type
 	 */
-	public void setType(AvailabilityMode type) {
+	public void setType(final AvailabilityMode type) {
 		this.type = type;
 	}
 	/**
@@ -80,7 +87,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	/**
 	 * @param items
 	 */
-	public void setItems(List<ItemWebBean> items) {
+	public void setItems(final List<ItemWebBean> items) {
 		this.items = items;
 	}
 	
@@ -89,7 +96,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 */
 	public boolean isObliged() {
 		boolean ret = false;
-		if (type==AvailabilityMode.OBLIGED) {
+		if (type == AvailabilityMode.OBLIGED) {
 			ret = true;
 		}
 		return ret;
@@ -100,7 +107,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 */
 	public boolean isSubscribed() {
 		boolean ret = false;
-		if (type==AvailabilityMode.SUBSCRIBED) {
+		if (type == AvailabilityMode.SUBSCRIBED) {
 			ret = true;
 		}
 		return ret;
@@ -111,7 +118,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 */
 	public boolean isNotSubscribed() {
 		boolean ret = false;
-		if (type==AvailabilityMode.NOTSUBSCRIBED) {
+		if (type == AvailabilityMode.NOTSUBSCRIBED) {
 			ret = true;
 		}
 		return ret;
@@ -120,7 +127,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	/**
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	public int compareTo(SourceWebBean o) {
+	public int compareTo(final SourceWebBean o) {
 		return name.compareTo(o.name);
 	}
 	
@@ -134,7 +141,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	/**
 	 * @param itemDisplayMode
 	 */
-	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) {
+	public void setItemDisplayMode(final ItemDisplayMode itemDisplayMode) {
 		this.itemDisplayMode = itemDisplayMode;
 	}
 	

@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
+import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
@@ -76,7 +77,7 @@ public class EditController extends TwoPanesController {
 	}
 
 	/**
-	 * JSF action : Change subscrition status of a source.
+	 * JSF action : Change subscription status of a source.
 	 * @return JSF from-outcome
 	 */
 	public String toogleSourceSubcribtion() {
@@ -107,6 +108,39 @@ public class EditController extends TwoPanesController {
 	}
 	
 	/**
+	 * JSF action : Change subscription status of a category.
+	 * @return JSF from-outcome
+	 */
+	public String toogleCategorySubcribtion() {
+		//get selected category with categoryId provided by the actionListener
+		CategoryWebBean selectedCategory = getCategorieByID(categoryId);
+		AvailabilityMode type = null;
+		try {
+			if (selectedCategory.isNotSubscribed()) {
+				getFacadeService().subscribeToCategory(getUID(), 
+					getContext().getId(), selectedCategory.getId());
+				type = AvailabilityMode.SUBSCRIBED;
+			}
+			if (selectedCategory.isSubscribed()) {
+				getFacadeService().unsubscribeToCategory(getUID(), 
+					getContext().getId(), selectedCategory.getId());
+				type = AvailabilityMode.NOTSUBSCRIBED;
+			}
+		} catch (DomainServiceException e) {
+			throw new WebException("Error in toogleCategorySubcribtion", e);
+		}
+		if (type != null) {
+			selectedCategory.setType(type);
+		}
+		//invalidate home page cache
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("invalidate home page cache");
+		}
+		homeController.flushContextFormVirtualSession();
+		return "OK";		
+	}
+	
+	/**
 	 * @return the current selected category
 	 */
 	public CategoryWebBean getSelectedCat() {
@@ -117,16 +151,46 @@ public class EditController extends TwoPanesController {
 	}
 	
 	/**
-	 * @param categoryBean
 	 * @return list of visible sources
 	 * @throws DomainServiceException 
 	 */
-	protected List<SourceBean> getSources(final CategoryBean categoryBean) throws DomainServiceException {
-		//this method need to be overwrite in edit controller
-		List<SourceBean> sources = getFacadeService().getVisibleSources(getUID(), categoryBean.getId());
-		return sources;
+	public List<SourceWebBean> getVisibleSources() {
+		CategoryWebBean categoryBean = getSelectedCat();
+		return categoryBean.getSources();
 	}
 
+	/**
+	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#getSources(org.esupportail.lecture.domain.beans.CategoryBean)
+	 * used to populate edit context with all visible sources
+	 */
+	@Override
+	protected List<SourceBean> getSources(final CategoryBean categoryBean)
+			throws DomainServiceException {
+		List<SourceBean> sources = getFacadeService().getVisibleSources(getUID(), categoryBean.getId());
+		return sources;
+
+	}
+
+	/**
+	 * @return list of visible categories
+	 * @throws DomainServiceException 
+	 */
+	public List<CategoryWebBean> getVisibleCategories() {
+		ContextWebBean ctx = getContext();
+		return ctx.getCategories();
+	}
+
+	/**
+	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#getCategories(java.lang.String)
+	 * used to populate edit context with all visible categories
+	 */
+	@Override
+	protected List<CategoryBean> getCategories(final String ctxtId)
+			throws ContextNotFoundException {
+		List<CategoryBean> categories = getFacadeService().getVisibleCategories(getUID(), ctxtId);
+		return categories;
+	}
+	
 	/**
 	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#getContextName()
 	 */
@@ -157,5 +221,5 @@ public class EditController extends TwoPanesController {
 	public boolean isDisplayRoot() {
 		return displayRoot;
 	}
-	
+
 }

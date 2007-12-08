@@ -42,7 +42,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	/**
 	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(TwoPanesController.class);
+	protected static final Log LOG = LogFactory.getLog(TwoPanesController.class);
 	/**
 	 * min value for tree size.
 	 */
@@ -106,8 +106,8 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @param actionEvent JSF ActionEvent used to know which button is used 
 	 */
 	public void adjustTreeSize(final ActionEvent actionEvent) {
-		if (log.isDebugEnabled()) {
-			log.debug("In adjustTreeSize");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("In adjustTreeSize");
 		}
 		int treeSize = getTreeSize();
 		FacesContext ctx = FacesContext.getCurrentInstance();
@@ -141,8 +141,8 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @return JSF from-outcome
 	 */
 	public String toggleTreeVisibility() {
-		if (log.isDebugEnabled()) {
-			log.debug("In toggleTreeVisibility");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("In toggleTreeVisibility");
 		}
 		if (isTreeVisible()) {
 			setTreeVisible(false);
@@ -204,29 +204,29 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	public ContextWebBean getContext() {
 		String contextName = getContextName();
 		ContextWebBean context = (ContextWebBean) virtualSession.get(contextName);
-		if (log.isTraceEnabled()) {
+		if (LOG.isTraceEnabled()) {
 			// browse sessions
 			Enumeration<String> keys = virtualSession.getSessions().keys();
 			while (keys.hasMoreElements()) {
 				String key = keys.nextElement();
-				log.trace("session: " + key);
+				LOG.trace("session: " + key);
 				Hashtable<String, Object> sessions = virtualSession.getSessions().get(key);
 				// browse objects in sessions
 				Enumeration<String> keys2 = sessions.keys();
 				while (keys2.hasMoreElements()) {
 					String key2 = keys2.nextElement();
-					log.trace("  obj: " + key2);
+					LOG.trace("  obj: " + key2);
 					Object obj = sessions.get(key2);
 					if (obj instanceof ContextWebBean) {
 						ContextWebBean ctx = (ContextWebBean) obj;
-						log.trace("    ContextWebBean: " + ctx.getId());
+						LOG.trace("    ContextWebBean: " + ctx.getId());
 					}
 				}
 			}
 		}
 		if (context == null) {
-			if (log.isDebugEnabled()) {
-				log.debug("getContext() :  Context (" + contextName 
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("getContext() :  Context (" + contextName 
 					+ ") not yet loaded or need to be refreshing : loading...");			
 			}
 			try {
@@ -285,10 +285,10 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	/**
 	 * populate a SourceWebBean from a SourceBean.
 	 * @param sourceBean
-	 * @return pupulated SourceWebBean
+	 * @return populated SourceWebBean
 	 * @throws DomainServiceException
 	 */
-	private SourceWebBean populateSourceWebBean(final SourceBean sourceBean) throws DomainServiceException {
+	protected SourceWebBean populateSourceWebBean(final SourceBean sourceBean) throws DomainServiceException {
 		SourceWebBean sourceWebBean = new SourceWebBean();
 		if (sourceBean instanceof SourceDummyBean) {
 			String cause = ((SourceDummyBean) sourceBean).getCause().getMessage();
@@ -312,7 +312,8 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @return pupulated CategoryWebBean
 	 * @throws DomainServiceException
 	 */
-	private CategoryWebBean populateCategoryWebBean(final CategoryBean categoryBean) throws DomainServiceException {
+	protected CategoryWebBean populateCategoryWebBean(final CategoryBean categoryBean) 
+			throws DomainServiceException {
 		CategoryWebBean categoryWebBean =  new CategoryWebBean();
 		if (categoryBean instanceof CategoryDummyBean) {
 			String cause = ((CategoryDummyBean) categoryBean).getCause().getMessage();
@@ -323,6 +324,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		} else {
 			categoryWebBean.setId(categoryBean.getId());
 			categoryWebBean.setName(categoryBean.getName());
+			categoryWebBean.setType(categoryBean.getType());
 			categoryWebBean.setDescription(categoryBean.getDescription());			
 		}
 		return categoryWebBean;
@@ -342,21 +344,21 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			catId = categoryBean.getId();
 			tempListSourceBean = getFacadeService().getAvailableSources(getUID(), catId);
 			//Temporary: remove dummy form the list
-			for (Iterator iter = tempListSourceBean.iterator(); iter.hasNext();) {
-				SourceBean element = (SourceBean) iter.next();
+			for (Iterator<SourceBean> iter = tempListSourceBean.iterator(); iter.hasNext();) {
+				SourceBean element = iter.next();
 				if (!(element instanceof SourceDummyBean)) {
 					ret.add(element);				
 				}
 			}
 		} catch (ElementDummyBeanException e) {
-			if (log.isWarnEnabled()) {
+			if (LOG.isWarnEnabled()) {
 				//TODO (RB) : see again dummy management
 				if (categoryBean instanceof CategoryDummyBean) {
 					CategoryDummyBean categoryDummyBean = (CategoryDummyBean) categoryBean;
-					log.warn("Try to get sources on a CategoryDummyBean. DummyBean cause: " 
+					LOG.warn("Try to get sources on a CategoryDummyBean. DummyBean cause: " 
 						+ categoryDummyBean.getCause());
 				} else {
-					log.error("Unable to cast as a CategoryDummyBean current object.");
+					LOG.error("Unable to cast as a CategoryDummyBean current object.");
 				}
 			}
 		}		
@@ -370,12 +372,12 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @throws ContextNotFoundException 
 	 */
 	protected List<CategoryBean> getCategories(final String ctxtId) throws ContextNotFoundException {
-		List<CategoryBean> ret = new ArrayList<CategoryBean>();
 		//Note: this method need to be overwrite in edit controller
+		List<CategoryBean> ret = new ArrayList<CategoryBean>();
 		List<CategoryBean> categories = getFacadeService().getAvailableCategories(getUID(), ctxtId);
 		//Temporary: remove dummy form the list
-		for (Iterator iter = categories.iterator(); iter.hasNext();) {
-			CategoryBean element = (CategoryBean) iter.next();
+		for (Iterator<CategoryBean> iter = categories.iterator(); iter.hasNext();) {
+			CategoryBean element = iter.next();
 			if (!(element instanceof CategoryDummyBean)) {
 				ret.add(element);				
 			}
@@ -508,8 +510,8 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 */
 	@Override
 	public void reset() {
-		if (log.isDebugEnabled()) {
-			log.debug("reset the controller");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("reset the controller");
 		}
 		//reset context from session
 		if (virtualSession != null) {

@@ -16,7 +16,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundExceptio
 import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 
 /**
- * used to store category informations
+ * used to store category informations.
  * @author bourges
  */
 public class CategoryBean {
@@ -25,27 +25,27 @@ public class CategoryBean {
 	 *************************** PROPERTIES ******************************** */	
 	
 	/**
-	 * id of categery
+	 * id of category.
 	 */
 	private String id;
 	/**
-	 * name of category
+	 * name of category.
 	 */
 	private String name;
 	/**
-	 * description of the category
+	 * description of the category.
 	 */
 	private String description;
 	/**
-	 * store if category is folded or not
+	 * store if category is folded or not.
 	 */
 	private boolean folded = true;	
 	/**
-	 * type of category
-	 * "subscribed" --> The category is alloweb and subscribed by the user
-	 * "notSubscribed" --> The category is alloweb and not yet subscribed by the user (used in edit mode)
+	 * type of category.
+	 * "subscribed" --> The category is allowed and subscribed by the user
+	 * "notSubscribed" --> The category is allowed and not yet subscribed by the user (used in edit mode)
 	 * "obliged" --> The category is obliged: user can't subscribe or unsubscribe this source
-	 * "owner" --> For personnal categories
+	 * "owner" --> For personal categories
 	 */
 	private AvailabilityMode type;
 	
@@ -55,18 +55,19 @@ public class CategoryBean {
 	/**
 	 * Default Constructor.
 	 */
-	public CategoryBean(){
+	public CategoryBean() {
 		// empty
 	}
 	
 	/**
-	 * Constructor initializing object
+	 * Constructor initializing object.
 	 * @param customCategory
 	 * @param customContext
 	 * @throws CategoryProfileNotFoundException
 	 * @throws CategoryNotLoadedException
 	 */
-	public CategoryBean(CustomCategory customCategory,CustomContext customContext) throws CategoryProfileNotFoundException, CategoryNotLoadedException{
+	public CategoryBean(final CustomCategory customCategory, final CustomContext customContext) 
+			throws CategoryProfileNotFoundException, CategoryNotLoadedException {
 		CategoryProfile profile = customCategory.getProfile();
 		
 		this.name = profile.getName();
@@ -79,7 +80,7 @@ public class CategoryBean {
 	 * constructor initializing object with ProfileAvailability.
 	 * @param profAv ProfileAvailability
 	 */
-	public CategoryBean(ProfileAvailability profAv) {
+	public CategoryBean(final ProfileAvailability profAv) {
 		ElementProfile elt = profAv.getProfile();
 		this.name = elt.getName();
 		this.id = elt.getId();
@@ -103,7 +104,7 @@ public class CategoryBean {
 	 * @throws ElementDummyBeanException 
 	 */
 	@SuppressWarnings("unused")
-	public void setDescription(String description) throws ElementDummyBeanException {
+	public void setDescription(final String description) throws ElementDummyBeanException {
 		this.description = description;
 	}
 	/**
@@ -119,7 +120,7 @@ public class CategoryBean {
 	 * @throws ElementDummyBeanException 
 	 */
 	@SuppressWarnings("unused")
-	public void setFolded(boolean folded) throws ElementDummyBeanException {
+	public void setFolded(final boolean folded) throws ElementDummyBeanException {
 		this.folded = folded;
 	}
 	/**
@@ -135,7 +136,7 @@ public class CategoryBean {
 	 * @throws ElementDummyBeanException 
 	 */
 	@SuppressWarnings("unused")
-	public void setId(String id) throws ElementDummyBeanException {
+	public void setId(final String id) throws ElementDummyBeanException {
 		this.id = id;
 	}
 	/**
@@ -151,7 +152,7 @@ public class CategoryBean {
 	 * @throws ElementDummyBeanException 
 	 */
 	@SuppressWarnings("unused")
-	public void setName(String name) throws ElementDummyBeanException {
+	public void setName(final String name) throws ElementDummyBeanException {
 		this.name = name;
 	}
 
@@ -169,7 +170,7 @@ public class CategoryBean {
 	 * @throws ElementDummyBeanException 
 	 */
 	@SuppressWarnings("unused")
-	public void setType(AvailabilityMode type) throws ElementDummyBeanException {
+	public void setType(final AvailabilityMode type) throws ElementDummyBeanException {
 		this.type = type;
 	}
 	
@@ -180,19 +181,19 @@ public class CategoryBean {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		String string = "";
 		string += "     Id = " + id.toString() + "\n";
 		string += "     Name = " + name.toString() + "\n";
 		string += "     Desc = "; 
-		if (description != null){
+		if (description != null) {
 			string += description.toString() + "\n";
 		}
 		string += "     Type = "; 
 		if (type != null) {
 			string += type;
 		}		
-		string += "     Folded = "+ folded + "\n";
+		string += "     Folded = " + folded + "\n";
 		
 		return string;
 	}

@@ -44,13 +44,14 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 
 	<categoryProfile name="Les rss utiles au CRI" id="rss"
 		urlCategory="&repConf;rss.xml"
-		trustCategory="yes" access="public" ttl="3600" timeout="3000">
+		trustCategory="no" access="public" ttl="3600" timeout="3000">
 		<visibility>
-			<allowed />
-			<autoSubscribed />
-			<obliged>
+			<allowed>
 				<regular attribute="uid" value="admin"/>
 				<regular attribute="uid" value="bourges"/>
+			</allowed>
+			<autoSubscribed />
+			<obliged>
 				<group name="pags.PERS_957" />
 			</obliged>
 		</visibility>
@@ -65,7 +66,7 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 		ttl = "3600" 
 		timeout = "3000" > 
 		<visibility>
-			<!-- allowed and autoSubscribed not yet supported -->
+			<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	

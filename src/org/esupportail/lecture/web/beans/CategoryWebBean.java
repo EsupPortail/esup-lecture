@@ -3,35 +3,55 @@ package org.esupportail.lecture.web.beans;
 import java.util.Collections;
 import java.util.List;
 
+import org.esupportail.lecture.domain.model.AvailabilityMode;
+
 /**
  * @author bourges
  * used to display category informations in view
  */
 public class CategoryWebBean implements Comparable<CategoryWebBean> {
+
 	/**
-	 * id of categery
+	 * id of category.
 	 */
 	private String id;
 	/**
-	 * name of category
+	 * name of category.
 	 */
 	private String name;
 	/**
-	 * description of category
+	 * type of category.
+	 * "subscribed" --> The source is allowed and subscribed by the user
+	 * "notSubscribed" --> The source is allowed and not yet subscribed by the user (used in edit mode)
+	 * "obliged" --> The source is obliged: user can't subscribe or unsubscribe this source
+	 * "owner" --> The source is personal
+	 */
+	private AvailabilityMode type;
+	/**
+	 * description of category.
 	 */
 	private String description;
 	/**
-	 * store if category is folded or not
+	 * store if category is folded or not.
 	 */
-	private boolean folded=false;
+	private boolean folded;
 	/**
-	 * selected source of category
+	 * selected source of category.
 	 */
 	private SourceWebBean selectedSource;
 	/**
-	 * list of sources of category
+	 * list of sources of category.
 	 */
 	private List<SourceWebBean> sources;
+
+	/**
+	 * Default constructor.
+	 */
+	public CategoryWebBean() {
+		super();
+		folded = false;
+	}
+	
 	/**
 	 * @return if category is folded or not
 	 */
@@ -41,7 +61,7 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	/**
 	 * @param folded
 	 */
-	public void setFolded(boolean folded) {
+	public void setFolded(final boolean folded) {
 		this.folded = folded;
 	}
 	/**
@@ -53,7 +73,7 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	/**
 	 * @param id
 	 */
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 	/**
@@ -65,7 +85,7 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	/**
 	 * @param name
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	/**
@@ -77,7 +97,7 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	/**
 	 * @param selectedSource
 	 */
-	public void setSelectedSource(SourceWebBean selectedSource) {
+	public void setSelectedSource(final SourceWebBean selectedSource) {
 		this.selectedSource = selectedSource;
 	}
 	/**
@@ -89,12 +109,12 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	/**
 	 * @param sources
 	 */
-	public void setSources(List<SourceWebBean> sources) {
+	public void setSources(final List<SourceWebBean> sources) {
 		Collections.sort(sources);
 		this.sources = sources;
 	}
 	/**
-	 * @return descrition
+	 * @return description
 	 */
 	public String getDescription() {
 		return description;
@@ -102,14 +122,54 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	/**
 	 * @param description
 	 */
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 	
 	/**
+	 * @param type
+	 */
+	public void setType(final AvailabilityMode type) {
+		this.type = type;
+	}
+
+	/**
+	 * @return if source is obliged or not
+	 */
+	public boolean isObliged() {
+		boolean ret = false;
+		if (type == AvailabilityMode.OBLIGED) {
+			ret = true;
+		}
+		return ret;
+	}
+	
+	/**
+	 * @return if source is macked as subcribed
+	 */
+	public boolean isSubscribed() {
+		boolean ret = false;
+		if (type == AvailabilityMode.SUBSCRIBED) {
+			ret = true;
+		}
+		return ret;
+	}
+	
+	/**
+	 * @return if source is macked as unsubcribed
+	 */
+	public boolean isNotSubscribed() {
+		boolean ret = false;
+		if (type == AvailabilityMode.NOTSUBSCRIBED) {
+			ret = true;
+		}
+		return ret;
+	}
+
+	/**
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
-	public int compareTo(CategoryWebBean o) {
+	public int compareTo(final CategoryWebBean o) {
 		return name.compareTo(o.name);
 	}
 

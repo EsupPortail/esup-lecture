@@ -69,7 +69,7 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000" >
 		<visibility>
-	 	<!-- allowed and autoSubscribed not yet supported -->
+	 	<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>
@@ -89,7 +89,7 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000">
 	 	<visibility>
-	 	<!-- allowed and autoSubscribed not yet supported -->
+	 	<!-- autoSubscribed not yet supported -->
 	 		<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -108,7 +108,7 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000"  >
 		<visibility>
-	 	<!-- allowed and autoSubscribed not yet supported -->
+	 	<!-- autoSubscribed not yet supported -->
 			<allowed/> 
 			<autoSubscribed/>
 			<obliged>
@@ -127,7 +127,7 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000"  > 
 		<visibility>
-		<!-- allowed and autoSubscribed not yet supported -->
+		<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -145,7 +145,7 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000"  > 
 		<visibility>
-		<!-- allowed and autoSubscribed not yet supported -->
+		<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -164,7 +164,7 @@ Pour plus d'informations voir le
 		ttl = "3600" 
 		timeout = "3000" > 
 		<visibility>
-			<!-- allowed and autoSubscribed not yet supported -->
+			<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -183,7 +183,7 @@ Pour plus d'informations voir le
 		ttl = "3600" 
 		timeout = "3000" > 
 		<visibility>
-			<!-- allowed and autoSubscribed not yet supported -->
+			<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -202,7 +202,7 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000"  > 
 		<visibility>
-			<!-- allowed and autoSubscribed not yet supported -->
+			<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -221,7 +221,7 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000"  > 
 		<visibility>
-			<!-- allowed and autoSubscribed not yet supported -->
+			<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	

@@ -17,7 +17,7 @@ import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundE
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
- * used to store source informations
+ * used to store source informations.
  * @author bourges
  */
 public class SourceBean {
@@ -25,24 +25,24 @@ public class SourceBean {
 	/* 
 	 *************************** PROPERTIES ******************************** */	
 	/**
-	 * id of source
+	 * id of source.
 	 */
 	private String id;
 	/**
-	 * name of source
+	 * name of source.
 	 */
 	private String name;
 	/**
-	 * type of source
-	 * "subscribed" --> The source is alloweb and subscribed by the user
-	 * "notSubscribed" --> The source is alloweb and not yet subscribed by the user (used in edit mode)
+	 * type of source.
+	 * "subscribed" --> The source is allowed and subscribed by the user
+	 * "notSubscribed" --> The source is allowed and not yet subscribed by the user (used in edit mode)
 	 * "obliged" --> The source is obliged: user can't subscribe or unsubscribe this source
 	 * "owner" --> For personal sources
 	 */
 	private AvailabilityMode type;
 	
 	/**
-	 * the item display mode of the source
+	 * the item display mode of the source.
 	 */
 	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.ALL;
 
@@ -50,20 +50,21 @@ public class SourceBean {
 	 *************************** INIT ************************************** */	
 	
 	/**
-	 * default constructor
+	 * default constructor.
 	 */
-	public SourceBean(){
+	public SourceBean() {
 		// empty
 	}
 	
 	/**
-	 * constructor initializing object with a customSource
+	 * constructor initializing object with a customSource.
 	 * @param customSource
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	public SourceBean(CustomSource customSource) throws ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException{
+	public SourceBean(final CustomSource customSource) throws ManagedCategoryProfileNotFoundException, 
+			CategoryNotLoadedException, SourceProfileNotFoundException {
 		SourceProfile profile = customSource.getProfile();
 		
 		this.name = profile.getName();
@@ -77,7 +78,7 @@ public class SourceBean {
 	 * constructor initializing object with ProfileAvailability.
 	 * @param profAv ProfileAvailability
 	 */
-	public SourceBean(ProfileAvailability profAv) {
+	public SourceBean(final ProfileAvailability profAv) {
 		ElementProfile elt = profAv.getProfile();
 		this.name = elt.getName();
 		this.id = elt.getId();
@@ -104,7 +105,7 @@ public class SourceBean {
 	 * @throws ElementDummyBeanException 
 	 */
 	@SuppressWarnings("unused")
-	public void setName(String name) throws ElementDummyBeanException {
+	public void setName(final String name) throws ElementDummyBeanException {
 		this.name = name;
 	}
 	/**
@@ -120,7 +121,7 @@ public class SourceBean {
 	 * @throws ElementDummyBeanException 
 	 */
 	@SuppressWarnings("unused")
-	public void setId(String id)  throws ElementDummyBeanException{
+	public void setId(final String id)  throws ElementDummyBeanException {
 		this.id = id;
 	}
 	
@@ -138,7 +139,7 @@ public class SourceBean {
 	 * @throws ElementDummyBeanException 
 	 */
 	@SuppressWarnings("unused")
-	public void setType(AvailabilityMode type) throws ElementDummyBeanException {
+	public void setType(final AvailabilityMode type) throws ElementDummyBeanException {
 		this.type = type;
 	}
 	
@@ -156,7 +157,7 @@ public class SourceBean {
 	 * @throws ElementDummyBeanException 
 	 */
 	@SuppressWarnings("unused")
-	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) throws ElementDummyBeanException {
+	public void setItemDisplayMode(final ItemDisplayMode itemDisplayMode) throws ElementDummyBeanException {
 		this.itemDisplayMode = itemDisplayMode;
 	}
 	/*
