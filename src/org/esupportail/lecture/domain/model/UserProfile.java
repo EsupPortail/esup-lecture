@@ -502,6 +502,9 @@ public class UserProfile {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug(ID + userId + " - removeCustomSource(" + sourceId + ")");
     	}
+	   	//RB --> GB: I add this line to avoid a ClassCastException 
+	   	// due to a hibernate bug when map is not yet loaded!
+	   	boolean foo = customSources.containsKey(sourceId);
 		CustomSource cs = customSources.remove(sourceId);
 		if (cs != null) {
 			DomainTools.getDaoService().deleteCustomSource(cs);
