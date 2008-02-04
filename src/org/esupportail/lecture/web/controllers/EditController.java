@@ -129,14 +129,12 @@ public class EditController extends TwoPanesController {
 		} catch (DomainServiceException e) {
 			throw new WebException("Error in toogleCategorySubcribtion", e);
 		}
-		if (type != null) {
-			selectedCategory.setType(type);
-		}
-		//invalidate home page cache
+		//invalidate home (and edit because of children sources modifications) page cache
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("invalidate home page cache");
 		}
 		homeController.flushContextFormVirtualSession();
+		this.flushContextFormVirtualSession();
 		return "OK";		
 	}
 	
@@ -222,4 +220,11 @@ public class EditController extends TwoPanesController {
 		return displayRoot;
 	}
 
+	/**
+	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#getContextKey()
+	 */
+	@Override
+	String getContextKey() {
+		return CONTEXT;
+	}
 }

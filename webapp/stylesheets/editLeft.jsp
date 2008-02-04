@@ -15,12 +15,14 @@
 				<h:outputText value="#{editController.context.name} (EDIT)" />
 			</t:htmlTag>
 			<!-- root -->
+			<!-- TODO edit category
 			<h:commandButton action="#{editController.displayRoot}"
 				alt="#{msgs['editContext']}" value="#{msgs['root']}"
 				title="#{msgs['editContext']}" styleClass="elementButton">
 				<t:updateActionListener property="#{editController.categoryId}"
 					value="0" />
 			</h:commandButton>
+			-->
 			<!-- Categories -->
 			<t:htmlTag value="ul">
 				<t:dataList value="#{editController.context.categories}" var="cat"

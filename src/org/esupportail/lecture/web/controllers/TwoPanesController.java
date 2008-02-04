@@ -98,6 +98,18 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		super();
 	}
 
+	/**
+	 * Remove Context cache from the virtual session.
+	 */
+	protected void flushContextFormVirtualSession() {
+		virtualSession.remove(getContextKey());
+	}
+
+	/**
+	 * @return the context key used to store the context in virtual session
+	 */
+	abstract String getContextKey();
+
 	/*
 	 * **************** Action and listener method ****************
 	 */	

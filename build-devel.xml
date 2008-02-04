@@ -83,7 +83,7 @@
 		
 	<target name="_restart" depends="_stop,_start" description="deploy and restart Tomcat" />
 
-	<target name="_dist" depends="_commons-dist" description="build ZIP archives" />
+	<target name="_dist" depends="use-default-conf,_commons-dist" description="build ZIP archives" />
 
 	<target name="_doc" depends="_commons-doc"
 		description="build the web site">
@@ -147,6 +147,7 @@
 	<target name="copy-conf">
 		<copy file="properties/esup-lecture.${conf-type}.xml" tofile="properties/esup-lecture.xml" overwrite="true" verbose="true"/>
 		<copy file="properties/mappings.${conf-type}.xml" tofile="properties/mappings.xml" overwrite="true" verbose="true"/>
+		<copy file="properties/auth/auth.${conf-type}.xml" tofile="properties/auth/auth.xml" overwrite="true" verbose="true"/>
 	</target>
 	
 </project>

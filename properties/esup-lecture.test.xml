@@ -3,7 +3,7 @@
 <!ENTITY repConf "file:///d:/tmp/conf_lecture_gwe_ray/" >
 ]>
 <channelConfig>
-	<guestUser>admin</guestUser>
+	<guestUser>guest</guestUser>
 
 	<context name="CRI" id="default">
 		<description>

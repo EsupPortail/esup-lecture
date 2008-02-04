@@ -162,15 +162,6 @@ public class HomeController extends TwoPanesController {
 		return items;
 	}
 	
-	/**
-	 * Remove Context cache from the virtual session.
-	 */
-	protected void flushContextFormVirtualSession() {
-		//virtualSession is a HomeCrontroller local variable
-		//so I need this method to interact with it from EditController
-		virtualSession.remove(CONTEXT);
-	}
-
 	/*
 	 * **************** Getter and Setter ****************
 	 */
@@ -293,6 +284,14 @@ public class HomeController extends TwoPanesController {
 	 */
 	public ItemDisplayMode getUnreadfirt() {
 		return ItemDisplayMode.UNREADFIRST;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#getContextKey()
+	 */
+	@Override
+	String getContextKey() {
+		return CONTEXT;
 	}
 
 }

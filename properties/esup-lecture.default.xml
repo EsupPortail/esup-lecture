@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" >
-<!-- 
-<!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" [
-<!ENTITY repConf "file:///d:/path/" >
-]>
- -->
 <channelConfig>
 	<guestUser>guest</guestUser>
 	<context 
