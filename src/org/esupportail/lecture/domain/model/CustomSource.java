@@ -23,7 +23,7 @@ import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 
 /**
- * Customizations on a SourceProfile for a user Profile 
+ * Customizations on a SourceProfile for a user Profile.
  * @author gbouteil
  * @see CustomElement
  *
@@ -32,28 +32,28 @@ public abstract class CustomSource implements CustomElement {
 	/*
 	 ************************** PROPERTIES *********************************/	
 	/**
-	 * Log instance
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(CustomSource.class);
+	private static final Log LOG = LogFactory.getLog(CustomSource.class);
 	/**
-	 * Id of the source refered by this
+	 * Id of the source refered by this.
 	 */
 	private String elementId;
 	/**
-	 * The userprofile parent 
+	 * The userprofile parent.
 	 */
 	private UserProfile userProfile;
 	/**
-	 * Set of read item by User
+	 * Set of read item by User.
 	 */
 	private Set<String> readItems = new HashSet<String>();
 	
 	/**
-	 * item display mode of this customSource 
+	 * item display mode of this customSource. 
 	 */
 	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.ALL;
 	/**
-	 * Database Primary Key
+	 * Database Primary Key.
 	 */
 	private long customSourcePK;
 	
@@ -61,24 +61,24 @@ public abstract class CustomSource implements CustomElement {
 	 ************************** INIT **********************************/
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param profile of the source refered by this CustomSource
 	 * @param user owner of this  CustomSource
 	 */
-	protected CustomSource(SourceProfile profile,UserProfile user){
-		if (log.isDebugEnabled()){
-			log.debug("CustomSource("+profile.getId()+","+user.getUserId()+")");
+	protected CustomSource(final SourceProfile profile, final UserProfile user) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("CustomSource(" + profile.getId() + "," + user.getUserId() + ")");
 		}
 		userProfile = user;
 		elementId = profile.getId();
 	}
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
-	protected CustomSource(){
-		if (log.isDebugEnabled()){
-			log.debug("CustomSource()");
+	protected CustomSource() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("CustomSource()");
 		}
 	}
 
@@ -86,7 +86,7 @@ public abstract class CustomSource implements CustomElement {
 	 ************************** METHODS **********************************/
 	
 	/**
-	 * Returns the list of items contained in the source referred by this customSource
+	 * Returns the list of items contained in the source referred by this customSource.
 	 * Items are ready to be displayed
 	 * @param ex access to externalService
 	 * @return the list of items
@@ -99,21 +99,21 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws SourceTimeOutException 
 	 * @throws SourceNotLoadedException 
 	 */
-	public List<Item> getItems(ExternalService ex) 
+	public List<Item> getItems(final ExternalService ex) 
 		throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
 		ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
 		SourceTimeOutException, SourceNotLoadedException  {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - getItems(externalService)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + elementId + " - getItems(externalService)");
 		}
 		SourceProfile profile = getProfile();
 		List<Item> listItems = null;
 		try {
 			listItems = profile.getItems(ex);
 			// pas de catch de categoryNotLoaded : cela entraine trop de compliaction
-		} catch (SourceNotLoadedException e){
+		} catch (SourceNotLoadedException e) {
 			// Dans ce cas : la mise à jour du customCategory n'a pas été effectué
-			log.error("Impossible to update getItems for customSource " + getElementId()
+			LOG.error("Impossible to update getItems for customSource " + getElementId()
 					+ " because its source is not loaded - " 
 					+ " It is very strange because loadSource() has been called before in mcp.updateCustomContext() ...", e);
 			throw e;
@@ -122,15 +122,15 @@ public abstract class CustomSource implements CustomElement {
 	}
 
 	/**
-	 * The name of the source profile associated to this CustomSource
+	 * The name of the source profile associated to this CustomSource.
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
 	public String getName() throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException{
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - getName()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + elementId + " - getName()");
 		}
 		return getProfile().getName();
 	}
@@ -141,13 +141,13 @@ public abstract class CustomSource implements CustomElement {
 	 * @param itemId id of the item to set as read
 	 * @param isRead boolean : true=item is read | false=item is not read
 	 */
-	public void setItemReadMode(String itemId, boolean isRead) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - setItemReadMode("+itemId+","+isRead+")");
+	public void setItemReadMode(final String itemId, final boolean isRead) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + elementId + " - setItemReadMode(" + itemId + "," + isRead + ")");
 		}
-		if (isRead){
+		if (isRead) {
 			readItems.add(itemId);	
-		}else {
+		} else {
 			readItems.remove(itemId);
 		}
 		DomainTools.getDaoService().updateCustomSource(this);
@@ -157,9 +157,9 @@ public abstract class CustomSource implements CustomElement {
 	 * @param itemId id of the item
 	 * @return true if the item is marked read
 	 */
-	public boolean isItemRead(String itemId) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - isItemRead("+itemId+")");
+	public boolean isItemRead(final String itemId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + elementId + " - isItemRead(" + itemId + ")");
 		}
 		return readItems.contains(itemId);
 	}
@@ -167,9 +167,9 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @param mode item display mode to set
 	 */
-	public void modifyItemDisplayMode(ItemDisplayMode mode){
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - modifyItemDisplayMode("+mode+")");
+	public void modifyItemDisplayMode(final ItemDisplayMode mode){
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + elementId + " - modifyItemDisplayMode(" + mode + ")");
 		}
 		/* old name was setItemDisplayMode but it has been changed to prevent 
 		 * loop by calling dao
@@ -181,9 +181,9 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @return the item display mode of this customSource
 	 */
-	public ItemDisplayMode getItemDisplayMode(){
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - itemDisplayMode("+itemDisplayMode+")");
+	public ItemDisplayMode getItemDisplayMode() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + elementId + " - itemDisplayMode(" + itemDisplayMode + ")");
 		}
 		return itemDisplayMode;
 	}
@@ -192,12 +192,20 @@ public abstract class CustomSource implements CustomElement {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null) return false;
-		if (!(o instanceof CustomSource)) return false;
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null) {
+			return false;
+		}
+		if (!(o instanceof CustomSource)) {
+			return false;
+		}
 		final CustomSource customSource = (CustomSource) o;
-		if (!customSource.getElementId().equals(this.getElementId())) return false;
+		if (!customSource.getElementId().equals(this.getElementId())) {
+			return false;
+		}
 		return true;
 	}
 
@@ -214,7 +222,7 @@ public abstract class CustomSource implements CustomElement {
 	 ************************** ABSTRACT METHODS **********************************/
 
 	/**
-	 * The SourceProfile associated to this CustomSource
+	 * The SourceProfile associated to this CustomSource.
 	 * @return the SourceProfile 
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
@@ -227,17 +235,17 @@ public abstract class CustomSource implements CustomElement {
 	/* 
 	 ************************** ACCESSORS **********************************/
 	/**
-	 * The user Profile, owner of this CustomSource
+	 * The user Profile, owner of this CustomSource.
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getUserProfile()
 	 */
-	public UserProfile getUserProfile(){
+	public UserProfile getUserProfile() {
 		return userProfile;
 	}
 	
 	/**
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getElementId()
 	 */
-	public String getElementId(){
+	public String getElementId() {
 		return elementId;
 	}
 
@@ -251,14 +259,14 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @param customSourcePK - - database Primary Key
 	 */
-	public void setCustomSourcePK(long customSourcePK) {
+	public void setCustomSourcePK(final long customSourcePK) {
 		this.customSourcePK = customSourcePK;
 	}
 
 	/**
 	 * @param userProfile
 	 */
-	private void setUserProfile(UserProfile userProfile) {
+	private void setUserProfile(final UserProfile userProfile) {
 		this.userProfile = userProfile;
 		//Needed by Hibernate
 	}
@@ -273,7 +281,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @param readItems
 	 */
-	private void setReadItems(Set<String> readItems) {
+	private void setReadItems(final Set<String> readItems) {
 		this.readItems = readItems;
 		//Needed by Hibernate
 	}
@@ -281,14 +289,14 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @param elementId
 	 */
-	public void setElementId(String elementId) {
+	public void setElementId(final String elementId) {
 		this.elementId = elementId;
 	}
 	
 	/**
 	 * @param mode
 	 */
-	public void setItemDisplayMode(ItemDisplayMode mode){
+	public void setItemDisplayMode(final ItemDisplayMode mode){
 		this.itemDisplayMode = mode;
 	}
 	
