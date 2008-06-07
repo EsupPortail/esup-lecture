@@ -29,48 +29,6 @@
   </articleinfo>
 
   <section>
-    <title>News</title>
-
-    <itemizedlist>
-      <listitem>
-        <para>2007-11-06: Version 0.9.1 released</para>
-      </listitem>
-
-      <listitem>
-        <para>2007-10-30: Version 0.9.0 released</para>
-      </listitem>
-
-      <listitem>
-        <para>2007-10-04: Version 0.8.3 released</para>
-      </listitem>
-
-      <listitem>
-        <para>2007-06-30: Version 0.8.2 released</para>
-      </listitem>
-
-      <listitem>
-        <para>2007-06-15: Version 0.8.1 released</para>
-      </listitem>
-
-      <listitem>
-        <para>2007-06-01: Version 0.8.0 released</para>
-      </listitem>
-
-      <listitem>
-        <para>2007-05-03: Version 0.7.2 released</para>
-      </listitem>
-
-      <listitem>
-        <para>2007-02-15: Version 0.7.1 released</para>
-      </listitem>
-
-      <listitem>
-        <para>2007-02-12: Version 0.7.0 released</para>
-      </listitem>
-    </itemizedlist>
-  </section>
-
-  <section>
     <title>Introduction</title>
 
     <para>Esup Lecture Portlet is an <ulink

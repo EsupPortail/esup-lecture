@@ -29,6 +29,17 @@
   </articleinfo>
 
   <section>
+    <title>Current version</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>Fixed: don't recognize rootElement="something" if XML have a DTD
+        definition (bug# 4163)</para>
+      </listitem>
+    </itemizedlist>
+  </section>
+
+  <section>
     <title>Version 1.0.0</title>
 
     <itemizedlist>
