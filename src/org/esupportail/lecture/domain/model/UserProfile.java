@@ -667,7 +667,7 @@ public class UserProfile {
 			return false;
 		}
 		final UserProfile other = (UserProfile) obj;
-		if (userProfilePK != other.userProfilePK) {
+		if (userId != other.userId) {
 			return false;
 		}
 		return true;
