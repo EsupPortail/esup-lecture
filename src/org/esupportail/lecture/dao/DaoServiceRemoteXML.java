@@ -14,6 +14,7 @@ import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.SourceProfile;
+import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.springframework.beans.factory.InitializingBean;
@@ -179,7 +180,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @return the source
 	 * @throws TimeoutException 
 	 */
-	public Source getSource(final SourceProfile sourceProfile) throws TimeoutException {
+	public Source getSource(final SourceProfile sourceProfile) throws TimeoutException, InfoDaoException {
 		Source ret = new GlobalSource();
 //		not yet implemented
 //		if (sourceProfile.isSpecificUserContent()) { 
@@ -224,7 +225,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @return the source
 	 * @throws TimeoutException 
 	 */
-	private Source getFreshSource(final SourceProfile sourceProfile) throws TimeoutException {
+	private Source getFreshSource(final SourceProfile sourceProfile) throws TimeoutException, InfoDaoException {
 		if (log.isDebugEnabled()) {
 			log.debug("in getFreshSource");
 		}
@@ -246,7 +247,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			if (e != null) {
 				String msg = "Error during execution of Thread getting Source";
 				log.error(msg);
-				throw new RuntimeException(msg, e);
+				throw new InfoDaoException(msg, e);
 			}			
 			ret = thread.getSource();
 		} catch (InterruptedException e) {

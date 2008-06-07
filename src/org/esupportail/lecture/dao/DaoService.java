@@ -10,6 +10,7 @@ import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
+import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 
 /**
@@ -42,8 +43,9 @@ public interface DaoService {
 	 * @param profile of the source to get
 	 * @return the source
 	 * @throws TimeoutException 
+	 * @throws ExternalDaoException 
 	 */
-	public Source getSource(ManagedSourceProfile profile) throws TimeoutException;
+	public Source getSource(ManagedSourceProfile profile) throws InfoDaoException;
 	
 	/**
 	 * get a source from a remote place

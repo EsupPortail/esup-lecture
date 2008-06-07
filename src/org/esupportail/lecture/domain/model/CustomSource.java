@@ -15,6 +15,7 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
@@ -102,7 +103,7 @@ public abstract class CustomSource implements CustomElement {
 	public List<Item> getItems(final ExternalService ex) 
 		throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
 		ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
-		SourceTimeOutException, SourceNotLoadedException  {
+		SourceTimeOutException, InfoDomainException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + elementId + " - getItems(externalService)");
 		}

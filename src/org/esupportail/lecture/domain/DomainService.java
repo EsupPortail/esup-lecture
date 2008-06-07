@@ -22,6 +22,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
@@ -90,6 +91,7 @@ public interface DomainService {
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceTimeOutException 
+	 * @throws InfoDomainException 
 	 * @see FacadeService#getItems(String, String)
 	 */
 	List<ItemBean> getItems( String uid,String sourceId,ExternalService ex)  

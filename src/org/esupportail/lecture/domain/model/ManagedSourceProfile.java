@@ -10,8 +10,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 
 
@@ -161,7 +163,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	synchronized protected void loadSource(ExternalService ex) throws SourceTimeOutException, CategoryNotLoadedException {
+	synchronized protected void loadSource(ExternalService ex) throws SourceTimeOutException, CategoryNotLoadedException, InfoDomainException {
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - loadSource(externalService)");
 		}
@@ -171,10 +173,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			Source source;
 			try {
 				source = DomainTools.getDaoService().getSource(this);
-			} catch (TimeoutException e) {
-				String errorMsg = "The source"+ this.getId()+"is impossible to load because of a TimeoutException";
+			} catch (InfoDaoException e) {
+				String errorMsg = "Impossible to load source with ID: "+ this.getId();
 				log.error(errorMsg);
-				throw new SourceTimeOutException(errorMsg,e);
+				throw new InfoDomainException(errorMsg, e);
 			}
 			setElement(source);
 				

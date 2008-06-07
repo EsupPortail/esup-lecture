@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
@@ -92,7 +93,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @throws SourceTimeOutException 
 	 * @throws CategoryNotLoadedException 
 	 */
-	protected abstract void loadSource(ExternalService ex) throws SourceTimeOutException, CategoryNotLoadedException ; 
+	protected abstract void loadSource(ExternalService ex) throws SourceTimeOutException, CategoryNotLoadedException, InfoDomainException ; 
 	
 	
 	/**
@@ -107,7 +108,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @throws CategoryNotLoadedException 
 	 */
 	synchronized protected List<Item> getItems(ExternalService ex) 
-		throws SourceNotLoadedException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException, SourceTimeOutException, CategoryNotLoadedException  {
+		throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, SourceTimeOutException, CategoryNotLoadedException, InfoDomainException  {
 	   	if (log.isDebugEnabled()){
     		log.debug("id="+this.id+" - getItems(externalService)");
     	}

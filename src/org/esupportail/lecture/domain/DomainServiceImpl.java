@@ -13,10 +13,12 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.application.Version;
 import org.esupportail.commons.services.authentication.AuthenticationService;
+import org.esupportail.commons.services.i18n.I18nService;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.CategoryDummyBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
+import org.esupportail.lecture.domain.beans.ItemDummyBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
@@ -88,6 +90,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 */
 	private AuthenticationService authenticationService;
 
+	/**
+	 * The i18n Service.
+	 */
+	private I18nService i18nService;
+
 	/* 
 	 ************************** INIT **********************************/
 
@@ -106,6 +113,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		Assert.notNull(channel, "property channel of class "
 				+ this.getClass().getName() + " can not be null");
 		Assert.notNull(authenticationService, "property authenticationService of class " 
+				+ this.getClass().getName() + " can not be null");
+		Assert.notNull(i18nService, "property i18nService of class " 
 				+ this.getClass().getName() + " can not be null");
 	}
 
@@ -283,7 +292,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<ItemBean> getItems(final String uid, final String sourceId, final ExternalService ex) 
-			throws SourceNotLoadedException, InternalDomainException, CategoryNotLoadedException, SourceTimeOutException {
+			throws SourceNotLoadedException, InternalDomainException, CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getItems(" + uid + "," + sourceId + ",externalService)");
 		}
@@ -336,8 +345,17 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				+ uid + ", source " + sourceId + ")";
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
-		}
-		
+		} catch (InfoDomainException e) {
+			String errorMsg = "InfoDomainException for service 'getItems(user "
+				+ uid + ", source " + sourceId + ")";
+			LOG.error(errorMsg);
+			//get error message form i18n service
+			String mes = i18nService.getString("itemDummy");
+			//build new exception with this first translated message in stack trace
+			InfoDomainException e2 = new InfoDomainException(mes, e); 
+			ItemBean itemBean = new ItemDummyBean(e2);
+			listItemBean.add(itemBean);
+		} 		
 		return listItemBean;
 	}
 
@@ -774,6 +792,14 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 */
 	public void setAuthenticationService(final AuthenticationService authenticationService) {
 		this.authenticationService = authenticationService;
+	}
+
+
+	/**
+	 * @param service the i18nService to set
+	 */
+	public void setI18nService(I18nService service) {
+		i18nService = service;
 	}
 
 
