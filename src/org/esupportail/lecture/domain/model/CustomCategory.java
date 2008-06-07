@@ -29,20 +29,19 @@ public abstract class CustomCategory implements CustomElement {
 	/*
 	 ************************** PROPERTIES *********************************/	
 	/**
-	 * Log instance
+	 * The userprofile owner.
 	 */
-	protected static final Log log = LogFactory.getLog(CustomCategory.class);
+	private static final Log LOG = LogFactory.getLog(CustomCategory.class);
 	/**
-	 * The userprofile owner 
+	 * The Id of the categoryProfile referring by this CustomCategory.
 	 */
 	protected UserProfile userProfile;
-	// TODO (GB later) pourquoi ne pas mettre le userPRofile en private comme dans customSource ?
 	/**
-	 * The Id of the categoryProfile referring by this CustomCategory
+	 * Log instance.
 	 */
 	private String elementId;	
 	/**
-	 * database pk
+	 * database pk.
 	 */
 	private long customCategoryPK;
 	
@@ -50,24 +49,24 @@ public abstract class CustomCategory implements CustomElement {
 	 ************************** INIT **********************************/
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param profileId of the category profile refered by this CustomManagedSource
 	 * @param user owner of this  CustomCategory
 	 */
-	protected CustomCategory(String profileId, UserProfile user) {
-		if (log.isDebugEnabled()){
-			log.debug("CustomCategory("+profileId+","+user.getUserId()+")");
+	protected CustomCategory(final String profileId, final UserProfile user) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("CustomCategory(" + profileId + "," + user.getUserId() + ")");
 		}
 		this.elementId = profileId;
 		this.userProfile = user;
 	}
 
 	/**
-	 * default constructor
+	 * default constructor.
 	 */
 	protected CustomCategory() {
-		if (log.isDebugEnabled()){
-			log.debug("CustomCategory()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("CustomCategory()");
 		}
 	}
 
@@ -75,13 +74,13 @@ public abstract class CustomCategory implements CustomElement {
 	 ************************** METHODS **********************************/
 	
 	/**
-	 * The used name of the categoryProfile
+	 * The used name of the categoryProfile.
 	 * @throws CategoryProfileNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
 	public String getName() throws CategoryProfileNotFoundException  {
-		if (log.isDebugEnabled()){
-			log.debug("id="+elementId+" - getName()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + elementId + " - getName()");
 		}
 		return getProfile().getName();
 	}
@@ -90,12 +89,20 @@ public abstract class CustomCategory implements CustomElement {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null) return false;
-		if (!(o instanceof CustomCategory)) return false;
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null) {
+			return false;
+		}
+		if (!(o instanceof CustomCategory)) {
+			return false;
+		}
 		final CustomCategory customCategory = (CustomCategory) o;
-		if (!customCategory.getElementId().equals(this.getElementId())) return false;
+		if (!customCategory.getElementId().equals(this.getElementId())) {
+			return false;
+		}
 		return true;
 	}
 
@@ -111,7 +118,7 @@ public abstract class CustomCategory implements CustomElement {
 	 ************************** ABSTRACT METHODS **********************************/
 	
 	/**
-	 * Return the list of sorted customSources displayed by this customCategory
+	 * Return the list of sorted customSources displayed by this customCategory.
 	 * @param ex access to external service 
 	 * @return the list of customSource
 	 * @throws CategoryProfileNotFoundException
@@ -121,26 +128,28 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryOutOfReachException 
 	 */
 	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) 
-	throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException;
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, 
+		CategoryTimeOutException, CategoryOutOfReachException;
 
 	/**
-	 * remove a CustomManegedSource displayed in this CustomCategory
+	 * remove a CustomManegedSource displayed in this CustomCategory.
 	 * and also removes every occcurence in userProfile
 	 * Used to remove a subscription or an importation indifferently
 	 * @param profileId the managedSourceProfile ID associated to the CustomManagedSource to remove
 	 */
-	protected abstract void removeCustomManagedSourceFromProfile (String profileId) ;
+	protected abstract void removeCustomManagedSourceFromProfile (final String profileId) ;
 	// TODO (GB later) removeCustomPersonalSource())
 	
 	/**
-	 * The categoryProfile associated to this CustomCategory
+	 * The categoryProfile associated to this CustomCategory.
 	 * @return the categoryProfile 
 	 * @throws CategoryProfileNotFoundException 
 	 */
 	public abstract CategoryProfile getProfile() throws CategoryProfileNotFoundException ;
 	
 	/**
-	 * Return a list of <SourceProfile,AvailabilityMode> corresponding to visible sources for user, 
+	 * Return a list of <SourceProfile,AvailabilityMode>.
+	 * This list corresponding to visible sources for user, 
 	 * in this customCategory.
 	 * @param ex access to external service 
 	 * @return list of ProfileAvailability
@@ -151,11 +160,12 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryTimeOutException 
 	 */
 	public abstract List<ProfileAvailability> getVisibleSources(ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException, CategoryTimeOutException;
+		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, 
+		InternalDomainException, CategoryTimeOutException;
 	
 	/**
-	 * For a customManagedCategory, it subscribes sourceId, but for a customPersonalcategory, 
-	 * there is not any subscription and throws a SubcriptionInPersonalException
+	 * For a customManagedCategory, it subscribes sourceId.
+	 * But for a customPersonalcategory, there is not any subscription and throws a SubcriptionInPersonalException
 	 * @param sourceId source ID
 	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
@@ -169,11 +179,12 @@ public abstract class CustomCategory implements CustomElement {
 	// TODO (GB later) faire le throw SubcriptionInPersonalImpossibleException pour le personal
 	public abstract void subscribeToSource(String sourceId, ExternalService ex) 
 		throws CategoryProfileNotFoundException, SourceProfileNotFoundException, 
-		SourceNotVisibleException, CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException, CategoryOutOfReachException;
-
+		SourceNotVisibleException, CategoryNotVisibleException, CategoryTimeOutException, 
+		InternalDomainException, CategoryOutOfReachException;
 
 	/**
-	 * For a customManagedCategory, it unsubscribes sourceId, but for a customPersonalcategory, 
+	 * For a customManagedCategory, it unsubscribes sourceId.
+	 * But for a customPersonalcategory, 
 	 * there is not any subscription and throws a SubcriptionInPersonalException
 	 * @param sourceId source ID
 	 * @param ex access to externalService
@@ -185,7 +196,8 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws InternalDomainException 
 	 */
 	public abstract void unsubscribeToSource(String sourceId, ExternalService ex) 
-		throws CategoryProfileNotFoundException, SourceObligedException, CategoryOutOfReachException, CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException;
+		throws CategoryProfileNotFoundException, SourceObligedException, CategoryOutOfReachException, 
+		CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException;
 	
 	/**
 	 * @param sourceId Id for customManagedSource
@@ -200,13 +212,13 @@ public abstract class CustomCategory implements CustomElement {
 	public abstract boolean containsCustomSource(String sourceId);
 		
 	/**
-	 * Remove the customSource sourceId in this CustomCategory only
+	 * Remove the customSource sourceId in this CustomCategory only.
 	 * @param sourceId ID for customSource
 	 */
 	public abstract void removeCustomSource(String sourceId);
 	
 	/**
-	 * Remove the customManagedSource sourceId in this CustomCategory only
+	 * Remove the customManagedSource sourceId in this CustomCategory only.
 	 * @param sourceId ID for customManagedSource
 	 */
 	public abstract void removeCustomManagedSource(String sourceId);
@@ -221,19 +233,18 @@ public abstract class CustomCategory implements CustomElement {
 	 ************************** ACCESSORS **********************************/
 
 	/**
-	 * The user Profile, owner of this CustomCategory
+	 * The user Profile, owner of this CustomCategory.
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getUserProfile()
 	 */
 	public UserProfile getUserProfile() {
 		return userProfile;
 	}
 	
-
 	/**
-	 * Sets userProfile
+	 * Sets userProfile.
 	 * @param userProfile
 	 */
-	private void setUserProfile(UserProfile userProfile) {
+	private void setUserProfile(final UserProfile userProfile) {
 		this.userProfile = userProfile;
 		//Needed by Hibernate
 	}
@@ -256,14 +267,14 @@ public abstract class CustomCategory implements CustomElement {
 	/**
 	 * @param customCategoryPK - databasePK
 	 */
-	public void setCustomCategoryPK(long customCategoryPK) {
+	public void setCustomCategoryPK(final long customCategoryPK) {
 		this.customCategoryPK = customCategoryPK;
 	}
 
 	/**
 	 * @param elementId
 	 */
-	public void setElementId(String elementId) {
+	public void setElementId(final String elementId) {
 		this.elementId = elementId;
 	}
 
