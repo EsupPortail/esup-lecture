@@ -42,6 +42,7 @@
 			web interface and the command-line calls.
 			It must implement interface org.esupportail.lecture.domain.DomainService.
 		</description>
+		<property name="i18nService" ref="i18nService" />
 		<property name="channel" ref="channel" />
 		<property name="authenticationService" ref="authenticationService" />
 	</bean> 
