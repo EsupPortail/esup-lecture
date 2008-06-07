@@ -159,27 +159,31 @@ public abstract class Source implements Element, Serializable {
 			} else {
 				LOG.error("Source " + this.profileId + "does not have any URL defined");
 			}
+			//no mapping find from url so using XML content caracteristics
 			if (m == null) {
-				//no mapping find from url so using XML content caracteristics
 				if (dtd != null) {
 					m = channel.getMappingByDtd(dtd);
-				} else {
-					if (xmlType != null) {
-						m = channel.getMappingByXmlType(xmlType);
-					} else {
-						if (xmlns != null) {
-							m = channel.getMappingByXmlns(xmlns);
-						} else {
-							if (rootElement != null) {
-								m = channel.getMappingByRootElement(rootElement);
-							} else {
-								LOG.warn("Source " + profileId 
-									+ " does not have any entry key to find xslt information : " 
-									+ "no dtd, xmlType, xmlns, rootElement");
-							}
-						}
-					}
+				} 
+			}
+			if (m == null) {
+				if (xmlType != null) {
+					m = channel.getMappingByXmlType(xmlType);
 				}
+			}
+			if (m == null) {
+				if (xmlns != null) {
+					m = channel.getMappingByXmlns(xmlns);
+				}
+			}
+			if (m == null) {
+				if (rootElement != null) {
+					m = channel.getMappingByRootElement(rootElement);
+				}
+			}
+			if (m == null) {
+				LOG.warn("Source " + profileId 
+						+ " does not have any entry key to find xslt information : " 
+						+ "no dtd, xmlType, xmlns, rootElement");
 			}
 			if (m == null) {
 				String errorMsg = "Mapping not found for source " + profileId;
