@@ -142,9 +142,6 @@ public class CustomContext implements CustomElement {
 		/* update this customContext with context */
 		getContext().updateCustom(this, ex);
 		
-//		DomainTools.getDaoService().updateCustomContext(this);
-//		DomainTools.getDaoService().updateUserProfile(userProfile);
-		
 		List<CustomCategory> listCustomCategories = new Vector<CustomCategory>();
 		for (CustomManagedCategory customCat : subscriptions.values()) {
 			// later : add other custom elements (imported et personal)
@@ -170,9 +167,6 @@ public class CustomContext implements CustomElement {
 		List<ProfileVisibility> couplesVisib;
 		couplesVisib = cxt.getVisibleCategoriesAndUpdateCustom(this, ex);
 			
-//		DomainTools.getDaoService().updateCustomContext(this);
-//		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
-		
 		List<ProfileAvailability> couplesAvail = new Vector<ProfileAvailability>();
 		for (ProfileVisibility coupleV : couplesVisib) {
 			// Every couple is not NOTVISIBLE (= visible)

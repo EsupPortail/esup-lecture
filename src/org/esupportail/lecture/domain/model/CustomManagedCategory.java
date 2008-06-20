@@ -126,9 +126,6 @@ public class CustomManagedCategory extends CustomCategory {
 			}
 		}
 		
-//		DomainTools.getDaoService().updateCustomCategory(this);
-//		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
-		
 		List<CustomSource> listSources = new Vector<CustomSource>();
 		for (CustomSource customSource : subscriptions.values()){
 			listSources.add(customSource);
@@ -176,9 +173,6 @@ public class CustomManagedCategory extends CustomCategory {
 					+ userProfile.getUserId());
 			}
 		}
-		
-//		DomainTools.getDaoService().updateCustomCategory(this);
-//		DomainTools.getDaoService().updateUserProfile(super.getUserProfile());
 		
 		List<ProfileAvailability> couplesAvail = new Vector<ProfileAvailability>();
 		for (ProfileVisibility coupleV : couplesVisib) {
@@ -321,8 +315,6 @@ public class CustomManagedCategory extends CustomCategory {
 						+ " because this source is not in subscriptions");
 				} else {
 					removeCustomManagedSourceFromProfile(sourceId);
-//					DomainTools.getDaoService().updateCustomCategory(this);
-//					DomainTools.getDaoService().updateUserProfile(userProfile);
 					LOG.trace("removeCustomManagedSource to source " + sourceId);
 				}
 				
@@ -340,8 +332,6 @@ public class CustomManagedCategory extends CustomCategory {
 			}
 		} catch (SourceProfileNotFoundException e) {
 			removeCustomManagedSourceFromProfile(sourceId);
-//			DomainTools.getDaoService().updateCustomCategory(this);
-//			DomainTools.getDaoService().updateUserProfile(userProfile);
 			LOG.trace("removeCustomManagedSource to source " + sourceId);
 		}
 	}
@@ -364,7 +354,7 @@ public class CustomManagedCategory extends CustomCategory {
 			CustomManagedSource customManagedSource = 
 				new CustomManagedSource(managedSourceProfile, getUserProfile());
 			subscriptions.put(profileId, customManagedSource);
-			DomainTools.getDaoService().updateCustomCategory(this);
+//			DomainTools.getDaoService().updateCustomCategory(this);
 			getUserProfile().addCustomSource(customManagedSource);
 		}
 	}

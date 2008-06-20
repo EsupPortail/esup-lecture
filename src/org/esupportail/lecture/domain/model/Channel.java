@@ -638,13 +638,6 @@ public class Channel implements InitializingBean {
 		this.mappingList = mappingList;
 	}
 
-//	/**
-//	 * @return daoService
-//	 */
-//	public DaoService getDaoService() {
-//		return daoService;
-//	}
-
 	/**
 	 * set DaoService
 	 * @param daoService
