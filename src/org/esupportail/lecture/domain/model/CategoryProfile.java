@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
@@ -51,7 +52,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @param ex
 	 * @throws CategoryTimeOutException 
 	 */
-	protected abstract void loadCategory(ExternalService ex) throws CategoryTimeOutException ;
+	protected abstract void loadCategory(ExternalService ex)  throws InfoDomainException;
 	
 	/**
 	 * Return the name of the referenced category. When the category is not loaded, it returns

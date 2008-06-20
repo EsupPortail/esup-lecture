@@ -52,8 +52,9 @@ public interface DaoService {
 	 * @param profile of the source to get
 	 * @param ptCas proxy ticket CAS used in case of CAS protected source
 	 * @return the source
+	 * @throws InfoDaoException 
 	 */
-	public Source getSource(ManagedSourceProfile profile, String ptCas);
+	public Source getSource(ManagedSourceProfile profile, String ptCas) throws InfoDaoException;
 
 	/* User Profile */
 	

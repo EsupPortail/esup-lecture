@@ -17,6 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
@@ -110,14 +111,13 @@ public class Context {
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet) {
 			try {
 				mcp.updateCustomContext(customContext, ex);
-			} catch (CategoryTimeOutException e) {
-				log.error("Impossible to update CustomContext associated to context " + getId()
-						+ " for managedCategoryProfile " + mcp.getId()
-						+ " because the remote category is in Time Out", e);
 			} catch (CategoryNotLoadedException e){
 				log.error("Impossible to update CustomContext associated to context " + getId()
 						+ " for managedCategoryProfile " + mcp.getId()+ " because its category is not loaded - " 
 						+ " It is very strange because loadCategory() has been called before in mcp.updateCustomContext() ...", e);
+			} catch (InfoDomainException e) {
+				log.error("Impossible to update CustomContext associated to context " + getId()
+						+ " for managedCategoryProfile " + mcp.getId());
 			}
 		}
 		// update for managedCategories not anymore in this context
@@ -173,10 +173,9 @@ public class Context {
 				log.error("Impossible to update CustomContext associated to context " + getId()
 						+ " for managedCategoryProfile " + mcp.getId()+ " because its category is not loaded - " 
 						+ " It is very strange because loadCategory() has been called before in mcp.updateCustomContext() ...", e);
-			} catch (CategoryTimeOutException e) {
+			} catch (InfoDomainException e) {
 				log.error("Impossible to update CustomContext associated to context " + getId()
-						+ " for managedCategoryProfile " + mcp.getId()
-						+ " because the remote category is in Time Out", e);
+						+ " for managedCategoryProfile " + mcp.getId());
 			}
 		}
 		

@@ -6,6 +6,9 @@
 package org.esupportail.lecture.domain.model;
 
 
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
@@ -102,26 +105,28 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @return true if the source is visible by the userProfile
 	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized public VisibilityMode updateCustomCategory(CustomManagedCategory customManagedCategory, ExternalService ex) 
+	public synchronized VisibilityMode updateCustomCategory(
+			final CustomManagedCategory customManagedCategory, final ExternalService ex) 
 		throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - updateCustomCategory("+customManagedCategory.getElementId()+"externalService)");
+		if (log.isDebugEnabled()) {
+			log.debug("id = " + this.getId() + " - updateCustomCategory("
+					+ customManagedCategory.getElementId() + "externalService)");
 		}
 		// no loadSource(ex) is needed here
-		return setUpCustomCategoryVisibility(customManagedCategory,ex);
+		return setUpCustomCategoryVisibility(customManagedCategory, ex);
 		
 	}
 
 	
 
 	/**
-	 * Computes rights on parameters shared between parent ManagedCategory and managedSourceProfile
+	 * Computes rights on parameters shared between parent ManagedCategory and managedSourceProfile.
 	 * ManagedCategory (edit, visibility,access)
 	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized public void computeFeatures() throws CategoryNotLoadedException   {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - computeFeatures()");
+	public synchronized void computeFeatures() throws CategoryNotLoadedException {
+		if (log.isDebugEnabled()) {
+			log.debug("id = " + this.getId() + " - computeFeatures()");
 		}
 	
 		/* Features that can be herited by the managedCategoryProfile */
@@ -143,15 +148,14 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			if (setTimeOut == 0) {
 				setTimeOut = categoryProfile.getTimeOut();
 			}
-
-		}else {
+		} else {
 			setAccess = categoryProfile.getAccess();
 			setVisib = categoryProfile.getVisibility();
 			setTimeOut = categoryProfile.getTimeOut();
 			
 		}
 				
-		features.update(setVisib,setAccess,setTimeOut);
+		features.update(setVisib, setAccess, setTimeOut);
 		
 	}
 
@@ -165,26 +169,33 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	@Override
 	protected synchronized void loadSource(final ExternalService ex) throws InfoDomainException {
 		if (log.isDebugEnabled()) {
-			log.debug("id=" + this.getId() + " - loadSource(externalService)");
+			log.debug("id = " + this.getId() + " - loadSource(externalService)");
 		}
 			
-		if (getAccess() == Accessibility.PUBLIC) {
-			// managed Source Profile => single or globalSource
-			Source source;
-			try {
+		Accessibility accessibility = getAccess();
+		try {
+			if (Accessibility.PUBLIC.equals(accessibility)) {
+				// managed Source Profile => single or globalSource
+				Source source;
 				source = DomainTools.getDaoService().getSource(this);
-			} catch (InfoDaoException e) {
-				String errorMsg = "Impossible to load source with ID: " + this.getId();
-				log.error(errorMsg);
-				throw new InfoDomainException(errorMsg, e);
+				setElement(source);
+
+			} else if (Accessibility.CAS.equals(accessibility)) {
+				URL url = new URL(getSourceURL());
+				String casTargetService = url.getProtocol() + "://" + url.getHost();
+				String ptCas = ex.getUserProxyTicketCAS(casTargetService);
+				Source source = DomainTools.getDaoService().getSource(this, ptCas);
+				setElement(source);
+
 			}
-			setElement(source);
-				
-		} else if (getAccess() == Accessibility.CAS) {
-			String ptCas = ex.getUserProxyTicketCAS();
-			Source source = DomainTools.getDaoService().getSource(this, ptCas);
-			setElement(source);
-				
+		} catch (InfoDaoException e) {
+			String errorMsg = "Impossible to load source with ID: " + this.getId();
+			log.error(errorMsg);
+			throw new InfoDomainException(errorMsg, e);
+		} catch (MalformedURLException e) {
+			String errorMsg = "Impossible to load source with ID: " + this.getId();
+			log.error(errorMsg);
+			throw new InfoDomainException(errorMsg, e);
 		}
 		
 		//features.compute();
@@ -202,10 +213,12 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @throws CategoryNotLoadedException 
 	 */
 	
-	synchronized private VisibilityMode setUpCustomCategoryVisibility(CustomManagedCategory customManagedCategory,ExternalService ex) 
-	throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - setUpCustomCategoryVisibility("+customManagedCategory.getElementId()+",externalService)");
+	private synchronized VisibilityMode setUpCustomCategoryVisibility(
+			final CustomManagedCategory customManagedCategory,
+			final ExternalService ex) throws CategoryNotLoadedException {
+		if (log.isDebugEnabled()) {
+			log.debug("id=" + this.getId() + " - setUpCustomCategoryVisibility(" 
+					+ customManagedCategory.getElementId() + ",externalService)");
 		}
 		/*
 		 * Algo pour gerer les customSourceProfiles :
@@ -218,17 +231,17 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		
 		VisibilityMode mode = getVisibility().whichVisibility(ex);
 		
-		if (mode == VisibilityMode.OBLIGED){
-			if (log.isTraceEnabled()){
-				log.trace("IsInObliged : "+mode);
+		if (mode == VisibilityMode.OBLIGED) {
+			if (log.isTraceEnabled()) {
+				log.trace("IsInObliged : " + mode);
 			}
 			customManagedCategory.addSubscription(this);
 			return mode;
 		}
 		
-		if (mode == VisibilityMode.AUTOSUBSCRIBED){
-			if (log.isTraceEnabled()){
-				log.trace("IsInAutoSubscribed : "+mode);
+		if (mode == VisibilityMode.AUTOSUBSCRIBED) {
+			if (log.isTraceEnabled()) {
+				log.trace("IsInAutoSubscribed : " + mode);
 			}
 			// TODO (GB later) l'ajouter dans le custom category si c'est la premiere fois
 			//customManagedCategory.addSubscription(this);
@@ -236,8 +249,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		}
 		
 		if (mode == VisibilityMode.ALLOWED) {
-			if (log.isTraceEnabled()){
-				log.trace("IsInAllowed : "+mode);
+			if (log.isTraceEnabled()) {
+				log.trace("IsInAllowed : " + mode);
 			}
 			// Nothing to do
 			return mode;
@@ -250,14 +263,14 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	}
 
 	/**	
-	 * Compute access value from feature and returns it
+	 * Compute access value from feature and returns it.
 	 * @return access
 	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getAccess()
 	 */
-	synchronized public Accessibility getAccess() throws CategoryNotLoadedException  {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - getAccess()");
+	public synchronized Accessibility getAccess() throws CategoryNotLoadedException  {
+		if (log.isDebugEnabled()) {
+			log.debug("id=" + this.getId() + " - getAccess()");
 		}
 		return features.getAccess();
 	}
@@ -266,9 +279,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see ManagedSourceProfile#access
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setAccess(org.esupportail.lecture.domain.model.Accessibility)
 	 */
-	synchronized public void setAccess(Accessibility access) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - setAccess()");
+	public synchronized void setAccess(final Accessibility access) {
+		if (log.isDebugEnabled()) {
+			log.debug("id=" + this.getId() + " - setAccess()");
 		}
 		this.access = access;
 		features.setIsComputed(false);
@@ -301,17 +314,17 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	}
 	
 	/**
-	 * Compute timeOut value from features and returns it
+	 * Compute timeOut value from features and returns it.
 	 * @return timeOut
 	 * @throws CategoryNotLoadedException 
 	 */
 	@Override
 	public int getTimeOut() throws CategoryNotLoadedException  {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - getTimeOut()");
+		if (log.isDebugEnabled()) {
+			log.debug("id=" + this.getId() + " - getTimeOut()");
 		}
-		if (log.isTraceEnabled()){
-			log.trace("timeOut : "+features.getTimeOut());
+		if (log.isTraceEnabled()) {
+			log.trace("timeOut : " + features.getTimeOut());
 		}
 		return features.getTimeOut();
 	}
@@ -322,9 +335,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.SourceProfile#setTimeOut(int)
 	 */
 	@Override
-	synchronized public void setTimeOut(int timeOut) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - setTimeOut("+timeOut+")");
+	public synchronized void setTimeOut(final int timeOut) {
+		if (log.isDebugEnabled()) {
+			log.debug("id=" + this.getId() + " - setTimeOut(" + timeOut + ")");
 		}
 		super.timeOut = timeOut;
 		features.setIsComputed(false);

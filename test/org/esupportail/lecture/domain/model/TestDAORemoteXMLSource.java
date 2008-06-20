@@ -15,6 +15,7 @@ import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
+import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
@@ -36,9 +37,9 @@ public class TestDAORemoteXMLSource {
 	 * @throws Xml2HtmlException 
 	 * @throws ComputeItemsException 
 	 * @throws MappingNotFoundException 
-	 * @throws TimeoutException 
+	 * @throws InfoDaoException 
 	 */
-	public static void main(String[] args) throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, TimeoutException {
+	public static void main(String[] args) throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, InfoDaoException {
 	
 		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);

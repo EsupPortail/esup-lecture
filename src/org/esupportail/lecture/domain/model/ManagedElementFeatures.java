@@ -51,8 +51,8 @@ public abstract class ManagedElementFeatures {
 	 * @param mep Managed element profile needing these features
 	 */
 	protected ManagedElementFeatures(ManagedElementProfile mep){
-		if (log.isDebugEnabled()){
-			log.debug("ManagedElementFeatures("+mep.getId()+")");
+		if (log.isDebugEnabled()) {
+			log.debug("ManagedElementFeatures(" + mep.getId() + ")");
 		}
 		this.mep = mep;
 	}
@@ -61,11 +61,11 @@ public abstract class ManagedElementFeatures {
 	 *********************** METHODS **************************************/
 	
 	/**
-	 * Compute features 
+	 * Compute features.
 	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized protected void compute() throws CategoryNotLoadedException   {
-		if (log.isDebugEnabled()){
+	protected synchronized void compute() throws CategoryNotLoadedException   {
+		if (log.isDebugEnabled()) {
 			log.debug("compute()");
 		}
 		mep.computeFeatures();
@@ -73,12 +73,12 @@ public abstract class ManagedElementFeatures {
 	}
 	
 	/**
-	 * Used to update features directly, without any computing
+	 * Used to update features directly, without any computing.
 	 * It only sets value in parameter
 	 * @param visib the visibility feature to update
 	 */
-	synchronized protected void update(VisibilitySets visib) {
-		if (log.isDebugEnabled()){
+	protected synchronized void update(final VisibilitySets visib) {
+		if (log.isDebugEnabled()) {
 			log.debug("update(visibility)");
 		}
 		this.visibility = visib;
@@ -88,12 +88,13 @@ public abstract class ManagedElementFeatures {
 	 * @return Returns the visibility (feature is automatically computed if needed).
 	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized protected VisibilitySets getVisibility() throws CategoryNotLoadedException {
-		if (!isComputed){
+	protected synchronized VisibilitySets getVisibility() throws CategoryNotLoadedException {
+		if (!isComputed) {
 			try {
 				compute();
 			} catch (CategoryNotLoadedException e) {
-				String errorMsg = "Impossible to compute features on element "+ mep.getId() + "because Category is not loaded";
+				String errorMsg = "Impossible to compute features on element " 
+					+ mep.getId() + "because Category is not loaded";
 				log.error(errorMsg);
 				throw e;
 			}
@@ -111,10 +112,10 @@ public abstract class ManagedElementFeatures {
 	}
 	
 	/**
-	 * Sets IsComputed
+	 * Sets IsComputed.
 	 * @param b the boolean to set
 	 */
-	synchronized protected void setIsComputed(boolean b) {
+	protected void setIsComputed(final boolean b) {
 		isComputed = b;
 	}
 		

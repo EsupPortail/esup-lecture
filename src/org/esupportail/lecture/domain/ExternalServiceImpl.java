@@ -11,6 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.myfaces.portlet.PortletUtil;
 import org.esupportail.commons.services.authentication.AuthenticationService;
+import org.esupportail.commons.services.cas.CasService;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.lecture.domain.utils.ModeService;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
@@ -54,6 +55,11 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 * The authentication Service.
 	 */
 	private AuthenticationService authenticationService;
+
+	/**
+	 * The CAS Service.
+	 */
+	private CasService casService;
 	
 	/*
 	 *************************** INIT ************************************** */	
@@ -75,6 +81,8 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 				+ this.getClass().getName() + " can not be null");
 		Assert.notNull(portletService, "property portletService of class " 
 				+ this.getClass().getName() + " can not be null");
+//		Assert.notNull(casService, "property casService of class " 
+//				+ this.getClass().getName() + " can not be null");
 		if (defaultService == null) {
 			defaultService = servletService;
 		}
@@ -134,7 +142,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserProxyTicketCAS()
 	 */
-	public String getUserProxyTicketCAS() {
+	public String getUserProxyTicketCAS(final String casTargetService) {
 	    if (LOG.isDebugEnabled()) {
 			LOG.debug("getUserProxyTicketCAS() - not yet implemented");
 		}
@@ -209,6 +217,13 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 */
 	public void setDefaultService(final ModeService defaultService) {
 		this.defaultService = defaultService;
+	}
+
+	/**
+	 * @param casService the casService to set
+	 */
+	public void setCasService(CasService casService) {
+		this.casService = casService;
 	}
 
 }

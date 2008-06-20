@@ -88,9 +88,8 @@ public class DaoServiceStub  implements DaoService {
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile, java.lang.String)
 	 */
-	public Source getSource(@SuppressWarnings("unused")
-	final ManagedSourceProfile profile, @SuppressWarnings("unused")
-	final String ptCas) {
+	public Source getSource(@SuppressWarnings("unused") final ManagedSourceProfile profile,
+			@SuppressWarnings("unused")	final String ptCas) {
 		return null;
 	}
 	

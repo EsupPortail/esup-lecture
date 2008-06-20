@@ -76,7 +76,7 @@ public class ExternalServiceStub implements ExternalService {
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserProxyTicketCAS()
 	 */
-	public String getUserProxyTicketCAS() {
+	public String getUserProxyTicketCAS(final String casTargetService) {
 		// non encore utilisée
 		return null;
 	}

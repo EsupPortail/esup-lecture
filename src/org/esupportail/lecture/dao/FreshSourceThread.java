@@ -1,7 +1,15 @@
 package org.esupportail.lecture.dao;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.Iterator;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.UsernamePasswordCredentials;
+import org.apache.commons.httpclient.auth.AuthScope;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Attribute;
@@ -17,34 +25,41 @@ import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
 
 /**
- * Get a Freash Managed Category from a distinct Thread
+ * Get a Freash Managed Category from a distinct Thread.
  * @author bourges
  */
 public class FreshSourceThread extends Thread {
 
 	/**
-	 * Log instance 
+	 * Log instance.
 	 */
-	private static final Log log = LogFactory.getLog(FreshSourceThread.class);
+	private static final Log LOG = LogFactory.getLog(FreshSourceThread.class);
 	/**
-	 * Exception generated in this Thread
+	 * Exception generated in this Thread.
 	 */
 	private Exception exception;
 	/**
-	 * Source to return by this Thread
+	 * Source to return by this Thread.
 	 */
 	private Source source;
 	/**
-	 * SourceProfile used to return a Source
+	 * SourceProfile used to return a Source.
 	 */
 	private SourceProfile profile;
+	/**
+	 * user and password. 
+	 * null for anonymous access.
+	 */
+	private UsernamePasswordCredentials creds;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param sourceProfile used to return a Source
+	 * @param creds - user and password. null for anonymous access
 	 */
-	public FreshSourceThread(SourceProfile sourceProfile) {
+	public FreshSourceThread(final SourceProfile sourceProfile, final UsernamePasswordCredentials creds) {
 		this.profile = sourceProfile;
+		this.creds = creds;
 		this.exception = null;
 	}
 
@@ -54,19 +69,22 @@ public class FreshSourceThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			this.source = getFreshSource(profile);
+			this.source = getFreshSource(profile, creds);
 		} catch (XMLParseException e) {
 			this.exception = e;
 		}
 	}
 
 	/**
-	 * get a source form the Web (without cache)
+	 * get a source form the Web (without cache).
 	 * @param sourceProfile source profile of source to get
+	 * @param creds - user and password. null for anonymous access
 	 * @return the source
 	 * @throws XMLParseException 
 	 */
-	private synchronized Source getFreshSource(SourceProfile sourceProfile) throws XMLParseException {
+	@SuppressWarnings("unchecked")
+	private synchronized Source getFreshSource(final SourceProfile sourceProfile, 
+			final UsernamePasswordCredentials creds) throws XMLParseException {
 		Source ret = new GlobalSource();
 		try {
 			String dtd = null;
@@ -76,9 +94,26 @@ public class FreshSourceThread extends Thread {
 			String xml = null;
 
 			//get the XML
-			SAXReader reader = new SAXReader();
 			String sourceURL = sourceProfile.getSourceURL();
-			Document document = reader.read(sourceURL);
+			Document document = null;
+			if (creds != null) {
+				HttpClient client = new HttpClient();
+				if (creds != null) {
+					client.getState().setCredentials(AuthScope.ANY, creds);				
+				}
+				GetMethod method = new GetMethod(sourceURL);
+				try {
+					client.executeMethod(method);
+					InputStream responseStream = method.getResponseBodyAsStream();
+					document = new SAXReader().read(responseStream);				
+				} catch (HttpException e) {
+					throw new RuntimeException("Error in getFreshSource", e);
+				} catch (IOException e) {
+					throw new RuntimeException("Error in getFreshSource", e);
+				}
+			} else {
+			    document = new SAXReader().read(sourceURL);
+			}
 			//find the dtd
 			DocumentType doctype = document.getDocType();
 			if (doctype != null) {
@@ -93,15 +128,18 @@ public class FreshSourceThread extends Thread {
 				rootNamespace = ns.getURI();				
 			}
 			//find XML Schema URL
-			Namespace xmlSchemaNameSpace = rootElement.getNamespaceForURI("http://www.w3.org/2001/XMLSchema-instance");
+			Namespace xmlSchemaNameSpace = 
+				rootElement.getNamespaceForURI("http://www.w3.org/2001/XMLSchema-instance");
 			if (xmlSchemaNameSpace != null) {
 				String xmlSchemaNameSpacePrefix = xmlSchemaNameSpace.getPrefix();
-				for (Iterator i = rootElement.attributeIterator(); i.hasNext(); ) {
-					Attribute attribute = (Attribute) i.next();
-					if (attribute.getQName().getNamespacePrefix().equals(xmlSchemaNameSpacePrefix) && attribute.getName().equals("schemaLocation")) {
+				Iterator<Attribute> i = rootElement.attributeIterator();
+				while (i.hasNext()) {
+					Attribute attribute = i.next();
+					if (attribute.getQName().getNamespacePrefix().equals(xmlSchemaNameSpacePrefix) 
+							&& attribute.getName().equals("schemaLocation")) {
 						xmltype = attribute.getValue();
 					}
-				}				
+				}
 			}
 			//get XML as String
 			xml = document.asXML();
@@ -115,9 +153,10 @@ public class FreshSourceThread extends Thread {
 			//			ret.setItemXPath(sourceProfile.getItemXPath());
 			//			ret.setXsltURL(sourceProfile.getXsltURL());
 		} catch (DocumentException e) {
-			String msg = "getSource with url="+sourceProfile.getSourceURL()+". Is it a valid XML Source ?";
-			log.error(msg);
-			throw new XMLParseException(msg ,e);
+			String msg = "getSource with url=" 
+				+ sourceProfile.getSourceURL() + ". Is it a valid XML Source ?";
+			LOG.error(msg);
+			throw new XMLParseException(msg, e);
 		}
 		return ret;
 	}

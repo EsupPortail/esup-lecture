@@ -230,6 +230,9 @@
 		<property name="hibernateService">
 			<ref bean="daoServiceHibernate"/>
 		</property>
+        <property name="authenticationService">
+            <ref bean="authenticationService"/>
+        </property>
 	</bean>
 
 	<bean id="daoServiceRemoteXML" 

@@ -16,6 +16,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
@@ -212,7 +213,10 @@ public class UserProfile {
 						LOG.error("Impossible to get CustomContext associated to context " 
 							+ contextId + " for managedCategoryProfile " + mcp.getId()
 							+ " because context not found", e);
-					} 
+					} catch (InfoDomainException e) {
+						throw new RuntimeException(
+							"Exception in updateCustomContextsForOneManagedCategory", e);
+					}
 				}
 			}
 		

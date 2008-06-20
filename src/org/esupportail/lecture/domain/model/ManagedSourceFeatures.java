@@ -75,15 +75,16 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	 * @return Returns the accessibility mode (feature is automatically computed if needed).
 	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized protected Accessibility getAccess() throws CategoryNotLoadedException{
-		if (log.isDebugEnabled()){
+	protected synchronized Accessibility getAccess() throws CategoryNotLoadedException {
+		if (log.isDebugEnabled()) {
 			log.debug("getAccess()");
 		}
-		if (!super.isComputed()){
+		if (!super.isComputed()) {
 			try {
 				super.compute();
 			} catch (CategoryNotLoadedException e) {
-				String errorMsg = "Impossible to compute features on element "+ super.mep.getId() + "because Category is not loaded";
+				String errorMsg = "Impossible to compute features on element " 
+					+ super.mep.getId() + "because Category is not loaded";
 				log.error(errorMsg);
 				throw e;
 			}
@@ -95,15 +96,16 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	 * @return Returns the timeOut (feature is automatically computed if needed).
 	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized protected int getTimeOut() throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()){
+	protected synchronized int getTimeOut() throws CategoryNotLoadedException {
+		if (log.isDebugEnabled()) {
 			log.debug("getTimeOut()");
 		}
-		if (!super.isComputed()){
+		if (!super.isComputed()) {
 			try {
 				super.compute();
 			} catch (CategoryNotLoadedException e) {
-				String errorMsg = "Impossible to compute features on element "+ super.mep.getId() + "because Category is not loaded";
+				String errorMsg = "Impossible to compute features on element "
+					+ super.mep.getId() + "because Category is not loaded";
 				log.error(errorMsg);
 				throw e;
 			}

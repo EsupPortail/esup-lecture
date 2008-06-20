@@ -23,6 +23,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
@@ -200,7 +201,7 @@ public class CustomContext implements CustomElement {
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryOutOfReachException 
 	 */
-	public void subscribeToCategory(String categoryId,ExternalService ex) 
+	public void subscribeToCategory(final String categoryId, final ExternalService ex) 
 		throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, 
 		CategoryTimeOutException, CategoryNotVisibleException, InternalDomainException, 
 		CategoryOutOfReachException {	
@@ -226,8 +227,14 @@ public class CustomContext implements CustomElement {
 				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
 					+ "is not refered by any customContext in userProfile "
 					+ userProfile.getUserId());
+			} catch (InfoDomainException e) {
+				throw new RuntimeException("Exception in subscribeToCategory", e);
 			}
+		} catch (InfoDomainException e) {
+			throw new RuntimeException("Exception in subscribeToCategory(" + getElementId()
+					+ ")", e);
 		}
+
 		
 		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
 			if (subscriptions.containsKey(categoryId)) {
@@ -293,7 +300,11 @@ public class CustomContext implements CustomElement {
 				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
 					+ "is not refered by any customContext in userProfile "
 					+ userProfile.getUserId());
+			} catch (InfoDomainException e) {
+				throw new RuntimeException("Exception in unsubscribeToCategory", e);
 			}
+		} catch (InfoDomainException e) {
+			throw new RuntimeException("Exception in unsubscribeToCategory", e);
 		}
 		
 		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {

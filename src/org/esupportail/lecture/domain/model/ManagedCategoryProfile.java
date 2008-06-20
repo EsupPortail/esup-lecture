@@ -6,6 +6,8 @@
 package org.esupportail.lecture.domain.model;
 
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 import org.apache.commons.logging.Log;
@@ -15,6 +17,7 @@ import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
@@ -118,11 +121,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param customContext the customContext to update
 	 * @param ex access to externalService to evaluate visibility
 	 * @return true if the category is visible by the userProfile
-	 * @throws CategoryTimeOutException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws InfoDomainException 
 	 */
 	synchronized protected VisibilityMode updateCustomContext(CustomContext customContext,ExternalService ex) 
-		throws CategoryTimeOutException, CategoryNotLoadedException{
+		throws InfoDomainException{
 		if (log.isDebugEnabled()){
 			log.debug("id="+this.getId()+" - updateCustomContext("+customContext.getElementId()+"externalService)");
 		}
@@ -137,11 +139,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @throws CategoryTimeOutException 
 	 */
 	@Override
-	protected synchronized void loadCategory(final ExternalService ex) throws CategoryTimeOutException {
+	protected synchronized void loadCategory(final ExternalService ex) throws InfoDomainException {
 		if (log.isDebugEnabled()) {
 			log.debug("id=" + this.getId() + " - loadCategory(externalService)");
 		}
-		if (getAccess() == Accessibility.PUBLIC) {
+		Accessibility accessibility = getAccess();
+		if (Accessibility.PUBLIC.equals(accessibility)) {
 			try {
 				setElement(DomainTools.getDaoService().getManagedCategory(this));
 			} catch (TimeoutException e) {
@@ -151,8 +154,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 				throw new CategoryTimeOutException(errorMsg, e);
 			}
 						
-		} else if (getAccess() == Accessibility.CAS) {
-			String ptCas = ex.getUserProxyTicketCAS();
+		} else if (Accessibility.CAS.equals(accessibility)) {
+			URL url;
+			try {
+				url = new URL(getUrlCategory());
+			} catch (MalformedURLException e) {
+				String errorMsg = "Impossible to load category with ID: " + this.getId();
+				log.error(errorMsg);
+				throw new InfoDomainException(errorMsg, e);
+			}
+			String casTargetService = url.getProtocol() + "://" + url.getHost();
+			String ptCas = ex.getUserProxyTicketCAS(casTargetService);
 			setElement(DomainTools.getDaoService().getManagedCategory(this, ptCas));
 		}
 	}

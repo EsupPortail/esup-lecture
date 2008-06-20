@@ -32,9 +32,10 @@ public interface ExternalService {
 	public String getCurrentContextId() throws NoExternalValueException, InternalExternalException;
 	/**
 	 * Return the proxy ticket CAS of the connected user
+	 * @param casTargetService - CAS target service
 	 * @return the proxy ticket CAS
 	 */
-	public String getUserProxyTicketCAS();
+	public String getUserProxyTicketCAS(String casTargetService);
 
 	/**
 	 * Return true if the connected user of the is in the "group" defined in the external service

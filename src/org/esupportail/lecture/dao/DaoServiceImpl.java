@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
@@ -18,12 +19,14 @@ import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.Assert;
 
 /**
  * @author bourges
  *
  */
-public class DaoServiceImpl implements DaoService {
+public class DaoServiceImpl implements DaoService, InitializingBean {
 	/**
 	 * Log instance.
 	 */
@@ -36,6 +39,10 @@ public class DaoServiceImpl implements DaoService {
 	 * hibernate service class.
 	 */
 	private DaoServiceHibernate hibernateService;
+	/**
+	 * the authentication Service
+	 */
+	private AuthenticationService authenticationService;
 
 	/**
 	 * @throws TimeoutException 
@@ -69,12 +76,13 @@ public class DaoServiceImpl implements DaoService {
 	}
 
 	/**
+	 * @throws InfoDaoException 
 	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile, java.lang.String)
 	 */
-	public Source getSource(@SuppressWarnings("unused") final ManagedSourceProfile profile,
-			@SuppressWarnings("unused") final String ptCas) {
-		// TODO (RB) manage source abd CAS
-		return null;
+	public Source getSource(final ManagedSourceProfile profile,
+			final String ptCas) throws InfoDaoException {
+		String user = authenticationService.getCurrentUserId();			
+		return remoteXMLService.getSource(profile, user, ptCas);
 	}
 
 	/**
@@ -189,6 +197,22 @@ public class DaoServiceImpl implements DaoService {
 	 */
 	public void updateVersionManager(final VersionManager versionManager) {
 		hibernateService.updateVersionManager(versionManager);
+	}
+
+	/**
+	 * @param authenticationService the authenticationService to set
+	 */
+	public void setAuthenticationService(AuthenticationService authenticationService) {
+		this.authenticationService = authenticationService;
+	}
+
+	public void afterPropertiesSet() throws Exception {
+		Assert.notNull(authenticationService, "property authenticationService of class "
+				+ this.getClass().getName() + " can not be null");
+		Assert.notNull(hibernateService, "property hibernateService of class "
+				+ this.getClass().getName() + " can not be null");
+		Assert.notNull(remoteXMLService, "property remoteXMLService of class "
+				+ this.getClass().getName() + " can not be null");
 	}
 	
 }
