@@ -470,7 +470,7 @@ public class UserProfile {
 	   	if (custom != null) {
 	   		custom.removeSubscriptions();
 	   		customContexts.remove(contextId);
-			DomainTools.getDaoService().deleteCustomContext(custom);
+//			DomainTools.getDaoService().deleteCustomContext(custom);
 			DomainTools.getDaoService().updateUserProfile(this);
 	   	}
 	}
@@ -489,7 +489,7 @@ public class UserProfile {
 	   	if (custom != null) {
 	   		custom.removeSubscriptions();
 	   		customCategories.remove(categoryId);
-	   		DomainTools.getDaoService().deleteCustomCategory(custom);
+//	   		DomainTools.getDaoService().deleteCustomCategory(custom);
 			DomainTools.getDaoService().updateUserProfile(this);
 	   	}
 	}
@@ -507,7 +507,7 @@ public class UserProfile {
 	   	boolean foo = customSources.containsKey(sourceId);
 		CustomSource cs = customSources.remove(sourceId);
 		if (cs != null) {
-			DomainTools.getDaoService().deleteCustomSource(cs);
+//			DomainTools.getDaoService().deleteCustomSource(cs);
 			DomainTools.getDaoService().updateUserProfile(this);
 		}
 	}

@@ -132,27 +132,28 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 
 	/**
-	 *  Load the category referenced by this ManagedCategoryProfile
+	 *  Load the category referenced by this ManagedCategoryProfile.
 	 *  @param ex access to externalservice to get proxy ticket CAS
 	 * @throws CategoryTimeOutException 
 	 */
 	@Override
-	synchronized protected void loadCategory(ExternalService ex) throws CategoryTimeOutException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - loadCategory(externalService)");
+	protected synchronized void loadCategory(final ExternalService ex) throws CategoryTimeOutException {
+		if (log.isDebugEnabled()) {
+			log.debug("id=" + this.getId() + " - loadCategory(externalService)");
 		}
-		if(getAccess() == Accessibility.PUBLIC) {
+		if (getAccess() == Accessibility.PUBLIC) {
 			try {
 				setElement(DomainTools.getDaoService().getManagedCategory(this));
 			} catch (TimeoutException e) {
-				String errorMsg = "The managedCategory "+ this.getId()+" is impossible to load because of a TimeoutException";
+				String errorMsg = "The managedCategory " + this.getId()
+					+ " is impossible to load because of a TimeoutException";
 				log.error(errorMsg);
-				throw new CategoryTimeOutException(errorMsg,e);
+				throw new CategoryTimeOutException(errorMsg, e);
 			}
 						
 		} else if (getAccess() == Accessibility.CAS) {
 			String ptCas = ex.getUserProxyTicketCAS();
-			setElement(DomainTools.getDaoService().getManagedCategory(this,ptCas));
+			setElement(DomainTools.getDaoService().getManagedCategory(this, ptCas));
 		}
 	}
 	

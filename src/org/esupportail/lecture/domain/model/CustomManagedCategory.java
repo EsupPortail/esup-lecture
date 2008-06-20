@@ -247,8 +247,6 @@ public class CustomManagedCategory extends CustomCategory {
 					+ " because this source is already in subscriptions");
 			} else {
 				addSubscription(soProfile);
-//				DomainTools.getDaoService().updateCustomCategory(this);
-//				DomainTools.getDaoService().updateUserProfile(userProfile);
 				LOG.debug("addSubscription to source " + sourceId);
 			}
 			
@@ -403,7 +401,7 @@ public class CustomManagedCategory extends CustomCategory {
 		CustomSource cs = subscriptions.get(sourceId);
 		if (cs != null) {
 			subscriptions.remove(sourceId);
-			DomainTools.getDaoService().updateCustomCategory(this);
+//			DomainTools.getDaoService().updateCustomCategory(this);
 		}
 	}
 	

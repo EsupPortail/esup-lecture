@@ -341,7 +341,7 @@ public class CustomContext implements CustomElement {
 		if (!subscriptions.containsKey(profileId)) {
 			CustomManagedCategory customManagedCategory = new CustomManagedCategory(profileId, userProfile);
 			subscriptions.put(profileId, customManagedCategory);
-			DomainTools.getDaoService().updateCustomContext(this);
+//			DomainTools.getDaoService().updateCustomContext(this);
 			userProfile.addCustomCategory(customManagedCategory);
 		}
 	}
@@ -375,7 +375,7 @@ public class CustomContext implements CustomElement {
 	}
 	
 	/**
-	 * Remove the customManagedCategory categoryId in ths customContext only.
+	 * Remove the customManagedCategory categoryId in this customContext only.
 	 * @param categoryId ID for customManagedCategory
 	 */
 	public void removeCustomManagedCategory(final String categoryId) {
@@ -385,7 +385,7 @@ public class CustomContext implements CustomElement {
 		CustomCategory cs = subscriptions.get(categoryId);
 		if (cs != null) {
 			subscriptions.remove(categoryId);
-			DomainTools.getDaoService().updateCustomContext(this);
+//			DomainTools.getDaoService().updateCustomContext(this);
 		}
 	}
 	
@@ -448,7 +448,7 @@ public class CustomContext implements CustomElement {
 		// TODO (GB later) externaliser les bornes
 		if ((size >= 0) && (size <= MAXTREESIZE)) {
 			treeSize = size;
-			DomainTools.getDaoService().updateCustomContext(this);
+//			DomainTools.getDaoService().updateCustomContext(this);
 		} else {
 			String errorMsg = "TreeSize must be into 0 and 100";
 			LOG.error(errorMsg);
@@ -467,8 +467,8 @@ public class CustomContext implements CustomElement {
 		if (!unfoldedCategories.remove(catId)) {
 			LOG.warn("foldCategory(" + catId + ") is called in customContext " + elementId 
 					+ " but this category is yet folded");
-		} else {
-			DomainTools.getDaoService().updateCustomContext(this);
+//		} else {
+//			DomainTools.getDaoService().updateCustomContext(this);
 		}
 	}
 	
@@ -483,8 +483,8 @@ public class CustomContext implements CustomElement {
 		if (!unfoldedCategories.add(catId)) {
 			LOG.warn("unfoldCategory(" + catId + ") is called in customContext " + elementId
 					+ " but this category is yet unfolded");
-		} else {
-			DomainTools.getDaoService().updateCustomContext(this);
+//		} else {
+//			DomainTools.getDaoService().updateCustomContext(this);
 		}
 	
 	}

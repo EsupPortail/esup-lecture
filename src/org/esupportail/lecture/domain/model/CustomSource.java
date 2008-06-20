@@ -151,7 +151,7 @@ public abstract class CustomSource implements CustomElement {
 		} else {
 			readItems.remove(itemId);
 		}
-		DomainTools.getDaoService().updateCustomSource(this);
+//		DomainTools.getDaoService().updateCustomSource(this);
 	}
 	
 	/**
@@ -176,7 +176,7 @@ public abstract class CustomSource implements CustomElement {
 		 * loop by calling dao
 		 */
 		this.itemDisplayMode = mode;
-		DomainTools.getDaoService().updateCustomSource(this);
+//		DomainTools.getDaoService().updateCustomSource(this);
 	}
 	
 	/**

@@ -156,25 +156,25 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	}
 
 	/**
-	 * Load the source referenced by this ManagedSourceProfile
+	 * Load the source referenced by this ManagedSourceProfile.
 	 * @param ex access to externalService
 	 * @throws SourceTimeOutException 
 	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	synchronized protected void loadSource(ExternalService ex) throws SourceTimeOutException, CategoryNotLoadedException, InfoDomainException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - loadSource(externalService)");
+	protected synchronized void loadSource(final ExternalService ex) throws InfoDomainException {
+		if (log.isDebugEnabled()) {
+			log.debug("id=" + this.getId() + " - loadSource(externalService)");
 		}
 			
-		if(getAccess() == Accessibility.PUBLIC) {
+		if (getAccess() == Accessibility.PUBLIC) {
 			// managed Source Profile => single or globalSource
 			Source source;
 			try {
 				source = DomainTools.getDaoService().getSource(this);
 			} catch (InfoDaoException e) {
-				String errorMsg = "Impossible to load source with ID: "+ this.getId();
+				String errorMsg = "Impossible to load source with ID: " + this.getId();
 				log.error(errorMsg);
 				throw new InfoDomainException(errorMsg, e);
 			}
@@ -182,7 +182,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				
 		} else if (getAccess() == Accessibility.CAS) {
 			String ptCas = ex.getUserProxyTicketCAS();
-			Source source = DomainTools.getDaoService().getSource(this,ptCas);
+			Source source = DomainTools.getDaoService().getSource(this, ptCas);
 			setElement(source);
 				
 		}

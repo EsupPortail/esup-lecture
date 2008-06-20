@@ -50,10 +50,10 @@ public class Channel implements InitializingBean {
 	 */
 	private Hashtable<String,ManagedCategoryProfile> managedCategoryProfilesHash;
 	
-	/**
-	 * Hashtable of UserProfiles loaded from database, indexed by their userId.
-	 */
-	private Hashtable<String,UserProfile> userProfilesHash = new Hashtable<String,UserProfile>();
+//	/**
+//	 * Hashtable of UserProfiles loaded from database, indexed by their userId.
+//	 */
+//	private Hashtable<String,UserProfile> userProfilesHash = new Hashtable<String,UserProfile>();
 	
 	/* mappings */
 	
@@ -325,18 +325,18 @@ public class Channel implements InitializingBean {
 			log.error(mes);
 			throw new ConfigException(mes);
 		}
-		UserProfile userProfile = userProfilesHash.get(userId);
+//		UserProfile userProfile = userProfilesHash.get(userId);
+//		if (userProfile == null) {
+		UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
 		if (userProfile == null) {
-			userProfile = DomainTools.getDaoService().getUserProfile(userId);
-			if (userProfile == null) {
-				userProfile = new UserProfile(userId);
-				DomainTools.getDaoService().saveUserProfile(userProfile);
-			}
-			userProfilesHash.put(userId, userProfile);
-		} else {
-			// Reatach userProfile to hibernate session
-			userProfile = DomainTools.getDaoService().refreshUserProfile(userProfile);
+			userProfile = new UserProfile(userId);
+			DomainTools.getDaoService().saveUserProfile(userProfile);
 		}
+//			userProfilesHash.put(userId, userProfile);
+//		} else {
+//			// Reatach userProfile to hibernate session
+//			userProfile = DomainTools.getDaoService().refreshUserProfile(userProfile);
+//		}
 		return userProfile;
 	}
 	
