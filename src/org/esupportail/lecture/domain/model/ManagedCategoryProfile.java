@@ -32,17 +32,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/*
 	 ************************** PROPERTIES ******************************** */	
 	/**
-	 * Log instance 
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(ManagedCategoryProfile.class); 
+	protected static final Log LOG = LogFactory.getLog(ManagedCategoryProfile.class); 
 
 	/**
-	 * URL of the remote managed category
+	 * URL of the remote managed category.
 	 */
 	private String categoryURL;
 	
 	/**
-	 * Access mode on the remote managed category
+	 * Access mode on the remote managed category.
 	 */
 	private Accessibility access;
 	
@@ -103,8 +103,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * Constructor 
 	 */
 	protected ManagedCategoryProfile() {
-		if (log.isDebugEnabled()){
-			log.debug("ManagedCategoryProfile()");
+		if (LOG.isDebugEnabled()){
+			LOG.debug("ManagedCategoryProfile()");
 		}
 		features = new ManagedCategoryFeatures(this);
 	}
@@ -123,10 +123,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @return true if the category is visible by the userProfile
 	 * @throws InfoDomainException 
 	 */
-	synchronized protected VisibilityMode updateCustomContext(CustomContext customContext,ExternalService ex) 
-		throws InfoDomainException{
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - updateCustomContext("+customContext.getElementId()+"externalService)");
+	protected VisibilityMode updateCustomContext(final CustomContext customContext,
+			final ExternalService ex) 
+		throws InfoDomainException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - updateCustomContext("
+					+ customContext.getElementId() + "externalService)");
 		}
 		loadCategory(ex);
 		return setUpCustomContextVisibility(customContext, ex);
@@ -140,8 +142,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	@Override
 	protected synchronized void loadCategory(final ExternalService ex) throws InfoDomainException {
-		if (log.isDebugEnabled()) {
-			log.debug("id=" + this.getId() + " - loadCategory(externalService)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - loadCategory(externalService)");
 		}
 		Accessibility accessibility = getAccess();
 		if (Accessibility.PUBLIC.equals(accessibility)) {
@@ -150,7 +152,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			} catch (TimeoutException e) {
 				String errorMsg = "The managedCategory " + this.getId()
 					+ " is impossible to load because of a TimeoutException";
-				log.error(errorMsg);
+				LOG.error(errorMsg);
 				throw new CategoryTimeOutException(errorMsg, e);
 			}
 						
@@ -160,7 +162,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 				url = new URL(getUrlCategory());
 			} catch (MalformedURLException e) {
 				String errorMsg = "Impossible to load category with ID: " + this.getId();
-				log.error(errorMsg);
+				LOG.error(errorMsg);
 				throw new InfoDomainException(errorMsg, e);
 			}
 			String casTargetService = url.getProtocol() + "://" + url.getHost();
@@ -178,10 +180,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @return true if the mcp is visible by the user of the customContext (in Obliged or in autoSubscribed, or in Allowed), else return false 
 	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized private VisibilityMode setUpCustomContextVisibility(CustomContext customContext, ExternalService ex) 
+	private VisibilityMode setUpCustomContextVisibility(final CustomContext customContext,
+			final ExternalService ex) 
 		throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - setUpCustomContextVisibility("+customContext.getElementId()+",externalService)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - setUpCustomContextVisibility("
+					+ customContext.getElementId() + ",externalService)");
 		}
 		/*
 		 * Algo pour gerer les customCategories :
@@ -194,17 +198,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 		VisibilityMode mode = getVisibility().whichVisibility(ex);
 		
-		if (mode == VisibilityMode.OBLIGED){
-			if (log.isTraceEnabled()){
-				log.trace("IsInObliged : "+mode);
+		if (mode == VisibilityMode.OBLIGED) {
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("IsInObliged : " + mode);
 			}
 			customContext.addSubscription(this);
 			return mode;
 		}
 		
 		if (mode == VisibilityMode.AUTOSUBSCRIBED){
-			if (log.isTraceEnabled()){
-				log.trace("IsInAutoSubscribed : "+mode);
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("IsInAutoSubscribed : " + mode);
 			}
 			// TODO (GB later) l'ajouter dans le custom context si c'est la premiere fois
 			//customContext.addSubscription(this);
@@ -212,8 +216,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		}
 		
 		if (mode == VisibilityMode.ALLOWED) {
-			if (log.isTraceEnabled()){
-				log.trace("IsInAllowed : "+mode);
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("IsInAllowed : " + mode);
 			}
 			// Nothing to do
 			return mode;
@@ -236,17 +240,20 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param ex access to external service for visibility evaluation
 	 * @throws CategoryNotLoadedException
 	 */
-	synchronized protected void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) 
+	protected void updateCustom(final CustomManagedCategory customManagedCategory,
+			final ExternalService ex) 
 		throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - updateCustom("+customManagedCategory.getElementId()+",externalService)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - updateCustom(" + customManagedCategory.getElementId()
+					+ ",externalService)");
 		}
 		ManagedCategory category = (ManagedCategory) getElement();
 		category.updateCustom(customManagedCategory, ex);
 	}
 	
 	/**
-	 * Return a list of <SourceProfile,VisibilityMode> corresponding to visible sources for user, 
+	 * Return a list of <SourceProfile,VisibilityMode>. 
+	 * Corresponding to visible sources for user, 
 	 * in this ManagedCategory and update its related custom (like methode updateCustom): 
 	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles
 	 * defined in ManagedCategory of this Profile, according to managedSourceProfiles visibility
@@ -256,10 +263,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @throws CategoryNotLoadedException 
 	 * @see ManagedCategoryProfile#updateCustom(CustomManagedCategory, ExternalService)
 	 */
-	synchronized protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(CustomManagedCategory customManagedCategory, ExternalService ex) 
+	protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(
+			final CustomManagedCategory customManagedCategory, final ExternalService ex) 
 		throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - getVisibleSourcesAndUpdateCustom("+this.getId()+",externalService)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - getVisibleSourcesAndUpdateCustom("
+					+ this.getId() + ",externalService)");
 		}
 		ManagedCategory category = (ManagedCategory) getElement();
 		return category.getVisibleSourcesAndUpdateCustom(customManagedCategory, ex);
@@ -268,16 +277,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	
 	
 	/** 
-	 * Computes rights on parameters shared between a ManagedCategoryProfile and its
+	 * Computes rights.
+	 * On parameters shared between a ManagedCategoryProfile and its
 	 * ManagedCategory (edit, visibility)
 	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized public void computeFeatures() throws CategoryNotLoadedException  {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - computeFeatures()");
+	public void computeFeatures() throws CategoryNotLoadedException  {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - computeFeatures()");
 		}
 		
-		ManagedCategory managedCategory = (ManagedCategory)getElement();
+		ManagedCategory managedCategory = (ManagedCategory) getElement();
 		//Editability setEdit;
 		VisibilitySets setVisib = visibility;
 		
@@ -291,21 +301,22 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			if (setVisib == null) {
 				setVisib = this.visibility;
 			}
-		}/* else {
+		}
+		/* else {
 				Already done during channel config loading 
 		} */
 		features.update(setVisib);
 	}
 
 	/**
-	 * Compute visibility value from features and returns it
+	 * Compute visibility value from features and returns it.
 	 * @return Visibility
 	 * @throws CategoryNotLoadedException 
 	 * @see ManagedCategoryProfile#visibility
 	 */
 	public VisibilitySets getVisibility() throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - getVisibility()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - getVisibility()");
 		}
 		return features.getVisibility();
 	}
@@ -313,62 +324,28 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * @param visibility
 	 */
-	synchronized public void setVisibility(VisibilitySets visibility) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - setVisibility(visibility)");
+	public void setVisibility(final VisibilitySets visibility) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - setVisibility(visibility)");
 		}
 		this.visibility = visibility;
 		features.setIsComputed(false);
-	}
-	
-//	/**
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
-//	 */
-//	synchronized public void setVisibilityAllowed(DefinitionSets d) {
-//		if (log.isDebugEnabled()){
-//			log.debug("setVisibilityAllowed(definitionSets)");
-//		}
-//		this.visibility.setAllowed(d);
-//		features.setIsComputed(false);
-//	}
-//	
-//	/**
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
-//	 */
-//	synchronized public void setVisibilityAutoSubcribed(DefinitionSets d) {
-//		if (log.isDebugEnabled()){
-//			log.debug("setVisibilityAutoSubcribed(definitionSets)");
-//		}
-//		this.visibility.setAutoSubscribed(d);
-//		features.setIsComputed(false);
-//	}
-//	
-//	/**
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
-//	 */
-//	synchronized public void setVisibilityObliged(DefinitionSets d) {
-//		if (log.isDebugEnabled()){
-//			log.debug("setVisibilityObliged(definitionSets)");
-//		}
-//		this.visibility.setObliged(d);
-//		features.setIsComputed(false);
-//	}
-//	
+	}	
 
 	/**
-	 * Add a context to the set of context of this managed category profile
+	 * Add a context to the set of context of this managed category profile.
 	 * This means that this managedCategoryProfile is declared in context c
 	 * @param c context to add
 	 */
-	synchronized protected void addContext(Context c){
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - addContext("+c.getId()+")");
+	protected void addContext(final Context c){
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - addContext(" + c.getId() + ")");
 		}
 		contextsSet.add(c);
 	}
 	
 	/**
-	 * Returns the managedSourceProfile identified by id, accessible by this ManagedCategoryProfile
+	 * Returns the managedSourceProfile identified by id, accessible by this ManagedCategoryProfile.
 	 * (Defined in ManagedCategory referred by this ManagedCategoryProfile)
 	 * @param id id of the sourceProfile to get
 	 * @return the sourceProfile
@@ -376,9 +353,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @throws SourceProfileNotFoundException 
 	 */
 	@Override
-	protected ManagedSourceProfile getSourceProfileById(String id) throws CategoryNotLoadedException, SourceProfileNotFoundException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - getSourceProfileById("+id+")");
+	protected ManagedSourceProfile getSourceProfileById(final String id) 
+			throws CategoryNotLoadedException, SourceProfileNotFoundException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - getSourceProfileById(" + id + ")");
 		}
 //		 TODO (GB later) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
 		return (ManagedSourceProfile) getElement().getSourceProfileById(id);
@@ -401,16 +379,16 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 	
 	/** 
-	 * Sets the URL of the remote managed category
+	 * Sets the URL of the remote managed category.
 	 * @param categoryURL the URL to set
 	 */
-	synchronized public void setUrlCategory(String categoryURL) {
+	public void setUrlCategory(final String categoryURL) {
 		//RB categoryURL = DomainTools.replaceWithUserAttributes(categoryURL);
 		this.categoryURL = categoryURL;
 	}
 
 	/**
-	 * Returns the state (true or false) of the trust category parameter
+	 * Returns the state (true or false) of the trust category parameter.
 	 * @return trustCategory
 	 */
 	protected boolean getTrustCategory() {
@@ -418,10 +396,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 	
 	/**
-	 * Sets the trust category parameter
+	 * Sets the trust category parameter?
 	 * @param trustCategory 
 	 */
-	synchronized protected void setTrustCategory(boolean trustCategory) {
+	protected void setTrustCategory(final boolean trustCategory) {
 		this.trustCategory = trustCategory;
 	}
 
@@ -436,7 +414,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * @param access 
 	 */
-	synchronized public void setAccess(Accessibility access) {
+	public void setAccess(final Accessibility access) {
 		this.access = access;
 	}
 	
@@ -482,7 +460,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @return ttl
 	 * @see ManagedCategoryProfile#ttl
 	 */
-	public int getTtl(){
+	public int getTtl() {
 		return ttl;
 	}
 	
@@ -490,7 +468,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param ttl 
 	 * @see ManagedCategoryProfile#ttl
 	 */
-	synchronized public void setTtl(int ttl) {
+	public void setTtl(final int ttl) {
 		this.ttl = ttl;
 	}
 
@@ -498,7 +476,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @return timeOut
 	 * @see ManagedCategoryProfile#timeOut
 	 */
-	public int getTimeOut(){
+	public int getTimeOut() {
 		return timeOut;
 	}
 	
@@ -506,7 +484,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param timeOut
 	 * @see ManagedCategoryProfile#timeOut
 	 */
-	synchronized public void setTimeOut(int timeOut) {
+	public void setTimeOut(final int timeOut) {
 		this.timeOut = timeOut;
 	}
 	/**
@@ -515,9 +493,5 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	protected Set<Context> getContextsSet() {
 		return contextsSet;
 	}
-
-
-
-
 
 }

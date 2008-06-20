@@ -134,16 +134,16 @@ public class Mapping {
 	}
 	
 	/**
-	 * Sets the xsltFile
+	 * Sets the xsltFile.
 	 * @param xsltUrl xslt URL
 	 * @see Mapping#xsltUrl
 	 */
-	synchronized protected void setXsltUrl(String xsltUrl) {
+	protected void setXsltUrl(String xsltUrl) {
 		this.xsltUrl = xsltUrl;
 	}
 
 	/**
-	 * Returns the item XPath
+	 * Returns the item XPath.
 	 * @return itemXPath
 	 * @see Mapping#itemXPath
 	 */
@@ -152,16 +152,16 @@ public class Mapping {
 	}
 	
 	/**
-	 * Sets the item XPath
+	 * Sets the item XPath.
 	 * @param itemXPath
 	 * @see Mapping#itemXPath
 	 */
-	synchronized protected void setItemXPath(String itemXPath) {
+	protected void setItemXPath(final String itemXPath) {
 		this.itemXPath = itemXPath;
 	}
 
 	/**
-	 * Returns the xmlns
+	 * Returns the xmlns.
 	 * @return xmlns
 	 * @see Mapping#xmlns
 	 */
@@ -169,16 +169,16 @@ public class Mapping {
 		return xmlns;
 	}
 	/**
-	 * Sets the xmlns
+	 * Sets the xmlns.
 	 * @param xmlns
 	 * @see Mapping#xmlns
 	 */
-	synchronized protected void setXmlns(String xmlns) {
+	protected void setXmlns(final String xmlns) {
 		this.xmlns = xmlns;
 	}
 
 	/**
-	 * Returns the XML type
+	 * Returns the XML type.
 	 * @return xmlType
 	 * @see Mapping#xmlType
 	 */
@@ -187,16 +187,16 @@ public class Mapping {
 	}
 	
 	/**
-	 * Sets the XML type
+	 * Sets the XML type.
 	 * @param xmlType
 	 * @see Mapping#xmlType
 	 */
-	synchronized protected void setXmlType(String xmlType) {
+	protected void setXmlType(final String xmlType) {
 		this.xmlType = xmlType;
 	}
 
 	/**
-	 * Returns the root element of the XML
+	 * Returns the root element of the XML.
 	 * @return root element
 	 */
 	protected String getRootElement() {
@@ -204,10 +204,10 @@ public class Mapping {
 	}
 
 	/**
-	 * Sets the root element of the XML
+	 * Sets the root element of the XML.
 	 * @param rootElement root element
 	 */
-	synchronized protected void setRootElement(String rootElement) {
+	protected void setRootElement(final String rootElement) {
 		this.rootElement = rootElement;
 	}
 	
@@ -219,10 +219,10 @@ public class Mapping {
 	}
 	
 	/**
-	 * set source URL
+	 * set source URL.
 	 * @param sourceURL
 	 */
-	synchronized protected void setSourceURL(String sourceURL) {
+	protected void setSourceURL(final String sourceURL) {
 		this.sourceURL = sourceURL;
 	}
 	
@@ -234,10 +234,10 @@ public class Mapping {
 	}
 	
 	/**
-	 * set map of XPathNameSpaces
+	 * set map of XPathNameSpaces.
 	 * @param pathNameSpace
 	 */
-	synchronized protected void setXPathNameSpaces(HashMap<String, String> pathNameSpace) {
+	protected void setXPathNameSpaces(final HashMap<String, String> pathNameSpace) {
 		XPathNameSpaces = pathNameSpace;
 	}
 	

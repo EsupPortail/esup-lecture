@@ -108,7 +108,7 @@ public class ChannelConfig  {
 	 * @throws ChannelConfigException 
 	 * @see ChannelConfig#singleton
 	 */
-	protected static synchronized ChannelConfig getInstance(String configFilePath) throws ChannelConfigException {
+	protected static ChannelConfig getInstance(final String configFilePath) throws ChannelConfigException {
 		filePath = configFilePath;
 		return getInstance();
 		
@@ -125,7 +125,7 @@ public class ChannelConfig  {
 			LOG.debug("getInstance()");
 		}
 	
-		if (filePath == null){
+		if (filePath == null) {
 			String errorMsg = "Config file path not defined, see in domain.xml file.";
 			LOG.error(errorMsg);
 			throw new ChannelConfigException(errorMsg);
@@ -397,11 +397,4 @@ public class ChannelConfig  {
 		return modified;
 	}
 
-//	/**
-//	 * @param modified The modified to set.
-//	 */
-//	synchronized protected static void setModified(boolean modified) {
-//		ChannelConfig.modified = modified;
-//	}
-	
 }

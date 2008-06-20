@@ -136,9 +136,9 @@ public abstract class Source implements Element, Serializable {
 	 * In fonction of dtd, xmlType, xmlns or XML root element of the source XML content
 	 * @throws MappingNotFoundException 
 	 */
-	private synchronized void computeXslt() throws MappingNotFoundException {
+	private void computeXslt() throws MappingNotFoundException {
 	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("id=" + this.profileId + " - computeXslt()");
+    		LOG.debug("id = " + this.profileId + " - computeXslt()");
     	}
 		
 		Channel channel = DomainTools.getChannel();
@@ -210,7 +210,7 @@ public abstract class Source implements Element, Serializable {
 	 * @throws Xml2HtmlException 
 	 */
 	@SuppressWarnings("unchecked")
-	private synchronized void computeItems() 
+	private void computeItems() 
 		throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.profileId + " - computeItems()");
@@ -278,7 +278,7 @@ public abstract class Source implements Element, Serializable {
 	 * @return html content
 	 * @throws Xml2HtmlException 
 	 */
-	private synchronized String xml2html(final String xml, final String xsltFileURL,
+	private String xml2html(final String xml, final String xsltFileURL,
 			final String encoding) throws Xml2HtmlException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.profileId + " - xml2html(xml,xsltFileURL)");
@@ -332,17 +332,6 @@ public abstract class Source implements Element, Serializable {
 		return itemXPath;
 	}
 
-//	/**
-//	 * @param itemXPath The itemXPath to set.
-//	 */
-//	private synchronized void setItemXPath(final String itemXPath) {
-//	   	if (LOG.isDebugEnabled()) {
-//    		LOG.debug("id=" + this.profileId + " - setItemXPath(" + itemXPath + ")");
-//    	}
-//		this.itemXPath = itemXPath;
-//		isXsltComputed = false;
-//	}
-
 	/**
 	 * @return Returns the xsltURL.
 	 * @throws MappingNotFoundException 
@@ -356,43 +345,6 @@ public abstract class Source implements Element, Serializable {
 		}
 		return xsltURL;
 	}
-
-//	/**
-//	 * @param xsltURL The xsltURL to set.
-//	 */
-//	private synchronized void setXsltURL(final String xsltURL) {
-//	   	if (LOG.isDebugEnabled()) {
-//    		LOG.debug("id=" + this.profileId + " - setXsltURL(" + xsltURL + ")");
-//    	}
-//		this.xsltURL = xsltURL;
-//		isXsltComputed = false;
-//	}
-
-//	/**
-//	 * @return a hash of XPathNameSpace of this source
-//	 * @throws MappingNotFoundException
-//	 */
-//	private HashMap<String, String> getXPathNameSpaces() throws MappingNotFoundException {
-//	   	if (LOG.isDebugEnabled()) {
-//    		LOG.debug("id=" + this.profileId + " - getXPathNameSpaces()");
-//    	}
-//		if (!isXsltComputed) {
-//			computeXslt();
-//		}
-//		return XPathNameSpaces;
-//	}
-
-//	/**
-//	 * Sets the hash of XPathNameSpace of this source.
-//	 * @param pathNameSpaces
-//	 */
-//	private synchronized void setXPathNameSpaces(final HashMap<String, String> pathNameSpaces) {
-//	   	if (LOG.isDebugEnabled()) {
-//    		LOG.debug("id=" + this.profileId + " - setXPathNameSpaces(" + pathNameSpaces + ")");
-//    	}
-//		XPathNameSpaces = pathNameSpaces;
-//		isXsltComputed = false;
-//	}
 
 	/**
 	 * get Items list of this source.
@@ -463,7 +415,7 @@ public abstract class Source implements Element, Serializable {
 	/**
 	 * @param rootElement The rootElement to set.
 	 */
-	public synchronized void setRootElement(final String rootElement) {
+	public void setRootElement(final String rootElement) {
 		this.rootElement = rootElement;
 	}
 
@@ -479,7 +431,7 @@ public abstract class Source implements Element, Serializable {
 	/**
 	 * @param xmlns The xmlns to set.
 	 */
-	public synchronized void setXmlns(final String xmlns) {
+	public void setXmlns(final String xmlns) {
 		this.xmlns = xmlns;
 	}
 
@@ -495,7 +447,7 @@ public abstract class Source implements Element, Serializable {
 	/**
 	 * @param xmlType The xmlType to set.
 	 */
-	public synchronized void setXmlType(final String xmlType) {
+	public void setXmlType(final String xmlType) {
 		this.xmlType = xmlType;
 	}
 
@@ -512,7 +464,7 @@ public abstract class Source implements Element, Serializable {
 	 * set XML Stream (XML content) of the source.
 	 * @param xmlStream
 	 */
-	public synchronized void setXmlStream(final String xmlStream) {
+	public void setXmlStream(final String xmlStream) {
 		this.xmlStream = xmlStream;
 	}
 

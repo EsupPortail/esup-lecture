@@ -105,7 +105,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @return true if the source is visible by the userProfile
 	 * @throws CategoryNotLoadedException 
 	 */
-	public synchronized VisibilityMode updateCustomCategory(
+	public VisibilityMode updateCustomCategory(
 			final CustomManagedCategory customManagedCategory, final ExternalService ex) 
 		throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()) {
@@ -124,7 +124,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * ManagedCategory (edit, visibility,access)
 	 * @throws CategoryNotLoadedException 
 	 */
-	public synchronized void computeFeatures() throws CategoryNotLoadedException {
+	public void computeFeatures() throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()) {
 			log.debug("id = " + this.getId() + " - computeFeatures()");
 		}
@@ -167,7 +167,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource(org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	protected synchronized void loadSource(final ExternalService ex) throws InfoDomainException {
+	protected void loadSource(final ExternalService ex) throws InfoDomainException {
 		if (log.isDebugEnabled()) {
 			log.debug("id = " + this.getId() + " - loadSource(externalService)");
 		}
@@ -213,11 +213,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @throws CategoryNotLoadedException 
 	 */
 	
-	private synchronized VisibilityMode setUpCustomCategoryVisibility(
+	private VisibilityMode setUpCustomCategoryVisibility(
 			final CustomManagedCategory customManagedCategory,
 			final ExternalService ex) throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()) {
-			log.debug("id=" + this.getId() + " - setUpCustomCategoryVisibility(" 
+			log.debug("id = " + this.getId() + " - setUpCustomCategoryVisibility(" 
 					+ customManagedCategory.getElementId() + ",externalService)");
 		}
 		/*
@@ -268,9 +268,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getAccess()
 	 */
-	public synchronized Accessibility getAccess() throws CategoryNotLoadedException  {
+	public Accessibility getAccess() throws CategoryNotLoadedException  {
 		if (log.isDebugEnabled()) {
-			log.debug("id=" + this.getId() + " - getAccess()");
+			log.debug("id = " + this.getId() + " - getAccess()");
 		}
 		return features.getAccess();
 	}
@@ -279,7 +279,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see ManagedSourceProfile#access
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setAccess(org.esupportail.lecture.domain.model.Accessibility)
 	 */
-	public synchronized void setAccess(final Accessibility access) {
+	public void setAccess(final Accessibility access) {
 		if (log.isDebugEnabled()) {
 			log.debug("id=" + this.getId() + " - setAccess()");
 		}
@@ -305,9 +305,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see ManagedSourceProfile#visibility
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibility(org.esupportail.lecture.domain.model.VisibilitySets)
 	 */
-	synchronized public void setVisibility(VisibilitySets visibility) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - setVisibility(visibility)");
+	public void setVisibility(final VisibilitySets visibility) {
+		if (log.isDebugEnabled()) {
+			log.debug("id=" + this.getId() + " - setVisibility(visibility)");
 		}
 		this.visibility = visibility;
 		features.setIsComputed(false);
@@ -335,7 +335,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.SourceProfile#setTimeOut(int)
 	 */
 	@Override
-	public synchronized void setTimeOut(final int timeOut) {
+	public void setTimeOut(final int timeOut) {
 		if (log.isDebugEnabled()) {
 			log.debug("id=" + this.getId() + " - setTimeOut(" + timeOut + ")");
 		}
@@ -343,81 +343,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		features.setIsComputed(false);
 	}
 	
-//	/** 
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAllowed(org.esupportail.lecture.domain.model.DefinitionSets)
-//	 */
-//	synchronized public void setVisibilityAllowed(DefinitionSets d) {
-//		if (log.isDebugEnabled()){
-//			log.debug("setVisibilityAllowed(definitionSets)");
-//		}
-//		visibility.setAllowed(d);
-//		features.setIsComputed(false);
-//		
-//	}
-//
-//	/**
-//	 * @throws ElementNotLoadedException 
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAllowed()
-//	 */
-//	public DefinitionSets getVisibilityAllowed() {
-//		if (log.isDebugEnabled()){
-//			log.debug("getVisibilityAllowed()");
-//		}
-//		return features.getVisibility().getAllowed();
-//	}
-//
-//	/**
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityAutoSubcribed(org.esupportail.lecture.domain.model.DefinitionSets)
-//	 */
-//	synchronized public void setVisibilityAutoSubcribed(DefinitionSets d) {
-//		if (log.isDebugEnabled()){
-//			log.debug("setVisibilityAutoSubcribed(definitionSets)");
-//		}
-//		visibility.setAutoSubscribed(d);
-//		features.setIsComputed(false);	
-//	}
-//
-//	/**
-//	 * @throws ElementNotLoadedException 
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAutoSubscribed()
-//	 */
-//	public DefinitionSets getVisibilityAutoSubscribed(){
-//		if (log.isDebugEnabled()){
-//			log.debug("getVisibilityAutoSubscribed()");
-//		}
-//		return features.getVisibility().getAutoSubscribed();
-//	}
-//
-//	/**
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibilityObliged(org.esupportail.lecture.domain.model.DefinitionSets)
-//	 */
-//	synchronized public void setVisibilityObliged(DefinitionSets d) {
-//		if (log.isDebugEnabled()){
-//			log.debug("setVisibilityObliged(definitionSets)");
-//		}
-//		visibility.setObliged(d);
-//		features.setIsComputed(false);	
-//		
-//	}
-//
-//	/**
-//	 * @throws ElementNotLoadedException 
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityObliged()
-//	 */
-//	public DefinitionSets getVisibilityObliged() {
-//		if (log.isDebugEnabled()){
-//			log.debug("getVisibilityObliged()");
-//		}
-//		return features.getVisibility().getObliged();
-//	}
-
-	
 	/* 
 	 *************************** ACCESSORS ******************************** */	
-
 	
 	/**
-	 * Returns ttl
+	 * Returns ttl.
 	 * @see ManagedSourceProfile#ttl
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getTtl()
 	 */
@@ -431,7 +361,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setTtl(int)
 	 */
 	@Override
-	synchronized public void setTtl(int ttl) {
+	public void setTtl(final int ttl) {
 		this.ttl = ttl;
 	}
 
@@ -445,11 +375,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	}
 
 	/**
-	 * Sets specificUserContent
+	 * Sets specificUserContent.
 	 * @param specificUserContent
 	 * @see ManagedSourceProfile#specificUserContent
 	 */
-	synchronized public void setSpecificUserContent(boolean specificUserContent) {
+	public void setSpecificUserContent(final boolean specificUserContent) {
 		this.specificUserContent = specificUserContent;
 	}
 
@@ -463,11 +393,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 
 
 	/**
-	 * @param fileId sourceProfileId defiend in xml category file
+	 * @param fileId sourceProfileId defined in xml category file
 	 */
-	synchronized public void setFileId(String fileId) {
+	public void setFileId(final String fileId) {
 		this.fileId = fileId;
-		super.setId(super.makeId("m",categoryProfile.getId(),fileId));
+		super.setId(super.makeId("m", categoryProfile.getId(), fileId));
 	}
 	
 }

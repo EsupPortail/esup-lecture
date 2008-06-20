@@ -111,16 +111,16 @@ public class RegularOfSet {
 		return attribute;
 	}
 	/**
-	 * Sets attribute name
+	 * Sets attribute name.
 	 * @param attribute
 	 * @see RegularOfSet#attribute
 	 */
-	synchronized public void setAttribute(String attribute) {
+	public void setAttribute(final String attribute) {
 		this.attribute = attribute;
 	}
 
 	/**
-	 * Returns attribute required value
+	 * Returns attribute required value.
 	 * @return value
 	 * @see RegularOfSet#value
 	 */
@@ -128,11 +128,11 @@ public class RegularOfSet {
 		return value;
 	}
 	/**
-	 * Sets attribute required value
+	 * Sets attribute required value.
 	 * @param value
 	 * @see RegularOfSet#value
 	 */
-	synchronized public void setValue(String value) {
+	 public void setValue(final String value) {
 		this.value = value;
 	}
 

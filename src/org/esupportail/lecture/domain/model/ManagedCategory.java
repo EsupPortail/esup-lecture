@@ -65,16 +65,18 @@ public class ManagedCategory extends Category {
 	 * @param  ex access to external service for visibility evaluation
 	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized protected void updateCustom(CustomManagedCategory customManagedCategory,ExternalService ex) throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getProfileId()+" - updateCustom("+customManagedCategory.getElementId()+",externalService)");
+	protected synchronized void updateCustom(final CustomManagedCategory customManagedCategory,
+			final ExternalService ex) throws CategoryNotLoadedException {
+		if (log.isDebugEnabled()) {
+			log.debug("id = " + this.getProfileId() + " - updateCustom("
+					+ customManagedCategory.getElementId() + ",externalService)");
 		}
 		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
 		
 		// update for managedSources defined in this managedCategory
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
-			msp.updateCustomCategory(customManagedCategory,ex);
+			msp.updateCustomCategory(customManagedCategory, ex);
 		
 		}
 		
@@ -83,7 +85,8 @@ public class ManagedCategory extends Category {
 	}
 	
 	/**
-	 * Return a list of <SourceProfile,VisibilityMode> corresponding to visible sources for user, 
+	 * Return a list of <SourceProfile,VisibilityMode>.
+	 * Corresponding to visible sources for user
 	 * in this ManagedCategory and update it (like methode updateCustom): 
 	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles
 	 * defined in ths ManagedCategory, according to managedSourceProfiles visibility
@@ -93,9 +96,12 @@ public class ManagedCategory extends Category {
 	 * @return list of ProfileVisibility
 	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(CustomManagedCategory customManagedCategory, ExternalService ex) throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getProfileId()+" - getVisibleSourcesAndUpdateCustom("+getProfileId()+",externalService)");
+	protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(
+			final CustomManagedCategory customManagedCategory,
+			final ExternalService ex) throws CategoryNotLoadedException {
+		if (log.isDebugEnabled()) {
+			log.debug("id=" + this.getProfileId() + " - getVisibleSourcesAndUpdateCustom("
+					+ getProfileId() + ",externalService)");
 		}
 		List<ProfileVisibility> couplesVisib = new Vector<ProfileVisibility>();
 		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
@@ -104,9 +110,9 @@ public class ManagedCategory extends Category {
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
 			ProfileVisibility couple;
-			VisibilityMode mode = msp.updateCustomCategory(customManagedCategory,ex);
-			if (mode != VisibilityMode.NOVISIBLE){
-				couple = new ProfileVisibility(msp,mode);
+			VisibilityMode mode = msp.updateCustomCategory(customManagedCategory, ex);
+			if (mode != VisibilityMode.NOVISIBLE) {
+				couple = new ProfileVisibility(msp, mode);
 				couplesVisib.add(couple);
 			}
 		}
@@ -118,16 +124,16 @@ public class ManagedCategory extends Category {
 	}
 
 	/**
-	 * Update CustomManagedCategory for managedSources not anymore in subscriptions
+	 * Update CustomManagedCategory for managedSources not anymore in subscriptions.
 	 * @param customManagedCategory element to update
 	 */
-	synchronized private void updateCustomForVanishedSubscriptions(CustomManagedCategory customManagedCategory) {
+	private void updateCustomForVanishedSubscriptions(final CustomManagedCategory customManagedCategory) {
 		List<String> sids = new ArrayList<String>();
-		for (String sourceId : customManagedCategory.getSubscriptions().keySet()){
+		for (String sourceId : customManagedCategory.getSubscriptions().keySet()) {
 			sids.add(sourceId);
 		}
 		for (String sourceId : sids) {
-			if (!containsSource(sourceId)){
+			if (!containsSource(sourceId)) {
 				customManagedCategory.removeCustomManagedSource(sourceId);
 				UserProfile user = customManagedCategory.getUserProfile();
 				user.removeCustomManagedSourceIfOrphan(sourceId);
@@ -140,11 +146,11 @@ public class ManagedCategory extends Category {
 	 * @param sourceId
 	 * @return true if this managedCategory contains the source identified by sourceId
 	 */
-	synchronized public boolean containsSource(String sourceId) {
-	   	if (log.isDebugEnabled()){
-    		log.debug("profileId="+super.getProfileId()+" - containsSource("+sourceId+")");
+	public boolean containsSource(final String sourceId) {
+	   	if (log.isDebugEnabled()) {
+    		log.debug("profileId=" + super.getProfileId() + " - containsSource(" + sourceId + ")");
     	}
-	   	Hashtable<String,SourceProfile> hashSourceProfile = getSourceProfilesHash();
+	   	Hashtable<String, SourceProfile> hashSourceProfile = getSourceProfilesHash();
 	   	
 	   	boolean result = hashSourceProfile.containsKey(sourceId);
 	   	return result;
@@ -157,7 +163,7 @@ public class ManagedCategory extends Category {
 	
 	
 	/**
-	 * Returns visibility sets of this managed category (if defined)
+	 * Returns visibility sets of this managed category (if defined).
 	 * @return visibility
 	 */
 	protected VisibilitySets getVisibility() {
@@ -166,33 +172,11 @@ public class ManagedCategory extends Category {
 
 
 	/**
-	 * Sets visibility sets of this managed category
+	 * Sets visibility sets of this managed category.
 	 * @param visibility
 	 */
-	synchronized public void setVisibility(VisibilitySets visibility) {
+	public void setVisibility(final VisibilitySets visibility) {
 		this.visibility = visibility;
 	}
-
-
-
-
-//	/**
-//	 * @return Returns the edit.
-//	 */
-//	public Editability getEdit() {
-//		return edit;
-//	}
-//	
-//
-//	/**
-//	 * @param edit The edit to set.
-//	 */
-//	synchronized public void setEdit(Editability edit) {
-//		this.edit = edit;
-//	}
-
-
-		
-	
 
 }

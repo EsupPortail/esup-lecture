@@ -15,7 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 /**
- * DefinitionSets is a the set definition,
+ * DefinitionSets is a the set definition.
  * It can be defined by two ways :
  * 		- an enumeration of groups (groups)
  * 		- a set of regulars defining groups (regulars) *
@@ -27,16 +27,16 @@ public class DefinitionSets {
 	/*
 	 ************************** PROPERTIES ******************************** */	
 	/**
-	 * Log instance 
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(DefinitionSets.class);
+	protected static final Log LOG = LogFactory.getLog(DefinitionSets.class);
 	/**
-	 * groups : set definition by existent group listing
+	 * groups : set definition by existent group listing.
 	 */
 	private List<String> groups = new ArrayList<String>();
 	
 	/**
-	 * regulars : set definition by regulars 
+	 * regulars : set definition by regulars.
 	 */
 	private List<RegularOfSet> regulars = new ArrayList<RegularOfSet>();
 	
@@ -47,7 +47,7 @@ public class DefinitionSets {
 	 *************************** METHODS ******************************** */	
 	
 	/**
-	 * Check existence of group names, attributes names used in group enumeration
+	 * Check existence of group names, attributes names used in group enumeration.
 	 * and regulars definition
 	 * Not used for the moment : see later
 	 * Not ready to use without modification
@@ -55,9 +55,9 @@ public class DefinitionSets {
 	 */
 	@SuppressWarnings("deprecation")
 	@Deprecated
-	synchronized protected void checkNamesExistence(){
-	   	if (log.isDebugEnabled()){
-    		log.debug("checkNamesExistence()");
+	protected void checkNamesExistence() {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("checkNamesExistence()");
     	}
 //		Iterator<String> iteratorString;
 //		iteratorString = groups.iterator();
@@ -69,35 +69,36 @@ public class DefinitionSets {
 //		}
 		
 		Iterator<RegularOfSet> iteratorReg = regulars.iterator();
-		for(RegularOfSet reg = null; iteratorReg.hasNext();){
+		for(RegularOfSet reg = null; iteratorReg.hasNext();) {
 			reg = iteratorReg.next();
 			reg.checkNamesExistence();
 		}
 	}
 	
 	/**
-	 * Evaluate current user visibility for this DefinitionSets
+	 * Evaluate current user visibility for this DefinitionSets.
 	 * @param ex access to externalService, in order to know user rights
 	 * @return true if the user to the set defined by this DefinitionSets
 	 */
-	synchronized protected boolean evaluateVisibility(ExternalService ex) {
-	   	if (log.isDebugEnabled()){
-    		log.debug("evaluateVisibility(externalService)");
+	protected boolean evaluateVisibility(final ExternalService ex) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("evaluateVisibility(externalService)");
     	}
 			
 		/* group evaluation */
 		Iterator<String> iteratorGroups = groups.iterator();
-		while (iteratorGroups.hasNext()){
+		while (iteratorGroups.hasNext()) {
 			String group = iteratorGroups.next();
-			if (log.isTraceEnabled()){
-				log.trace("DefinitionSets, evaluation on group : "+group);
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("DefinitionSets, evaluation on group : " + group);
 			}
 			try {
-				if (ex.isUserInGroup(group)){
+				if (ex.isUserInGroup(group)) {
 					return true;
 				}
 			} catch (InternalExternalException e) {
-				log.error("Group user evaluation impossible (external service unavailable) : "+e.getMessage());
+				LOG.error("Group user evaluation impossible (external service unavailable) : "
+						+ e.getMessage());
 			}
 			
 		}
@@ -106,10 +107,10 @@ public class DefinitionSets {
 		Iterator<RegularOfSet> iteratorReg = regulars.iterator();
 		while (iteratorReg.hasNext()){
 			RegularOfSet reg = iteratorReg.next();
-			if (log.isTraceEnabled()){
-				log.trace("DefinionSets, evaluation regular : attr("+ reg.getAttribute() +") val("+ reg.getValue()+")");
+			if (LOG.isTraceEnabled()){
+				LOG.trace("DefinionSets, evaluation regular : attr("+ reg.getAttribute() +") val("+ reg.getValue()+")");
 			}
-			if (reg.evaluate(ex)){
+			if (reg.evaluate(ex)) {
 				return true;
 			}
 		}
@@ -118,25 +119,25 @@ public class DefinitionSets {
 	}
 	
 	/**
-	 * Add a group in groups enumeration of this DefintionSets
+	 * Add a group in groups enumeration of this DefintionSets.
 	 * @param group group to add
 	 * @see DefinitionSets#groups
 	 */
-	synchronized public void addGroup(String group) {
-	   	if (log.isDebugEnabled()){
-    		log.debug("addGroup("+group+")");
+	public synchronized void addGroup(final String group) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("addGroup(" + group + ")");
     	}
 		this.groups.add(group);
 	}
 	
 	/**
-	 * Add a regulars in list of regulars of this DefintionSets
+	 * Add a regulars in list of regulars of this DefintionSets.
 	 * @param regular
 	 * @see DefinitionSets#regulars
 	 */
-	synchronized public void addRegular(RegularOfSet regular) {
-	   	if (log.isDebugEnabled()){
-    		log.debug("addGroup(regular)");
+	public synchronized void addRegular(final RegularOfSet regular) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("addGroup(regular)");
     	}
 		this.regulars.add(regular);
 	}
@@ -146,55 +147,15 @@ public class DefinitionSets {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		
-		String string="";
-		string += "		groups : "+ groups.toString()+"\n";
-		string += "		regulars : "+ regulars.toString()+"\n";
+		String string = "";
+		string += "		groups : " + groups.toString() + "\n";
+		string += "		regulars : " + regulars.toString() + "\n";
 		
 		return string;
 	}
 	
 	/* ************************** ACCESSORS ******************************** */	
 
-//	/**
-//	 * Returns groups enumeration of this object
-//	 * @return groups
-//	 * @see DefinitionSets#groups
-//	 */
-//	public List<String> getGroups() {
-//		return groups;
-//	}
-//	/**
-//	 * Sets groups enumeration of this object
-//	 * @param groups 
-//	 * @see DefinitionSets#groups
-//	 */
-//	synchronized protected void setGroups(List<String> groups) {
-//		this.groups = groups;
-//	}
-
-//	/**
-//	 * Returns regulars of this object
-//	 * @return regulars
-//	 * @see DefinitionSets#regulars
-//	 */
-//	public List<RegularOfSet> getRegulars() {
-//		return regulars;
-//	}
-//	/**
-//	 * Sets regulars of this object
-//	 * @param regulars
-//	 * @see DefinitionSets#regulars
-//	 */
-//	synchronized protected void setRegulars(List<RegularOfSet> regulars) {
-//		this.regulars = regulars;
-//	}
-
-	
-
-
-
-
-	
 }

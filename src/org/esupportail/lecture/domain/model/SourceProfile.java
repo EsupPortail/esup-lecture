@@ -33,7 +33,7 @@ public abstract class SourceProfile implements ElementProfile {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(SourceProfile.class);
+	protected static final Log LOG = LogFactory.getLog(SourceProfile.class);
 
 	/**
 	 * Id of the source profile 
@@ -97,7 +97,7 @@ public abstract class SourceProfile implements ElementProfile {
 	
 	
 	/**
-	 * Return the list of items to be displayed for this source
+	 * Return the list of items to be displayed for this source.
 	 * @param ex access to externalService
 	 * @return a list of items
 	 * @throws SourceNotLoadedException
@@ -107,10 +107,11 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @throws SourceTimeOutException 
 	 * @throws CategoryNotLoadedException 
 	 */
-	synchronized protected List<Item> getItems(ExternalService ex) 
-		throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, SourceTimeOutException, CategoryNotLoadedException, InfoDomainException  {
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+this.id+" - getItems(externalService)");
+	protected List<Item> getItems(final ExternalService ex) 
+			throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
+			SourceTimeOutException, CategoryNotLoadedException, InfoDomainException  {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id = " + this.id + " - getItems(externalService)");
     	}
 		loadSource(ex);
 		Source s = getElement();
@@ -118,15 +119,15 @@ public abstract class SourceProfile implements ElementProfile {
 	}
 
 	/**
-	 * Make the (long)id of this sourceProfile (<type>:<parentId>:<interneId>)
+	 * Make the (long)id of this sourceProfile (<type>:<parentId>:<interneId>).
 	 * @param type = p | m  (personal or managed)
 	 * @param parentId = 0 for a personal (no parent owner) | CategoryProfileId for a managed
 	 * @param simpleId = interneId for a personal | fileId for a managed	  
 	 * @return ID made from the three parameters
 	 */
 	protected String makeId(String type,String parentId,String simpleId){
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+this.id+" - makeId("+type+","+parentId+","+simpleId+")");
+	   	if (LOG.isDebugEnabled()){
+    		LOG.debug("id="+this.id+" - makeId("+type+","+parentId+","+simpleId+")");
     	}
 		id = type+":"+parentId+":"+simpleId;
 		return id;
@@ -138,12 +139,12 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @throws SourceNotLoadedException 
 	 */
 	public Source getElement() throws SourceNotLoadedException {
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+this.id+" - getElement()");
+	   	if (LOG.isDebugEnabled()){
+    		LOG.debug("id="+this.id+" - getElement()");
     	}
 		if (source == null){
 			String errorMsg = "Source "+id+" is not loaded in profile";
-			log.error(errorMsg);
+			LOG.error(errorMsg);
 			throw new SourceNotLoadedException(errorMsg);
 		}
 		return source;
@@ -162,15 +163,15 @@ public abstract class SourceProfile implements ElementProfile {
 	}
 
 	/**
-	 * Sets the source profile Id
+	 * Sets the source profile Id.
 	 * @param id
 	 */
-	synchronized public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 
 	/**
-	 * Returns the source profile name
+	 * Returns the source profile name.
 	 * @return name
 	 */
 	public String getName() {
@@ -178,15 +179,15 @@ public abstract class SourceProfile implements ElementProfile {
 	}
 	
 	/**
-	 * Sets the source profile name
+	 * Sets the source profile name.
 	 * @param name
 	 */
-	synchronized public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Returns the source URL of the source profile
+	 * Returns the source URL of the source profile.
 	 * @return sourceURL
 	 */
 	public String getSourceURL() {
@@ -194,20 +195,20 @@ public abstract class SourceProfile implements ElementProfile {
 	}
 	
 	/**
-	 * Sets the source URL of the source profile
+	 * Sets the source URL of the source profile.
 	 * @param sourceURL
 	 */
-	synchronized public void setSourceURL(String sourceURL) {
+	public void setSourceURL(final String sourceURL) {
 		//RB sourceURL = DomainTools.replaceWithUserAttributes(sourceURL);
 		this.sourceURL = sourceURL;
 	}
 
 
 	/**
-	 * Sets source on the profile
+	 * Sets source on the profile.
 	 * @param source
 	 */
-	synchronized public void setElement(Source source) {
+	public void setElement(final Source source) {
 		this.source = source;
 	}
 
@@ -215,7 +216,7 @@ public abstract class SourceProfile implements ElementProfile {
 	/**
 	 * @param string
 	 */
-	synchronized public void setXsltURL(String string) {
+	public void setXsltURL(final String string) {
 		xsltURL = string;
 		
 	}
@@ -224,9 +225,8 @@ public abstract class SourceProfile implements ElementProfile {
 	/**
 	 * @param string
 	 */
-	synchronized public void setItemXPath(String string) {
+	public void setItemXPath(final String string) {
 		itemXPath = string;
-		
 	}
 
 
@@ -258,7 +258,7 @@ public abstract class SourceProfile implements ElementProfile {
 	/**
 	 * @param ttl
 	 */
-	synchronized public void setTtl(int ttl) {
+	public void setTtl(final int ttl) {
 		this.ttl = ttl;
 	}
 

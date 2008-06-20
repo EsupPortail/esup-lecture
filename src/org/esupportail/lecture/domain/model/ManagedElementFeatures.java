@@ -64,7 +64,7 @@ public abstract class ManagedElementFeatures {
 	 * Compute features.
 	 * @throws CategoryNotLoadedException 
 	 */
-	protected synchronized void compute() throws CategoryNotLoadedException   {
+	protected void compute() throws CategoryNotLoadedException   {
 		if (log.isDebugEnabled()) {
 			log.debug("compute()");
 		}
@@ -77,7 +77,7 @@ public abstract class ManagedElementFeatures {
 	 * It only sets value in parameter
 	 * @param visib the visibility feature to update
 	 */
-	protected synchronized void update(final VisibilitySets visib) {
+	protected void update(final VisibilitySets visib) {
 		if (log.isDebugEnabled()) {
 			log.debug("update(visibility)");
 		}
@@ -88,7 +88,7 @@ public abstract class ManagedElementFeatures {
 	 * @return Returns the visibility (feature is automatically computed if needed).
 	 * @throws CategoryNotLoadedException 
 	 */
-	protected synchronized VisibilitySets getVisibility() throws CategoryNotLoadedException {
+	protected VisibilitySets getVisibility() throws CategoryNotLoadedException {
 		if (!isComputed) {
 			try {
 				compute();

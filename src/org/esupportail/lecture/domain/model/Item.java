@@ -58,7 +58,7 @@ public class Item {
 	/**
 	 * @param htmlContent
 	 */
-	synchronized protected void setHtmlContent(String htmlContent) {
+	protected void setHtmlContent(final String htmlContent) {
 		this.htmlContent = htmlContent;
 	}
 	/**
@@ -70,7 +70,7 @@ public class Item {
 	/**
 	 * @param id
 	 */
-	synchronized protected void setId(String id) {
+	protected void setId(final String id) {
 		this.id = id;
 	}
 

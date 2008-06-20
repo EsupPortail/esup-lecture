@@ -93,7 +93,7 @@ public abstract class Category implements Element,Serializable {
 	/**
 	 * @param sourceProfilesHash to set.
 	 */
-	synchronized public void setSourceProfilesHash(Hashtable<String,SourceProfile> sourceProfilesHash) {
+	public void setSourceProfilesHash(Hashtable<String,SourceProfile> sourceProfilesHash) {
 		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.sourceProfilesHash = sourceProfilesHash;
 	}
@@ -109,17 +109,17 @@ public abstract class Category implements Element,Serializable {
 
 
 	/**
-	 * Sets the category name
+	 * Sets the category name.
 	 * @param name
 	 * @see Category#name
 	 */
-	synchronized public void setName(String name) {
+	public void setName(final String name) {
 		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.name = name;
 	}
 	
 	/**
-	 * Returns the category description
+	 * Returns the category description.
 	 * @return description
 	 * @see Category#description
 	 */
@@ -128,18 +128,18 @@ public abstract class Category implements Element,Serializable {
 	}
 
 	/**
-	 * Sets the category description
+	 * Sets the category description.
 	 * @param description
 	 * @see Category#description
 	 */
-	synchronized public void setDescription(String description) {
+	public void setDescription(final String description) {
 		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.description = description;
 	}
 
 	
 	/**
-	 * Returns the id of the categoryProfile accociated to this Category
+	 * Returns the id of the categoryProfile associated to this Category.
 	 * @return id
 	 * @see Category#profileId
 	 */
@@ -149,11 +149,11 @@ public abstract class Category implements Element,Serializable {
 
 
 	/**
-	 * Sets the id of the categoryProfile accociated to this Category
+	 * Sets the id of the categoryProfile accociated to this Category.
 	 * @param profileId
 	 * @see Category#profileId
 	 */
-	synchronized public void setProfileId(String profileId) {
+	public void setProfileId(final String profileId) {
 		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.profileId = profileId;
 	}

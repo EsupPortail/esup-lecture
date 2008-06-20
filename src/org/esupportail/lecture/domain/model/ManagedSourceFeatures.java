@@ -56,14 +56,14 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	 *********************** METHODS **************************************/
 	
 	/**
-	 * Used to update features directly, without any computing
+	 * Used to update features directly, without any computing.
 	 * It only sets value in parameters
 	 * @param visib the visibility feature to update
 	 * @param acces the access mode to update
 	 * @param to timeOut to update
 	 */
-	synchronized protected void update(VisibilitySets visib, Accessibility acces, int to) {
-		if (log.isDebugEnabled()){
+	protected void update(final VisibilitySets visib, final Accessibility acces, final int to) {
+		if (log.isDebugEnabled()) {
 			log.debug("update(setVisib,setAccess)");
 		}
 		super.update(visib);
@@ -75,7 +75,7 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	 * @return Returns the accessibility mode (feature is automatically computed if needed).
 	 * @throws CategoryNotLoadedException 
 	 */
-	protected synchronized Accessibility getAccess() throws CategoryNotLoadedException {
+	protected Accessibility getAccess() throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()) {
 			log.debug("getAccess()");
 		}
@@ -96,7 +96,7 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	 * @return Returns the timeOut (feature is automatically computed if needed).
 	 * @throws CategoryNotLoadedException 
 	 */
-	protected synchronized int getTimeOut() throws CategoryNotLoadedException {
+	protected int getTimeOut() throws CategoryNotLoadedException {
 		if (log.isDebugEnabled()) {
 			log.debug("getTimeOut()");
 		}

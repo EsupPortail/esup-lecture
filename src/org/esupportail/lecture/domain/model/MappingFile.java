@@ -109,50 +109,50 @@ public class MappingFile {
 	 * @throws MappingFileException 
 	 * @see MappingFile#singleton
 	 */
-	protected static synchronized MappingFile getInstance(String mappingFilePath) throws MappingFileException {
+	protected static synchronized MappingFile getInstance(final String mappingFilePath) 
+			throws MappingFileException {
 		filePath = mappingFilePath;
 		return getInstance();
 		
 	}
 	
 	/**
-	* Returns a singleton of this class used to load mappings
+	* Returns a singleton of this class used to load mappings.
 	 * @return an instance of the mapping file (singleton) to load
 	 * @throws MappingFileException 
 	 * @see MappingFile#singleton
 	 */
-	synchronized protected static MappingFile getInstance() throws MappingFileException  {
-		if (log.isDebugEnabled()){
+	protected static synchronized MappingFile getInstance() throws MappingFileException  {
+		if (log.isDebugEnabled()) {
 			log.debug("getInstance()");
 		}
 		
-		if (filePath == null){
+		if (filePath == null) {
 			String errorMsg = "Mapping file path not defined, see in domain.xml file.";
 			log.error(errorMsg);
 			throw new MappingFileException(errorMsg);
 		}
 		if (singleton == null) {
 			URL url = MappingFile.class.getResource(filePath);
-			if (url==null) {
-				String ErrorMsg = "Mapping config file: "+filePath+" not found.";
-				log.error(ErrorMsg);
-				throw new MappingFileException(ErrorMsg);
+			if (url == null) {
+				String errorMsg = "Mapping config file: " + filePath + " not found.";
+				log.error(errorMsg);
+				throw new MappingFileException(errorMsg);
 			}
 			File mappingFile = new File(url.getFile());
 			fileBasePath = mappingFile.getAbsolutePath();
 			fileLastModified = mappingFile.lastModified();		
 			singleton = new MappingFile();
-	
-		}else {
-			if (log.isDebugEnabled()){
-				log.debug("getInstance :: "+"singleton not null ");
+		} else {
+			if (log.isDebugEnabled()) {
+				log.debug("getInstance :: " + "singleton not null ");
 			}
 			
 			File mappingFile = new File(fileBasePath);
 			long newDate = mappingFile.lastModified();
 			if (fileLastModified < newDate) {
-				if (log.isDebugEnabled()){
-					log.debug("getInstance :: "+"Mappings reloading");
+				if (log.isDebugEnabled()) {
+					log.debug("getInstance :: " + "Mappings reloading");
 				}
 				fileLastModified = newDate;
 				singleton = new MappingFile();
@@ -163,75 +163,75 @@ public class MappingFile {
 		return singleton;
 	}
 
-
-
 	/**
-	 * Check syntax file that cannot be checked by DTD
+	 * Check syntax file that cannot be checked by DTD.
 	 * @throws MappingFileException 
 	 */
-	synchronized private static void checkXmlFile() throws MappingFileException {
-		if (log.isDebugEnabled()){
+	private static synchronized void checkXmlFile() throws MappingFileException {
+		if (log.isDebugEnabled()) {
 			log.debug("checkXmlFile()");
 		}
 	
 		int nbMappings = xmlFile.getMaxIndex("mapping") + 1;
 		mappingList = new ArrayList<Mapping>();
 		
-		for(int i = 0; i<nbMappings;i++ ){
+		for (int i = 0; i < nbMappings; i++ ) {
 			String pathMapping = "mapping(" + i + ")";
 			Mapping m = new Mapping();
-			String sourceURL = xmlFile.getString(pathMapping+ "[@sourceURL]");
-			String dtd = xmlFile.getString(pathMapping+ "[@dtd]");
-			String xmlns = xmlFile.getString(pathMapping+ "[@xmlns]");
-			String xmlType = xmlFile.getString(pathMapping+ "[@xmlType]");
-			String rootElement = xmlFile.getString(pathMapping+ "[@rootElement]");
+			String sourceURL = xmlFile.getString(pathMapping + "[@sourceURL]");
+			String dtd = xmlFile.getString(pathMapping + "[@dtd]");
+			String xmlns = xmlFile.getString(pathMapping + "[@xmlns]");
+			String xmlType = xmlFile.getString(pathMapping + "[@xmlType]");
+			String rootElement = xmlFile.getString(pathMapping + "[@rootElement]");
 			
-			if (sourceURL == null && dtd == null && xmlns == null && xmlType == null && rootElement == null){
-				String errorMsg = "In mappingFile, mapping n°"+i+"is empty, you must declare sourceURL or dtd or xmlns or xmltype or rootElement in a mapping.";
+			if (sourceURL == null && dtd == null && xmlns == null && xmlType == null && rootElement == null) {
+				String errorMsg = "In mappingFile, mapping n°" + i 
+					+ "is empty, you must declare sourceURL or dtd or " 
+					+ "xmlns or xmltype or rootElement in a mapping.";
 				log.error(errorMsg);
 				throw new MappingFileException(errorMsg);
 			}
 			
-			if (sourceURL == null){
+			if (sourceURL == null) {
 				m.setSourceURL("");
-			}else{
+			} else {
 				m.setSourceURL(sourceURL);
 			}
 			
-			if (dtd == null){
+			if (dtd == null) {
 				m.setDtd("");
-			}else{
+			} else {
 				m.setDtd(dtd);
 			}
 			
-			if (xmlns == null){
+			if (xmlns == null) {
 				m.setXmlns("");
-			}else{
+			} else {
 				m.setXmlns(xmlns);
 			}
 			
-			if (xmlType == null){
+			if (xmlType == null) {
 				m.setXmlType("");
-			}else{
+			} else {
 				m.setXmlType(xmlType);
 			}	
 				
-			if (rootElement == null){
+			if (rootElement == null) {
 				m.setRootElement("");
-			}else{
+			} else {
 				m.setRootElement(rootElement);
 			}
 			
-			m.setXsltUrl(xmlFile.getString(pathMapping+ "[@xsltFile]"));
-			m.setItemXPath(xmlFile.getString(pathMapping+ "[@itemXPath]"));
+			m.setXsltUrl(xmlFile.getString(pathMapping + "[@xsltFile]"));
+			m.setItemXPath(xmlFile.getString(pathMapping + "[@itemXPath]"));
 			
 			//loop on XPathNameSpace
-			int nbXPathNameSpaces = xmlFile.getMaxIndex(pathMapping+ ".XPathNameSpace") + 1;
+			int nbXPathNameSpaces = xmlFile.getMaxIndex(pathMapping + ".XPathNameSpace") + 1;
 			HashMap<String, String> XPathNameSpaces = new HashMap<String, String>();
-			for(int j = 0; j < nbXPathNameSpaces; j++) {
-				String pathXPathNameSpace = pathMapping+ ".XPathNameSpace("+j+")";
-				String prefix = xmlFile.getString(pathXPathNameSpace+"[@prefix]");
-				String uri = xmlFile.getString(pathXPathNameSpace+"[@uri]");
+			for (int j = 0; j < nbXPathNameSpaces; j++) {
+				String pathXPathNameSpace = pathMapping + ".XPathNameSpace("+j+")";
+				String prefix = xmlFile.getString(pathXPathNameSpace + "[@prefix]");
+				String uri = xmlFile.getString(pathXPathNameSpace + "[@uri]");
 				XPathNameSpaces.put(prefix, uri);
 			}
 			m.setXPathNameSpaces(XPathNameSpaces);
@@ -241,11 +241,11 @@ public class MappingFile {
 	}
 	
 	/**
-	 * Load mappings in the channel 
+	 * Load mappings in the channel.
 	 * @param channel of the loading
 	 */
-	synchronized protected static void loadMappings(Channel channel) {
-		if (log.isDebugEnabled()){
+	protected static synchronized void loadMappings(final Channel channel) {
+		if (log.isDebugEnabled()) {
 			log.debug("loadMappings()");
 		}
 		
@@ -253,15 +253,15 @@ public class MappingFile {
 	}
 
 	/**
-	 * Initialize hash mappings in channel
+	 * Initialize hash mappings in channel.
 	 * @param channel of the initialization
 	 */
-	synchronized protected static void initChannelHashMappings(Channel channel){
-		if (log.isDebugEnabled()){
+	protected static synchronized void initChannelHashMappings(final Channel channel){
+		if (log.isDebugEnabled()) {
 			log.debug("initChannelHashMappings()");
 		}
 		Iterator<Mapping> iterator = channel.getMappingList().iterator();
-		for(Mapping m = null; iterator.hasNext();){
+		for (Mapping m = null; iterator.hasNext();) {
 			m = iterator.next();
 			channel.addMapping(m);
 			
@@ -290,14 +290,14 @@ public class MappingFile {
 	}
 	
 	/**
-	 * Returns the string containing path of the mapping file 
+	 * Returns the string containing path of the mapping file. 
 	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString(){
-		String string = "path : "+ filePath ;
-		return string ;
+	public String toString() {
+		String string = "path : " + filePath;
+		return string;
 	}
 	
 	/*
@@ -305,7 +305,7 @@ public class MappingFile {
 	
 	
 	/**
-	 * Returns the classpath relative path of the mapping file
+	 * Returns the classpath relative path of the mapping file.
 	 * @return mappingFilePath
 	 * @see MappingFile#filePath
 	 */
@@ -314,13 +314,13 @@ public class MappingFile {
 	}
 	
 	/**
-	 * Set the classpath relative file path of the mapping file
+	 * Set the classpath relative file path of the mapping file.
 	 * @param mappingFilePath
 	 * @see MappingFile#filePath
 	 */
-	synchronized protected static void setMappingFilePath(String mappingFilePath) {
-		if(log.isDebugEnabled()){
-			log.debug("setMappingFilePath("+mappingFilePath+")");
+	protected static synchronized void setMappingFilePath(final String mappingFilePath) {
+		if (log.isDebugEnabled()) {
+			log.debug("setMappingFilePath(" + mappingFilePath + ")");
 		}
 		MappingFile.filePath = mappingFilePath;
 	}
@@ -331,12 +331,5 @@ public class MappingFile {
 	protected static boolean isModified() {
 		return modified;
 	}
-
-//	/**
-//	 * @param modified The modified to set.
-//	 */
-//	synchronized protected static void setModified(boolean modified) {
-//		MappingFile.modified = modified;
-//	}
 
 }

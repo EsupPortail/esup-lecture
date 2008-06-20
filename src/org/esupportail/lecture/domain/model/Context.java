@@ -76,9 +76,10 @@ public class Context {
 	 * @param channel channel where the context is defined 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	synchronized protected void initManagedCategoryProfiles(Channel channel) throws ManagedCategoryProfileNotFoundException  {
-		if (log.isDebugEnabled()){
-			log.debug("id="+id+" - initManagedCategoryProfiles(channel)");
+	protected synchronized void initManagedCategoryProfiles(final Channel channel) 
+			throws ManagedCategoryProfileNotFoundException  {
+		if (log.isDebugEnabled()) {
+			log.debug("id = " + id + " - initManagedCategoryProfiles(channel)");
 		}
 		/* Connecting Managed category profiles and contexts */
 		Iterator<String> iterator = refIdManagedCategoryProfilesSet.iterator();
@@ -101,7 +102,7 @@ public class Context {
 	 * @param customContext customContext to update
 	 * @param ex access to external service for visibility evaluation
 	 */
-	synchronized protected void updateCustom(CustomContext customContext, ExternalService ex){
+	protected synchronized void updateCustom(final CustomContext customContext, final ExternalService ex) {
 		if (log.isDebugEnabled()) {
 			log.debug("id=" + id + " - updateCustom(" + customContext.getElementId() + ",externalService)");
 		}
@@ -111,10 +112,12 @@ public class Context {
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet) {
 			try {
 				mcp.updateCustomContext(customContext, ex);
-			} catch (CategoryNotLoadedException e){
+			} catch (CategoryNotLoadedException e) {
 				log.error("Impossible to update CustomContext associated to context " + getId()
-						+ " for managedCategoryProfile " + mcp.getId()+ " because its category is not loaded - " 
-						+ " It is very strange because loadCategory() has been called before in mcp.updateCustomContext() ...", e);
+						+ " for managedCategoryProfile " + mcp.getId()
+						+ " because its category is not loaded - " 
+						+ " It is very strange because loadCategory() has " 
+						+ "been called before in mcp.updateCustomContext() ...", e);
 			} catch (InfoDomainException e) {
 				log.error("Impossible to update CustomContext associated to context " + getId()
 						+ " for managedCategoryProfile " + mcp.getId());
@@ -125,16 +128,16 @@ public class Context {
 	}
 
 	/**
-	 * Update customContext for managedCategories not anymore in this context
+	 * Update customContext for managedCategories not anymore in this context.
 	 * @param customContext
 	 */
-	synchronized private void updateCustomForVanishedSubscriptions(CustomContext customContext) {
+	private synchronized void updateCustomForVanishedSubscriptions(final CustomContext customContext) {
 		List<String> cids = new ArrayList<String>();
-		for (String categoryId : customContext.getSubscriptions().keySet()){
+		for (String categoryId : customContext.getSubscriptions().keySet()) {
 			cids.add(categoryId);
 		}
 		for (String categoryId : cids) {
-			if (!containsCategory(categoryId)){
+			if (!containsCategory(categoryId)) {
 				customContext.removeCustomManagedCategory(categoryId);
 				UserProfile user = customContext.getUserProfile();
 				user.removeCustomManagedCategoryIfOrphan(categoryId);
@@ -143,8 +146,9 @@ public class Context {
 	}
 
 	/**
-	 * Return a list of <CategoryProfile,VisibilityMode> corresponding to visible categories for user, 
-	 * in this Context and update its related custom (like methode updateCustom): 
+	 * Return a list of <CategoryProfile,VisibilityMode>.
+	 * This list corresponding to visible categories for user, 
+	 * in this Context and update its related custom (like method updateCustom): 
 	 * It sets up subscriptions of customContext on managedCategoriesProfiles
 	 * defined in this Context, according to managedCategoriesProfiles visibility
 	 * @param customContext custom to update
@@ -152,9 +156,11 @@ public class Context {
 	 * @return list of <ProfileVisibility>
 	 * @see Context#updateCustom(CustomContext, ExternalService)
 	 */
-	synchronized protected List<ProfileVisibility> getVisibleCategoriesAndUpdateCustom(CustomContext customContext, ExternalService ex) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - getVisibleCategoriesAndUpdateCustom("+this.getId()+",externalService)");
+	protected synchronized List<ProfileVisibility> getVisibleCategoriesAndUpdateCustom(
+			final CustomContext customContext, final ExternalService ex) {
+		if (log.isDebugEnabled()) {
+			log.debug("id=" + this.getId() + " - getVisibleCategoriesAndUpdateCustom("
+					+ this.getId() + ",externalService)");
 		}
 		List<ProfileVisibility> couplesVisib = new Vector<ProfileVisibility>();
 		Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
@@ -190,21 +196,21 @@ public class Context {
 	 * @param categoryId
 	 * @return true if this context refers the category identified by categoryId
 	 */
-	synchronized public boolean containsCategory(String categoryId) {
-	   	if (log.isDebugEnabled()){
-    		log.debug("id="+id+" - containsCategory("+categoryId+")");
+	public boolean containsCategory(final String categoryId) {
+	   	if (log.isDebugEnabled()) {
+    		log.debug("id = " + id + " - containsCategory(" + categoryId + ")");
     	}
 		return refIdManagedCategoryProfilesSet.contains(categoryId);
 	}
 	
 	
 	/**
-	 * Add a managed category profile id to this context
+	 * Add a managed category profile id to this context.
 	 * @param s the id to add
 	 */
-	synchronized protected void addRefIdManagedCategoryProfile(String s) {
-		if (log.isDebugEnabled()){
-			log.debug("id="+id+" - addRefIdManagedCategoryProfile("+s+")");
+	protected synchronized void addRefIdManagedCategoryProfile(final String s) {
+		if (log.isDebugEnabled()) {
+			log.debug("id=" + id + " - addRefIdManagedCategoryProfile(" + s + ")");
 		}
 		refIdManagedCategoryProfilesSet.add(s);
 	}
@@ -285,16 +291,16 @@ public class Context {
 	}
 
 	/**
-	 * Sets the name of the context
+	 * Sets the name of the context.
 	 * @param name the name to set
 	 * @see Context#name
 	 */
-	synchronized protected void setName(String name) {
+	protected void setName(final String name) {
 		this.name = name;
 	}
 
 	/**
-	 * Returns the description of the context
+	 * Returns the description of the context.
 	 * @return description
 	 * @see Context#description
 	 */
@@ -303,16 +309,16 @@ public class Context {
 	}
 
 	/**
-	 * Sets the description of the context
+	 * Sets the description of the context.
 	 * @param description the description to set
 	 * @see Context#description
 	 */
-	synchronized protected void setDescription(String description) {
+	protected void setDescription(final String description) {
 		this.description = description;
 	}
 
 	/**
-	 * Returns the id of the context
+	 * Returns the id of the context.
 	 * @return id
 	 * @see Context#id
 	 */
@@ -321,49 +327,12 @@ public class Context {
 	}
 
 	/**
-	 * Sets the id of the context
+	 * Sets the id of the context.
 	 * @param id the id to set
 	 * @see Context#id
 	 */
-	synchronized protected void setId(String id) {
+	protected void setId(final String id) {
 		this.id = id;
 	}
-
-	
-
-
-	
-// later
-//	protected Editability getEdit() {
-//		return edit;
-//	}
-//
-//	protected void setEdit(Editability edit) {
-//		this.edit = edit;
-//	}
-
-	
-//	/**
-//	 * Returns set of Managed category profiles defined in the context
-//	 * @return managedCategoryProfilesSet
-//	 */
-//	public Set<ManagedCategoryProfile> getManagedCategoryProfilesSet() {
-//		return managedCategoryProfilesSet;
-//	}
-	
-//	 /**
-//	  * Sets the set of managed category profiles in the Context
-//	 * @param managedCategoryProfilesSet
-//	 */
-//	synchronized protected void setManagedCategoryProfilesSet(
-//			Set<ManagedCategoryProfile> managedCategoryProfilesSet) {
-//		this.managedCategoryProfilesSet = managedCategoryProfilesSet;
-//	}
-
-
-//	protected void setSetRefIdManagedCategoryProfiles(Set<String> s) {
-//		refIdManagedCategoryProfilesSet = s;
-//	}
-
 	
 }
