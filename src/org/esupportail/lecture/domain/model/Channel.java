@@ -10,6 +10,7 @@ import java.util.*;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
@@ -314,15 +315,20 @@ public class Channel implements InitializingBean {
 	 * @param userId : identifient of the user profile
 	 * @return the user profile
 	 */
-	synchronized public UserProfile getUserProfile(String userId){
-		if (log.isDebugEnabled()){
-			log.debug("getUserProfile("+userId+")");
+	public synchronized UserProfile getUserProfile(final String userId) {
+		if (log.isDebugEnabled()) {
+			log.debug("getUserProfile(" + userId + ")");
 		}
 	
+		if (userId == null) {
+			String mes = "userId not found. Check Channel configuation.";
+			log.error(mes);
+			throw new ConfigException(mes);
+		}
 		UserProfile userProfile = userProfilesHash.get(userId);
 		if (userProfile == null) {
 			userProfile = DomainTools.getDaoService().getUserProfile(userId);
-			if (userProfile == null){
+			if (userProfile == null) {
 				userProfile = new UserProfile(userId);
 				DomainTools.getDaoService().saveUserProfile(userProfile);
 			}
@@ -335,19 +341,19 @@ public class Channel implements InitializingBean {
 	}
 	
 	/**
-	 * return the context identified by "contextId" 
+	 * return the context identified by "contextId".
 	 * if it is defined in channel
 	 * @param contextId
 	 * @return  the context identified by "contextId"
 	 * @throws ContextNotFoundException 
 	 */
-	protected Context getContext(String contextId) throws ContextNotFoundException {
-		if (log.isDebugEnabled()){
-			log.debug("getContext("+contextId+")");
+	protected Context getContext(final String contextId) throws ContextNotFoundException {
+		if (log.isDebugEnabled()) {
+			log.debug("getContext(" + contextId + ")");
 		}
 		Context context = contextsHash.get(contextId);
 		if (context == null) {
-			String errorMsg = "Context "+contextId+" is not defined in channel";
+			String errorMsg = "Context " + contextId + " is not defined in channel";
 			log.error(errorMsg);
 			throw new ContextNotFoundException(errorMsg);
 		}
