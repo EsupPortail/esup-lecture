@@ -47,19 +47,19 @@ public class FreshSourceThread extends Thread {
 	 */
 	private SourceProfile profile;
 	/**
-	 * user and password. 
+	 * Proxy ticket CAS 
 	 * null for anonymous access.
 	 */
-	private UsernamePasswordCredentials creds;
+	private String ptCas;
 
 	/**
 	 * Constructor.
 	 * @param sourceProfile used to return a Source
 	 * @param creds - user and password. null for anonymous access
 	 */
-	public FreshSourceThread(final SourceProfile sourceProfile, final UsernamePasswordCredentials creds) {
+	public FreshSourceThread(final SourceProfile sourceProfile, final String ptCas) {
 		this.profile = sourceProfile;
-		this.creds = creds;
+		this.ptCas = ptCas;
 		this.exception = null;
 	}
 
@@ -69,7 +69,7 @@ public class FreshSourceThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			this.source = getFreshSource(profile, creds);
+			this.source = getFreshSource(profile, ptCas);
 		} catch (XMLParseException e) {
 			this.exception = e;
 		}
@@ -84,7 +84,7 @@ public class FreshSourceThread extends Thread {
 	 */
 	@SuppressWarnings("unchecked")
 	private synchronized Source getFreshSource(final SourceProfile sourceProfile, 
-			final UsernamePasswordCredentials creds) throws XMLParseException {
+			final String ptCas) throws XMLParseException {
 		Source ret = new GlobalSource();
 		try {
 			String dtd = null;
@@ -95,12 +95,17 @@ public class FreshSourceThread extends Thread {
 
 			//get the XML
 			String sourceURL = sourceProfile.getSourceURL();
+			if (sourceURL.contains("?")) { 
+				sourceURL = sourceURL + "?ticket=" + ptCas;
+            } else {
+				sourceURL = sourceURL + "&ticket=" + ptCas;
+			}
 			Document document = null;
-			if (creds != null) {
+			if (ptCas != null) {
 				HttpClient client = new HttpClient();
-				if (creds != null) {
-					client.getState().setCredentials(AuthScope.ANY, creds);				
-				}
+//				if (creds != null) {
+//					client.getState().setCredentials(AuthScope.ANY, creds);				
+//				}
 				GetMethod method = new GetMethod(sourceURL);
 				try {
 					client.executeMethod(method);

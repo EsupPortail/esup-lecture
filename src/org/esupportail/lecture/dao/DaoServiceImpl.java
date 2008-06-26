@@ -82,7 +82,7 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	public Source getSource(final ManagedSourceProfile profile,
 			final String ptCas) throws InfoDaoException {
 		String user = authenticationService.getCurrentUserId();			
-		return remoteXMLService.getSource(profile, user, ptCas);
+		return remoteXMLService.getSource(profile, ptCas);
 	}
 
 	/**

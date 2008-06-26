@@ -97,17 +97,33 @@
 			</param-name>
 			<param-value>[TOMCAT_HOST][TOMCAT_PORT_STRING]</param-value>
 		</init-param>
-		<init-param>
-			<param-name>
-				edu.yale.its.tp.cas.client.filter.wrapRequest
-			</param-name>
-			<param-value>true</param-value>
-		</init-param>
+        <init-param>
+            <param-name>
+                edu.yale.its.tp.cas.client.filter.wrapRequest
+            </param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>
+                edu.yale.its.tp.cas.client.filter.proxyCallbackUrl
+            </param-name>
+            <param-value>[CAS_PROXY_SERVLET_URL]</param-value>
+        </init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>CAS Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+	
+    <servlet>
+        <servlet-name>ProxyTicketReceptor</servlet-name>
+        <servlet-class>edu.yale.its.tp.cas.proxy.ProxyTicketReceptor</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ProxyTicketReceptor</servlet-name>
+        <url-pattern>/CasProxyServlet</url-pattern>
+    </servlet-mapping>
   USE_CAS -->	
 
 <!-- IS_SERVLET
@@ -130,7 +146,7 @@
 	<servlet-mapping>
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.faces</url-pattern>
-	</servlet-mapping>
+	</servlet-mapping>	
  IS_SERVLET -->
 
 <!-- IS_PORTLET

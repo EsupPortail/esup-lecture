@@ -22,5 +22,10 @@
 		</description>
 		<property name="userId" value="admin" />
 	</bean>
-
+	
+    <bean 
+        id="casService"
+        class="org.esupportail.commons.services.cas.ServletCasServiceImpl"
+        >
+    </bean>
 </beans>

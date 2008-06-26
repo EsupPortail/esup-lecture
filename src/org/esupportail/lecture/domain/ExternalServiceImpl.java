@@ -81,8 +81,8 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 				+ this.getClass().getName() + " can not be null");
 		Assert.notNull(portletService, "property portletService of class " 
 				+ this.getClass().getName() + " can not be null");
-//		Assert.notNull(casService, "property casService of class " 
-//				+ this.getClass().getName() + " can not be null");
+		Assert.notNull(casService, "property casService of class " 
+				+ this.getClass().getName() + " can not be null");
 		if (defaultService == null) {
 			defaultService = servletService;
 		}
@@ -146,7 +146,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	    if (LOG.isDebugEnabled()) {
 			LOG.debug("getUserProxyTicketCAS() - not yet implemented");
 		}
-		return null;
+		return casService.getProxyTicket(casTargetService);
 	}
 
 	/**

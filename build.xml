@@ -77,7 +77,7 @@
 					</then>
 				</if>
 				<if>
-					<ispropertytrue property="use.cas" /> <!-- true by default -->
+					<ispropertytrue property="use.cas" /> <!-- true by default except if excplecitly false in, for ex., build-devel.properties -->
 					<then>
 					    <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false"
 					               flags="g"
@@ -103,9 +103,21 @@
 			    <replace file="${deploy.home}/WEB-INF/web.xml" 
 			    	token="[TOMCAT_HOST]" 
 			        value="${tomcat.host}" />
-			    <replace file="${deploy.home}/WEB-INF/web.xml"
-			    	token="[TOMCAT_PORT_STRING]" 
-			    	value="${tomcat.port.string}" />
+                <replace file="${deploy.home}/WEB-INF/web.xml"
+                    token="[TOMCAT_PORT_STRING]" 
+                    value="${tomcat.port.string}" />
+                <if>
+                    <not>
+                        <isset property="cas.proxy.servlet.url" />
+                    </not>
+                    <then>
+                        <property name="cas.proxy.servlet.url" value="http://localhost:8080/esup-lecture/CasProxyServlet" />
+                        <echo>cas.proxy.servlet.url is not set, defaults to ${cas.proxy.servlet.url}.</echo>
+                    </then>
+                </if>
+                <replace file="${deploy.home}/WEB-INF/web.xml"
+                    token="[CAS_PROXY_SERVLET_URL]" 
+                    value="${cas.proxy.servlet.url}" />
 			</else>
 		</if>
 	</target>

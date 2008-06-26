@@ -181,12 +181,11 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	/**
 	 * get a source form cache.
 	 * @param sourceProfile source profile of source to get
-	 * @param user user ID
 	 * @param ptCas CAS proxy ticket 
 	 * @return the source
 	 * @throws InfoDaoException 
 	 */
-	public Source getSource(final SourceProfile sourceProfile, final String user, final String ptCas) 
+	public Source getSource(final SourceProfile sourceProfile, final String ptCas) 
 			throws InfoDaoException {
 		Source ret = new GlobalSource();
 //		not yet implemented
@@ -198,16 +197,12 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		String urlSource = sourceProfile.getSourceURL();
 		Long lastSrcAccess = sourceLastAccess.get(urlSource);
 		Long currentTimeMillis = System.currentTimeMillis();
-		UsernamePasswordCredentials creds = null;
-		if (ptCas != null) {
-			 creds = new UsernamePasswordCredentials(user, ptCas);			
-		}
 		if (lastSrcAccess != null) {
 			if (lastSrcAccess + (sourceProfile.getTtl() * MILLIS_PER_SECOND) > currentTimeMillis) {
 				Element element = cache.get(urlSource);
 				if (element == null) { 
 					// not in cache !
-					ret = getFreshSource(sourceProfile, creds);
+					ret = getFreshSource(sourceProfile, ptCas);
 					cache.put(new Element(urlSource, ret));
 					sourceLastAccess.put(urlSource, currentTimeMillis);
 					if (LOG.isWarnEnabled()) {
@@ -218,12 +213,12 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					ret = (Source) element.getObjectValue();
 				}
 			} else {
-				ret = getFreshSource(sourceProfile, creds);
+				ret = getFreshSource(sourceProfile, ptCas);
 				cache.put(new Element(urlSource, ret));
 				sourceLastAccess.put(urlSource, currentTimeMillis);
 			}
 		} else {
-			ret = getFreshSource(sourceProfile, creds);
+			ret = getFreshSource(sourceProfile, ptCas);
 			cache.put(new Element(urlSource, ret));
 			sourceLastAccess.put(urlSource, currentTimeMillis);
 		}
@@ -237,7 +232,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @throws InfoDaoException 
 	 */
 	public Source getSource(final SourceProfile sourceProfile) throws InfoDaoException {
-		return getSource(sourceProfile, null, null);
+		return getSource(sourceProfile, null);
 	}
 
 	/**
@@ -248,13 +243,13 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @throws InfoDaoException 
 	 */
 	private Source getFreshSource(final SourceProfile sourceProfile,
-			final UsernamePasswordCredentials creds) throws InfoDaoException {
+			final String ptCas) throws InfoDaoException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshSource");
 		}
 		Source ret = new GlobalSource();
 		//start a Thread to get FreshSource
-		FreshSourceThread thread = new FreshSourceThread(sourceProfile, creds);
+		FreshSourceThread thread = new FreshSourceThread(sourceProfile, ptCas);
 		thread.start();
 		int timeOut = defaultTimeout;
 		try {
