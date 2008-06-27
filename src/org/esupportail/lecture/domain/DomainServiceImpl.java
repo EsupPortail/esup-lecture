@@ -798,7 +798,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @param service the i18nService to set
 	 */
-	public void setI18nService(I18nService service) {
+	public void setI18nService(final I18nService service) {
 		i18nService = service;
 	}
 
