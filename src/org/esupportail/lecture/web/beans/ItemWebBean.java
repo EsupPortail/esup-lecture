@@ -6,17 +6,21 @@ package org.esupportail.lecture.web.beans;
  */
 public class ItemWebBean {
 	/**
-	 * id of item
+	 * id of item.
 	 */
 	private String id;
 	/**
-	 * html content of item
+	 * html content of item.
 	 */
 	private String htmlContent;
 	/**
-	 * store if item is read or not
+	 * store if item is read or not.
 	 */
 	private boolean read;
+	/**
+	 * Dummy state of this bean.
+	 */
+	private boolean dummy;
 	/**
 	 * @return html content of item
 	 */
@@ -38,7 +42,7 @@ public class ItemWebBean {
 	/**
 	 * @param id
 	 */
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 	/**
@@ -50,8 +54,17 @@ public class ItemWebBean {
 	/**
 	 * @param read
 	 */
-	public void setRead(boolean read) {
+	public void setRead(final boolean read) {
 		this.read = read;
+	}
+	public void setDummy(final boolean dummy) {
+		this.dummy = dummy;
+	}
+	/**
+	 * @return the dummy
+	 */
+	public boolean isDummy() {
+		return dummy;
 	}
 	
 

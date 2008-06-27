@@ -8,17 +8,13 @@ package org.esupportail.lecture.domain.beans;
 import java.util.Collection;
 
 import org.esupportail.commons.services.exceptionHandling.ExceptionUtils;
-import org.esupportail.commons.services.i18n.I18nService;
 import org.esupportail.commons.utils.strings.StringUtils;
-import org.esupportail.lecture.domain.model.AvailabilityMode;
-import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
-import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.UnknownException;
 
 /**
- * A DummyBean for a ItemBean : every methods are overriden from SourceBean and throw an ElementDummyBeanException
- * @author gbouteil
+ * A DummyBean for a ItemBean.
+ * @author bourges
  *
  */
 public class ItemDummyBean extends ItemBean implements DummyBean {
@@ -26,24 +22,24 @@ public class ItemDummyBean extends ItemBean implements DummyBean {
 	/* 
 	 *************************** PROPERTIES ******************************** */	
 	/**
-	 * Cause of the Dummy Bean
+	 * Cause of the Dummy Bean.
 	 */
-	DomainServiceException cause;
+	private DomainServiceException cause;
 
 	/*
 	 *************************** INIT ************************************** */	
 
 	/**
-	 * default constructor
+	 * default constructor.
 	 */
 	public ItemDummyBean() {
 		cause = new UnknownException();
 	}
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param e exception cause of dummyBean creation
 	 */
-	public ItemDummyBean(DomainServiceException e) {
+	public ItemDummyBean(final DomainServiceException e) {
 		cause = e;
 	}
 
@@ -103,6 +99,15 @@ public class ItemDummyBean extends ItemBean implements DummyBean {
 			separator = "<br/>";
 		}
 		return result.toString();
+	}
+	
+	/**
+	 * @see org.esupportail.lecture.domain.beans.ItemBean#isDummy()
+	 * return true because this a dummy bean
+	 */
+	@Override
+	public boolean isDummy() {
+		return true;
 	}
 	
 }

@@ -48,10 +48,10 @@ public class FreshManagedCategoryThread extends Thread {
 	 */
 	private Exception exception;
 	/**
-	 * user and password. 
+	 * Proxy ticket CAS 
 	 * null for anonymous access.
 	 */
-	private UsernamePasswordCredentials creds;
+	private String ptCas;
 	
 	/**
 	 * Constructor.
@@ -59,10 +59,10 @@ public class FreshManagedCategoryThread extends Thread {
 	 * @param creds - user and password. null for anonymous access
 	 */
 	public FreshManagedCategoryThread(final ManagedCategoryProfile profile, 
-			final UsernamePasswordCredentials creds) {
+			final String ptCas) {
 		this.managedCategoryProfile = profile;
 		this.exception = null;
-		this.creds = creds;
+		this.ptCas = ptCas;
 	}
 
 	/**
@@ -71,7 +71,7 @@ public class FreshManagedCategoryThread extends Thread {
 	@Override
 	public void run() {
 		try {
-			this.managedCategory = getFreshManagedCategory(managedCategoryProfile, creds);
+			this.managedCategory = getFreshManagedCategory(managedCategoryProfile, ptCas);
 		} catch (XMLParseException e) {
 			this.exception = e;
 		}
@@ -86,7 +86,7 @@ public class FreshManagedCategoryThread extends Thread {
 	 */
 	@SuppressWarnings("unchecked")
 	private synchronized ManagedCategory getFreshManagedCategory(final ManagedCategoryProfile profile,
-			final UsernamePasswordCredentials creds) 
+			final String ptCas) 
 			throws XMLParseException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshManagedCategory");
@@ -96,25 +96,15 @@ public class FreshManagedCategoryThread extends Thread {
 		try {
 			//get the XML
 			String categoryURL = profile.getUrlCategory();
-			Document document = null;
-			if (creds != null) {
-				HttpClient client = new HttpClient();
-				if (creds != null) {
-					client.getState().setCredentials(AuthScope.ANY, creds);				
+			if (ptCas != null) {
+				if (categoryURL.contains("?")) { 
+					categoryURL = categoryURL + "?ticket=" + ptCas;
+				} else {
+					categoryURL = categoryURL + "&ticket=" + ptCas;
 				}
-				GetMethod method = new GetMethod(categoryURL);
-				try {
-					client.executeMethod(method);
-					InputStream responseStream = method.getResponseBodyAsStream();
-					document = new SAXReader().read(responseStream);				
-				} catch (HttpException e) {
-					throw new RuntimeException("Error in getFreshSource", e);
-				} catch (IOException e) {
-					throw new RuntimeException("Error in getFreshSource", e);
-				}
-			} else {
-			    document = new SAXReader().read(categoryURL);
 			}
+			SAXReader reader = new SAXReader();
+			Document document = reader.read(categoryURL);
 			Element root = document.getRootElement();
 			// Category properties
 			ret.setName(root.valueOf("@name"));

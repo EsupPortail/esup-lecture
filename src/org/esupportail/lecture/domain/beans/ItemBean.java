@@ -90,6 +90,12 @@ public class ItemBean {
 		this.read = read;
 	}
 
+	/**
+	 * @return false because it is not a dummy Item
+	 */
+	public boolean isDummy() {
+		return false;
+	}
 	/*
 	 *************************** METHODS *********************************** */	
 	/**

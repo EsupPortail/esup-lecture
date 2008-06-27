@@ -7,7 +7,7 @@ package org.esupportail.lecture.exceptions.domain;
 
 /**
  * Exception throwed by domain layer that never catch by other layer.
- * These are private exception for doamin layer
+ * These are private exception for domain layer
  * @author gbouteil
  */
 public class PrivateException extends Exception {

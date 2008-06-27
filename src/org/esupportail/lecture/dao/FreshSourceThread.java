@@ -1,15 +1,7 @@
 package org.esupportail.lecture.dao;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.Iterator;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Attribute;
@@ -95,30 +87,15 @@ public class FreshSourceThread extends Thread {
 
 			//get the XML
 			String sourceURL = sourceProfile.getSourceURL();
-			if (sourceURL.contains("?")) { 
-				sourceURL = sourceURL + "?ticket=" + ptCas;
-            } else {
-				sourceURL = sourceURL + "&ticket=" + ptCas;
-			}
-			Document document = null;
 			if (ptCas != null) {
-				HttpClient client = new HttpClient();
-//				if (creds != null) {
-//					client.getState().setCredentials(AuthScope.ANY, creds);				
-//				}
-				GetMethod method = new GetMethod(sourceURL);
-				try {
-					client.executeMethod(method);
-					InputStream responseStream = method.getResponseBodyAsStream();
-					document = new SAXReader().read(responseStream);				
-				} catch (HttpException e) {
-					throw new RuntimeException("Error in getFreshSource", e);
-				} catch (IOException e) {
-					throw new RuntimeException("Error in getFreshSource", e);
+				if (sourceURL.contains("?")) { 
+					sourceURL = sourceURL + "?ticket=" + ptCas;
+				} else {
+					sourceURL = sourceURL + "&ticket=" + ptCas;
 				}
-			} else {
-			    document = new SAXReader().read(sourceURL);
 			}
+			SAXReader reader = new SAXReader();
+			Document document = reader.read(sourceURL);
 			//find the dtd
 			DocumentType doctype = document.getDocType();
 			if (doctype != null) {

@@ -48,13 +48,13 @@
 				<t:htmlTag value="div" styleClass="toggleButton">
 					<h:commandButton action="#{homeController.toggleItemReadState}"
 						image="/media/unread.png" alt="#{msgs['markAsRead']}"
-						title="#{msgs['markAsRead']}" rendered="#{!item.read and !homeController.guestMode}">
+						title="#{msgs['markAsRead']}" rendered="#{!item.read and !homeController.guestMode and !item.dummy}">
 						<t:updateActionListener property="#{homeController.item}"
 							value="#{item}" />
 					</h:commandButton>
 					<h:commandButton action="#{homeController.toggleItemReadState}"
 						image="/media/read.png" alt="#{msgs['markAsUnread']}"
-						title="#{msgs['markAsUnread']}" rendered="#{item.read and !homeController.guestMode}">
+						title="#{msgs['markAsUnread']}" rendered="#{item.read and !homeController.guestMode and !item.dummy}">
 						<t:updateActionListener property="#{homeController.item}"
 							value="#{item}" />
 					</h:commandButton>

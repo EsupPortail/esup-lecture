@@ -11,9 +11,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.myfaces.portlet.PortletUtil;
 import org.esupportail.commons.services.authentication.AuthenticationService;
+import org.esupportail.commons.services.cas.CasException;
 import org.esupportail.commons.services.cas.CasService;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.lecture.domain.utils.ModeService;
+import org.esupportail.lecture.exceptions.dao.InfoDaoException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.springframework.beans.factory.InitializingBean;
@@ -140,13 +143,19 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	}
 
 	/**
+	 * @throws InfoDomainExceptionException 
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserProxyTicketCAS()
 	 */
-	public String getUserProxyTicketCAS(final String casTargetService) {
+	public String getUserProxyTicketCAS(final String casTargetService) throws InfoDomainException {
 	    if (LOG.isDebugEnabled()) {
 			LOG.debug("getUserProxyTicketCAS() - not yet implemented");
 		}
-		return casService.getProxyTicket(casTargetService);
+	    try {
+			return casService.getProxyTicket(casTargetService);
+		} catch (CasException e) {
+			throw new InfoDomainException("Error getting CAS Proxy Ticket", e); 
+		}
+		
 	}
 
 	/**

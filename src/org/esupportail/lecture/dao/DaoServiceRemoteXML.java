@@ -146,13 +146,13 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 */
 	@SuppressWarnings("unchecked")
 	private ManagedCategory getFreshManagedCategory(final ManagedCategoryProfile profile,
-			final UsernamePasswordCredentials creds) throws TimeoutException {
+			final String ptCas) throws TimeoutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshManagedCategory");
 		}
 		ManagedCategory ret = new ManagedCategory();
 		//start a Thread to get FreshManagedCategory
-		FreshManagedCategoryThread thread = new FreshManagedCategoryThread(profile, creds);
+		FreshManagedCategoryThread thread = new FreshManagedCategoryThread(profile, ptCas);
 		thread.start();
 		int timeOut = profile.getTimeOut();
 		try {

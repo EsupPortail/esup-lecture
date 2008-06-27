@@ -202,6 +202,7 @@ public class HomeController extends TwoPanesController {
 							itemWebBean.setId(itemBean.getId());
 							itemWebBean.setHtmlContent(itemBean.getHtmlContent());
 							itemWebBean.setRead(itemBean.isRead());
+							itemWebBean.setDummy(itemBean.isDummy());
 							ret.add(itemWebBean);
 						}
 						//Put items in selected source

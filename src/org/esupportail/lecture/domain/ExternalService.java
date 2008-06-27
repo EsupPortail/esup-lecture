@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain;
 
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
@@ -34,8 +35,9 @@ public interface ExternalService {
 	 * Return the proxy ticket CAS of the connected user
 	 * @param casTargetService - CAS target service
 	 * @return the proxy ticket CAS
+	 * @throws InfoDomainException 
 	 */
-	public String getUserProxyTicketCAS(String casTargetService);
+	public String getUserProxyTicketCAS(String casTargetService) throws InfoDomainException;
 
 	/**
 	 * Return true if the connected user of the is in the "group" defined in the external service
