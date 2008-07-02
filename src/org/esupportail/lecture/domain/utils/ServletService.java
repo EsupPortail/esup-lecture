@@ -11,6 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.utils.Assert;
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.portal.ws.client.PortalService;
@@ -65,7 +66,10 @@ public class ServletService implements ModeService, InitializingBean {
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getPreference(java.lang.String)
 	 */
 	public String getPreference(final String name) {
-		// default return value in case of serlvet use case (because Preference have no sense in this mode)
+		String ret = name;
+		if (name.equals(DomainTools.CONTEXT)) {
+			ret = "default";
+		}
 		return name;
 	}
 
