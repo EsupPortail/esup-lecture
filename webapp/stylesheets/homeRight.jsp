@@ -22,6 +22,7 @@
 					<t:htmlTag value="li">
 						<h:outputText value="#{msgs['selectorLabel']}" />
 						<h:selectOneMenu value="#{homeController.itemDisplayMode}" converter="#{itemDisplayModeConverter}">
+                            <!--  onchange="submit();" -->
 							<f:selectItem itemValue="#{homeController.all}" itemLabel="#{msgs['all']}" />
 							<f:selectItem itemValue="#{homeController.unread}" itemLabel="#{msgs['notRead']}" />
 							<f:selectItem itemValue="#{homeController.unreadfirt}" itemLabel="#{msgs['unreadFirst']}" />
@@ -34,7 +35,7 @@
 					</t:htmlTag>
 					<t:htmlTag id="XMLWithoutMenu" value="li" rendered="#{homeController.treeVisible}">
 						<h:commandButton action="#{homeController.toggleTreeVisibility}"
-							image="/media/XMLWithoutMenu.gif" alt="#{msgs['hideTree']}" title="#{msgs['hideTree']}"/>
+							image="/media/XMLWithoutMenu.gif" alt="#{msgs['hideTree']}" title="#{msgs['hideTree']}"/>             
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>

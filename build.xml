@@ -58,14 +58,22 @@
 		<if>
 			<equals arg1="${deploy.type}" arg2="portlet" />
 			<then> <!-- portket -->
-			    <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false"
-	             	flags="g"
-	            	match=".!-- IS_PORTLET" 
-	               	replace="" /> 
-	    		<replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false" 
-	               	flags="g"
-	               	match="IS_PORTLET --." 
-	               	replace="" />
+                <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false"
+                    flags="g"
+                    match=".!-- IS_PORTLET" 
+                    replace="" /> 
+                <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false" 
+                    flags="g"
+                    match="IS_PORTLET --." 
+                    replace="" />
+                <replaceregexp file="${deploy.home}/WEB-INF/classes/properties/auth/auth.xml" byline="false"
+                    flags="g"
+                    match=".!-- IS_PORTLET" 
+                    replace="" /> 
+                <replaceregexp file="${deploy.home}/WEB-INF/classes/properties/auth/auth.xml" byline="false" 
+                    flags="g"
+                    match="IS_PORTLET --." 
+                    replace="" />
 			</then>
 			<else> <!-- servlet or quickstart -->
 				<if>
@@ -89,14 +97,22 @@
 					               replace="" />
 					</then>
 				</if>
-			    <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false"
-			               flags="g"
-			               match=".!-- IS_SERVLET" 
-			               replace="" /> 
-			    <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false" 
-			               flags="g"
-			               match="IS_SERVLET --." 
-			               replace="" />
+                <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false"
+                           flags="g"
+                           match=".!-- IS_SERVLET" 
+                           replace="" /> 
+                <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false" 
+                           flags="g"
+                           match="IS_SERVLET --." 
+                           replace="" />
+                <replaceregexp file="${deploy.home}/WEB-INF/classes/properties/auth/auth.xml" byline="false"
+                           flags="g"
+                           match=".!-- IS_SERVLET" 
+                           replace="" /> 
+                <replaceregexp file="${deploy.home}/WEB-INF/classes/properties/auth/auth.xml" byline="false" 
+                           flags="g"
+                           match="IS_SERVLET --." 
+                           replace="" />
 			    <replace file="${deploy.home}/WEB-INF/web.xml" 
 			    	token="[CAS_URL]" 
 			        value="${cas.url}" />
@@ -111,7 +127,7 @@
                         <isset property="cas.proxy.servlet.url" />
                     </not>
                     <then>
-                        <property name="cas.proxy.servlet.url" value="http://localhost:8080/esup-lecture/CasProxyServlet" />
+                        <property name="cas.proxy.servlet.url" value="https://localhost:8080/esup-lecture/CasProxyServlet" />
                         <echo>cas.proxy.servlet.url is not set, defaults to ${cas.proxy.servlet.url}.</echo>
                     </then>
                 </if>

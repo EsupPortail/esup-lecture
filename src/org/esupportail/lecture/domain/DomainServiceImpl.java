@@ -731,24 +731,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	}
 
 	/**
-	 * @return the first (and only) VersionManager instance of the database.
-	 * @throws ConfigException 
-	 */
-	private VersionManager getVersionManager() throws ConfigException {
-		List<VersionManager> versionManagers = null;
-		try {
-			versionManagers = DomainTools.getDaoService().getVersionManagers();
-		} catch (BadSqlGrammarException e) {
-			throw new ConfigException("your database is not initialized, please run 'ant init'", e);
-		}
-		if (versionManagers.isEmpty()) {
-			return null;
-		}
-		return versionManagers.get(0);
-	}
-
-
-	/**
 	 * @see org.esupportail.lecture.domain.DomainService#setDatabaseVersion(java.lang.String)
 	 */
 	public void setDatabaseVersion(final String version) {
@@ -767,6 +749,24 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("database version set to '" + version + "'.");
 		}
+	}
+
+
+	/**
+	 * @return the first (and only) VersionManager instance of the database.
+	 * @throws ConfigException 
+	 */
+	private VersionManager getVersionManager() throws ConfigException {
+		List<VersionManager> versionManagers = null;
+		try {
+			versionManagers = DomainTools.getDaoService().getVersionManagers();
+		} catch (BadSqlGrammarException e) {
+			throw new ConfigException("your database is not initialized, please run 'ant init'", e);
+		}
+		if (versionManagers.isEmpty()) {
+			return null;
+		}
+		return versionManagers.get(0);
 	}
 
 

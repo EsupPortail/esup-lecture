@@ -43,6 +43,13 @@
 		</param-value>
 	</context-param>
 
+<!-- USE_CAS
+    <context-param>
+        <param-name>edu.yale.its.tp.cas.proxyUrl</param-name>
+        <param-value>[CAS_URL]/proxy</param-value>
+    </context-param>
+ USE_CAS -->
+    
 	<listener>
 		<listener-class>
 			org.springframework.web.util.Log4jConfigListener

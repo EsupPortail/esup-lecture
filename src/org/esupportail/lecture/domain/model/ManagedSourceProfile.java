@@ -6,18 +6,13 @@
 package org.esupportail.lecture.domain.model;
 
 
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
-import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
-import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 
 
 /**
@@ -32,35 +27,37 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/*
 	 ************************** PROPERTIES ******************************** */	
 	/**
-	 * Log instance 
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(ManagedSourceProfile.class); 
+	protected static final Log LOG = LogFactory.getLog(ManagedSourceProfile.class); 
 	
 	/**
-	 * Access mode on the remote source
+	 * Access mode on the remote source.
 	 */
 	private Accessibility access;
 	
 	/**
-	 * Visibility rights for groups on the remote source
+	 * Visibility rights for groups on the remote source.
 	 */
 	private VisibilitySets visibility;
 
 	/**
-	 * Ttl of the remote source reloading
+	 * Ttl of the remote source reloading.
 	 * Using depends on trustCategory parameter
 	 */
 	private int ttl;
 	
 	/**
-	 * Specific user content parameter : indicates source multiplicity :
+	 * Specific user content parameter.
+	 * Indicates source multiplicity :
 	 * - true : source is specific to a user, it is loaded in user profile => source is a SingleSource
 	 * - false : source is global to users, it is loaded in channel environnement => source is a GlobalSource
 	 */
 	private boolean specificUserContent;
 	
 	/**
-	 * Resolve feature values (access, visibility) from :
+	 * Resolve feature values (access, visibility).
+	 * From :
 	 * - managedSourceProfile 
 	 * - source 
 	 * - trustCategory parameter 
@@ -68,12 +65,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	private ManagedSourceFeatures features;
 
 	/**
-	 * profile of the parent category of this managed source profile 
+	 * profile of the parent category of this managed source profile. 
 	 */
 	private ManagedCategoryProfile categoryProfile;
 	
 	/**
-	 * source profile Id defined in the xml file : interne Id of the source Profile
+	 * source profile Id.
+	 * Defined in the xml file : interne Id of the source Profile
 	 */
 	private String fileId;
 
@@ -81,12 +79,12 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 ************************** INIT ******************************** */	
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param mcp profile of the managedCategory parent of this ManagedSourceProfile
 	 */
-	public ManagedSourceProfile(ManagedCategoryProfile mcp) {
-		if (log.isDebugEnabled()){
-			log.debug("ManagedSourceProfile("+mcp.getId()+")");
+	public ManagedSourceProfile(final ManagedCategoryProfile mcp) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("ManagedSourceProfile(" + mcp.getId() + ")");
 		}
 		categoryProfile = mcp;
 		features = new ManagedSourceFeatures(this);
@@ -108,8 +106,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	public VisibilityMode updateCustomCategory(
 			final CustomManagedCategory customManagedCategory, final ExternalService ex) 
 		throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()) {
-			log.debug("id = " + this.getId() + " - updateCustomCategory("
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - updateCustomCategory("
 					+ customManagedCategory.getElementId() + "externalService)");
 		}
 		// no loadSource(ex) is needed here
@@ -125,8 +123,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @throws CategoryNotLoadedException 
 	 */
 	public void computeFeatures() throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()) {
-			log.debug("id = " + this.getId() + " - computeFeatures()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - computeFeatures()");
 		}
 	
 		/* Features that can be herited by the managedCategoryProfile */
@@ -168,8 +166,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	@Override
 	protected void loadSource(final ExternalService ex) throws InfoDomainException {
-		if (log.isDebugEnabled()) {
-			log.debug("id = " + this.getId() + " - loadSource(externalService)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - loadSource(externalService)");
 		}
 			
 		Accessibility accessibility = getAccess();
@@ -181,20 +179,14 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				setElement(source);
 
 			} else if (Accessibility.CAS.equals(accessibility)) {
-				URL url = new URL(getSourceURL());
-				String casTargetService = url.getProtocol() + "://" + url.getHost();
-				String ptCas = ex.getUserProxyTicketCAS(casTargetService);
+				String ptCas = ex.getUserProxyTicketCAS(getSourceURL());
 				Source source = DomainTools.getDaoService().getSource(this, ptCas);
 				setElement(source);
 
 			}
 		} catch (InfoDaoException e) {
 			String errorMsg = "Impossible to load source with ID: " + this.getId();
-			log.error(errorMsg);
-			throw new InfoDomainException(errorMsg, e);
-		} catch (MalformedURLException e) {
-			String errorMsg = "Impossible to load source with ID: " + this.getId();
-			log.error(errorMsg);
+			LOG.error(errorMsg);
 			throw new InfoDomainException(errorMsg, e);
 		}
 		
@@ -216,8 +208,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	private VisibilityMode setUpCustomCategoryVisibility(
 			final CustomManagedCategory customManagedCategory,
 			final ExternalService ex) throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()) {
-			log.debug("id = " + this.getId() + " - setUpCustomCategoryVisibility(" 
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - setUpCustomCategoryVisibility(" 
 					+ customManagedCategory.getElementId() + ",externalService)");
 		}
 		/*
@@ -232,16 +224,16 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		VisibilityMode mode = getVisibility().whichVisibility(ex);
 		
 		if (mode == VisibilityMode.OBLIGED) {
-			if (log.isTraceEnabled()) {
-				log.trace("IsInObliged : " + mode);
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("IsInObliged : " + mode);
 			}
 			customManagedCategory.addSubscription(this);
 			return mode;
 		}
 		
 		if (mode == VisibilityMode.AUTOSUBSCRIBED) {
-			if (log.isTraceEnabled()) {
-				log.trace("IsInAutoSubscribed : " + mode);
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("IsInAutoSubscribed : " + mode);
 			}
 			// TODO (GB later) l'ajouter dans le custom category si c'est la premiere fois
 			//customManagedCategory.addSubscription(this);
@@ -249,8 +241,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		}
 		
 		if (mode == VisibilityMode.ALLOWED) {
-			if (log.isTraceEnabled()) {
-				log.trace("IsInAllowed : " + mode);
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("IsInAllowed : " + mode);
 			}
 			// Nothing to do
 			return mode;
@@ -269,8 +261,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getAccess()
 	 */
 	public Accessibility getAccess() throws CategoryNotLoadedException  {
-		if (log.isDebugEnabled()) {
-			log.debug("id = " + this.getId() + " - getAccess()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - getAccess()");
 		}
 		return features.getAccess();
 	}
@@ -280,22 +272,22 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setAccess(org.esupportail.lecture.domain.model.Accessibility)
 	 */
 	public void setAccess(final Accessibility access) {
-		if (log.isDebugEnabled()) {
-			log.debug("id=" + this.getId() + " - setAccess()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - setAccess()");
 		}
 		this.access = access;
 		features.setIsComputed(false);
 	}
 
 	/**
-	 * Compute visibility value from features and returns it
+	 * Compute visibility value from features and returns it.
 	 * @return visibility
 	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
 	 */
 	public VisibilitySets getVisibility() throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - getVisibility()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - getVisibility()");
 		}
 		return features.getVisibility();
 	}
@@ -306,8 +298,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibility(org.esupportail.lecture.domain.model.VisibilitySets)
 	 */
 	public void setVisibility(final VisibilitySets visibility) {
-		if (log.isDebugEnabled()) {
-			log.debug("id=" + this.getId() + " - setVisibility(visibility)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - setVisibility(visibility)");
 		}
 		this.visibility = visibility;
 		features.setIsComputed(false);
@@ -320,11 +312,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	@Override
 	public int getTimeOut() throws CategoryNotLoadedException  {
-		if (log.isDebugEnabled()) {
-			log.debug("id=" + this.getId() + " - getTimeOut()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - getTimeOut()");
 		}
-		if (log.isTraceEnabled()) {
-			log.trace("timeOut : " + features.getTimeOut());
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("timeOut : " + features.getTimeOut());
 		}
 		return features.getTimeOut();
 	}
@@ -336,8 +328,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	@Override
 	public void setTimeOut(final int timeOut) {
-		if (log.isDebugEnabled()) {
-			log.debug("id=" + this.getId() + " - setTimeOut(" + timeOut + ")");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - setTimeOut(" + timeOut + ")");
 		}
 		super.timeOut = timeOut;
 		features.setIsComputed(false);

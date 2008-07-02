@@ -5,6 +5,7 @@
 package org.esupportail.lecture.portlet;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import javax.faces.FactoryFinder;
 import javax.faces.application.Application;
@@ -18,7 +19,6 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.WindowState;
 
 import org.apache.myfaces.context.servlet.ServletFacesContextImpl;
 import org.apache.myfaces.portlet.MyFacesGenericPortlet;
@@ -29,13 +29,19 @@ import org.esupportail.commons.services.exceptionHandling.ExceptionUtils;
 import org.esupportail.commons.services.logging.Logger;
 import org.esupportail.commons.services.logging.LoggerImpl;
 import org.esupportail.commons.utils.ContextUtils;
+import org.esupportail.commons.web.portlet.SerializableServletFacesContextImpl;
 import org.springframework.web.portlet.context.PortletRequestAttributes;
 
 /**
  * A JSF-based portlet that catches exception and gives them to an exception service.
  */
-public class FacesPortlet extends MyFacesGenericPortlet {
+public class FacesPortlet extends MyFacesGenericPortlet implements Serializable {
 	
+	/**
+	 * The serialization id.
+	 */
+	private static final long serialVersionUID = -4232039696236207722L;
+
 	/**
 	 * A logger.
 	 */
@@ -63,6 +69,7 @@ public class FacesPortlet extends MyFacesGenericPortlet {
 	/**
 	 * Catch an exception.
 	 * @param exception
+	 * @return an exception service
 	 */
 	protected ExceptionService catchException(
 			final Exception exception) {
@@ -83,8 +90,6 @@ public class FacesPortlet extends MyFacesGenericPortlet {
 	protected void nonFacesRequest(
 			final RenderRequest request, 
 			final RenderResponse response) throws PortletException {
-// the selection of the default view must be done once the faces context has been initialized
-//        nonFacesRequest(request, response, selectDefaultView(request, response));
         nonFacesRequest(request, response, null);
     }
 
@@ -112,7 +117,8 @@ public class FacesPortlet extends MyFacesGenericPortlet {
             (ApplicationFactory) FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
         Application application = appFactory.getApplication();
         ViewHandler viewHandler = application.getViewHandler();
-        ServletFacesContextImpl facesContext = (ServletFacesContextImpl) FacesContext.getCurrentInstance();
+        ServletFacesContextImpl facesContext = 
+        	(ServletFacesContextImpl) FacesContext.getCurrentInstance();
         if (facesContext == null) {
         	facesContext = (ServletFacesContextImpl) facesContext(request, response);
     		facesContext.setExternalContext(makeExternalContext(request, response));
@@ -133,7 +139,7 @@ public class FacesPortlet extends MyFacesGenericPortlet {
 			throw new PortletException(e);
 		}
     }
-
+	
 	/**
 	 * @see org.apache.myfaces.portlet.MyFacesGenericPortlet#facesRender(
 	 * javax.portlet.RenderRequest, javax.portlet.RenderResponse)
@@ -143,57 +149,36 @@ public class FacesPortlet extends MyFacesGenericPortlet {
 			final RenderRequest request, 
 			final RenderResponse response) 
 	throws PortletException, IOException {
-		WindowState state = null;
-		if (request != null) {
-			state = request.getWindowState();			
-		} else {
-			logger.error("parameter \"request\" is null in fonction facesRender");
-		}
-		if (state != null && !state.equals(WindowState.MINIMIZED)) {
-//for (int i = 1; i < 10; i++) {
-//	try {
-//		Thread.sleep(500);
-//	} catch (InterruptedException e) {
-//		// TODO Auto-generated catch block
-//		e.printStackTrace();
-//	}
-//	System.out.println(request.getScheme());
-//}
-			if (logger.isDebugEnabled()) {
-				logger.debug("==== BEGIN facesRender in WindowState " + state + " ====");
-			}
-			PortletRequestAttributes previousRequestAttributes = 
-				ContextUtils.bindRequestAndContext(request, getPortletContext());
-			if (!ExceptionUtils.exceptionAlreadyCaught()) {
-				try {
-					DatabaseUtils.open();
-					DatabaseUtils.begin();
-					super.facesRender(request, response);
-					DatabaseUtils.commit();
-					DatabaseUtils.close();
-					ContextUtils.unbindRequest(previousRequestAttributes);
-					if (logger.isDebugEnabled()) {
-						logger.debug("==== END facesRender ====");
-					}
-					return;
-				} catch (Exception e) {
-					DatabaseUtils.close();
-					catchException(e);
-				}
-			}
+		PortletRequestAttributes previousRequestAttributes = 
+			ContextUtils.bindRequestAndContext(request, getPortletContext());
+		if (!ExceptionUtils.exceptionAlreadyCaught()) {
 			try {
-				ExceptionService exceptionService = ExceptionUtils.getMarkedExceptionService();
-				if (exceptionService == null) {
-					logger.error("An exception was thrown but no exception service was found!");
-				} else {
-					nonFacesRequest(request, response, exceptionService.getExceptionView());
-				}
-			} catch (Exception e) {
-				logger.error("An exception was caught while rendering an exception, giving up", e);
-				handleExceptionFromLifecycle(e);
-			} finally {
+				DatabaseUtils.open();
+				DatabaseUtils.begin();
+				super.facesRender(request, response);
+				DatabaseUtils.commit();
+				DatabaseUtils.close();
 				ContextUtils.unbindRequest(previousRequestAttributes);
+				if (logger.isDebugEnabled()) {
+					logger.debug("==== END facesRender ====");
+				}
+				return;
+			} catch (Exception e) {
+				catchException(e);
 			}
+		}
+		try {
+			ExceptionService exceptionService = ExceptionUtils.getMarkedExceptionService();
+			if (exceptionService == null) {
+				logger.error("An exception was thrown but no exception service was found!");
+			} else {
+				nonFacesRequest(request, response, exceptionService.getExceptionView());
+			}
+		} catch (Exception e) {
+			logger.error("An exception was caught while rendering an exception, giving up", e);
+			handleExceptionFromLifecycle(e);
+		} finally {
+			ContextUtils.unbindRequest(previousRequestAttributes);
 		}
 	}
 
@@ -222,7 +207,7 @@ public class FacesPortlet extends MyFacesGenericPortlet {
     		DatabaseUtils.open();
     		DatabaseUtils.begin();
     		VersionningUtils.checkVersion(true, false);
-            facesContext = (ServletFacesContextImpl) facesContext(request, response);
+            facesContext = new SerializableServletFacesContextImpl(portletContext, request, response);
             request.getPortletSession().setAttribute(CURRENT_FACES_CONTEXT, facesContext);
     		facesContext.setExternalContext(makeExternalContext(request, response));
             setPortletRequestFlag(request);
@@ -231,7 +216,6 @@ public class FacesPortlet extends MyFacesGenericPortlet {
                 response.setRenderParameter(VIEW_ID, facesContext.getViewRoot().getViewId());
             }
             DatabaseUtils.commit();
-            DatabaseUtils.close();
     		if (logger.isDebugEnabled()) {
     			logger.debug("==== END processAction ====");
     		}
@@ -239,9 +223,9 @@ public class FacesPortlet extends MyFacesGenericPortlet {
 			ExceptionService exceptionService = catchException(e);
             DatabaseUtils.close();
 			response.setRenderParameter(VIEW_ID, exceptionService.getExceptionView());
-			if (facesContext != null) {
-				facesContext.release();
-			}
+//			if (facesContext != null) {
+//				facesContext.release();
+//			}
         } finally {
         	saveRequestAttributes(request);
         	ContextUtils.unbindRequest(previousRequestAttributes);

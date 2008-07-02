@@ -89,9 +89,9 @@ public class FreshSourceThread extends Thread {
 			String sourceURL = sourceProfile.getSourceURL();
 			if (ptCas != null) {
 				if (sourceURL.contains("?")) { 
-					sourceURL = sourceURL + "?ticket=" + ptCas;
-				} else {
 					sourceURL = sourceURL + "&ticket=" + ptCas;
+				} else {
+					sourceURL = sourceURL + "?ticket=" + ptCas;
 				}
 			}
 			SAXReader reader = new SAXReader();

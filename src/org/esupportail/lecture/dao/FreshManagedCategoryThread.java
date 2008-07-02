@@ -98,9 +98,9 @@ public class FreshManagedCategoryThread extends Thread {
 			String categoryURL = profile.getUrlCategory();
 			if (ptCas != null) {
 				if (categoryURL.contains("?")) { 
-					categoryURL = categoryURL + "?ticket=" + ptCas;
-				} else {
 					categoryURL = categoryURL + "&ticket=" + ptCas;
+				} else {
+					categoryURL = categoryURL + "?ticket=" + ptCas;
 				}
 			}
 			SAXReader reader = new SAXReader();

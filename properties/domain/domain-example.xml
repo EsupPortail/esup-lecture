@@ -74,6 +74,7 @@
 		<property name="authenticationService" ref="authenticationService" />
 		<property name="portletService" ref="portletService" />
 		<property name="servletService" ref="servletService" />
+		<property name="casService" ref="${casService.bean}" />
 	</bean>
 	
 	<bean id="servletService" class="org.esupportail.lecture.domain.utils.ServletService">
