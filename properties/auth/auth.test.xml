@@ -45,20 +45,20 @@
         id="portletCasService"
         class="org.esupportail.commons.services.cas.PortletCasServiceImpl"
         >
-        <property name="service" value="http://portal.domain.edu/esup-example" >
+        <property name="service" value="${casService.service}" >
             <description>
                 The service that retrieves PTs from the CAS server. This property
                 must be the same as the one set in parameter casTargetService
                 used when publishing the portlet.
             </description>
         </property>
-        <property name="casValidateUrl" value="https://cas.domain.edu/proxyValidate" >
+        <property name="casValidateUrl" value="${casService.casValidateUrl}" >
             <description>
                 The URL used on the CAS server to validate the ticket passed by 
                 the portal to the portlet.
             </description>
         </property>
-        <property name="proxyCallbackUrl" value="https://portal.domain.edu/esup-example/casProxyCallback" >
+        <property name="proxyCallbackUrl" value="${casService.proxyCallbackUrl}" >
             <description>
                 The callback URL used by the CAS server to pass the PGT to
                 the portlet.
