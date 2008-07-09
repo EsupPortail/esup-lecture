@@ -3,7 +3,9 @@
 <beans 
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
+	
 	>
 
 	<!-- 
@@ -13,6 +15,7 @@
 		This file is referenced by /properties/applicationContext.xml.
 	-->
 
+<!-- 
 	<bean 
 		id="authenticationService"
 		class="org.esupportail.commons.services.authentication.OfflineFixedUserAuthenticator"
@@ -22,8 +25,8 @@
 		</description>
 		<property name="userId" value="admin" />
 	</bean>
+ -->
 
-<!-- 
     <bean 
         id="authenticationService"
         class="org.esupportail.commons.services.authentication.PortalOrCasFilterAuthenticator"
@@ -33,7 +36,6 @@
         </description>
         <property name="uidPortalAttribute" value="uid" />
     </bean>
- -->
 
     <bean 
         id="servletCasService"
@@ -44,6 +46,7 @@
     <bean 
         id="portletCasService"
         class="org.esupportail.commons.services.cas.PortletCasServiceImpl"
+        scope="session"
         >
         <property name="service" value="${casService.service}" >
             <description>
@@ -64,6 +67,7 @@
                 the portlet.
             </description>
         </property>
+        <aop:scoped-proxy/>
     </bean>
 
 </beans>

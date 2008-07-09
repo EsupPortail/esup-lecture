@@ -72,7 +72,7 @@
 		</listener-class>
 	</listener>
 
-<!-- USE_CAS
+<!-- CAS_SERVLET
 	<filter>
 		<description>
 			The CAS filter, used to authenticate users.
@@ -121,7 +121,9 @@
 		<filter-name>CAS Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+  CAS_SERVLET -->   
 	
+<!-- USE_CAS
     <servlet>
         <servlet-name>ProxyTicketReceptor</servlet-name>
         <servlet-class>edu.yale.its.tp.cas.proxy.ProxyTicketReceptor</servlet-class>
@@ -131,7 +133,7 @@
         <servlet-name>ProxyTicketReceptor</servlet-name>
         <url-pattern>/CasProxyServlet</url-pattern>
     </servlet-mapping>
-  USE_CAS -->	
+ USE_CAS -->
 
 <!-- IS_SERVLET
 	<servlet>
