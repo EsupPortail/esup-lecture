@@ -35,6 +35,10 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 * List of items of source.
 	 */
 	private List<ItemWebBean> items;
+	/**
+	 * xmlOrder id used to store the order of the corresponding sourceProfile in an Category XML file.
+	 */
+	private int xmlOrder;
 
 	/**
 	 * Default constructor.
@@ -143,6 +147,18 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 */
 	public void setItemDisplayMode(final ItemDisplayMode itemDisplayMode) {
 		this.itemDisplayMode = itemDisplayMode;
+	}
+	/**
+	 * @return the xmlOrder
+	 */
+	public int getXmlOrder() {
+		return xmlOrder;
+	}
+	/**
+	 * @param xmlOrder the xmlOrder to set
+	 */
+	public void setXmlOrder(final int xmlOrder) {
+		this.xmlOrder = xmlOrder;
 	}
 	
 }

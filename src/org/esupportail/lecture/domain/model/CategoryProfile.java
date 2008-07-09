@@ -25,9 +25,9 @@ public abstract class CategoryProfile implements ElementProfile {
 	 *************************** PROPERTIES *********************************/	
 
 	/**
-	 * Log instance 
+	 * Log instance. 
 	 */
-	protected static final Log log = LogFactory.getLog(CategoryProfile.class); 
+	protected static final Log LOG = LogFactory.getLog(CategoryProfile.class); 
 	/**
 	 *  Category profile name.
 	 *  It is the category name that is used.
@@ -35,20 +35,24 @@ public abstract class CategoryProfile implements ElementProfile {
 	 */
 	private String name = "";
 	/**
-	 *  Category profile id
+	 *  Category profile id.
 	 */
 	private String id;
 	/**
-	 * Category described by this CategoryProfile
+	 * Category described by this CategoryProfile.
 	 */
 	private Category category;
+	/**
+	 * xmlOrder id used to store the order of the categoryProfile in an Context XML file.
+	 */
+	private int xmlOrder;
 	
 	
 	/*
 	 ************************** METHODS *********************************/	
 	
 	/**
-	 * Load the category referenced by this CategoryProfile
+	 * Load the category referenced by this CategoryProfile.
 	 * @param ex
 	 * @throws CategoryTimeOutException 
 	 */
@@ -60,15 +64,15 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @return name
 	 */
 	public String getName(){
-		if (log.isDebugEnabled()){
-			log.debug("id="+id+" - getName()");
+		if (LOG.isDebugEnabled()){
+			LOG.debug("id="+id+" - getName()");
 		}
 		String currentName ;
 		
 		try {
 			currentName = getElement().getName();
 		}catch (CategoryNotLoadedException e) {
-			log.error("Category "+id+" is not loaded");
+			LOG.error("Category "+id+" is not loaded");
 			currentName = this.name;
 		}
 		return currentName;
@@ -79,8 +83,8 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @throws CategoryNotLoadedException
 	 */
 	public String getDescription() throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+id+" - getDescription()");
+		if (LOG.isDebugEnabled()){
+			LOG.debug("id="+id+" - getDescription()");
 		}
 		return getElement().getDescription();
 		
@@ -91,12 +95,12 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @throws CategoryNotLoadedException 
 	 */
 	public Category getElement() throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+id+" - getElement()");
+		if (LOG.isDebugEnabled()){
+			LOG.debug("id="+id+" - getElement()");
 		}
 		if (category==null){
 			String errorMsg = "Category "+id+" is not loaded in profile";
-			log.error(errorMsg);
+			LOG.error(errorMsg);
 			throw new CategoryNotLoadedException(errorMsg);
 		}
 		return category;
@@ -170,5 +174,19 @@ public abstract class CategoryProfile implements ElementProfile {
 	 */
 	public void setElement(final Category category) {
 		this.category = category;
+	}
+
+	/**
+	 * @return the xmlOrder
+	 */
+	public int getXmlOrder() {
+		return xmlOrder;
+	}
+
+	/**
+	 * @param xmlOrder the xmlOrder to set
+	 */
+	public void setXmlOrder(final int xmlOrder) {
+		this.xmlOrder = xmlOrder;
 	}
 }

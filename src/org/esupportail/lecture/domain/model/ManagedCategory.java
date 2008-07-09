@@ -18,7 +18,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 
 
 /**
- * Managed category element : loaded from a remote definition, transfered by an XML file
+ * Managed category element : loaded from a remote definition, transfered by an XML file.
  * A category contains a set of sourceProfiles
  * @author gbouteil
  * @see Category
@@ -32,11 +32,11 @@ public class ManagedCategory extends Category {
 
 
 	/**
-	 * Log instance 
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(ManagedCategory.class);
+	protected static final Log LOG = LogFactory.getLog(ManagedCategory.class);
 	/**
-	 * Visibility sets of this category (if defined)
+	 * Visibility sets of this category (if defined).
 	 * Using depends on trustCategory parameter in 
 	 * ManagedCategoryProfile corresponding 
 	 */
@@ -67,8 +67,8 @@ public class ManagedCategory extends Category {
 	 */
 	protected synchronized void updateCustom(final CustomManagedCategory customManagedCategory,
 			final ExternalService ex) throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()) {
-			log.debug("id = " + this.getProfileId() + " - updateCustom("
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getProfileId() + " - updateCustom("
 					+ customManagedCategory.getElementId() + ",externalService)");
 		}
 		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
@@ -99,8 +99,8 @@ public class ManagedCategory extends Category {
 	protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(
 			final CustomManagedCategory customManagedCategory,
 			final ExternalService ex) throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()) {
-			log.debug("id=" + this.getProfileId() + " - getVisibleSourcesAndUpdateCustom("
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getProfileId() + " - getVisibleSourcesAndUpdateCustom("
 					+ getProfileId() + ",externalService)");
 		}
 		List<ProfileVisibility> couplesVisib = new Vector<ProfileVisibility>();
@@ -147,8 +147,8 @@ public class ManagedCategory extends Category {
 	 * @return true if this managedCategory contains the source identified by sourceId
 	 */
 	public boolean containsSource(final String sourceId) {
-	   	if (log.isDebugEnabled()) {
-    		log.debug("profileId=" + super.getProfileId() + " - containsSource(" + sourceId + ")");
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("profileId=" + super.getProfileId() + " - containsSource(" + sourceId + ")");
     	}
 	   	Hashtable<String, SourceProfile> hashSourceProfile = getSourceProfilesHash();
 	   	

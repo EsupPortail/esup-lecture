@@ -113,11 +113,14 @@ public class FreshManagedCategoryThread extends Thread {
 			// SourceProfiles loop
 			Hashtable<String, SourceProfile> sourceProfiles = new Hashtable<String, SourceProfile>();
 			List<Node> srcProfiles = root.selectNodes("/category/sourceProfiles/sourceProfile");
+			int xmlOrder = 1;
 			for (Node srcProfile : srcProfiles) {
 				ManagedSourceProfile sp = new ManagedSourceProfile(profile);
 				sp.setFileId(srcProfile.valueOf("@id"));
 				sp.setName(srcProfile.valueOf("@name"));
 				sp.setSourceURL(srcProfile.valueOf("@url"));
+				sp.setXmlOrder(xmlOrder);
+				xmlOrder += 1;
 				String timeout = srcProfile.valueOf("@timeout");
 				if (!(timeout.equals(""))) {
 					sp.setTimeOut(Integer.parseInt(timeout));

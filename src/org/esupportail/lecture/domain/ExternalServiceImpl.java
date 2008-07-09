@@ -148,7 +148,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 */
 	public String getUserProxyTicketCAS(final String casTargetService) throws InfoDomainException {
 	    if (LOG.isDebugEnabled()) {
-			LOG.debug("getUserProxyTicketCAS() - not yet implemented");
+			LOG.debug("getUserProxyTicketCAS(" + casTargetService + ")");
 		}
 	    try {
 			return casService.getProxyTicket(casTargetService);

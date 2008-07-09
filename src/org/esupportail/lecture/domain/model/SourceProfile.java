@@ -31,54 +31,57 @@ public abstract class SourceProfile implements ElementProfile {
 	 *************************** PROPERTIES ******************************** */
 	
 	/**
-	 * Log instance 
+	 * Log instance. 
 	 */
 	protected static final Log LOG = LogFactory.getLog(SourceProfile.class);
 
 	/**
-	 * Id of the source profile 
+	 * timeOut to get the remote source.
+	 */
+	protected int timeOut;
+
+	/**
+	 * Id of the source profile. 
 	 * A source profile id is like :
 	 * <type>:<parentId>:<interneId>
 	 */
 	private String id;
 
 	/**
-	 * Name of the source 
+	 * Name of the source. 
 	 */
 	private String name = "";
 
 	/**
-	 * URL of the source 
+	 * URL of the source. 
 	 */
 	private String sourceURL = "";
 
 	/**
-	 * Source associated to this profile
+	 * Source associated to this profile.
 	 */
 	private Source source;
 	
 	/**
-	 * URL of the xslt file 
+	 * URL of the xslt file. 
 	 */
 	private String xsltURL;
 
 	/**
-	 * Xpath of an item 
+	 * Xpath of an item. 
 	 */
 	private String itemXPath;
 	
 	/**
-	 * Ttl of the remote source reloading
+	 * Ttl of the remote source reloading.
 	 */
 	private int ttl;
 	
 	/**
-	 * timeOut to get the remote source
+	 * xmlOrder id used to store the order of the sourceProfile in an Category XML file.
 	 */
-	protected int timeOut;
+	private int xmlOrder;
 	
-
-
 	/*
 	 *************************** INIT	 ******************************** */	
 		
@@ -88,7 +91,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 *************************** METHODS ******************************** */	
 
 	/**
-	 * Load the source referenced by this SourceProfile
+	 * Load the source referenced by this SourceProfile.
 	 * @param ex
 	 * @throws SourceTimeOutException 
 	 * @throws CategoryNotLoadedException 
@@ -275,5 +278,18 @@ public abstract class SourceProfile implements ElementProfile {
 	public abstract void setTimeOut(int timeOut);
 
 
+	/**
+	 * @return the xmlOrder
+	 */
+	public int getXmlOrder() {
+		return xmlOrder;
+	}
+
+	/**
+	 * @param xmlOrder the xmlOrder to set
+	 */
+	public void setXmlOrder(final int xmlOrder) {
+		this.xmlOrder = xmlOrder;
+	}
 
 }

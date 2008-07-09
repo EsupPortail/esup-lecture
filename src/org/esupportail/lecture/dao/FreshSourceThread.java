@@ -131,9 +131,7 @@ public class FreshSourceThread extends Thread {
 			ret.setXmlStream(xml);
 			ret.setXmlType(xmltype);
 			ret.setUrl(sourceURL);
-			// TODO (RB <-- GB) Pourquoi as tu commenté ces deux lignes ?
-			//			ret.setItemXPath(sourceProfile.getItemXPath());
-			//			ret.setXsltURL(sourceProfile.getXsltURL());
+			ret.setXmlOrder(sourceProfile.getXmlOrder());
 		} catch (DocumentException e) {
 			String msg = "getSource with url=" 
 				+ sourceProfile.getSourceURL() + ". Is it a valid XML Source ?";
