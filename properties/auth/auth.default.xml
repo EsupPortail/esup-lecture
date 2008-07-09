@@ -43,7 +43,7 @@
                 used when publishing the portlet.
             </description>
         </property>
-        <property name="casValidateUrl" value="${casService.casValidateUrl}" >
+        <property name="casValidateUrl" value="${casService.url}/proxyValidate" >
             <description>
                 The URL used on the CAS server to validate the ticket passed by 
                 the portal to the portlet.

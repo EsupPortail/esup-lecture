@@ -1,6 +1,7 @@
 <project name="esup-lecture" default="compile" basedir=".">
 
 	<property name="recover.previous-versions" value="1.0.0,0.9.1,0.9.0,0.8.3,0.8.2,0.8.1,0.8.0" />
+    <property file="properties/config.properties"/>
 	<property name="app.recover.files"
 		value="
 		properties/init/init.xml
@@ -134,19 +135,19 @@
                            replace="" />
                 <replace file="${deploy.home}/WEB-INF/web.xml" 
                     token="[CAS_URL]" 
-                    value="${cas.url}" />
+                    value="${casService.url}" />
                 <if>
                     <not>
-                        <isset property="cas.proxy.servlet.url" />
+                        <isset property="casService.proxyCallbackUrl" />
                     </not>
                     <then>
-                        <property name="cas.proxy.servlet.url" value="https://localhost:8080/esup-lecture/CasProxyServlet" />
-                        <echo>cas.proxy.servlet.url is not set, defaults to ${cas.proxy.servlet.url}.</echo>
+                        <property name="casService.proxyCallbackUrl" value="https://localhost:8080/esup-lecture/CasProxyServlet" />
+                        <echo>casService.proxyCallbackUrl is not set, defaults to ${casService.proxyCallbackUrl}.</echo>
                     </then>
                 </if>
                 <replace file="${deploy.home}/WEB-INF/web.xml"
-                    token="[CAS_PROXY_SERVLET_URL]" 
-                    value="${cas.proxy.servlet.url}" />
+                    token="[CAS_PROXY_CALLBACK_URL]" 
+                    value="${casService.proxyCallbackUrl}" />
             </then>
         </if>
 	</target>

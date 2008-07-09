@@ -114,7 +114,7 @@
             <param-name>
                 edu.yale.its.tp.cas.client.filter.proxyCallbackUrl
             </param-name>
-            <param-value>[CAS_PROXY_SERVLET_URL]</param-value>
+            <param-value>[CAS_PROXY_CALLBACK_URL]</param-value>
         </init-param>
 	</filter>
 	<filter-mapping>
