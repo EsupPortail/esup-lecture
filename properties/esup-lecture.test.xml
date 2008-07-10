@@ -13,7 +13,8 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 ]]>
 		</description>
 		<refCategoryProfile refId="liens" />
-		<refCategoryProfile refId="rss" />
+        <refCategoryProfile refId="rss" />
+        <refCategoryProfile refId="news" />
 	</context>
 
 	<context 
@@ -42,19 +43,35 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 		</visibility>
 	</categoryProfile>
 
-	<categoryProfile name="Les rss utiles au CRI" id="rss"
-		urlCategory="&repConf;rss.xml"
-		trustCategory="yes" access="public" ttl="3600" timeout="3000">
-		<visibility>
-			<allowed />
-			<autoSubscribed />
-			<obliged>
-				<regular attribute="uid" value="admin"/>
-				<regular attribute="uid" value="bourges"/>
-				<group name="pags.PERS_957" />
-			</obliged>
-		</visibility>
-	</categoryProfile>
+    <categoryProfile name="Les rss utiles au CRI" id="rss"
+        urlCategory="&repConf;rss.xml"
+        trustCategory="yes" access="public" ttl="3600" timeout="3000">
+        <visibility>
+            <allowed />
+            <autoSubscribed />
+            <obliged>
+                <regular attribute="uid" value="admin"/>
+                <regular attribute="uid" value="bourges"/>
+                <group name="pags.PERS_957" />
+            </obliged>
+        </visibility>
+    </categoryProfile>
+
+    <categoryProfile name="Les rss du portlet news" id="news"
+        urlCategory="http://ent-test.univ-rennes1.fr/newsPortlet/feeds/pub/rss?t=3&amp;cID=2"
+        trustCategory="yes" access="public" ttl="3600" timeout="3000">
+        <visibility>
+            <allowed />
+            <autoSubscribed />
+            <obliged>
+        <!-- 
+                <regular attribute="uid" value="admin"/>
+                <regular attribute="uid" value="bourges"/>
+                <group name="pags.PERS_957" />
+         -->
+            </obliged>
+        </visibility>
+    </categoryProfile>
 
 	<categoryProfile 
 		name="Categorie de démo 2"

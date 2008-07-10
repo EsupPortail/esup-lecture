@@ -70,7 +70,7 @@ public class ServletService implements ModeService, InitializingBean {
 		if (name.equals(DomainTools.CONTEXT)) {
 			ret = "default";
 		}
-		return name;
+		return ret;
 	}
 
 	/**
