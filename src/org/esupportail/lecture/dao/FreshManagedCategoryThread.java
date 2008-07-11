@@ -2,8 +2,11 @@ package org.esupportail.lecture.dao;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -112,14 +115,17 @@ public class FreshManagedCategoryThread extends Thread {
 			ret.setProfileId(profile.getId());
 			// SourceProfiles loop
 			Hashtable<String, SourceProfile> sourceProfiles = new Hashtable<String, SourceProfile>();
+			Map<String, Integer> orderedSourceIDs = Collections.synchronizedMap(new HashMap<String, Integer>());
 			List<Node> srcProfiles = root.selectNodes("/category/sourceProfiles/sourceProfile");
 			int xmlOrder = 1;
 			for (Node srcProfile : srcProfiles) {
 				ManagedSourceProfile sp = new ManagedSourceProfile(profile);
-				sp.setFileId(srcProfile.valueOf("@id"));
+				String srcProfileID = srcProfile.valueOf("@id");
+				sp.setFileId(srcProfileID);
 				sp.setName(srcProfile.valueOf("@name"));
 				sp.setSourceURL(srcProfile.valueOf("@url"));
-				sp.setXmlOrder(xmlOrder);
+				//use of caculated sp.getId() as key for orderedSourceIDs
+				orderedSourceIDs.put(sp.getId(), xmlOrder);
 				xmlOrder += 1;
 				String timeout = srcProfile.valueOf("@timeout");
 				if (!(timeout.equals(""))) {
@@ -171,6 +177,7 @@ public class FreshManagedCategoryThread extends Thread {
 				sourceProfiles.put(sp.getId(), sp);				
 			}
 			ret.setSourceProfilesHash(sourceProfiles);
+			ret.setOrderedSourceIDs(orderedSourceIDs);
 			// Category visibility
 			VisibilitySets visibilitySets = new VisibilitySets();  
 			// foreach (allowed / autoSubscribed / Obliged)

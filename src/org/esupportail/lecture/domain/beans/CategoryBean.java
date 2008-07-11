@@ -5,6 +5,10 @@
 */
 package org.esupportail.lecture.domain.beans;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.CategoryProfile;
 import org.esupportail.lecture.domain.model.CustomCategory;
@@ -48,6 +52,10 @@ public class CategoryBean {
 	 * "owner" --> For personal categories
 	 */
 	private AvailabilityMode type;
+	/**
+	 * orderedSourceIDs store SourceID and ordering order in the CategoryProfile definition.
+	 */
+	private Map<String, Integer> orderedSourceIDs = Collections.synchronizedMap(new HashMap<String, Integer>());	
 	
 	/*
 	 *************************** INIT ************************************** */	
@@ -69,11 +77,11 @@ public class CategoryBean {
 	public CategoryBean(final CustomCategory customCategory, final CustomContext customContext) 
 			throws CategoryProfileNotFoundException, CategoryNotLoadedException {
 		CategoryProfile profile = customCategory.getProfile();
-		
 		this.name = profile.getName();
 		this.description = profile.getDescription();
 		this.id = profile.getId();
 		this.folded = customContext.isCategoryFolded(id);
+		this.orderedSourceIDs = profile.getElement().getOrderedSourceIDs();
 	}
 	
 	/**
@@ -95,7 +103,6 @@ public class CategoryBean {
 	 * @return description of the category
 	 * @throws ElementDummyBeanException 
 	 */
-	@SuppressWarnings("unused")
 	public String getDescription() throws ElementDummyBeanException {
 		return description;
 	}
@@ -103,7 +110,6 @@ public class CategoryBean {
 	 * @param description description of the category
 	 * @throws ElementDummyBeanException 
 	 */
-	@SuppressWarnings("unused")
 	public void setDescription(final String description) throws ElementDummyBeanException {
 		this.description = description;
 	}
@@ -111,7 +117,6 @@ public class CategoryBean {
 	 * @return if category is folded or not
 	 * @throws ElementDummyBeanException 
 	 */
-	@SuppressWarnings("unused")
 	public boolean isFolded() throws ElementDummyBeanException {
 		return folded;
 	}
@@ -119,7 +124,6 @@ public class CategoryBean {
 	 * @param folded
 	 * @throws ElementDummyBeanException 
 	 */
-	@SuppressWarnings("unused")
 	public void setFolded(final boolean folded) throws ElementDummyBeanException {
 		this.folded = folded;
 	}
@@ -127,7 +131,6 @@ public class CategoryBean {
 	 * @return id of category
 	 * @throws ElementDummyBeanException 
 	 */
-	@SuppressWarnings("unused")
 	public String getId() throws ElementDummyBeanException {
 		return id;
 	}
@@ -135,7 +138,6 @@ public class CategoryBean {
 	 * @param id
 	 * @throws ElementDummyBeanException 
 	 */
-	@SuppressWarnings("unused")
 	public void setId(final String id) throws ElementDummyBeanException {
 		this.id = id;
 	}
@@ -143,7 +145,6 @@ public class CategoryBean {
 	 * @return name of category
 	 * @throws ElementDummyBeanException 
 	 */
-	@SuppressWarnings("unused")
 	public String getName() throws ElementDummyBeanException {
 		return name;
 	}
@@ -151,7 +152,6 @@ public class CategoryBean {
 	 * @param name
 	 * @throws ElementDummyBeanException 
 	 */
-	@SuppressWarnings("unused")
 	public void setName(final String name) throws ElementDummyBeanException {
 		this.name = name;
 	}
@@ -160,7 +160,6 @@ public class CategoryBean {
 	 * @return type of category
 	 * @throws ElementDummyBeanException 
 	 */
-	@SuppressWarnings("unused")
 	public AvailabilityMode getType()  throws ElementDummyBeanException {
 		return type;
 	}
@@ -169,7 +168,6 @@ public class CategoryBean {
 	 * @param type
 	 * @throws ElementDummyBeanException 
 	 */
-	@SuppressWarnings("unused")
 	public void setType(final AvailabilityMode type) throws ElementDummyBeanException {
 		this.type = type;
 	}
@@ -177,6 +175,18 @@ public class CategoryBean {
 	/*
 	 *************************** METHODS *********************************** */	
 
+	/**
+	 * @param sourceID - the ID of source to find
+	 * @return the XML order in of the source the CategoryProfile definition
+	 */
+	public int getXMLOrder(final String sourceID) {
+		Integer ret = orderedSourceIDs.get(sourceID);
+		if (ret == null) {
+			ret = Integer.MAX_VALUE;
+		}
+		return ret;
+	}
+	
 	/**
 	 * @see java.lang.Object#toString()
 	 */

@@ -5,6 +5,10 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
@@ -42,11 +46,6 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * Category described by this CategoryProfile.
 	 */
 	private Category category;
-	/**
-	 * xmlOrder id used to store the order of the categoryProfile in an Context XML file.
-	 */
-	private int xmlOrder;
-	
 	
 	/*
 	 ************************** METHODS *********************************/	
@@ -176,17 +175,4 @@ public abstract class CategoryProfile implements ElementProfile {
 		this.category = category;
 	}
 
-	/**
-	 * @return the xmlOrder
-	 */
-	public int getXmlOrder() {
-		return xmlOrder;
-	}
-
-	/**
-	 * @param xmlOrder the xmlOrder to set
-	 */
-	public void setXmlOrder(final int xmlOrder) {
-		this.xmlOrder = xmlOrder;
-	}
 }

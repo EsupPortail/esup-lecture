@@ -38,7 +38,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	/**
 	 * xmlOrder id used to store the order of the corresponding sourceProfile in an Category XML file.
 	 */
-	private int xmlOrder;
+	private int xmlOrder = Integer.MAX_VALUE;
 
 	/**
 	 * Default constructor.
@@ -132,7 +132,8 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(final SourceWebBean o) {
-		return name.compareTo(o.name);
+		int ret = xmlOrder - o.getXmlOrder();
+		return ret;
 	}
 	
 	/**

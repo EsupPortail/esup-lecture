@@ -25,6 +25,7 @@ import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
+import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
@@ -274,6 +275,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 							while (iter2.hasNext()) {
 								SourceBean sourceBean = iter2.next();
 								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean);
+								//we add the source order in the Category XML definition file
+								int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
+								sourceWebBean.setXmlOrder(xmlOrder);
 								sourcesWeb.add(sourceWebBean);
 							}
 						}

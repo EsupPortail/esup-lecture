@@ -45,10 +45,6 @@ public class SourceBean {
 	 * the item display mode of the source.
 	 */
 	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.ALL;
-	/**
-	 * xmlOrder id used to store the order of the corresponding sourceProfile in an Category XML file.
-	 */
-	private int xmlOrder;
 
 	/*
 	 *************************** INIT ************************************** */	
@@ -181,21 +177,4 @@ public class SourceBean {
 		return string;
 	}
 
-	/**
-	 * @return the xmlOrder
-	 */
-	public int getXmlOrder() {
-		return xmlOrder;
-	}
-
-	/**
-	 * @param xmlOrder the xmlOrder to set
-	 */
-	public void setXmlOrder(final int xmlOrder) {
-		this.xmlOrder = xmlOrder;
-	}
-
-
-	
-	
 }

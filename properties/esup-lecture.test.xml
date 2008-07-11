@@ -59,7 +59,7 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 
     <categoryProfile name="Les rss du portlet news" id="news"
         urlCategory="http://ent-test.univ-rennes1.fr/newsPortlet/feeds/pub/rss?t=3&amp;cID=2"
-        trustCategory="yes" access="public" ttl="3600" timeout="3000">
+        trustCategory="yes" access="cas" ttl="3600" timeout="3000">
         <visibility>
             <allowed />
             <autoSubscribed />

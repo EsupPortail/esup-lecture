@@ -5,7 +5,10 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,28 +27,32 @@ public abstract class Category implements Element,Serializable {
 	 *************************** PROPERTIES *********************************/	
 
 	/**
-	 * Log instance
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(Category.class);
+	protected static final Log LOG = LogFactory.getLog(Category.class);
 	/**
-	 * Name of the category 
+	 * Name of the category. 
 	 */
 	private String name = "";
 	/**
-	 * Description of the category
+	 * Description of the category.
 	 */
 	private String description = "";
 	/**
-	 * Id of the categoryProfil
+	 * Id of the categoryProfil.
 	 */
 	private String profileId;
 	
 	/**
-	 * SourcesProfiles contained by this Category
+	 * SourcesProfiles contained by this Category.
 	 */
 	private Hashtable<String,SourceProfile> sourceProfilesHash = new Hashtable<String,SourceProfile>();
-	
 
+	/**
+	 * orderedSourceIDs store SourceID and ordering order in the CategoryProfile definition.
+	 */
+	private Map<String, Integer> orderedSourceIDs = Collections.synchronizedMap(new HashMap<String, Integer>());	
+	
 	/*
 	 *************************** INIT *********************************/
 	
@@ -55,19 +62,19 @@ public abstract class Category implements Element,Serializable {
 	
 	
 	/**
-	 * Returns the sourceProfile identified by id, defined in this Category
+	 * Returns the sourceProfile identified by id, defined in this Category.
 	 * @param id id oh the sourceProfile
 	 * @return the sourceProfile
 	 * @throws SourceProfileNotFoundException 
 	 */
-	protected SourceProfile getSourceProfileById(String id) throws SourceProfileNotFoundException{
-		if (log.isDebugEnabled()){
-			log.debug("getSourceProfileById("+id+")");
+	protected SourceProfile getSourceProfileById(final String id) throws SourceProfileNotFoundException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getSourceProfileById(" + id + ")");
 		}
 		SourceProfile profile = sourceProfilesHash.get(id);
-		if (profile==null){
-			String errorMsg = "SourceProfile "+id+" is not found in Category "+this.profileId;
-			log.error(errorMsg);
+		if (profile == null) {
+			String errorMsg = "SourceProfile " + id + " is not found in Category " + this.profileId;
+			LOG.error(errorMsg);
 			throw new SourceProfileNotFoundException(errorMsg);
 		}
 		return profile;
@@ -85,7 +92,6 @@ public abstract class Category implements Element,Serializable {
 	 * @return Returns the sourceProfilesHash of this category
 	 */
 	protected Hashtable<String,SourceProfile> getSourceProfilesHash() {
-	
 		return sourceProfilesHash;
 	}
 
@@ -93,13 +99,13 @@ public abstract class Category implements Element,Serializable {
 	/**
 	 * @param sourceProfilesHash to set.
 	 */
-	public void setSourceProfilesHash(Hashtable<String,SourceProfile> sourceProfilesHash) {
+	public void setSourceProfilesHash(final Hashtable<String,SourceProfile> sourceProfilesHash) {
 		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.sourceProfilesHash = sourceProfilesHash;
 	}
 	
 	/**
-	 * Returns the name of the category
+	 * Returns the name of the category.
 	 * @return name
 	 * @see Category#name
 	 */
@@ -158,4 +164,17 @@ public abstract class Category implements Element,Serializable {
 		this.profileId = profileId;
 	}
 
+	/**
+	 * @return the orderedSourceIDs
+	 */
+	public Map<String, Integer> getOrderedSourceIDs() {
+		return orderedSourceIDs;
+	}
+
+	/**
+	 * @param orderedSourceIDs the orderedSourceIDs to set
+	 */
+	public void setOrderedSourceIDs(final Map<String, Integer> orderedSourceIDs) {
+		this.orderedSourceIDs = orderedSourceIDs;
+	}
 }

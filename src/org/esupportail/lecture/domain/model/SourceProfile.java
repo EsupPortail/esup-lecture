@@ -77,11 +77,6 @@ public abstract class SourceProfile implements ElementProfile {
 	 */
 	private int ttl;
 	
-	/**
-	 * xmlOrder id used to store the order of the sourceProfile in an Category XML file.
-	 */
-	private int xmlOrder;
-	
 	/*
 	 *************************** INIT	 ******************************** */	
 		
@@ -276,20 +271,5 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @param timeOut
 	 */
 	public abstract void setTimeOut(int timeOut);
-
-
-	/**
-	 * @return the xmlOrder
-	 */
-	public int getXmlOrder() {
-		return xmlOrder;
-	}
-
-	/**
-	 * @param xmlOrder the xmlOrder to set
-	 */
-	public void setXmlOrder(final int xmlOrder) {
-		this.xmlOrder = xmlOrder;
-	}
 
 }

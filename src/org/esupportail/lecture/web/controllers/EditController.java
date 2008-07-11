@@ -5,6 +5,7 @@
  */
 package org.esupportail.lecture.web.controllers;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -154,7 +155,8 @@ public class EditController extends TwoPanesController {
 	 */
 	public List<SourceWebBean> getVisibleSources() {
 		CategoryWebBean categoryBean = getSelectedCat();
-		return categoryBean.getSources();
+		List<SourceWebBean> ret = categoryBean.getSources();
+		return ret;
 	}
 
 	/**

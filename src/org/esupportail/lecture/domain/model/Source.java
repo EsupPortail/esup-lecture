@@ -122,12 +122,6 @@ public abstract class Source implements Element, Serializable {
 	 */
 	private List<Item> Items = new ArrayList<Item>();
 	
-	/**
-	 * xmlOrder id used to store the order of the corresponding sourceProfile in an Category XML file.
-	 */
-	private int xmlOrder;
-	
-	
 	/*
 	 *************************** INIT ******************************** */	
 		
@@ -481,21 +475,5 @@ public abstract class Source implements Element, Serializable {
 	public void setUrl(final String url) {
 		this.url = url;
 	}
-
-	/**
-	 * @return the xmlOrder
-	 */
-	public int getXmlOrder() {
-		return xmlOrder;
-	}
-
-	/**
-	 * @param xmlOrder the xmlOrder to set
-	 */
-	public void setXmlOrder(final int xmlOrder) {
-		this.xmlOrder = xmlOrder;
-	}
-
-
 
 }
