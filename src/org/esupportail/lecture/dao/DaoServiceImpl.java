@@ -48,7 +48,7 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	 * @throws TimeoutException 
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile)
 	 */
-	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws TimeoutException {
+	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InfoDaoException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getManagedCategory");
 		}
@@ -56,14 +56,13 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	}
 
 	/**
+	 * @throws InfoDaoException 
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile, java.lang.String)
 	 */
 	public ManagedCategory getManagedCategory(@SuppressWarnings("unused")
 			final ManagedCategoryProfile profile,
-			@SuppressWarnings("unused")
-			final String ptCas) {
-		// TODO (RB) manage category and CAS
-		return null;
+			final String ptCas) throws InfoDaoException {
+		return remoteXMLService.getManagedCategory(profile, ptCas);
 	}
 
 	/**
@@ -81,7 +80,6 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	 */
 	public Source getSource(final ManagedSourceProfile profile,
 			final String ptCas) throws InfoDaoException {
-		String user = authenticationService.getCurrentUserId();			
 		return remoteXMLService.getSource(profile, ptCas);
 	}
 

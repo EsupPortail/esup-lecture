@@ -14,6 +14,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
@@ -150,25 +151,24 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		if (Accessibility.PUBLIC.equals(accessibility)) {
 			try {
 				setElement(DomainTools.getDaoService().getManagedCategory(this));
-			} catch (TimeoutException e) {
+			} catch (InfoDaoException e) {
 				String errorMsg = "The managedCategory " + this.getId()
-					+ " is impossible to load because of a TimeoutException";
-				LOG.error(errorMsg);
-				throw new CategoryTimeOutException(errorMsg, e);
-			}
-						
-		} else if (Accessibility.CAS.equals(accessibility)) {
-			URL url;
-			try {
-				url = new URL(getUrlCategory());
-			} catch (MalformedURLException e) {
-				String errorMsg = "Impossible to load category with ID: " + this.getId();
+					+ " is impossible to load.";
 				LOG.error(errorMsg);
 				throw new InfoDomainException(errorMsg, e);
 			}
-			String casTargetService = url.getProtocol() + "://" + url.getHost();
-			String ptCas = ex.getUserProxyTicketCAS(casTargetService);
-			setElement(DomainTools.getDaoService().getManagedCategory(this, ptCas));
+						
+		} else if (Accessibility.CAS.equals(accessibility)) {
+			String url = getUrlCategory();
+			String ptCas = ex.getUserProxyTicketCAS(url);
+			try {
+				setElement(DomainTools.getDaoService().getManagedCategory(this, ptCas));
+			} catch (InfoDaoException e) {
+				String errorMsg = "The managedCategory " + this.getId()
+				+ " is impossible to load.";
+				LOG.error(errorMsg);
+				throw new InfoDomainException(errorMsg, e);
+			}
 		}
 	}
 	

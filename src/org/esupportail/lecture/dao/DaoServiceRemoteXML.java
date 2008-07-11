@@ -6,7 +6,6 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.utils.Assert;
@@ -69,12 +68,15 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	private Cache cache;
 
 	/**
-	 * @param profile 
-	 * @return a managedCategory
+	 * get a Category form cache.
+	 * @param profile - Category profile of category to get
+	 * @param ptCas CAS proxy ticket 
+	 * @return the Category
 	 * @throws TimeoutException 
-	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(ManagedCategoryProfile)
+	 * @throws InfoDaoException 
 	 */
-	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws TimeoutException {
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile,
+			String ptCas) throws InfoDaoException {
 
 		/* *************************************
 		 * Cache logic :
@@ -114,7 +116,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 				if (element == null) { 
 					// not in cache !
 					// creds parameter at null because it not specified to use CAS for Category
-					ret = getFreshManagedCategory(profile, null);
+					ret = getFreshManagedCategory(profile, ptCas);
 					cache.put(new Element(cacheKey, ret));
 					managedCategoryLastAccess.put(cacheKey, currentTimeMillis);
 					if (LOG.isWarnEnabled()) {
@@ -125,16 +127,26 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					ret = (ManagedCategory) element.getObjectValue();
 				}
 			} else {
-				ret = getFreshManagedCategory(profile, null);
+				ret = getFreshManagedCategory(profile, ptCas);
 				cache.put(new Element(cacheKey, ret));
 				managedCategoryLastAccess.put(cacheKey, currentTimeMillis);
 			}
 		} else {
-			ret = getFreshManagedCategory(profile, null);
+			ret = getFreshManagedCategory(profile, ptCas);
 			cache.put(new Element(cacheKey, ret));
 			managedCategoryLastAccess.put(cacheKey, currentTimeMillis);
 		}
 		return ret;
+	}
+
+	/**
+	 * @param profile 
+	 * @return a managedCategory
+	 * @throws TimeoutException 
+	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(ManagedCategoryProfile)
+	 */
+	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InfoDaoException {
+		return getManagedCategory(profile, null);
 	}
 	
 	/**

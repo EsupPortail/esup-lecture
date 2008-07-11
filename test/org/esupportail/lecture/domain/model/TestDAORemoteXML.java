@@ -11,6 +11,7 @@ import java.util.Hashtable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.dao.DaoService;
+import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.core.io.ClassPathResource;
@@ -28,7 +29,7 @@ public class TestDAORemoteXML {
 	 * @param args non argumet needed
 	 * @throws TimeoutException 
 	 */
-	public static void main(String[] args) throws TimeoutException {
+	public static void main(String[] args) throws InfoDaoException {
 
 		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);

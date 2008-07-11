@@ -28,15 +28,16 @@ public interface DaoService {
 	 * @return the managedCategory
 	 * @throws TimeoutException 
 	 */
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws TimeoutException;
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws InfoDaoException;
 
 	/**
 	 * Get a managed category from a remote place
 	 * @param profile of the category to get
 	 * @param ptCas proxy ticket CAS used in case of CAS protected source
 	 * @return the managedCategory
+	 * @throws TimeoutException 
 	 */
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile,String ptCas);
+	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile,String ptCas) throws InfoDaoException;
 
 	/**
 	 * get a source from a remote place
