@@ -16,6 +16,7 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
@@ -239,10 +240,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param customManagedCategory customManagedCategory to update
 	 * @param ex access to external service for visibility evaluation
 	 * @throws CategoryNotLoadedException
+	 * @throws CategoryProfileNotFoundException 
 	 */
 	protected void updateCustom(final CustomManagedCategory customManagedCategory,
 			final ExternalService ex) 
-		throws CategoryNotLoadedException {
+		throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustom(" + customManagedCategory.getElementId()
 					+ ",externalService)");
@@ -261,11 +263,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param ex access to externalService
 	 * @return list of <ProfileVisibility>
 	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryProfileNotFoundException 
 	 * @see ManagedCategoryProfile#updateCustom(CustomManagedCategory, ExternalService)
 	 */
 	protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(
 			final CustomManagedCategory customManagedCategory, final ExternalService ex) 
-		throws CategoryNotLoadedException {
+		throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - getVisibleSourcesAndUpdateCustom("
 					+ this.getId() + ",externalService)");

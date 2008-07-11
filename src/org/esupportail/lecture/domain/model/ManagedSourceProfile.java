@@ -12,6 +12,7 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 
 
@@ -102,17 +103,17 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @param ex access to externalService
 	 * @return true if the source is visible by the userProfile
 	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryProfileNotFoundException 
 	 */
 	public VisibilityMode updateCustomCategory(
 			final CustomManagedCategory customManagedCategory, final ExternalService ex) 
-		throws CategoryNotLoadedException {
+		throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustomCategory("
 					+ customManagedCategory.getElementId() + "externalService)");
 		}
 		// no loadSource(ex) is needed here
-		return setUpCustomCategoryVisibility(customManagedCategory, ex);
-		
+		return setUpCustomCategoryVisibility(customManagedCategory, ex);	
 	}
 
 	
@@ -203,11 +204,12 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @param customManagedCategory customManagedCategory to set up
 	 * @return true if sourceProfile is visible by user (in Obliged or in autoSubscribed, or in Allowed)
 	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryProfileNotFoundException 
 	 */
 	
 	private VisibilityMode setUpCustomCategoryVisibility(
 			final CustomManagedCategory customManagedCategory,
-			final ExternalService ex) throws CategoryNotLoadedException {
+			final ExternalService ex) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - setUpCustomCategoryVisibility(" 
 					+ customManagedCategory.getElementId() + ",externalService)");
@@ -219,9 +221,23 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		 * user app. autoSub => enregistrer la source dans le user profile si c'est la première fois + sortir
 		 * user app.allowed => rien à faire + sortir
 		 * user n'app. rien => effacer la custom source .
+		 * 
+		 * RB : En plus on doit vérifier si la Source a une visibilité. 
+		 * Si ce n'est pas le cas on regarde ce qui est au niveau de la catégorie afin de le prendre comme valeur par défaut. 
 		 */
 		
-		VisibilityMode mode = getVisibility().whichVisibility(ex);
+		// get visibilitySets of the current sourceProfile
+		VisibilitySets visibilitySets = getVisibility();
+		
+		VisibilityMode mode = VisibilityMode.NOVISIBLE;
+		//if visibilitySets is NOT defined on sourceProfile
+		if (visibilitySets.isEmpty()) {
+			//we get, as default, the VisibilityMode from the CategoryProfile containing the sourceProfile.
+			//Please note that in case of CategoryProfile with TrustedCategory=yes attribute then the 
+			//visibilitySets of CategoryProfile was replaced by the CategoryProfile of the trusted Category.
+			visibilitySets = customManagedCategory.getProfile().getVisibility();
+		} 
+		mode = visibilitySets.whichVisibility(ex);
 		
 		if (mode == VisibilityMode.OBLIGED) {
 			if (LOG.isTraceEnabled()) {

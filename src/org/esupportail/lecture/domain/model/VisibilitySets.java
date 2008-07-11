@@ -11,7 +11,7 @@ import org.esupportail.lecture.domain.ExternalService;
 
 
 /**
- * Visibility sets for managed categories and managed sources 
+ * Visibility sets for managed categories and managed sources. 
  * @author gbouteil
  *
  */
@@ -20,19 +20,19 @@ public class VisibilitySets {
 	/*
 	 *************************** PROPERTIES ******************************** */	
 	/**
-	 * Log instance 
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(VisibilitySets.class);
+	protected static final Log LOG = LogFactory.getLog(VisibilitySets.class);
 	/**
-	 * Group of allowed users to subscribe to element
+	 * Group of allowed users to subscribe to element.
 	 */
 	private DefinitionSets allowed = new DefinitionSets();
 	/**
-	 * Group of autoSubribed users to element (subscribed automatically, unsubscription possible)
+	 * Group of autoSubribed users to element (subscribed automatically, unsubscription possible).
 	 */
 	private DefinitionSets autoSubscribed = new DefinitionSets();
 	/**
-	 * Group of obliged users (no unsubscription possible) 
+	 * Group of obliged users (no unsubscription possible).
 	 */
 	private DefinitionSets obliged = new DefinitionSets();
 
@@ -44,7 +44,7 @@ public class VisibilitySets {
 	 ************************** METHODS ********************************** */	
 	
 	/**
-	 * Check existence of group names, attributes names used in group definition
+	 * Check existence of group names, attributes names used in group definition.
 	 * Not used for the moment : see later
 	 * Not ready to use without modification
 	 * @deprecated
@@ -52,8 +52,8 @@ public class VisibilitySets {
 	@SuppressWarnings("deprecation")
 	@Deprecated
 	synchronized protected void checkNamesExistence(){
-	   	if (log.isDebugEnabled()){
-    		log.debug("checkNamesExistence()");
+	   	if (LOG.isDebugEnabled()){
+    		LOG.debug("checkNamesExistence()");
     	}
 		allowed.checkNamesExistence();
 		obliged.checkNamesExistence();
@@ -62,28 +62,28 @@ public class VisibilitySets {
 	
 	
 	/**
-	 * Return the visibility mode for current user (user connected to externalService)
+	 * Return the visibility mode for current user (user connected to externalService).
 	 * @param ex externalService
 	 * @return visibilityMode 
 	 */
-	synchronized protected VisibilityMode whichVisibility(ExternalService ex){
+	synchronized protected VisibilityMode whichVisibility(final ExternalService ex){
 		
 		VisibilityMode mode = VisibilityMode.NOVISIBLE;
 		
 		boolean isVisible = false;
 		
 		isVisible = obliged.evaluateVisibility(ex);
-		if (isVisible){
+		if (isVisible) {
 			mode = VisibilityMode.OBLIGED;
 		
 		} else {
 			isVisible = autoSubscribed.evaluateVisibility(ex);
-			if (isVisible){
+			if (isVisible) {
 				mode = VisibilityMode.AUTOSUBSCRIBED;
 			
 			} else {
 				isVisible = allowed.evaluateVisibility(ex);
-				if (isVisible){
+				if (isVisible) {
 					mode = VisibilityMode.ALLOWED;
 				} else {
 					mode = VisibilityMode.NOVISIBLE;
@@ -99,12 +99,12 @@ public class VisibilitySets {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		
-		String string ="";
-		string += "	   allowed : "+"\n"+ allowed.toString();
-		string += "           autoSubscribed : "+"\n"+ autoSubscribed.toString()+"\n";
-		string += "           obliged : "+"\n"+ obliged.toString()+"\n";
+		String string = "";
+		string += "	   allowed : " + "\n" + allowed.toString();
+		string += "           autoSubscribed : " + "\n" + autoSubscribed.toString() + "\n";
+		string += "           obliged : " + "\n" +  obliged.toString() + "\n";
 		
 		return string;
 	}
@@ -114,41 +114,43 @@ public class VisibilitySets {
 	 *************************** ACCESSORS ******************************** */	
 
 	/**
-	 * Returns allowed group visibility
+	 * Returns allowed group visibility.
 	 * @return allowed
 	 * @see VisibilitySets#allowed
 	 */
 	public DefinitionSets getAllowed() {
 		return allowed;
 	}
+	
 	/**
-	 * Sets allowed group visibility
+	 * Sets allowed group visibility.
 	 * @param allowed
 	 * @see VisibilitySets#allowed
 	 */
-	synchronized public void setAllowed(DefinitionSets allowed) {
+	public void setAllowed(final DefinitionSets allowed) {
 		this.allowed = allowed;
 	}
 
 	/**
-	 * Returns autoSubscribed group visibility
+	 * Returns autoSubscribed group visibility.
 	 * @return autoSubscribed
 	 * @see VisibilitySets#autoSubscribed
 	 */
 	public DefinitionSets getAutoSubscribed() {
 		return autoSubscribed;
 	}
+	
 	/**
-	 * Sets autoSubscribed group visibility
+	 * Sets autoSubscribed group visibility.
 	 * @param autoSubscribed
 	 * @see VisibilitySets#autoSubscribed
 	 */
-	synchronized public void setAutoSubscribed(DefinitionSets autoSubscribed) {
+	public void setAutoSubscribed(final DefinitionSets autoSubscribed) {
 		this.autoSubscribed = autoSubscribed;
 	}
 
 	/**
-	 * Returns obliged group visibility
+	 * Returns obliged group visibility.
 	 * @return obliged
 	 * @see VisibilitySets#obliged
 	 */
@@ -157,13 +159,23 @@ public class VisibilitySets {
 	}
 	
 	/**
-	 * Sets obliged group visibility
+	 * Sets obliged group visibility.
 	 * @param obliged
 	 * @see VisibilitySets#obliged
 	 */
-	synchronized public void setObliged(DefinitionSets obliged) {
+	 public void setObliged(final DefinitionSets obliged) {
 		this.obliged = obliged;
 	}
 
-	
+	 /**
+	  * @return if VisibilitySets is Empty or not
+	  */
+	 public boolean isEmpty() {
+		 boolean ret = false;
+		 if (allowed.isEmpty() && obliged.isEmpty() && autoSubscribed.isEmpty()) {
+			 ret = true;
+		 }
+		 return ret;
+	 }
+
 }

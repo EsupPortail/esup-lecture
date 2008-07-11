@@ -69,7 +69,7 @@ public class DefinitionSets {
 //		}
 		
 		Iterator<RegularOfSet> iteratorReg = regulars.iterator();
-		for(RegularOfSet reg = null; iteratorReg.hasNext();) {
+		for (RegularOfSet reg = null; iteratorReg.hasNext();) {
 			reg = iteratorReg.next();
 			reg.checkNamesExistence();
 		}
@@ -105,10 +105,11 @@ public class DefinitionSets {
 		
 		/* regulars evaluation */
 		Iterator<RegularOfSet> iteratorReg = regulars.iterator();
-		while (iteratorReg.hasNext()){
+		while (iteratorReg.hasNext()) {
 			RegularOfSet reg = iteratorReg.next();
-			if (LOG.isTraceEnabled()){
-				LOG.trace("DefinionSets, evaluation regular : attr("+ reg.getAttribute() +") val("+ reg.getValue()+")");
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("DefinionSets, evaluation regular : attr(" 
+					+ reg.getAttribute() + ") val(" + reg.getValue() + ")");
 			}
 			if (reg.evaluate(ex)) {
 				return true;
@@ -142,6 +143,16 @@ public class DefinitionSets {
 		this.regulars.add(regular);
 	}
 	
+	/**
+	 * @return if DefinitionSets is Empty or not
+	 */
+	public boolean isEmpty() {
+		boolean ret = false;
+		if (groups.isEmpty() && regulars.isEmpty()) {
+			ret = true;
+		}
+		return ret;
+	}
 	
 	/**
 	 * @see java.lang.Object#toString()

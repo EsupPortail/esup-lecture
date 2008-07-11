@@ -15,6 +15,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 
 
 /**
@@ -64,9 +65,10 @@ public class ManagedCategory extends Category {
 	 * @param customManagedCategory customManagedCategory to update
 	 * @param  ex access to external service for visibility evaluation
 	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryProfileNotFoundException 
 	 */
 	protected synchronized void updateCustom(final CustomManagedCategory customManagedCategory,
-			final ExternalService ex) throws CategoryNotLoadedException {
+			final ExternalService ex) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getProfileId() + " - updateCustom("
 					+ customManagedCategory.getElementId() + ",externalService)");
@@ -95,10 +97,11 @@ public class ManagedCategory extends Category {
 	 * @param ex access to external service for visibility evaluation
 	 * @return list of ProfileVisibility
 	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryProfileNotFoundException 
 	 */
 	protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(
 			final CustomManagedCategory customManagedCategory,
-			final ExternalService ex) throws CategoryNotLoadedException {
+			final ExternalService ex) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getProfileId() + " - getVisibleSourcesAndUpdateCustom("
 					+ getProfileId() + ",externalService)");
