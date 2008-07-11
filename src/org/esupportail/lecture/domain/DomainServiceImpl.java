@@ -488,10 +488,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	
 	/**
 	 * @throws ContextNotFoundException 
+	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId, final ExternalService ex) 
-		throws ContextNotFoundException {
+		throws ContextNotFoundException, CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getVisibleCategories(" + uid + "," + contextId + ",ex)");
 		}

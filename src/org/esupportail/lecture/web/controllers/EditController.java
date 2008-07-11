@@ -10,9 +10,11 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.exceptions.EsupException;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.web.WebException;
@@ -181,13 +183,19 @@ public class EditController extends TwoPanesController {
 	}
 
 	/**
+	 * @throws  
 	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#getCategories(java.lang.String)
 	 * used to populate edit context with all visible categories
 	 */
 	@Override
 	protected List<CategoryBean> getCategories(final String ctxtId)
 			throws ContextNotFoundException {
-		List<CategoryBean> categories = getFacadeService().getVisibleCategories(getUID(), ctxtId);
+		List<CategoryBean> categories;
+		try {
+			categories = getFacadeService().getVisibleCategories(getUID(), ctxtId);
+		} catch (CategoryNotLoadedException e) {
+			throw new WebException("Error in getCategories", e);
+		}
 		return categories;
 	}
 	

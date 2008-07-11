@@ -238,6 +238,9 @@ public class DomainTest {
 			}	
 		} catch (ContextNotFoundException e) {
 			System.out.println("ContextNotFoundException !!!! sur context "+contextId);
+		} catch (CategoryNotLoadedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	

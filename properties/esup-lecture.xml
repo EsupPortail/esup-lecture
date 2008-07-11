@@ -27,8 +27,8 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 Version de test. Merci de signaler tout problème à <a title="Envoyer un mail à raymond.bourges@univ-rennes1.fr" href="mailto:raymond.bourges@univ-rennes1.fr">raymond.bourges@univ-rennes1.fr</a>
 ]]>
 		</description> 
-        <refCategoryProfile refId="liens" />
-        <refCategoryProfile refId="rss" />
+		<refCategoryProfile refId="liens" />
+		<refCategoryProfile refId="rss" />
 	</context>
 
 	<categoryProfile name="Les liens utiles au CRI" id="liens"

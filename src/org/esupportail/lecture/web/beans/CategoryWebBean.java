@@ -104,13 +104,13 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 * @return list of sources
 	 */
 	public List<SourceWebBean> getSources() {
+		Collections.sort(sources);
 		return sources;
 	}
 	/**
 	 * @param sources
 	 */
 	public void setSources(final List<SourceWebBean> sources) {
-		Collections.sort(sources);
 		this.sources = sources;
 	}
 	/**

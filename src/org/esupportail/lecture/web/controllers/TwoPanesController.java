@@ -245,7 +245,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 					+ ") not yet loaded or need to be refreshing : loading...");			
 			}
 			try {
-				//We evalute the context and we put it in the virtual session
+				//We evaluate the context and we put it in the virtual session
 				context = new ContextWebBean();
 				String ctxId = getContextId();
 				ContextBean contextBean = getFacadeService().getContext(getUID(), ctxId);
@@ -483,7 +483,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	/**
 	 * @param cat where to find source
 	 * @param id of source to find
-	 * @return the finded source
+	 * @return the fund source
 	 */
 	protected SourceWebBean getSourceByID(final CategoryWebBean cat, final String id) {
 		SourceWebBean ret = null;

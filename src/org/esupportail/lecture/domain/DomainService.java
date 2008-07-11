@@ -125,7 +125,8 @@ public interface DomainService {
 	 * @throws ContextNotFoundException 
 	 * @see FacadeService#getVisibleCategories(String, String)
 	 */
-	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId, final ExternalService ex) throws ContextNotFoundException ;
+	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId, final ExternalService ex) 
+		throws ContextNotFoundException, CategoryNotLoadedException ;
 	
 	/**
 	 * @param categoryId 

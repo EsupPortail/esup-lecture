@@ -87,13 +87,14 @@ public class CategoryBean {
 	/**
 	 * constructor initializing object with ProfileAvailability.
 	 * @param profAv ProfileAvailability
+	 * @throws CategoryNotLoadedException 
 	 */
-	public CategoryBean(final ProfileAvailability profAv) {
-		ElementProfile elt = profAv.getProfile();
+	public CategoryBean(final ProfileAvailability profAv) throws CategoryNotLoadedException {
+		CategoryProfile elt = (CategoryProfile)profAv.getProfile();
 		this.name = elt.getName();
 		this.id = elt.getId();
 		this.type = profAv.getMode();
-		
+		this.orderedSourceIDs = elt.getElement().getOrderedSourceIDs();
 	}
 	
 	/*

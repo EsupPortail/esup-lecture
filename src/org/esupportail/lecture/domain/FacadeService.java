@@ -276,8 +276,10 @@ public class FacadeService implements InitializingBean {
 	 * @param contextId
 	 * @return List of CategoryBean
 	 * @throws ContextNotFoundException
+	 * @throws CategoryNotLoadedException 
 	 */
-	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId) throws ContextNotFoundException {
+	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId) 
+			throws ContextNotFoundException, CategoryNotLoadedException {
 		return domainService.getVisibleCategories(uid, contextId, externalService);
 	}
 	
