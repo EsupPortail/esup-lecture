@@ -21,17 +21,17 @@ public interface CustomElement {
 	 * @throws ElementNotFoundException
 	 * @throws CategoryNotLoadedException 
 	 */
-	public String getName()throws ElementNotFoundException, CategoryNotLoadedException;
+	String getName()throws ElementNotFoundException, CategoryNotLoadedException;
 	
 	/**
 	 * @return user profile : owner of this customElement
 	 */
-	public UserProfile getUserProfile();
+	UserProfile getUserProfile();
 	
 	/**
 	 * @return id of the element refered by this CustomElement
 	 */
-	public String getElementId();
+	String getElementId();
 	
 
 	

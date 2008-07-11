@@ -6,8 +6,11 @@
 package org.esupportail.lecture.domain.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.Iterator;
 import java.util.Vector;
@@ -32,22 +35,22 @@ public class Context {
 	/*
 	 *************************** PROPERTIES ******************************** */
 	/**
-	 * Log instance
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(Context.class);
+	private static final Log LOG = LogFactory.getLog(Context.class);
 
 	/**
-	 * The context name
+	 * The context name.
 	 */
 	private String name = "";
 
 	/**
-	 * The context description
+	 * The context description.
 	 */
 	private String description = "";
 
 	/**
-	 * The context id
+	 * The context id.
 	 */
 	private String id;
 
@@ -67,8 +70,20 @@ public class Context {
 	 */
 	private Set<String> refIdManagedCategoryProfilesSet = new HashSet<String>();
 
+	/**
+	 * orderedSourceIDs store SourceID and ordering order in the CategoryProfile definition.
+	 */
+	private Map<String, Integer> orderedCategoryIDs = Collections.synchronizedMap(new HashMap<String, Integer>());	
+	
 	/*
 	 *************************** INIT *********************************/
+
+	/**
+	 * Constructor.
+	 */
+	public Context() {
+		super();
+	}
 
 	/**
 	 * Initilizes associations with managed category profiles linked to this Context.
@@ -78,8 +93,8 @@ public class Context {
 	 */
 	protected synchronized void initManagedCategoryProfiles(final Channel channel) 
 			throws ManagedCategoryProfileNotFoundException  {
-		if (log.isDebugEnabled()) {
-			log.debug("id = " + id + " - initManagedCategoryProfiles(channel)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + id + " - initManagedCategoryProfiles(channel)");
 		}
 		/* Connecting Managed category profiles and contexts */
 		Iterator<String> iterator = refIdManagedCategoryProfilesSet.iterator();
@@ -103,8 +118,8 @@ public class Context {
 	 * @param ex access to external service for visibility evaluation
 	 */
 	protected synchronized void updateCustom(final CustomContext customContext, final ExternalService ex) {
-		if (log.isDebugEnabled()) {
-			log.debug("id=" + id + " - updateCustom(" + customContext.getElementId() + ",externalService)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + id + " - updateCustom(" + customContext.getElementId() + ",externalService)");
 		}
 		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
@@ -113,13 +128,13 @@ public class Context {
 			try {
 				mcp.updateCustomContext(customContext, ex);
 			} catch (CategoryNotLoadedException e) {
-				log.error("Impossible to update CustomContext associated to context " + getId()
+				LOG.error("Impossible to update CustomContext associated to context " + getId()
 						+ " for managedCategoryProfile " + mcp.getId()
 						+ " because its category is not loaded - " 
 						+ " It is very strange because loadCategory() has " 
 						+ "been called before in mcp.updateCustomContext() ...", e);
 			} catch (InfoDomainException e) {
-				log.error("Impossible to update CustomContext associated to context " + getId()
+				LOG.error("Impossible to update CustomContext associated to context " + getId()
 						+ " for managedCategoryProfile " + mcp.getId());
 			}
 		}
@@ -158,8 +173,8 @@ public class Context {
 	 */
 	protected synchronized List<ProfileVisibility> getVisibleCategoriesAndUpdateCustom(
 			final CustomContext customContext, final ExternalService ex) {
-		if (log.isDebugEnabled()) {
-			log.debug("id=" + this.getId() + " - getVisibleCategoriesAndUpdateCustom("
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - getVisibleCategoriesAndUpdateCustom("
 					+ this.getId() + ",externalService)");
 		}
 		List<ProfileVisibility> couplesVisib = new Vector<ProfileVisibility>();
@@ -170,17 +185,19 @@ public class Context {
 			ManagedCategoryProfile mcp = iterator.next();
 			ProfileVisibility couple;
 			try {				
-				VisibilityMode mode = mcp.updateCustomContext(customContext,ex);
-				if (mode != VisibilityMode.NOVISIBLE){
-					couple = new ProfileVisibility(mcp,mode);
+				VisibilityMode mode = mcp.updateCustomContext(customContext, ex);
+				if (mode != VisibilityMode.NOVISIBLE) {
+					couple = new ProfileVisibility(mcp, mode);
 					couplesVisib.add(couple);
 				}
 			} catch (CategoryNotLoadedException e) {
-				log.error("Impossible to update CustomContext associated to context " + getId()
-						+ " for managedCategoryProfile " + mcp.getId()+ " because its category is not loaded - " 
-						+ " It is very strange because loadCategory() has been called before in mcp.updateCustomContext() ...", e);
+				LOG.error("Impossible to update CustomContext associated to context " + getId()
+						+ " for managedCategoryProfile " + mcp.getId()
+						+ " because its category is not loaded - " 
+						+ " It is very strange because loadCategory() has " 
+						+ "been called before in mcp.updateCustomContext() ...", e);
 			} catch (InfoDomainException e) {
-				log.error("Impossible to update CustomContext associated to context " + getId()
+				LOG.error("Impossible to update CustomContext associated to context " + getId()
 						+ " for managedCategoryProfile " + mcp.getId());
 			}
 		}
@@ -197,8 +214,8 @@ public class Context {
 	 * @return true if this context refers the category identified by categoryId
 	 */
 	public boolean containsCategory(final String categoryId) {
-	   	if (log.isDebugEnabled()) {
-    		log.debug("id = " + id + " - containsCategory(" + categoryId + ")");
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id = " + id + " - containsCategory(" + categoryId + ")");
     	}
 		return refIdManagedCategoryProfilesSet.contains(categoryId);
 	}
@@ -209,8 +226,8 @@ public class Context {
 	 * @param s the id to add
 	 */
 	protected synchronized void addRefIdManagedCategoryProfile(final String s) {
-		if (log.isDebugEnabled()) {
-			log.debug("id=" + id + " - addRefIdManagedCategoryProfile(" + s + ")");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + id + " - addRefIdManagedCategoryProfile(" + s + ")");
 		}
 		refIdManagedCategoryProfilesSet.add(s);
 	}
@@ -254,14 +271,15 @@ public class Context {
 	 * ************************** ACCESSORS ******************************** */
 
 	/**
-	 * Returns the managedCategoryProfile identified by id, referred by this Context 
+	 * Returns the managedCategoryProfile identified by id, referred by this Context.
 	 * @param categoryId id of the categoryProfile to get
 	 * @return the categoryProfile
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	protected ManagedCategoryProfile getCatProfileById(String categoryId) throws ManagedCategoryProfileNotFoundException {
-		if (log.isDebugEnabled()){
-			log.debug("id="+this.getId()+" - getCatProfileById("+categoryId+")");
+	protected ManagedCategoryProfile getCatProfileById(final String categoryId) 
+		throws ManagedCategoryProfileNotFoundException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - getCatProfileById(" + categoryId + ")");
 		}
 		
 		
@@ -269,20 +287,20 @@ public class Context {
 			Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
 			for (ManagedCategoryProfile m = null; iterator.hasNext();) {
 				m = iterator.next();
-				if (m.getId().equals(categoryId)){
+				if (m.getId().equals(categoryId)) {
 					return m;
 				}
 				
 			}
 		} 
-		String errorMsg = "ManagedCategoryProfile "+categoryId+" is not found in Context "+this.id;
-		log.error(errorMsg);
+		String errorMsg = "ManagedCategoryProfile " + categoryId + " is not found in Context " + this.id;
+		LOG.error(errorMsg);
 		throw new ManagedCategoryProfileNotFoundException(errorMsg);
 	}
 	
 	
 	/**
-	 * Returns the name of the context 
+	 * Returns the name of the context. 
 	 * @return name
 	 * @see Context#name
 	 */
@@ -333,6 +351,20 @@ public class Context {
 	 */
 	protected void setId(final String id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the orderedCategoryIDs
+	 */
+	public Map<String, Integer> getOrderedCategoryIDs() {
+		return orderedCategoryIDs;
+	}
+
+	/**
+	 * @param orderedCategoryIDs the orderedCategoryIDs to set
+	 */
+	public void setOrderedCategoryIDs(Map<String, Integer> orderedCategoryIDs) {
+		this.orderedCategoryIDs = orderedCategoryIDs;
 	}
 	
 }

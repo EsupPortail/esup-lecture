@@ -7,8 +7,11 @@ package org.esupportail.lecture.domain.model;
 
 import java.io.File;
 import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.configuration.ConfigurationException;
@@ -335,17 +338,21 @@ public class ChannelConfig  {
 			c.setDescription(xmlFile.getString(pathContext + ".description"));
 			//TODO (GB later) c.setEdit(...) param edit 
 			List<String> refIdList = xmlFile.getList(pathContext + ".refCategoryProfile[@refId]");
-			Iterator<String> iterator = refIdList.iterator();
-			for (String s = null; iterator.hasNext();) {
-				s = iterator.next();
-				c.addRefIdManagedCategoryProfile(s);
+			Map<String, Integer> orderedCategoryIDs = 
+				Collections.synchronizedMap(new HashMap<String, Integer>());
+			int xmlOrder = 1;
+			for (String refId : refIdList) {
+				c.addRefIdManagedCategoryProfile(refId);
+				orderedCategoryIDs.put(refId, xmlOrder);
+				xmlOrder += 1;				
 			}
+			c.setOrderedCategoryIDs(orderedCategoryIDs);
 			channel.addContext(c);
 		}
     }    
     
     /**
-     * Initialises associations between contexts and managed category profiles.
+     * Initializes associations between contexts and managed category profiles.
      * defined in the channel config in channel
      * @param channel of the initialization
      * @throws ContextNotFoundException 

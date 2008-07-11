@@ -43,6 +43,10 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 * list of sources of category.
 	 */
 	private List<SourceWebBean> sources;
+	/**
+	 * xmlOrder is used to store the order of the corresponding categoryProfile in an Context XML file.
+	 */
+	private int xmlOrder = Integer.MAX_VALUE;
 
 	/**
 	 * Default constructor.
@@ -134,6 +138,20 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	}
 
 	/**
+	 * @return the xmlOrder
+	 */
+	public int getXmlOrder() {
+		return xmlOrder;
+	}
+
+	/**
+	 * @param xmlOrder the xmlOrder to set
+	 */
+	public void setXmlOrder(final int xmlOrder) {
+		this.xmlOrder = xmlOrder;
+	}
+
+	/**
 	 * @return if source is obliged or not
 	 */
 	public boolean isObliged() {
@@ -170,7 +188,8 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(final CategoryWebBean o) {
-		return name.compareTo(o.name);
+		int ret = xmlOrder - o.getXmlOrder();
+		return ret;
 	}
 
 }

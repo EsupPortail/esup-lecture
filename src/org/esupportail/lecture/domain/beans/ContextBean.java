@@ -5,12 +5,16 @@
 */
 package org.esupportail.lecture.domain.beans;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 
 /**
- * used to store context informations
+ * used to store context informations.
  * @author bourges
  */
 public class ContextBean {
@@ -18,78 +22,78 @@ public class ContextBean {
 	/* 
 	 *************************** PROPERTIES ******************************** */	
 	/**
-	 * id of context
+	 * id of context.
 	 */
 	private String id;
 	/**
-	 * name of context
+	 * name of context.
 	 */
 	private String name;
 	/**
-	 * description of the context
+	 * description of the context.
 	 */
 	private String description;
 	
 	/**
-	 * size of tree window 
+	 * size of tree window.
 	 */
 	private int treeSize;
+
+	/**
+	 * orderedSourceIDs store SourceID and ordering order in the CategoryProfile definition.
+	 */
+	private Map<String, Integer> orderedCategoryIDs = Collections.synchronizedMap(new HashMap<String, Integer>());	
 
 	/*
 	 *************************** INIT ************************************** */	
 
 	/**
-	 * default contructor
-	 */
-	public ContextBean(){
-		// empty
-	}
-	
-	/**
-	 * Constructor initializing object
+	 * Constructor initializing object.
 	 * @param customContext
 	 * @throws ContextNotFoundException 
 	 */
-	public ContextBean(CustomContext customContext) throws ContextNotFoundException{
+	public ContextBean(final CustomContext customContext) throws ContextNotFoundException {
 		Context context = customContext.getContext();
-
 		setTreeSize(customContext.getTreeSize());
-		
 		setName(context.getName());
 		setDescription(context.getDescription());
 		setId(context.getId());
-		
+		setOrderedCategoryIDs(customContext.getContext().getOrderedCategoryIDs());
 	}
 	
 	/*
 	 *************************** ACCESSORS ********************************* */	
 	
 	/**
-	 * get the id of the context
+	 * get the id of the context.
 	 * @return id of context
 	 */
 	public String getId() {
 		return id;
 	}
+	
 	/**
-	 * set the id of the context
+	 * set the id of the context.
 	 * @param id id of context
 	 */
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
+	
 	/**
-	 * get the name of the context
+	 * get the name of the context.
 	 * @return name of context
 	 */
+	
 	public String getName() {
 		return name;
 	}
+	
 	/** 
-	 * set the name of the context
+	 * set the name of the context.
 	 * @param name name of the context
 	 */
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
@@ -103,7 +107,7 @@ public class ContextBean {
 	/**
 	 * @param description description of the context
 	 */
-	public void setDescription(String description) {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 	
@@ -117,17 +121,43 @@ public class ContextBean {
 	/**
 	 * @param treeSize tree size to set
 	 */
-	public void setTreeSize(int treeSize) {
+	public void setTreeSize(final int treeSize) {
 		this.treeSize = treeSize;
 	}
 	
+	/**
+	 * @param orderedCategoryIDs the orderedCategoryIDs to set
+	 */
+	public void setOrderedCategoryIDs(final Map<String, Integer> orderedCategoryIDs) {
+		this.orderedCategoryIDs = orderedCategoryIDs;
+	}
+
+	/**
+	 * @return the orderedCategoryIDs
+	 */
+	public Map<String, Integer> getOrderedCategoryIDs() {
+		return orderedCategoryIDs;
+	}
+
 	/*
 	 *************************** METHODS *********************************** */	
+	/**
+	 * @param categoryID - the ID of source to find
+	 * @return the XML order in of the source the CategoryProfile definition
+	 */
+	public int getXMLOrder(final String categoryID) {
+		Integer ret = orderedCategoryIDs.get(categoryID);
+		if (ret == null) {
+			ret = Integer.MAX_VALUE;
+		}
+		return ret;
+	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		String string = "";
 		string += " Id = " + id.toString() + "\n";
 		string += " Name = " + name.toString() + "\n";

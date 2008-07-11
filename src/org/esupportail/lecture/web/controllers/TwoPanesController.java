@@ -282,6 +282,8 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 							}
 						}
 						categoryWebBean.setSources(sourcesWeb);
+						int xmlOrder = contextBean.getXMLOrder(categoryBean.getId());
+						categoryWebBean.setXmlOrder(xmlOrder);
 						categoriesWeb.add(categoryWebBean);
 					}
 				}

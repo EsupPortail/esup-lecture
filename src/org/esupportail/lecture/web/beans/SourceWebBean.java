@@ -36,7 +36,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 */
 	private List<ItemWebBean> items;
 	/**
-	 * xmlOrder id used to store the order of the corresponding sourceProfile in an Category XML file.
+	 * xmlOrder is used to store the order of the corresponding sourceProfile in an Category XML file.
 	 */
 	private int xmlOrder = Integer.MAX_VALUE;
 

@@ -18,7 +18,6 @@ import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
-import org.springframework.beans.factory.InitializingBean;
 
 /**
  * @author : Raymond 
@@ -31,7 +30,7 @@ public class HomeController extends TwoPanesController {
 	/**
 	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(HomeController.class);
+	private static final Log LOG = LogFactory.getLog(HomeController.class);
 	/**
 	 * Display mode for item (all | unread | unreadfirst).
 	 */
@@ -40,16 +39,25 @@ public class HomeController extends TwoPanesController {
 	 *  item used by t:updateActionListener.
 	 */
 	private ItemWebBean item;
+
+	/**
+	 * Constructor.
+	 */
+	public HomeController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * JSF action : toogle item from read to unread and unread to read.
 	 * @return JSF from-outcome
 	 */
 	public String toggleItemReadState() {
-		if (log.isDebugEnabled()) {
-			log.debug("In toggleItemReadState");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("In toggleItemReadState");
 		}
-		if (log.isDebugEnabled()) {
-			log.debug("itemID = " + item.getId());
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("itemID = " + item.getId());
 		}
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
 		try {
@@ -69,8 +77,8 @@ public class HomeController extends TwoPanesController {
 	 * @return JSF from-outcome
 	 */
 	public String selectElement() {
-		if (log.isDebugEnabled()) {
-			log.debug("in selectElement");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("in selectElement");
 		}
 		String catID = this.categoryId;
 		String srcId = this.sourceId;
@@ -157,7 +165,7 @@ public class HomeController extends TwoPanesController {
 			}
 
 		} else {
-			log.warn("Unknown itemDisplayMode value \"" + displayMode + "\" in sortedItems function");
+			LOG.warn("Unknown itemDisplayMode value \"" + displayMode + "\" in sortedItems function");
 		}
 		return items;
 	}
@@ -170,8 +178,8 @@ public class HomeController extends TwoPanesController {
 	 * @return the list of items to dysplay for current selection (category/source) and displayMode
 	 */
 	public List<ItemWebBean> getItems() {
-		if (log.isDebugEnabled()) {
-			log.debug("getItems()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getItems()");
 		}
 		List<ItemWebBean> ret = null;
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
@@ -184,8 +192,8 @@ public class HomeController extends TwoPanesController {
 				if (selectedSource.getItems() != null) {
 					ret = selectedSource.getItems();
 				} else {
-					if (log.isDebugEnabled()) {
-						log.debug("Put items in selected source");
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("Put items in selected source");
 					}
 					List<ItemBean> items;
 					try {
@@ -232,8 +240,8 @@ public class HomeController extends TwoPanesController {
 	 * @return Display mode form items
 	 */
 	public ItemDisplayMode getItemDisplayMode() {
-		if (log.isDebugEnabled()) {
-			log.debug("getItemDisplayMode()=" + itemDisplayMode);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getItemDisplayMode()=" + itemDisplayMode);
 		}
 		return itemDisplayMode;
 	}
@@ -243,8 +251,8 @@ public class HomeController extends TwoPanesController {
 	 * @param itemDisplayMode
 	 */
 	public void setItemDisplayMode(final ItemDisplayMode itemDisplayMode) {
-		if (log.isDebugEnabled()) {
-			log.debug("setItemDisplayMode(" + itemDisplayMode + ")");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("setItemDisplayMode(" + itemDisplayMode + ")");
 		}
 		this.itemDisplayMode = itemDisplayMode;
 	}

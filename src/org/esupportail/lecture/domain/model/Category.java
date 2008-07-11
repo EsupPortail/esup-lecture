@@ -21,7 +21,7 @@ import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
  * @see Element
  *
  */
-public abstract class Category implements Element,Serializable {
+public abstract class Category implements Element, Serializable {
 
 	/*
 	 *************************** PROPERTIES *********************************/	
