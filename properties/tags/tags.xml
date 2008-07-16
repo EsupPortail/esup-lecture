@@ -63,7 +63,11 @@
     			Warning: URLs may not be the same for servlet and portlet installations!
     		</description>
     		<list>
-    			<value>../media/functions.js</value>
+                <value>../media/functions.js</value>
+                <value>../dwr/interface/JDate.js</value>
+                <value>../dwr/engine.js</value>
+                <value>../dwr/util.js</value>
+                <value>../media/lecture.js</value>
     		</list>
     	</property>
     	<property name="stylesheets" >

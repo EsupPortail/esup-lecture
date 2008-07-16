@@ -42,7 +42,15 @@
 		</t:htmlTag>
 		<!-- Items display -->
 		<t:htmlTag value="div" id="right">
-			<t:htmlTag value="hr"/>
+            <t:htmlTag value="hr"/>
+
+			<f:verbatim>
+                <input type="button" value="Date" onclick="test()"/>
+			</f:verbatim>
+            <t:htmlTag value="span" id="d27">
+            </t:htmlTag>
+
+            <t:htmlTag value="hr"/>
 			<h:outputText value="#{homeController.selectedElementDescription}" escape="false" rendered="#{!homeController.sourceSelected}"/>
 			<t:dataList value="#{homeController.items}" var="item" layout="simple" rendered="#{homeController.sourceSelected}">
 				<!-- Read/Unread Button -->
