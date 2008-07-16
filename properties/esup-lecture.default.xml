@@ -41,17 +41,6 @@ Pour plus d'informations voir le
   	  <refCategoryProfile refId="demo1"/>
   	  <refCategoryProfile refId="demo2"/>
   	  <refCategoryProfile refId="demo3"/>
-  	  <refCategoryProfile refId="demo4"/>
-	</context>
-
-	<context 
-	  name = "Servlet mode context"
-	  id = "context">
-	  <description>Test Context used in servlet mode (NOT NORMAL MODE!)</description> 
-  	  <refCategoryProfile refId="demo1"/>
-  	  <refCategoryProfile refId="demo2"/>
-  	  <refCategoryProfile refId="demo3"/>
-  	  <refCategoryProfile refId="demo4"/>
 	</context>
 
 	<categoryProfile 
@@ -154,7 +143,7 @@ Pour plus d'informations voir le
 		name="Categorie de démo 1"
 		id="demo1"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo1.xml"
-		trustCategory="no"
+		trustCategory="yes"
 		access="public"
 		ttl = "3600" 
 		timeout = "3000" > 
