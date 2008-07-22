@@ -9,7 +9,7 @@ import org.esupportail.lecture.domain.model.UserProfile;
 
 /**
  * 
- * used to store user informations
+ * used to store user informations.
  * @author bourges
  */
 public class UserBean {
@@ -18,7 +18,7 @@ public class UserBean {
 	 *************************** PROPERTIES ******************************** */	
 	
 	/**
-	 * id of source
+	 * id of source.
 	 */
 	private String uid;
 	
@@ -26,17 +26,17 @@ public class UserBean {
 	 *************************** INIT ************************************** */	
 			
 	/**
-	 * Constructor initializing object
+	 * Constructor initializing object.
 	 * @param uid user ID
 	 */
-	public UserBean(String uid) {
+	public UserBean(final String uid) {
 		this.uid = uid;
 	}
 	/**
-	 * Constructor initializing object
+	 * Constructor initializing object.
 	 * @param userProfile
 	 */
-	public UserBean(UserProfile userProfile) {
+	public UserBean(final UserProfile userProfile) {
 		uid = userProfile.getUserId();
 	}
 	
@@ -52,7 +52,7 @@ public class UserBean {
 	/**
 	 * @param id
 	 */
-	public void setUid(String id) {
+	public void setUid(final String id) {
 		this.uid = id;
 	}
 	
@@ -63,9 +63,9 @@ public class UserBean {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		String string = "";
-		string +=" uid = " + uid.toString()+"\n";
+		string += " uid = " + uid.toString() + "\n";
 		return string;
 	}
 	

@@ -9,7 +9,7 @@ import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 
 /**
- * used to store item informations
+ * used to store item informations.
  * @author bourges
  */
 public class ItemBean {
@@ -18,33 +18,33 @@ public class ItemBean {
 	 *************************** PROPERTIES ******************************** */	
 	
 	/**
-	 * id of item
+	 * id of item.
 	 */
 	private String id;
 	/**
-	 * html content of item
+	 * html content of item.
 	 */
 	private String htmlContent;
 	/**
-	 * store if item is read or not
+	 * store if item is read or not.
 	 */
 	private boolean read;
 	
 	/*
 	 *************************** INIT ************************************** */	
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	public ItemBean() {
 		super();
 	}
 
 	/**
-	 * Constructor initializing object
+	 * Constructor initializing object.
 	 * @param it
 	 * @param customSource
 	 */
-	public ItemBean(Item it, CustomSource customSource) {
+	public ItemBean(final Item it, final CustomSource customSource) {
 		id = it.getId();
 		htmlContent = it.getHtmlContent();
 		read = customSource.isItemRead(id);
@@ -62,7 +62,7 @@ public class ItemBean {
 	/**
 	 * @param htmlContent
 	 */
-	public void setHtmlContent(String htmlContent) {
+	public void setHtmlContent(final String htmlContent) {
 		this.htmlContent = htmlContent;
 	}
 	/**
@@ -74,7 +74,7 @@ public class ItemBean {
 	/**
 	 * @param id
 	 */
-	public void setId(String id) {
+	public void setId(final String id) {
 		this.id = id;
 	}
 	/**
@@ -86,7 +86,7 @@ public class ItemBean {
 	/**
 	 * @param read
 	 */
-	public void setRead(boolean read) {
+	public void setRead(final boolean read) {
 		this.read = read;
 	}
 
@@ -102,7 +102,7 @@ public class ItemBean {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		String string = "";
 		string += "     Id = " + id + "\n";
 		string += "     Html = " + htmlContent + "\n";

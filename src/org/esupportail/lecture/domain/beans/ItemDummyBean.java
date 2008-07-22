@@ -52,7 +52,7 @@ public class ItemDummyBean extends ItemBean implements DummyBean {
 		return cause;
 	}
 
-	/*
+	/**
 	 * @see org.esupportail.lecture.domain.beans.ItemBean#getHtmlContent()
 	 */
 	@Override
@@ -61,21 +61,21 @@ public class ItemDummyBean extends ItemBean implements DummyBean {
 		buffer.append(html(ExceptionUtils.getShortStackTraceStrings(cause)));
 		return buffer.toString();
 	}
-	/*
+	/**
 	 * @see org.esupportail.lecture.domain.beans.ItemBean#getId()
 	 */
 	@Override
 	public String getId() {
 		return "foo";
 	}
-	/*
+	/**
 	 * @see org.esupportail.lecture.domain.beans.ItemBean#isRead()
 	 */
 	@Override
 	public boolean isRead() {
 		return false;
 	}
-	/* (non-Javadoc)
+	/**
 	 * @see org.esupportail.lecture.domain.beans.ItemBean#toString()
 	 */
 	@Override

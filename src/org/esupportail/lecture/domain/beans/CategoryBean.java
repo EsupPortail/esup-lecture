@@ -13,7 +13,6 @@ import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.CategoryProfile;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.domain.model.ElementProfile;
 import org.esupportail.lecture.domain.model.ProfileAvailability;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
@@ -90,7 +89,7 @@ public class CategoryBean {
 	 * @throws CategoryNotLoadedException 
 	 */
 	public CategoryBean(final ProfileAvailability profAv) throws CategoryNotLoadedException {
-		CategoryProfile elt = (CategoryProfile)profAv.getProfile();
+		CategoryProfile elt = (CategoryProfile) profAv.getProfile(); 
 		this.name = elt.getName();
 		this.id = elt.getId();
 		this.type = profAv.getMode();

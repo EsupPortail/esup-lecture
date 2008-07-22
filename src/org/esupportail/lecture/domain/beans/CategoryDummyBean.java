@@ -10,36 +10,37 @@ import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.UnknownException;
 
 /**
- * A DummyBean for a CategoryBean : every methods are overriden from CategoryBean and throw an ElementDummyBeanException
+ * A DummyBean for a CategoryBean : every methods are overriden from CategoryBean
+ * and throw an ElementDummyBeanException.
  * @author gbouteil
  *
  */
 public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	// TODO (GB later) peut etre voir une autre conception :
-	//categoryBean et ctageoryDummyBean étendent tous les deux une meme classe :
-	// categoryInterBean (par ex) pour assurer que categoryDummyBean a les memes méthodes
+	//categoryBean et ctageoryDummyBean ï¿½tendent tous les deux une meme classe :
+	// categoryInterBean (par ex) pour assurer que categoryDummyBean a les memes mï¿½thodes
 	// que l'autre
 	
 	/* 
 	 *************************** PROPERTIES ******************************** */	
 	/**
-	 * Cause of the Dummy Bean
+	 * Cause of the Dummy Bean.
 	 */
-	DomainServiceException cause;
+	private DomainServiceException cause;
 	
 	/*
 	 *************************** INIT ************************************** */	
 	/**
-	 * default constructor
+	 * default constructor.
 	 */
 	public CategoryDummyBean() {
 		cause = new UnknownException();
 	}
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param e exception cause of dummyBean creation
 	 */
-	public CategoryDummyBean(DomainServiceException e){
+	public CategoryDummyBean(final DomainServiceException e) {
 		cause = e;
 	}
 	
@@ -64,9 +65,9 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	/**
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#setDescription(java.lang.String)
 	 */
-	@Override
-	public void setDescription(@SuppressWarnings("unused")
-	String description) throws ElementDummyBeanException {
+	@Override 
+	public void setDescription(@SuppressWarnings("unused") final String description) 
+	throws ElementDummyBeanException {
 		throw new ElementDummyBeanException("Method setDescription() not available on a CategoryDummyBean");
 	}
 	
@@ -83,8 +84,8 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#setFolded(boolean)
 	 */
 	@Override
-	public void setFolded(@SuppressWarnings("unused")
-	boolean folded) throws ElementDummyBeanException {
+	public void setFolded(@SuppressWarnings("unused") final	boolean folded) 
+	throws ElementDummyBeanException {
 		throw new ElementDummyBeanException("Method setFolded() not available on a CategoryDummyBean");
 	}
 	
@@ -100,8 +101,7 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#setId(java.lang.String)
 	 */
 	@Override
-	public void setId(@SuppressWarnings("unused")
-	String id) throws ElementDummyBeanException {
+	public void setId(@SuppressWarnings("unused") final String id) throws ElementDummyBeanException {
 		throw new ElementDummyBeanException("Method setId() not available on a CategoryDummyBean");
 	}
 	
@@ -117,8 +117,7 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.CategoryBean#setName(java.lang.String)
 	 */
 	@Override
-	public void setName(@SuppressWarnings("unused")
-	String name) throws ElementDummyBeanException {
+	public void setName(@SuppressWarnings("unused") final String name) throws ElementDummyBeanException {
 		throw new ElementDummyBeanException("Method setName() not available on a CategoryDummyBean");
 	}
 	
@@ -129,7 +128,7 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	 * @see org.esupportail.lecture.domain.beans.DummyBean#toString()
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		return "CategoryDummyBean created because: " + cause.getMessage();
 	}
 	

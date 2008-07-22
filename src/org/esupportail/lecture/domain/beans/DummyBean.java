@@ -17,10 +17,10 @@ public interface DummyBean {
 	/**
 	 * @return the Exception causing DummyBean creation 
 	 */
-	public DomainServiceException getCause();
+	DomainServiceException getCause();
 	
 	/**
 	 * @return message of the Exception cause
 	 */
-	public String toString();
+	String toString();
 }
