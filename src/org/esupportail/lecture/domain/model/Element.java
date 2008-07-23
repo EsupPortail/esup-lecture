@@ -6,7 +6,7 @@
 package org.esupportail.lecture.domain.model;
 
 /**
- * An element can be a source or a category
+ * An element can be a source or a category.
  * @author gbouteil
  *
  */

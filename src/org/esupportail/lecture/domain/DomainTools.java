@@ -109,7 +109,7 @@ public class DomainTools {
 					realMedValue = med;
 				}
 				//generate return value
-				ret = begin + realMedValue + end;								
+				ret = begin + realMedValue + end;
 				if (LOG.isDebugEnabled()) {
 					LOG.debug("replaceWithUserAttributes" + " :: replace " + value + " by " + ret);
 				}

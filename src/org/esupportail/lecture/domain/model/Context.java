@@ -9,20 +9,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Iterator;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
  * Context element : it is the environnement context of an instance
@@ -161,7 +159,7 @@ public class Context {
 	}
 
 	/**
-	 * Return a list of <CategoryProfile,VisibilityMode>.
+	 * Return a list of <CategoryProfile, VisibilityMode>.
 	 * This list corresponding to visible categories for user, 
 	 * in this Context and update its related custom (like method updateCustom): 
 	 * It sets up subscriptions of customContext on managedCategoriesProfiles
@@ -258,12 +256,11 @@ public class Context {
 		// string += " edit : "+ edit +"\n";;
 		/* Managed category profiles available in this context */
 		string += "	managedCategoryProfilesSet : \n";
-		Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
-		for (ManagedCategoryProfile m = null; iterator.hasNext();) {
-			m = iterator.next();
+
+		for (ManagedCategoryProfile m : managedCategoryProfilesSet) {
 			string += "         (" + m.getId() + "," + m.getName() + ")\n";
 		}
-
+		
 		return string;
 	}
 
@@ -284,13 +281,10 @@ public class Context {
 		
 		
 		if (refIdManagedCategoryProfilesSet.contains(categoryId)) {
-			Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
-			for (ManagedCategoryProfile m = null; iterator.hasNext();) {
-				m = iterator.next();
+			for (ManagedCategoryProfile m : managedCategoryProfilesSet) {
 				if (m.getId().equals(categoryId)) {
 					return m;
 				}
-				
 			}
 		} 
 		String errorMsg = "ManagedCategoryProfile " + categoryId + " is not found in Context " + this.id;
@@ -363,7 +357,7 @@ public class Context {
 	/**
 	 * @param orderedCategoryIDs the orderedCategoryIDs to set
 	 */
-	public void setOrderedCategoryIDs(Map<String, Integer> orderedCategoryIDs) {
+	public void setOrderedCategoryIDs(final Map<String, Integer> orderedCategoryIDs) {
 		this.orderedCategoryIDs = orderedCategoryIDs;
 	}
 	

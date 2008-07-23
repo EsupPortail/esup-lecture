@@ -6,8 +6,8 @@
 package org.esupportail.lecture.domain.model;
 
 /**
- * Availability mode of an element :  
- * user is
+ * Availability mode of an element.
+ * A user is
  * - subscribed to an element (for managed elements)
  * - not subscribed to an element (for managed elements)
  * - obliged to be subscribed to an element (for managed elements)
@@ -17,25 +17,25 @@ package org.esupportail.lecture.domain.model;
  *
  */
 // TODO (GB later) : A renommer (subscribeMode ?) : c'rest ambigue avec le VisibilityMode
-// Le AvailabilityMode est utilisé pour répondre à getVisible...
-// Le VisibilityMode est utilisé pour définir les réponses à getAvailableMode
+// Le AvailabilityMode est utilisï¿½ pour rï¿½pondre ï¿½ getVisible...
+// Le VisibilityMode est utilisï¿½ pour dï¿½finir les rï¿½ponses ï¿½ getAvailableMode
 public enum AvailabilityMode {
 	
 	/**
-	 *  The (managed) source is subscribed by the user
+	 *  The (managed) source is subscribed by the user.
 	 */
 	SUBSCRIBED,
 	/**
-	 * The (managed) source is subscribed by the user
+	 * The (managed) source is subscribed by the user.
 	 */
 	NOTSUBSCRIBED,
 	/**
 	 * The (managed) source is subscribed by the user 
-	 * and he is obliged to : he cannot unsubscribe to
+	 * and he is obliged to : he cannot unsubscribe to.
 	 */
 	OBLIGED,
 	/**
-	 * The user is owner of the (personal) source
+	 * The user is owner of the (personal) source.
 	 */
 	OWNER
 }

@@ -26,7 +26,7 @@ public interface DaoService {
 	 * Get a managed category from a remote place
 	 * @param profile of the category to get
 	 * @return the managedCategory
-	 * @throws TimeoutException 
+	 * @throws InfoDaoException 
 	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws InfoDaoException;
 
@@ -35,7 +35,7 @@ public interface DaoService {
 	 * @param profile of the category to get
 	 * @param ptCas proxy ticket CAS used in case of CAS protected source
 	 * @return the managedCategory
-	 * @throws TimeoutException 
+	 * @throws InfoDaoException 
 	 */
 	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile,String ptCas) throws InfoDaoException;
 
@@ -44,7 +44,7 @@ public interface DaoService {
 	 * @param profile of the source to get
 	 * @return the source
 	 * @throws TimeoutException 
-	 * @throws ExternalDaoException 
+	 * @throws InfoDaoException 
 	 */
 	public Source getSource(ManagedSourceProfile profile) throws InfoDaoException;
 	
@@ -84,7 +84,7 @@ public interface DaoService {
 	 * Delete userProfile that is identified with "userId" 
 	 * @param userProfile : userProfile to delete
 	 */
-	// TODO (GB later) creer un service pour supprimer définitivement un userProfile par l'admin ?
+	// TODO (GB later) creer un service pour supprimer dÃ©finitivement un userProfile par l'admin ?
 	public void deleteUserProfile(UserProfile userProfile);
 
 	/**
@@ -105,7 +105,7 @@ public interface DaoService {
 	 * delete custom context
 	 * @param cco
 	 */
-	// TODO (GB later) creer un service pour supprimer définitivement un contexte par l'admin ?
+	// TODO (GB later) creer un service pour supprimer dï¿½finitivement un contexte par l'admin ?
 	public void deleteCustomContext(CustomContext cco);
 	
 	/* CustomCategory */

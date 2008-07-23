@@ -204,6 +204,9 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 		this.authenticationService = authenticationService;
 	}
 
+	/**
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+	 */
 	public void afterPropertiesSet() throws Exception {
 		Assert.notNull(authenticationService, "property authenticationService of class "
 				+ this.getClass().getName() + " can not be null");

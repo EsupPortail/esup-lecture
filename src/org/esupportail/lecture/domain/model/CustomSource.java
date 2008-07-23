@@ -11,7 +11,6 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
@@ -98,6 +97,7 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceTimeOutException 
+	 * @throws InfoDomainException 
 	 * @throws SourceNotLoadedException 
 	 */
 	public List<Item> getItems(final ExternalService ex) 
@@ -113,10 +113,11 @@ public abstract class CustomSource implements CustomElement {
 			listItems = profile.getItems(ex);
 			// pas de catch de categoryNotLoaded : cela entraine trop de compliaction
 		} catch (SourceNotLoadedException e) {
-			// Dans ce cas : la mise à jour du customCategory n'a pas été effectué
+			// Dans ce cas : la mise ï¿½ jour du customCategory n'a pas ï¿½tï¿½ effectuï¿½
 			LOG.error("Impossible to update getItems for customSource " + getElementId()
 					+ " because its source is not loaded - " 
-					+ " It is very strange because loadSource() has been called before in mcp.updateCustomContext() ...", e);
+					+ " It is very strange because loadSource() has been "
+					+ "called before in mcp.updateCustomContext() ...", e);
 			throw e;
 		}
 		return listItems;
@@ -129,7 +130,8 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
-	public String getName() throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException{
+	public String getName() 
+	throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + elementId + " - getName()");
 		}
@@ -168,7 +170,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @param mode item display mode to set
 	 */
-	public void modifyItemDisplayMode(final ItemDisplayMode mode){
+	public void modifyItemDisplayMode(final ItemDisplayMode mode) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + elementId + " - modifyItemDisplayMode(" + mode + ")");
 		}
@@ -229,7 +231,8 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	public abstract SourceProfile getProfile() throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException;
+	public abstract SourceProfile getProfile() 
+	throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException;
 	
 
 
@@ -265,26 +268,10 @@ public abstract class CustomSource implements CustomElement {
 	}
 
 	/**
-	 * @param userProfile
-	 */
-	private void setUserProfile(final UserProfile userProfile) {
-		this.userProfile = userProfile;
-		//Needed by Hibernate
-	}
-
-	/**
 	 * @return a set of read items ID
 	 */
 	protected Set<String> getReadItems() {
 		return readItems;
-	}
-
-	/**
-	 * @param readItems
-	 */
-	private void setReadItems(final Set<String> readItems) {
-		this.readItems = readItems;
-		//Needed by Hibernate
 	}
 
 	/**

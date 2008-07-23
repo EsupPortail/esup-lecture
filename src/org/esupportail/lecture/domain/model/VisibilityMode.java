@@ -11,25 +11,25 @@ package org.esupportail.lecture.domain.model;
  * - allowed to subscribe an element
  * - autosubscribe to an element
  * - obliged to be subscribe to an element
- * - is not allowed to subscribe it : the element is not visble
+ * - is not allowed to subscribe it : the element is not visble.
  * @author gbouteil
  *
  */
 public enum VisibilityMode {
 	/**
-	 * Obliged visibility : automatic subscription with impossible unsubcription 
+	 * Obliged visibility : automatic subscription with impossible unsubcription.
 	 */
 	OBLIGED,
 	/**
-	 * AutoSubscribed visibility : automatic subscription with possible unsubcription 
+	 * AutoSubscribed visibility : automatic subscription with possible unsubcription.
 	 */
 	AUTOSUBSCRIBED,
 	/**
-	 * Allowed visibility : subscription and unsubcription possible 
+	 * Allowed visibility : subscription and unsubcription possible.
 	 */
 	ALLOWED,
 	/**
-	 * No visibility
+	 * No visibility.
 	 */
 	NOVISIBLE
 }

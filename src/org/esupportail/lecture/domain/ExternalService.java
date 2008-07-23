@@ -16,53 +16,53 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 public interface ExternalService {
 
 	/**
-	 * Return ID of the connected user
+	 * Return ID of the connected user.
 	 * @return String
 	 * @throws InternalExternalException 
 	 * @throws NoExternalValueException 
 	 */
-	public String getConnectedUserId() throws NoExternalValueException, InternalExternalException;
+	String getConnectedUserId() throws NoExternalValueException, InternalExternalException;
 
 	/**
-	 * Return ID of the current context (from channel instantiation)
+	 * Return ID of the current context (from channel instantiation).
 	 * @return string
 	 * @throws InternalExternalException 
 	 * @throws NoExternalValueException 
 	 * @see FacadeService#getCurrentContextId()
 	 */
-	public String getCurrentContextId() throws NoExternalValueException, InternalExternalException;
+	String getCurrentContextId() throws NoExternalValueException, InternalExternalException;
 	/**
-	 * Return the proxy ticket CAS of the connected user
+	 * Return the proxy ticket CAS of the connected user.
 	 * @param casTargetService - CAS target service
 	 * @return the proxy ticket CAS
 	 * @throws InfoDomainException 
 	 */
-	public String getUserProxyTicketCAS(String casTargetService) throws InfoDomainException;
+	String getUserProxyTicketCAS(String casTargetService) throws InfoDomainException;
 
 	/**
-	 * Return true if the connected user of the is in the "group" defined in the external service
+	 * Return true if the connected user of the is in the "group" defined in the external service.
 	 * @param group
 	 * @return true or false
 	 * @throws InternalExternalException 
 	 */
-	public boolean isUserInGroup(String group) throws InternalExternalException;
+	boolean isUserInGroup(String group) throws InternalExternalException;
 
 	/**
-	 * Get attribute value from the external service for connected user
+	 * Get attribute value from the external service for connected user.
 	 * @param attribute
 	 * @return the attribute value defined by "attributeNAme"
 	 * @throws InternalExternalException 
 	 * @throws NoExternalValueException 
 	 */
-	public String getUserAttribute(String attribute) throws NoExternalValueException, InternalExternalException;
+	String getUserAttribute(String attribute) throws NoExternalValueException, InternalExternalException;
 
 	/**
-	 * Get preference value by given the preference name from channel instantiation
+	 * Get preference value by given the preference name from channel instantiation.
 	 * @param name name of the preference
 	 * @return the value of the preference
 	 * @throws InternalExternalException 
 	 * @throws NoExternalValueException 
 	 */
-	public String getPreferences(String name) throws NoExternalValueException, InternalExternalException;
+	String getPreferences(String name) throws NoExternalValueException, InternalExternalException;
 
 }

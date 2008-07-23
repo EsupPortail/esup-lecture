@@ -12,7 +12,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 /**
  * Class that contains features of a managed element needed to be computed
  * because of inheritance rules between managedElement and managedElementProfile :
- * Interested feature is : visibility
+ * Interested feature is : visibility.
  * @author gbouteil
  * @see ManagedElementFeatures
  *
@@ -22,37 +22,39 @@ public abstract class ManagedElementFeatures {
 	/*
 	 *********************** PROPERTIES**************************************/ 
 	/**
-	 * Log instance 
+	 * Log instance. 
 	 */
-	protected static final Log log = LogFactory.getLog(ManagedElementFeatures.class);
+	protected static final Log LOG = LogFactory.getLog(ManagedElementFeatures.class);
+	/**
+	 * Managed element profile needing these features.
+	 */
+	protected ManagedElementProfile mep;
+	
 	/**
 	 * Visibility rights for groups on the managed element
-	 * Its values depends on trustCategory parameter 
+	 * Its values depends on trustCategory parameter. 
 	 */
 	private VisibilitySets visibility;
 	/**
 	 * Indicates if activeFeatures can be used or not :
 	 *  - false : features are not computed, they can't be used
-	 *  - true : features are computed, they can be used
+	 *  - true : features are computed, they can be used.
  	 */
 	private boolean isComputed = false;
 	
-	/**
-	 * Managed element profile needing these features
-	 */
-	protected ManagedElementProfile mep;
+
 	
 	
 	/*
 	 ********************* INITIALIZATION **************************************/
 	
 	/** 
-	 * Constructor
+	 * Constructor.
 	 * @param mep Managed element profile needing these features
 	 */
-	protected ManagedElementFeatures(ManagedElementProfile mep){
-		if (log.isDebugEnabled()) {
-			log.debug("ManagedElementFeatures(" + mep.getId() + ")");
+	protected ManagedElementFeatures(final ManagedElementProfile mep) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("ManagedElementFeatures(" + mep.getId() + ")");
 		}
 		this.mep = mep;
 	}
@@ -64,9 +66,9 @@ public abstract class ManagedElementFeatures {
 	 * Compute features.
 	 * @throws CategoryNotLoadedException 
 	 */
-	protected void compute() throws CategoryNotLoadedException   {
-		if (log.isDebugEnabled()) {
-			log.debug("compute()");
+	protected void compute() throws CategoryNotLoadedException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("compute()");
 		}
 		mep.computeFeatures();
 		isComputed = true;
@@ -78,8 +80,8 @@ public abstract class ManagedElementFeatures {
 	 * @param visib the visibility feature to update
 	 */
 	protected void update(final VisibilitySets visib) {
-		if (log.isDebugEnabled()) {
-			log.debug("update(visibility)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("update(visibility)");
 		}
 		this.visibility = visib;
 	}
@@ -95,7 +97,7 @@ public abstract class ManagedElementFeatures {
 			} catch (CategoryNotLoadedException e) {
 				String errorMsg = "Impossible to compute features on element " 
 					+ mep.getId() + "because Category is not loaded";
-				log.error(errorMsg);
+				LOG.error(errorMsg);
 				throw e;
 			}
 		}

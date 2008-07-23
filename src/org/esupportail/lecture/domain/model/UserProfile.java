@@ -146,8 +146,8 @@ public class UserProfile {
 			try {
 				updateCustomContextsForOneManagedCategory(categoryId, ex);
 			} catch (CategoryNotLoadedException e) {
-				// Dans ce cas : la managedCategory n'est pointé par aucun 
-				// context correspondant à des customContext du userProfile => supression ?
+				// Dans ce cas : la managedCategory n'est pointï¿½ par aucun 
+				// context correspondant ï¿½ des customContext du userProfile => supression ?
 				removeCustomManagedCategoryIfOrphan(categoryId);
 				throw new CategoryOutOfReachException("ManagedCategory " + categoryId 
 						+ "is not refered by any customContext in userProfile " + getUserId());
@@ -676,12 +676,5 @@ public class UserProfile {
 		}
 		return true;
 	}
-
-
-	
-
-	
-
-
 	
 }

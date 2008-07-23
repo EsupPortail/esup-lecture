@@ -90,8 +90,10 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @param ex
 	 * @throws SourceTimeOutException 
 	 * @throws CategoryNotLoadedException 
+	 * @throws InfoDomainException 
 	 */
-	protected abstract void loadSource(ExternalService ex) throws SourceTimeOutException, CategoryNotLoadedException, InfoDomainException ; 
+	protected abstract void loadSource(ExternalService ex) 
+	throws SourceTimeOutException, CategoryNotLoadedException, InfoDomainException ; 
 	
 	
 	/**
@@ -104,6 +106,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @throws Xml2HtmlException
 	 * @throws SourceTimeOutException 
 	 * @throws CategoryNotLoadedException 
+	 * @throws InfoDomainException 
 	 */
 	protected List<Item> getItems(final ExternalService ex) 
 			throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
@@ -123,25 +126,25 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @param simpleId = interneId for a personal | fileId for a managed	  
 	 * @return ID made from the three parameters
 	 */
-	protected String makeId(String type,String parentId,String simpleId){
-	   	if (LOG.isDebugEnabled()){
-    		LOG.debug("id="+this.id+" - makeId("+type+","+parentId+","+simpleId+")");
+	protected String makeId(final String type, final String parentId, final String simpleId) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.id + " - makeId(" + type + "," + parentId + "," + simpleId + ")");
     	}
-		id = type+":"+parentId+":"+simpleId;
+		id = type + ":" + parentId + ":" + simpleId;
 		return id;
 	}
 	
 	/**
-	 * Returns source of this managed source profile (if loaded)
+	 * Returns source of this managed source profile (if loaded).
 	 * @return source
 	 * @throws SourceNotLoadedException 
 	 */
 	public Source getElement() throws SourceNotLoadedException {
-	   	if (LOG.isDebugEnabled()){
-    		LOG.debug("id="+this.id+" - getElement()");
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.id + " - getElement()");
     	}
-		if (source == null){
-			String errorMsg = "Source "+id+" is not loaded in profile";
+		if (source == null) {
+			String errorMsg = "Source " + id + " is not loaded in profile";
 			LOG.error(errorMsg);
 			throw new SourceNotLoadedException(errorMsg);
 		}
@@ -153,7 +156,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 *************************** ACCESSORS ******************************** */	
 
 	/**
-	 * Returns the source profile Id
+	 * Returns the source profile Id.
 	 * @return id
 	 */
 	public String getId() {

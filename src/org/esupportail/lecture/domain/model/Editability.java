@@ -6,24 +6,24 @@
 package org.esupportail.lecture.domain.model;
 
 /**
- * Editability mode of an element 
+ * Editability mode of an element.
  * @author gbouteil
  *
  */
 public enum Editability { 
 	/**
-	 * no editibility
+	 * no editibility.
 	 */
 	NO,
 	/**
-	 * Only personal element creation
+	 * Only personal element creation.
 	 */
 	PERSONAL,
 	/**
-	 * Only managed element importation
+	 * Only managed element importation.
 	 */
 	MANAGED,
 	/**
-	 * Personal element creation and managed element importaion
+	 * Personal element creation and managed element importaion.
 	 */
 	ALL }

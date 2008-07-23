@@ -192,7 +192,7 @@ public class FacadeService implements InitializingBean {
 	 * @throws SourceTimeOutException 
 	 */
 	public List<ItemBean> getItems(final String uid, final String sourceId) 
-			throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, 
+	throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, 
 			CategoryNotLoadedException, SourceTimeOutException {
 		return domainService.getItems(uid, sourceId, externalService);
 	}
@@ -299,10 +299,9 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryTimeOutException 
 	 */
 	public List<SourceBean> getVisibleSources(final String uid, final String categoryId) 
-			throws ManagedCategoryProfileNotFoundException, CategoryProfileNotFoundException,
-			CategoryOutOfReachException, CategoryNotVisibleException, 
-				InternalDomainException, UserNotSubscribedToCategoryException, 
-				CategoryTimeOutException {
+	throws ManagedCategoryProfileNotFoundException, CategoryProfileNotFoundException,
+	CategoryOutOfReachException, CategoryNotVisibleException, InternalDomainException, 
+	UserNotSubscribedToCategoryException, CategoryTimeOutException {
 		return domainService.getVisibleSources(uid, categoryId, externalService);
 	}
 	
@@ -319,7 +318,9 @@ public class FacadeService implements InitializingBean {
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
 	public void subscribeToCategory(final String uid, final String contextId, final String categoryId) 
-		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException {
+	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
+	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
+	InternalDomainException {
 		domainService.subscribeToCategory(uid, contextId, categoryId, externalService);
 	}
 	
@@ -340,10 +341,10 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryTimeOutException 
 	 */
 	public void subscribeToSource(final String uid, final String categorieId, final String sourceId) 
-			throws ManagedCategoryProfileNotFoundException, CategoryProfileNotFoundException, 
-			CategoryOutOfReachException, UserNotSubscribedToCategoryException, 
-			CategoryNotVisibleException, SourceProfileNotFoundException,
-			SourceNotVisibleException, InternalDomainException, CategoryTimeOutException {
+	throws ManagedCategoryProfileNotFoundException, CategoryProfileNotFoundException, 
+	CategoryOutOfReachException, UserNotSubscribedToCategoryException, 
+	CategoryNotVisibleException, SourceProfileNotFoundException, SourceNotVisibleException, 
+	InternalDomainException, CategoryTimeOutException {
 		domainService.subscribeToSource(uid, categorieId, sourceId, externalService);
 	}
 	
@@ -361,8 +362,9 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryObligedException 
 	 */
 	public void unsubscribeToCategory(final String uid, final String contextId, final String categoryId) 
-		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, CategoryTimeOutException, 
-		CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException, CategoryObligedException {
+	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
+	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
+	InternalDomainException, CategoryObligedException {
 		domainService.unsubscribeToCategory(uid, contextId, categoryId, externalService);
 	}
 
@@ -380,9 +382,9 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryTimeOutException 
 	 */
 	public void unsubscribeToSource(final String uid, final String categorieId, final String sourceId) 
-			throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
-			CategoryProfileNotFoundException, CategoryOutOfReachException, 
-			SourceObligedException, InternalDomainException, CategoryTimeOutException {
+	throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
+	CategoryProfileNotFoundException, CategoryOutOfReachException, SourceObligedException, 
+	InternalDomainException, CategoryTimeOutException {
 		domainService.unsubscribeToSource(uid, categorieId, sourceId, externalService);
 	}
 	

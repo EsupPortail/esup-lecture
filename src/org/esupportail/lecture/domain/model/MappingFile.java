@@ -8,14 +8,12 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.exceptions.domain.ChannelConfigException;
 import org.esupportail.lecture.exceptions.domain.MappingFileException;
 
 
@@ -31,42 +29,42 @@ public class MappingFile {
 	/*
 	 *********************** PROPERTIES**************************************/ 
 	/**
-	 * Log instance 
+	 * Log instance. 
 	 */
-	protected static final Log log = LogFactory.getLog(MappingFile.class);
+	protected static final Log LOG = LogFactory.getLog(MappingFile.class);
 	
 	/**
-	 * Instance of this class
+	 * Instance of this class.
 	 */
-	private static MappingFile singleton = null;
+	private static MappingFile singleton;
 	
 	/**
-	 * XML file loaded
+	 * XML file loaded.
 	 */
 	private static XMLConfiguration xmlFile;
 	
 	/**
-	 *  relative classpath of the file to load
+	 *  relative classpath of the file to load.
 	 */
 	private static String filePath;
 	
 	/**
-	 *  Base path of the file to load
+	 *  Base path of the file to load.
 	 */
 	private static String fileBasePath;
 	
 	/**
-	 * Last modified time of the file to load
+	 * Last modified time of the file to load.
 	 */
 	private static long fileLastModified;
 
 	/**
-	 * Indicates if file has been modified since the last getInstance() calling
+	 * Indicates if file has been modified since the last getInstance() calling.
 	 */
 	private static boolean modified = false;
 	
 	/**
-	 * List of loaded mappings for file to be set in channel
+	 * List of loaded mappings for file to be set in channel.
 	 */
 	private static List<Mapping> mappingList;
 	
@@ -74,12 +72,12 @@ public class MappingFile {
 	 ************************** INIT *********************************/	
 	
 	/**
-	 * Private Constructor: load xml mapping file 
+	 * Private Constructor: load xml mapping file. 
 	 * @throws MappingFileException
 	 */
 	private MappingFile() throws MappingFileException {
-		if (log.isDebugEnabled()){
-			log.debug("MappingFile()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("MappingFile()");
 		}
 		
 		try {
@@ -92,8 +90,8 @@ public class MappingFile {
 
 		} catch (ConfigurationException e) {
 			String errorMsg = "Impossible to load XML Mapping file (mappings.xml)";
-			log.error(errorMsg);
-			throw new MappingFileException(errorMsg,e);	
+			LOG.error(errorMsg);
+			throw new MappingFileException(errorMsg, e);	
 		} 
 	}	
 
@@ -123,20 +121,20 @@ public class MappingFile {
 	 * @see MappingFile#singleton
 	 */
 	protected static synchronized MappingFile getInstance() throws MappingFileException  {
-		if (log.isDebugEnabled()) {
-			log.debug("getInstance()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getInstance()");
 		}
 		
 		if (filePath == null) {
 			String errorMsg = "Mapping file path not defined, see in domain.xml file.";
-			log.error(errorMsg);
+			LOG.error(errorMsg);
 			throw new MappingFileException(errorMsg);
 		}
 		if (singleton == null) {
 			URL url = MappingFile.class.getResource(filePath);
 			if (url == null) {
 				String errorMsg = "Mapping config file: " + filePath + " not found.";
-				log.error(errorMsg);
+				LOG.error(errorMsg);
 				throw new MappingFileException(errorMsg);
 			}
 			File mappingFile = new File(url.getFile());
@@ -144,20 +142,20 @@ public class MappingFile {
 			fileLastModified = mappingFile.lastModified();		
 			singleton = new MappingFile();
 		} else {
-			if (log.isDebugEnabled()) {
-				log.debug("getInstance :: " + "singleton not null ");
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("getInstance :: " + "singleton not null ");
 			}
 			
 			File mappingFile = new File(fileBasePath);
 			long newDate = mappingFile.lastModified();
 			if (fileLastModified < newDate) {
-				if (log.isDebugEnabled()) {
-					log.debug("getInstance :: " + "Mappings reloading");
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("getInstance :: " + "Mappings reloading");
 				}
 				fileLastModified = newDate;
 				singleton = new MappingFile();
 			} else {
-				log.debug("getInstance :: mappings not reloaded");
+				LOG.debug("getInstance :: mappings not reloaded");
 			}
 		}
 		return singleton;
@@ -168,8 +166,8 @@ public class MappingFile {
 	 * @throws MappingFileException 
 	 */
 	private static synchronized void checkXmlFile() throws MappingFileException {
-		if (log.isDebugEnabled()) {
-			log.debug("checkXmlFile()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("checkXmlFile()");
 		}
 	
 		int nbMappings = xmlFile.getMaxIndex("mapping") + 1;
@@ -184,11 +182,15 @@ public class MappingFile {
 			String xmlType = xmlFile.getString(pathMapping + "[@xmlType]");
 			String rootElement = xmlFile.getString(pathMapping + "[@rootElement]");
 			
-			if (sourceURL == null && dtd == null && xmlns == null && xmlType == null && rootElement == null) {
-				String errorMsg = "In mappingFile, mapping n°" + i 
+			if (sourceURL == null && 
+					dtd == null && 
+					xmlns == null && 
+					xmlType == null && 
+					rootElement == null) {
+				String errorMsg = "In mappingFile, mapping nï¿½" + i 
 					+ "is empty, you must declare sourceURL or dtd or " 
 					+ "xmlns or xmltype or rootElement in a mapping.";
-				log.error(errorMsg);
+				LOG.error(errorMsg);
 				throw new MappingFileException(errorMsg);
 			}
 			
@@ -227,14 +229,14 @@ public class MappingFile {
 			
 			//loop on XPathNameSpace
 			int nbXPathNameSpaces = xmlFile.getMaxIndex(pathMapping + ".XPathNameSpace") + 1;
-			HashMap<String, String> XPathNameSpaces = new HashMap<String, String>();
+			HashMap<String, String> xPathNameSpaces = new HashMap<String, String>();
 			for (int j = 0; j < nbXPathNameSpaces; j++) {
 				String pathXPathNameSpace = pathMapping + ".XPathNameSpace("+j+")";
 				String prefix = xmlFile.getString(pathXPathNameSpace + "[@prefix]");
 				String uri = xmlFile.getString(pathXPathNameSpace + "[@uri]");
-				XPathNameSpaces.put(prefix, uri);
+				xPathNameSpaces.put(prefix, uri);
 			}
-			m.setXPathNameSpaces(XPathNameSpaces);
+			m.setXPathNameSpaces(xPathNameSpaces);
 
 			mappingList.add(m);
 		}
@@ -245,8 +247,8 @@ public class MappingFile {
 	 * @param channel of the loading
 	 */
 	protected static synchronized void loadMappings(final Channel channel) {
-		if (log.isDebugEnabled()) {
-			log.debug("loadMappings()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("loadMappings()");
 		}
 		
 		channel.setMappingList(mappingList);
@@ -256,13 +258,11 @@ public class MappingFile {
 	 * Initialize hash mappings in channel.
 	 * @param channel of the initialization
 	 */
-	protected static synchronized void initChannelHashMappings(final Channel channel){
-		if (log.isDebugEnabled()) {
-			log.debug("initChannelHashMappings()");
+	protected static synchronized void initChannelHashMappings(final Channel channel) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("initChannelHashMappings()");
 		}
-		Iterator<Mapping> iterator = channel.getMappingList().iterator();
-		for (Mapping m = null; iterator.hasNext();) {
-			m = iterator.next();
+		for (Mapping m : channel.getMappingList()) {
 			channel.addMapping(m);
 			
 //			String sourceURL = m.getSourceURL();
@@ -319,8 +319,8 @@ public class MappingFile {
 	 * @see MappingFile#filePath
 	 */
 	protected static synchronized void setMappingFilePath(final String mappingFilePath) {
-		if (log.isDebugEnabled()) {
-			log.debug("setMappingFilePath(" + mappingFilePath + ")");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("setMappingFilePath(" + mappingFilePath + ")");
 		}
 		MappingFile.filePath = mappingFilePath;
 	}

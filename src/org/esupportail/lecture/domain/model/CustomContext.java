@@ -20,15 +20,11 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
-import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
-import org.esupportail.lecture.exceptions.domain.SourceObligedException;
-import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 
 /**
@@ -158,11 +154,12 @@ public class CustomContext implements CustomElement {
 	 * @return list of ProfileAvailability
 	 * @throws ContextNotFoundException 
 	 */
-	public List<ProfileAvailability> getVisibleCategories(ExternalService ex) throws ContextNotFoundException  {
+	public List<ProfileAvailability> getVisibleCategories(final ExternalService ex) 
+	throws ContextNotFoundException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + getElementId() + " - getVisibleCategories(ex)");
 		}
-		// TODO (GB later) à redéfinir avec les custom personnal 
+		// TODO (GB later) ï¿½ redï¿½finir avec les custom personnal 
 		// category : en fonction de l'ordre d'affichage peut etre.
 		Context cxt = getContext();
 		List<ProfileVisibility> couplesVisib;
@@ -192,7 +189,7 @@ public class CustomContext implements CustomElement {
 	}
 	
 	/**
-	 * after checking visibility rights, subcribe user to the category categoryId in this CustomContext
+	 * after checking visibility rights, subcribe user to the category categoryId in this CustomContext.
 	 * @param categoryId category ID
 	 * @throws ContextNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
@@ -215,14 +212,14 @@ public class CustomContext implements CustomElement {
 			catProfile = context.getCatProfileById(categoryId);
 			mode = catProfile.updateCustomContext(this, ex);
 		} catch (CategoryNotLoadedException e1) {
-			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
+			// Dans ce cas : la mise ï¿½ jour du customContext n'a pas ï¿½tï¿½ effectuï¿½e
 			try {
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), ex);
 				catProfile = context.getCatProfileById(categoryId);
 				mode = catProfile.updateCustomContext(this, ex);
 			} catch (CategoryNotLoadedException e2) {
-				// Dans ce cas : la managedCategory n'est pointé par aucun 
-				// context correspondant à des customContext du userProfile => supression ?
+				// Dans ce cas : la managedCategory n'est pointï¿½ par aucun 
+				// context correspondant ï¿½ des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
 				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
 					+ "is not refered by any customContext in userProfile "
@@ -264,7 +261,7 @@ public class CustomContext implements CustomElement {
 	}
 	
 	/**
-	 * after checking visibility rights, unsubcribe user to the category categoryId in this CustomContext
+	 * after checking visibility rights, unsubcribe user to the category categoryId in this CustomContext.
 	 * @param categoryId category ID
 	 * @param externalService
 	 * @throws ContextNotFoundException 
@@ -288,14 +285,14 @@ public class CustomContext implements CustomElement {
 			catProfile = context.getCatProfileById(categoryId);
 			mode = catProfile.updateCustomContext(this, externalService);
 		} catch (CategoryNotLoadedException e1) {
-			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
+			// Dans ce cas : la mise ï¿½ jour du customContext n'a pas ï¿½tï¿½ effectuï¿½e
 			try {
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), externalService);
 				catProfile = context.getCatProfileById(categoryId);
 				mode = catProfile.updateCustomContext(this, externalService);
 			} catch (CategoryNotLoadedException e2) {
-				// Dans ce cas : la managedCategory n'est pointé par aucun 
-				// context correspondant à des customContext du userProfile => supression ?
+				// Dans ce cas : la managedCategory n'est pointï¿½ par aucun 
+				// context correspondant ï¿½ des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
 				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
 					+ "is not refered by any customContext in userProfile "
@@ -506,7 +503,7 @@ public class CustomContext implements CustomElement {
 	 */
 	public boolean containsCustomManagedCategory(final String categoryId) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug(ID + elementId + " - containsCustomManagedCategory(" + categoryId+")");
+			LOG.debug(ID + elementId + " - containsCustomManagedCategory(" + categoryId + ")");
 		}
 		return subscriptions.containsKey(categoryId);
 		

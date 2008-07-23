@@ -14,12 +14,12 @@ public class ProfileAvailability {
 	/* 
 	 *************************** PROPERTIES ******************************** */
 	/**
-	 * The profile interested 
+	 * The profile interested.
 	 */
 	private ElementProfile profile;
 	
 	/**
-	 * the availability mode of the profile
+	 * the availability mode of the profile.
 	 */
 	private AvailabilityMode mode;
 
@@ -27,11 +27,11 @@ public class ProfileAvailability {
 	 *************************** INIT ************************************** */
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param elt
 	 * @param m
 	 */
-	public ProfileAvailability(ElementProfile elt,AvailabilityMode m){
+	public ProfileAvailability(final ElementProfile elt, final AvailabilityMode m) {
 		this.profile = elt;
 		this.mode = m;
 	}
@@ -51,7 +51,7 @@ public class ProfileAvailability {
 	/**
 	 * @param mode
 	 */
-	protected void setMode(AvailabilityMode mode) {
+	protected void setMode(final AvailabilityMode mode) {
 		this.mode = mode;
 	}
 
@@ -65,7 +65,7 @@ public class ProfileAvailability {
 	/**
 	 * @param profile
 	 */
-	protected void setProfile(ElementProfile profile) {
+	protected void setProfile(final ElementProfile profile) {
 		this.profile = profile;
 	}
 }

@@ -142,7 +142,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	/**
 	 * @param profile 
 	 * @return a managedCategory
-	 * @throws TimeoutException 
+	 * @throws InfoDaoException 
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(ManagedCategoryProfile)
 	 */
 	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InfoDaoException {
@@ -152,7 +152,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	/**
 	 * get a managed category from the web without cache.
 	 * @param profile ManagedCategoryProfile of Managed category to get
-	 * @param creds - user and password. null for anonymous access
+	 * @param ptCas - user and password. null for anonymous access
 	 * @return Managed category
 	 * @throws TimeoutException 
 	 */
@@ -250,7 +250,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	/**
 	 * get a source form the Web (without cache).
 	 * @param sourceProfile source profile of source to get
-	 * @param creds - user and password. null for anonymous access
+	 * @param ptCas - user and password. null for anonymous access
 	 * @return the source
 	 * @throws InfoDaoException 
 	 */

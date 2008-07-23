@@ -11,7 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * A mapping provides a xsltURL and xpath to source view and item access
+ * A mapping provides a xsltURL and xpath to source view and item access.
  * A mapping can have several entries (at least one):
  * - sourceURL
  * - dtd
@@ -28,47 +28,48 @@ public class Mapping {
 	 ************************** PROPERTIES ******************************** */	
 
 	/**
-	 * Log instance
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(Mapping.class);
+	protected static final Log LOG = LogFactory.getLog(Mapping.class);
 	
 	/**
-	 * Source URL
+	 * Source URL.
 	 */
 	private String sourceURL = "";
 	
 	/**
-	 * Name of the dtd
+	 * Name of the dtd.
 	 */
 	private String dtd = "";
 	
 	/**
-	 * Xmlns of the source xml stream
+	 * Xmlns of the source xml stream.
 	 */
 	private String xmlns = "";
 	
 	/**
-	 * Xml type 
+	 * Xml type.
 	 */
 	private String xmlType;
 
 	/**
-	 * Path of the xslt file 
+	 * Path of the xslt file.
 	 */
 	private String xsltUrl = "";
 	
 	/**
-	 * Xpath to get an item in the source xml stream
+	 * Xpath to get an item in the source xml stream.
 	 */
 	private String itemXPath = "";
 
 	/**
-	 * Optionnal : rootElement of the xmlStream (one of these parameter is required : sourceURL, xmlns, xmlType, dtd, rootElement)
+	 * Optionnal : rootElement of the xmlStream
+	 * (one of these parameter is required : sourceURL, xmlns, xmlType, dtd, rootElement).
 	 */
 	private String rootElement;
 	
 	/**
-	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI)
+	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI).
 	 */
 	private HashMap<String, String> XPathNameSpaces = new HashMap<String, String>();
 	
@@ -109,7 +110,7 @@ public class Mapping {
 	 ************************** ACCESSORS ******************************** */	
 
 	/**
-	 * Returns the dtd of the mapping
+	 * Returns the dtd of the mapping.
 	 * @return dtd
 	 * @see Mapping#dtd
 	 */
@@ -117,16 +118,16 @@ public class Mapping {
 		return dtd;
 	}
 	/**
-	 * Sets the dtd
+	 * Sets the dtd.
 	 * @param dtd
 	 * @see Mapping#dtd
 	 */
-	synchronized protected void setDtd(String dtd) {
+	protected synchronized  void setDtd(final String dtd) {
 		this.dtd = dtd;
 	}
 
 	/**
-	 * Returns the xslt url
+	 * Returns the xslt url.
 	 * @return xsltUrl
 	 */
 	protected String getXsltUrl() {
@@ -138,7 +139,7 @@ public class Mapping {
 	 * @param xsltUrl xslt URL
 	 * @see Mapping#xsltUrl
 	 */
-	protected void setXsltUrl(String xsltUrl) {
+	protected void setXsltUrl(final String xsltUrl) {
 		this.xsltUrl = xsltUrl;
 	}
 

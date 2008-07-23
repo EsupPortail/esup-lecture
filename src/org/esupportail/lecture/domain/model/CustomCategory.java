@@ -78,7 +78,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryProfileNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
-	public String getName() throws CategoryProfileNotFoundException  {
+	public String getName() throws CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + elementId + " - getName()");
 		}
@@ -137,7 +137,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * Used to remove a subscription or an importation indifferently
 	 * @param profileId the managedSourceProfile ID associated to the CustomManagedSource to remove
 	 */
-	protected abstract void removeCustomManagedSourceFromProfile (final String profileId) ;
+	protected abstract void removeCustomManagedSourceFromProfile(final String profileId);
 	// TODO (GB later) removeCustomPersonalSource())
 	
 	/**
@@ -145,7 +145,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @return the categoryProfile 
 	 * @throws CategoryProfileNotFoundException 
 	 */
-	public abstract CategoryProfile getProfile() throws CategoryProfileNotFoundException ;
+	public abstract CategoryProfile getProfile() throws CategoryProfileNotFoundException;
 	
 	/**
 	 * Return a list of <SourceProfile,AvailabilityMode>.
@@ -240,14 +240,7 @@ public abstract class CustomCategory implements CustomElement {
 		return userProfile;
 	}
 	
-	/**
-	 * Sets userProfile.
-	 * @param userProfile
-	 */
-	private void setUserProfile(final UserProfile userProfile) {
-		this.userProfile = userProfile;
-		//Needed by Hibernate
-	}
+
 	
 	/**
 	 * @return id of the profile category referred by this customCategory

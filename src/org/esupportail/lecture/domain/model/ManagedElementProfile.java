@@ -16,45 +16,46 @@ import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
  *
  */
 interface ManagedElementProfile extends ElementProfile {
-	
-	
-	
+		
 	/**
-	 * Returns access mode of the Element
+	 * Returns access mode of the Element.
 	 * @return access 
 	 * @throws CategoryNotLoadedException 
 	 */
-	public Accessibility getAccess() throws CategoryNotLoadedException; 
+	Accessibility getAccess() throws CategoryNotLoadedException; 
 	
 	/**
-	 * Sets access mode of the Element
+	 * Sets access mode of the Element.
 	 * @param access access groups
 	 */
-	public void setAccess(Accessibility access);
+	void setAccess(Accessibility access);
 
 	/**
-	 * Returns visibility sets of the Element
+	 * Returns visibility sets of the Element.
 	 * @return visibility 
 	 * @throws CategoryNotLoadedException 
 	 */
-	public VisibilitySets getVisibility() throws  CategoryNotLoadedException ;
+	VisibilitySets getVisibility() throws  CategoryNotLoadedException;
+	
 	/**
-	 * Sets visibility sets of the Element
+	 * Sets visibility sets of the Element.
 	 * @param visibility
 	 */
-	public void setVisibility(VisibilitySets visibility);
+	void setVisibility(VisibilitySets visibility);
 
 	/**
-	 * Returns ttl of the Element
+	 * Returns ttl of the Element.
 	 * @return ttl 
 	 * @throws ElementNotLoadedException 
 	 */
-	public int getTtl() throws ElementNotLoadedException;
+	int getTtl() throws ElementNotLoadedException;
+	
 	/**
-	 * Sets ttl of the Element
+	 * Sets ttl of the Element.
 	 * @param ttl
-	 */	
-	public void setTtl(int ttl) ;
+	 */		
+	void setTtl(int ttl);
+	
 	/**
 	 * Sets allowed visibility group of the Element
 	 * @param d allowed group
@@ -91,10 +92,10 @@ interface ManagedElementProfile extends ElementProfile {
 //	public DefinitionSets getVisibilityObliged();
 	/**
 	 * Computes rights on parameters shared between a ManagedElementProfile and its
-	 * ManagedElement (edit, visibility)
+	 * ManagedElement (edit, visibility).
 	 * @throws CategoryNotLoadedException 
 	 */
-	public void computeFeatures() throws CategoryNotLoadedException ;
+	void computeFeatures() throws CategoryNotLoadedException;
 	
 
 }

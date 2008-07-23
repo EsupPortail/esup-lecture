@@ -51,8 +51,8 @@ public class VisibilitySets {
 	 */
 	@SuppressWarnings("deprecation")
 	@Deprecated
-	synchronized protected void checkNamesExistence(){
-	   	if (LOG.isDebugEnabled()){
+	protected synchronized void checkNamesExistence() {
+	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("checkNamesExistence()");
     	}
 		allowed.checkNamesExistence();
@@ -66,7 +66,7 @@ public class VisibilitySets {
 	 * @param ex externalService
 	 * @return visibilityMode 
 	 */
-	synchronized protected VisibilityMode whichVisibility(final ExternalService ex){
+	protected synchronized VisibilityMode whichVisibility(final ExternalService ex){
 		
 		VisibilityMode mode = VisibilityMode.NOVISIBLE;
 		

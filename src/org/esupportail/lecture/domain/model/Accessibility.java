@@ -6,17 +6,17 @@
 package org.esupportail.lecture.domain.model;
 
 /**
- * Access mode of an element
+ * Access mode of an element.
  * @author gbouteil
  *
  */
 public enum Accessibility { 
 	/**
-	 * Public access
+	 * Public access.
 	 */
 	PUBLIC,
 	/**
-	 * Restricted access, by CAS authentification
+	 * Restricted access, by CAS authentification.
 	 */
 	CAS 
 }

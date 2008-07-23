@@ -20,15 +20,15 @@ package org.esupportail.lecture.domain.model;
  */
 public enum ItemDisplayMode {
 	/**
-	 * All items are displayed with no special order 
+	 * All items are displayed with no special order .
 	 */
 	ALL,
 	/**
-	 * only unread items are displayed
+	 * only unread items are displayed.
 	 */
 	UNREAD,
 	/**
-	 * unread items are in first, and read items are at the end
+	 * unread items are in first, and read items are at the end.
 	 */
 	UNREADFIRST
 	

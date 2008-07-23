@@ -23,13 +23,19 @@ import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
  */
 public abstract class Category implements Element, Serializable {
 
-	/*
-	 *************************** PROPERTIES *********************************/	
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * Log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(Category.class);
+	private static final Log LOG = LogFactory.getLog(Category.class);
+	/*
+	 *************************** PROPERTIES *********************************/	
+
+
 	/**
 	 * Name of the category. 
 	 */
@@ -46,13 +52,14 @@ public abstract class Category implements Element, Serializable {
 	/**
 	 * SourcesProfiles contained by this Category.
 	 */
-	private Hashtable<String,SourceProfile> sourceProfilesHash = new Hashtable<String,SourceProfile>();
+	private Hashtable<String, SourceProfile> sourceProfilesHash = new Hashtable<String, SourceProfile>();
 
 	/**
 	 * orderedSourceIDs store SourceID and ordering order in the CategoryProfile definition.
 	 */
 	private Map<String, Integer> orderedSourceIDs = Collections.synchronizedMap(new HashMap<String, Integer>());	
 	
+
 	/*
 	 *************************** INIT *********************************/
 	
@@ -89,9 +96,9 @@ public abstract class Category implements Element, Serializable {
 	
 	
 	/**
-	 * @return Returns the sourceProfilesHash of this category
+	 * @return Returns the sourceProfilesHash of this category.
 	 */
-	protected Hashtable<String,SourceProfile> getSourceProfilesHash() {
+	protected Hashtable<String, SourceProfile> getSourceProfilesHash() {
 		return sourceProfilesHash;
 	}
 
@@ -99,8 +106,8 @@ public abstract class Category implements Element, Serializable {
 	/**
 	 * @param sourceProfilesHash to set.
 	 */
-	public void setSourceProfilesHash(final Hashtable<String,SourceProfile> sourceProfilesHash) {
-		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
+	public void setSourceProfilesHash(final Hashtable<String, SourceProfile> sourceProfilesHash) {
+		// TODO (GB later) revoir la visibilite public qd on crï¿½era les sourcesProfiles avec des daoBeans
 		this.sourceProfilesHash = sourceProfilesHash;
 	}
 	
@@ -120,7 +127,7 @@ public abstract class Category implements Element, Serializable {
 	 * @see Category#name
 	 */
 	public void setName(final String name) {
-		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
+		// TODO (GB later) revoir la visibilite public qd on crï¿½era les sourcesProfiles avec des daoBeans
 		this.name = name;
 	}
 	
@@ -139,7 +146,7 @@ public abstract class Category implements Element, Serializable {
 	 * @see Category#description
 	 */
 	public void setDescription(final String description) {
-		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
+		// TODO (GB later) revoir la visibilite public qd on crï¿½era les sourcesProfiles avec des daoBeans
 		this.description = description;
 	}
 
@@ -160,7 +167,7 @@ public abstract class Category implements Element, Serializable {
 	 * @see Category#profileId
 	 */
 	public void setProfileId(final String profileId) {
-		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
+		// TODO (GB later) revoir la visibilite public qd on crï¿½era les sourcesProfiles avec des daoBeans
 		this.profileId = profileId;
 	}
 

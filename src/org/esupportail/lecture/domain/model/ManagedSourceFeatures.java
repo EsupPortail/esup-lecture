@@ -13,7 +13,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
  * Class that contains features of a source needed to be computed
  * because of inheritance rules between Source and managedSourceProfile,
  * depending on trustCategory parameter :
- * Interested feature are : visibility, access, timeOut
+ * Interested feature are : visibility, access, timeOut.
  * @author gbouteil
  * @see ManagedElementFeatures
  *
@@ -24,15 +24,15 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	 *********************** PROPERTIES**************************************/ 
 	
 	/**
-	 * Log instance 
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(ManagedSourceFeatures.class);
+	protected static final Log LOG = LogFactory.getLog(ManagedSourceFeatures.class);
 	/**
-	 * Access mode on the Source
+	 * Access mode on the Source.
 	 */	
 	private Accessibility access;
 	/**
-	 * timeOut to get the Source
+	 * timeOut to get the Source.
 	 */	
 	private int timeOut;
 	
@@ -41,13 +41,13 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	 ********************* INITIALIZATION **************************************/
 
 	/** 
-	 * Constructor
+	 * Constructor.
 	 * @param msp Managed source profile needing these features
 	 */	
-	protected ManagedSourceFeatures(ManagedSourceProfile msp) {
+	protected ManagedSourceFeatures(final ManagedSourceProfile msp) {
 		super(msp);
-		if (log.isDebugEnabled()){
-			log.debug("ManagedSourceFeatures("+msp.getId()+")");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("ManagedSourceFeatures(" + msp.getId() + ")");
 		}
 	}
 	
@@ -63,8 +63,8 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	 * @param to timeOut to update
 	 */
 	protected void update(final VisibilitySets visib, final Accessibility acces, final int to) {
-		if (log.isDebugEnabled()) {
-			log.debug("update(setVisib,setAccess)");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("update(setVisib,setAccess)");
 		}
 		super.update(visib);
 		access = acces;
@@ -76,8 +76,8 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	 * @throws CategoryNotLoadedException 
 	 */
 	protected Accessibility getAccess() throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()) {
-			log.debug("getAccess()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getAccess()");
 		}
 		if (!super.isComputed()) {
 			try {
@@ -85,7 +85,7 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 			} catch (CategoryNotLoadedException e) {
 				String errorMsg = "Impossible to compute features on element " 
 					+ super.mep.getId() + "because Category is not loaded";
-				log.error(errorMsg);
+				LOG.error(errorMsg);
 				throw e;
 			}
 		}
@@ -97,8 +97,8 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 	 * @throws CategoryNotLoadedException 
 	 */
 	protected int getTimeOut() throws CategoryNotLoadedException {
-		if (log.isDebugEnabled()) {
-			log.debug("getTimeOut()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getTimeOut()");
 		}
 		if (!super.isComputed()) {
 			try {
@@ -106,7 +106,7 @@ public class ManagedSourceFeatures extends ManagedElementFeatures {
 			} catch (CategoryNotLoadedException e) {
 				String errorMsg = "Impossible to compute features on element "
 					+ super.mep.getId() + "because Category is not loaded";
-				log.error(errorMsg);
+				LOG.error(errorMsg);
 				throw e;
 			}
 		}

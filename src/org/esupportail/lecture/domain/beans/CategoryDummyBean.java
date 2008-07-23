@@ -20,6 +20,8 @@ public class CategoryDummyBean extends CategoryBean implements DummyBean {
 	//categoryBean et ctageoryDummyBean �tendent tous les deux une meme classe :
 	// categoryInterBean (par ex) pour assurer que categoryDummyBean a les memes m�thodes
 	// que l'autre
+	// TODO (RB/GB) Revoir le traitement des Dummy (autre que par des ifs) 
+	// pour faire du vrai objet
 	
 	/* 
 	 *************************** PROPERTIES ******************************** */	

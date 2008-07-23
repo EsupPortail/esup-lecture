@@ -6,19 +6,18 @@
 package org.esupportail.lecture.domain.model;
 
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
-import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
@@ -60,7 +59,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * Resolve feature values (edit, visibility) from :
 	 * - managedCategoryProfile features
 	 * - managedCategory features
-	 * - trustCategory parameter 
+	 * - trustCategory parameter.
 	 */
 	private ManagedCategoryFeatures features;
 		
@@ -80,17 +79,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	private VisibilitySets visibility;
 
 	/**
-	 * Ttl of the remote managed category reloading
+	 * Ttl of the remote managed category reloading.
 	 */
 	private int ttl;
 	
 	/**
-	 * timeOut to get the remote managedCategory
+	 * timeOut to get the remote managedCategory.
 	 */
 	private int timeOut;
 
 	/**
-	 * Contexts where these profiles category are referenced
+	 * Contexts where these profiles category are referenced.
 	 */
 	private Set<Context> contextsSet = new HashSet<Context>();
 
@@ -102,10 +101,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	
 	
 	/**
-	 * Constructor 
+	 * Constructor. 
 	 */
 	protected ManagedCategoryProfile() {
-		if (LOG.isDebugEnabled()){
+		if (LOG.isDebugEnabled()) {
 			LOG.debug("ManagedCategoryProfile()");
 		}
 		features = new ManagedCategoryFeatures(this);
@@ -140,7 +139,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 *  Load the category referenced by this ManagedCategoryProfile.
 	 *  @param ex access to externalservice to get proxy ticket CAS
-	 * @throws CategoryTimeOutException 
+	 * @throws InfoDomainException 
 	 */
 	@Override
 	protected synchronized void loadCategory(final ExternalService ex) throws InfoDomainException {
@@ -176,9 +175,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * Evaluate visibility of current user for this managed category.
 	 * Update customContext (belongs to user) if needed :
 	 * add or remove subscription associated with this managedCategoryProfile
+	 * (true if in Obliged or in autoSubscribed, or in Allowed)
 	 * @param ex access to externalService to evaluate visibility
 	 * @param customContext customContext to set up
-	 * @return true if the mcp is visible by the user of the customContext (in Obliged or in autoSubscribed, or in Allowed), else return false 
+	 * @return true if the mcp is visible by the user of the customContext else return false 
 	 * @throws CategoryNotLoadedException 
 	 */
 	private VisibilityMode setUpCustomContextVisibility(final CustomContext customContext,
@@ -192,8 +192,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		 * Algo pour gerer les customCategories :
 		 * ------------------------------------
 		 * user app. obliged => enregistrer la cat dans le user profile + sortir
-		 * user app. autoSub => enregistrer la cat dans le user profile si c'est la première fois + sortir
-		 * user app.allowed => rien à faire + sortir
+		 * user app. autoSub => enregistrer la cat dans le user profile si c'est la premiï¿½re fois + sortir
+		 * user app.allowed => rien ï¿½ faire + sortir
 		 * user n'app. rien => effacer la cat.
 		 */
 
@@ -207,7 +207,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			return mode;
 		}
 		
-		if (mode == VisibilityMode.AUTOSUBSCRIBED){
+		if (mode == VisibilityMode.AUTOSUBSCRIBED) {
 			if (LOG.isTraceEnabled()) {
 				LOG.trace("IsInAutoSubscribed : " + mode);
 			}
@@ -340,7 +340,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * This means that this managedCategoryProfile is declared in context c
 	 * @param c context to add
 	 */
-	protected void addContext(final Context c){
+	protected void addContext(final Context c) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - addContext(" + c.getId() + ")");
 		}
@@ -374,7 +374,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 
 	/**
-	 * Returns the URL of the remote managed category
+	 * Returns the URL of the remote managed category.
 	 * @return urlCategory
 	 */
 	public String getUrlCategory() {

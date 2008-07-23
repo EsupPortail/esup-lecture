@@ -51,10 +51,16 @@ public abstract class Source implements Element, Serializable {
 	/*
 	 *************************** PROPERTIES ******************************** */	
 
+
 	/**
 	 * log instance.
 	 */
 	protected static final Log LOG = LogFactory.getLog(Source.class); 
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * xmlStream (XML content) of the source.
@@ -120,7 +126,7 @@ public abstract class Source implements Element, Serializable {
 	/**
 	 * Items List of this source.
 	 */
-	private List<Item> Items = new ArrayList<Item>();
+	private List<Item> items = new ArrayList<Item>();
 	
 	/*
 	 *************************** INIT ******************************** */	
@@ -251,7 +257,7 @@ public abstract class Source implements Element, Serializable {
 					}
 				}
 				item.setId(hashString.toString());
-				Items.add(item);
+				items.add(item);
 			}
 		} catch (DocumentException e) {
 			String errorMsg = "Error parsing XML content of the source";
@@ -359,7 +365,7 @@ public abstract class Source implements Element, Serializable {
 		if (!isItemComputed) {
 			computeItems();
 		}
-		return Items;
+		return items;
 	}
 	
 	/**

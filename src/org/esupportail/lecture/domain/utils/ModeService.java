@@ -18,14 +18,12 @@ public interface ModeService {
 	 * @param name name of the preference
 	 * @return the value of the preference
 	 * @throws InternalExternalException 
-	 * @throws NoExternalValueException 
 	 */
 	String getPreference(String name) throws InternalExternalException;
 	/**
 	 * Get attribute value from the external service.
 	 * @param attribute
-	 * @return the attribute value defined by "attributeNAme"
-	 * @throws NoExternalValueException 
+	 * @return the attribute value defined by "attributeName"
 	 * @throws InternalExternalException 
 	 */
 	String getUserAttribute(String attribute) throws InternalExternalException;

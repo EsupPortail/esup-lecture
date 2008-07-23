@@ -5,15 +5,10 @@
 */
 package org.esupportail.lecture.domain.model;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
@@ -53,7 +48,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	/**
 	 * Load the category referenced by this CategoryProfile.
 	 * @param ex
-	 * @throws CategoryTimeOutException 
+	 * @throws InfoDomainException 
 	 */
 	protected abstract void loadCategory(ExternalService ex)  throws InfoDomainException;
 	
@@ -62,16 +57,16 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * the name of this CategoryProfile.
 	 * @return name
 	 */
-	public String getName(){
-		if (LOG.isDebugEnabled()){
-			LOG.debug("id="+id+" - getName()");
+	public String getName() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + id + " - getName()");
 		}
-		String currentName ;
+		String currentName;
 		
 		try {
 			currentName = getElement().getName();
-		}catch (CategoryNotLoadedException e) {
-			LOG.error("Category "+id+" is not loaded");
+		} catch (CategoryNotLoadedException e) {
+			LOG.error("Category " + id + " is not loaded");
 			currentName = this.name;
 		}
 		return currentName;
@@ -82,8 +77,8 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @throws CategoryNotLoadedException
 	 */
 	public String getDescription() throws CategoryNotLoadedException {
-		if (LOG.isDebugEnabled()){
-			LOG.debug("id="+id+" - getDescription()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + id + " - getDescription()");
 		}
 		return getElement().getDescription();
 		
@@ -94,11 +89,11 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @throws CategoryNotLoadedException 
 	 */
 	public Category getElement() throws CategoryNotLoadedException {
-		if (LOG.isDebugEnabled()){
-			LOG.debug("id="+id+" - getElement()");
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + id + " - getElement()");
 		}
-		if (category==null){
-			String errorMsg = "Category "+id+" is not loaded in profile";
+		if (category == null) {
+			String errorMsg = "Category " + id + " is not loaded in profile";
 			LOG.error(errorMsg);
 			throw new CategoryNotLoadedException(errorMsg);
 		}
@@ -106,14 +101,15 @@ public abstract class CategoryProfile implements ElementProfile {
 	}
 	
 	/**
-	 * Returns the sourceProfile identified by id, accessible by CategoryProfile
-	 * (Defined in Category referred by this categoryProfile
+	 * Returns the sourceProfile identified by id, accessible by CategoryProfile.
+	 * (Defined in Category referred by this categoryProfile)
 	 * @param sourceProfileId id of the sourceProfile
 	 * @return the sourceProfile
 	 * @throws CategoryNotLoadedException 
 	 * @throws SourceProfileNotFoundException 
 	 */
-	protected abstract SourceProfile getSourceProfileById(String sourceProfileId) throws CategoryNotLoadedException, SourceProfileNotFoundException ;
+	protected abstract SourceProfile getSourceProfileById(String sourceProfileId) 
+	throws CategoryNotLoadedException, SourceProfileNotFoundException;
 
 	
 	
@@ -123,16 +119,16 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		
 		String string = "";
 		
 		/* The category profile name */
-		string += "	name : "+ name +"\n";
+		string += "	name : " + name + "\n";
 		
 	
 		/* The category profile id */
-		string += "	id : "+ id +"\n";
+		string += "	id : " + id + "\n";
 		
 		return string;
 	}

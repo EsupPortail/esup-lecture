@@ -13,7 +13,7 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
 /**
  * Regular definition of a group : 
- * Every user that "attribute x" has "value Y"
+ * Every user that "attribute x" has "value Y".
  * @author gbouteil
  *
  */
@@ -22,17 +22,17 @@ public class RegularOfSet {
 	/*
 	 *************************** PROPERTIES ******************************** */	
 	/**
-	 * Log instance 
+	 * Log instance.
 	 */
-	protected static final Log log = LogFactory.getLog(RegularOfSet.class);
+	protected static final Log LOG = LogFactory.getLog(RegularOfSet.class);
 	
 	/**
-	 * attribute required value 
+	 * attribute required value.
 	 */
 	private String attribute = "";
 	
 	/**
-	 * Value required by the attribute to be in the group that is defined
+	 * Value required by the attribute to be in the group that is defined.
 	 */
 	private String value = "";
 
@@ -42,23 +42,24 @@ public class RegularOfSet {
 	
 	/**
 	 * Return true if user checks this regular, else returns false
-	 * (returns false when no answer or error from externalService)
+	 * (returns false when no answer or error from externalService).
 	 * @param ex access to externalService
 	 * @return boolean
 	 */
-	protected boolean evaluate(ExternalService ex) {
-		if (log.isDebugEnabled()){
-			log.debug("evaluate(externalService)");
+	protected boolean evaluate(final ExternalService ex) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("evaluate(externalService)");
 		}
 		
 		String userAttributeValue;
 		try {
 			userAttributeValue = ex.getUserAttribute(attribute);
 		} catch (NoExternalValueException e) {
-			log.warn("User attribute evaluation impossible (NoExternalValueException) : "+e.getMessage());
+			LOG.warn("User attribute evaluation impossible (NoExternalValueException) : " + e.getMessage());
 			return false;
 		} catch (InternalExternalException e) {
-			log.error("User attribute evaluation impossible (external service unavailable) : "+e.getMessage());
+			LOG.error("User attribute evaluation impossible (external service unavailable) : "
+					+ e.getMessage());
 			// TODO (GB later) revoir ?
 			return false;
 		}
@@ -74,15 +75,15 @@ public class RegularOfSet {
 	/**
 	 * Check existence of attributes names used in regular definition
 	 * Not used for the moment : see later
-	 * Not ready to use without modification
+	 * Not ready to use without modification.
 	 * @deprecated
 	 */
 	@Deprecated
-	protected void checkNamesExistence(){
-	   	if (log.isDebugEnabled()){
-    		log.debug("checkNamesExistence()");
+	protected void checkNamesExistence() {
+	   	if (LOG.isDebugEnabled()) {
+	   		LOG.debug("checkNamesExistence()");
     	}
-		// TODO (GB later) vérification de l'existence de l'attribut dans le portail :impossible
+		// TODO (GB later) vï¿½rification de l'existence de l'attribut dans le portail :impossible
 	   	// on ne peut verifier que sa declaration dans le portlet.xml ? + log.warn si pb
 	}
 	
@@ -90,11 +91,11 @@ public class RegularOfSet {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString(){
+	public String toString() {
 		
-		String string ="";
-		string += "attribute : "+ attribute;
-		string += ", value : "+ value ;
+		String string = "";
+		string += "attribute : " + attribute;
+		string += ", value : " + value;
 		
 		return string;
 	}
@@ -103,7 +104,7 @@ public class RegularOfSet {
 	 *************************** ACCESSORS ******************************** */	
 
 	/**
-	 * Returns attribute name
+	 * Returns attribute name.
 	 * @return attribute
 	 * @see RegularOfSet#attribute
 	 */

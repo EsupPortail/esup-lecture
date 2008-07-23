@@ -9,7 +9,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * Class that contains features of category needed to be computed
+ * Class that contains features of category needed to be computed.
  * because of inheritance rules between managedCategory and managedCategoryProfile :
  * Interested features are : edit, visibility
  * @author gbouteil 
@@ -21,9 +21,9 @@ public class ManagedCategoryFeatures extends ManagedElementFeatures {
 	 *********************** PROPERTIES**************************************/ 
 	
 	/**
-	 * Log instance 
+	 * Log instance. 
 	 */
-	protected static final Log log = LogFactory.getLog(ManagedCategoryFeatures.class);
+	protected static final Log LOG = LogFactory.getLog(ManagedCategoryFeatures.class);
 	
 // Used later	
 //	/**
@@ -38,10 +38,10 @@ public class ManagedCategoryFeatures extends ManagedElementFeatures {
 	 ********************* INIT *********************************************/
 	
 	/** 
-	 * Constructor
+	 * Constructor.
 	 * @param mcp  Managed category profile concerned by these features
 	 */
-	protected ManagedCategoryFeatures(ManagedCategoryProfile mcp){
+	protected ManagedCategoryFeatures(final ManagedCategoryProfile mcp) {
 		super(mcp);
 	}
 
@@ -49,14 +49,14 @@ public class ManagedCategoryFeatures extends ManagedElementFeatures {
 	 *********************** METHODS **************************************/
 	
 	/**
-	 * Used to update features directly, without any computing
-	 * It only sets value in parameter
+	 * Used to update features directly, without any computing.
+	 * It only sets value in parameter.
 	 * @param visibility the visibility feature to update
 	 */
 	@Override
-	protected void update(/*Editability edit, */ VisibilitySets visibility) {
-		if (log.isDebugEnabled()){
-			log.debug("update(visibility)");
+	protected void update(/*Editability edit, */ final VisibilitySets visibility) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("update(visibility)");
 		}
 		super.update(visibility);
 		//this.edit = edit;

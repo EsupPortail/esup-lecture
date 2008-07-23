@@ -68,10 +68,7 @@ import org.springframework.util.Assert;
  * automatic research, it is leading by higher layer.
  * @author gbouteil
  */
-public class DomainServiceImpl implements DomainService, InitializingBean {
-	//TODO (GB <-- RB) CheckStyle ? 
-	// Note RB : j'ai fait plein de petites modifs pour avoir beaucoup moins de warning
-	
+public class DomainServiceImpl implements DomainService, InitializingBean {	
 	/*
 	 ************************** PROPERTIES ******************************** */	
 	
@@ -178,7 +175,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param ex externalService
 	 * @return a list of CategoryBean
 	 * @throws ContextNotFoundException
-	 * @see org.esupportail.lecture.domain.DomainService#getAvailableCategories(java.lang.String, java.lang.String, ExternalService)
+	 * @see org.esupportail.lecture.domain.DomainService#getAvailableCategories(
+	 *   java.lang.String, java.lang.String, ExternalService)
 	 */
 	public List<CategoryBean> getAvailableCategories(final String userId, final String contextId, 
 			final ExternalService ex) 
@@ -228,10 +226,12 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryOutOfReachException 
-	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(
+	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<SourceBean> getAvailableSources(final String uid, final String categoryId, final ExternalService ex) 
-			throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
+	public List<SourceBean> getAvailableSources(
+			final String uid, final String categoryId, final ExternalService ex) 
+		throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
 			InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getAvailableSources(" + uid + "," + categoryId + ",externalService)");
@@ -254,7 +254,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 					userProfile.removeCustomSourceFromProfile(customSource.getElementId());
 				} catch (InfoDomainException e) {
 					LOG.error("Error on service 'getAvailableSources(user "
-						+ uid + ", category " + categoryId + ") : creation of a SourceDummyBean");
+						+ uid + ", category " + categoryId + ") : " 
+						+ "creation of a SourceDummyBean");
 					source = new SourceDummyBean(e);
 					listSourceBean.add(source);
 				}
@@ -288,8 +289,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotLoadedException 
-	 * @throws SourceTimeOutException 
-	 * @see org.esupportail.lecture.domain.DomainService#getItems(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 * @see org.esupportail.lecture.domain.DomainService#getItems(
+	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<ItemBean> getItems(final String uid, final String sourceId, final ExternalService ex) 
 			throws SourceNotLoadedException, InternalDomainException, CategoryNotLoadedException {
@@ -366,7 +367,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param itemId item Id
 	 * @param isRead the read Mode (true=item read | false=item not read)
 	 * @throws InternalDomainException 
-	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(java.lang.String, java.lang.String, java.lang.String, boolean)
+	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(
+	 *   java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
 	public void marckItemReadMode(final String uid, final String sourceId, 
 			final String itemId, final boolean isRead) 
@@ -448,7 +450,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param cxtId context Id 
 	 * @param catId category Id
 	 * @throws ContextNotFoundException
-	 * @see org.esupportail.lecture.domain.DomainService#foldCategory(java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#foldCategory(
+	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void foldCategory(final String uid, final String cxtId, 
 			final String catId) throws ContextNotFoundException {
@@ -469,7 +472,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param cxtId context Id 
 	 * @param catId category Id
 	 * @throws ContextNotFoundException
-	 * @see org.esupportail.lecture.domain.DomainService#unfoldCategory(java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#unfoldCategory(
+	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void unfoldCategory(final String uid, final String cxtId,
 			final String catId) throws ContextNotFoundException {
@@ -489,9 +493,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @throws ContextNotFoundException 
 	 * @throws CategoryNotLoadedException 
-	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(
+	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId, final ExternalService ex) 
+	public List<CategoryBean> getVisibleCategories(
+			final String uid, final String contextId, final ExternalService ex) 
 		throws ContextNotFoundException, CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getVisibleCategories(" + uid + "," + contextId + ",ex)");
@@ -512,7 +518,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(
+	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getVisibleSources(final String uid, final String categoryId, final ExternalService ex) 
 			throws CategoryNotVisibleException, CategoryOutOfReachException, 
@@ -571,8 +578,10 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @throws CategoryTimeOutException 
 	 * 
 	 */
-	public void subscribeToCategory(final String uid, final String contextId, final String categoryId, ExternalService externalService) 
-		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException  {
+	public void subscribeToCategory(final String uid, final String contextId, 
+			final String categoryId, final ExternalService externalService) 
+	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
+	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToCategory(" + uid + "," + contextId 
 				+ "," + categoryId + ")");
@@ -644,9 +653,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @throws CategoryObligedException 
 	 * 
 	 */
-	public void unsubscribeToCategory(String uid, String contextId, String categoryId, ExternalService externalService) 
-		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, CategoryTimeOutException, 
-		CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException, CategoryObligedException {
+	public void unsubscribeToCategory(final String uid, final String contextId, 
+			final String categoryId, final ExternalService externalService) 
+		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
+		CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
+		InternalDomainException, CategoryObligedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("unsubscribeToCategory(" + uid + "," + contextId + "," + categoryId + ")");
 		}
@@ -671,8 +682,9 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 */
 	public void unsubscribeToSource(final String uid, final String categoryId, 
 			final String sourceId, final ExternalService ex) 
-			throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, InternalDomainException, 
-			CategoryOutOfReachException, SourceObligedException, CategoryTimeOutException {
+			throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
+			InternalDomainException, CategoryOutOfReachException, SourceObligedException, 
+			CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + uid + "," + categoryId + "," 
 				+ sourceId + ", externalService)");
@@ -802,10 +814,5 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	public void setI18nService(final I18nService service) {
 		i18nService = service;
 	}
-
-
-	
-
-
 
 }

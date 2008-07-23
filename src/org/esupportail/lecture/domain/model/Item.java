@@ -12,11 +12,11 @@ public class Item {
 	 *************************** PROPERTIES ******************************** */	
 
 	/**
-	 * Id of item
+	 * Id of item.
 	 */
 	private String id;
 	/**
-	 * html content of item
+	 * html content of item.
 	 */
 	private String htmlContent;
 
@@ -29,12 +29,20 @@ public class Item {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null) return false;
-		if (!(o instanceof Item)) return false;
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null) {
+			return false;
+		}
+		if (!(o instanceof Item)) {
+			return false;
+		}
 		final Item item = (Item) o;
-		if (!item.getId().equals(this.getId())) return false;
+		if (!item.getId().equals(this.getId())) {
+			return false;
+		}
 		return true;
 	}
 

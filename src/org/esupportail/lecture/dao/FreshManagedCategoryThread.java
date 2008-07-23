@@ -1,18 +1,13 @@
 package org.esupportail.lecture.dao;
 
-import java.io.IOException;
-import java.io.InputStream;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpException;
-import org.apache.commons.httpclient.UsernamePasswordCredentials;
-import org.apache.commons.httpclient.auth.AuthScope;
-import org.apache.commons.httpclient.methods.GetMethod;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -59,7 +54,7 @@ public class FreshManagedCategoryThread extends Thread {
 	/**
 	 * Constructor.
 	 * @param profile used to return a ManagedCategory
-	 * @param creds - user and password. null for anonymous access
+	 * @param ptCas - user and password. null for anonymous access
 	 */
 	public FreshManagedCategoryThread(final ManagedCategoryProfile profile, 
 			final String ptCas) {
@@ -83,7 +78,7 @@ public class FreshManagedCategoryThread extends Thread {
 	/**
 	 * get a managed category from the web without cache.
 	 * @param profile ManagedCategoryProfile of Managed category to get
-	 * @param creds - user and password. null for anonymous access
+	 * @param ptCas - user and password. null for anonymous access
 	 * @return Managed category
 	 * @throws XMLParseException 
 	 */

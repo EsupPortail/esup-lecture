@@ -19,32 +19,32 @@ public interface ElementProfile {
 
 /* ************************** ACCESSORS ******************************** */	
 	/**
-	 * Returns the id of the element profile (same id as the corresponding element)
+	 * Returns the id of the element profile (same id as the corresponding element).
 	 * @return String id
 	 */
-	public String getId();
+	String getId();
 	/**
-	 * Sets the id of the element profile (same id as the corresponding element)
+	 * Sets the id of the element profile (same id as the corresponding element).
 	 * @param id
 	 */
-	public void setId(String id);
+	 void setId(String id);
 	/**
-	 * Returns the name of the element profile (should be the same as the corresponding element)
+	 * Returns the name of the element profile (should be the same as the corresponding element).
 	 * @return String name
 	 */
-	public String getName();
+	String getName();
 	/**
-	 * Sets the name of the element profile (should be the same as the correcponding element)
+	 * Sets the name of the element profile (should be the same as the correcponding element).
 	 * @param name
 	 */
-	public void setName(String name);
+	void setName(String name);
 	
 	/**
 	 * @return the element associated to this profile
 	 * @throws ElementNotLoadedException 
 	 * @throws ElementNotLoadedException
 	 */
-	public Element getElement() throws ElementNotLoadedException ;
+	Element getElement() throws ElementNotLoadedException;
 	
 
 }

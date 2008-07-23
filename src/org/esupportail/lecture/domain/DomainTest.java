@@ -42,33 +42,34 @@ public class DomainTest {
 	 ************************** PROPERTIES ******************************** */	
 
 	/**
-	 * Log instance 
+	 * Log instance.
 	 */
 	protected static final Log LOG = LogFactory.getLog(DomainTest.class); 
+	
 	/**
-	 * Access to facadeService
+	 * Access to facadeService.
 	 */
 	private static FacadeService facadeService;
 
 	/* Controller local variables */
 	/**
-	 * user ID for tests
+	 * user ID for tests.
 	 */
 	private static String userId = "bourges";
 	/**
-	 * context ID for tests
+	 * context ID for tests.
 	 */
 	private static String contextId;
 	/**
-	 * list of category IDs for tests
+	 * list of category IDs for tests.
 	 */
 	private static List<String> categoryIds;
 	/**
-	 * item ID for tests
+	 * item ID for tests.
 	 */
 	private static String itemId;
 	/**
-	 * source ID for tests
+	 * source ID for tests.
 	 */
 	private static String sourceId;
 	
@@ -79,10 +80,10 @@ public class DomainTest {
 	/**
 	 * @param args non argumet needed
 	 */
-	public static void main(String[] args)  {
+	public static void main(final String[] args)  {
 		ClassPathResource res = new ClassPathResource("properties/applicationContext.test.domain.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
-		facadeService = (FacadeService)factory.getBean("facadeService");
+		facadeService = (FacadeService) factory.getBean("facadeService");
 		
 		try {
 			/* Test alternative behavior */
@@ -121,13 +122,14 @@ public class DomainTest {
 //			testGetAvailableSources();
 //			testTimeOutValues();
 		
-			// TODO (GB later) : tester pour un user OBLIGED et ALLOWED opour une source : le OBLIGED est prioritaire
+			// TODO (GB later) : tester pour un user OBLIGED et ALLOWED opour une source : 
+			// le OBLIGED est prioritaire
 			
 		} catch (InternalExternalException e) {
 			System.out.println("\n!!! EXCEPTION !!!");
 			System.out.println("\n!!! Catching InternalExternalException");
 			e.printStackTrace();
-		}catch (InfoDomainException e) {
+		} catch (InfoDomainException e) {
 			System.out.println("\n!!! EXCEPTION !!!");
 			System.out.println("\n!!! Catching InfoDomainException");
 			e.printStackTrace();
@@ -135,10 +137,10 @@ public class DomainTest {
 //			System.out.println("\n!!! EXCEPTION !!!");
 //			System.out.println("\n!!! Catching InternalDomainException");
 //			e.printStackTrace();
-		} catch (DomainServiceException e) {
-			System.out.println("\n!!! EXCEPTION !!!");
-			System.out.println("\n!!! Catching DomainServiceException");
-			e.printStackTrace();
+//		} catch (DomainServiceException e) {
+//			System.out.println("\n!!! EXCEPTION !!!");
+//			System.out.println("\n!!! Catching DomainServiceException");
+//			e.printStackTrace();
 		} 
 		
 
@@ -147,7 +149,7 @@ public class DomainTest {
 
 
 	/*
-	 ************************** Méthodes de Test ******************************** */	
+	 ************************** Mï¿½thodes de Test ******************************** */	
 
 	
 
@@ -156,7 +158,7 @@ public class DomainTest {
 
 
 	/**
-	 * Test of servide "getConnectedUser"
+	 * Test of servide "getConnectedUser".
 	 * @throws InternalExternalException 
 	 */
 	private static void testGetConnectedUser() throws InternalExternalException {
@@ -167,14 +169,15 @@ public class DomainTest {
 	}
 	
 	/**
-	 * Test of service "getContext"
+	 * Test of service "getContext".
 	 * @throws InternalExternalException 
 	 * @throws ContextNotFoundException 
 	 */
-	private static void testGetContext() throws InternalExternalException, ContextNotFoundException{
+	private static void testGetContext() 
+	throws InternalExternalException, ContextNotFoundException {
 		printIntro("getContext");
 		contextId = facadeService.getCurrentContextId();
-		ContextBean context = facadeService.getContext(userId,contextId);
+		ContextBean context = facadeService.getContext(userId, contextId);
 		System.out.println(context.toString());
 	}
 	/**
@@ -182,9 +185,10 @@ public class DomainTest {
 	 * @throws ContextNotFoundException
 	 */
 	@SuppressWarnings("unused")
-	private static void testGetContextBis(String cid) throws ContextNotFoundException  {
+	private static void testGetContextBis(final String cid) 
+	throws ContextNotFoundException  {
 		printIntro("getContext");
-		ContextBean context = facadeService.getContext(userId,cid);
+		ContextBean context = facadeService.getContext(userId, cid);
 		System.out.println(context.toString());
 	}
 
@@ -193,11 +197,12 @@ public class DomainTest {
 	 * @throws ContextNotFoundException 
 	 * @throws DomainServiceException 
 	 */
-	private static void testGetAvailableCategories() throws ContextNotFoundException,DomainServiceException{
+	private static void testGetAvailableCategories() 
+	throws ContextNotFoundException, DomainServiceException {
 		printIntro("getAvailableCategories");
 		List<CategoryBean> categories = facadeService.getAvailableCategories(userId, contextId);
 		categoryIds = new ArrayList<String>();
-		for(CategoryBean cat : categories){
+		for (CategoryBean cat : categories) {
 			categoryIds.add(cat.getId());
 			System.out.println(" **** categorie ****");
 			System.out.println(cat.toString());
@@ -206,15 +211,15 @@ public class DomainTest {
 	}
 	
 	/**
-	 * Test of service "getAvailableSources"
+	 * Test of service "getAvailableSources".
 	 * @throws DomainServiceException 
 	 */
 	private static void testGetAvailableSources() throws DomainServiceException  {
 		printIntro("getAvailableSources");
-		for(String catId : categoryIds){
-			System.out.println(" **** cat "+catId+" **********");
+		for (String catId : categoryIds) {
+			System.out.println(" **** cat " + catId + " **********");
 			List<SourceBean> sources = facadeService.getAvailableSources(userId, catId);
-			for(SourceBean so : sources){
+			for (SourceBean so : sources) {
 				System.out.println("  **** source ****");
 				System.out.println(so.toString());
 				sourceId = so.getId();
@@ -224,7 +229,7 @@ public class DomainTest {
 	}
 	
 	/**
-	 * Test of service "getVisibleCategories"
+	 * Test of service "getVisibleCategories".
 	 */
 	@SuppressWarnings("unused")
 	private static void testGetVisibleCategories()  {
@@ -232,12 +237,12 @@ public class DomainTest {
 		List<CategoryBean> cats;
 		try {
 			cats = facadeService.getVisibleCategories(userId, contextId);
-			for(CategoryBean ca : cats){
+			for (CategoryBean ca : cats) {
 				System.out.println("  **** category ****");
 				System.out.println(ca.toString());
 			}	
 		} catch (ContextNotFoundException e) {
-			System.out.println("ContextNotFoundException !!!! sur context "+contextId);
+			System.out.println("ContextNotFoundException !!!! sur context " + contextId);
 		} catch (CategoryNotLoadedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -245,10 +250,9 @@ public class DomainTest {
 	}
 	
 	/**
-	 * Test of service "getVisibleSources"
+	 * Test of service "getVisibleSources".
 	 * @throws DomainServiceException 
 	 */
-	@SuppressWarnings("unused")
 	private static void testGetVisibleSources() throws DomainServiceException {
 		printIntro("getVisibleSources");
 		categoryIds = new ArrayList<String>();
@@ -258,23 +262,23 @@ public class DomainTest {
 		//categoryIds.add("cp4");
 		categoryIds.add("cp5");
 
-		for(String catId : categoryIds){
-			System.out.println(" **** cat "+catId+" **********");
+		for (String catId : categoryIds) {
+			System.out.println(" **** cat " + catId + " **********");
 			try {
 				List<SourceBean> sources = facadeService.getVisibleSources(userId, catId);
-				for(SourceBean so : sources){
+				for (SourceBean so : sources) {
 					System.out.println("  **** source ****");
 					System.out.println(so.toString());
 					sourceId = so.getId();
 				}
-			}catch (CategoryNotVisibleException e){
-				System.out.println("CategoryNotVisibleException !!!! sur category "+catId);
+			} catch (CategoryNotVisibleException e) {
+				System.out.println("CategoryNotVisibleException !!!! sur category " + catId);
 			}
 		}
 	}
 
 	/**
-	 * Test of service "subscribeToSource" and "unsubscribeToSource"
+	 * Test of service "subscribeToSource" and "unsubscribeToSource".
 	 * @throws DomainServiceException 
 	 */
 	@SuppressWarnings("unused")
@@ -320,14 +324,14 @@ public class DomainTest {
 			e.printStackTrace();
 		}
 		
-		try{
+		try {
 			System.out.println(" **** category cp5 : UNsubscribe to source 'trois' **********");
 			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:trois");
 		} catch (DomainServiceException e) {
 			System.out.println("DomainServiceException !!!! ");
 			e.printStackTrace();
 		}
-		try{
+		try {
 			System.out.println(" **** category cp5 AGAIN : UNsubscribe to source 'trois' **********");
 			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:trois");
 		} catch (DomainServiceException e) {
@@ -335,7 +339,7 @@ public class DomainTest {
 			e.printStackTrace();
 		}
 		
-		try{
+		try {
 			/* source no visible */
 			System.out.println(" **** category cp5 : UNsubscribe to source 'quatre' **********");
 			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:quatre");
@@ -343,7 +347,7 @@ public class DomainTest {
 			System.out.println("DomainServiceException !!!! ");
 			e.printStackTrace();
 		}
-		try{
+		try {
 			/* category not subcribed to */
 			System.out.println(" **** category cp3 : UNsubscribe to source 'trois' **********");
 			facadeService.unsubscribeToSource(userId, "cp3", "m:cp5:trois");
@@ -358,8 +362,7 @@ public class DomainTest {
 	}
 	
 	/**
-	 * Test of service "subscribeToCategory" and "unsubscribeToCategory"
-	 * @throws DomainServiceException 
+	 * Test of service "subscribeToCategory" and "unsubscribeToCategory".
 	 */
 	private static void testSubUnSubscribeToCategory() {
 		printIntro("getSubscribeToCategory");
@@ -370,7 +373,7 @@ public class DomainTest {
 			facadeService.subscribeToCategory(userId, contextId, "cp2");
 		} catch (DomainServiceException e) {
 			System.out.println("DomainServiceException !!!! ");
-			System.out.println("Exception : "+e.getMessage()); 
+			System.out.println("Exception : " + e.getMessage()); 
 		}
 		try {
 			/* category allowed*/
@@ -380,7 +383,7 @@ public class DomainTest {
 			facadeService.subscribeToCategory(userId, contextId, "cp4");
 		} catch (DomainServiceException e) {
 			System.out.println("DomainServiceException !!!! ");
-			System.out.println("Exception : "+e.getMessage()); 
+			System.out.println("Exception : " + e.getMessage()); 
 		}
 		try {
 			/* category autosubscribed*/
@@ -390,7 +393,7 @@ public class DomainTest {
 			facadeService.subscribeToCategory(userId, contextId, "cp1");
 		} catch (DomainServiceException e) {
 			System.out.println("DomainServiceException !!!! ");
-			System.out.println("Exception : "+e.getMessage()); 
+			System.out.println("Exception : " + e.getMessage()); 
 		}
 		try {
 			/* category no visible */
@@ -398,7 +401,7 @@ public class DomainTest {
 			facadeService.subscribeToCategory(userId, contextId, "cp3");
 		} catch (DomainServiceException e) {
 			System.out.println("DomainServiceException !!!! ");
-			System.out.println("Exception : "+e.getMessage()); 
+			System.out.println("Exception : " + e.getMessage()); 
 		}
 	
 			testGetVisibleCategories();
@@ -409,7 +412,7 @@ public class DomainTest {
 				facadeService.unsubscribeToCategory(userId, contextId, "cp2");
 			} catch (DomainServiceException e) {
 				System.out.println("DomainServiceException !!!! ");
-				System.out.println("Exception : "+e.getMessage()); 
+				System.out.println("Exception : " + e.getMessage()); 
 			}
 			try {
 				/* category allowed*/
@@ -420,7 +423,7 @@ public class DomainTest {
 				facadeService.unsubscribeToCategory(userId, contextId, "cp4");
 			} catch (DomainServiceException e) {
 				System.out.println("DomainServiceException !!!! ");
-				System.out.println("Exception : "+e.getMessage()); 
+				System.out.println("Exception : " + e.getMessage()); 
 			}
 			try {
 				/* category autosubscribed*/
@@ -430,7 +433,7 @@ public class DomainTest {
 				facadeService.unsubscribeToCategory(userId, contextId, "cp1");
 			} catch (DomainServiceException e) {
 				System.out.println("DomainServiceException !!!! ");
-				System.out.println("Exception : "+e.getMessage()); 
+				System.out.println("Exception : " + e.getMessage()); 
 			}
 			try {
 				/* category no visible */
@@ -438,7 +441,7 @@ public class DomainTest {
 				facadeService.unsubscribeToCategory(userId, contextId, "cp3");
 			} catch (DomainServiceException e) {
 				System.out.println("DomainServiceException !!!! ");
-				System.out.println("Exception : "+e.getMessage()); 
+				System.out.println("Exception : " + e.getMessage()); 
 			}
 			testGetVisibleCategories();
 		
@@ -447,21 +450,22 @@ public class DomainTest {
 	
 	/**
 	 *  Test of service "getAvailableSources" in an alternative way :
-	 *  - the parent category has not been got before
+	 *  - the parent category has not been got before.
 	 * @throws InternalExternalException 
 	 * @throws DomainServiceException 
 	 */
 	@SuppressWarnings("unused")
-	private static void testGetAvailableSourceAlternativeWay() throws InternalExternalException, DomainServiceException  {	
+	private static void testGetAvailableSourceAlternativeWay() 
+	throws InternalExternalException, DomainServiceException  {	
 		testGetContext();	
 		printIntro("getAvailableSources - alternative way");
 		categoryIds = new ArrayList<String>();
 		categoryIds.add("cp1");
 		categoryIds.add("cp2");
-		for(String catId : categoryIds){
-			System.out.println(" **** cat "+catId+" **********");
+		for (String catId : categoryIds) {
+			System.out.println(" **** cat " + catId + " **********");
 			List<SourceBean> sources = facadeService.getAvailableSources(userId, catId);
-			for(SourceBean so : sources){
+			for (SourceBean so : sources) {
 				System.out.println("  **** source ****");
 				System.out.println(so.toString());
 				sourceId = so.getId();
@@ -471,7 +475,7 @@ public class DomainTest {
 
 
 	/**
-	 * Test of service "getItems"
+	 * Test of service "getItems".
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceNotLoadedException 
 	 * @throws CategoryNotLoadedException 
@@ -479,25 +483,26 @@ public class DomainTest {
 	 * @throws InternalDomainException 
 	 */
 	@SuppressWarnings("unused")
-	private static void testTimeOutValues() throws ManagedCategoryProfileNotFoundException, SourceNotLoadedException, CategoryNotLoadedException, SourceTimeOutException, InternalDomainException {
+	private static void testTimeOutValues() 
+	throws ManagedCategoryProfileNotFoundException, SourceNotLoadedException, CategoryNotLoadedException, SourceTimeOutException, InternalDomainException {
 		printIntro("testTimeOutValues");
 		System.out.println(" ** category CP1 ( no trust category) **********");
 		System.out.println(" ***** source un (timeout present) **********");
-		facadeService.getItems(userId,"m:cp1:un");
+		facadeService.getItems(userId, "m:cp1:un");
 		System.out.println(" ***** source deux (timeout abscent) ********");
-		facadeService.getItems(userId,"m:cp1:deux");
+		facadeService.getItems(userId, "m:cp1:deux");
 		System.out.println("\n");
 		System.out.println(" ** category CP5 ( trust category) **********");
 		System.out.println(" ***** source un (timeout present) **********");
-		facadeService.getItems(userId,"m:cp5:un");
+		facadeService.getItems(userId, "m:cp5:un");
 		System.out.println(" ***** source deux (timeout abscent) ********");
-		facadeService.getItems(userId,"m:cp5:deux");
+		facadeService.getItems(userId, "m:cp5:deux");
 		
 		
 	}
 	
 	/**
-	 * Test of service markItemAsRead and markItemAsUnread
+	 * Test of service markItemAsRead and markItemAsUnread.
 	 * @throws InternalDomainException 
 	 * @throws SourceNotLoadedException 
 	 * @throws SourceProfileNotFoundException 
@@ -506,12 +511,13 @@ public class DomainTest {
 	 * @throws SourceTimeOutException 
 	 */
 	@SuppressWarnings("unused")
-	private static void testMarkItemReadMode() throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException {
+	private static void testMarkItemReadMode() 
+	throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException {
 		printIntro("markItemReadMode");
-		System.out.println("Marquage de l'item "+itemId+" comme lu");
+		System.out.println("Marquage de l'item " + itemId + " comme lu");
 		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId,true);
 		testGetItems();
-		System.out.println("Marquage de l'item "+itemId+" comme non lu");
+		System.out.println("Marquage de l'item " + itemId + " comme non lu");
 		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId,false);
 		testGetItems();
 		
@@ -531,29 +537,30 @@ public class DomainTest {
 	
 	
 	/**
-	 * Test of service setTreeSize
+	 * Test of service setTreeSize.
 	 * @throws TreeSizeErrorException 
 	 * @throws ContextNotFoundException 
 	 * @throws InternalExternalException 
 	 */
 	@SuppressWarnings("unused")
-	private static void testSetTreeSize() throws ContextNotFoundException, TreeSizeErrorException, InternalExternalException {
+	private static void testSetTreeSize() 
+	throws ContextNotFoundException, TreeSizeErrorException, InternalExternalException {
 		printIntro("setTreeSize");
 		int newTreeSize = 10;
-		System.out.println("Set tree size to "+newTreeSize);
-		facadeService.setTreeSize(userId,contextId,newTreeSize);
+		System.out.println("Set tree size to " + newTreeSize);
+		facadeService.setTreeSize(userId, contextId, newTreeSize);
 		testGetContext();	
 	}
 	
 
 	/**
-	 * Test of service foldCategory and unfoldCategory
+	 * Test of service foldCategory and unfoldCategory.
 	 * @throws DomainServiceException 
 	 */
 	@SuppressWarnings("unused")
 	private static void testFoldCategory() throws DomainServiceException {
 		printIntro("foldCategory");
-		System.out.println("Pliage de la categorie cp1 (deja pliée) => WARN");
+		System.out.println("Pliage de la categorie cp1 (deja pliï¿½e) => WARN");
 		facadeService.foldCategory(userId, contextId, "cp1");
 		System.out.println("Depliage de la categorie cp1 \n");
 		facadeService.unfoldCategory(userId, contextId, "cp1");
@@ -566,7 +573,7 @@ public class DomainTest {
 	}
 
 	/**
-	 * Test of timeOut Values
+	 * Test of timeOut Values.
 	 * @throws SourceNotLoadedException
 	 * @throws InternalDomainException 
 	 * @throws ManagedCategoryProfileNotFoundException 
@@ -574,12 +581,12 @@ public class DomainTest {
 	 * @throws SourceProfileNotFoundException 
 	 * @throws SourceTimeOutException 
 	 */
-	@SuppressWarnings("unused")
-	private static void testGetItems() throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException  {
+	private static void testGetItems() 
+	throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException  {
 		printIntro("getItems");
-		System.out.println(" **** source "+sourceId+" **********");
-		List<ItemBean> items = facadeService.getItems(userId,sourceId);
-		for(ItemBean it : items){
+		System.out.println(" **** source " + sourceId + " **********");
+		List<ItemBean> items = facadeService.getItems(userId, sourceId);
+		for (ItemBean it : items) {
 			System.out.println("  **** item ****");
 			System.out.println(it.toString());
 			itemId = it.getId();
@@ -591,12 +598,12 @@ public class DomainTest {
 	
 	
 	/**
-	 * Affichage du service à tester
-	 * @param nomService nom du service à tester
+	 * Affichage du service ï¿½ tester.
+	 * @param nomService nom du service ï¿½ tester
 	 */
-	private static void printIntro(String nomService){
+	private static void printIntro(final String nomService) {
 		System.out.println("******************************************************");
-		System.out.println("Test du service -"+nomService+"- \n");
+		System.out.println("Test du service -" + nomService + "- \n");
 	}
 	
 	/**
@@ -609,7 +616,7 @@ public class DomainTest {
 	/**
 	 * @param service facadeService
 	 */
-	public void setFacadeService(FacadeService service) {
+	public void setFacadeService(final FacadeService service) {
 		DomainTest.facadeService = service;
 	}
 }

@@ -14,12 +14,12 @@ public class ProfileVisibility {
 	/* 
 	 *************************** PROPERTIES ******************************** */
 	/**
-	 * The profile interested 
+	 * The profile interested.
 	 */
 	private ElementProfile profile;
 	
 	/**
-	 * the visibility mode of the profile
+	 * the visibility mode of the profile.
 	 */
 	private VisibilityMode mode;
 
@@ -27,7 +27,7 @@ public class ProfileVisibility {
 	 *************************** INIT ************************************** */
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ProfileVisibility() {
 		// empty
@@ -35,11 +35,11 @@ public class ProfileVisibility {
 
 	
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param elt
 	 * @param m
 	 */
-	public ProfileVisibility(ElementProfile elt,VisibilityMode m){
+	public ProfileVisibility(final ElementProfile elt, final VisibilityMode m) {
 		this.profile = elt;
 		this.mode = m;
 	}
@@ -59,7 +59,7 @@ public class ProfileVisibility {
 	/**
 	 * @param mode
 	 */
-	protected void setMode(VisibilityMode mode) {
+	protected void setMode(final VisibilityMode mode) {
 		this.mode = mode;
 	}
 
@@ -73,7 +73,7 @@ public class ProfileVisibility {
 	/**
 	 * @param profile
 	 */
-	protected void setProfile(ElementProfile profile) {
+	protected void setProfile(final ElementProfile profile) {
 		this.profile = profile;
 	}
 }

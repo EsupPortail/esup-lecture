@@ -15,7 +15,6 @@ import org.esupportail.commons.services.cas.CasException;
 import org.esupportail.commons.services.cas.CasService;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.lecture.domain.utils.ModeService;
-import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
@@ -143,8 +142,8 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	}
 
 	/**
-	 * @throws InfoDomainExceptionException 
-	 * @see org.esupportail.lecture.domain.ExternalService#getUserProxyTicketCAS()
+	 * @throws InfoDomainException
+	 * @see org.esupportail.lecture.domain.ExternalService#getUserProxyTicketCAS(String)
 	 */
 	public String getUserProxyTicketCAS(final String casTargetService) throws InfoDomainException {
 	    if (LOG.isDebugEnabled()) {
@@ -231,7 +230,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	/**
 	 * @param casService the casService to set
 	 */
-	public void setCasService(CasService casService) {
+	public void setCasService(final CasService casService) {
 		this.casService = casService;
 	}
 

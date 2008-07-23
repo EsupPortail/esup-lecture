@@ -17,7 +17,8 @@ import org.esupportail.lecture.exceptions.domain.UnknownException;
  *
  */
 public class SourceDummyBean extends SourceBean implements DummyBean {
-	
+	// TODO (RB/GB) Revoir le traitement des Dummy (autre que par des ifs) 
+	// pour faire du vrai objet
 	/* 
 	 *************************** PROPERTIES ******************************** */	
 	/**

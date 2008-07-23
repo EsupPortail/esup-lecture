@@ -83,7 +83,7 @@ public class PortletService implements ModeService {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = facesContext.getExternalContext();
 			PortletRequest request = (PortletRequest) externalContext.getRequest();
-			Map<String, String> userInfo = (Map) request.getAttribute(PortletRequest.USER_INFO);
+			Map<String, String> userInfo = (Map)request.getAttribute(PortletRequest.USER_INFO);
 			value = userInfo.get(attribute);
 		} catch (Exception e) {
 			throw new InternalExternalException(e);

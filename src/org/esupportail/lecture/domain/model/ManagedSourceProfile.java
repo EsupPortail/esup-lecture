@@ -161,9 +161,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * Load the source referenced by this ManagedSourceProfile.
 	 * @param ex access to externalService
-	 * @throws SourceTimeOutException 
-	 * @throws CategoryNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource(org.esupportail.lecture.domain.ExternalService)
+	 * @throws InfoDomainException 
+	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource(
+	 *   org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
 	protected void loadSource(final ExternalService ex) throws InfoDomainException {
@@ -192,7 +192,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		}
 		
 		//features.compute();
-		//features.setIsComputed(false); // TODO (GB later) à optimiser
+		//features.setIsComputed(false); // TODO (GB later) ï¿½ optimiser
 	}
 
 	
@@ -209,7 +209,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	
 	private VisibilityMode setUpCustomCategoryVisibility(
 			final CustomManagedCategory customManagedCategory,
-			final ExternalService ex) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
+			final ExternalService ex) 
+	throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - setUpCustomCategoryVisibility(" 
 					+ customManagedCategory.getElementId() + ",externalService)");
@@ -218,12 +219,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		 * Algo pour gerer les customSourceProfiles :
 		 * ------------------------------------
 		 * user app. obliged => enregistrer la source dans le user profile + sortir
-		 * user app. autoSub => enregistrer la source dans le user profile si c'est la première fois + sortir
-		 * user app.allowed => rien à faire + sortir
+		 * user app. autoSub => enregistrer la source dans le user profile si c'est la premiï¿½re fois + sortir
+		 * user app.allowed => rien ï¿½ faire + sortir
 		 * user n'app. rien => effacer la custom source .
 		 * 
-		 * RB : En plus on doit vérifier si la Source a une visibilité. 
-		 * Si ce n'est pas le cas on regarde ce qui est au niveau de la catégorie afin de le prendre comme valeur par défaut. 
+		 * RB : En plus on doit vï¿½rifier si la Source a une visibilitï¿½. 
+		 * Si ce n'est pas le cas on regarde ce qui est au niveau de la catï¿½gorie 
+		 * afin de le prendre comme valeur par dï¿½faut. 
 		 */
 		
 		// get visibilitySets of the current sourceProfile
@@ -285,7 +287,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 
 	/**
 	 * @see ManagedSourceProfile#access
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setAccess(org.esupportail.lecture.domain.model.Accessibility)
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setAccess(
+	 * org.esupportail.lecture.domain.model.Accessibility)
 	 */
 	public void setAccess(final Accessibility access) {
 		if (LOG.isDebugEnabled()) {
@@ -311,7 +314,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 
 	/**
 	 * @see ManagedSourceProfile#visibility
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibility(org.esupportail.lecture.domain.model.VisibilitySets)
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibility(
+	 * org.esupportail.lecture.domain.model.VisibilitySets)
 	 */
 	public void setVisibility(final VisibilitySets visibility) {
 		if (LOG.isDebugEnabled()) {
