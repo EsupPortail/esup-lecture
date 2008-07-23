@@ -67,6 +67,8 @@
 
 	<property name="commons.basedir" value="${basedir}/../esup-commons-0.17.3"/>
 	
+	<property file="${basedir}/build-devel.properties"/>
+	
 	<import file="${commons.basedir}/build-commons-devel.xml"/>
 
 	<target name="_clean" depends="clean,_commons-clean" description="clean everything" />
@@ -138,16 +140,37 @@
 		</antcall>
 	</target>
 	
-	<target name="use-test-conf" description="use test ESUP-Lecture configuration files">
+	<target name="use-test-conf" depends="use-default-conf" description="use test ESUP-Lecture configuration files">
 		<antcall target="copy-conf">
-			<param name="conf-type" value="test"/>
+			<param name="conf-type" value="${developper.name}"/>
 		</antcall>
 	</target>
 
 	<target name="copy-conf">
-		<copy file="properties/esup-lecture.${conf-type}.xml" tofile="properties/esup-lecture.xml" overwrite="true" verbose="true"/>
-		<copy file="properties/mappings.${conf-type}.xml" tofile="properties/mappings.xml" overwrite="true" verbose="true"/>
-		<copy file="properties/auth/auth.${conf-type}.xml" tofile="properties/auth/auth.xml" overwrite="true" verbose="true"/>
+		<if>
+			<available file="properties/esup-lecture.${conf-type}.xml"/>
+		    <then>
+		    	<copy file="properties/esup-lecture.${conf-type}.xml" tofile="properties/esup-lecture.xml" overwrite="true" verbose="true"/>
+			</then>
+		</if>
+		<if>
+			<available file="properties/mappings.${conf-type}.xml"/>
+		    <then>
+		    	<copy file="properties/mappings.${conf-type}.xml" tofile="properties/mappings.xml" overwrite="true" verbose="true"/>
+			</then>
+		</if>
+		<if>
+			<available file="properties/auth/auth.${conf-type}.xml"/>
+		    <then>
+		    	<copy file="properties/auth/auth.${conf-type}.xml" tofile="properties/auth/auth.xml" overwrite="true" verbose="true"/>
+			</then>
+		</if>
+		<if>
+			<available file="properties/applicationContext.${conf-type}.xml"/>
+		    <then>
+		    	<copy file="properties/applicationContext.${conf-type}.xml" tofile="properties/applicationContext.xml" overwrite="true" verbose="true"/>
+			</then>
+		</if>
 	</target>
 	
 </project>

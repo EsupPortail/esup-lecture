@@ -32,7 +32,7 @@
 	<import resource="auth/auth.xml" />
 	<import resource="cache/cache.xml" />
 	<import resource="dao/dao.xml" />
- 	<import resource="domain/domain.test.domain.xml" />
+ 	<import resource="domain/domain.xml" />
 	<import resource="exceptionHandling/exceptionHandling.xml" />
 	<import resource="i18n/i18n.xml" />
 	<import resource="ldap/ldap.xml" />
