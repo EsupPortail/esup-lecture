@@ -268,10 +268,26 @@ public abstract class CustomSource implements CustomElement {
 	}
 
 	/**
+	 * @param userProfile
+	 */
+	private void setUserProfile(final UserProfile userProfile) {
+		this.userProfile = userProfile;
+		//Needed by Hibernate
+	}
+
+	/**
 	 * @return a set of read items ID
 	 */
 	protected Set<String> getReadItems() {
 		return readItems;
+	}
+
+	/**
+	 * @param readItems
+	 */
+	private void setReadItems(final Set<String> readItems) {
+		this.readItems = readItems;
+		//Needed by Hibernate
 	}
 
 	/**

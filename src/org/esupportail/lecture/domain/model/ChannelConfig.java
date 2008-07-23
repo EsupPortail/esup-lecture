@@ -259,9 +259,15 @@ public class ChannelConfig  {
 			
 		    // Visibility
 		    VisibilitySets visibilitySets = new VisibilitySets();  
-		    // foreach (allowed / autoSubscribed / Obliged
+		    /* these 2 lines aren't used at this time because autoSubscribed is managed as allowed    
 		    visibilitySets.setAllowed(loadDefAndContentSets("allowed", i));
 		    visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed", i));
+		    */
+		    // load allowed
+		    DefinitionSets definitionSets = loadDefAndContentSets("allowed", i);
+		    // add autoSubscribed to allowed
+		    definitionSets.addDefinitionSets(loadDefAndContentSets("autoSubscribed", i));
+		    visibilitySets.setAllowed(definitionSets);
 		   	visibilitySets.setObliged(loadDefAndContentSets("obliged", i));
 		    mcp.setVisibility(visibilitySets);
 		    

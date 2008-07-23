@@ -16,6 +16,7 @@ import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
 import org.esupportail.lecture.domain.model.Accessibility;
+import org.esupportail.lecture.domain.model.DefinitionSets;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.ManagedSourceProfile;
@@ -156,13 +157,23 @@ public class FreshManagedCategoryThread extends Thread {
 				}
 				// SourceProfile visibility
 				VisibilitySets visibilitySets = new VisibilitySets();  
-				// foreach (allowed / autoSubscribed / Obliged)
+			    /* these 2 lines aren't used at this time because autoSubscribed is managed as allowed    
 				visibilitySets.setAllowed(
 						XMLUtil.loadDefAndContentSets(
 								srcProfile.selectSingleNode("visibility/allowed")));
 				visibilitySets.setObliged(
 						XMLUtil.loadDefAndContentSets(
 								srcProfile.selectSingleNode("visibility/obliged")));
+				*/
+				// load allowed
+			    DefinitionSets definitionSets = 
+			    	XMLUtil.loadDefAndContentSets(
+			    			root.selectSingleNode("visibility/allowed"));
+			    // add autoSubscribed to allowed
+			    definitionSets.addDefinitionSets(
+						XMLUtil.loadDefAndContentSets(
+								root.selectSingleNode("visibility/obliged")));
+			    visibilitySets.setAllowed(definitionSets);			
 				visibilitySets.setAutoSubscribed(
 						XMLUtil.loadDefAndContentSets(
 								srcProfile.selectSingleNode(
@@ -175,13 +186,23 @@ public class FreshManagedCategoryThread extends Thread {
 			ret.setOrderedSourceIDs(orderedSourceIDs);
 			// Category visibility
 			VisibilitySets visibilitySets = new VisibilitySets();  
-			// foreach (allowed / autoSubscribed / Obliged)
+		    /* these 2 lines aren't used at this time because autoSubscribed is managed as allowed    
 			visibilitySets.setAllowed(
 					XMLUtil.loadDefAndContentSets(
 							root.selectSingleNode("/category/visibility/allowed")));
 			visibilitySets.setObliged(
 					XMLUtil.loadDefAndContentSets(
 							root.selectSingleNode("/category/visibility/obliged")));
+			*/
+			// load allowed
+		    DefinitionSets definitionSets = 
+		    	XMLUtil.loadDefAndContentSets(
+		    			root.selectSingleNode("/category/visibility/allowed"));
+		    // add autoSubscribed to allowed
+		    definitionSets.addDefinitionSets(
+					XMLUtil.loadDefAndContentSets(
+							root.selectSingleNode("/category/visibility/obliged")));
+		    visibilitySets.setAllowed(definitionSets);	
 			visibilitySets.setAutoSubscribed(
 					XMLUtil.loadDefAndContentSets(
 							root.selectSingleNode("/category/visibility/autoSubscribed")));

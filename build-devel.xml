@@ -142,7 +142,7 @@
 	
 	<target name="use-test-conf" depends="use-default-conf" description="use test ESUP-Lecture configuration files">
 		<antcall target="copy-conf">
-			<param name="conf-type" value="${developper.name}"/>
+			<param name="conf-type" value="${developer.name}"/>
 		</antcall>
 	</target>
 

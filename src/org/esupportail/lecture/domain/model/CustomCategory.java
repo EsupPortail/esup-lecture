@@ -241,6 +241,14 @@ public abstract class CustomCategory implements CustomElement {
 	}
 	
 
+	/**
+	 * Sets userProfile
+	 * @param userProfile
+	 */
+	private void setUserProfile(UserProfile userProfile) {
+		this.userProfile = userProfile;
+		//Needed by Hibernate
+	}
 	
 	/**
 	 * @return id of the profile category referred by this customCategory

@@ -142,6 +142,15 @@ public class DefinitionSets {
 	}
 	
 	/**
+	 * Add a definitionSets to the current definitionSets
+	 * @param definitionSets - the definitionSets to add
+	 */
+	public void addDefinitionSets(final DefinitionSets definitionSets) {
+		this.groups.addAll(definitionSets.groups);
+		this.regulars.addAll(definitionSets.regulars);
+	}
+	
+	/**
 	 * @return if DefinitionSets is Empty or not
 	 */
 	public boolean isEmpty() {

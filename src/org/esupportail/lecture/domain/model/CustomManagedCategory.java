@@ -507,6 +507,13 @@ public class CustomManagedCategory extends CustomCategory {
 		return subscriptions;
 	}
 
+	/**
+	 * @param subscriptions
+	 */
+	private void setSubscriptions(final Map<String, CustomManagedSource> subscriptions) {
+		this.subscriptions = subscriptions;
+		//Needed by Hibernate 
+	}
 
 
 	
