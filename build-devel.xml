@@ -152,24 +152,70 @@
 		    <then>
 		    	<copy file="properties/esup-lecture.${conf-type}.xml" tofile="properties/esup-lecture.xml" overwrite="true" verbose="true"/>
 			</then>
+			<else>
+				<if> 
+					<equals arg1="${conf-type}" arg2="default" />
+					<then> 
+						<fail message="A properties/esup-lecture.${conf-type}.xml is needed."/>
+					</then>
+				</if>
+			</else>
 		</if>
 		<if>
 			<available file="properties/mappings.${conf-type}.xml"/>
 		    <then>
 		    	<copy file="properties/mappings.${conf-type}.xml" tofile="properties/mappings.xml" overwrite="true" verbose="true"/>
 			</then>
+			<else>
+				<if> 
+					<equals arg1="${conf-type}" arg2="default" />
+					<then> 
+						<fail message="A properties/mappings.${conf-type}.xml is needed."/>
+					</then>
+				</if>
+			</else>
+		</if>
+		<if>
+			<available file="properties/domain/domain.${conf-type}.xml"/>
+		    <then>
+		    	<copy file="properties/domain/domain.${conf-type}.xml" tofile="properties/domain/domain.xml" overwrite="true" verbose="true"/>
+			</then>
+			<else>
+				<if> 
+					<equals arg1="${conf-type}" arg2="default" />
+					<then> 
+						<fail message="A properties/domain/domain.${conf-type}.xml is needed."/>
+					</then>
+				</if>
+			</else>
 		</if>
 		<if>
 			<available file="properties/auth/auth.${conf-type}.xml"/>
 		    <then>
 		    	<copy file="properties/auth/auth.${conf-type}.xml" tofile="properties/auth/auth.xml" overwrite="true" verbose="true"/>
 			</then>
+			<else>
+				<if> 
+					<equals arg1="${conf-type}" arg2="default" />
+					<then> 
+						<fail message="A properties/auth/auth.${conf-type}.xml is needed."/>
+					</then>
+				</if>
+			</else>
 		</if>
 		<if>
 			<available file="properties/applicationContext.${conf-type}.xml"/>
 		    <then>
 		    	<copy file="properties/applicationContext.${conf-type}.xml" tofile="properties/applicationContext.xml" overwrite="true" verbose="true"/>
 			</then>
+			<else>
+				<if> 
+					<equals arg1="${conf-type}" arg2="default" />
+					<then> 
+						<fail message="A properties/applicationContext.${conf-type}.xml is needed."/>
+					</then>
+				</if>
+			</else>
 		</if>
 	</target>
 	
