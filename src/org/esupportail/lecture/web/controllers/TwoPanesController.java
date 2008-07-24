@@ -71,9 +71,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 */
 	protected String categoryId;
 	/**
-	 *  sourceID used by t:updateActionListener.
+	 *  source used by t:updateActionListener.
 	 */
-	protected String sourceId;
+	private SourceWebBean source;
 	/**
 	 * is tree is visible or not.
 	 */
@@ -309,7 +309,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @throws DomainServiceException
 	 */
 	protected SourceWebBean populateSourceWebBean(final SourceBean sourceBean) throws DomainServiceException {
-		SourceWebBean sourceWebBean = new SourceWebBean();
+		SourceWebBean sourceWebBean = new SourceWebBean(facadeService);
 		if (sourceBean instanceof SourceDummyBean) {
 			String cause = ((SourceDummyBean) sourceBean).getCause().getMessage();
 			String id = "DummySrc:" + DummyId++;
@@ -448,7 +448,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		}
 		return ret;
 	}
-
+	
 	/**
 	 * @param id of catogory to find in the context
 	 * @return the finded category
@@ -472,14 +472,6 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 */
 	public void setCategoryId(final String categoryId) {
 		this.categoryId = categoryId;
-	}
-
-	/**
-	 * set sourceId from t:updateActionListener in JSF view.
-	 * @param sourceId
-	 */
-	public void setSourceId(final String sourceId) {
-		this.sourceId = sourceId;
 	}
 
 	/**
@@ -547,6 +539,30 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 */
 	public boolean isGuestMode() {
 		return facadeService.isGuestMode();
+	}
+
+	/**
+	 * @return the current selected category
+	 */
+	public CategoryWebBean getSelectedCategory() {
+		CategoryWebBean ret = null;
+		ContextWebBean ctx = getContext();
+		ret = ctx.getSelectedCategory();
+		return ret;
+	}
+
+	/**
+	 * @return the source
+	 */
+	public SourceWebBean getSource() {
+		return source;
+	}
+
+	/**
+	 * @param source the source to set
+	 */
+	public void setSource(SourceWebBean source) {
+		this.source = source;
 	}
 
 }

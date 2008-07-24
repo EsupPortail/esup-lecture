@@ -142,21 +142,11 @@ public class EditController extends TwoPanesController {
 	}
 	
 	/**
-	 * @return the current selected category
-	 */
-	public CategoryWebBean getSelectedCat() {
-		CategoryWebBean ret = null;
-		ContextWebBean ctx = getContext();
-		ret = ctx.getSelectedCategory();
-		return ret;
-	}
-	
-	/**
 	 * @return list of visible sources
 	 * @throws DomainServiceException 
 	 */
 	public List<SourceWebBean> getVisibleSources() {
-		CategoryWebBean categoryBean = getSelectedCat();
+		CategoryWebBean categoryBean = getSelectedCategory();
 		List<SourceWebBean> ret = categoryBean.getSources();
 		return ret;
 	}

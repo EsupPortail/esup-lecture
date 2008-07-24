@@ -81,15 +81,13 @@ public class HomeController extends TwoPanesController {
 			LOG.debug("in selectElement");
 		}
 		String catID = this.categoryId;
-		String srcId = this.sourceId;
 		CategoryWebBean cat = getCategorieByID(catID);
-		if (srcId.equals("0")) {
-			//toggle expanded status
-			cat.setFolded(!cat.isFolded());
+		if (getSource() == null) {
 			isSourceSelected = false;
+			cat.setSelectedSource(null);
 		} else {
 			//set source focused by user as selected source in the category
-			SourceWebBean src = getSourceByID(cat, srcId);
+			SourceWebBean src = getSourceByID(cat, getSource().getId());
 			cat.setSelectedSource(src);
 			isSourceSelected = true;
 			//set controller itemDisplayMode to the select source itemDisplayMode
@@ -98,6 +96,21 @@ public class HomeController extends TwoPanesController {
 		// set category focused by user as selected category in the context
 		ContextWebBean ctx = getContext();
 		ctx.setSelectedCategory(cat);
+		return "OK";
+	}
+
+	/**
+	 * JSF action : toggle Folded State of the current category.
+	 * @return JSF from-outcome
+	 */
+	public String toggleFoldedState() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("in toggleFoldedState");
+		}
+		String catID = this.categoryId;
+		CategoryWebBean cat = getCategorieByID(catID);
+		//toggle expanded status
+		cat.setFolded(!cat.isFolded());
 		return "OK";
 	}
 
@@ -122,105 +135,10 @@ public class HomeController extends TwoPanesController {
 		return "OK";
 	}	
 
-	/**
-	 * sort items list in function of itemDisplayMode.
-	 * @param items List to sort
-	 * @return Sorted items list
-	 */
-	private List<ItemWebBean> sortedItems(final List<ItemWebBean> items, final ItemDisplayMode displayMode) {
-		if (displayMode == ItemDisplayMode.ALL) {
-			// nothing to do
-		} else if (displayMode == ItemDisplayMode.UNREAD) {
-			if (items != null) {
-				List<ItemWebBean> ret = new ArrayList<ItemWebBean>();
-				Iterator<ItemWebBean> iter = items.iterator();
-				while (iter.hasNext()) {
-					ItemWebBean itemWebBean = iter.next();
-					if (!itemWebBean.isRead()) {
-						ret.add(itemWebBean);
-					}
-				}
-				return ret;
-			}
-		} else if (displayMode == ItemDisplayMode.UNREADFIRST) {
-			if (items != null) {
-				List<ItemWebBean> ret = new ArrayList<ItemWebBean>();
-				// find unread
-				Iterator<ItemWebBean> iter = items.iterator();
-				while (iter.hasNext()) {
-					ItemWebBean itemWebBean = iter.next();
-					if (!itemWebBean.isRead()) {
-						ret.add(itemWebBean);
-					}
-				}
-				// and read
-				iter = items.iterator();
-				while (iter.hasNext()) {
-					ItemWebBean itemWebBean = iter.next();
-					if (itemWebBean.isRead()) {
-						ret.add(itemWebBean);
-					}
-				}
-				return ret;
-			}
-
-		} else {
-			LOG.warn("Unknown itemDisplayMode value \"" + displayMode + "\" in sortedItems function");
-		}
-		return items;
-	}
-	
 	/*
 	 * **************** Getter and Setter ****************
 	 */
 
-	/**
-	 * @return the list of items to dysplay for current selection (category/source) and displayMode
-	 */
-	public List<ItemWebBean> getItems() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("getItems()");
-		}
-		List<ItemWebBean> ret = null;
-		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
-		ItemDisplayMode displayMode = ItemDisplayMode.ALL;
-		if (selectedCategory != null) {
-			SourceWebBean selectedSource = selectedCategory.getSelectedSource();
-			if (selectedSource != null) {
-				displayMode = selectedSource.getItemDisplayMode();
-				//Test if list in already in selected source				
-				if (selectedSource.getItems() != null) {
-					ret = selectedSource.getItems();
-				} else {
-					if (LOG.isDebugEnabled()) {
-						LOG.debug("Put items in selected source");
-					}
-					List<ItemBean> items;
-					try {
-						items = getFacadeService().getItems(getUID(), selectedSource.getId());
-					} catch (Exception e) {
-						throw new WebException("Error in getItems", e);
-					}
-					ret = new ArrayList<ItemWebBean>();
-					if (items != null) {
-						Iterator<ItemBean> iter = items.iterator();
-						while (iter.hasNext()) {
-							ItemBean itemBean = iter.next();
-							ItemWebBean itemWebBean = new ItemWebBean();
-							itemWebBean.setId(itemBean.getId());
-							itemWebBean.setHtmlContent(itemBean.getHtmlContent());
-							itemWebBean.setRead(itemBean.isRead());
-							itemWebBean.setDummy(itemBean.isDummy());
-							ret.add(itemWebBean);
-						}
-						//Put items in selected source
-						selectedSource.setItems(ret);
-					}
-				}
-			}			
-		}
-		return sortedItems(ret, displayMode);
-	}
 
 	/**
 	 * @return desciption of current selected element (category or source)

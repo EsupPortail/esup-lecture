@@ -1,5 +1,6 @@
 package org.esupportail.lecture.web.beans;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -54,6 +55,20 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	public CategoryWebBean() {
 		super();
 		folded = false;
+	}
+	/**
+	 * Return list of all sources if no source is selected.
+	 * Just the selectedSource if a source is selected.
+	 * @return list of sources.
+	 */
+	public List<SourceWebBean> getSelectedOrAllSources() {
+		List<SourceWebBean> ret = new ArrayList<SourceWebBean>();
+		if (selectedSource != null) {
+			ret.add(selectedSource);
+		} else {
+			ret = getSources();
+		}
+		return ret;
 	}
 	
 	/**

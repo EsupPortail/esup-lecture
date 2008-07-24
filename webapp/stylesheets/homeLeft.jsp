@@ -19,14 +19,14 @@
 				<t:dataList value="#{homeController.context.categories}" var="cat" layout="simple">
 					<t:htmlTag value="li"
 						styleClass="#{cat.folded ? 'collapsed' : 'expanded' }">
-						<h:commandButton action="#{homeController.selectElement}"
+						<h:commandButton action="#{homeController.toggleFoldedState}"
 							image="/media/moins.gif" alt="#{msgs['colapseCategory']}"
 							title="#{msgs['colapseCategory']}" rendered="#{!cat.folded}">
 							<t:updateActionListener property="#{homeController.sourceId}" value="0" />
 							<t:updateActionListener property="#{homeController.categoryId}"
 								value="#{cat.id}" />
 						</h:commandButton>
-						<h:commandButton action="#{homeController.selectElement}"
+						<h:commandButton action="#{homeController.toggleFoldedState}"
 							image="/media/plus.gif" alt="#{msgs['expandCategory']}"
 							title="#{msgs['expandCategory']}" rendered="#{cat.folded}">
 							<t:updateActionListener property="#{homeController.sourceId}" value="0" />
@@ -35,7 +35,7 @@
 						</h:commandButton>
 						<h:commandButton action="#{homeController.selectElement}" alt="#{cat.name}"
 							title="#{cat.name}" value="#{cat.name}" styleClass="elementButton">
-							<t:updateActionListener property="#{homeController.sourceId}" value="0" />
+							<t:updateActionListener property="#{homeController.source}" value="#{null}" />
 							<t:updateActionListener property="#{homeController.categoryId}" value="#{cat.id}" />
 						</h:commandButton>
 						<t:htmlTag value="ul" rendered="#{!cat.folded}">
@@ -44,15 +44,15 @@
 								<t:htmlTag value="li">
 									<h:commandButton action="#{homeController.selectElement}"
 										image="/media/puce.gif" alt="#{msgs['selectSource']}" title="#{msgs['selectSource']}">
-										<t:updateActionListener property="#{homeController.sourceId}"
-											value="#{src.id}" />
+										<t:updateActionListener property="#{homeController.source}"
+											value="#{src}" />
 										<t:updateActionListener property="#{homeController.categoryId}"
 											value="#{cat.id}" />
 									</h:commandButton>
 									<h:commandButton action="#{homeController.selectElement}"
 										alt="#{src.name}" title="#{src.name}" value="#{src.name}" styleClass="elementButton">
-										<t:updateActionListener property="#{homeController.sourceId}"
-											value="#{src.id}" />
+										<t:updateActionListener property="#{homeController.source}"
+											value="#{src}" />
 										<t:updateActionListener property="#{homeController.categoryId}"
 											value="#{cat.id}" />
 									</h:commandButton>

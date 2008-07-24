@@ -1,9 +1,17 @@
 package org.esupportail.lecture.web.beans;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.FacadeService;
+import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.exceptions.web.WebException;
+import org.esupportail.lecture.web.controllers.HomeController;
 
 /**
  * @author bourges
@@ -11,6 +19,10 @@ import org.esupportail.lecture.domain.model.ItemDisplayMode;
  */
 public class SourceWebBean  implements Comparable<SourceWebBean> {
 
+	/**
+	 * Log instance.
+	 */
+	private static final Log LOG = LogFactory.getLog(SourceWebBean.class);
 	/**
 	 * id of source.
 	 */
@@ -39,12 +51,17 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 * xmlOrder is used to store the order of the corresponding sourceProfile in an Category XML file.
 	 */
 	private int xmlOrder = Integer.MAX_VALUE;
+	/**
+	 * facadeService bean.
+	 */
+	private FacadeService facadeService;
 
 	/**
 	 * Default constructor.
 	 */
-	public SourceWebBean() {
+	public SourceWebBean(FacadeService facadeService) {
 		super();
+		this.facadeService = facadeService;
 	}
 	/**
 	 * @return name of source
@@ -86,14 +103,79 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 * @return list of items
 	 */
 	public List<ItemWebBean> getItems() {
+		if (items == null) {
+			//we need to put item in the source
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("Put items in source");
+			}
+			List<ItemBean> list;
+			try {
+				String uid = facadeService.getConnectedUserId();
+				list = facadeService.getItems(uid, id);
+			} catch (Exception e) {
+				throw new WebException("Error in getItems", e);
+			}
+			items = new ArrayList<ItemWebBean>();
+			if (list != null) {
+				for (ItemBean itemBean : list) {
+					ItemWebBean itemWebBean = new ItemWebBean();
+					itemWebBean.setId(itemBean.getId());
+					itemWebBean.setHtmlContent(itemBean.getHtmlContent());
+					itemWebBean.setRead(itemBean.isRead());
+					itemWebBean.setDummy(itemBean.isDummy());
+					items.add(itemWebBean);				
+				}
+			}
+		}
 		return items;
 	}
+	
 	/**
-	 * @param items
+	 * sort items list in function of itemDisplayMode.
+	 * @param items List to sort
+	 * @return Sorted items list
 	 */
-	public void setItems(final List<ItemWebBean> items) {
-		this.items = items;
+	public List<ItemWebBean> getSortedItems() {
+		List<ItemWebBean> list = getItems();
+		List<ItemWebBean> ret = new ArrayList<ItemWebBean>();
+		if (itemDisplayMode == ItemDisplayMode.ALL) {
+			ret = list;
+		} else if (itemDisplayMode == ItemDisplayMode.UNREAD) {
+			if (list != null) {
+				for (ItemWebBean itemWebBean : list) {
+					if (!itemWebBean.isRead()) {
+						ret.add(itemWebBean);
+					}					
+				}
+			}
+		} else if (itemDisplayMode == ItemDisplayMode.UNREADFIRST) {
+			if (list != null) {
+				// find unread
+				for (ItemWebBean itemWebBean : list) {
+					if (!itemWebBean.isRead()) {
+						ret.add(itemWebBean);
+					}					
+				}
+				// and read
+				for (ItemWebBean itemWebBean : list) {
+					if (itemWebBean.isRead()) {
+						ret.add(itemWebBean);
+					}					
+				}
+			}
+		} else {
+			LOG.warn("Unknown itemDisplayMode value \"" + itemDisplayMode + "\" in sortedItems function");
+		}
+		return ret;
 	}
+	
+	
+//	/**
+//	 * @param items
+//	 */
+//	public void setItems(final List<ItemWebBean> items) {
+//		this.items = items;
+//	}
 	
 	/**
 	 * @return if source is obliged or not

@@ -10,11 +10,11 @@
 		<!-- MENU with Source name, sort list and zoom -->
 		<t:htmlTag value="div" id="menuRight" forceId="true">
 			<t:htmlTag value="p" styleClass="portlet-section-header" rendered="#{homeController.guestMode}">
-				<h:outputText value="#{homeController.selectionTitle}" />
+				<h:outputText value="#{homeController.selectedCategory}"/>
 			</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuTitle" rendered="#{!homeController.guestMode}">
 				<t:htmlTag value="span" styleClass="portlet-section-header">
-					<h:outputText value="#{homeController.selectionTitle}" />
+					<h:outputText value="#{homeController.selectionTitle}"/><!-- TODO used selected cat name -->
 				</t:htmlTag>
 			</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuButton" rendered="#{!homeController.guestMode}">
@@ -43,31 +43,35 @@
 		<!-- Items display -->
 		<t:htmlTag value="div" id="right">
 			<t:htmlTag value="hr"/>
-			<h:outputText value="#{homeController.selectedElementDescription}" escape="false" rendered="#{!homeController.sourceSelected}"/>
-			<t:dataList value="#{homeController.items}" var="item" layout="simple" rendered="#{homeController.sourceSelected}">
-				<!-- Read/Unread Button -->
-				<t:htmlTag value="div" styleClass="toggleButton">
-					<h:commandButton action="#{homeController.toggleItemReadState}"
-						image="/media/unread.png" alt="#{msgs['markAsRead']}"
-						title="#{msgs['markAsRead']}" rendered="#{!item.read and !homeController.guestMode and !item.dummy}">
-						<t:updateActionListener property="#{homeController.item}"
-							value="#{item}" />
-					</h:commandButton>
-					<h:commandButton action="#{homeController.toggleItemReadState}"
-						image="/media/read.png" alt="#{msgs['markAsUnread']}"
-						title="#{msgs['markAsUnread']}" rendered="#{item.read and !homeController.guestMode and !item.dummy}">
-						<t:updateActionListener property="#{homeController.item}"
-							value="#{item}" />
-					</h:commandButton>
+            <t:dataList value="#{homeController.selectedCategory.selectedOrAllSources}" var="source" layout="simple" >
+				<t:htmlTag value="div" styleClass="portlet-section-header">
+				    <h:outputText value="#{source.name}"/>
 				</t:htmlTag>
-				<!-- Item Display -->
-				<t:htmlTag value="div"
-					styleClass="#{item.read ? 'readArticle' : 'unreadArticle'}">
-					<f:verbatim>
-						<h:outputText value="#{item.htmlContent}" escape="false" />
-					</f:verbatim>
-				</t:htmlTag>
-			</t:dataList>
+	            <t:dataList value="#{source.sortedItems}" var="item" layout="simple">
+	                <!-- Read/Unread Button -->
+	                <t:htmlTag value="div" styleClass="toggleButton">
+	                    <h:commandButton action="#{homeController.toggleItemReadState}"
+	                        image="/media/unread.png" alt="#{msgs['markAsRead']}"
+	                        title="#{msgs['markAsRead']}" rendered="#{!item.read and !homeController.guestMode and !item.dummy}">
+	                        <t:updateActionListener property="#{homeController.item}"
+	                            value="#{item}" />
+	                    </h:commandButton>
+	                    <h:commandButton action="#{homeController.toggleItemReadState}"
+	                        image="/media/read.png" alt="#{msgs['markAsUnread']}"
+	                        title="#{msgs['markAsUnread']}" rendered="#{item.read and !homeController.guestMode and !item.dummy}">
+	                        <t:updateActionListener property="#{homeController.item}"
+	                            value="#{item}" />
+	                    </h:commandButton>
+	                </t:htmlTag>
+	                <!-- Item Display -->
+	                <t:htmlTag value="div"
+	                    styleClass="#{item.read ? 'readArticle' : 'unreadArticle'}">
+	                    <f:verbatim>
+	                        <h:outputText value="#{item.htmlContent}" escape="false" />
+	                    </f:verbatim>
+	                </t:htmlTag>
+	            </t:dataList>
+            </t:dataList>
 		</t:htmlTag>
 	</f:subview>
 </jsp:root>
