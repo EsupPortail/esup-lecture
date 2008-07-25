@@ -113,4 +113,14 @@ public class ContextWebBean {
 		this.treeSize = treeSize;
 	}
 
+	/**
+	 * @return true if this context have a not null selectedCatogory.
+	 */
+	public boolean isWithSelectedCategory() {
+		boolean ret = false;
+		if (selectedCategory != null) {
+			ret = true;
+		} 
+		return ret;
+	}
 }

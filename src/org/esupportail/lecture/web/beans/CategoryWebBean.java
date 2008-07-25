@@ -207,4 +207,15 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 		return ret;
 	}
 
+	/**
+	 * @return true if this category have a not null selectedCatogory.
+	 */
+	public boolean isWithSelectedSource() {
+		boolean ret = false;
+		if (selectedSource != null) {
+			ret = true;
+		} 
+		return ret;
+	}
+
 }

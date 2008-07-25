@@ -142,7 +142,7 @@ public class DefinitionSets {
 	}
 	
 	/**
-	 * Add a definitionSets to the current definitionSets
+	 * Add a definitionSets to the current definitionSets.
 	 * @param definitionSets - the definitionSets to add
 	 */
 	public void addDefinitionSets(final DefinitionSets definitionSets) {

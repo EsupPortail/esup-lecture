@@ -5,13 +5,8 @@
  */
 package org.esupportail.lecture.web.controllers;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
@@ -38,7 +33,7 @@ public class HomeController extends TwoPanesController {
 	/**
 	 *  item used by t:updateActionListener.
 	 */
-	private ItemWebBean item;
+	private ItemWebBean ualItem;
 
 	/**
 	 * Constructor.
@@ -57,60 +52,32 @@ public class HomeController extends TwoPanesController {
 			LOG.debug("In toggleItemReadState");
 		}
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("itemID = " + item.getId());
+			LOG.debug("itemID = " + ualItem.getId());
 		}
-		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
+		SourceWebBean selectedSource = getUalSource();
 		try {
 			getFacadeService().marckItemReadMode(getUID(), 
-					selectedCategory.getSelectedSource().getId(), item.getId(), !item.isRead());
+					selectedSource.getId(), ualItem.getId(), !ualItem.isRead());
 			
 		} catch (Exception e) {
 			throw new WebException("Error in toggleItemReadState", e);
 		}
-		item.setRead(!item.isRead());
+		ualItem.setRead(!ualItem.isRead());
 		return "OK";
 	}
 
 	/**
-	 * JSF action : select a category or a source from the tree.
-	 * Use categoryID and sourceID valued by t:updateActionListener.
-	 * @return JSF from-outcome
-	 */
-	public String selectElement() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("in selectElement");
-		}
-		String catID = this.categoryId;
-		CategoryWebBean cat = getCategorieByID(catID);
-		if (getSource() == null) {
-			isSourceSelected = false;
-			cat.setSelectedSource(null);
-		} else {
-			//set source focused by user as selected source in the category
-			SourceWebBean src = getSourceByID(cat, getSource().getId());
-			cat.setSelectedSource(src);
-			isSourceSelected = true;
-			//set controller itemDisplayMode to the select source itemDisplayMode
-			itemDisplayMode = src.getItemDisplayMode();
-		}
-		// set category focused by user as selected category in the context
-		ContextWebBean ctx = getContext();
-		ctx.setSelectedCategory(cat);
-		return "OK";
-	}
-
-	/**
-	 * JSF action : toggle Folded State of the current category.
+	 * JSF action : toggle Folded State of the selected category.
 	 * @return JSF from-outcome
 	 */
 	public String toggleFoldedState() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in toggleFoldedState");
 		}
-		String catID = this.categoryId;
-		CategoryWebBean cat = getCategorieByID(catID);
+		ContextWebBean currentContext = getContext();
+		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
 		//toggle expanded status
-		cat.setFolded(!cat.isFolded());
+		selectedCategory.setFolded(!selectedCategory.isFolded());
 		return "OK";
 	}
 
@@ -147,9 +114,9 @@ public class HomeController extends TwoPanesController {
 		String ret = null;
 		ContextWebBean ctx = getContext();
 		ret = ctx.getDescription();
-		CategoryWebBean categoryWebBean = ctx.getSelectedCategory();
-		if (categoryWebBean != null) {
-			ret = categoryWebBean.getDescription();
+		CategoryWebBean selectedCategory = ctx.getSelectedCategory();
+		if (selectedCategory != null) {
+			ret = selectedCategory.getDescription();
 		}
 		return ret;
 	}
@@ -158,10 +125,19 @@ public class HomeController extends TwoPanesController {
 	 * @return Display mode form items
 	 */
 	public ItemDisplayMode getItemDisplayMode() {
+		ItemDisplayMode ret = itemDisplayMode.ALL;
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getItemDisplayMode()=" + itemDisplayMode);
 		}
-		return itemDisplayMode;
+		ContextWebBean currentContext = getContext();
+		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
+		if (selectedCategory != null) {
+			SourceWebBean selectedSource = selectedCategory.getSelectedSource();
+			if (selectedSource != null) {
+				ret = selectedSource.getItemDisplayMode();
+			}
+		}
+		return ret;
 	}
 
 	/**
@@ -179,8 +155,8 @@ public class HomeController extends TwoPanesController {
 	 * set item from t:updateActionListener in JSF view.
 	 * @param item
 	 */
-	public void setItem(final ItemWebBean item) {
-		this.item = item;
+	public void setUalItem(final ItemWebBean item) {
+		this.ualItem = item;
 	}
 
 	/**

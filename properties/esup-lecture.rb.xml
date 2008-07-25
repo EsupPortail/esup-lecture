@@ -14,7 +14,9 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 		</description>
 		<refCategoryProfile refId="liens" />
         <refCategoryProfile refId="rss" />
+        <!-- 
         <refCategoryProfile refId="news" />
+         -->
 	</context>
 
 	<context 

@@ -25,7 +25,6 @@ import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
-import org.esupportail.lecture.domain.model.Category;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
@@ -45,7 +44,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	/**
 	 * Log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(TwoPanesController.class);
+	private static final Log LOG = LogFactory.getLog(TwoPanesController.class);
 	/**
 	 * min value for tree size.
 	 */
@@ -59,22 +58,6 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 */
 	private static final int TREE_SIZE_STEP = 5;
 	/**
-	 * Access to multiple instance of channel in a one session (contexts).
-	 */
-	protected VirtualSession virtualSession;
-	/**
-	 * Store if a source is selected or not.
-	 */
-	protected boolean isSourceSelected = false;
-	/**
-	 *  categoryID used by t:updateActionListener.
-	 */
-	protected String categoryId;
-	/**
-	 *  source used by t:updateActionListener.
-	 */
-	private SourceWebBean source;
-	/**
 	 * is tree is visible or not.
 	 */
 	private boolean treeVisible = true;
@@ -83,17 +66,32 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 */
 	private FacadeService facadeService;
 	/**
-	 * UID of the connected user.
+	 * uid of the connected user.
 	 */
-	private String UID;
+	private String uid;
 	/**
 	 * contextId store the contextId.
 	 */
 	private String contextId;
 	/**
-	 * DummyId is used to have an unique ID for DummyCategory or DummySource.
+	 * dummyId is used to have an unique ID for DummyCategory or DummySource.
+	 * 0 as default.
 	 */
-	private int DummyId = 0;
+	private int dummyId;
+	/**
+	 * Session with portlet context compatibility.
+	 */
+	private VirtualSession virtualSession;
+	/**
+	 * source to set by t:updateActionListener.
+	 */
+	private SourceWebBean ualSource;
+	/**
+	 * category to set by t:updateActionListener.
+	 */
+	private CategoryWebBean ualCategory;
+
+	
 	/**
 	 * Controller constructor.
 	 */
@@ -312,7 +310,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		SourceWebBean sourceWebBean = new SourceWebBean(facadeService);
 		if (sourceBean instanceof SourceDummyBean) {
 			String cause = ((SourceDummyBean) sourceBean).getCause().getMessage();
-			String id = "DummySrc:" + DummyId++;
+			String id = "DummySrc:" + dummyId++;
 			sourceWebBean.setId(id);
 			sourceWebBean.setName(cause);
 			sourceWebBean.setType(AvailabilityMode.OBLIGED);
@@ -337,7 +335,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		CategoryWebBean categoryWebBean =  new CategoryWebBean();
 		if (categoryBean instanceof CategoryDummyBean) {
 			String cause = ((CategoryDummyBean) categoryBean).getCause().getMessage();
-			String id = "DummyCat:" + DummyId++;
+			String id = "DummyCat:" + dummyId++;
 			categoryWebBean.setId(id);
 			categoryWebBean.setName("Error!");
 			categoryWebBean.setDescription(cause);			
@@ -409,7 +407,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @return the connected user UID
 	 */
 	protected String getUID() {
-		if (UID == null) {
+		if (uid == null) {
 			//init the user
 			String userId;
 			try {
@@ -418,16 +416,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 				throw new WebException("Error in getUID", e);
 			}
 			UserBean userBean = getFacadeService().getConnectedUser(userId);
-			UID = userBean.getUid();
+			uid = userBean.getUid();
 		}
-		return UID;
-	}
-
-	/**
-	 * @return information of any source selected or not
-	 */
-	public boolean isSourceSelected() {
-		return isSourceSelected;
+		return uid;
 	}
 
 	/**
@@ -439,11 +430,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		CategoryWebBean categoryWebBean = ctx.getSelectedCategory();
 		if (categoryWebBean != null) {
 			ret = categoryWebBean.getName();
-			if (isSourceSelected) {
-				SourceWebBean sourceWebBean = categoryWebBean.getSelectedSource();
-				if (sourceWebBean != null) {
-					ret += " > " + sourceWebBean.getName();
-				}
+			SourceWebBean sourceWebBean = categoryWebBean.getSelectedSource();
+			if (sourceWebBean != null) {
+				ret += " > " + sourceWebBean.getName();
 			}
 		}
 		return ret;
@@ -464,14 +453,6 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			}
 		}
 		return ret;
-	}
-
-	/**
-	 * set categoryId from t:updateActionListener in JSF view.
-	 * @param categoryId
-	 */
-	public void setCategoryId(final String categoryId) {
-		this.categoryId = categoryId;
 	}
 
 	/**
@@ -552,17 +533,67 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	}
 
 	/**
-	 * @return the source
+	 * @param source the source to set by t:updateActionListener
 	 */
-	public SourceWebBean getSource() {
-		return source;
+	public void setUalSource(final SourceWebBean source) {
+		this.ualSource = source;
 	}
 
 	/**
-	 * @param source the source to set
+	 * @return the ualSource
 	 */
-	public void setSource(SourceWebBean source) {
-		this.source = source;
+	public SourceWebBean getUalSource() {
+		return ualSource;
 	}
+
+	/**
+	 * @param category the currentCategory to set by t:updateActionListener
+	 */
+	public void setUalCategory(final CategoryWebBean category) {
+		this.ualCategory = category;
+	}
+
+	/**
+	 * @return the ualCategory
+	 */
+	public CategoryWebBean getUalCategory() {
+		return ualCategory;
+	}
+
+	/**
+	 * @return the virtualSession
+	 */
+	public VirtualSession getVirtualSession() {
+		return virtualSession;
+	}
+
+	/**
+	 * @param virtualSession the virtualSession to set
+	 */
+	public void setVirtualSession(final VirtualSession virtualSession) {
+		this.virtualSession = virtualSession;
+	}
+
+	/**
+	 * JSF action : select a category or a source from the tree.
+	 * Use ualCategory and ualSource valued by t:updateActionListener.
+	 * @return JSF from-outcome
+	 */
+	public String selectElement() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("in selectElement");
+		}
+		CategoryWebBean selectedCategory = getUalCategory();
+		SourceWebBean selectedSource = getUalSource();
+		if (selectedCategory != null) {
+			//set source focused by user as selected source in the category
+			selectedCategory.setSelectedSource(selectedSource);
+		}
+		// set category focused by user as selected category in the context
+		ContextWebBean ctx = getContext();
+		ctx.setSelectedCategory(selectedCategory);
+		return "OK";
+	}
+
 
 }

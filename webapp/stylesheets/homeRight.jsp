@@ -19,7 +19,7 @@
 			</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuButton" rendered="#{!homeController.guestMode}">
 				<t:htmlTag value="ul">
-					<t:htmlTag value="li">
+					<t:htmlTag value="li" rendered="#{homeController.selectedCategory.withSelectedSource}">
 						<h:outputText value="#{msgs['selectorLabel']}" />
 						<h:selectOneMenu value="#{homeController.itemDisplayMode}" converter="#{itemDisplayModeConverter}">
                             <!--  onchange="submit();" -->
@@ -53,14 +53,14 @@
 	                    <h:commandButton action="#{homeController.toggleItemReadState}"
 	                        image="/media/unread.png" alt="#{msgs['markAsRead']}"
 	                        title="#{msgs['markAsRead']}" rendered="#{!item.read and !homeController.guestMode and !item.dummy}">
-	                        <t:updateActionListener property="#{homeController.item}"
-	                            value="#{item}" />
+                            <t:updateActionListener property="#{homeController.ualSource}" value="#{source}" />
+	                        <t:updateActionListener property="#{homeController.ualItem}" value="#{item}" />
 	                    </h:commandButton>
 	                    <h:commandButton action="#{homeController.toggleItemReadState}"
 	                        image="/media/read.png" alt="#{msgs['markAsUnread']}"
 	                        title="#{msgs['markAsUnread']}" rendered="#{item.read and !homeController.guestMode and !item.dummy}">
-	                        <t:updateActionListener property="#{homeController.item}"
-	                            value="#{item}" />
+                            <t:updateActionListener property="#{homeController.ualSource}" value="#{source}" />
+	                        <t:updateActionListener property="#{homeController.ualItem}" value="#{item}" />
 	                    </h:commandButton>
 	                </t:htmlTag>
 	                <!-- Item Display -->

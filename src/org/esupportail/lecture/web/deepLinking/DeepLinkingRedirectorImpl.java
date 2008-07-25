@@ -10,7 +10,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.web.deepLinking.DeepLinkingRedirector;
-import org.esupportail.lecture.web.controllers.HomeController;
+import org.esupportail.lecture.web.controllers.TwoPanesController;
 
 /**
  * @author bourges
@@ -24,7 +24,7 @@ public class DeepLinkingRedirectorImpl implements DeepLinkingRedirector {
 	/**
 	 * home Controller.
 	 */
-	private HomeController homeController;
+	private TwoPanesController homeController;
 
 	/**
 	 * default constructor.
@@ -48,7 +48,7 @@ public class DeepLinkingRedirectorImpl implements DeepLinkingRedirector {
 	/**
 	 * @param controller the controller to set
 	 */
-	public void setHomeController(final HomeController controller) {
+	public void setHomeController(final TwoPanesController controller) {
 		this.homeController = controller;
 	}
 

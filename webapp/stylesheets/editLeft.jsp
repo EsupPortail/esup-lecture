@@ -15,14 +15,12 @@
 				<h:outputText value="#{editController.context.name} (EDIT)" />
 			</t:htmlTag>
 			<!-- root -->
-			<!-- TODO edit category
-			<h:commandButton action="#{editController.displayRoot}"
+			<h:commandButton action="#{editController.selectElement}"
 				alt="#{msgs['editContext']}" value="#{msgs['root']}"
 				title="#{msgs['editContext']}" styleClass="elementButton">
-				<t:updateActionListener property="#{editController.categoryId}"
-					value="0" />
+				<t:updateActionListener property="#{editController.ualCategory}" value="#{null}" />
+                <t:updateActionListener property="#{homeController.ualSource}" value="#{src}" />
 			</h:commandButton>
-			-->
 			<!-- Categories -->
 			<t:htmlTag value="ul">
 				<t:dataList value="#{editController.context.categories}" var="cat"
@@ -31,14 +29,12 @@
 						<h:commandButton action="#{editController.selectElement}"
 							image="/media/puce.gif" alt="#{msgs['editCategory']}"
 							title="#{msgs['editCategory']}">
-							<t:updateActionListener property="#{editController.categoryId}"
-								value="#{cat.id}" />
+							<t:updateActionListener property="#{editController.ualCategory}" value="#{cat}" />
 						</h:commandButton>
 						<h:commandButton action="#{editController.selectElement}"
 							alt="#{cat.name}" title="#{cat.name}" value="#{cat.name}"
 							styleClass="elementButton">
-							<t:updateActionListener property="#{editController.categoryId}"
-								value="#{cat.id}" />
+							<t:updateActionListener property="#{editController.ualCategory}" value="#{cat}" />
 						</h:commandButton>
 					</t:htmlTag>
 				</t:dataList>

@@ -9,26 +9,24 @@
 	<f:subview id="rightSubview">
 		<!-- MENU with Source name -->
 		<t:htmlTag value="p" styleClass="portlet-section-header  !!">
-			<h:outputText value="#{msgs['root']}" rendered="#{editController.displayRoot}"/>
-			<h:outputText value="#{editController.selectionTitle}" rendered="#{!editController.displayRoot}"/>
+			<h:outputText value="#{msgs['root']}" rendered="#{!editController.context.withSelectedCategory}"/>
+			<h:outputText value="#{editController.selectionTitle}" rendered="#{editController.context.withSelectedCategory}"/>
 		</t:htmlTag>
+		<t:htmlTag value="hr"/>
 		<!-- Categories display -->
-		<t:htmlTag value="ul" rendered="#{editController.displayRoot}">
-			<t:dataList value="#{editController.visibleCategories}" var="cat"
-				layout="simple">
+		<t:htmlTag value="ul" rendered="#{!editController.context.withSelectedCategory}">
+			<t:dataList value="#{editController.visibleCategories}" var="cat" layout="simple">
 				<t:htmlTag value="li" styleClass="edit">
 					<!-- TODO edit category
 					<h:commandButton action="#{editController.toogleCategorySubcribtion}"
 						image="/media/subscribe.png" alt="#{msgs['subscribeCategory']}"
 						title="#{msgs['subscribeCategory']}" rendered="#{cat.notSubscribed}">
-						<t:updateActionListener property="#{editController.categoryId}"
-							value="#{cat.id}" />
+						<t:updateActionListener property="#{editController.ualCategory}" value="#{cat}" />
 					</h:commandButton>
 					<h:commandButton action="#{editController.toogleCategorySubcribtion}"
 						image="/media/unsubscribe.png" alt="#{msgs['unsubscribeCategory']}"
 						title="#{msgs['unsubscribeCategory']}" rendered="#{cat.subscribed}">
-						<t:updateActionListener property="#{editController.categoryId}"
-							value="#{cat.id}" />
+						<t:updateActionListener property="#{editController.ualCategory}" value="#{cat}" />
 					</h:commandButton>
 					<h:graphicImage value="/media/forced.png"
 						alt="#{msgs['forcedCategory']}" title="#{msgs['forcedCategory']}"
@@ -39,21 +37,18 @@
 			</t:dataList>
 		</t:htmlTag>
 		<!-- Sources display -->
-		<t:htmlTag value="ul" rendered="#{!editController.displayRoot}">
-			<t:dataList value="#{editController.visibleSources}" var="src"
-				layout="simple">
+		<t:htmlTag value="ul" rendered="#{editController.context.withSelectedCategory}">
+			<t:dataList value="#{editController.visibleSources}" var="src" layout="simple">
 				<t:htmlTag value="li" styleClass="edit">
 					<h:commandButton action="#{editController.toogleSourceSubcribtion}"
 						image="/media/subscribe.png" alt="#{msgs['subscribeSource']}"
 						title="#{msgs['subscribeSource']}" rendered="#{src.notSubscribed}">
-						<t:updateActionListener property="#{editController.sourceId}"
-							value="#{src.id}" />
+						<t:updateActionListener property="#{editController.ualSource}" value="#{src}" />
 					</h:commandButton>
 					<h:commandButton action="#{editController.toogleSourceSubcribtion}"
 						image="/media/unsubscribe.png" alt="#{msgs['unsubscribeSource']}"
 						title="#{msgs['unsubscribeSource']}" rendered="#{src.subscribed}">
-						<t:updateActionListener property="#{editController.sourceId}"
-							value="#{src.id}" />
+						<t:updateActionListener property="#{editController.ualSource}" value="#{src}" />
 					</h:commandButton>
 					<h:graphicImage value="/media/forced.png"
 						alt="#{msgs['forcedSource']}" title="#{msgs['forcedSource']}"

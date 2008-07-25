@@ -110,7 +110,8 @@ public class FreshManagedCategoryThread extends Thread {
 			ret.setProfileId(profile.getId());
 			// SourceProfiles loop
 			Hashtable<String, SourceProfile> sourceProfiles = new Hashtable<String, SourceProfile>();
-			Map<String, Integer> orderedSourceIDs = Collections.synchronizedMap(new HashMap<String, Integer>());
+			Map<String, Integer> orderedSourceIDs = 
+				Collections.synchronizedMap(new HashMap<String, Integer>());
 			List<Node> srcProfiles = root.selectNodes("/category/sourceProfiles/sourceProfile");
 			int xmlOrder = 1;
 			for (Node srcProfile : srcProfiles) {
