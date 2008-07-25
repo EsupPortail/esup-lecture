@@ -27,7 +27,7 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 * "obliged" --> The source is obliged: user can't subscribe or unsubscribe this source
 	 * "owner" --> The source is personal
 	 */
-	private AvailabilityMode type;
+	private AvailabilityMode availabilityMode;
 	/**
 	 * description of category.
 	 */
@@ -123,7 +123,9 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 * @return list of sources
 	 */
 	public List<SourceWebBean> getSources() {
-		Collections.sort(sources);
+		if (sources != null) {
+			Collections.sort(sources);			
+		}
 		return sources;
 	}
 	/**
@@ -146,10 +148,16 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	}
 	
 	/**
+	 * @return the availabilityMode
+	 */
+	public AvailabilityMode getAvailabilityMode() {
+		return availabilityMode;
+	}
+	/**
 	 * @param type
 	 */
-	public void setType(final AvailabilityMode type) {
-		this.type = type;
+	public void setAvailabilityMode(final AvailabilityMode type) {
+		this.availabilityMode = type;
 	}
 
 	/**
@@ -171,7 +179,7 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 */
 	public boolean isObliged() {
 		boolean ret = false;
-		if (type == AvailabilityMode.OBLIGED) {
+		if (availabilityMode == AvailabilityMode.OBLIGED) {
 			ret = true;
 		}
 		return ret;
@@ -182,7 +190,7 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 */
 	public boolean isSubscribed() {
 		boolean ret = false;
-		if (type == AvailabilityMode.SUBSCRIBED) {
+		if (availabilityMode == AvailabilityMode.SUBSCRIBED) {
 			ret = true;
 		}
 		return ret;
@@ -193,7 +201,7 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 */
 	public boolean isNotSubscribed() {
 		boolean ret = false;
-		if (type == AvailabilityMode.NOTSUBSCRIBED) {
+		if (availabilityMode == AvailabilityMode.NOTSUBSCRIBED) {
 			ret = true;
 		}
 		return ret;

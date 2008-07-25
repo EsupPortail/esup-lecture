@@ -261,25 +261,23 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 				List<CategoryBean> categories = getCategories(ctxId);
 				List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
 				if (categories != null) {
-					Iterator<CategoryBean> iter = categories.iterator();
-					while (iter.hasNext()) {
-						CategoryBean categoryBean = iter.next();
+					for (CategoryBean categoryBean : categories) {
 						CategoryWebBean categoryWebBean = populateCategoryWebBean(categoryBean);
-						//find sources in this category
-						List<SourceBean> sources = getSources(categoryBean);
-						List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
-						if (sources != null) {
-							Iterator<SourceBean> iter2 = sources.iterator();
-							while (iter2.hasNext()) {
-								SourceBean sourceBean = iter2.next();
-								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean);
-								//we add the source order in the Category XML definition file
-								int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
-								sourceWebBean.setXmlOrder(xmlOrder);
-								sourcesWeb.add(sourceWebBean);
+						//find sources in this category (if this category is subscribed)
+						if (categoryBean.getType() != AvailabilityMode.NOTSUBSCRIBED) {
+							List<SourceBean> sources = getSources(categoryBean);
+							List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
+							if (sources != null) {
+								for (SourceBean sourceBean : sources) {
+									SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean);
+									//we add the source order in the Category XML definition file
+									int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
+									sourceWebBean.setXmlOrder(xmlOrder);
+									sourcesWeb.add(sourceWebBean);
+								}
 							}
+							categoryWebBean.setSources(sourcesWeb);
 						}
-						categoryWebBean.setSources(sourcesWeb);
 						int xmlOrder = contextBean.getXMLOrder(categoryBean.getId());
 						categoryWebBean.setXmlOrder(xmlOrder);
 						categoriesWeb.add(categoryWebBean);
@@ -342,7 +340,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		} else {
 			categoryWebBean.setId(categoryBean.getId());
 			categoryWebBean.setName(categoryBean.getName());
-			categoryWebBean.setType(categoryBean.getType());
+			categoryWebBean.setAvailabilityMode(categoryBean.getType());
 			categoryWebBean.setDescription(categoryBean.getDescription());			
 		}
 		return categoryWebBean;

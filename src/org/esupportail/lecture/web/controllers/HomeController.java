@@ -74,8 +74,7 @@ public class HomeController extends TwoPanesController {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in toggleFoldedState");
 		}
-		ContextWebBean currentContext = getContext();
-		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
+		CategoryWebBean selectedCategory = getUalCategory();
 		//toggle expanded status
 		selectedCategory.setFolded(!selectedCategory.isFolded());
 		return "OK";

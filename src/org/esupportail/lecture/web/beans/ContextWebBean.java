@@ -85,7 +85,9 @@ public class ContextWebBean {
 	 * @param categories
 	 */
 	public void setCategories(final List<CategoryWebBean> categories) {
-		Collections.sort(categories);
+		if (categories != null) {
+			Collections.sort(categories);			
+		}
 		this.categories = categories;
 	}
 	/**

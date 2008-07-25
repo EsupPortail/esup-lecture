@@ -83,20 +83,16 @@ public class EditController extends TwoPanesController {
 	 * @return JSF from-outcome
 	 */
 	public String toogleCategorySubcribtion() {
-		//get selected category with categoryId provided by the actionListener
-		ContextWebBean currentContext = getContext();
-		CategoryWebBean currentCategory = currentContext.getSelectedCategory();
-		AvailabilityMode type = null;
+		CategoryWebBean currentCategory = getUalCategory();
+		AvailabilityMode availabilityMode = currentCategory.getAvailabilityMode();
 		try {
-			if (currentCategory.isNotSubscribed()) {
+			if (availabilityMode == AvailabilityMode.NOTSUBSCRIBED) {
 				getFacadeService().subscribeToCategory(getUID(), 
 					getContext().getId(), currentCategory.getId());
-				type = AvailabilityMode.SUBSCRIBED;
 			}
-			if (currentCategory.isSubscribed()) {
+			if (availabilityMode ==  availabilityMode.SUBSCRIBED) {
 				getFacadeService().unsubscribeToCategory(getUID(), 
-					getContext().getId(), currentCategory.getId());
-				type = AvailabilityMode.NOTSUBSCRIBED;
+						getContext().getId(), currentCategory.getId());
 			}
 		} catch (DomainServiceException e) {
 			throw new WebException("Error in toogleCategorySubcribtion", e);

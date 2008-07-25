@@ -17,7 +17,6 @@
 		<t:htmlTag value="ul" rendered="#{!editController.context.withSelectedCategory}">
 			<t:dataList value="#{editController.visibleCategories}" var="cat" layout="simple">
 				<t:htmlTag value="li" styleClass="edit">
-					<!-- TODO edit category
 					<h:commandButton action="#{editController.toogleCategorySubcribtion}"
 						image="/media/subscribe.png" alt="#{msgs['subscribeCategory']}"
 						title="#{msgs['subscribeCategory']}" rendered="#{cat.notSubscribed}">
@@ -31,7 +30,6 @@
 					<h:graphicImage value="/media/forced.png"
 						alt="#{msgs['forcedCategory']}" title="#{msgs['forcedCategory']}"
 						rendered="#{cat.obliged}" />
-					-->
 					<h:outputText value="#{cat.name}" />
 				</t:htmlTag>
 			</t:dataList>
