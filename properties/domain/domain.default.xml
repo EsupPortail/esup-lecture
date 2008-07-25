@@ -33,7 +33,6 @@
 	***************************************************
 				DOMAIN SERVICE 
 	***************************************************-->
-	<!-- For Gwenaelle  -->
 	<bean 
 		id="domainService"
 		class="org.esupportail.lecture.domain.DomainServiceImpl">

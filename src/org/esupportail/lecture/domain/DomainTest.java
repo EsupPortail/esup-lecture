@@ -81,7 +81,7 @@ public class DomainTest {
 	 * @param args non argumet needed
 	 */
 	public static void main(final String[] args)  {
-		ClassPathResource res = new ClassPathResource("properties/applicationContext.test.domain.xml");
+		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 		facadeService = (FacadeService) factory.getBean("facadeService");
 		

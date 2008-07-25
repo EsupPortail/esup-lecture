@@ -28,13 +28,11 @@
 		<property name="domainService" ref="domainService"/>
 		<property name="externalService" ref="externalService"/>
 	</bean>
- 
 	 
 	<!-- 
 	***************************************************
 				DOMAIN SERVICE 
 	***************************************************-->
-	
 	<bean 
 		id="domainService"
 		class="org.esupportail.lecture.domain.DomainServiceImpl">
@@ -43,11 +41,10 @@
 			web interface and the command-line calls.
 			It must implement interface org.esupportail.lecture.domain.DomainService.
 		</description>
-		<property name="channel">
-			<ref bean="channel"/>
-		</property>
+		<property name="i18nService" ref="i18nService" />
+		<property name="channel" ref="channel" />
+		<property name="authenticationService" ref="authenticationService" />
 	</bean> 
-	
 
 	<!-- Main domain model class -->
 	<!-- not yet implemented -->
@@ -55,17 +52,39 @@
 		<description>
 			This bean is the main domain model class, used by the domainService.
 		</description>
-		<property name="daoService">
-			<ref bean="daoServiceStub"/>
-		</property>	
-		<property name="externalService">
-			<ref bean="externalService"/>
-		</property>	
-		<!-- proriétés qui devront être externalisées -->
-		<property name="configFilePath" value="/properties/esup-lecture.test.domain.xml"/>
-		<property name="mappingFilePath" value="/properties/mappings.test.domain.xml"/>
+		<property name="daoService" ref="daoServiceStub"/>
+		<property name="externalService" ref="externalService"/>
+		<property name="configFilePath" value="/properties/esup-lecture.xml"/>
+		<property name="mappingFilePath" value="/properties/mappings.xml"/>		
 	</bean>
 	
+	<!-- 
+	***************************************************
+				EXTERNAL SERVICE 
+	***************************************************-->
+	<bean
+		id="externalService"
+		class="org.esupportail.lecture.domain.ExternalServiceStub">
+		<description>
+			This bean provides the external (portlet and/or servlet) service of the application, used by the 
+			web interface and the command-line calls.
+			It must implement interface org.esupportail.lecture.domain.ExternalService.
+		</description>
+	</bean>
+
+
+	<!-- 
+	***************************************************
+				DOMAIN TEST 
+	***************************************************-->
+	<bean
+		id="domainTest"
+		class="org.esupportail.lecture.domain.DomainTest">
+		<description>
+			This bean calls FacadeService instead of web interface and the command-line calls.
+		</description>
+	</bean>
+
 	<!-- 
 	<bean
 		id="domainService"
@@ -100,21 +119,7 @@
 		</constructor-arg>
 	</bean>
 	-->
-	<!-- 
-	***************************************************
-				EXTERNAL SERVICE 
-	***************************************************-->
 	
-	<bean
-		id="externalService"
-		class="org.esupportail.lecture.domain.ExternalServiceStub"
-		>
-		<description>
-			This bean provides the external (portlet and/or servlet) service of the application, used by the 
-			web interface and the command-line calls.
-			It must implement interface org.esupportail.lecture.domain.ExternalService.
-		</description>
-	</bean>
 	<!--
 	
 	<bean
@@ -126,22 +131,6 @@
 			It must implement interface org.esupportail.lecture.domain.ExternalService.
 		</description>
 	</bean>
--->
-
-	<!-- 
-	***************************************************
-				DOMAIN TEST 
-	***************************************************-->
-	<!-- For Gwenaelle -->
-	<bean
-		id="domainTest"
-		class="org.esupportail.lecture.domain.DomainTest">
-		<description>
-			This bean calls FacadeService instead of web interface and the command-line calls.
-		</description>
-	</bean>
-
-	
-	
+    -->
 
 </beans>

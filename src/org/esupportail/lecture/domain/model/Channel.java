@@ -223,7 +223,7 @@ public class Channel implements InitializingBean {
 			/* Reset channel properties loaded from config */
 			resetChannelConfigProperties();
 			
-			/*Loading guest user name */
+			/* Loading guest user name */
 			ChannelConfig.loadGuestUser();
 			
 			/* Loading managed category profiles */
