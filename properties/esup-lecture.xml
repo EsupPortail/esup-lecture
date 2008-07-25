@@ -65,7 +65,7 @@ Pour plus d'informations voir le
 		
 		id="cp1"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
-		trustCategory="no"
+		trustCategory="yes"
 		access="public"
 		ttl = "3600"
 		timeout = "3000" >
@@ -78,9 +78,9 @@ Pour plus d'informations voir le
 					value="User"/>
 			</autoSubscribed>		
 			<obliged>
-				<regular
+				<!--<regular
 					attribute="sn"
-					value="User"/>	
+					value="User"/>-->	
 			</obliged>
 		</visibility>
 	</categoryProfile>

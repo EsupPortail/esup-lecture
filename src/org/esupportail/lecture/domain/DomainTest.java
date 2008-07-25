@@ -91,10 +91,12 @@ public class DomainTest {
 //			testGetAvailableSourceAlternativeWay(); 
 			
 			/* Test normal behavior */
-//			testGetConnectedUser();
-//			testGetContext();
-//			testGetAvailableCategories();
-//			testGetAvailableSources();
+			testGetConnectedUser();
+			testGetContext();
+			testGetAvailableCategories();
+			testGetVisibleCategories();
+			testGetAvailableSources();
+			testGetVisibleSources();
 //			testGetItems();
 		
 			/* small actions */
@@ -110,10 +112,10 @@ public class DomainTest {
 //			testGetVisibleSources();
 //			testSubUnSubscribeToSource();
 
-			testGetConnectedUser();
-			testGetContext();
-			testGetVisibleCategories();
-			testSubUnSubscribeToCategory();
+//			testGetConnectedUser();
+//			testGetContext();
+//			testGetVisibleCategories();
+//			testSubUnSubscribeToCategory();
 			
 			/* test timeout values */
 //			testGetConnectedUser();
@@ -133,14 +135,14 @@ public class DomainTest {
 			System.out.println("\n!!! EXCEPTION !!!");
 			System.out.println("\n!!! Catching InfoDomainException");
 			e.printStackTrace();
-//		} catch (InternalDomainException e) {
-//			System.out.println("\n!!! EXCEPTION !!!");
-//			System.out.println("\n!!! Catching InternalDomainException");
-//			e.printStackTrace();
-//		} catch (DomainServiceException e) {
-//			System.out.println("\n!!! EXCEPTION !!!");
-//			System.out.println("\n!!! Catching DomainServiceException");
-//			e.printStackTrace();
+		} catch (InternalDomainException e) {
+			System.out.println("\n!!! EXCEPTION !!!");
+			System.out.println("\n!!! Catching InternalDomainException");
+			e.printStackTrace();
+		} catch (DomainServiceException e) {
+			System.out.println("\n!!! EXCEPTION !!!");
+			System.out.println("\n!!! Catching DomainServiceException");
+			e.printStackTrace();
 		} 
 		
 

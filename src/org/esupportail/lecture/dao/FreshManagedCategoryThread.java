@@ -161,9 +161,10 @@ public class FreshManagedCategoryThread extends Thread {
 				visibilitySets.setAllowed(
 						XMLUtil.loadDefAndContentSets(
 								srcProfile.selectSingleNode("visibility/allowed")));
-				visibilitySets.setObliged(
+				visibilitySets.setAutoSubscribed(
 						XMLUtil.loadDefAndContentSets(
-								srcProfile.selectSingleNode("visibility/obliged")));
+								srcProfile.selectSingleNode(
+										"visibility/autoSubscribed")));
 				*/
 				// load allowed
 			    DefinitionSets definitionSets = 
@@ -172,12 +173,11 @@ public class FreshManagedCategoryThread extends Thread {
 			    // add autoSubscribed to allowed
 			    definitionSets.addDefinitionSets(
 						XMLUtil.loadDefAndContentSets(
-								root.selectSingleNode("visibility/obliged")));
+								root.selectSingleNode("visibility/autoSubscribed")));
 			    visibilitySets.setAllowed(definitionSets);			
-				visibilitySets.setAutoSubscribed(
+				visibilitySets.setObliged(
 						XMLUtil.loadDefAndContentSets(
-								srcProfile.selectSingleNode(
-										"visibility/autoSubscribed")));
+								srcProfile.selectSingleNode("visibility/obliged")));
 				sp.setVisibility(visibilitySets);
 				sp.setTtl(profile.getTtl());
 				sourceProfiles.put(sp.getId(), sp);				
@@ -190,9 +190,9 @@ public class FreshManagedCategoryThread extends Thread {
 			visibilitySets.setAllowed(
 					XMLUtil.loadDefAndContentSets(
 							root.selectSingleNode("/category/visibility/allowed")));
-			visibilitySets.setObliged(
+			visibilitySets.setAutoSubscribed(
 					XMLUtil.loadDefAndContentSets(
-							root.selectSingleNode("/category/visibility/obliged")));
+							root.selectSingleNode("/category/visibility/autoSubscribed")));
 			*/
 			// load allowed
 		    DefinitionSets definitionSets = 
@@ -201,11 +201,11 @@ public class FreshManagedCategoryThread extends Thread {
 		    // add autoSubscribed to allowed
 		    definitionSets.addDefinitionSets(
 					XMLUtil.loadDefAndContentSets(
-							root.selectSingleNode("/category/visibility/obliged")));
-		    visibilitySets.setAllowed(definitionSets);	
-			visibilitySets.setAutoSubscribed(
-					XMLUtil.loadDefAndContentSets(
 							root.selectSingleNode("/category/visibility/autoSubscribed")));
+		    visibilitySets.setAllowed(definitionSets);	
+			visibilitySets.setObliged(
+					XMLUtil.loadDefAndContentSets(
+							root.selectSingleNode("/category/visibility/obliged")));
 			ret.setVisibility(visibilitySets);
 		} catch (DocumentException e) {
 			String profileId = "null";
