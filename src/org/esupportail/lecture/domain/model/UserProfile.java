@@ -206,7 +206,7 @@ public class UserProfile {
 						customContext = getCustomContext(contextId);
 				
 						VisibilityMode mode = mcp.updateCustomContext(customContext, ex);
-						if (mode != VisibilityMode.NOVISIBLE) {
+						if (mode == VisibilityMode.NOVISIBLE) {
 							categoryIsVisible = false;
 						} 
 					} catch (ContextNotFoundException e) {
