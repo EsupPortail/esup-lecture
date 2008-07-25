@@ -183,12 +183,12 @@ public class ChannelConfig  {
 		}
 	
 		// TODO (GB later) groupes visibility :
-		// - vérifier l'existances des noms d'attributs (et de groupes) 
+		// - vï¿½rifier l'existances des noms d'attributs (et de groupes) 
 		// 	 dans le portletContext (portlet.xml) : WARNING
-		// - vérifier qu'il y ait au moins un groupe de visibilité pour 
+		// - vï¿½rifier qu'il y ait au moins un groupe de visibilitï¿½ pour 
 		//   chq cat (au moins un des trois et non vide) : WARNING	
-		//  (vérifier que les attributs portail référencés dans la config
-	   	//      ont bien été déclarés dans le portlet.xml)
+		//  (vï¿½rifier que les attributs portail rï¿½fï¿½rencï¿½s dans la config
+	   	//      ont bien ï¿½tï¿½ dï¿½clarï¿½s dans le portlet.xml)
 		if (false) {
 			String errorMsg = "...";
 			LOG.error(errorMsg);
@@ -211,7 +211,7 @@ public class ChannelConfig  {
 //		if (LOG.isDebugEnabled()) {
 //			LOG.debug("loadUserId()");
 //		}
-//		// TODO (RB<--GB) à retirer suite à l'auth cas via esup-commons ?
+//		// TODO (RB<--GB) ï¿½ retirer suite ï¿½ l'auth cas via esup-commons ?
 //		DomainTools.setUserID(xmlFile.getString("userId"));
 //	}
 
@@ -259,15 +259,9 @@ public class ChannelConfig  {
 			
 		    // Visibility
 		    VisibilitySets visibilitySets = new VisibilitySets();  
-		    /* these 2 lines aren't used at this time because autoSubscribed is managed as allowed    
+		    // foreach (allowed / autoSubscribed / Obliged
 		    visibilitySets.setAllowed(loadDefAndContentSets("allowed", i));
 		    visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed", i));
-		    */
-		    // load allowed
-		    DefinitionSets definitionSets = loadDefAndContentSets("allowed", i);
-		    // add autoSubscribed to allowed
-		    definitionSets.addDefinitionSets(loadDefAndContentSets("autoSubscribed", i));
-		    visibilitySets.setAllowed(definitionSets);
 		   	visibilitySets.setObliged(loadDefAndContentSets("obliged", i));
 		    mcp.setVisibility(visibilitySets);
 		    
@@ -399,7 +393,7 @@ public class ChannelConfig  {
 	 * @see ChannelConfig#filePath
 	 */
 	protected static synchronized void setfilePath(final String filePath) {
-		// TODO (GB later) sera utilisé lorsque le file sera externalisé
+		// TODO (GB later) sera utilisï¿½ lorsque le file sera externalisï¿½
 		LOG.debug("setFilePath(" + filePath + ")");
 		ChannelConfig.filePath = filePath;
 	}
