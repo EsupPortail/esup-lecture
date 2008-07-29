@@ -140,7 +140,7 @@ public class CustomManagedCategory extends CustomCategory {
 	 * Return a list of "SourceProfile, AvailabilityMode" corresponding to visible sources for user, 
 	 * in this customCategory and update it.
 	 * @param ex access to external service 
-	 * @return list of ProfileAvailability
+	 * @return list of CoupleProfileAvailability
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryOutOfReachException 
@@ -150,7 +150,7 @@ public class CustomManagedCategory extends CustomCategory {
 	 *   org.esupportail.lecture.domain.ExternalService)
 	 */
 	@Override
-	public List<ProfileAvailability> getVisibleSources(final ExternalService ex) 
+	public List<CoupleProfileAvailability> getVisibleSources(final ExternalService ex) 
 	throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, 
 	InternalDomainException, CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
@@ -176,20 +176,20 @@ public class CustomManagedCategory extends CustomCategory {
 			}
 		}
 		
-		List<ProfileAvailability> couplesAvail = new Vector<ProfileAvailability>();
+		List<CoupleProfileAvailability> couplesAvail = new Vector<CoupleProfileAvailability>();
 		for (ProfileVisibility coupleV : couplesVisib) {
 			// Every couple is not NOTVISIBLE (= visible)
-			ProfileAvailability coupleA;
+			CoupleProfileAvailability coupleA;
 			SourceProfile sourceProfile = (SourceProfile) coupleV.getProfile();
 			
 			if (coupleV.getMode() == VisibilityMode.OBLIGED ) {
-				coupleA = new ProfileAvailability(sourceProfile, AvailabilityMode.OBLIGED);
+				coupleA = new CoupleProfileAvailability(sourceProfile, AvailabilityMode.OBLIGED);
 			} else { 
 				// It must be ALLOWED OR AUTOSUBSRIBED
 				if (subscriptions.containsKey(sourceProfile.getId())) {
-					coupleA = new ProfileAvailability(sourceProfile, AvailabilityMode.SUBSCRIBED);
+					coupleA = new CoupleProfileAvailability(sourceProfile, AvailabilityMode.SUBSCRIBED);
 				} else {
-					coupleA = new ProfileAvailability(sourceProfile, 
+					coupleA = new CoupleProfileAvailability(sourceProfile, 
 						AvailabilityMode.NOTSUBSCRIBED);
 				}
 			}

@@ -6,10 +6,10 @@
 package org.esupportail.lecture.domain.beans;
 
 import org.esupportail.lecture.domain.model.AvailabilityMode;
+import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.ElementProfile;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.domain.model.ProfileAvailability;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
@@ -73,10 +73,10 @@ public class SourceBean {
 	}
 
 	/**
-	 * constructor initializing object with ProfileAvailability.
-	 * @param profAv ProfileAvailability
+	 * constructor initializing object with CoupleProfileAvailability.
+	 * @param profAv CoupleProfileAvailability
 	 */
-	public SourceBean(final ProfileAvailability profAv) {
+	public SourceBean(final CoupleProfileAvailability profAv) {
 		ElementProfile elt = profAv.getProfile();
 		this.name = elt.getName();
 		this.id = elt.getId();

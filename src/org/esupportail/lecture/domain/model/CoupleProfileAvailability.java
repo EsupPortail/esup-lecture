@@ -6,11 +6,11 @@
 package org.esupportail.lecture.domain.model;
 
 /**
- * Used to set availability of a user on an elementProfile.
+ * Couple associating a profile with its AvailibilityMode.
  * @author gbouteil
  *
  */
-public class ProfileAvailability {
+public class CoupleProfileAvailability {
 	/* 
 	 *************************** PROPERTIES ******************************** */
 	/**
@@ -31,7 +31,7 @@ public class ProfileAvailability {
 	 * @param elt
 	 * @param m
 	 */
-	public ProfileAvailability(final ElementProfile elt, final AvailabilityMode m) {
+	public CoupleProfileAvailability(final ElementProfile elt, final AvailabilityMode m) {
 		this.profile = elt;
 		this.mode = m;
 	}

@@ -11,9 +11,9 @@ import java.util.Map;
 
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.CategoryProfile;
+import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.domain.model.ProfileAvailability;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
@@ -84,11 +84,11 @@ public class CategoryBean {
 	}
 	
 	/**
-	 * constructor initializing object with ProfileAvailability.
-	 * @param profAv ProfileAvailability
+	 * constructor initializing object with CoupleProfileAvailability.
+	 * @param profAv CoupleProfileAvailability
 	 * @throws CategoryNotLoadedException 
 	 */
-	public CategoryBean(final ProfileAvailability profAv) throws CategoryNotLoadedException {
+	public CategoryBean(final CoupleProfileAvailability profAv) throws CategoryNotLoadedException {
 		CategoryProfile profile = (CategoryProfile) profAv.getProfile(); 
 		this.name = profile.getName();
 		this.id = profile.getId();

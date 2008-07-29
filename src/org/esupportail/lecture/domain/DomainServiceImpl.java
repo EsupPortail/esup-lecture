@@ -29,7 +29,7 @@ import org.esupportail.lecture.domain.model.CustomManagedSource;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.domain.model.ProfileAvailability;
+import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
@@ -505,8 +505,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
 		UserProfile userProfile = channel.getUserProfile(uid);
 		CustomContext customContext = userProfile.getCustomContext(contextId);
-		List<ProfileAvailability> couples = customContext.getVisibleCategories(ex);
-		for (ProfileAvailability couple : couples) {
+		List<CoupleProfileAvailability> couples = customContext.getVisibleCategories(ex);
+		for (CoupleProfileAvailability couple : couples) {
 			CategoryBean category;
 			category = new CategoryBean(couple);
 			listCategoryBean.add(category);
@@ -532,8 +532,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		try {
 			
 			CustomCategory customCategory = userProfile.getCustomCategory(categoryId, ex);
-			List<ProfileAvailability> couples = customCategory.getVisibleSources(ex);
-			for (ProfileAvailability couple : couples) {
+			List<CoupleProfileAvailability> couples = customCategory.getVisibleSources(ex);
+			for (CoupleProfileAvailability couple : couples) {
 				SourceBean source;
 				//try {
 					source = new SourceBean(couple);

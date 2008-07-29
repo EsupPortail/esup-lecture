@@ -151,10 +151,10 @@ public class CustomContext implements CustomElement {
 	 * Return a list of (CategoryProfile, AvailabilityMode) corresponding to visible categories for user, 
 	 * in this customContext and update it.
 	 * @param ex access to external service 
-	 * @return list of ProfileAvailability
+	 * @return list of CoupleProfileAvailability
 	 * @throws ContextNotFoundException 
 	 */
-	public List<ProfileAvailability> getVisibleCategories(final ExternalService ex) 
+	public List<CoupleProfileAvailability> getVisibleCategories(final ExternalService ex) 
 	throws ContextNotFoundException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + getElementId() + " - getVisibleCategories(ex)");
@@ -165,20 +165,20 @@ public class CustomContext implements CustomElement {
 		List<ProfileVisibility> couplesVisib;
 		couplesVisib = cxt.getVisibleCategoriesAndUpdateCustom(this, ex);
 			
-		List<ProfileAvailability> couplesAvail = new Vector<ProfileAvailability>();
+		List<CoupleProfileAvailability> couplesAvail = new Vector<CoupleProfileAvailability>();
 		for (ProfileVisibility coupleV : couplesVisib) {
 			// Every couple is not NOTVISIBLE (= visible)
-			ProfileAvailability coupleA;
+			CoupleProfileAvailability coupleA;
 			CategoryProfile categoryProfile = (CategoryProfile) coupleV.getProfile();
 			
 			if (coupleV.getMode() == VisibilityMode.OBLIGED ) {
-				coupleA = new ProfileAvailability(categoryProfile, AvailabilityMode.OBLIGED);
+				coupleA = new CoupleProfileAvailability(categoryProfile, AvailabilityMode.OBLIGED);
 			} else { 
 				// It must be ALLOWED OR AUTOSUBSRIBED
 				if (subscriptions.containsKey(categoryProfile.getId())) {
-					coupleA = new ProfileAvailability(categoryProfile, AvailabilityMode.SUBSCRIBED);
+					coupleA = new CoupleProfileAvailability(categoryProfile, AvailabilityMode.SUBSCRIBED);
 				} else {
-					coupleA = new ProfileAvailability(categoryProfile, 
+					coupleA = new CoupleProfileAvailability(categoryProfile, 
 						AvailabilityMode.NOTSUBSCRIBED);
 				}
 			}

@@ -152,14 +152,14 @@ public abstract class CustomCategory implements CustomElement {
 	 * This list corresponding to visible sources for user, 
 	 * in this customCategory.
 	 * @param ex access to external service 
-	 * @return list of ProfileAvailability
+	 * @return list of CoupleProfileAvailability
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryOutOfReachException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 */
-	public abstract List<ProfileAvailability> getVisibleSources(ExternalService ex) 
+	public abstract List<CoupleProfileAvailability> getVisibleSources(ExternalService ex) 
 		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, 
 		InternalDomainException, CategoryTimeOutException;
 	
