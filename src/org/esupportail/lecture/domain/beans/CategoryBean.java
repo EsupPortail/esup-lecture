@@ -80,7 +80,7 @@ public class CategoryBean {
 		this.description = profile.getDescription();
 		this.id = profile.getId();
 		this.folded = customContext.isCategoryFolded(id);
-		this.orderedSourceIDs = profile.getElement().getOrderedSourceIDs();
+		this.orderedSourceIDs = profile.getOrderedSourceIDs();
 	}
 	
 	/**
@@ -89,11 +89,11 @@ public class CategoryBean {
 	 * @throws CategoryNotLoadedException 
 	 */
 	public CategoryBean(final ProfileAvailability profAv) throws CategoryNotLoadedException {
-		CategoryProfile elt = (CategoryProfile) profAv.getProfile(); 
-		this.name = elt.getName();
-		this.id = elt.getId();
+		CategoryProfile profile = (CategoryProfile) profAv.getProfile(); 
+		this.name = profile.getName();
+		this.id = profile.getId();
 		this.type = profAv.getMode();
-		this.orderedSourceIDs = elt.getElement().getOrderedSourceIDs();
+		this.orderedSourceIDs = profile.getOrderedSourceIDs();
 	}
 	
 	/*
@@ -177,7 +177,7 @@ public class CategoryBean {
 
 	/**
 	 * @param sourceID - the ID of source to find
-	 * @return the XML order in of the source the CategoryProfile definition
+	 * @return the XML order in the source in the CategoryProfile definition
 	 */
 	public int getXMLOrder(final String sourceID) {
 		Integer ret = orderedSourceIDs.get(sourceID);

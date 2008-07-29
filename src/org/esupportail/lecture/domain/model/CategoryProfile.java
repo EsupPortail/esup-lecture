@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.ExternalService;
@@ -17,6 +19,10 @@ import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
  * A Category profile references a category and is displayed in a context
  * @author gbouteil
  * @see ElementProfile
+ */
+/**
+ * @author gbouteil
+ *
  */
 public abstract class CategoryProfile implements ElementProfile {
 	
@@ -84,6 +90,17 @@ public abstract class CategoryProfile implements ElementProfile {
 		
 	}
 
+	/**
+	 * @return the Map of Ordered Source IDs 
+	 * @throws CategoryNotLoadedException
+	 */
+	public Map<String, Integer> getOrderedSourceIDs() throws CategoryNotLoadedException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + id + " - getName()");
+		}
+		return getElement().getOrderedSourceIDs();
+	}
+	
 	/**
 	 * @return Returns the category referenced by this CategoryProfile
 	 * @throws CategoryNotLoadedException 
@@ -170,5 +187,6 @@ public abstract class CategoryProfile implements ElementProfile {
 	public void setElement(final Category category) {
 		this.category = category;
 	}
+
 
 }

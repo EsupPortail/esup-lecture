@@ -58,7 +58,7 @@ public class ContextBean {
 		setName(context.getName());
 		setDescription(context.getDescription());
 		setId(context.getId());
-		setOrderedCategoryIDs(customContext.getContext().getOrderedCategoryIDs());
+		setOrderedCategoryIDs(context.getOrderedCategoryIDs());
 	}
 	
 	/*
