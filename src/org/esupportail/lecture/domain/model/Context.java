@@ -166,26 +166,26 @@ public class Context {
 	 * defined in this Context, according to managedCategoriesProfiles visibility
 	 * @param customContext custom to update
 	 * @param ex access to externalService
-	 * @return list of ProfileVisibility)
+	 * @return list of CoupleProfileVisibility)
 	 * @see Context#updateCustom(CustomContext, ExternalService)
 	 */
-	protected synchronized List<ProfileVisibility> getVisibleCategoriesAndUpdateCustom(
+	protected synchronized List<CoupleProfileVisibility> getVisibleCategoriesAndUpdateCustom(
 			final CustomContext customContext, final ExternalService ex) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - getVisibleCategoriesAndUpdateCustom("
 					+ this.getId() + ",externalService)");
 		}
-		List<ProfileVisibility> couplesVisib = new Vector<ProfileVisibility>();
+		List<CoupleProfileVisibility> couplesVisib = new Vector<CoupleProfileVisibility>();
 		Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
 		
 		// update and get managedSources defined in this managedCategory 
 		while (iterator.hasNext()) {
 			ManagedCategoryProfile mcp = iterator.next();
-			ProfileVisibility couple;
+			CoupleProfileVisibility couple;
 			try {				
 				VisibilityMode mode = mcp.updateCustomContext(customContext, ex);
 				if (mode != VisibilityMode.NOVISIBLE) {
-					couple = new ProfileVisibility(mcp, mode);
+					couple = new CoupleProfileVisibility(mcp, mode);
 					couplesVisib.add(couple);
 				}
 			} catch (CategoryNotLoadedException e) {

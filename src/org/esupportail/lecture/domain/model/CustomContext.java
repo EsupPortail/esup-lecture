@@ -162,11 +162,11 @@ public class CustomContext implements CustomElement {
 		// TODO (GB later) redéfinir avec les custom personnal 
 		// category : en fonction de l'ordre d'affichage peut etre.
 		Context cxt = getContext();
-		List<ProfileVisibility> couplesVisib;
+		List<CoupleProfileVisibility> couplesVisib;
 		couplesVisib = cxt.getVisibleCategoriesAndUpdateCustom(this, ex);
 			
 		List<CoupleProfileAvailability> couplesAvail = new Vector<CoupleProfileAvailability>();
-		for (ProfileVisibility coupleV : couplesVisib) {
+		for (CoupleProfileVisibility coupleV : couplesVisib) {
 			// Every couple is not NOTVISIBLE (= visible)
 			CoupleProfileAvailability coupleA;
 			CategoryProfile categoryProfile = (CategoryProfile) coupleV.getProfile();

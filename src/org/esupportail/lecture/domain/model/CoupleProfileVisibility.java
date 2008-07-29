@@ -6,11 +6,11 @@
 package org.esupportail.lecture.domain.model;
 
 /**
- * Used to set visibility of a user on an elementProfile.
+ * Couple associating a profile with its VisibilityMode.
  * @author gbouteil
  *
  */
-public class ProfileVisibility {
+public class CoupleProfileVisibility {
 	/* 
 	 *************************** PROPERTIES ******************************** */
 	/**
@@ -29,7 +29,7 @@ public class ProfileVisibility {
 	/**
 	 * Constructor.
 	 */
-	public ProfileVisibility() {
+	public CoupleProfileVisibility() {
 		// empty
 	}
 
@@ -39,7 +39,7 @@ public class ProfileVisibility {
 	 * @param elt
 	 * @param m
 	 */
-	public ProfileVisibility(final ElementProfile elt, final VisibilityMode m) {
+	public CoupleProfileVisibility(final ElementProfile elt, final VisibilityMode m) {
 		this.profile = elt;
 		this.mode = m;
 	}

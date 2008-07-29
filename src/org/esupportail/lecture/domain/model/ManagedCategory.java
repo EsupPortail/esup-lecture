@@ -95,27 +95,27 @@ public class ManagedCategory extends Category {
 	 * (there is not any loading of source at this time)
 	 * @param customManagedCategory custom to update
 	 * @param ex access to external service for visibility evaluation
-	 * @return list of ProfileVisibility
+	 * @return list of CoupleProfileVisibility
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 */
-	protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(
+	protected List<CoupleProfileVisibility> getVisibleSourcesAndUpdateCustom(
 			final CustomManagedCategory customManagedCategory,
 			final ExternalService ex) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getProfileId() + " - getVisibleSourcesAndUpdateCustom("
 					+ getProfileId() + ",externalService)");
 		}
-		List<ProfileVisibility> couplesVisib = new Vector<ProfileVisibility>();
+		List<CoupleProfileVisibility> couplesVisib = new Vector<CoupleProfileVisibility>();
 		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
 		
 		// update and get managedSources defined in this managedCategory 
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
-			ProfileVisibility couple;
+			CoupleProfileVisibility couple;
 			VisibilityMode mode = msp.updateCustomCategory(customManagedCategory, ex);
 			if (mode != VisibilityMode.NOVISIBLE) {
-				couple = new ProfileVisibility(msp, mode);
+				couple = new CoupleProfileVisibility(msp, mode);
 				couplesVisib.add(couple);
 			}
 		}

@@ -266,7 +266,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @throws CategoryProfileNotFoundException 
 	 * @see ManagedCategoryProfile#updateCustom(CustomManagedCategory, ExternalService)
 	 */
-	protected List<ProfileVisibility> getVisibleSourcesAndUpdateCustom(
+	protected List<CoupleProfileVisibility> getVisibleSourcesAndUpdateCustom(
 			final CustomManagedCategory customManagedCategory, final ExternalService ex) 
 		throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {

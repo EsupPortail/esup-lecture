@@ -159,7 +159,7 @@ public class CustomManagedCategory extends CustomCategory {
 		// TODO (GB later) redéfinir avec les custom personnal 
 		// category : en fonction de l'ordre d'affichage peut etre.
 		ManagedCategoryProfile profile = getProfile();
-		List<ProfileVisibility> couplesVisib;
+		List<CoupleProfileVisibility> couplesVisib;
 		try {
 			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this, ex);
 		} catch (CategoryNotLoadedException e1) {
@@ -177,7 +177,7 @@ public class CustomManagedCategory extends CustomCategory {
 		}
 		
 		List<CoupleProfileAvailability> couplesAvail = new Vector<CoupleProfileAvailability>();
-		for (ProfileVisibility coupleV : couplesVisib) {
+		for (CoupleProfileVisibility coupleV : couplesVisib) {
 			// Every couple is not NOTVISIBLE (= visible)
 			CoupleProfileAvailability coupleA;
 			SourceProfile sourceProfile = (SourceProfile) coupleV.getProfile();
