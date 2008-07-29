@@ -358,7 +358,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		String catId;
 		try {
 			catId = categoryBean.getId();
-			tempListSourceBean = getFacadeService().getAvailableSources(getUID(), catId);
+			tempListSourceBean = getFacadeService().getDisplayedSources(getUID(), catId);
 			//Temporary: remove dummy form the list
 			for (Iterator<SourceBean> iter = tempListSourceBean.iterator(); iter.hasNext();) {
 				SourceBean element = iter.next();

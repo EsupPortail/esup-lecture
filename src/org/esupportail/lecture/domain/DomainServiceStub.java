@@ -134,18 +134,18 @@ public class DomainServiceStub implements DomainService {
 	 * @param uid
 	 * @return list of sourceBean
 	 */
-	public List<SourceBean> getAvailableSources(final String categoryId, final String uid) {
+	public List<SourceBean> getDisplayedSources(final String categoryId, final String uid) {
 		List<SourceBean> ret = null;
 		ret = sources;
 		return ret;
 	}
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(
+	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(
 	 * java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<SourceBean> getAvailableSources(final String uid, final String categoryId, 
+	public List<SourceBean> getDisplayedSources(final String uid, final String categoryId, 
 			@SuppressWarnings("unused") final ExternalService ex) {
-		return getAvailableSources(categoryId, uid);
+		return getDisplayedSources(categoryId, uid);
 	}
 	
 	
@@ -189,7 +189,7 @@ public class DomainServiceStub implements DomainService {
 	 * @param categoryId 
 	 * @param ex 
 	 * @return sources
-	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(
+	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(
 	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getVisibleSources(final String uid, final String categoryId, final ExternalService ex) {

@@ -56,7 +56,7 @@ public class TestDAOLecture {
 		Class params[] = {};
 		Object paramsObj[] = {};
 		out("************************************************");
-		out("executing test: "+methodName);
+		out("executing test: " + methodName);
 		try {
 			Method method = TestDAOLecture.class.getDeclaredMethod(methodName, params);
 			method.invoke(TestDAOLecture.class.newInstance(), paramsObj);
@@ -212,7 +212,7 @@ public class TestDAOLecture {
 ////				cmc.addSubscription((ManagedSourceProfile)cs2.getProfile());
 ////			}
 ////		}
-////ne manipule plus l'object rataché à userprofile.... Cf. mail gwenaëlle
+////ne manipule plus l'object ratachï¿½ ï¿½ userprofile.... Cf. mail gwenaï¿½lle
 ////		ccat2.addSubscription((ManagedSourceProfile)cs1.getProfile());
 ////		ccat3.addSubscription((ManagedSourceProfile)cs2.getProfile());
 //		

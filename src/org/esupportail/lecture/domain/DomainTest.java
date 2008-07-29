@@ -88,14 +88,14 @@ public class DomainTest {
 		try {
 			/* Test alternative behavior */
 //			testGetContextBis("c1");
-//			testGetAvailableSourceAlternativeWay(); 
+//			testGetDisplayedSourceAlternativeWay(); 
 			
 			/* Test normal behavior */
 			testGetConnectedUser();
 			testGetContext();
 			testGetDisplayedCategories();
 			testGetVisibleCategories();
-			testGetAvailableSources();
+			testGetDisplayedSources();
 			testGetVisibleSources();
 //			testGetItems();
 		
@@ -121,7 +121,7 @@ public class DomainTest {
 //			testGetConnectedUser();
 //			testGetContext();
 //			testGetDisplayedCategories();
-//			testGetAvailableSources();
+//			testGetDisplayedSources();
 //			testTimeOutValues();
 		
 			// TODO (GB later) : tester pour un user OBLIGED et ALLOWED opour une source : 
@@ -213,14 +213,14 @@ public class DomainTest {
 	}
 	
 	/**
-	 * Test of service "getAvailableSources".
+	 * Test of service "getDisplayedeSources".
 	 * @throws DomainServiceException 
 	 */
-	private static void testGetAvailableSources() throws DomainServiceException  {
-		printIntro("getAvailableSources");
+	private static void testGetDisplayedSources() throws DomainServiceException  {
+		printIntro("getDisplayedSources");
 		for (String catId : categoryIds) {
 			System.out.println(" **** cat " + catId + " **********");
-			List<SourceBean> sources = facadeService.getAvailableSources(userId, catId);
+			List<SourceBean> sources = facadeService.getDisplayedSources(userId, catId);
 			for (SourceBean so : sources) {
 				System.out.println("  **** source ****");
 				System.out.println(so.toString());
@@ -360,7 +360,7 @@ public class DomainTest {
 		
 		categoryIds = new ArrayList<String>();
 		categoryIds.add("cp5");
-		testGetAvailableSources();
+		testGetDisplayedSources();
 	}
 	
 	/**
@@ -451,22 +451,22 @@ public class DomainTest {
 	
 	
 	/**
-	 *  Test of service "getAvailableSources" in an alternative way :
+	 *  Test of service "getDisplayedSources" in an alternative way :
 	 *  - the parent category has not been got before.
 	 * @throws InternalExternalException 
 	 * @throws DomainServiceException 
 	 */
 	@SuppressWarnings("unused")
-	private static void testGetAvailableSourceAlternativeWay() 
+	private static void testGetDisplayedSourceAlternativeWay() 
 	throws InternalExternalException, DomainServiceException  {	
 		testGetContext();	
-		printIntro("getAvailableSources - alternative way");
+		printIntro("getDisplayedSources - alternative way");
 		categoryIds = new ArrayList<String>();
 		categoryIds.add("cp1");
 		categoryIds.add("cp2");
 		for (String catId : categoryIds) {
 			System.out.println(" **** cat " + catId + " **********");
-			List<SourceBean> sources = facadeService.getAvailableSources(userId, catId);
+			List<SourceBean> sources = facadeService.getDisplayedSources(userId, catId);
 			for (SourceBean so : sources) {
 				System.out.println("  **** source ****");
 				System.out.println(so.toString());
@@ -534,7 +534,7 @@ public class DomainTest {
 		printIntro("markItemDisplayMode");
 		System.out.println("Marquage de la source 'm:cp5:un' comme UNREADFIRST");
 		facadeService.marckItemDisplayMode(userId, "m:cp5:un", ItemDisplayMode.UNREADFIRST);
-		testGetAvailableSources();
+		testGetDisplayedSources();
 	}
 	
 	

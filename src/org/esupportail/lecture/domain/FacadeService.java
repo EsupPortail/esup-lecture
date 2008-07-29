@@ -156,7 +156,7 @@ public class FacadeService implements InitializingBean {
 	}
 	
 	/**
-	 * Returns a list of sourceBean - corresponding to categories to display on interface.
+	 * Returns a list of sourceBean - corresponding to sources to display on interface.
 	 * into category categoryId for user userId
 	 * Displayed sources are one that user : 
 	 * - is subscribed to (obliged or allowed or autoSubscribe)
@@ -171,10 +171,10 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryOutOfReachException 
 	 */
-	public List<SourceBean> getAvailableSources(final String uid, final String categoryId) 
+	public List<SourceBean> getDisplayedSources(final String uid, final String categoryId) 
 		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, 
 			UserNotSubscribedToCategoryException, CategoryTimeOutException, CategoryOutOfReachException {
-		return domainService.getAvailableSources(uid, categoryId, externalService);
+		return domainService.getDisplayedSources(uid, categoryId, externalService);
 	}
 	
 

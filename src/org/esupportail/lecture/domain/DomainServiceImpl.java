@@ -226,15 +226,15 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryOutOfReachException 
-	 * @see org.esupportail.lecture.domain.DomainService#getAvailableSources(
+	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(
 	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
-	public List<SourceBean> getAvailableSources(
+	public List<SourceBean> getDisplayedSources(
 			final String uid, final String categoryId, final ExternalService ex) 
 		throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
 			InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException  {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("getAvailableSources(" + uid + "," + categoryId + ",externalService)");
+			LOG.debug("getDisplayedSources(" + uid + "," + categoryId + ",externalService)");
 		}
 		
 		List<SourceBean> listSourceBean = new ArrayList<SourceBean>();
@@ -249,11 +249,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 					source = new SourceBean(customSource);
 					listSourceBean.add(source);
 				} catch (SourceProfileNotFoundException e) {
-					LOG.warn("Warning on service 'getAvailableSources(user " 
+					LOG.warn("Warning on service 'getDisplayedSources(user " 
 						+ uid + ", category " + categoryId + ") : clean custom source ");
 					userProfile.removeCustomSourceFromProfile(customSource.getElementId());
 				} catch (InfoDomainException e) {
-					LOG.error("Error on service 'getAvailableSources(user "
+					LOG.error("Error on service 'getDisplayedSources(user "
 						+ uid + ", category " + categoryId + ") : " 
 						+ "creation of a SourceDummyBean");
 					source = new SourceDummyBean(e);
@@ -261,14 +261,14 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				}
 			}
 		} catch	(CategoryProfileNotFoundException e) {
-			String errorMsg = "CategoryProfileNotFoundException for service 'getAvailableSources(user "
+			String errorMsg = "CategoryProfileNotFoundException for service 'getDisplayedSources(user "
 				+ uid + ", category " + categoryId + ")";
 			LOG.error(errorMsg);
 			//userProfile.cleanCustomCategoryFromProfile(categoryId);
 			userProfile.removeCustomCategoryFromProfile(categoryId);
 			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomCategoryNotFoundException e) {
-			String errorMsg = "CustomCategoryNotFound for service 'getAvailableSources(user "
+			String errorMsg = "CustomCategoryNotFound for service 'getDisplayedSources(user "
 				+ uid + ", category " + categoryId + ")\n" 
 				+ "User " + uid + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);

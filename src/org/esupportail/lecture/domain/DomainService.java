@@ -76,9 +76,9 @@ public interface DomainService {
 	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryOutOfReachException 
-	 * @see FacadeService#getAvailableSources(String, String)
+	 * @see FacadeService#getDisplayedSources(String, String)
 	 */
-	List<SourceBean> getAvailableSources(String uid, String categoryId, ExternalService ex)  
+	List<SourceBean> getDisplayedSources(String uid, String categoryId, ExternalService ex)  
 	throws CategoryNotVisibleException, CategoryProfileNotFoundException, 
 	InternalDomainException, UserNotSubscribedToCategoryException, CategoryTimeOutException, 
 	CategoryOutOfReachException;
