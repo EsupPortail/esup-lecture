@@ -166,7 +166,7 @@ public class Context {
 	 * defined in this Context, according to managedCategoriesProfiles visibility
 	 * @param customContext custom to update
 	 * @param ex access to externalService
-	 * @return list of CoupleProfileVisibility)
+	 * @return list of CoupleProfileVisibility
 	 * @see Context#updateCustom(CustomContext, ExternalService)
 	 */
 	protected synchronized List<CoupleProfileVisibility> getVisibleCategoriesAndUpdateCustom(
