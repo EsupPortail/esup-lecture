@@ -19,9 +19,24 @@ public class Item {
 	 * html content of item.
 	 */
 	private String htmlContent;
+	
+	/**
+	 * Source parent of this item.
+	 */
+	private Source parent;
 
 	/*
 	 *************************** INIT ************************************** */	
+
+	/**
+	 * Constructor.
+	 * @param p parent of the item
+	 */
+	public Item(final Source p) {
+		parent = p;
+	}
+	
+
 	/*
 	 *************************** METHODS *********************************** */	
 
@@ -82,6 +97,12 @@ public class Item {
 		this.id = id;
 	}
 
+	/**
+	 * @return parent of the item
+	 */
+	public Source getParent() {
+		return parent;
+	}
 	
 
 }

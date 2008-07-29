@@ -249,7 +249,7 @@ public abstract class Source implements Element, Serializable {
 			Iterator<Node> iter = list.iterator();
 			while (iter.hasNext()) {
 				Node node = iter.next();
-				Item item = new Item();
+				Item item = new Item(this);
 				StringBuffer xml = new StringBuffer("<?xml version=\"1.0\" encoding=\"");
 				xml.append(encoding);
 				xml.append("\" ?>");
