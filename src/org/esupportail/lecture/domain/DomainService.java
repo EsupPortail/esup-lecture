@@ -22,7 +22,6 @@ import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
-import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
@@ -61,9 +60,9 @@ public interface DomainService {
 	 * @param ex access to external service 
 	 * @return List<CategoryBean>
 	 * @throws ContextNotFoundException 
-	 * @see FacadeService#getAvailableCategories(String, String)
+	 * @see FacadeService#getDisplayedCategories(String, String)
 	 */
-	List<CategoryBean> getAvailableCategories(String uid, String contextId, ExternalService ex) 
+	List<CategoryBean> getDisplayedCategories(String uid, String contextId, ExternalService ex) 
 	throws ContextNotFoundException;
 
 	/**

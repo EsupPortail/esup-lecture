@@ -390,7 +390,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	protected List<CategoryBean> getCategories(final String ctxtId) throws ContextNotFoundException {
 		//Note: this method need to be overwrite in edit controller
 		List<CategoryBean> ret = new ArrayList<CategoryBean>();
-		List<CategoryBean> categories = getFacadeService().getAvailableCategories(getUID(), ctxtId);
+		List<CategoryBean> categories = getFacadeService().getDisplayedCategories(getUID(), ctxtId);
 		//Temporary: remove dummy form the list
 		for (Iterator<CategoryBean> iter = categories.iterator(); iter.hasNext();) {
 			CategoryBean element = iter.next();

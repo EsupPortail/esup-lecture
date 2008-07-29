@@ -140,9 +140,9 @@ public class FacadeService implements InitializingBean {
 	}
 	
 	/**
-	 * Returns a list of categoryBean - corresponding to available categories to display on interface.
+	 * Returns a list of categoryBean - corresponding to categories to display on interface.
 	 * into context contextId for user userId
-	 * Available categories are one that user : 
+	 * Displayed categories are one that user : 
 	 * - is subscribed to (obliged or allowed or autoSubscribe)
 	 * - has created (personal categories)
 	 * @param contextId id of context
@@ -150,15 +150,15 @@ public class FacadeService implements InitializingBean {
 	 * @return List of CategoryBean
 	 * @throws ContextNotFoundException
 	 */
-	public List<CategoryBean> getAvailableCategories(final String uid, final String contextId) 
+	public List<CategoryBean> getDisplayedCategories(final String uid, final String contextId) 
 		throws ContextNotFoundException  {
-		return domainService.getAvailableCategories(uid, contextId, externalService);
+		return domainService.getDisplayedCategories(uid, contextId, externalService);
 	}
 	
 	/**
-	 * Returns a list of sourceBean - corresponding to available categories to display on interface.
+	 * Returns a list of sourceBean - corresponding to categories to display on interface.
 	 * into category categoryId for user userId
-	 * Available sources are one that user : 
+	 * Displayed sources are one that user : 
 	 * - is subscribed to (obliged or allowed or autoSubscribe)
 	 * - has created (personal sources)
 	 * @param categoryId id of category

@@ -165,9 +165,9 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	}
 
 	/**
-	 * Returns a list of categoryBean - corresponding to available categories to display on interface.
+	 * Returns a list of categoryBean - corresponding to categories to display on interface.
 	 * into context contextId for user userId
-	 * Available categories are one that user : 
+	 * Displayed categories are one that user : 
 	 * - is subscribed to (obliged or allowed or autoSubscribe)
 	 * - has created (personal categories)
 	 * @param userId id of the current user
@@ -175,14 +175,14 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param ex externalService
 	 * @return a list of CategoryBean
 	 * @throws ContextNotFoundException
-	 * @see org.esupportail.lecture.domain.DomainService#getAvailableCategories(
+	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedCategories(
 	 *   java.lang.String, java.lang.String, ExternalService)
 	 */
-	public List<CategoryBean> getAvailableCategories(final String userId, final String contextId, 
+	public List<CategoryBean> getDisplayedCategories(final String userId, final String contextId, 
 			final ExternalService ex) 
 			throws ContextNotFoundException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("getAvailableCategories(" + userId + "," + contextId + ",externalService)");
+			LOG.debug("getDisplayedCategories(" + userId + "," + contextId + ",externalService)");
 		}
 		
 		/* Get current user profile and customContext */
@@ -198,12 +198,12 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				category = new CategoryBean(customCategory, customContext);
 				listCategoryBean.add(category);
 			} catch (CategoryProfileNotFoundException e) {
-				LOG.warn("Warning on service 'getAvailableCategories(user " 
+				LOG.warn("Warning on service 'getDisplayedeCategories(user " 
 					+ userId + ", context " + contextId + ") : clean custom source ");
 				//userProfile.cleanCustomCategoryFromProfile(customCategory.getElementId());
 				userProfile.removeCustomCategoryFromProfile(customCategory.getElementId());
 			} catch (InfoDomainException e) {
-				LOG.error("Error on service 'getAvailableCategories(user " 
+				LOG.error("Error on service 'getDisplayedCategories(user " 
 					+ userId + ", context " + contextId + ") : creation of a CategoryDummyBean");
 				category = new CategoryDummyBean(e);
 				listCategoryBean.add(category);

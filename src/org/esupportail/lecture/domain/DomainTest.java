@@ -93,7 +93,7 @@ public class DomainTest {
 			/* Test normal behavior */
 			testGetConnectedUser();
 			testGetContext();
-			testGetAvailableCategories();
+			testGetDisplayedCategories();
 			testGetVisibleCategories();
 			testGetAvailableSources();
 			testGetVisibleSources();
@@ -120,7 +120,7 @@ public class DomainTest {
 			/* test timeout values */
 //			testGetConnectedUser();
 //			testGetContext();
-//			testGetAvailableCategories();
+//			testGetDisplayedCategories();
 //			testGetAvailableSources();
 //			testTimeOutValues();
 		
@@ -199,10 +199,10 @@ public class DomainTest {
 	 * @throws ContextNotFoundException 
 	 * @throws DomainServiceException 
 	 */
-	private static void testGetAvailableCategories() 
+	private static void testGetDisplayedCategories() 
 	throws ContextNotFoundException, DomainServiceException {
-		printIntro("getAvailableCategories");
-		List<CategoryBean> categories = facadeService.getAvailableCategories(userId, contextId);
+		printIntro("getDisplayedCategories");
+		List<CategoryBean> categories = facadeService.getDisplayedCategories(userId, contextId);
 		categoryIds = new ArrayList<String>();
 		for (CategoryBean cat : categories) {
 			categoryIds.add(cat.getId());
@@ -566,10 +566,10 @@ public class DomainTest {
 		facadeService.foldCategory(userId, contextId, "cp1");
 		System.out.println("Depliage de la categorie cp1 \n");
 		facadeService.unfoldCategory(userId, contextId, "cp1");
-		testGetAvailableCategories();
+		testGetDisplayedCategories();
 		System.out.println("Pliage de la categorie cp1 \n");
 		facadeService.foldCategory(userId, contextId, "cp1");
-		testGetAvailableCategories();
+		testGetDisplayedCategories();
 		
 		
 	}
