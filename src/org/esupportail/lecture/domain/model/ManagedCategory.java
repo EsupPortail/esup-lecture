@@ -58,6 +58,9 @@ public class ManagedCategory extends Category {
 	 */
 	public ManagedCategory(CategoryProfile cp) {
 		super(cp);
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("ManagedCategory(" + cp.getId() + ")");
+    	}
 	}
 	
 	/*

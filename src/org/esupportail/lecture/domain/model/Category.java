@@ -72,6 +72,9 @@ public abstract class Category implements Element, Serializable {
 	 * @param cp categoryProfile associated to this category
 	 */
 	public Category(final CategoryProfile cp) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Category(" + cp.getId() + ")");
+    	}
 		profile = cp;
 		profileId = cp.getId();
 	}

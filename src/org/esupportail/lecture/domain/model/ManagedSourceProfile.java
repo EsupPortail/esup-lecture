@@ -66,6 +66,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	private ManagedSourceFeatures features;
 
 	/**
+	 * parent category of this managed source profile. 
+	 */
+	private ManagedCategory parent;
+
+	/**
 	 * profile of the parent category of this managed source profile. 
 	 */
 	private ManagedCategoryProfile categoryProfile;
@@ -81,13 +86,14 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	
 	/**
 	 * Constructor.
-	 * @param mcp profile of the managedCategory parent of this ManagedSourceProfile
+	 * @param mc managedCategory parent of this ManagedSourceProfile
 	 */
-	public ManagedSourceProfile(final ManagedCategoryProfile mcp) {
+	public ManagedSourceProfile(final ManagedCategory mc) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("ManagedSourceProfile(" + mcp.getId() + ")");
+			LOG.debug("ManagedSourceProfile(" + mc.getProfileId() + ")");
 		}
-		categoryProfile = mcp;
+		parent = mc;
+		categoryProfile = (ManagedCategoryProfile) mc.getProfile();
 		features = new ManagedSourceFeatures(this);
 	}
 
@@ -357,6 +363,15 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	
 	/* 
 	 *************************** ACCESSORS ******************************** */	
+	
+	
+	/**
+	 * @return the parent of this managed source profile
+	 */
+	public ManagedCategory getParent() {
+		return parent;
+	}
+
 	
 	/**
 	 * Returns ttl.

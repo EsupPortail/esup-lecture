@@ -141,6 +141,9 @@ public abstract class Source implements Element, Serializable {
 	 * @param sp sourceProfile associated to this source
 	 */
 	public Source(final SourceProfile sp) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("Source(" + sp.getId() + ")");
+    	}
 		profile = sp;
 		profileId = sp.getId();
 	}

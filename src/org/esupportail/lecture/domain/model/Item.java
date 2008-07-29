@@ -1,5 +1,8 @@
 package org.esupportail.lecture.domain.model;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 /**
  * @author bourges
  * It is the smallest unit information. 
@@ -10,7 +13,10 @@ public class Item {
 
 	/* 
 	 *************************** PROPERTIES ******************************** */	
-
+	/**
+	 * Log instance.
+	 */
+	protected static final Log LOG = LogFactory.getLog(ManagedSourceProfile.class); 
 	/**
 	 * Id of item.
 	 */
@@ -33,6 +39,9 @@ public class Item {
 	 * @param p parent of the item
 	 */
 	public Item(final Source p) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("Item(" + p.getProfileId() + ")");
+		}
 		parent = p;
 	}
 	

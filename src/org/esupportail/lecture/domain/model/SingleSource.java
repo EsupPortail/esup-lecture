@@ -25,8 +25,11 @@ public class SingleSource extends Source {
 	/**
 	 * Constructor.
 	 */
-	public SingleSource(SourceProfile sp) {
+	public SingleSource(final SourceProfile sp) {
 		super(sp);
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("SingleSource(" + sp.getId() + ")");
+    	}
 	}	
 /*
  *************************** METHODS *********************************** */	

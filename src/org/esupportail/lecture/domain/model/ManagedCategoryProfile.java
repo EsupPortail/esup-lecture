@@ -7,6 +7,7 @@ package org.esupportail.lecture.domain.model;
 
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -366,7 +367,23 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 	}
 
-	
+	/**
+	 * Returns the list of contexts referencing this managedCategoryProfile.
+	 * @return the list of contexts
+	 */
+	public List<Context> getAdoptiveParents() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getAdoptiveParents(" + this.getId() + ")");
+		}
+		
+		List<Context> parents = new ArrayList<Context>();
+		
+		// For all contexts refered by this managedCategoryProfile
+		for (Context context : contextsSet) {
+			parents.add(context);
+		}
+		return parents;
+	}
 	
 	
 	/*

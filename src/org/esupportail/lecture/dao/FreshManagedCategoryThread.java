@@ -116,7 +116,7 @@ public class FreshManagedCategoryThread extends Thread {
 			List<Node> srcProfiles = root.selectNodes("/category/sourceProfiles/sourceProfile");
 			int xmlOrder = 1;
 			for (Node srcProfile : srcProfiles) {
-				ManagedSourceProfile sp = new ManagedSourceProfile(profile);
+				ManagedSourceProfile sp = new ManagedSourceProfile(ret);
 				String srcProfileID = srcProfile.valueOf("@id");
 				sp.setFileId(srcProfileID);
 				sp.setName(srcProfile.valueOf("@name"));

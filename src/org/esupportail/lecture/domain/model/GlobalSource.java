@@ -28,8 +28,11 @@ public class GlobalSource extends Source {
 	/**
 	 * Constructor.
 	 */
-	public GlobalSource(SourceProfile sp) {
+	public GlobalSource(final SourceProfile sp) {
 		super(sp);
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("GlobalSource(" + sp.getId() + ")");
+    	}
 	}
 	
 /*
