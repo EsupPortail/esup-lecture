@@ -75,7 +75,12 @@ public abstract class Source implements Element, Serializable {
 	/**
 	 * profile Id of the source.
 	 */
-	private int profileId;
+	private String profileId;
+	
+	/**
+	 * sourceProfile associated to this source.
+	 */
+	private SourceProfile profile;
 
 	/**
 	 * Opitionnal : DTD of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement).
@@ -131,6 +136,14 @@ public abstract class Source implements Element, Serializable {
 	/*
 	 *************************** INIT ******************************** */	
 		
+	/**
+	 * Constructor.
+	 * @param sp sourceProfile associated to this source
+	 */
+	public Source(final SourceProfile sp) {
+		profile = sp;
+		profileId = sp.getId();
+	}
 
 	/*
 	 *************************** METHODS ******************************** */	
@@ -391,6 +404,20 @@ public abstract class Source implements Element, Serializable {
 	
 	/* 
 	 ************************* ACCESSORS ******************************** */	
+
+	/**
+	 * @return the ID of the sourceProfile associated to this source
+	 */
+	public String getProfileId() {
+		return profileId;
+	}
+	
+	/**
+	 * @return the sourceProfile associated to this source
+	 */
+	public SourceProfile getProfile() {
+		return profile;
+	}
 
 	/**
 	 * @return the dtd of source XML content

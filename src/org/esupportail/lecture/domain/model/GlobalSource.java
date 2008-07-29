@@ -25,7 +25,12 @@ public class GlobalSource extends Source {
 
 /*
  *************************** INIT ************************************** */	
-	
+	/**
+	 * Constructor.
+	 */
+	public GlobalSource(SourceProfile sp) {
+		super(sp);
+	}
 	
 /*
  *************************** METHODS *********************************** */	

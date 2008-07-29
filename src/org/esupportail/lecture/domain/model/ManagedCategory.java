@@ -52,7 +52,13 @@ public class ManagedCategory extends Category {
 	/*
 	 *********************** INIT **************************************/ 
 
-
+	/**
+	 * Constructor
+	 * @param cp categoryProfile associated to this managedCategory
+	 */
+	public ManagedCategory(CategoryProfile cp) {
+		super(cp);
+	}
 	
 	/*
 	 *********************** METHOD **************************************/ 

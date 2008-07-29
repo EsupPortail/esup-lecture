@@ -104,7 +104,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getManagedCategory");
 		}
-		ManagedCategory ret = new ManagedCategory();
+		ManagedCategory ret = new ManagedCategory(profile);
 		String url = profile.getUrlCategory();
 		String cacheKey = "CAT:" + profile.getId() + url;
 		System.currentTimeMillis();
@@ -161,7 +161,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshManagedCategory");
 		}
-		ManagedCategory ret = new ManagedCategory();
+		ManagedCategory ret = new ManagedCategory(profile);
 		//start a Thread to get FreshManagedCategory
 		FreshManagedCategoryThread thread = new FreshManagedCategoryThread(profile, ptCas);
 		thread.start();
@@ -198,7 +198,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 */
 	public Source getSource(final SourceProfile sourceProfile, final String ptCas) 
 			throws InfoDaoException {
-		Source ret = new GlobalSource();
+		Source ret = new GlobalSource(sourceProfile);
 //		not yet implemented
 //		if (sourceProfile.isSpecificUserContent()) { 
 //		ret = getFreshSource(sourceProfile);
@@ -258,7 +258,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshSource");
 		}
-		Source ret = new GlobalSource();
+		Source ret = new GlobalSource(sourceProfile);
 		//start a Thread to get FreshSource
 		FreshSourceThread thread = new FreshSourceThread(sourceProfile, ptCas);
 		thread.start();

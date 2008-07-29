@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mappings SYSTEM "mappings.dtd" [
-<!ENTITY repConf "file:///d:/tmp/conf_lecture_gwe_ray/" >
+<!ENTITY repConf "http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/" >
 ] >
 <mappings>
 	<mapping 

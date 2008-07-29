@@ -11,5 +11,9 @@ package org.esupportail.lecture.domain.model;
  *
  */
 public interface Element {
-	// empty
+		
+	/**
+	 * @return the profile associated to this element
+	 */
+	ElementProfile getProfile();
 }

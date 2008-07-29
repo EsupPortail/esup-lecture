@@ -22,7 +22,12 @@ public class SingleSource extends Source {
 
 /*
  *************************** INIT ************************************** */	
-		
+	/**
+	 * Constructor.
+	 */
+	public SingleSource(SourceProfile sp) {
+		super(sp);
+	}	
 /*
  *************************** METHODS *********************************** */	
 

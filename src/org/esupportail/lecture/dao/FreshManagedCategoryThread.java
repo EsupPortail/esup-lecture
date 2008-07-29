@@ -90,7 +90,7 @@ public class FreshManagedCategoryThread extends Thread {
 			LOG.debug("in getFreshManagedCategory");
 		}
 		// TODO (RB <-- GB) gestion des attributs xml IMPLIED 
-		ManagedCategory ret = new ManagedCategory();
+		ManagedCategory ret = new ManagedCategory(profile);
 		try {
 			//get the XML
 			String categoryURL = profile.getUrlCategory();
@@ -107,7 +107,8 @@ public class FreshManagedCategoryThread extends Thread {
 			// Category properties
 			ret.setName(root.valueOf("@name"));
 			ret.setDescription(root.valueOf("/category/description"));
-			ret.setProfileId(profile.getId());
+			// devenu inutile 
+			//ret.setProfileId(profile.getId());
 			// SourceProfiles loop
 			Hashtable<String, SourceProfile> sourceProfiles = new Hashtable<String, SourceProfile>();
 			Map<String, Integer> orderedSourceIDs = 

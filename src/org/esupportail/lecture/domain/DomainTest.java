@@ -97,7 +97,7 @@ public class DomainTest {
 			testGetVisibleCategories();
 			testGetDisplayedSources();
 			testGetVisibleSources();
-//			testGetItems();
+			testGetItems();
 		
 			/* small actions */
 //			testMarkItemReadMode();

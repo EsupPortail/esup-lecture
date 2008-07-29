@@ -48,7 +48,11 @@ public abstract class Category implements Element, Serializable {
 	 * Id of the categoryProfil.
 	 */
 	private String profileId;
-	
+	/**
+	 * categoryProfile associated to this category.
+	 */
+	private CategoryProfile profile;
+
 	/**
 	 * SourcesProfiles contained by this Category.
 	 */
@@ -63,6 +67,14 @@ public abstract class Category implements Element, Serializable {
 	/*
 	 *************************** INIT *********************************/
 	
+	/**
+	 * Constructor.
+	 * @param cp categoryProfile associated to this category
+	 */
+	public Category(final CategoryProfile cp) {
+		profile = cp;
+		profileId = cp.getId();
+	}
 	
 	/*
 	 *************************** METHODS *********************************/
@@ -78,13 +90,13 @@ public abstract class Category implements Element, Serializable {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getSourceProfileById(" + id + ")");
 		}
-		SourceProfile profile = sourceProfilesHash.get(id);
-		if (profile == null) {
+		SourceProfile sp = sourceProfilesHash.get(id);
+		if (sp == null) {
 			String errorMsg = "SourceProfile " + id + " is not found in Category " + this.profileId;
 			LOG.error(errorMsg);
 			throw new SourceProfileNotFoundException(errorMsg);
 		}
-		return profile;
+		return sp;
 	}
 
 
@@ -159,7 +171,13 @@ public abstract class Category implements Element, Serializable {
 	protected String getProfileId() {
 		return profileId;
 	}
-
+	
+	/**
+	 * @return categoryProfile associated to this category
+	 */
+	public CategoryProfile getProfile() {
+		return profile;
+	}
 
 	/**
 	 * Sets the id of the categoryProfile accociated to this Category.

@@ -77,7 +77,7 @@ public class FreshSourceThread extends Thread {
 	@SuppressWarnings("unchecked")
 	private synchronized Source getFreshSource(final SourceProfile sourceProfile, 
 			final String ptCas) throws XMLParseException {
-		Source ret = new GlobalSource();
+		Source ret = new GlobalSource(sourceProfile);
 		try {
 			String dtd = null;
 			String root = null;
