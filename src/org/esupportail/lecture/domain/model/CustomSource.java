@@ -113,7 +113,7 @@ public abstract class CustomSource implements CustomElement {
 			listItems = profile.getItems(ex);
 			// pas de catch de categoryNotLoaded : cela entraine trop de compliaction
 		} catch (SourceNotLoadedException e) {
-			// Dans ce cas : la mise � jour du customCategory n'a pas �t� effectu�
+			// Dans ce cas : la mise à jour du customCategory n'a pas été effectuée
 			LOG.error("Impossible to update getItems for customSource " + getElementId()
 					+ " because its source is not loaded - " 
 					+ " It is very strange because loadSource() has been "

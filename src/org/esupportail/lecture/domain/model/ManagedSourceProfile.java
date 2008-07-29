@@ -192,7 +192,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		}
 		
 		//features.compute();
-		//features.setIsComputed(false); // TODO (GB later) � optimiser
+		//features.setIsComputed(false); // TODO (GB later) optimiser
 	}
 
 	
@@ -219,13 +219,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		 * Algo pour gerer les customSourceProfiles :
 		 * ------------------------------------
 		 * user app. obliged => enregistrer la source dans le user profile + sortir
-		 * user app. autoSub => enregistrer la source dans le user profile si c'est la premi�re fois + sortir
-		 * user app.allowed => rien � faire + sortir
+		 * user app. autoSub => enregistrer la source dans le user profile si c'est la première fois + sortir
+		 * user app.allowed => rien à faire + sortir
 		 * user n'app. rien => effacer la custom source .
 		 * 
-		 * RB : En plus on doit v�rifier si la Source a une visibilit�. 
-		 * Si ce n'est pas le cas on regarde ce qui est au niveau de la cat�gorie 
-		 * afin de le prendre comme valeur par d�faut. 
+		 * RB : En plus on doit vérifier si la Source a une visibilité. 
+		 * Si ce n'est pas le cas on regarde ce qui est au niveau de la catégorie 
+		 * afin de le prendre comme valeur par défaut. 
 		 */
 		
 		// get visibilitySets of the current sourceProfile

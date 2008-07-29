@@ -77,7 +77,7 @@ public class ExternalServiceStub implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserProxyTicketCAS(String)
 	 */
 	public String getUserProxyTicketCAS(@SuppressWarnings("unused") final String casTargetService) {
-		// non encore utilis�e
+		// non encore utilisée
 		return null;
 	}
 

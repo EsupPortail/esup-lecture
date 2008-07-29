@@ -146,8 +146,8 @@ public class UserProfile {
 			try {
 				updateCustomContextsForOneManagedCategory(categoryId, ex);
 			} catch (CategoryNotLoadedException e) {
-				// Dans ce cas : la managedCategory n'est point� par aucun 
-				// context correspondant � des customContext du userProfile => supression ?
+				// Dans ce cas : la managedCategory n'est pointée par aucun 
+				// context correspondant à des customContext du userProfile => supression ?
 				removeCustomManagedCategoryIfOrphan(categoryId);
 				throw new CategoryOutOfReachException("ManagedCategory " + categoryId 
 						+ "is not refered by any customContext in userProfile " + getUserId());
@@ -506,8 +506,9 @@ public class UserProfile {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug(ID + userId + " - removeCustomSource(" + sourceId + ")");
     	}
-	   	//RB --> GB: I add this line to avoid a ClassCastException 
+	   	//TODO (RB --> GB): I add this line to avoid a ClassCastException 
 	   	// due to a hibernate bug when map is not yet loaded!
+	   	//TODO (RB <-- GB): je ne comprends pas ce que tu veux faire
 	   	boolean foo = customSources.containsKey(sourceId);
 		CustomSource cs = customSources.remove(sourceId);
 		if (cs != null) {

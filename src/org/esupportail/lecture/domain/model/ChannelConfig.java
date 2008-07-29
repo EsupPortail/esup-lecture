@@ -203,6 +203,7 @@ public class ChannelConfig  {
 		
 	}
 
+// TODO (RB <-- GB) : Raymond, peux tu confirmer ? : Code inutile depuis que le userId est récupéré via l'authenticationService	
 //	/**
 //	 * Load attribute name provided by portlet request.
 //	 * to identified user profiles (userId)
@@ -211,7 +212,6 @@ public class ChannelConfig  {
 //		if (LOG.isDebugEnabled()) {
 //			LOG.debug("loadUserId()");
 //		}
-//		// TODO (RB<--GB) � retirer suite � l'auth cas via esup-commons ?
 //		DomainTools.setUserID(xmlFile.getString("userId"));
 //	}
 

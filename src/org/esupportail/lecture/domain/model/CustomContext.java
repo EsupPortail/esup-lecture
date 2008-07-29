@@ -159,7 +159,7 @@ public class CustomContext implements CustomElement {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + getElementId() + " - getVisibleCategories(ex)");
 		}
-		// TODO (GB later) � red�finir avec les custom personnal 
+		// TODO (GB later) redéfinir avec les custom personnal 
 		// category : en fonction de l'ordre d'affichage peut etre.
 		Context cxt = getContext();
 		List<ProfileVisibility> couplesVisib;
@@ -212,14 +212,14 @@ public class CustomContext implements CustomElement {
 			catProfile = context.getCatProfileById(categoryId);
 			mode = catProfile.updateCustomContext(this, ex);
 		} catch (CategoryNotLoadedException e1) {
-			// Dans ce cas : la mise � jour du customContext n'a pas �t� effectu�e
+			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), ex);
 				catProfile = context.getCatProfileById(categoryId);
 				mode = catProfile.updateCustomContext(this, ex);
 			} catch (CategoryNotLoadedException e2) {
-				// Dans ce cas : la managedCategory n'est point� par aucun 
-				// context correspondant � des customContext du userProfile => supression ?
+				// Dans ce cas : la managedCategory n'est pointée par aucun 
+				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
 				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
 					+ "is not refered by any customContext in userProfile "
@@ -285,14 +285,14 @@ public class CustomContext implements CustomElement {
 			catProfile = context.getCatProfileById(categoryId);
 			mode = catProfile.updateCustomContext(this, externalService);
 		} catch (CategoryNotLoadedException e1) {
-			// Dans ce cas : la mise � jour du customContext n'a pas �t� effectu�e
+			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), externalService);
 				catProfile = context.getCatProfileById(categoryId);
 				mode = catProfile.updateCustomContext(this, externalService);
 			} catch (CategoryNotLoadedException e2) {
-				// Dans ce cas : la managedCategory n'est point� par aucun 
-				// context correspondant � des customContext du userProfile => supression ?
+				// Dans ce cas : la managedCategory n'est pointée par aucun 
+				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
 				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
 					+ "is not refered by any customContext in userProfile "
