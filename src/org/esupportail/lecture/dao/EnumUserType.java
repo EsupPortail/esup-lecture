@@ -9,31 +9,32 @@ import org.hibernate.HibernateException;
 import org.hibernate.usertype.UserType; 
 
 /**
- * Generic Hibernate UserType for java 5 Enun
+ * Generic Hibernate UserType for java 5 Enun.
  * This code come from http://www.hibernate.org/265.html
  * @author bourges
  *
  * @param <E>
  */
 public class EnumUserType<E extends Enum<E>> implements UserType { 
+    
     /**
-     * the class wrapped by this UserType
+     * SQL Type used by hibernate.
+     */
+    private static final int[] SQL_TYPES = {Types.VARCHAR}; 
+    
+	/**
+     * the class wrapped by this UserType.
      */
     private Class<E> clazz = null; 
     
     /**
-     * Constructor
+     * Constructor.
      * @param c 
      */
-    protected EnumUserType(Class<E> c) { 
+    protected EnumUserType(final Class<E> c) { 
         this.clazz = c; 
     } 
  
-    /**
-     * SQL Type used by hibernate
-     */
-    private static final int[] SQL_TYPES = {Types.VARCHAR}; 
-    
     /**
      * @see org.hibernate.usertype.UserType#sqlTypes()
      */
@@ -51,7 +52,7 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
     /**
      * @see org.hibernate.usertype.UserType#nullSafeGet(java.sql.ResultSet, java.lang.String[], java.lang.Object)
      */
-    public Object nullSafeGet(ResultSet resultSet, String[] names, @SuppressWarnings("unused")
+    public Object nullSafeGet(final ResultSet resultSet, final String[] names, @SuppressWarnings("unused") final
 	Object owner) throws HibernateException, SQLException { 
         String name = resultSet.getString(names[0]); 
         E result = null; 

@@ -11,10 +11,9 @@ import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
-import org.esupportail.lecture.exceptions.dao.TimeoutException;
 
 /**
- * Interface Service to Data Access Object
+ * Interface Service to Data Access Object.
  * @author gbouteil
  *
  */
@@ -23,118 +22,117 @@ public interface DaoService {
 	/* Remote data */
 	
 	/**
-	 * Get a managed category from a remote place
+	 * Get a managed category from a remote place.
 	 * @param profile of the category to get
 	 * @return the managedCategory
 	 * @throws InfoDaoException 
 	 */
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws InfoDaoException;
+	ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws InfoDaoException;
 
 	/**
-	 * Get a managed category from a remote place
+	 * Get a managed category from a remote place.
 	 * @param profile of the category to get
 	 * @param ptCas proxy ticket CAS used in case of CAS protected source
 	 * @return the managedCategory
 	 * @throws InfoDaoException 
 	 */
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile,String ptCas) throws InfoDaoException;
+	ManagedCategory getManagedCategory(ManagedCategoryProfile profile, String ptCas) throws InfoDaoException;
 
 	/**
-	 * get a source from a remote place
+	 * get a source from a remote place.
 	 * @param profile of the source to get
 	 * @return the source
-	 * @throws TimeoutException 
 	 * @throws InfoDaoException 
 	 */
-	public Source getSource(ManagedSourceProfile profile) throws InfoDaoException;
+	Source getSource(ManagedSourceProfile profile) throws InfoDaoException;
 	
 	/**
-	 * get a source from a remote place
+	 * get a source from a remote place.
 	 * @param profile of the source to get
 	 * @param ptCas proxy ticket CAS used in case of CAS protected source
 	 * @return the source
 	 * @throws InfoDaoException 
 	 */
-	public Source getSource(ManagedSourceProfile profile, String ptCas) throws InfoDaoException;
+	Source getSource(ManagedSourceProfile profile, String ptCas) throws InfoDaoException;
 
 	/* User Profile */
 	
 	/**
 	 * Returns the userProfile that is identified with "userId" 
-	 * and null if no user profile exists with this userId 
+	 * and null if no user profile exists with this userId.
 	 * @param userId : user identifient provided by portlet request
 	 * @return user profile 
 	 */
-	public UserProfile getUserProfile(String userId) ;
+	UserProfile getUserProfile(String userId);
 
 	/**
-	 * Return a "fresh" userProfile from data base 
+	 * Return a "fresh" userProfile from data base. 
 	 * @param userProfile
 	 * @return a "fresh" userProfile
 	 */
-	public UserProfile refreshUserProfile(UserProfile userProfile);
+	UserProfile refreshUserProfile(UserProfile userProfile);
 
 	/**
 	 * Add a user profile to persistent data.
 	 * @param userProfile : user to add
 	 */
-	public void saveUserProfile(UserProfile userProfile);
+	void saveUserProfile(UserProfile userProfile);
 
 	/**
-	 * Delete userProfile that is identified with "userId" 
+	 * Delete userProfile that is identified with "userId". 
 	 * @param userProfile : userProfile to delete
 	 */
 	// TODO (GB later) creer un service pour supprimer définitivement un userProfile par l'admin ?
-	public void deleteUserProfile(UserProfile userProfile);
+	void deleteUserProfile(UserProfile userProfile);
 
 	/**
-	 * update userProfile
+	 * update userProfile.
 	 * @param userProfile
 	 */
-	public void updateUserProfile(UserProfile userProfile);
+	void updateUserProfile(UserProfile userProfile);
 	
 	/* CustomContext */
 
 	/**
-	 * update custom context
+	 * update custom context.
 	 * @param customContext
 	 */
-	public void updateCustomContext(CustomContext customContext);
+	void updateCustomContext(CustomContext customContext);
 
 	/**
-	 * delete custom context
+	 * delete custom context.
 	 * @param cco
 	 */
-	// TODO (GB later) creer un service pour supprimer d�finitivement un contexte par l'admin ?
-	public void deleteCustomContext(CustomContext cco);
+	// TODO (GB later) creer un service pour supprimer définitivement un contexte par l'admin ?
+	void deleteCustomContext(CustomContext cco);
 	
 	/* CustomCategory */
 	
 	/**
-	 * delete custom category
+	 * delete custom category.
 	 * @param cca
 	 */
-	public void deleteCustomCategory(CustomCategory cca);
+	void deleteCustomCategory(CustomCategory cca);
 
 	/**
-	 * update custom category
+	 * update custom category.
 	 * @param cca
 	 */
-	public void updateCustomCategory(CustomCategory cca);
+	void updateCustomCategory(CustomCategory cca);
 
 	/* CustomSource */
 	
 	/**
-	 * delete custom source
+	 * delete custom source.
 	 * @param cs
 	 */
-	public void deleteCustomSource(CustomSource cs);
+	void deleteCustomSource(CustomSource cs);
 
 	/**
-	 * update custom source
+	 * update custom source.
 	 * @param source
 	 */
-	public void updateCustomSource(CustomSource source);
+	void updateCustomSource(CustomSource source);
 
 	/**
 	 * @return all the VersionManager instances of the database.

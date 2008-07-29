@@ -67,7 +67,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	/**
 	 * @param userProfile 
 	 * @return userProfile
-	 * @see org.esupportail.lecture.dao.DaoService#refreshUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 * @see org.esupportail.lecture.dao.DaoService#refreshUserProfile(
+	 * 	org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public UserProfile refreshUserProfile(final UserProfile userProfile) {
 		//TODO (RB) renommer en attachCleanUserProfile
@@ -101,7 +102,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 
 	/**
 	 * @param userProfile 
-	 * @see org.esupportail.lecture.dao.DaoService#deleteUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 * @see org.esupportail.lecture.dao.DaoService#deleteUserProfile(
+	 *  org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void deleteUserProfile(final UserProfile userProfile) {
 		if (LOG.isDebugEnabled()) {
@@ -115,7 +117,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 
 	/**
 	 * @param userProfile 
-	 * @see org.esupportail.lecture.dao.DaoService#updateUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 * @see org.esupportail.lecture.dao.DaoService#updateUserProfile(
+	 *  org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void updateUserProfile(final UserProfile userProfile) {
 		if (LOG.isDebugEnabled()) {
@@ -130,7 +133,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 
 	/**
 	 * @param customContext 
-	 * @see org.esupportail.lecture.dao.DaoService#updateCustomContext(org.esupportail.lecture.domain.model.CustomContext)
+	 * @see org.esupportail.lecture.dao.DaoService#updateCustomContext(
+	 *  org.esupportail.lecture.domain.model.CustomContext)
 	 */
 	public void updateCustomContext(final CustomContext customContext) {
 		if (LOG.isDebugEnabled()) {
@@ -142,7 +146,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 
 	/**
 	 * @param cco 
-	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomContext(org.esupportail.lecture.domain.model.CustomContext)
+	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomContext(
+	 *  org.esupportail.lecture.domain.model.CustomContext)
 	 */
 	public void deleteCustomContext(final CustomContext cco) {
 		if (LOG.isDebugEnabled()) {
@@ -156,7 +161,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 
 	/**
 	 * @param cca 
-	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomCategory(org.esupportail.lecture.domain.model.CustomCategory)
+	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomCategory(
+	 *  org.esupportail.lecture.domain.model.CustomCategory)
 	 */
 	public void deleteCustomCategory(final CustomCategory cca) {
 		if (LOG.isDebugEnabled()) {
@@ -170,7 +176,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 
 	/**
 	 * @param cca 
-	 * @see org.esupportail.lecture.dao.DaoService#updateCustomCategory(org.esupportail.lecture.domain.model.CustomCategory)
+	 * @see org.esupportail.lecture.dao.DaoService#updateCustomCategory(
+	 *  org.esupportail.lecture.domain.model.CustomCategory)
 	 */
 	public void updateCustomCategory(final CustomCategory cca) {
 		if (LOG.isDebugEnabled()) {
@@ -185,7 +192,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 
 	/**
 	 * @param cs 
-	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomSource(org.esupportail.lecture.domain.model.CustomSource)
+	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomSource(
+	 *  org.esupportail.lecture.domain.model.CustomSource)
 	 */
 	public void deleteCustomSource(final CustomSource cs) {
 		if (LOG.isDebugEnabled()) {
@@ -199,7 +207,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 
 	/**
 	 * @param source 
-	 * @see org.esupportail.lecture.dao.DaoService#updateCustomSource(org.esupportail.lecture.domain.model.CustomSource)
+	 * @see org.esupportail.lecture.dao.DaoService#updateCustomSource(
+	 *  org.esupportail.lecture.domain.model.CustomSource)
 	 */
 	public void updateCustomSource(final CustomSource source) {
 		if (LOG.isDebugEnabled()) {
@@ -227,7 +236,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 
 	/**
 	 * @param versionManager 
-	 * @see org.esupportail.lecture.dao.DaoService#addVersionManager(org.esupportail.lecture.domain.model.VersionManager)
+	 * @see org.esupportail.lecture.dao.DaoService#addVersionManager(
+	 *  org.esupportail.lecture.domain.model.VersionManager)
 	 */
 	public void addVersionManager(final VersionManager versionManager) {
 		if (LOG.isDebugEnabled()) {
@@ -238,7 +248,8 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 
 	/**
 	 * @param versionManager 
-	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(org.esupportail.lecture.domain.model.VersionManager)
+	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(
+	 *  org.esupportail.lecture.domain.model.VersionManager)
 	 */
 	public void updateVersionManager(final VersionManager versionManager) {
 		if (LOG.isDebugEnabled()) {

@@ -230,8 +230,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getDisplayedSources(
-			final String uid, final String categoryId, final ExternalService ex) 
-		throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
+		final String uid, final String categoryId, final ExternalService ex) 
+	throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
 			InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getDisplayedSources(" + uid + "," + categoryId + ",externalService)");
@@ -522,8 +522,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
 	 */
 	public List<SourceBean> getVisibleSources(final String uid, final String categoryId, final ExternalService ex) 
-			throws CategoryNotVisibleException, CategoryOutOfReachException, 
-			UserNotSubscribedToCategoryException, InternalDomainException, CategoryTimeOutException {
+	throws CategoryNotVisibleException, CategoryOutOfReachException, 
+	UserNotSubscribedToCategoryException, InternalDomainException, CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getVisibleSources(" + uid + "," + categoryId + ",ex)");
 		}
@@ -579,7 +579,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * 
 	 */
 	public void subscribeToCategory(final String uid, final String contextId, 
-			final String categoryId, final ExternalService externalService) 
+		final String categoryId, final ExternalService externalService) 
 	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
 	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException  {
 		if (LOG.isDebugEnabled()) {
@@ -610,10 +610,10 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @throws CategoryTimeOutException 
 	 */
 	public void subscribeToSource(final String uid, final String categoryId, 
-			final String sourceId, final ExternalService ex) 
-			throws UserNotSubscribedToCategoryException, CategoryNotVisibleException,
-			CategoryOutOfReachException, SourceProfileNotFoundException, SourceNotVisibleException,
-			InternalDomainException, CategoryTimeOutException {
+		final String sourceId, final ExternalService ex) 
+	throws UserNotSubscribedToCategoryException, CategoryNotVisibleException,
+	CategoryOutOfReachException, SourceProfileNotFoundException, SourceNotVisibleException,
+	InternalDomainException, CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + uid + "," + categoryId 
 				+ "," + sourceId + ", externalService)");
@@ -654,10 +654,10 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * 
 	 */
 	public void unsubscribeToCategory(final String uid, final String contextId, 
-			final String categoryId, final ExternalService externalService) 
-		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
-		CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
-		InternalDomainException, CategoryObligedException {
+		final String categoryId, final ExternalService externalService) 
+	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
+	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
+	InternalDomainException, CategoryObligedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("unsubscribeToCategory(" + uid + "," + contextId + "," + categoryId + ")");
 		}
@@ -681,10 +681,10 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @throws CategoryTimeOutException 
 	 */
 	public void unsubscribeToSource(final String uid, final String categoryId, 
-			final String sourceId, final ExternalService ex) 
-			throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
-			InternalDomainException, CategoryOutOfReachException, SourceObligedException, 
-			CategoryTimeOutException {
+		final String sourceId, final ExternalService ex) 
+	throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
+	InternalDomainException, CategoryOutOfReachException, SourceObligedException, 
+	CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + uid + "," + categoryId + "," 
 				+ sourceId + ", externalService)");

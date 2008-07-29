@@ -109,8 +109,8 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @throws InfoDomainException 
 	 */
 	protected List<Item> getItems(final ExternalService ex) 
-			throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
-			SourceTimeOutException, CategoryNotLoadedException, InfoDomainException  {
+	throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
+	SourceTimeOutException, CategoryNotLoadedException, InfoDomainException  {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id = " + this.id + " - getItems(externalService)");
     	}

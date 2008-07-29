@@ -107,7 +107,7 @@ public abstract class Category implements Element, Serializable {
 	 * @param sourceProfilesHash to set.
 	 */
 	public void setSourceProfilesHash(final Hashtable<String, SourceProfile> sourceProfilesHash) {
-		// TODO (GB later) revoir la visibilite public qd on cr�era les sourcesProfiles avec des daoBeans
+		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.sourceProfilesHash = sourceProfilesHash;
 	}
 	
@@ -127,7 +127,7 @@ public abstract class Category implements Element, Serializable {
 	 * @see Category#name
 	 */
 	public void setName(final String name) {
-		// TODO (GB later) revoir la visibilite public qd on cr�era les sourcesProfiles avec des daoBeans
+		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.name = name;
 	}
 	
@@ -167,7 +167,7 @@ public abstract class Category implements Element, Serializable {
 	 * @see Category#profileId
 	 */
 	public void setProfileId(final String profileId) {
-		// TODO (GB later) revoir la visibilite public qd on cr�era les sourcesProfiles avec des daoBeans
+		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.profileId = profileId;
 	}
 

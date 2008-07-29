@@ -148,7 +148,7 @@ public class CustomContext implements CustomElement {
 	}
 	
 	/**
-	 * Return a list of "CategoryProfile, AvailabilityMode" corresponding to visible categories for user, 
+	 * Return a list of (CategoryProfile, AvailabilityMode) corresponding to visible categories for user, 
 	 * in this customContext and update it.
 	 * @param ex access to external service 
 	 * @return list of ProfileAvailability
@@ -191,6 +191,7 @@ public class CustomContext implements CustomElement {
 	/**
 	 * after checking visibility rights, subcribe user to the category categoryId in this CustomContext.
 	 * @param categoryId category ID
+	 * @param ex external service
 	 * @throws ContextNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws CategoryTimeOutException 
@@ -199,9 +200,9 @@ public class CustomContext implements CustomElement {
 	 * @throws CategoryOutOfReachException 
 	 */
 	public void subscribeToCategory(final String categoryId, final ExternalService ex) 
-		throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, 
-		CategoryTimeOutException, CategoryNotVisibleException, InternalDomainException, 
-		CategoryOutOfReachException {	
+	throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, 
+	CategoryTimeOutException, CategoryNotVisibleException, InternalDomainException, 
+	CategoryOutOfReachException {	
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToCategory(" + categoryId + ", externalService)");
 		}
@@ -272,9 +273,9 @@ public class CustomContext implements CustomElement {
 	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryObligedException 
 	 */
-	public void unsubscribeToCategory(String categoryId, ExternalService externalService) 
-		throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, CategoryTimeOutException, 
-		CategoryNotVisibleException, InternalDomainException, CategoryOutOfReachException, CategoryObligedException {
+	public void unsubscribeToCategory(final String categoryId, final ExternalService externalService) 
+	throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, CategoryTimeOutException, 
+	CategoryNotVisibleException, InternalDomainException, CategoryOutOfReachException, CategoryObligedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToCategory(" + categoryId + ", externalService)");
 		}

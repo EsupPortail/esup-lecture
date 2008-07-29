@@ -195,7 +195,7 @@ public class DomainTest {
 	}
 
 	/**
-	 * Test of service "getCategories"
+	 * Test of service "getCategories".
 	 * @throws ContextNotFoundException 
 	 * @throws DomainServiceException 
 	 */
@@ -233,7 +233,6 @@ public class DomainTest {
 	/**
 	 * Test of service "getVisibleCategories".
 	 */
-	@SuppressWarnings("unused")
 	private static void testGetVisibleCategories()  {
 		printIntro("getVisibleCategories");
 		List<CategoryBean> cats;
@@ -517,10 +516,10 @@ public class DomainTest {
 	throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException {
 		printIntro("markItemReadMode");
 		System.out.println("Marquage de l'item " + itemId + " comme lu");
-		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId,true);
+		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId, true);
 		testGetItems();
 		System.out.println("Marquage de l'item " + itemId + " comme non lu");
-		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId,false);
+		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId, false);
 		testGetItems();
 		
 		

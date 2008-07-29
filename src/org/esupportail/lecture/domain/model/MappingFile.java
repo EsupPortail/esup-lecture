@@ -182,11 +182,11 @@ public class MappingFile {
 			String xmlType = xmlFile.getString(pathMapping + "[@xmlType]");
 			String rootElement = xmlFile.getString(pathMapping + "[@rootElement]");
 			
-			if (sourceURL == null && 
-					dtd == null && 
-					xmlns == null && 
-					xmlType == null && 
-					rootElement == null) {
+			if (sourceURL == null 
+					&& dtd == null 
+					&& xmlns == null 
+					&& xmlType == null 
+					&& rootElement == null) {
 				String errorMsg = "In mappingFile, mapping n�" + i 
 					+ "is empty, you must declare sourceURL or dtd or " 
 					+ "xmlns or xmltype or rootElement in a mapping.";

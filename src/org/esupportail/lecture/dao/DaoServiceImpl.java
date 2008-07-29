@@ -40,13 +40,14 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	 */
 	private DaoServiceHibernate hibernateService;
 	/**
-	 * the authentication Service
+	 * the authentication Service.
 	 */
 	private AuthenticationService authenticationService;
 
 	/**
 	 * @throws TimeoutException 
-	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile)
+	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(
+	 *  org.esupportail.lecture.domain.model.ManagedCategoryProfile)
 	 */
 	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InfoDaoException {
 		if (LOG.isDebugEnabled()) {
@@ -57,9 +58,10 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 
 	/**
 	 * @throws InfoDaoException 
-	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(org.esupportail.lecture.domain.model.ManagedCategoryProfile, java.lang.String)
+	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(
+	 *  org.esupportail.lecture.domain.model.ManagedCategoryProfile, java.lang.String)
 	 */
-	public ManagedCategory getManagedCategory(@SuppressWarnings("unused")
+	public ManagedCategory getManagedCategory(
 			final ManagedCategoryProfile profile,
 			final String ptCas) throws InfoDaoException {
 		return remoteXMLService.getManagedCategory(profile, ptCas);
@@ -68,7 +70,8 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	/**
 	 * @throws TimeoutException 
 	 * @throws TimeoutException 
-	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile)
+	 * @see org.esupportail.lecture.dao.DaoService#getSource(
+	 *  org.esupportail.lecture.domain.model.ManagedSourceProfile)
 	 */
 	public Source getSource(final ManagedSourceProfile profile) throws InfoDaoException {
 		return remoteXMLService.getSource(profile);
@@ -76,7 +79,8 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 
 	/**
 	 * @throws InfoDaoException 
-	 * @see org.esupportail.lecture.dao.DaoService#getSource(org.esupportail.lecture.domain.model.ManagedSourceProfile, java.lang.String)
+	 * @see org.esupportail.lecture.dao.DaoService#getSource(
+	 *  org.esupportail.lecture.domain.model.ManagedSourceProfile, java.lang.String)
 	 */
 	public Source getSource(final ManagedSourceProfile profile,
 			final String ptCas) throws InfoDaoException {
@@ -91,7 +95,8 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#refreshUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 * @see org.esupportail.lecture.dao.DaoService#refreshUserProfile(
+	 *  org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public UserProfile refreshUserProfile(final UserProfile userProfile) {
 		return hibernateService.refreshUserProfile(userProfile);
@@ -105,63 +110,71 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#deleteUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 * @see org.esupportail.lecture.dao.DaoService#deleteUserProfile(
+	 *  org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void deleteUserProfile(final UserProfile userProfile) {
 		hibernateService.deleteUserProfile(userProfile);
 	}
 
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#updateUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 * @see org.esupportail.lecture.dao.DaoService#updateUserProfile(
+	 *  org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void updateUserProfile(final UserProfile userProfile) {
 		hibernateService.updateUserProfile(userProfile);
 	}
 
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#updateCustomContext(org.esupportail.lecture.domain.model.CustomContext)
+	 * @see org.esupportail.lecture.dao.DaoService#updateCustomContext(
+	 *  org.esupportail.lecture.domain.model.CustomContext)
 	 */
 	public void updateCustomContext(final CustomContext customContext) {
 		hibernateService.updateCustomContext(customContext);
 	}
 
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomContext(org.esupportail.lecture.domain.model.CustomContext)
+	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomContext(
+	 *  org.esupportail.lecture.domain.model.CustomContext)
 	 */
 	public void deleteCustomContext(final CustomContext cco) {
 		hibernateService.deleteCustomContext(cco);
 	}
 
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomCategory(org.esupportail.lecture.domain.model.CustomCategory)
+	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomCategory(
+	 *  org.esupportail.lecture.domain.model.CustomCategory)
 	 */
 	public void deleteCustomCategory(final CustomCategory cca) {
 		hibernateService.deleteCustomCategory(cca);
 	}
 
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#updateCustomCategory(org.esupportail.lecture.domain.model.CustomCategory)
+	 * @see org.esupportail.lecture.dao.DaoService#updateCustomCategory(
+	 *  org.esupportail.lecture.domain.model.CustomCategory)
 	 */
 	public void updateCustomCategory(final CustomCategory cca) {
 		hibernateService.updateCustomCategory(cca);
 	}
 
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomSource(org.esupportail.lecture.domain.model.CustomSource)
+	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomSource(
+	 *  org.esupportail.lecture.domain.model.CustomSource)
 	 */
 	public void deleteCustomSource(final CustomSource cs) {
 		hibernateService.deleteCustomSource(cs);
 	}
 
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#updateCustomSource(org.esupportail.lecture.domain.model.CustomSource)
+	 * @see org.esupportail.lecture.dao.DaoService#updateCustomSource(
+	 *  org.esupportail.lecture.domain.model.CustomSource)
 	 */
 	public void updateCustomSource(final CustomSource source) {
 		hibernateService.updateCustomSource(source);
 	}
 
 	/**
-	 * used by Spring
+	 * used by Spring.
 	 * @param hibernateService class reference
 	 */
 	public void setHibernateService(final DaoServiceHibernate hibernateService) {
@@ -184,14 +197,16 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#addVersionManager(org.esupportail.lecture.domain.model.VersionManager)
+	 * @see org.esupportail.lecture.dao.DaoService#addVersionManager(
+	 *  org.esupportail.lecture.domain.model.VersionManager)
 	 */
 	public void addVersionManager(final VersionManager versionManager) {
 		hibernateService.addVersionManager(versionManager);
 	}
 
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(org.esupportail.lecture.domain.model.VersionManager)
+	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(
+	 *  org.esupportail.lecture.domain.model.VersionManager)
 	 */
 	public void updateVersionManager(final VersionManager versionManager) {
 		hibernateService.updateVersionManager(versionManager);
@@ -200,7 +215,7 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	/**
 	 * @param authenticationService the authenticationService to set
 	 */
-	public void setAuthenticationService(AuthenticationService authenticationService) {
+	public void setAuthenticationService(final AuthenticationService authenticationService) {
 		this.authenticationService = authenticationService;
 	}
 

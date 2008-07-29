@@ -148,7 +148,7 @@ public abstract class CustomCategory implements CustomElement {
 	public abstract CategoryProfile getProfile() throws CategoryProfileNotFoundException;
 	
 	/**
-	 * Return a list of <SourceProfile,AvailabilityMode>.
+	 * Return a list of (SourceProfile,AvailabilityMode).
 	 * This list corresponding to visible sources for user, 
 	 * in this customCategory.
 	 * @param ex access to external service 
@@ -242,10 +242,11 @@ public abstract class CustomCategory implements CustomElement {
 	
 
 	/**
-	 * Sets userProfile
+	 * Sets userProfile.
 	 * @param userProfile
 	 */
-	private void setUserProfile(UserProfile userProfile) {
+	@SuppressWarnings("unused")
+	private void setUserProfile(final UserProfile userProfile) {
 		this.userProfile = userProfile;
 		//Needed by Hibernate
 	}

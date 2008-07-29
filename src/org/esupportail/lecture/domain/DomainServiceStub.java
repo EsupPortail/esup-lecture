@@ -231,11 +231,11 @@ public class DomainServiceStub implements DomainService {
 	 */
 	@SuppressWarnings("unused")
 	public void subscribeToSource(
-			final String uid, final String categorieId, final String sourceId, final ExternalService ex)
-		throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, 
-		CategoryNotVisibleException, CategoryProfileNotFoundException, CategoryOutOfReachException, 
-		SourceProfileNotFoundException, SourceNotVisibleException, 
-		InternalDomainException {
+		final String uid, final String categorieId, final String sourceId, final ExternalService ex)
+	throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, 
+	CategoryNotVisibleException, CategoryProfileNotFoundException, CategoryOutOfReachException, 
+	SourceProfileNotFoundException, SourceNotVisibleException, 
+	InternalDomainException {
 		// nothing
 	}
 	
@@ -257,10 +257,7 @@ public class DomainServiceStub implements DomainService {
 			@SuppressWarnings("unused") final String uid, 
 			@SuppressWarnings("unused") final String contextId, 
 			@SuppressWarnings("unused") final String categoryId, 
-			@SuppressWarnings("unused") final ExternalService externalService) 
-	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
-	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
-	InternalDomainException, CategoryObligedException {
+			@SuppressWarnings("unused") final ExternalService externalService) {
 //		 nothing
 	}
 	/**

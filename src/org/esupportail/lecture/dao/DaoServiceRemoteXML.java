@@ -75,8 +75,8 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @throws TimeoutException 
 	 * @throws InfoDaoException 
 	 */
-	public ManagedCategory getManagedCategory(ManagedCategoryProfile profile,
-			String ptCas) throws InfoDaoException {
+	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile, final String ptCas) 
+	throws InfoDaoException {
 
 		/* *************************************
 		 * Cache logic :
@@ -156,7 +156,6 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @return Managed category
 	 * @throws TimeoutException 
 	 */
-	@SuppressWarnings("unchecked")
 	private ManagedCategory getFreshManagedCategory(final ManagedCategoryProfile profile,
 			final String ptCas) throws TimeoutException {
 		if (LOG.isDebugEnabled()) {

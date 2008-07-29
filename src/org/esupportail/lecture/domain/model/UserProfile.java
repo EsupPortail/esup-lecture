@@ -135,8 +135,8 @@ public class UserProfile {
 	 * @throws CategoryOutOfReachException 
 	 */
 	public CustomCategory getCustomCategory(final String categoryId, final ExternalService ex) 
-		throws  CategoryNotVisibleException, CustomCategoryNotFoundException, InternalDomainException, 
-		CategoryTimeOutException, CategoryOutOfReachException {
+	throws  CategoryNotVisibleException, CustomCategoryNotFoundException, InternalDomainException, 
+	CategoryTimeOutException, CategoryOutOfReachException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug(ID + userId + " - getCustomCategory(" + categoryId + ")");
     	}

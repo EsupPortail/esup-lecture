@@ -101,9 +101,9 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws SourceNotLoadedException 
 	 */
 	public List<Item> getItems(final ExternalService ex) 
-		throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
-		ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
-		SourceTimeOutException, InfoDomainException  {
+	throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
+	ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
+	SourceTimeOutException, InfoDomainException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + elementId + " - getItems(externalService)");
 		}
@@ -270,6 +270,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @param userProfile
 	 */
+	@SuppressWarnings("unused")
 	private void setUserProfile(final UserProfile userProfile) {
 		this.userProfile = userProfile;
 		//Needed by Hibernate
@@ -285,6 +286,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @param readItems
 	 */
+	@SuppressWarnings("unused")
 	private void setReadItems(final Set<String> readItems) {
 		this.readItems = readItems;
 		//Needed by Hibernate
@@ -300,7 +302,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @param mode
 	 */
-	public void setItemDisplayMode(final ItemDisplayMode mode){
+	public void setItemDisplayMode(final ItemDisplayMode mode) {
 		this.itemDisplayMode = mode;
 	}
 	

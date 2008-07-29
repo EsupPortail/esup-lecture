@@ -254,14 +254,14 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 	
 	/**
-	 * Return a list of <SourceProfile,VisibilityMode>. 
+	 * Return a list of (SourceProfile,VisibilityMode). 
 	 * Corresponding to visible sources for user, 
 	 * in this ManagedCategory and update its related custom (like methode updateCustom): 
 	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles
 	 * defined in ManagedCategory of this Profile, according to managedSourceProfiles visibility
 	 * @param customManagedCategory custom to update
 	 * @param ex access to externalService
-	 * @return list of <ProfileVisibility>
+	 * @return list of (ProfileVisibility)
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @see ManagedCategoryProfile#updateCustom(CustomManagedCategory, ExternalService)

@@ -159,14 +159,14 @@ public class Context {
 	}
 
 	/**
-	 * Return a list of <CategoryProfile, VisibilityMode>.
+	 * Return a list of (CategoryProfile, VisibilityMode).
 	 * This list corresponding to visible categories for user, 
 	 * in this Context and update its related custom (like method updateCustom): 
 	 * It sets up subscriptions of customContext on managedCategoriesProfiles
 	 * defined in this Context, according to managedCategoriesProfiles visibility
 	 * @param customContext custom to update
 	 * @param ex access to externalService
-	 * @return list of <ProfileVisibility>
+	 * @return list of ProfileVisibility)
 	 * @see Context#updateCustom(CustomContext, ExternalService)
 	 */
 	protected synchronized List<ProfileVisibility> getVisibleCategoriesAndUpdateCustom(

@@ -101,8 +101,8 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	@Override
 	public List<CustomSource> getSortedCustomSources(final ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, 
-			CategoryTimeOutException, CategoryOutOfReachException {
+	throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, 
+	CategoryTimeOutException, CategoryOutOfReachException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + super.getElementId() + " - getSortedCustomSources(externalService)");
 		}
@@ -151,8 +151,8 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	@Override
 	public List<ProfileAvailability> getVisibleSources(final ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, 
-			InternalDomainException, CategoryTimeOutException {
+	throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, 
+	InternalDomainException, CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + super.getElementId() + " - getVisibleSources(ex)");
 		}
@@ -215,8 +215,8 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	@Override
 	public void subscribeToSource(final String sourceId, final ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryOutOfReachException, SourceProfileNotFoundException, SourceNotVisibleException, 
-		CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException {
+	throws CategoryProfileNotFoundException, CategoryOutOfReachException, SourceProfileNotFoundException, SourceNotVisibleException, 
+	CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + sourceId + ",externalService)");
 		}
@@ -282,8 +282,8 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	@Override
 	public void unsubscribeToSource(final String sourceId, final ExternalService ex) 
-		throws CategoryProfileNotFoundException, CategoryOutOfReachException, CategoryNotVisibleException, 
-		CategoryTimeOutException, SourceObligedException, InternalDomainException {
+	throws CategoryProfileNotFoundException, CategoryOutOfReachException, CategoryNotVisibleException, 
+	CategoryTimeOutException, SourceObligedException, InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("unsubscribeToSource(" + sourceId + ",externalService)");
 		}
@@ -510,6 +510,7 @@ public class CustomManagedCategory extends CustomCategory {
 	/**
 	 * @param subscriptions
 	 */
+	@SuppressWarnings("unused")
 	private void setSubscriptions(final Map<String, CustomManagedSource> subscriptions) {
 		this.subscriptions = subscriptions;
 		//Needed by Hibernate 

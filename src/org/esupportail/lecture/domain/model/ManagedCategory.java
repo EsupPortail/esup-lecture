@@ -87,7 +87,7 @@ public class ManagedCategory extends Category {
 	}
 	
 	/**
-	 * Return a list of <SourceProfile,VisibilityMode>.
+	 * Return a list of (SourceProfile,VisibilityMode).
 	 * Corresponding to visible sources for user
 	 * in this ManagedCategory and update it (like methode updateCustom): 
 	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles

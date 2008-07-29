@@ -16,9 +16,6 @@ package org.esupportail.lecture.domain.model;
  * @author gbouteil
  *
  */
-// TODO (GB later) : A renommer (subscribeMode ?) : c'rest ambigue avec le VisibilityMode
-// Le AvailabilityMode est utilisé pour répondre à getVisible...
-// Le VisibilityMode est utilisé pour définir les réponses à getAvailableMode
 public enum AvailabilityMode {
 	
 	/**
