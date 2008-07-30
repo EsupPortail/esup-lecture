@@ -129,9 +129,6 @@ public abstract class CategoryProfile implements ElementProfile {
 	throws CategoryNotLoadedException, SourceProfileNotFoundException;
 
 	
-	
-	
-	
 	/** 
 	 * @see java.lang.Object#toString()
 	 */

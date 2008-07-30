@@ -68,7 +68,7 @@ public class ManagedCategory extends Category {
 	 * @param cp categoryProfile associated to this managedCategory
 	 */
 	@SuppressWarnings("synthetic-access")
-	public ManagedCategory(final CategoryProfile cp) {
+	public ManagedCategory(final ManagedCategoryProfile cp) {
 		super(cp);
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("ManagedCategory(" + cp.getId() + ")");

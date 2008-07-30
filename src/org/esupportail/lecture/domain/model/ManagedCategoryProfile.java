@@ -308,7 +308,29 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		return parents;
 	}
 
+	/**
+	 * @return Returns the managedCategory referenced by this managedCategoryProfile
+	 * @throws CategoryNotLoadedException 
+	 * @see org.esupportail.lecture.domain.model.CategoryProfile#getElement()
+	 */
+	@Override
+	public ManagedCategory getElement() throws CategoryNotLoadedException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + super.getId() + " - getElement()");
+		}
+		return (ManagedCategory) super.getElement();
+	}
 
+	
+	/**
+	 * @param category The category to set.
+	 */
+	@Override
+	public void setElement(final Category category) {
+		ManagedCategory cat = (ManagedCategory) category;
+		super.setElement(cat);
+	}
+	
 	/*
 	 *************************** ACCESSORS ******************************** */	
 
