@@ -70,7 +70,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * Inheritance rules are applied on feature (take care of inner features).
 	 */
-	private boolean featuresAreComputed = false;
+	private boolean featuresComputed = false;
 	/**
 	 * Access mode on the Source.
 	 */	
@@ -263,7 +263,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			LOG.debug("id=" + this.getId() + " - setAccess()");
 		}
 		inner.access = access;
-		featuresAreComputed = false;
+		featuresComputed = false;
 	}
 
 	/**
@@ -290,7 +290,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			LOG.debug("id=" + this.getId() + " - setVisibility(visibility)");
 		}
 		inner.visibility = visibility;
-		featuresAreComputed = false;
+		featuresComputed = false;
 	}
 
 	/**
@@ -316,7 +316,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			LOG.debug("id=" + this.getId() + " - setTimeOut(" + timeOut + ")");
 		}
 		inner.timeOut = timeOut;
-		featuresAreComputed = false;
+		featuresComputed = false;
 	}
 
 	/**
@@ -329,7 +329,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			LOG.debug("id = " + this.getId() + " - computeFeatures()");
 		}
 		
-		if (!featuresAreComputed) {
+		if (!featuresComputed) {
 			try {
 				if (categoryProfile.getTrustCategory()) {		
 					access = inner.access;
@@ -353,7 +353,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 					visibility = categoryProfile.getVisibility();
 					timeOut = categoryProfile.getTimeOut();
 				}
-				featuresAreComputed = true;
+				featuresComputed = true;
 			} catch (CategoryNotLoadedException e) {
 				String errorMsg = "Impossible to compute features on element " 
 					+ this.getId() + "because Category is not loaded";

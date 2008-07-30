@@ -44,7 +44,7 @@ public class ManagedCategory extends Category {
 	/**
 	 * Inheritance rules are applied on feature (take care of inner features).
 	 */
-	private boolean featuresAreComputed = false;
+	private boolean featuresComputed = false;
 // used later	
 //	/**
 //	 * Editability mode on the category 
@@ -223,7 +223,7 @@ public class ManagedCategory extends Category {
 			LOG.debug("id=" + this.getProfileId() + " - setVisibility(visibility)");
 		}
 		inner.visibility = visibility;
-		featuresAreComputed = false;
+		featuresComputed = false;
 	}
 	
 	/**
@@ -248,7 +248,7 @@ public class ManagedCategory extends Category {
 			LOG.debug("id=" + this.getProfileId() + " - setTimeOut(" + timeOut + ")");
 		}
 		inner.timeOut = timeOut;
-		featuresAreComputed = false;
+		featuresComputed = false;
 	}
 
 //	Used later
@@ -273,7 +273,7 @@ public class ManagedCategory extends Category {
 //			LOG.debug("id=" + this.getProfileId() + " - setEditability()");
 //		}
 //		inner.edit = edit;
-//		featuresAreComputed = false;
+//		featuresComputed = false;
 //	}
 
 
@@ -287,7 +287,7 @@ public class ManagedCategory extends Category {
 		}
 		ManagedCategoryProfile profile = getProfile();
 		
-		if (!featuresAreComputed) {
+		if (!featuresComputed) {
 			if (profile.getTrustCategory()) {		
 //				edit = inner.edit;
 				visibility = inner.visibility;
@@ -310,7 +310,7 @@ public class ManagedCategory extends Category {
 				visibility = profile.getVisibility();
 				timeOut = profile.getTimeOut();
 			}
-			featuresAreComputed = true;
+			featuresComputed = true;
 		}
 	}
 	

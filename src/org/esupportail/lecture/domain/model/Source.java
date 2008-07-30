@@ -104,6 +104,14 @@ public abstract class Source implements Element, Serializable {
 	private String rootElement;
 	
 	/**
+	 * Inner features declared in source file (take mappingFile as default if undefined
+	 */
+	private InnerFeatures inner;
+	/**
+	 * flag used to know if computeXslt() used one time or not.
+	 */
+	private boolean xsltComputed;
+	/**
 	 * URL of the xslt file to display xml content.
 	 */
 	private String xsltURL;
@@ -112,26 +120,21 @@ public abstract class Source implements Element, Serializable {
 	 * Xpath to access item in the XML source file correspoding to this source profile.
 	 */
 	private String itemXPath;
-	
-	/**
-	 * flag used to know if computeXslt() used one time or not.
-	 */
-	private boolean isXsltComputed;
 
-	/**
-	 * flag used to know if computeItems() used one time or not.  
-	 */
-	private boolean isItemComputed;
-	
+	// TODO (RB <-- GB) Not used ???
 	/**
 	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI).
 	 */
-	private HashMap<String, String> XPathNameSpaces = new HashMap<String, String>();
+	private HashMap<String, String> xPathNameSpaces = new HashMap<String, String>();
 
 	/**
 	 * Items List of this source.
 	 */
 	private List<Item> items = new ArrayList<Item>();
+	/**
+	 * flag used to know if items are computed.  
+	 */
+	private boolean itemComputed = false;
 	
 	/*
 	 *************************** INIT ******************************** */	
@@ -140,18 +143,76 @@ public abstract class Source implements Element, Serializable {
 	 * Constructor.
 	 * @param sp sourceProfile associated to this source
 	 */
+	@SuppressWarnings("synthetic-access")
 	public Source(final SourceProfile sp) {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("Source(" + sp.getId() + ")");
     	}
 		profile = sp;
 		profileId = sp.getId();
+		inner = new InnerFeatures();
 	}
 
 	/*
 	 *************************** METHODS ******************************** */	
+	/**
+	 * @return Returns the itemXPath.
+	 * @throws MappingNotFoundException 
+	 */
+	private String getItemXPath() throws MappingNotFoundException {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - getItemXPath()");
+    	}
+		computeXslt();
+		return itemXPath;
+	}
+
+	/**
+	 * @param itemXPath
+	 */
+	public void setItemXPath(String itemXPath) {
+		inner.itemXPath = itemXPath;
+		xsltComputed = false;
+	}
+
+	/**
+	 * @return Returns the xsltURL.
+	 * @throws MappingNotFoundException 
+	 */
+	private String getXsltURL() throws MappingNotFoundException {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - getXsltURL()");
+    	}
+		computeXslt();
+		return xsltURL;
+	}
 	
+	/**
+	 * @param xsltURL
+	 */
+	public void setXsltURL(String xsltURL) {
+		inner.xsltURL = xsltURL;
+		xsltComputed = false;
+	}
 	
+	/**
+	 * @return the hashMap containing xPathNameSpaces
+	 * @throws MappingNotFoundException
+	 */
+	private HashMap<String, String> getXPathNameSpaces() throws MappingNotFoundException {
+		computeXslt();
+		return xPathNameSpaces;
+	}
+	
+	/**
+	 * @param xPathNameSpaces
+	 */
+	public void setXPathNameSpaces(HashMap<String, String> xPathNameSpaces) {
+		inner.xPathNameSpaces = xPathNameSpaces;
+		xsltComputed = false;
+		
+	}
+
 	/**
 	 * find item XPath and url of Xslt file, in list of Mappings in channel (from mapping file).
 	 * In fonction of dtd, xmlType, xmlns or XML root element of the source XML content
@@ -172,56 +233,63 @@ public abstract class Source implements Element, Serializable {
 			LOG.debug("rootElement : " + rootElement);			
 		}
 		
-		if (xsltURL == null || itemXPath == null || XPathNameSpaces.size() == 0) {
-			Mapping m = new Mapping();
-			if (url != null) {
-				//Try to find a mapping from url
-				m = channel.getMappingBySourceURL(url);
-			} else {
-				LOG.error("Source " + this.profileId + "does not have any URL defined");
-			}
-			//no mapping find from url so using XML content caracteristics
-			if (m == null) {
-				if (dtd != null) {
-					m = channel.getMappingByDtd(dtd);
-				} 
-			}
-			if (m == null) {
-				if (xmlType != null) {
-					m = channel.getMappingByXmlType(xmlType);
+		if (!xsltComputed) {
+		
+			if (inner.xsltURL == null || inner.itemXPath == null || inner.xPathNameSpaces.size() == 0) {
+				Mapping m = new Mapping();
+				if (url != null) {
+					//Try to find a mapping from url
+					m = channel.getMappingBySourceURL(url);
+				} else {
+					LOG.error("Source " + this.profileId + "does not have any URL defined");
+				}
+				//no mapping find from url so using XML content caracteristics
+				if (m == null) {
+					if (dtd != null) {
+						m = channel.getMappingByDtd(dtd);
+					} 
+				}
+				if (m == null) {
+					if (xmlType != null) {
+						m = channel.getMappingByXmlType(xmlType);
+					}
+				}
+				if (m == null) {
+					if (xmlns != null) {
+						m = channel.getMappingByXmlns(xmlns);
+					}
+				}
+				if (m == null) {
+					if (rootElement != null) {
+						m = channel.getMappingByRootElement(rootElement);
+					}
+				}
+				if (m == null) {
+					LOG.warn("Source " + profileId 
+							+ " does not have any entry key to find xslt information : " 
+							+ "no dtd, xmlType, xmlns, rootElement");
+					String errorMsg = "Mapping not found for source " + profileId;
+					LOG.error(errorMsg);
+					throw new MappingNotFoundException("Mapping not found for source " + profileId);
+				}
+				if (inner.xsltURL == null) {
+					xsltURL = m.getXsltUrl();
+				} else {
+					xsltURL = inner.xsltURL;
+				}
+				if (inner.itemXPath == null) {
+					itemXPath = m.getItemXPath();
+				} else {
+					itemXPath = inner.itemXPath;
+				}
+				if (inner.xPathNameSpaces.size() == 0) {
+					xPathNameSpaces = m.getXPathNameSpaces();
+				} else {
+					xPathNameSpaces = inner.xPathNameSpaces;
 				}
 			}
-			if (m == null) {
-				if (xmlns != null) {
-					m = channel.getMappingByXmlns(xmlns);
-				}
-			}
-			if (m == null) {
-				if (rootElement != null) {
-					m = channel.getMappingByRootElement(rootElement);
-				}
-			}
-			if (m == null) {
-				LOG.warn("Source " + profileId 
-						+ " does not have any entry key to find xslt information : " 
-						+ "no dtd, xmlType, xmlns, rootElement");
-			}
-			if (m == null) {
-				String errorMsg = "Mapping not found for source " + profileId;
-				LOG.error(errorMsg);
-				throw new MappingNotFoundException("Mapping not found for source " + profileId);
-			}
-			if (xsltURL == null) {
-				xsltURL = m.getXsltUrl();
-			}
-			if (itemXPath == null) {
-				itemXPath = m.getItemXPath();
-			}
-			if (XPathNameSpaces.size() == 0) {
-				XPathNameSpaces = m.getXPathNameSpaces();
-			}
+			xsltComputed = true;
 		}
-		isXsltComputed = true;
 	}
 	
 	/**
@@ -236,59 +304,58 @@ public abstract class Source implements Element, Serializable {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.profileId + " - computeItems()");
     	}
-		if (!isXsltComputed) {
-			computeXslt();
-		}
-		try {
-			//create dom4j document
-			Document document = DocumentHelper.parseText(xmlStream);
-			//get encoding
-			String encoding = document.getXMLEncoding();
-			//lauch Xpath find
-			XPath xpath = document.createXPath(getItemXPath());
-			xpath.setNamespaceURIs(XPathNameSpaces);
-			List<Node> list = xpath.selectNodes(document);
-			//List<Node> list = document.selectNodes(itemXPath);
-			Iterator<Node> iter = list.iterator();
-			while (iter.hasNext()) {
-				Node node = iter.next();
-				Item item = new Item(this);
-				StringBuffer xml = new StringBuffer("<?xml version=\"1.0\" encoding=\"");
-				xml.append(encoding);
-				xml.append("\" ?>");
-				xml.append(node.asXML());
-				String xmlAsString = xml.toString();
-				String htmlContent = xml2html(xmlAsString, getXsltURL(), encoding);
-				item.setHtmlContent(htmlContent);
-				//find MD5 of item content for his ID
-				byte[] hash = MessageDigest.getInstance("MD5").digest(xmlAsString.getBytes());
-				StringBuffer hashString = new StringBuffer();
-				for (int i = 0; i < hash.length; ++i) {
-					String hex = Integer.toHexString(hash[i]);
-					if (hex.length() == 1) {
-						hashString.append('0');
-						hashString.append(hex.charAt(hex.length() - 1));
-					} else {
-						hashString.append(hex.substring(hex.length() - 2));
+	   	if (!itemComputed) {
+	   		try {
+	   			//create dom4j document
+	   			Document document = DocumentHelper.parseText(xmlStream);
+	   			//	get encoding
+	   			String encoding = document.getXMLEncoding();
+	   			//lauch Xpath find
+				XPath xpath = document.createXPath(getItemXPath());
+				xpath.setNamespaceURIs(getXPathNameSpaces());
+				List<Node> list = xpath.selectNodes(document);
+				//List<Node> list = document.selectNodes(getItemXPath());
+				Iterator<Node> iter = list.iterator();
+				while (iter.hasNext()) {
+					Node node = iter.next();
+					Item item = new Item(this);
+					StringBuffer xml = new StringBuffer("<?xml version=\"1.0\" encoding=\"");
+					xml.append(encoding);
+					xml.append("\" ?>");
+					xml.append(node.asXML());
+					String xmlAsString = xml.toString();
+					String htmlContent = xml2html(xmlAsString, getXsltURL(), encoding);
+					item.setHtmlContent(htmlContent);
+					//find MD5 of item content for his ID
+					byte[] hash = MessageDigest.getInstance("MD5").digest(xmlAsString.getBytes());
+					StringBuffer hashString = new StringBuffer();
+					for (int i = 0; i < hash.length; ++i) {
+						String hex = Integer.toHexString(hash[i]);
+						if (hex.length() == 1) {
+							hashString.append('0');
+							hashString.append(hex.charAt(hex.length() - 1));
+						} else {
+							hashString.append(hex.substring(hex.length() - 2));
+						}
 					}
+					item.setId(hashString.toString());
+					items.add(item);
 				}
-				item.setId(hashString.toString());
-				items.add(item);
+			} catch (DocumentException e) {
+				String errorMsg = "Error parsing XML content of the source";
+				LOG.error(errorMsg);
+				throw new ComputeItemsException(errorMsg, e);
+			} catch (NoSuchAlgorithmException e) {
+				String errorMsg = "MD5 algorithm not supported";
+				LOG.error(errorMsg);
+				throw new ComputeItemsException(errorMsg, e);
+			} catch (XPathException e) {
+				String errorMsg = "Xpath with NameSpace not specified in mappings.xml";
+				LOG.error(errorMsg);
+				throw new ComputeItemsException(errorMsg, e);
 			}
-		} catch (DocumentException e) {
-			String errorMsg = "Error parsing XML content of the source";
-			LOG.error(errorMsg);
-			throw new ComputeItemsException(errorMsg, e);
-		} catch (NoSuchAlgorithmException e) {
-			String errorMsg = "MD5 algorithm not supported";
-			LOG.error(errorMsg);
-			throw new ComputeItemsException(errorMsg, e);
-		} catch (XPathException e) {
-			String errorMsg = "Xpath with NameSpace not specified in mappings.xml";
-			LOG.error(errorMsg);
-			throw new ComputeItemsException(errorMsg, e);
-		}
-		isItemComputed = true;
+		itemComputed = true;
+	   	}
 	}
 	
 	/**
@@ -339,33 +406,7 @@ public abstract class Source implements Element, Serializable {
 		return ret;
 	}
 	
-	/**
-	 * @return Returns the itemXPath.
-	 * @throws MappingNotFoundException 
-	 */
-	private String getItemXPath() throws MappingNotFoundException {
-	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("id=" + this.profileId + " - getItemXPath()");
-    	}
-		if (!isXsltComputed) {
-			computeXslt();
-		}
-		return itemXPath;
-	}
 
-	/**
-	 * @return Returns the xsltURL.
-	 * @throws MappingNotFoundException 
-	 */
-	private String getXsltURL() throws MappingNotFoundException {
-	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("id=" + this.profileId + " - getXsltURL()");
-    	}
-		if (!isXsltComputed) {
-			computeXslt();
-		}
-		return xsltURL;
-	}
 
 	/**
 	 * get Items list of this source.
@@ -378,9 +419,7 @@ public abstract class Source implements Element, Serializable {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.profileId + " - getItems()");
     	}
-		if (!isItemComputed) {
-			computeItems();
-		}
+		computeItems();
 		return items;
 	}
 	
@@ -404,6 +443,31 @@ public abstract class Source implements Element, Serializable {
 		return out.toString();
 	}
 	
+	/* 
+	 *************************** INNER CLASS ******************************** */	
+	
+	/**
+	 * Inner Features (xsltURL, itemXPath, xPathNameSpace) declared in xml file. 
+	 * @author gbouteil
+	 */
+	private class InnerFeatures {
+		 
+		/**
+		 * URL of the xslt file to display xml content.
+		 */
+		public String xsltURL;
+		
+		/**
+		 * Xpath to access item in the XML source file correspoding to this source profile.
+		 */
+		public String itemXPath;
+		
+		/**
+		 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI).
+		 */
+		public HashMap<String, String> xPathNameSpaces = new HashMap<String, String>();
+			
+	}
 	
 	/* 
 	 ************************* ACCESSORS ******************************** */	
@@ -511,5 +575,5 @@ public abstract class Source implements Element, Serializable {
 	public void setUrl(final String url) {
 		this.url = url;
 	}
-
+	
 }
