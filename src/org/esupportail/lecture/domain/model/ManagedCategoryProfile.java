@@ -37,17 +37,24 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * Log instance.
 	 */
 	protected static final Log LOG = LogFactory.getLog(ManagedCategoryProfile.class); 
-
+	/**
+	 * Contexts where these profiles category are referenced.
+	 */
+	private Set<Context> contextsSet = new HashSet<Context>();
+	
 	/**
 	 * URL of the remote managed category.
 	 */
 	private String categoryURL;
+	/**
+	 * Ttl of the remote managed category reloading.
+	 */
+	private int ttl;
 	
 	/**
 	 * Access mode on the remote managed category.
 	 */
 	private Accessibility access;
-	
 	/**
 	 * trustCategory parameter : indicates between managed category and category profile, which one to trust
 	 * True : category is trusted. 
@@ -56,46 +63,20 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	private boolean trustCategory;
 	
-	/**
-	 * Resolve feature values (edit, visibility) from :
-	 * - managedCategoryProfile features
-	 * - managedCategory features
-	 * - trustCategory parameter.
-	 */
-	private ManagedCategoryFeatures features;
-		
-	// Later
+// used later	
 //	/**
-//	 * Remote managed category edit mode : not used for the moment
-//	 * Using depends on trustCategory parameter
+//	 * Editability mode on the category 
 //	 */	
 //	private Editability edit;
-	
 	/**
-	 * Visibility rights for groups on the remote managed category.
-	 * Value is one defined in channel config. This value not must be
-	 * exploited directly. It must be used by attribute "features" 
-	 * (take care of trustCategory parameter)
+	 * Visibility rights for groups on the managed element
+	 * Its values depends on trustCategory parameter. 
 	 */
 	private VisibilitySets visibility;
-
 	/**
-	 * Ttl of the remote managed category reloading.
-	 */
-	private int ttl;
-	
-	/**
-	 * timeOut to get the remote managedCategory.
-	 */
+	 * timeOut to get the Source.
+	 */	
 	private int timeOut;
-
-	/**
-	 * Contexts where these profiles category are referenced.
-	 */
-	private Set<Context> contextsSet = new HashSet<Context>();
-
-
-	
 	
 	/*
 	 ************************** INITIALIZATION ******************************** */	
@@ -108,7 +89,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("ManagedCategoryProfile()");
 		}
-		features = new ManagedCategoryFeatures(this);
 	}
 	
 	/*
@@ -194,7 +174,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		 * ------------------------------------
 		 * user app. obliged => enregistrer la cat dans le user profile + sortir
 		 * user app. autoSub => enregistrer la cat dans le user profile si c'est la premi�re fois + sortir
-		 * user app.allowed => rien � faire + sortir
+		 * user app.allowed => rien à faire + sortir
 		 * user n'app. rien => effacer la cat.
 		 */
 
@@ -279,63 +259,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 	
 	
-	
-	/** 
-	 * Computes rights.
-	 * On parameters shared between a ManagedCategoryProfile and its
-	 * ManagedCategory (edit, visibility)
-	 * @throws CategoryNotLoadedException 
-	 */
-	public void computeFeatures() throws CategoryNotLoadedException  {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getId() + " - computeFeatures()");
-		}
-		
-		ManagedCategory managedCategory = (ManagedCategory) getElement();
-		//Editability setEdit;
-		VisibilitySets setVisib = visibility;
-		
-		if (trustCategory) {		
-			//setEdit = managedCategory.getEdit();
-			setVisib = managedCategory.getVisibility();
-			
-//			if (setEdit == null) {
-//				setEdit = this.edit;
-//			}
-			if (setVisib == null) {
-				setVisib = this.visibility;
-			}
-		}
-		/* else {
-				Already done during channel config loading 
-		} */
-		features.update(setVisib);
-	}
-
-	/**
-	 * Compute visibility value from features and returns it.
-	 * @return Visibility
-	 * @throws CategoryNotLoadedException 
-	 * @see ManagedCategoryProfile#visibility
-	 */
-	public VisibilitySets getVisibility() throws CategoryNotLoadedException {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getId() + " - getVisibility()");
-		}
-		return features.getVisibility();
-	}
-	
-	/**
-	 * @param visibility
-	 */
-	public void setVisibility(final VisibilitySets visibility) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getId() + " - setVisibility(visibility)");
-		}
-		this.visibility = visibility;
-		features.setIsComputed(false);
-	}	
-
 	/**
 	 * Add a context to the set of context of this managed category profile.
 	 * This means that this managedCategoryProfile is declared in context c
@@ -384,8 +307,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		}
 		return parents;
 	}
-	
-	
+
+
 	/*
 	 *************************** ACCESSORS ******************************** */	
 
@@ -447,34 +370,20 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 //	features.setComputed(false);
 //	}
 	
-	
+	/**
+	 * @return visibility
+	 */
+	public VisibilitySets getVisibility() {
+		return visibility;
+	}
 
-//	/**
-//	 * @return allowed visibility group 
-//	 */
-//	public DefinitionSets getVisibilityAllowed() {
-//		return getVisibility().getAllowed();
-//	}
-//
-//
-//	/** 
-//	 * @return autoSubscribed group visibility
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityAutoSubscribed()
-//	 */
-//	public DefinitionSets getVisibilityAutoSubscribed() {
-//		return getVisibility().getAutoSubscribed();
-//	}
-//
-//	
-//	/**
-//	 * @return obliged group visibility
-//	 * @throws ElementNotLoadedException 
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibilityObliged()
-//	 */
-//	public DefinitionSets getVisibilityObliged()  {
-//		return getVisibility().getObliged();
-//		
-//	}
+	/**
+	 * @param visibility 
+	 */
+	public void setVisibility(final VisibilitySets visibility) {
+		this.visibility = visibility;
+	}
+
 
 	/**
 	 * @return ttl

@@ -90,12 +90,6 @@ interface ManagedElementProfile extends ElementProfile {
 //	 * @throws ElementNotLoadedException 
 //	 */
 //	public DefinitionSets getVisibilityObliged();
-	/**
-	 * Computes rights on parameters shared between a ManagedElementProfile and its
-	 * ManagedElement (edit, visibility).
-	 * @throws CategoryNotLoadedException 
-	 */
-	void computeFeatures() throws CategoryNotLoadedException;
-	
+
 
 }

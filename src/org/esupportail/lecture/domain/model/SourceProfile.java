@@ -36,11 +36,6 @@ public abstract class SourceProfile implements ElementProfile {
 	protected static final Log LOG = LogFactory.getLog(SourceProfile.class);
 
 	/**
-	 * timeOut to get the remote source.
-	 */
-	protected int timeOut;
-
-	/**
 	 * Id of the source profile. 
 	 * A source profile id is like :
 	 * <type>:<parentId>:<interneId>

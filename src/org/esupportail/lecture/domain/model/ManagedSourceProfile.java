@@ -31,22 +31,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * Log instance.
 	 */
 	protected static final Log LOG = LogFactory.getLog(ManagedSourceProfile.class); 
-	
-	/**
-	 * Access mode on the remote source.
-	 */
-	private Accessibility access;
-	
-	/**
-	 * Visibility rights for groups on the remote source.
-	 */
-	private VisibilitySets visibility;
 
-	/**
-	 * Ttl of the remote source reloading.
-	 * Using depends on trustCategory parameter
-	 */
-	private int ttl;
+// no used anymore	
+//	/**
+//	 * Ttl of the remote source reloading.
+//	 * Using depends on trustCategory parameter
+//	 */
+//	private int ttl;
 	
 	/**
 	 * Specific user content parameter.
@@ -57,18 +48,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	private boolean specificUserContent;
 	
 	/**
-	 * Resolve feature values (access, visibility).
-	 * From :
-	 * - managedSourceProfile 
-	 * - source 
-	 * - trustCategory parameter 
-	 */
-	private ManagedSourceFeatures features;
-
-	/**
 	 * parent category of this managed source profile. 
 	 */
-	private ManagedCategory parent;
+	private ManagedCategory category;
 
 	/**
 	 * profile of the parent category of this managed source profile. 
@@ -80,6 +62,28 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * Defined in the xml file : interne Id of the source Profile
 	 */
 	private String fileId;
+	
+	/**
+	 * Inner features declared in XML file.
+	 */
+	private InnerFeatures inner;
+	/**
+	 * Inheritance rules are applied on feature (take care of inner features).
+	 */
+	private boolean featuresAreComputed = false;
+	/**
+	 * Access mode on the Source.
+	 */	
+	private Accessibility access;
+	/**
+	 * Visibility rights for groups on the managed element
+	 * Its values depends on trustCategory parameter. 
+	 */
+	private VisibilitySets visibility;
+	/**
+	 * timeOut to get the Source.
+	 */	
+	private int timeOut;
 
 	/*
 	 ************************** INIT ******************************** */	
@@ -88,13 +92,14 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * Constructor.
 	 * @param mc managedCategory parent of this ManagedSourceProfile
 	 */
+	@SuppressWarnings("synthetic-access")
 	public ManagedSourceProfile(final ManagedCategory mc) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("ManagedSourceProfile(" + mc.getProfileId() + ")");
 		}
-		parent = mc;
-		categoryProfile = (ManagedCategoryProfile) mc.getProfile();
-		features = new ManagedSourceFeatures(this);
+		category = mc;
+		categoryProfile = mc.getProfile();
+		inner = new InnerFeatures();
 	}
 
 
@@ -120,48 +125,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		}
 		// no loadSource(ex) is needed here
 		return setUpCustomCategoryVisibility(customManagedCategory, ex);	
-	}
-
-	
-
-	/**
-	 * Computes rights on parameters shared between parent ManagedCategory and managedSourceProfile.
-	 * ManagedCategory (edit, visibility,access)
-	 * @throws CategoryNotLoadedException 
-	 */
-	public void computeFeatures() throws CategoryNotLoadedException {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getId() + " - computeFeatures()");
-		}
-	
-		/* Features that can be herited by the managedCategoryProfile */
-		Accessibility setAccess;
-		VisibilitySets setVisib;
-		int setTimeOut;
-		
-		if (categoryProfile.getTrustCategory()) {		
-			setAccess = access;
-			setVisib = visibility;
-			setTimeOut = super.timeOut;
-			
-			if (setAccess == null) {
-				setAccess = categoryProfile.getAccess();
-			}
-			if (setVisib == null) {
-				setVisib = categoryProfile.getVisibility();
-			}
-			if (setTimeOut == 0) {
-				setTimeOut = categoryProfile.getTimeOut();
-			}
-		} else {
-			setAccess = categoryProfile.getAccess();
-			setVisib = categoryProfile.getVisibility();
-			setTimeOut = categoryProfile.getTimeOut();
-			
-		}
-				
-		features.update(setVisib, setAccess, setTimeOut);
-		
 	}
 
 	/**
@@ -197,8 +160,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			throw new InfoDomainException(errorMsg, e);
 		}
 		
-		//features.compute();
-		//features.setIsComputed(false); // TODO (GB later) optimiser
 	}
 
 	
@@ -229,22 +190,22 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		 * user app.allowed => rien à faire + sortir
 		 * user n'app. rien => effacer la custom source .
 		 * 
-		 * RB : En plus on doit vérifier si la Source a une visibilité. 
-		 * Si ce n'est pas le cas on regarde ce qui est au niveau de la catégorie 
-		 * afin de le prendre comme valeur par défaut. 
 		 */
 		
 		// get visibilitySets of the current sourceProfile
 		VisibilitySets visibilitySets = getVisibility();
 		
+// 		GB : J'ai tout commenté car c'est géré par la méthode computeFeatures()
+//		//if visibilitySets is NOT defined on sourceProfile
+//		if (visibilitySets.isEmpty()) {
+//			//we get, as default, the VisibilityMode from the CategoryProfile containing the sourceProfile.
+//			//Please note that in case of CategoryProfile with TrustedCategory=yes attribute then the 
+//			//visibilitySets of CategoryProfile was replaced by the CategoryProfile of the trusted Category.
+//			visibilitySets = customManagedCategory.getProfile().getVisibility();
+//		} 
+		
 		VisibilityMode mode = VisibilityMode.NOVISIBLE;
-		//if visibilitySets is NOT defined on sourceProfile
-		if (visibilitySets.isEmpty()) {
-			//we get, as default, the VisibilityMode from the CategoryProfile containing the sourceProfile.
-			//Please note that in case of CategoryProfile with TrustedCategory=yes attribute then the 
-			//visibilitySets of CategoryProfile was replaced by the CategoryProfile of the trusted Category.
-			visibilitySets = customManagedCategory.getProfile().getVisibility();
-		} 
+
 		mode = visibilitySets.whichVisibility(ex);
 		
 		if (mode == VisibilityMode.OBLIGED) {
@@ -279,7 +240,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	}
 
 	/**	
-	 * Compute access value from feature and returns it.
+	 * Return access of the source, taking care of inheritance regulars.
 	 * @return access
 	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getAccess()
@@ -288,7 +249,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - getAccess()");
 		}
-		return features.getAccess();
+		computeFeatures();
+		return access;
 	}
 
 	/**
@@ -300,12 +262,12 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - setAccess()");
 		}
-		this.access = access;
-		features.setIsComputed(false);
+		inner.access = access;
+		featuresAreComputed = false;
 	}
 
 	/**
-	 * Compute visibility value from features and returns it.
+	 * Return visibility of the source, taking care of inheritance regulars.
 	 * @return visibility
 	 * @throws CategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
@@ -314,9 +276,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - getVisibility()");
 		}
-		return features.getVisibility();
+		computeFeatures();
+		return visibility;
 	}
-
 
 	/**
 	 * @see ManagedSourceProfile#visibility
@@ -327,12 +289,12 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - setVisibility(visibility)");
 		}
-		this.visibility = visibility;
-		features.setIsComputed(false);
+		inner.visibility = visibility;
+		featuresAreComputed = false;
 	}
-	
+
 	/**
-	 * Compute timeOut value from features and returns it.
+	 * Return timeOut of the source, taking care of inheritance regulars.
 	 * @return timeOut
 	 * @throws CategoryNotLoadedException 
 	 */
@@ -341,14 +303,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - getTimeOut()");
 		}
-		if (LOG.isTraceEnabled()) {
-			LOG.trace("timeOut : " + features.getTimeOut());
-		}
-		return features.getTimeOut();
+		computeFeatures();
+		return timeOut;
 	}
 
-
-	
 	/**
 	 * @see org.esupportail.lecture.domain.model.SourceProfile#setTimeOut(int)
 	 */
@@ -357,8 +315,78 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - setTimeOut(" + timeOut + ")");
 		}
-		super.timeOut = timeOut;
-		features.setIsComputed(false);
+		inner.timeOut = timeOut;
+		featuresAreComputed = false;
+	}
+
+	/**
+	 * Computes rights on parameters shared between parent ManagedCategory and managedSourceProfile.
+	 * (timeOut, visibility,access)
+	 * @throws CategoryNotLoadedException 
+	 */
+	private void computeFeatures() throws CategoryNotLoadedException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - computeFeatures()");
+		}
+		
+		if (!featuresAreComputed) {
+			try {
+				if (categoryProfile.getTrustCategory()) {		
+					access = inner.access;
+					visibility = inner.visibility;
+					timeOut = inner.timeOut;
+					
+					if (access == null) {
+						access = category.getAccess();
+					}
+					if (visibility == null) {
+						visibility = category.getVisibility();
+					} else if (visibility.isEmpty()) {
+						visibility = category.getVisibility();
+					}
+					if (timeOut == 0) {
+						timeOut = category.getTimeOut();
+					}
+				} else {
+					// No trust => features of categoryProfile 
+					access = categoryProfile.getAccess();
+					visibility = categoryProfile.getVisibility();
+					timeOut = categoryProfile.getTimeOut();
+				}
+				featuresAreComputed = true;
+			} catch (CategoryNotLoadedException e) {
+				String errorMsg = "Impossible to compute features on element " 
+					+ this.getId() + "because Category is not loaded";
+				LOG.error(errorMsg);
+				throw e;
+			}
+		}
+	}
+	
+	/* 
+	 *************************** INNER CLASS ******************************** */	
+	
+	/**
+	 * Inner Features (accessibility, visibility, timeOut) declared in xml file. 
+	 * These values are used according to inheritance regulars
+	 * @author gbouteil
+	 */
+	private class InnerFeatures {
+		 
+		/**
+		 * Access mode on the remote source.
+		 */
+		public Accessibility access;
+		/**
+		 * Visibility rights for groups on the remote source.
+		 */
+		public VisibilitySets visibility;
+		/**
+		 * timeOut to get the remote source.
+		 */
+		public int timeOut;
+		
+				
 	}
 	
 	/* 
@@ -369,28 +397,30 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @return the parent of this managed source profile
 	 */
 	public ManagedCategory getParent() {
-		return parent;
+		return category;
 	}
 
 	
-	/**
-	 * Returns ttl.
-	 * @see ManagedSourceProfile#ttl
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getTtl()
-	 */
-	@Override
-	public int getTtl()  {
-		return ttl;
-	}
+// 	No used anymore	
+//	/**
+//	 * Returns ttl.
+//	 * @see ManagedSourceProfile#ttl
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getTtl()
+//	 */
+//	@Override
+//	public int getTtl()  {
+//		return ttl;
+//	}
 
-	/**
-	 * @see ManagedSourceProfile#ttl
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setTtl(int)
-	 */
-	@Override
-	public void setTtl(final int ttl) {
-		this.ttl = ttl;
-	}
+// 	No used anymore	
+//	/**
+//	 * @see ManagedSourceProfile#ttl
+//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setTtl(int)
+//	 */
+//	@Override
+//	public void setTtl(final int ttl) {
+//		this.ttl = ttl;
+//	}
 
 	/**
 	 * Returns specificUserContent value.

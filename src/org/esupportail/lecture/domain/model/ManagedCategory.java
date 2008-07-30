@@ -36,31 +36,44 @@ public class ManagedCategory extends Category {
 	 * Log instance.
 	 */
 	protected static final Log LOG = LogFactory.getLog(ManagedCategory.class);
+	
 	/**
-	 * Visibility sets of this category (if defined).
-	 * Using depends on trustCategory parameter in 
-	 * ManagedCategoryProfile corresponding 
+	 * Inner features declared in XML file.
+	 */
+	private InnerFeatures inner;
+	/**
+	 * Inheritance rules are applied on feature (take care of inner features).
+	 */
+	private boolean featuresAreComputed = false;
+// used later	
+//	/**
+//	 * Editability mode on the category 
+//	 */	
+//	private Editability edit;
+	/**
+	 * Visibility rights for groups on the managed element
+	 * Its values depends on trustCategory parameter. 
 	 */
 	private VisibilitySets visibility;
-//	/**
-//	 * Managed category edit mode : not used for the moment (if defined)
-//	 * Using depends on trustCategory parameter in 
-//	 * ManagedCategoryProfile corresponding
-//	 */
-//	private Editability edit;
-	
+	/**
+	 * timeOut to get the Source.
+	 */	
+	private int timeOut;
+
 	/*
 	 *********************** INIT **************************************/ 
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param cp categoryProfile associated to this managedCategory
 	 */
-	public ManagedCategory(CategoryProfile cp) {
+	@SuppressWarnings("synthetic-access")
+	public ManagedCategory(final CategoryProfile cp) {
 		super(cp);
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("ManagedCategory(" + cp.getId() + ")");
     	}
+	   	inner = new InnerFeatures();
 	}
 	
 	/*
@@ -155,6 +168,14 @@ public class ManagedCategory extends Category {
 
 	
 	/**
+	 * @return managedCategoryProfile associated to this category
+	 */
+	@Override
+	public ManagedCategoryProfile getProfile() {
+		return (ManagedCategoryProfile) super.getProfile();
+	}
+	
+	/**
 	 * @param sourceId
 	 * @return true if this managedCategory contains the source identified by sourceId
 	 */
@@ -168,27 +189,166 @@ public class ManagedCategory extends Category {
 	   	return result;
 	}
 	
+	/**
+	 * Return accessibility of the category.
+	 * @return accessibility
+	 */
+	public Accessibility getAccess() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getProfileId() + " - getAccessy()");
+		}
+		return getProfile().getAccess();
+	}
+
+
+	/**
+	 * Return visibility of the category, taking care of inheritance regulars.
+	 * @return visibility
+	 * @throws CategoryNotLoadedException 
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
+	 */
+	public VisibilitySets getVisibility() throws CategoryNotLoadedException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getProfileId() + " - getVisibility()");
+		}
+		computeFeatures();
+		return visibility;
+	}
+	
+	/**
+	 * @param visibility 
+	 * @see ManagedCategory#visibility
+	 */
+	public void setVisibility(final VisibilitySets visibility) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getProfileId() + " - setVisibility(visibility)");
+		}
+		inner.visibility = visibility;
+		featuresAreComputed = false;
+	}
+	
+	/**
+	 * Return timeOut of the category, taking care of inheritance regulars.
+	 * @return timeOut
+	 */
+	@Override
+	public int getTimeOut() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getProfileId() + " - getTimeOut()");
+		}
+		computeFeatures();
+		return timeOut;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.model.Category#setTimeOut(int)
+	 */
+	@Override
+	public void setTimeOut(final int timeOut) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getProfileId() + " - setTimeOut(" + timeOut + ")");
+		}
+		inner.timeOut = timeOut;
+		featuresAreComputed = false;
+	}
+
+//	Used later
+//	/**	
+//	 * Return editability of the category, taking care of inheritance regulars.
+//	 * @return edit
+//	 */
+//	public Editability getEdit() {
+//		if (LOG.isDebugEnabled()) {
+//			LOG.debug("id = " + this.getProfileId() + " - getEdit()");
+//		}
+//		computeFeatures();
+//		return edit;
+//	}
+//	
+//	/**
+//	 * @param edit	
+//	 * @see ManagedCategory#edit 
+//	 */
+//	public void setEdit(final Editability edit) {
+//		if (LOG.isDebugEnabled()) {
+//			LOG.debug("id=" + this.getProfileId() + " - setEditability()");
+//		}
+//		inner.edit = edit;
+//		featuresAreComputed = false;
+//	}
+
+
+	/**
+	 * Computes rights on parameters shared between parent ManagedCategory and managedCategoryProfile.
+	 * (timeOut, visibility,access)
+	 */
+	private void computeFeatures() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getProfileId() + " - computeFeatures()");
+		}
+		ManagedCategoryProfile profile = getProfile();
+		
+		if (!featuresAreComputed) {
+			if (profile.getTrustCategory()) {		
+//				edit = inner.edit;
+				visibility = inner.visibility;
+				timeOut = inner.timeOut;
+					
+//				if (edit == null) {
+//					edit = profile.getEdit();
+//				}
+				if (visibility == null) {
+					visibility = profile.getVisibility();
+				} else if (visibility.isEmpty()) {
+					visibility = profile.getVisibility();
+				}
+				if (timeOut == 0) {
+					timeOut = profile.getTimeOut();
+				}
+			} else {
+				// No trust => features of categoryProfile 
+//				edit = profile.getEdit();
+				visibility = profile.getVisibility();
+				timeOut = profile.getTimeOut();
+			}
+			featuresAreComputed = true;
+		}
+	}
+	
+	
+
+	
+	/* 
+	 *************************** INNER CLASS ******************************** */	
+	
+	/**
+	 * Inner Features (editability, visibility, timeOut) declared in xml file. 
+	 * These values are used according to inheritance regulars
+	 * @author gbouteil
+	 */
+	private class InnerFeatures {
+		 
+// used later	
+//		/** 
+//		 * Managed category edit mode 
+//		*/
+//		public Editability edit;
+		/**
+		 * Visibility rights for groups on the remote source.
+		 */
+		public VisibilitySets visibility;
+		/**
+		 * timeOut to get the remote source.
+		 */
+		public int timeOut;
+		
+				
+	}
+	
 	
 	/*
 	 *********************** ACCESSORS**************************************/ 
 
 	
-	
-	/**
-	 * Returns visibility sets of this managed category (if defined).
-	 * @return visibility
-	 */
-	protected VisibilitySets getVisibility() {
-		return visibility;
-	}
-
-
-	/**
-	 * Sets visibility sets of this managed category.
-	 * @param visibility
-	 */
-	public void setVisibility(final VisibilitySets visibility) {
-		this.visibility = visibility;
-	}
 
 }
