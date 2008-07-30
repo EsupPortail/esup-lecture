@@ -44,6 +44,19 @@ interface ManagedElementProfile extends ElementProfile {
 	void setVisibility(VisibilitySets visibility);
 
 	/**
+	 * Return timeOut of the element.
+	 * @return timeOut
+	 * @throws CategoryNotLoadedException 
+	 */
+	int getTimeOut() throws  CategoryNotLoadedException;
+	
+	/**
+	 * Sets timeOut of the element.
+	 * @param timeOut
+	 */
+	void setTimeOut(int timeOut);
+	
+	/**
 	 * Returns ttl of the Element.
 	 * @return ttl 
 	 * @throws ElementNotLoadedException 
@@ -60,36 +73,5 @@ interface ManagedElementProfile extends ElementProfile {
 	 * Sets allowed visibility group of the Element
 	 * @param d allowed group
 	 */	
-//	public void setVisibilityAllowed(DefinitionSets d);
-//	
-//	/**
-//	 * Returns allowed visibility group of the Element
-//	 * @return allowed 
-//	 * @throws ElementNotLoadedException 
-//	 */
-//	public DefinitionSets getVisibilityAllowed() ;
-//	/**
-//	 * Sets autoSubscribed visibility group of the Element
-//	 * @param d subscribed group
-//	 */	
-//	public void setVisibilityAutoSubcribed(DefinitionSets d);
-//	/**
-//	 * Returns autoSubscribed visibility group of the Element
-//	 * @return autoSubscribed 
-//	 * @throws ElementNotLoadedException 
-//	 */
-//	public DefinitionSets getVisibilityAutoSubscribed();
-//	/**
-//	 * Sets obliged visibility group of the Element
-//	 * @param d obliged group
-//	 */	
-//	public void setVisibilityObliged(DefinitionSets d);
-//	/**
-//	 * Returns obliged visibility group of the Element
-//	 * @return d obliged group
-//	 * @throws ElementNotLoadedException 
-//	 */
-//	public DefinitionSets getVisibilityObliged();
-
 
 }

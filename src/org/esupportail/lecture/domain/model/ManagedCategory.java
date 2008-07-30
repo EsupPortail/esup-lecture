@@ -166,7 +166,6 @@ public class ManagedCategory extends Category {
 		}
 	}
 
-	
 	/**
 	 * @return managedCategoryProfile associated to this category
 	 */

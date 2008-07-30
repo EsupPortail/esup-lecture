@@ -141,8 +141,7 @@ public abstract class CategoryProfile implements ElementProfile {
 		String string = "";
 		
 		/* The category profile name */
-		string += "	name : " + name + "\n";
-		
+		string += "	name : " + name + "\n";		
 	
 		/* The category profile id */
 		string += "	id : " + id + "\n";
