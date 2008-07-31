@@ -32,13 +32,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	protected static final Log LOG = LogFactory.getLog(ManagedSourceProfile.class); 
 
-// no used anymore	
-//	/**
-//	 * Ttl of the remote source reloading.
-//	 * Using depends on trustCategory parameter
-//	 */
-//	private int ttl;
-	
 	/**
 	 * Specific user content parameter.
 	 * Indicates source multiplicity :
@@ -400,27 +393,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		return category;
 	}
 
-	
-// 	No used anymore	
-//	/**
-//	 * Returns ttl.
-//	 * @see ManagedSourceProfile#ttl
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getTtl()
-//	 */
-//	@Override
-//	public int getTtl()  {
-//		return ttl;
-//	}
-
-// 	No used anymore	
-//	/**
-//	 * @see ManagedSourceProfile#ttl
-//	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setTtl(int)
-//	 */
-//	@Override
-//	public void setTtl(final int ttl) {
-//		this.ttl = ttl;
-//	}
 
 	/**
 	 * Returns specificUserContent value.

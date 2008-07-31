@@ -77,6 +77,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * timeOut to get the Source.
 	 */	
 	private int timeOut;
+	/**
+	 * Referrenced category.
+	 */
+	private ManagedCategory category;
 	
 	/*
 	 ************************** INITIALIZATION ******************************** */	
@@ -94,6 +98,74 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/*
 	 ************************** METHODS ******************************** */	
 	
+	/**
+	 * @return Returns the category referenced by this CategoryProfile
+	 * @throws CategoryNotLoadedException 
+	 */
+	@Override
+	protected ManagedCategory getElement() throws CategoryNotLoadedException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + getId() + " - getElement()");
+		}
+		category = (ManagedCategory) super.getCategory(); 
+		if (category == null) {
+			String errorMsg = "Category " + getId() + " is not loaded in profile";
+			LOG.error(errorMsg);
+			throw new CategoryNotLoadedException(errorMsg);
+		}
+		return  category;
+	}
+	
+	/**
+	 * @param category The category to set.
+	 */
+	@Override
+	protected void setElement(final Category category) {
+		ManagedCategory cat = (ManagedCategory) category;
+		super.setElement(cat);
+	}
+	
+	/**
+	 * Return the name of the referenced category. When the category is not loaded, it returns
+	 * the name of this CategoryProfile.
+	 * @return name
+	 */
+	@Override
+	public String getName() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + getId() + " - getName()");
+		}
+		String currentName;
+		
+		try {
+			currentName = getElement().getName();
+		} catch (CategoryNotLoadedException e) {
+			LOG.warn("Category " + getId() + " is not loaded");
+			currentName = super.getName();
+		}
+		return currentName;
+	}
+	
+	/**
+	 * Return the name of the referenced category. When the category is not loaded, it returns
+	 * the name of this CategoryProfile.
+	 * @return name
+	 */
+	@Override
+	public String getDescription() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + getId() + " - getDescription()");
+		}
+		String currentDesc;
+		
+		try {
+			currentDesc = getElement().getDescription();
+		} catch (CategoryNotLoadedException e) {
+			LOG.warn("Category " + getId() + " is not loaded");
+			currentDesc = super.getDescription();
+		}
+		return currentDesc;
+	}
 	
 
 	/**
@@ -122,7 +194,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 *  @param ex access to externalservice to get proxy ticket CAS
 	 * @throws InfoDomainException 
 	 */
-	@Override
 	protected synchronized void loadCategory(final ExternalService ex) throws InfoDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - loadCategory(externalService)");
@@ -230,7 +301,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			LOG.debug("id = " + this.getId() + " - updateCustom(" + customManagedCategory.getElementId()
 					+ ",externalService)");
 		}
-		ManagedCategory category = (ManagedCategory) getElement();
+		ManagedCategory category = getElement();
 		category.updateCustom(customManagedCategory, ex);
 	}
 	
@@ -254,7 +325,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			LOG.debug("id = " + this.getId() + " - getVisibleSourcesAndUpdateCustom("
 					+ this.getId() + ",externalService)");
 		}
-		ManagedCategory category = (ManagedCategory) getElement();
+		ManagedCategory category = getElement();
 		return category.getVisibleSourcesAndUpdateCustom(customManagedCategory, ex);
 	}
 	
@@ -308,33 +379,13 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		return parents;
 	}
 
-	/**
-	 * @return Returns the managedCategory referenced by this managedCategoryProfile
-	 * @throws CategoryNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.CategoryProfile#getElement()
-	 */
-	@Override
-	public ManagedCategory getElement() throws CategoryNotLoadedException {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + super.getId() + " - getElement()");
-		}
-		return (ManagedCategory) super.getElement();
-	}
 
-	
-	/**
-	 * @param category The category to set.
-	 */
-	@Override
-	public void setElement(final Category category) {
-		ManagedCategory cat = (ManagedCategory) category;
-		super.setElement(cat);
-	}
+
 	
 	/*
 	 *************************** ACCESSORS ******************************** */	
 
-
+	
 	/**
 	 * Returns the URL of the remote managed category.
 	 * @return urlCategory

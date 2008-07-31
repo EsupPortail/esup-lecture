@@ -82,6 +82,7 @@ public abstract class CustomCategory implements CustomElement {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + elementId + " - getName()");
 		}
+		
 		return getProfile().getName();
 	}
 	

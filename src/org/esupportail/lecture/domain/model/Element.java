@@ -10,7 +10,7 @@ package org.esupportail.lecture.domain.model;
  * @author gbouteil
  *
  */
-public interface Element {
+interface Element {
 		
 	/**
 	 * @return the profile associated to this element

@@ -9,9 +9,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
@@ -34,65 +32,41 @@ public abstract class CategoryProfile implements ElementProfile {
 	 */
 	protected static final Log LOG = LogFactory.getLog(CategoryProfile.class); 
 	/**
-	 *  Category profile name.
-	 *  It is the category name that is used.
-	 *  This name is used only when category is not loaded
+	 * Category described by this CategoryProfile.
 	 */
-	private String name = "";
+	private Category category;
 	/**
 	 *  Category profile id.
 	 */
 	private String id;
 	/**
-	 * Category described by this CategoryProfile.
+	 *  Category profile name.
 	 */
-	private Category category;
+	private String name = "";
+	/**
+	 *  Category profile description.
+	 */
+	private String description = "";
+	
+	
 	
 	/*
 	 ************************** METHODS *********************************/	
 	
 	/**
-	 * Load the category referenced by this CategoryProfile.
-	 * @param ex
-	 * @throws InfoDomainException 
+	 * @return Returns the category referenced by this CategoryProfile
+	 * @throws CategoryNotLoadedException 
 	 */
-	protected abstract void loadCategory(ExternalService ex)  throws InfoDomainException;
-	
-	/**
-	 * Return the name of the referenced category. When the category is not loaded, it returns
-	 * the name of this CategoryProfile.
-	 * @return name
-	 */
-	public String getName() {
+	protected Category getElement() throws CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + id + " - getName()");
+			LOG.debug("id=" + id + " - getElement()");
 		}
-		String currentName;
-		
-		try {
-			currentName = getElement().getName();
-		} catch (CategoryNotLoadedException e) {
-			LOG.error("Category " + id + " is not loaded");
-			currentName = this.name;
-		}
-		return currentName;
+		return category;
 	}
 	
 	/**
-	 * @return description of the category referenced by this CategoryProfile
-	 * @throws CategoryNotLoadedException
-	 */
-	public String getDescription() throws CategoryNotLoadedException {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + id + " - getDescription()");
-		}
-		return getElement().getDescription();
-		
-	}
-
-	/**
-	 * @return the Map of Ordered Source IDs 
-	 * @throws CategoryNotLoadedException
+	 * @return the Map of Ordered Source IDs
+	 * @throws CategoryNotLoadedException 
 	 */
 	public Map<String, Integer> getOrderedSourceIDs() throws CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
@@ -101,21 +75,7 @@ public abstract class CategoryProfile implements ElementProfile {
 		return getElement().getOrderedSourceIDs();
 	}
 	
-	/**
-	 * @return Returns the category referenced by this CategoryProfile
-	 * @throws CategoryNotLoadedException 
-	 */
-	public Category getElement() throws CategoryNotLoadedException {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + id + " - getElement()");
-		}
-		if (category == null) {
-			String errorMsg = "Category " + id + " is not loaded in profile";
-			LOG.error(errorMsg);
-			throw new CategoryNotLoadedException(errorMsg);
-		}
-		return category;
-	}
+
 	
 	/**
 	 * Returns the sourceProfile identified by id, accessible by CategoryProfile.
@@ -133,13 +93,13 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString() {
+	public String toString()  {
 		
 		String string = "";
 		
 		/* The category profile name */
-		string += "	name : " + name + "\n";		
-	
+		string += "	name : " + getName() + "\n";
+			
 		/* The category profile id */
 		string += "	id : " + id + "\n";
 		
@@ -150,12 +110,41 @@ public abstract class CategoryProfile implements ElementProfile {
 	 ************************** ACCESSORS *********************************/	
 	
 	/**
-	 * @param name
-	 * @see CategoryProfile#name
-	 * @see ElementProfile#setName(String)
+	 * Return the name of the category profile. 
+	 * @return name
 	 */
-	public void setName(final String name) {
+	public String getName() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + id + " - getName()");
+		}		
+		return name;
+	}
+	
+	/**
+	 * Sets the name to the category profile.
+	 * @param name
+	 */
+	protected void setName(final String name) {
 		this.name = name;
+	}
+	
+	/**
+	 * @return description of this CategoryProfile
+	 */
+	public String getDescription() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + id + " - getDescription()");
+		}
+		return description;
+		
+	}
+	
+	/**
+	 * Sets the description to this category profile.
+	 * @param name
+	 */
+	protected void setDescription(final String desc) {
+		this.description = desc;
 	}
 	
 	/**
@@ -180,9 +169,22 @@ public abstract class CategoryProfile implements ElementProfile {
 	/**
 	 * @param category The category to set.
 	 */
-	public void setElement(final Category category) {
+	protected void setElement(final Category category) {
 		this.category = category;
 	}
 
+	/**
+	 * @return category
+	 */
+	protected Category getCategory() {
+		return category;
+	}
+
+	/**
+	 * @param category
+	 */
+	protected void setCategory(Category category) {
+		this.category = category;
+	}
 
 }

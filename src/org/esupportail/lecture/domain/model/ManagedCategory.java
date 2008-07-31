@@ -30,8 +30,6 @@ public class ManagedCategory extends Category {
 
 	/*
 	 *********************** PROPERTIES**************************************/ 
-
-
 	/**
 	 * Log instance.
 	 */
@@ -59,6 +57,14 @@ public class ManagedCategory extends Category {
 	 * timeOut to get the Source.
 	 */	
 	private int timeOut;
+	/**
+	 * Name of the category. 
+	 */
+	private String name = "";
+	/**
+	 * Description of the category.
+	 */
+	private String description = "";
 
 	/*
 	 *********************** INIT **************************************/ 
@@ -348,6 +354,42 @@ public class ManagedCategory extends Category {
 	/*
 	 *********************** ACCESSORS**************************************/ 
 
+	/**
+	 * Returns the name of the category.
+	 * @return name
+	 * */
+	@Override
+	protected String getName() {
+		return name;
+	}
+
+
+	/**
+	 * Sets the category name.
+	 * @param name
+	 */
+	@Override
+	public void setName(final String name) {
+		this.name = name;
+	}
 	
+	/**
+	 * Returns the description of the category.
+	 * @return description
+	 * */
+	@Override
+	protected String getDescription() {
+		return description;
+	}
+
+
+	/**
+	 * Sets the description name.
+	 * @param description
+	 */
+	@Override
+	public void setDescription(final String description) {
+		this.description = description;
+	}
 
 }

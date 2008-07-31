@@ -36,15 +36,6 @@ public abstract class Category implements Element, Serializable {
 	/*
 	 *************************** PROPERTIES *********************************/	
 
-
-	/**
-	 * Name of the category. 
-	 */
-	private String name = "";
-	/**
-	 * Description of the category.
-	 */
-	private String description = "";
 	/**
 	 * Id of the categoryProfil.
 	 */
@@ -140,40 +131,34 @@ public abstract class Category implements Element, Serializable {
 	/**
 	 * Returns the name of the category.
 	 * @return name
-	 * @see Category#name
 	 */
 	protected String getName() {
-		return name;
+		return getProfile().getName();
 	}
 
 
 	/**
 	 * Sets the category name.
 	 * @param name
-	 * @see Category#name
 	 */
 	public void setName(final String name) {
-		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
-		this.name = name;
+		getProfile().setName(name);
 	}
 	
 	/**
 	 * Returns the category description.
 	 * @return description
-	 * @see Category#description
 	 */
 	protected String getDescription() {
-		return description;
+		return getProfile().getDescription();
 	}
 
 	/**
 	 * Sets the category description.
 	 * @param description
-	 * @see Category#description
 	 */
 	public void setDescription(final String description) {
-		// TODO (GB later) revoir la visibilite public qd on cr�era les sourcesProfiles avec des daoBeans
-		this.description = description;
+		getProfile().setDescription(description);
 	}
 
 	

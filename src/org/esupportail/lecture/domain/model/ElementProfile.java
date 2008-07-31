@@ -5,7 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
-import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 
 
 /**
@@ -29,22 +29,23 @@ public interface ElementProfile {
 	 */
 	 void setId(String id);
 	/**
-	 * Returns the name of the element profile (should be the same as the corresponding element).
+	 * Returns the name of the element profile (the same as the referrencing element).
 	 * @return String name
 	 */
 	String getName();
-	/**
-	 * Sets the name of the element profile (should be the same as the correcponding element).
-	 * @param name
-	 */
-	void setName(String name);
 	
-	/**
-	 * @return the element associated to this profile
-	 * @throws ElementNotLoadedException 
-	 * @throws ElementNotLoadedException
-	 */
-	Element getElement() throws ElementNotLoadedException;
+// 	GB : pour restreindre la visibilité	
+//	/**
+//	 * Sets the name of the element profile (should be the same as the corresponding element).
+//	 * @param name
+//	 * @throws CategoryNotLoadedException 
+//	 */
+//	void setName(String name) throws CategoryNotLoadedException;
+//
+//	/**
+//	 * @return the element associated to this profile
+//	 * @throws ElementNotLoadedException 
+//	 */
+//	Element getElement() throws ElementNotLoadedException;
 	
-
 }
