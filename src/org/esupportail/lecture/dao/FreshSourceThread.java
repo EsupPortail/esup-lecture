@@ -130,7 +130,6 @@ public class FreshSourceThread extends Thread {
 			ret.setXmlns(rootNamespace);
 			ret.setXmlStream(xml);
 			ret.setXmlType(xmltype);
-			ret.setUrl(sourceURL);
 		} catch (DocumentException e) {
 			String msg = "getSource with url=" 
 				+ sourceProfile.getSourceURL() + ". Is it a valid XML Source ?";

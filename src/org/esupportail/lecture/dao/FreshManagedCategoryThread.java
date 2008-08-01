@@ -170,7 +170,6 @@ public class FreshManagedCategoryThread extends Thread {
 								srcProfile.selectSingleNode(
 										"visibility/autoSubscribed")));
 				sp.setVisibility(visibilitySets);
-				sp.setTtl(profile.getTtl());
 				sourceProfiles.put(sp.getId(), sp);				
 			}
 			ret.setSourceProfilesHash(sourceProfiles);

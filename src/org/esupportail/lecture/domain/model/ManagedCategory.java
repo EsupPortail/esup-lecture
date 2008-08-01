@@ -100,6 +100,20 @@ public class ManagedCategory extends Category {
 	}
 
 	/**
+	 * @return timeOut
+	 */
+	protected int getTimeOut() {
+		return getProfile().getTimeOut();
+	}
+
+	/**
+	 * @return ttl
+	 */
+	protected int getTtl() {
+		return getProfile().getTtl();
+	}
+	
+	/**
 	 * Return visibility of the category, taking care of inheritance regulars.
 	 * @return visibility
 	 * @throws CategoryNotLoadedException 

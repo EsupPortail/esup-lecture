@@ -56,27 +56,15 @@ public abstract class Source implements Element, Serializable {
 	 * log instance.
 	 */
 	protected static final Log LOG = LogFactory.getLog(Source.class); 
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * xmlStream (XML content) of the source.
-	 */
-	private String xmlStream = "";
-	
-	/**
-	 * URL of the source (also used by xslt mapping to find ItemXpath and Xslt File).
-	 */
-	private String url = "";
-
-	/**
 	 * profile Id of the source.
 	 */
-	private String profileId;
-	
+	private String profileId;	
 	/**
 	 * sourceProfile associated to this source.
 	 */
@@ -86,17 +74,14 @@ public abstract class Source implements Element, Serializable {
 	 * Opitionnal : DTD of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement).
 	 */
 	private String dtd;
-
 	/**
 	 * Optionnal : xmlType of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement).
 	 */
 	private String xmlType;
-	
 	/**
 	 * Optionnal : xmlns of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement).
 	 */
 	private String xmlns;
-	
 	/**
 	 * Optionnal : rootElement of the xmlStream.
 	 * (one of these parameter is required : xmlns, xmlType, dtd,rootElement)
@@ -104,9 +89,10 @@ public abstract class Source implements Element, Serializable {
 	private String rootElement;
 	
 	/**
-	 * Inner features declared in source file (take mappingFile as default if undefined
+	 * xmlStream (XML content) of the source.
 	 */
-	private InnerFeatures inner;
+	private String xmlStream = "";
+
 	/**
 	 * flag used to know if computeXslt() used one time or not.
 	 */
@@ -115,12 +101,10 @@ public abstract class Source implements Element, Serializable {
 	 * URL of the xslt file to display xml content.
 	 */
 	private String xsltURL;
-	
 	/**
 	 * Xpath to access item in the XML source file correspoding to this source profile.
 	 */
 	private String itemXPath;
-
 	// TODO (RB <-- GB) Not used ???
 	/**
 	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI).
@@ -134,7 +118,7 @@ public abstract class Source implements Element, Serializable {
 	/**
 	 * flag used to know if items are computed.  
 	 */
-	private boolean itemComputed = false;
+	private boolean itemComputed;
 	
 	/*
 	 *************************** INIT ******************************** */	
@@ -143,18 +127,26 @@ public abstract class Source implements Element, Serializable {
 	 * Constructor.
 	 * @param sp sourceProfile associated to this source
 	 */
-	@SuppressWarnings("synthetic-access")
-	public Source(final SourceProfile sp) {
+	protected Source(final SourceProfile sp) {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("Source(" + sp.getId() + ")");
     	}
 		profile = sp;
 		profileId = sp.getId();
-		inner = new InnerFeatures();
+		itemComputed = false;
 	}
 
 	/*
 	 *************************** METHODS ******************************** */	
+	
+	/**
+	 * Returns the source URL (defined in the source profile).
+	 * @return sourceURL
+	 */
+	private String getSourceURL() {
+		return getProfile().getSourceURL();
+	}
+	
 	/**
 	 * @return Returns the itemXPath.
 	 * @throws MappingNotFoundException 
@@ -165,14 +157,6 @@ public abstract class Source implements Element, Serializable {
     	}
 		computeXslt();
 		return itemXPath;
-	}
-
-	/**
-	 * @param itemXPath
-	 */
-	public void setItemXPath(String itemXPath) {
-		inner.itemXPath = itemXPath;
-		xsltComputed = false;
 	}
 
 	/**
@@ -188,29 +172,12 @@ public abstract class Source implements Element, Serializable {
 	}
 	
 	/**
-	 * @param xsltURL
-	 */
-	public void setXsltURL(String xsltURL) {
-		inner.xsltURL = xsltURL;
-		xsltComputed = false;
-	}
-	
-	/**
 	 * @return the hashMap containing xPathNameSpaces
 	 * @throws MappingNotFoundException
 	 */
 	private HashMap<String, String> getXPathNameSpaces() throws MappingNotFoundException {
 		computeXslt();
 		return xPathNameSpaces;
-	}
-	
-	/**
-	 * @param xPathNameSpaces
-	 */
-	public void setXPathNameSpaces(HashMap<String, String> xPathNameSpaces) {
-		inner.xPathNameSpaces = xPathNameSpaces;
-		xsltComputed = false;
-		
 	}
 
 	/**
@@ -234,10 +201,15 @@ public abstract class Source implements Element, Serializable {
 		}
 		
 		if (!xsltComputed) {
+			SourceProfile p = getProfile();
+			xsltURL = p.getXsltURL();
+			itemXPath = p.getItemXPath();
+			xPathNameSpaces = p.getXPathNameSpaces();
 		
-			if (inner.xsltURL == null || inner.itemXPath == null || inner.xPathNameSpaces.size() == 0) {
+			if (xsltURL == null || itemXPath == null || xPathNameSpaces.size() == 0) {
 				Mapping m = new Mapping();
-				if (url != null) {
+				String url = getSourceURL();
+				if ( url != null) {
 					//Try to find a mapping from url
 					m = channel.getMappingBySourceURL(url);
 				} else {
@@ -272,21 +244,15 @@ public abstract class Source implements Element, Serializable {
 					LOG.error(errorMsg);
 					throw new MappingNotFoundException("Mapping not found for source " + profileId);
 				}
-				if (inner.xsltURL == null) {
+				if (xsltURL == null || xsltURL == "") {
 					xsltURL = m.getXsltUrl();
-				} else {
-					xsltURL = inner.xsltURL;
-				}
-				if (inner.itemXPath == null) {
+				} 
+				if (itemXPath == null || itemXPath == "") {
 					itemXPath = m.getItemXPath();
-				} else {
-					itemXPath = inner.itemXPath;
-				}
-				if (inner.xPathNameSpaces.size() == 0) {
+				} 
+				if (xPathNameSpaces.size() == 0) {
 					xPathNameSpaces = m.getXPathNameSpaces();
-				} else {
-					xPathNameSpaces = inner.xPathNameSpaces;
-				}
+				} 
 			}
 			xsltComputed = true;
 		}
@@ -311,7 +277,8 @@ public abstract class Source implements Element, Serializable {
 	   			//	get encoding
 	   			String encoding = document.getXMLEncoding();
 	   			//lauch Xpath find
-				XPath xpath = document.createXPath(getItemXPath());
+	   			String x = getItemXPath();
+				XPath xpath = document.createXPath(x);
 				xpath.setNamespaceURIs(getXPathNameSpaces());
 				List<Node> list = xpath.selectNodes(document);
 				//List<Node> list = document.selectNodes(getItemXPath());
@@ -444,45 +411,19 @@ public abstract class Source implements Element, Serializable {
 	}
 	
 	/* 
-	 *************************** INNER CLASS ******************************** */	
-	
-	/**
-	 * Inner Features (xsltURL, itemXPath, xPathNameSpace) declared in xml file. 
-	 * @author gbouteil
-	 */
-	private class InnerFeatures {
-		 
-		/**
-		 * URL of the xslt file to display xml content.
-		 */
-		public String xsltURL;
-		
-		/**
-		 * Xpath to access item in the XML source file correspoding to this source profile.
-		 */
-		public String itemXPath;
-		
-		/**
-		 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI).
-		 */
-		public HashMap<String, String> xPathNameSpaces = new HashMap<String, String>();
-			
-	}
-	
-	/* 
 	 ************************* ACCESSORS ******************************** */	
 
 	/**
 	 * @return the ID of the sourceProfile associated to this source
 	 */
-	public String getProfileId() {
+	protected String getProfileId() {
 		return profileId;
 	}
 	
 	/**
 	 * @return the sourceProfile associated to this source
 	 */
-	public SourceProfile getProfile() {
+	protected SourceProfile getProfile() {
 		return profile;
 	}
 
@@ -567,13 +508,4 @@ public abstract class Source implements Element, Serializable {
 		this.xmlStream = xmlStream;
 	}
 
-
-	/**
-	 * set the Source URL.
-	 * @param url
-	 */
-	public void setUrl(final String url) {
-		this.url = url;
-	}
-	
 }

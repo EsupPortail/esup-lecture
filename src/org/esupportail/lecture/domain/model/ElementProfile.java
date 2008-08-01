@@ -23,11 +23,11 @@ public interface ElementProfile {
 	 * @return String id
 	 */
 	String getId();
-	/**
-	 * Sets the id of the element profile (same id as the corresponding element).
-	 * @param id
-	 */
-	 void setId(String id);
+//	/**
+//	 * Sets the id of the element profile (same id as the corresponding element).
+//	 * @param id
+//	 */
+//	 void setId(String id);
 	/**
 	 * Returns the name of the element profile (the same as the referrencing element).
 	 * @return String name

@@ -54,12 +54,15 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * Access mode on the remote managed category.
 	 */
 	private Accessibility access;
-	
 	/**
-	 * External Service.
+	 * Ttl of remote reloading.
 	 */
-	private ExternalService ex;
-
+	private int ttl;
+	/**
+	 * TimeOut of remote reloading.
+	 */
+	private int timeOut;
+	
 	/* FEATURES */
 	
 	/**
@@ -101,7 +104,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		}
 		inner = new InnerFeatures();
 		featuresComputed = false;
-		ex = DomainTools.getExternalService();
 	}
 	
 	/*
@@ -332,8 +334,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			LOG.debug("id = " + this.getId() + " - updateCustomContext("
 					+ customContext.getElementId() + "externalService)");
 		}
-		loadCategory();
-		return setUpCustomContextVisibility(customContext, ex);
+		loadCategory(); // TODO (GB) a retirer certainement
+		return setUpCustomContextVisibility(customContext, DomainTools.getExternalService());
 		
 	}
 
@@ -362,7 +364,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			String errorMsg = "The managedCategory " + this.getId()
 			+ " is impossible to load.";
 			try {
-				ptCas = ex.getUserProxyTicketCAS(url);
+				ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);
 			} catch (InfoDomainException e1) {
 				LOG.error(errorMsg);
 				throw new CategoryNotLoadedException(errorMsg, e1);
@@ -453,7 +455,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 					+ ",externalService)");
 		}
 		ManagedCategory cat = getElement();
-		cat.updateCustom(customManagedCategory, ex);
+		cat.updateCustom(customManagedCategory, DomainTools.getExternalService());
 	}
 	
 	/**
@@ -476,7 +478,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 					+ this.getId() + ",externalService)");
 		}
 		ManagedCategory cat = getElement();
-		return cat.getVisibleSourcesAndUpdateCustom(customManagedCategory, ex);
+		return cat.getVisibleSourcesAndUpdateCustom(customManagedCategory, DomainTools.getExternalService());
 	}
 	
 	
@@ -545,4 +547,30 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	protected void setFeaturesComputed(final boolean featuresComputed) {
 			this.featuresComputed = featuresComputed;
 		}
+	/**
+	 * @return ttl
+	 */
+	public int getTtl() {
+		return ttl;
+	}
+	
+	/**
+	 * @param ttl 
+	 */
+	public void setTtl(final int ttl) {
+		this.ttl = ttl;
+	}
+	/**
+	 * @return timeOut
+	 */
+	public int getTimeOut() {
+		return timeOut;
+	}
+	/**
+	 * @param timeOut
+	 */
+	public void setTimeOut(final int timeOut) {
+		this.timeOut = timeOut;
+	}
+	
 }

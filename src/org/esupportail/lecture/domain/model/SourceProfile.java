@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -34,24 +35,29 @@ public abstract class SourceProfile implements ElementProfile {
 	 * Log instance. 
 	 */
 	protected static final Log LOG = LogFactory.getLog(SourceProfile.class);
-
+	/**
+	 * Default TTL.
+	 */
+	private static final int DEFAULTTTL = 3600;
+	/**
+	 * Default Time Out.
+	 */
+	private static final int DEFAULTTIMEOUT = 3000;
+	
 	/**
 	 * Id of the source profile. 
 	 * A source profile id is like :
 	 * <type>:<parentId>:<interneId>
 	 */
 	private String id;
-
 	/**
 	 * Name of the source. 
 	 */
 	private String name = "";
-
 	/**
 	 * URL of the source. 
 	 */
 	private String sourceURL = "";
-
 	/**
 	 * Source associated to this profile.
 	 */
@@ -61,21 +67,38 @@ public abstract class SourceProfile implements ElementProfile {
 	 * URL of the xslt file. 
 	 */
 	private String xsltURL;
-
 	/**
 	 * Xpath of an item. 
 	 */
 	private String itemXPath;
-	
+	// TODO (RB <-- GB) Not used ???
 	/**
-	 * Ttl of the remote source reloading.
+	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI).
+	 */
+	private HashMap<String, String> xPathNameSpaces = new HashMap<String, String>();
+
+	/**
+	 * Ttl of remote reloading.
 	 */
 	private int ttl;
-	
+	/**
+	 * Time Out of remote reloading.
+	 */
+	private int timeOut;
+
 	/*
 	 *************************** INIT	 ******************************** */	
 		
-
+	/**
+	 * Constructor.
+	 */
+	public SourceProfile() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("SourceProfile()");
+		}
+		ttl = DEFAULTTTL;
+		timeOut = DEFAULTTIMEOUT;
+	}
 
 	/*
 	 *************************** METHODS ******************************** */	
@@ -134,7 +157,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @return source
 	 * @throws SourceNotLoadedException 
 	 */
-	public Source getElement() throws SourceNotLoadedException {
+	protected Source getElement() throws SourceNotLoadedException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.id + " - getElement()");
     	}
@@ -150,6 +173,15 @@ public abstract class SourceProfile implements ElementProfile {
 	/*
 	 *************************** ACCESSORS ******************************** */	
 
+
+	/**
+	 * Sets source on the profile.
+	 * @param source
+	 */
+	protected void setElement(final Source source) {
+		this.source = source;
+	}
+	
 	/**
 	 * Returns the source profile Id.
 	 * @return id
@@ -162,7 +194,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 * Sets the source profile Id.
 	 * @param id
 	 */
-	public void setId(final String id) {
+	protected void setId(final String id) {
 		this.id = id;
 	}
 
@@ -199,24 +231,26 @@ public abstract class SourceProfile implements ElementProfile {
 		this.sourceURL = sourceURL;
 	}
 
-
 	/**
-	 * Sets source on the profile.
-	 * @param source
+	 * @return xsltURL
 	 */
-	public void setElement(final Source source) {
-		this.source = source;
+	protected String getXsltURL() {
+		return xsltURL;
 	}
-
-
+	
 	/**
 	 * @param string
 	 */
 	public void setXsltURL(final String string) {
 		xsltURL = string;
-		
 	}
 
+	/**
+	 * @return itemXPath
+	 */
+	protected String getItemXPath() {
+		return itemXPath;
+	}
 
 	/**
 	 * @param string
@@ -225,23 +259,20 @@ public abstract class SourceProfile implements ElementProfile {
 		itemXPath = string;
 	}
 
-
 	/**
-	 * @return itemXPath
+	 * @return xPathNameSpaces
 	 */
-	public String getItemXPath() {
-		return itemXPath;
+	protected HashMap<String, String> getXPathNameSpaces() {
+		return xPathNameSpaces;
 	}
 
 
 	/**
-	 * @return xsltURL
+	 * @param pathNameSpaces
 	 */
-	@SuppressWarnings("unused")
-	private String getXsltURL() {
-		return xsltURL;
+	public void setXPathNameSpaces(HashMap<String, String> pathNameSpaces) {
+		xPathNameSpaces = pathNameSpaces;
 	}
-
 
 	/**
 	 * @return ttl
@@ -250,24 +281,19 @@ public abstract class SourceProfile implements ElementProfile {
 		return ttl;
 	}
 
-
 	/**
-	 * @param ttl
+	 * @return timeOut
+	 * @throws CategoryNotLoadedException 
 	 */
-	public void setTtl(final int ttl) {
-		this.ttl = ttl;
+	public int getTimeOut() throws CategoryNotLoadedException {
+		return timeOut;
 	}
 
 	/**
-	 * @return timeOut
-	 * @exception CategoryNotLoadedException
+	 * @param timeOut 
 	 */
-	public abstract int getTimeOut() throws CategoryNotLoadedException;
-
-
-	/**
-	 * @param timeOut
-	 */
-	public abstract void setTimeOut(int timeOut);
+	public void setTimeOut(final int timeOut) {
+		this.timeOut = timeOut;
+	}
 
 }

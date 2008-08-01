@@ -63,11 +63,11 @@ interface ManagedElementProfile extends ElementProfile {
 	 */
 	int getTtl() throws ElementNotLoadedException;
 	
-	/**
-	 * Sets ttl of the Element.
-	 * @param ttl
-	 */		
-	void setTtl(int ttl);
+//	/**
+//	 * Sets ttl of the Element.
+//	 * @param ttl
+//	 */		
+//	void setTtl(int ttl);
 	
 	/**
 	 * Sets allowed visibility group of the Element

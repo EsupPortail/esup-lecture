@@ -94,19 +94,7 @@ public abstract class Category implements Element, Serializable {
 		return sp;
 	}
 
-	/**
-	 * @return timeOut
-	 */
-	protected int getTimeOut() {
-		return getProfile().getTimeOut();
-	}
 
-	/**
-	 * @return ttl
-	 */
-	protected int getTtl() {
-		return getProfile().getTtl();
-	}
 	
 	/*
 	 *************************** ACCESSORS *********************************/	
