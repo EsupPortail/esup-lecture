@@ -32,6 +32,14 @@ public abstract class CategoryProfile implements ElementProfile {
 	 */
 	protected static final Log LOG = LogFactory.getLog(CategoryProfile.class); 
 	/**
+	 * Default TTL.
+	 */
+	private static final int DEFAULTTTL = 3600;
+	/**
+	 * Default TTL.
+	 */
+	private static final int DEFAULTTIMEOUT = 3000;
+	/**
 	 * Category described by this CategoryProfile.
 	 */
 	private Category category;
@@ -46,12 +54,32 @@ public abstract class CategoryProfile implements ElementProfile {
 	/**
 	 *  Category profile description.
 	 */
-	private String description = "";
+	private String description = "";	
+	/**
+	 * Ttl of remote reloading.
+	 */
+	private int ttl;
+	/**
+	 * TimeOut of remote reloading.
+	 */
+	private int timeOut;
 	
-	
-	
+
+
+
 	/*
 	 ************************** METHODS *********************************/	
+	/**
+	 * Constructor. 
+	 */
+	protected CategoryProfile() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("CategoryProfile()");
+		}
+		ttl = DEFAULTTTL;
+		timeOut = DEFAULTTIMEOUT;
+	}
+	
 	
 	/**
 	 * @return Returns the category referenced by this CategoryProfile
@@ -141,7 +169,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	
 	/**
 	 * Sets the description to this category profile.
-	 * @param name
+	 * @param desc
 	 */
 	protected void setDescription(final String desc) {
 		this.description = desc;
@@ -183,8 +211,37 @@ public abstract class CategoryProfile implements ElementProfile {
 	/**
 	 * @param category
 	 */
-	protected void setCategory(Category category) {
+	protected void setCategory(final Category category) {
 		this.category = category;
 	}
 
+	/**
+	 * @return ttl
+	 */
+	public int getTtl() {
+		return ttl;
+	}
+	
+	/**
+	 * @param ttl 
+	 */
+	public void setTtl(final int ttl) {
+		this.ttl = ttl;
+	}
+	
+	
+	/**
+	 * @return timeOut
+	 */
+	public int getTimeOut() {
+		return timeOut;
+	}
+
+
+	/**
+	 * @param timeOut
+	 */
+	public void setTimeOut(int timeOut) {
+		this.timeOut = timeOut;
+	}
 }

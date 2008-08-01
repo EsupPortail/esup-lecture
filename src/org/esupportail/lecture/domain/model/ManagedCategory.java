@@ -38,25 +38,11 @@ public class ManagedCategory extends Category {
 	/**
 	 * Inner features declared in XML file.
 	 */
-	private InnerFeatures inner;
+	protected InnerFeatures inner;
 	/**
 	 * Inheritance rules are applied on feature (take care of inner features).
 	 */
 	private boolean featuresComputed = false;
-// used later	
-//	/**
-//	 * Editability mode on the category 
-//	 */	
-//	private Editability edit;
-	/**
-	 * Visibility rights for groups on the managed element
-	 * Its values depends on trustCategory parameter. 
-	 */
-	private VisibilitySets visibility;
-	/**
-	 * timeOut to get the Source.
-	 */	
-	private int timeOut;
 	/**
 	 * Name of the category. 
 	 */
@@ -216,112 +202,52 @@ public class ManagedCategory extends Category {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getProfileId() + " - getVisibility()");
 		}
-		computeFeatures();
-		return visibility;
+		return getProfile().getVisibility();
 	}
 	
 	/**
 	 * @param visibility 
-	 * @see ManagedCategory#visibility
 	 */
 	public void setVisibility(final VisibilitySets visibility) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getProfileId() + " - setVisibility(visibility)");
 		}
 		inner.visibility = visibility;
-		featuresComputed = false;
+		getProfile().setFeaturesComputed(false);
 	}
 	
-	/**
-	 * Return timeOut of the category, taking care of inheritance regulars.
-	 * @return timeOut
+	/**	
+	 * Return editability of the category, taking care of inheritance regulars.
+	 * @return edit
+	 * @throws CategoryNotLoadedException 
 	 */
-	@Override
-	public int getTimeOut() {
+	public Editability getEdit() throws CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getProfileId() + " - getTimeOut()");
+			LOG.debug("id = " + this.getProfileId() + " - getEdit()");
 		}
-		computeFeatures();
-		return timeOut;
-	}
-
-	/**
-	 * @see org.esupportail.lecture.domain.model.Category#setTimeOut(int)
-	 */
-	@Override
-	public void setTimeOut(final int timeOut) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getProfileId() + " - setTimeOut(" + timeOut + ")");
+		Editability e;
+		try {
+			e = getProfile().getEdit();
+			
+		} catch (CategoryNotLoadedException ex) {
+			LOG.error("Impossible situation : CategoryNotLoadedException in a ManagedCategory, please contact developer");
+			e = null;
 		}
-		inner.timeOut = timeOut;
-		featuresComputed = false;
-	}
-
-//	Used later
-//	/**	
-//	 * Return editability of the category, taking care of inheritance regulars.
-//	 * @return edit
-//	 */
-//	public Editability getEdit() {
-//		if (LOG.isDebugEnabled()) {
-//			LOG.debug("id = " + this.getProfileId() + " - getEdit()");
-//		}
-//		computeFeatures();
-//		return edit;
-//	}
-//	
-//	/**
-//	 * @param edit	
-//	 * @see ManagedCategory#edit 
-//	 */
-//	public void setEdit(final Editability edit) {
-//		if (LOG.isDebugEnabled()) {
-//			LOG.debug("id=" + this.getProfileId() + " - setEditability()");
-//		}
-//		inner.edit = edit;
-//		featuresComputed = false;
-//	}
-
-
-	/**
-	 * Computes rights on parameters shared between parent ManagedCategory and managedCategoryProfile.
-	 * (timeOut, visibility,access)
-	 */
-	private void computeFeatures() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getProfileId() + " - computeFeatures()");
-		}
-		ManagedCategoryProfile profile = getProfile();
+		return e;
 		
-		if (!featuresComputed) {
-			if (profile.getTrustCategory()) {		
-//				edit = inner.edit;
-				visibility = inner.visibility;
-				timeOut = inner.timeOut;
-					
-//				if (edit == null) {
-//					edit = profile.getEdit();
-//				}
-				if (visibility == null) {
-					visibility = profile.getVisibility();
-				} else if (visibility.isEmpty()) {
-					visibility = profile.getVisibility();
-				}
-				if (timeOut == 0) {
-					timeOut = profile.getTimeOut();
-				}
-			} else {
-				// No trust => features of categoryProfile 
-//				edit = profile.getEdit();
-				visibility = profile.getVisibility();
-				timeOut = profile.getTimeOut();
-			}
-			featuresComputed = true;
-		}
 	}
 	
-	
-
+	/**
+	 * @param edit	
+	 * @see ManagedCategory#edit 
+	 */
+	public void setEdit(final Editability edit) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getProfileId() + " - setEditability()");
+		}
+		inner.edit = edit;
+		getProfile().setFeaturesComputed(false);
+	}
 	
 	/* 
 	 *************************** INNER CLASS ******************************** */	
@@ -331,23 +257,17 @@ public class ManagedCategory extends Category {
 	 * These values are used according to inheritance regulars
 	 * @author gbouteil
 	 */
-	private class InnerFeatures {
+	protected class InnerFeatures {
 		 
-// used later	
-//		/** 
-//		 * Managed category edit mode 
-//		*/
-//		public Editability edit;
+		/** 
+		 * Managed category edit mode 
+		*/
+		public Editability edit;
 		/**
 		 * Visibility rights for groups on the remote source.
 		 */
 		public VisibilitySets visibility;
-		/**
-		 * timeOut to get the remote source.
-		 */
-		public int timeOut;
-		
-				
+	
 	}
 	
 	

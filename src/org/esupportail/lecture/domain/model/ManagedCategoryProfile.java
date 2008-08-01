@@ -47,11 +47,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	private String categoryURL;
 	/**
-	 * Ttl of the remote managed category reloading.
-	 */
-	private int ttl;
-	
-	/**
 	 * Access mode on the remote managed category.
 	 */
 	private Accessibility access;
@@ -62,14 +57,21 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * parameters interested : edit, visibility
 	 */
 	private boolean trustCategory;
-	
-// used later	
-//	/**
-//	 * Editability mode on the category 
-//	 */	
-//	private Editability edit;
+
 	/**
-	 * Visibility rights for groups on the managed element
+	 * Inner features declared in XML file.
+	 */
+	private InnerFeatures inner;
+	/**
+	 * Inheritance rules are applied on feature (take care of inner features).
+	 */
+	private boolean featuresComputed = false;
+	/**
+	 * Editability mode on the category. 
+	 */	
+	private Editability edit;
+	/**
+	 * Visibility rights for groups on the managed category
 	 * Its values depends on trustCategory parameter. 
 	 */
 	private VisibilitySets visibility;
@@ -93,6 +95,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("ManagedCategoryProfile()");
 		}
+		inner = new InnerFeatures();
 	}
 	
 	/*
@@ -113,7 +116,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			LOG.error(errorMsg);
 			throw new CategoryNotLoadedException(errorMsg);
 		}
-		return  category;
+		return category;
 	}
 	
 	/**
@@ -301,7 +304,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			LOG.debug("id = " + this.getId() + " - updateCustom(" + customManagedCategory.getElementId()
 					+ ",externalService)");
 		}
-		ManagedCategory category = getElement();
+		ManagedCategory cat = getElement();
 		category.updateCustom(customManagedCategory, ex);
 	}
 	
@@ -379,7 +382,104 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		return parents;
 	}
 
+	/**
+	 * Return visibility of the category, taking care of inheritance regulars.
+	 * @return visibility
+	 * @throws CategoryNotLoadedException 
+	 */
+	public VisibilitySets getVisibility() throws CategoryNotLoadedException {
+		computeFeatures();
+		return visibility;
+	}
 
+	/**
+	 * @param visibility 
+	 */
+	public void setVisibility(final VisibilitySets visibility) {
+		inner.visibility = visibility;
+		featuresComputed = false;
+	}
+	
+	/**
+	 * Return editability mode of the category, taking care of inheritance regulars.
+	 * @return edit
+	 * @throws CategoryNotLoadedException 
+	 */
+	public Editability getEdit() throws CategoryNotLoadedException {
+		computeFeatures();
+		return edit;
+	}
+
+	/**
+	 * @param edit 
+	 */
+	public void setEdit(final Editability edit) {
+		inner.edit = edit;
+		featuresComputed = false;
+	}
+	
+	/**
+	 * Computes rights on parameters shared between parent ManagedCategory and managedCategoryProfile.
+	 * (timeOut, visibility,access)
+	 * @throws CategoryNotLoadedException 
+	 */
+	private void computeFeatures() throws CategoryNotLoadedException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - computeFeatures()");
+		}
+		
+		if (!featuresComputed) {
+
+			if (trustCategory) {
+				ManagedCategory cat = getElement();
+				
+				visibility = cat.inner.visibility;
+				edit = cat.inner.edit;
+//				visibility = inner.visibility;
+//				timeOut = inner.timeOut;
+					
+//				Inutile : edit est obligatoire dans le fichier XML de category				
+//				if (edit == null) {
+//					edit = inner.edit;
+//				}
+				if (visibility == null) {
+					visibility = inner.visibility;
+				} else if (visibility.isEmpty()) {
+					visibility = inner.visibility;
+				}
+//				if (timeOut == 0) {
+//					timeOut = profile.getTimeOut();
+//				}
+			} else {
+				// No trust => features of categoryProfile 
+				edit = inner.edit;
+				visibility = inner.visibility;
+//				timeOut = profile.getTimeOut();
+			}
+			featuresComputed = true;
+		}
+	}
+	
+	
+	/* 
+	 *************************** INNER CLASS ******************************** */	
+	
+	/**
+	 * Inner Features (editability,) declared in xml file. 
+	 * These values are used according to inheritance regulars
+	 * @author gbouteil
+	 */
+	private class InnerFeatures {
+		 
+ 		/** 
+		 * Managed category edit mode 
+		*/
+		public Editability edit;
+		/**
+		 * Visibility rights for groups on the remote source.
+		 */
+		public VisibilitySets visibility;
+	}
 
 	
 	/*
@@ -434,46 +534,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		this.access = access;
 	}
 	
-	// utile plus tard
-//	protected Editability getEdit() {
-//		return features.getEdit();
-//	}
-//	protected void setEdit(Editability edit) {
-//		this.edit = edit;
-//	features.setComputed(false);
-//	}
-	
-	/**
-	 * @return visibility
-	 */
-	public VisibilitySets getVisibility() {
-		return visibility;
-	}
-
-	/**
-	 * @param visibility 
-	 */
-	public void setVisibility(final VisibilitySets visibility) {
-		this.visibility = visibility;
-	}
-
-
-	/**
-	 * @return ttl
-	 * @see ManagedCategoryProfile#ttl
-	 */
-	public int getTtl() {
-		return ttl;
-	}
-	
-	/**
-	 * @param ttl 
-	 * @see ManagedCategoryProfile#ttl
-	 */
-	public void setTtl(final int ttl) {
-		this.ttl = ttl;
-	}
-
 	/**
 	 * @return timeOut
 	 * @see ManagedCategoryProfile#timeOut
@@ -496,4 +556,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		return contextsSet;
 	}
 
+	/**
+	 * @param featuresComputed
+	 */
+	protected void setFeaturesComputed(boolean featuresComputed) {
+			this.featuresComputed = featuresComputed;
+		}
 }

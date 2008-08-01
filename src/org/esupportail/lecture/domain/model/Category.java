@@ -5,14 +5,14 @@
 */
 package org.esupportail.lecture.domain.model;
 
+
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
-import java.io.Serializable;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
@@ -96,16 +96,17 @@ public abstract class Category implements Element, Serializable {
 
 	/**
 	 * @return timeOut
-	 * @exception CategoryNotLoadedException
 	 */
-	public abstract int getTimeOut() throws CategoryNotLoadedException;
-
+	public int getTimeOut() {
+		return getProfile().getTimeOut();
+	}
 
 	/**
-	 * @param timeOut
+	 * @return ttl
 	 */
-	public abstract void setTimeOut(int timeOut);
-
+	public int getTtl() {
+		return getProfile().getTtl();
+	}
 	
 	/*
 	 *************************** ACCESSORS *********************************/	
