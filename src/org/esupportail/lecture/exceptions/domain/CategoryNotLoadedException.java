@@ -18,5 +18,12 @@ public class CategoryNotLoadedException extends ElementNotLoadedException {
 		super(string);
 	}
 
+	/**
+	 * @param string
+	 */
+	public CategoryNotLoadedException(String string, Exception cause) {
+		super(string,cause);
+	}
+
 
 }

@@ -111,12 +111,12 @@ public class CustomManagedCategory extends CustomCategory {
 		
 		ManagedCategoryProfile profile = getProfile();
 		try {
-			profile.updateCustom(this, ex);
+			profile.updateCustom(this);
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectué
 			try {
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), ex);
-				profile.updateCustom(this, ex);
+				profile.updateCustom(this);
 			} catch (CategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
@@ -161,14 +161,14 @@ public class CustomManagedCategory extends CustomCategory {
 		ManagedCategoryProfile profile = getProfile();
 		List<CoupleProfileVisibility> couplesVisib;
 		try {
-			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this, ex);
+			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this);
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), ex);
-				couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this, ex);
+				couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this);
 			} catch (CategoryNotLoadedException e2) {
 				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
 					+ "is not refered by any customContext in userProfile " 

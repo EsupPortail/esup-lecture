@@ -124,7 +124,7 @@ public class Context {
 		// update for managedCategories defined in this context
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet) {
 			try {
-				mcp.updateCustomContext(customContext, ex);
+				mcp.updateCustomContext(customContext);
 			} catch (CategoryNotLoadedException e) {
 				LOG.error("Impossible to update CustomContext associated to context " + getId()
 						+ " for managedCategoryProfile " + mcp.getId()
@@ -183,7 +183,7 @@ public class Context {
 			ManagedCategoryProfile mcp = iterator.next();
 			CoupleProfileVisibility couple;
 			try {				
-				VisibilityMode mode = mcp.updateCustomContext(customContext, ex);
+				VisibilityMode mode = mcp.updateCustomContext(customContext);
 				if (mode != VisibilityMode.NOVISIBLE) {
 					couple = new CoupleProfileVisibility(mcp, mode);
 					couplesVisib.add(couple);

@@ -30,18 +30,22 @@ import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
  * @see ManagedElementProfile
  */
 public class ManagedCategoryProfile extends CategoryProfile implements ManagedElementProfile {
-
-	/*
-	 ************************** PROPERTIES ******************************** */	
 	/**
 	 * Log instance.
 	 */
 	protected static final Log LOG = LogFactory.getLog(ManagedCategoryProfile.class); 
-	/**
-	 * Contexts where these profiles category are referenced.
-	 */
-	private Set<Context> contextsSet = new HashSet<Context>();
 	
+	/*
+	 ************************** PROPERTIES ******************************** */	
+	
+	/**
+	 * Contexts where these category profiles are referenced.
+	 */
+	private Set<Context> contextsSet = new HashSet<Context>();	
+	/**
+	 * Referrenced category.
+	 */
+	private ManagedCategory category;
 	/**
 	 * URL of the remote managed category.
 	 */
@@ -50,39 +54,38 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * Access mode on the remote managed category.
 	 */
 	private Accessibility access;
+	
+	/**
+	 * External Service.
+	 */
+	private ExternalService ex;
+
+	/* FEATURES */
+	
 	/**
 	 * trustCategory parameter : indicates between managed category and category profile, which one to trust
+	 * (used for inheritance regulars in computeFeatures())
 	 * True : category is trusted. 
 	 * False : category is not trusted, only parameters profile are good 
-	 * parameters interested : edit, visibility
 	 */
 	private boolean trustCategory;
-
 	/**
-	 * Inner features declared in XML file.
+	 * Inner features declared in XML file (used by inheritance regulars).
 	 */
 	private InnerFeatures inner;
 	/**
-	 * Inheritance rules are applied on feature (take care of inner features).
+	 * Inheritance rules are applied on features (used by computeFeatures()).
 	 */
-	private boolean featuresComputed = false;
+	private boolean featuresComputed;
 	/**
-	 * Editability mode on the category. 
+	 * Editability mode on the category (takes care of inheritance regulars).
 	 */	
 	private Editability edit;
 	/**
-	 * Visibility rights for groups on the managed category
-	 * Its values depends on trustCategory parameter. 
+	 * Visibility rights on the managed category (takes care of inheritance regulars).
 	 */
 	private VisibilitySets visibility;
-	/**
-	 * timeOut to get the Source.
-	 */	
-	private int timeOut;
-	/**
-	 * Referrenced category.
-	 */
-	private ManagedCategory category;
+	
 	
 	/*
 	 ************************** INITIALIZATION ******************************** */	
@@ -91,11 +94,14 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Constructor. 
 	 */
-	protected ManagedCategoryProfile() {
+	@SuppressWarnings("synthetic-access")
+	public ManagedCategoryProfile() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("ManagedCategoryProfile()");
 		}
 		inner = new InnerFeatures();
+		featuresComputed = false;
+		ex = DomainTools.getExternalService();
 	}
 	
 	/*
@@ -112,9 +118,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		}
 		category = (ManagedCategory) super.getCategory(); 
 		if (category == null) {
-			String errorMsg = "Category " + getId() + " is not loaded in profile";
-			LOG.error(errorMsg);
-			throw new CategoryNotLoadedException(errorMsg);
+			loadCategory();
 		}
 		return category;
 	}
@@ -172,32 +176,172 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	
 
 	/**
+	 * Add a context to the set of context of this managed category profile.
+	 * This means that this managedCategoryProfile is declared in context c
+	 * @param c context to add
+	 */
+	protected void addContext(final Context c) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - addContext(" + c.getId() + ")");
+		}
+		contextsSet.add(c);
+	}
+	
+	/**
+	 * Returns the managedSourceProfile identified by id, accessible by this ManagedCategoryProfile.
+	 * (Defined in ManagedCategory referred by this ManagedCategoryProfile)
+	 * @param id id of the sourceProfile to get
+	 * @return the sourceProfile
+	 * @throws CategoryNotLoadedException 
+	 * @throws SourceProfileNotFoundException 
+	 */
+	@Override
+	protected ManagedSourceProfile getSourceProfileById(final String id) 
+			throws CategoryNotLoadedException, SourceProfileNotFoundException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - getSourceProfileById(" + id + ")");
+		}
+		return (ManagedSourceProfile) getElement().getSourceProfileById(id);
+
+	}
+
+	/**
+	 * Returns the list of contexts referencing this managedCategoryProfile.
+	 * @return the list of contexts
+	 */
+	protected List<Context> getAdoptiveParents() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getAdoptiveParents(" + this.getId() + ")");
+		}
+		
+		List<Context> parents = new ArrayList<Context>();
+		
+		// For all contexts refered by this managedCategoryProfile
+		for (Context context : contextsSet) {
+			parents.add(context);
+		}
+		return parents;
+	}
+
+	/**
+	 * Return visibility of the category, taking care of inheritance regulars.
+	 * @return visibility
+	 * @throws CategoryNotLoadedException 
+	 */
+	protected VisibilitySets getVisibility() throws CategoryNotLoadedException {
+		computeFeatures();
+		return visibility;
+	}
+
+	/**
+	 * @param visibility 
+	 */
+	public void setVisibility(final VisibilitySets visibility) {
+		inner.visibility = visibility;
+		featuresComputed = false;
+	}
+	
+	/**
+	 * Return editability mode of the category, taking care of inheritance regulars.
+	 * @return edit
+	 * @throws CategoryNotLoadedException 
+	 */
+	protected Editability getEdit() throws CategoryNotLoadedException {
+		computeFeatures();
+		return edit;
+	}
+
+	/**
+	 * @param edit 
+	 */
+	public void setEdit(final Editability edit) {
+		inner.edit = edit;
+		featuresComputed = false;
+	}
+	
+	/**
+	 * Computes rights on parameters shared between parent ManagedCategory and managedCategoryProfile.
+	 * taking care of inheritance rules (on param visibility,edit)
+	 * @throws CategoryNotLoadedException 
+	 */
+	private void computeFeatures() throws CategoryNotLoadedException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getId() + " - computeFeatures()");
+		}
+		
+		if (!featuresComputed) {
+
+			if (trustCategory) {
+				ManagedCategory cat = getElement();
+				
+				visibility = cat.inner.visibility;
+				edit = cat.inner.edit;
+					
+				// Inutile : edit obligatoire le XML d'une category				
+				if (edit == null) {
+					edit = inner.edit;
+				}
+				if (visibility == null) {
+					visibility = inner.visibility;
+				} else if (visibility.isEmpty()) {
+					visibility = inner.visibility;
+				}
+			} else {
+				// No trust => features of categoryProfile 
+				edit = inner.edit;
+				visibility = inner.visibility;
+			}
+			featuresComputed = true;
+		}
+	}
+	
+	
+	/* 
+	 *************************** INNER CLASS ******************************** */	
+	
+	/**
+	 * Inner Features (editability,visibility) declared in xml file. 
+	 * These values are used according to inheritance regulars
+	 * @author gbouteil
+	 */
+	private class InnerFeatures {
+		 
+ 		/** 
+		 * Managed category edit mode .
+		*/
+		protected Editability edit;
+		/**
+		 * Visibility rights for groups on the remote source.
+		 */
+		protected VisibilitySets visibility;
+	}
+
+	/* UPDATING */
+	
+	/**
 	 * Update CustomContext with this ManagedCategoryProfile. 
 	 * It evaluates visibility for user profile and subscribe it 
 	 * or not to customContext.
 	 * @param customContext the customContext to update
-	 * @param ex access to externalService to evaluate visibility
 	 * @return true if the category is visible by the userProfile
 	 * @throws InfoDomainException 
 	 */
-	protected VisibilityMode updateCustomContext(final CustomContext customContext,
-			final ExternalService ex) 
+	protected VisibilityMode updateCustomContext(final CustomContext customContext) 
 		throws InfoDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustomContext("
 					+ customContext.getElementId() + "externalService)");
 		}
-		loadCategory(ex);
+		loadCategory();
 		return setUpCustomContextVisibility(customContext, ex);
 		
 	}
 
 	/**
 	 *  Load the category referenced by this ManagedCategoryProfile.
-	 *  @param ex access to externalservice to get proxy ticket CAS
-	 * @throws InfoDomainException 
+	 *  @throws CategoryNotLoadedException 
 	 */
-	protected synchronized void loadCategory(final ExternalService ex) throws InfoDomainException {
+	private synchronized void loadCategory() throws CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - loadCategory(externalService)");
 		}
@@ -209,19 +353,25 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 				String errorMsg = "The managedCategory " + this.getId()
 					+ " is impossible to load.";
 				LOG.error(errorMsg);
-				throw new InfoDomainException(errorMsg, e);
+				throw new CategoryNotLoadedException(errorMsg, e);
 			}
 						
 		} else if (Accessibility.CAS.equals(accessibility)) {
 			String url = getUrlCategory();
-			String ptCas = ex.getUserProxyTicketCAS(url);
+			String ptCas;
+			String errorMsg = "The managedCategory " + this.getId()
+			+ " is impossible to load.";
+			try {
+				ptCas = ex.getUserProxyTicketCAS(url);
+			} catch (InfoDomainException e1) {
+				LOG.error(errorMsg);
+				throw new CategoryNotLoadedException(errorMsg, e1);
+			}
 			try {
 				setElement(DomainTools.getDaoService().getManagedCategory(this, ptCas));
-			} catch (InfoDaoException e) {
-				String errorMsg = "The managedCategory " + this.getId()
-				+ " is impossible to load.";
+			} catch (InfoDaoException e2) {
 				LOG.error(errorMsg);
-				throw new InfoDomainException(errorMsg, e);
+				throw new CategoryNotLoadedException(errorMsg, e2);
 			}
 		}
 	}
@@ -293,19 +443,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * defined in ManagedCategory of this Profile, according to managedSourceProfiles visibility
 	 * (there is not any loading of source at this time)
 	 * @param customManagedCategory customManagedCategory to update
-	 * @param ex access to external service for visibility evaluation
 	 * @throws CategoryNotLoadedException
 	 * @throws CategoryProfileNotFoundException 
 	 */
-	protected void updateCustom(final CustomManagedCategory customManagedCategory,
-			final ExternalService ex) 
+	protected void updateCustom(final CustomManagedCategory customManagedCategory) 
 		throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustom(" + customManagedCategory.getElementId()
 					+ ",externalService)");
 		}
 		ManagedCategory cat = getElement();
-		category.updateCustom(customManagedCategory, ex);
+		cat.updateCustom(customManagedCategory, ex);
 	}
 	
 	/**
@@ -315,175 +463,26 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles
 	 * defined in ManagedCategory of this Profile, according to managedSourceProfiles visibility
 	 * @param customManagedCategory custom to update
-	 * @param ex access to externalService
 	 * @return list of (ProfileVisibility)
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
-	 * @see ManagedCategoryProfile#updateCustom(CustomManagedCategory, ExternalService)
+	 * @see ManagedCategoryProfile#updateCustom(CustomManagedCategory)
 	 */
 	protected List<CoupleProfileVisibility> getVisibleSourcesAndUpdateCustom(
-			final CustomManagedCategory customManagedCategory, final ExternalService ex) 
+			final CustomManagedCategory customManagedCategory) 
 		throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - getVisibleSourcesAndUpdateCustom("
 					+ this.getId() + ",externalService)");
 		}
-		ManagedCategory category = getElement();
-		return category.getVisibleSourcesAndUpdateCustom(customManagedCategory, ex);
+		ManagedCategory cat = getElement();
+		return cat.getVisibleSourcesAndUpdateCustom(customManagedCategory, ex);
 	}
 	
 	
-	/**
-	 * Add a context to the set of context of this managed category profile.
-	 * This means that this managedCategoryProfile is declared in context c
-	 * @param c context to add
-	 */
-	protected void addContext(final Context c) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getId() + " - addContext(" + c.getId() + ")");
-		}
-		contextsSet.add(c);
-	}
-	
-	/**
-	 * Returns the managedSourceProfile identified by id, accessible by this ManagedCategoryProfile.
-	 * (Defined in ManagedCategory referred by this ManagedCategoryProfile)
-	 * @param id id of the sourceProfile to get
-	 * @return the sourceProfile
-	 * @throws CategoryNotLoadedException 
-	 * @throws SourceProfileNotFoundException 
-	 */
-	@Override
-	protected ManagedSourceProfile getSourceProfileById(final String id) 
-			throws CategoryNotLoadedException, SourceProfileNotFoundException {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getId() + " - getSourceProfileById(" + id + ")");
-		}
-//		 TODO (GB later) on pourrait faire un loadCategory ou autre chose ou ailleurs ?
-		return (ManagedSourceProfile) getElement().getSourceProfileById(id);
-
-	}
-
-	/**
-	 * Returns the list of contexts referencing this managedCategoryProfile.
-	 * @return the list of contexts
-	 */
-	public List<Context> getAdoptiveParents() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("getAdoptiveParents(" + this.getId() + ")");
-		}
-		
-		List<Context> parents = new ArrayList<Context>();
-		
-		// For all contexts refered by this managedCategoryProfile
-		for (Context context : contextsSet) {
-			parents.add(context);
-		}
-		return parents;
-	}
-
-	/**
-	 * Return visibility of the category, taking care of inheritance regulars.
-	 * @return visibility
-	 * @throws CategoryNotLoadedException 
-	 */
-	public VisibilitySets getVisibility() throws CategoryNotLoadedException {
-		computeFeatures();
-		return visibility;
-	}
-
-	/**
-	 * @param visibility 
-	 */
-	public void setVisibility(final VisibilitySets visibility) {
-		inner.visibility = visibility;
-		featuresComputed = false;
-	}
-	
-	/**
-	 * Return editability mode of the category, taking care of inheritance regulars.
-	 * @return edit
-	 * @throws CategoryNotLoadedException 
-	 */
-	public Editability getEdit() throws CategoryNotLoadedException {
-		computeFeatures();
-		return edit;
-	}
-
-	/**
-	 * @param edit 
-	 */
-	public void setEdit(final Editability edit) {
-		inner.edit = edit;
-		featuresComputed = false;
-	}
-	
-	/**
-	 * Computes rights on parameters shared between parent ManagedCategory and managedCategoryProfile.
-	 * (timeOut, visibility,access)
-	 * @throws CategoryNotLoadedException 
-	 */
-	private void computeFeatures() throws CategoryNotLoadedException {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getId() + " - computeFeatures()");
-		}
-		
-		if (!featuresComputed) {
-
-			if (trustCategory) {
-				ManagedCategory cat = getElement();
-				
-				visibility = cat.inner.visibility;
-				edit = cat.inner.edit;
-//				visibility = inner.visibility;
-//				timeOut = inner.timeOut;
-					
-//				Inutile : edit est obligatoire dans le fichier XML de category				
-//				if (edit == null) {
-//					edit = inner.edit;
-//				}
-				if (visibility == null) {
-					visibility = inner.visibility;
-				} else if (visibility.isEmpty()) {
-					visibility = inner.visibility;
-				}
-//				if (timeOut == 0) {
-//					timeOut = profile.getTimeOut();
-//				}
-			} else {
-				// No trust => features of categoryProfile 
-				edit = inner.edit;
-				visibility = inner.visibility;
-//				timeOut = profile.getTimeOut();
-			}
-			featuresComputed = true;
-		}
-	}
-	
-	
-	/* 
-	 *************************** INNER CLASS ******************************** */	
-	
-	/**
-	 * Inner Features (editability,) declared in xml file. 
-	 * These values are used according to inheritance regulars
-	 * @author gbouteil
-	 */
-	private class InnerFeatures {
-		 
- 		/** 
-		 * Managed category edit mode 
-		*/
-		public Editability edit;
-		/**
-		 * Visibility rights for groups on the remote source.
-		 */
-		public VisibilitySets visibility;
-	}
-
 	
 	/*
-	 *************************** ACCESSORS ******************************** */	
+	 *************************** SIMPLE ACCESSORS ******************************** */	
 
 	
 	/**
@@ -515,15 +514,14 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * Sets the trust category parameter?
 	 * @param trustCategory 
 	 */
-	protected void setTrustCategory(final boolean trustCategory) {
+	public void setTrustCategory(final boolean trustCategory) {
 		this.trustCategory = trustCategory;
 	}
-
 
 	/**
 	 * @return access
 	 */
-	public Accessibility getAccess() {
+	protected Accessibility getAccess() {
 		return access;
 	}
 	
@@ -535,21 +533,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 	
 	/**
-	 * @return timeOut
-	 * @see ManagedCategoryProfile#timeOut
-	 */
-	public int getTimeOut() {
-		return timeOut;
-	}
-	
-	/**
-	 * @param timeOut
-	 * @see ManagedCategoryProfile#timeOut
-	 */
-	public void setTimeOut(final int timeOut) {
-		this.timeOut = timeOut;
-	}
-	/**
 	 * @return contextSets
 	 */
 	protected Set<Context> getContextsSet() {
@@ -559,7 +542,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * @param featuresComputed
 	 */
-	protected void setFeaturesComputed(boolean featuresComputed) {
+	protected void setFeaturesComputed(final boolean featuresComputed) {
 			this.featuresComputed = featuresComputed;
 		}
 }

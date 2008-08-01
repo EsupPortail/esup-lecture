@@ -97,14 +97,14 @@ public abstract class Category implements Element, Serializable {
 	/**
 	 * @return timeOut
 	 */
-	public int getTimeOut() {
+	protected int getTimeOut() {
 		return getProfile().getTimeOut();
 	}
 
 	/**
 	 * @return ttl
 	 */
-	public int getTtl() {
+	protected int getTtl() {
 		return getProfile().getTtl();
 	}
 	
@@ -119,7 +119,6 @@ public abstract class Category implements Element, Serializable {
 	protected Hashtable<String, SourceProfile> getSourceProfilesHash() {
 		return sourceProfilesHash;
 	}
-
 
 	/**
 	 * @param sourceProfilesHash to set.
@@ -136,7 +135,6 @@ public abstract class Category implements Element, Serializable {
 	protected String getName() {
 		return getProfile().getName();
 	}
-
 
 	/**
 	 * Sets the category name.
@@ -161,7 +159,6 @@ public abstract class Category implements Element, Serializable {
 	public void setDescription(final String description) {
 		getProfile().setDescription(description);
 	}
-
 	
 	/**
 	 * Returns the id of the categoryProfile associated to this Category.

@@ -36,7 +36,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	 */
 	private static final int DEFAULTTTL = 3600;
 	/**
-	 * Default TTL.
+	 * Default Time Out.
 	 */
 	private static final int DEFAULTTIMEOUT = 3000;
 	/**
@@ -64,15 +64,13 @@ public abstract class CategoryProfile implements ElementProfile {
 	 */
 	private int timeOut;
 	
-
-
-
 	/*
-	 ************************** METHODS *********************************/	
+	 ************************** INITIALIZATION ******************************** */	
+	
 	/**
 	 * Constructor. 
 	 */
-	protected CategoryProfile() {
+	public CategoryProfile() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("CategoryProfile()");
 		}
@@ -80,6 +78,8 @@ public abstract class CategoryProfile implements ElementProfile {
 		timeOut = DEFAULTTIMEOUT;
 	}
 	
+	/*
+	 ************************** METHODS *********************************/	
 	
 	/**
 	 * @return Returns the category referenced by this CategoryProfile
@@ -103,7 +103,6 @@ public abstract class CategoryProfile implements ElementProfile {
 		return getElement().getOrderedSourceIDs();
 	}
 	
-
 	
 	/**
 	 * Returns the sourceProfile identified by id, accessible by CategoryProfile.
@@ -142,9 +141,6 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @return name
 	 */
 	public String getName() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + id + " - getName()");
-		}		
 		return name;
 	}
 	
@@ -152,7 +148,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * Sets the name to the category profile.
 	 * @param name
 	 */
-	protected void setName(final String name) {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	
@@ -160,9 +156,6 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @return description of this CategoryProfile
 	 */
 	public String getDescription() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + id + " - getDescription()");
-		}
 		return description;
 		
 	}
@@ -229,19 +222,16 @@ public abstract class CategoryProfile implements ElementProfile {
 		this.ttl = ttl;
 	}
 	
-	
 	/**
 	 * @return timeOut
 	 */
 	public int getTimeOut() {
 		return timeOut;
 	}
-
-
 	/**
 	 * @param timeOut
 	 */
-	public void setTimeOut(int timeOut) {
+	public void setTimeOut(final int timeOut) {
 		this.timeOut = timeOut;
 	}
 }

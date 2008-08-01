@@ -40,10 +40,6 @@ public class ManagedCategory extends Category {
 	 */
 	protected InnerFeatures inner;
 	/**
-	 * Inheritance rules are applied on feature (take care of inner features).
-	 */
-	private boolean featuresComputed = false;
-	/**
 	 * Name of the category. 
 	 */
 	private String name = "";
@@ -59,7 +55,6 @@ public class ManagedCategory extends Category {
 	 * Constructor.
 	 * @param cp categoryProfile associated to this managedCategory
 	 */
-	@SuppressWarnings("synthetic-access")
 	public ManagedCategory(final ManagedCategoryProfile cp) {
 		super(cp);
 	   	if (LOG.isDebugEnabled()) {
@@ -70,7 +65,119 @@ public class ManagedCategory extends Category {
 	
 	/*
 	 *********************** METHOD **************************************/ 
-		
+
+	/**
+	 * @return managedCategoryProfile associated to this category
+	 */
+	@Override
+	public ManagedCategoryProfile getProfile() {
+		return (ManagedCategoryProfile) super.getProfile();
+	}
+	
+	/**
+	 * @param sourceId
+	 * @return true if this managedCategory contains the source identified by sourceId
+	 */
+	public boolean containsSource(final String sourceId) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("profileId=" + super.getProfileId() + " - containsSource(" + sourceId + ")");
+    	}
+	   	Hashtable<String, SourceProfile> hashSourceProfile = getSourceProfilesHash();
+	   	
+	   	boolean result = hashSourceProfile.containsKey(sourceId);
+	   	return result;
+	}
+	
+	/**
+	 * Return accessibility of the category.
+	 * @return accessibility
+	 */
+	protected Accessibility getAccess() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getProfileId() + " - getAccessy()");
+		}
+		return getProfile().getAccess();
+	}
+
+	/**
+	 * Return visibility of the category, taking care of inheritance regulars.
+	 * @return visibility
+	 * @throws CategoryNotLoadedException 
+	 */
+	protected VisibilitySets getVisibility() throws CategoryNotLoadedException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getProfileId() + " - getVisibility()");
+		}
+		return getProfile().getVisibility();
+	}
+	
+	/**
+	 * @param visibility 
+	 */
+	public void setVisibility(final VisibilitySets visibility) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getProfileId() + " - setVisibility(visibility)");
+		}
+		inner.visibility = visibility;
+		getProfile().setFeaturesComputed(false);
+	}
+	
+	/**	
+	 * Return editability of the category, taking care of inheritance regulars.
+	 * @return edit
+	 * @throws CategoryNotLoadedException 
+	 */
+	protected Editability getEdit() throws CategoryNotLoadedException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id = " + this.getProfileId() + " - getEdit()");
+		}
+		Editability e;
+		try {
+			e = getProfile().getEdit();
+			
+		} catch (CategoryNotLoadedException ex) {
+			LOG.error("Impossible situation : " 
+					+ "CategoryNotLoadedException in a ManagedCategory, please contact developer");
+			e = null;
+		}
+		return e;
+	}
+	
+	/**
+	 * @param edit	
+	 */
+	public void setEdit(final Editability edit) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getProfileId() + " - setEditability()");
+		}
+		inner.edit = edit;
+		getProfile().setFeaturesComputed(false);
+	}
+	
+	/* 
+	 *************************** INNER CLASS ******************************** */	
+	
+	/**
+	 * Inner Features (editability, visibility) declared in xml file. 
+	 * These values are used according to inheritance regulars
+	 * @author gbouteil
+	 */
+	protected class InnerFeatures {
+		 
+		/** 
+		 * Managed category edit mode.
+		*/
+		public Editability edit;
+		/**
+		 * Visibility rights for groups on the remote source.
+		 */
+		public VisibilitySets visibility;
+	
+	}
+	
+
+	/* UPDATING */
+	
 	/**
 	 * Update the CustomManagedCategory linked to this ManagedCategory.
 	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles
@@ -158,118 +265,7 @@ public class ManagedCategory extends Category {
 		}
 	}
 
-	/**
-	 * @return managedCategoryProfile associated to this category
-	 */
-	@Override
-	public ManagedCategoryProfile getProfile() {
-		return (ManagedCategoryProfile) super.getProfile();
-	}
-	
-	/**
-	 * @param sourceId
-	 * @return true if this managedCategory contains the source identified by sourceId
-	 */
-	public boolean containsSource(final String sourceId) {
-	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("profileId=" + super.getProfileId() + " - containsSource(" + sourceId + ")");
-    	}
-	   	Hashtable<String, SourceProfile> hashSourceProfile = getSourceProfilesHash();
-	   	
-	   	boolean result = hashSourceProfile.containsKey(sourceId);
-	   	return result;
-	}
-	
-	/**
-	 * Return accessibility of the category.
-	 * @return accessibility
-	 */
-	public Accessibility getAccess() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getProfileId() + " - getAccessy()");
-		}
-		return getProfile().getAccess();
-	}
 
-
-	/**
-	 * Return visibility of the category, taking care of inheritance regulars.
-	 * @return visibility
-	 * @throws CategoryNotLoadedException 
-	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
-	 */
-	public VisibilitySets getVisibility() throws CategoryNotLoadedException {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getProfileId() + " - getVisibility()");
-		}
-		return getProfile().getVisibility();
-	}
-	
-	/**
-	 * @param visibility 
-	 */
-	public void setVisibility(final VisibilitySets visibility) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getProfileId() + " - setVisibility(visibility)");
-		}
-		inner.visibility = visibility;
-		getProfile().setFeaturesComputed(false);
-	}
-	
-	/**	
-	 * Return editability of the category, taking care of inheritance regulars.
-	 * @return edit
-	 * @throws CategoryNotLoadedException 
-	 */
-	public Editability getEdit() throws CategoryNotLoadedException {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getProfileId() + " - getEdit()");
-		}
-		Editability e;
-		try {
-			e = getProfile().getEdit();
-			
-		} catch (CategoryNotLoadedException ex) {
-			LOG.error("Impossible situation : CategoryNotLoadedException in a ManagedCategory, please contact developer");
-			e = null;
-		}
-		return e;
-		
-	}
-	
-	/**
-	 * @param edit	
-	 * @see ManagedCategory#edit 
-	 */
-	public void setEdit(final Editability edit) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getProfileId() + " - setEditability()");
-		}
-		inner.edit = edit;
-		getProfile().setFeaturesComputed(false);
-	}
-	
-	/* 
-	 *************************** INNER CLASS ******************************** */	
-	
-	/**
-	 * Inner Features (editability, visibility, timeOut) declared in xml file. 
-	 * These values are used according to inheritance regulars
-	 * @author gbouteil
-	 */
-	protected class InnerFeatures {
-		 
-		/** 
-		 * Managed category edit mode 
-		*/
-		public Editability edit;
-		/**
-		 * Visibility rights for groups on the remote source.
-		 */
-		public VisibilitySets visibility;
-	
-	}
-	
 	
 	/*
 	 *********************** ACCESSORS**************************************/ 
@@ -282,7 +278,6 @@ public class ManagedCategory extends Category {
 	protected String getName() {
 		return name;
 	}
-
 
 	/**
 	 * Sets the category name.

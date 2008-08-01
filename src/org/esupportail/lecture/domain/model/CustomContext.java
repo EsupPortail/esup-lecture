@@ -211,13 +211,13 @@ public class CustomContext implements CustomElement {
 		VisibilityMode mode = null;
 		try {
 			catProfile = context.getCatProfileById(categoryId);
-			mode = catProfile.updateCustomContext(this, ex);
+			mode = catProfile.updateCustomContext(this);
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), ex);
 				catProfile = context.getCatProfileById(categoryId);
-				mode = catProfile.updateCustomContext(this, ex);
+				mode = catProfile.updateCustomContext(this);
 			} catch (CategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
@@ -284,13 +284,13 @@ public class CustomContext implements CustomElement {
 		VisibilityMode mode = null;
 		try {
 			catProfile = context.getCatProfileById(categoryId);
-			mode = catProfile.updateCustomContext(this, externalService);
+			mode = catProfile.updateCustomContext(this);
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), externalService);
 				catProfile = context.getCatProfileById(categoryId);
-				mode = catProfile.updateCustomContext(this, externalService);
+				mode = catProfile.updateCustomContext(this);
 			} catch (CategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?

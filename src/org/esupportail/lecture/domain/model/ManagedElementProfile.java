@@ -17,12 +17,12 @@ import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
  */
 interface ManagedElementProfile extends ElementProfile {
 		
-	/**
-	 * Returns access mode of the Element.
-	 * @return access 
-	 * @throws CategoryNotLoadedException 
-	 */
-	Accessibility getAccess() throws CategoryNotLoadedException; 
+//	/**
+//	 * Returns access mode of the Element.
+//	 * @return access 
+//	 * @throws CategoryNotLoadedException 
+//	 */
+//	Accessibility getAccess() throws CategoryNotLoadedException; 
 	
 	/**
 	 * Sets access mode of the Element.
@@ -30,12 +30,12 @@ interface ManagedElementProfile extends ElementProfile {
 	 */
 	void setAccess(Accessibility access);
 
-	/**
-	 * Returns visibility sets of the Element.
-	 * @return visibility 
-	 * @throws CategoryNotLoadedException 
-	 */
-	VisibilitySets getVisibility() throws  CategoryNotLoadedException;
+//	/**
+//	 * Returns visibility sets of the Element.
+//	 * @return visibility 
+//	 * @throws CategoryNotLoadedException 
+//	 */
+//	VisibilitySets getVisibility() throws  CategoryNotLoadedException;
 	
 	/**
 	 * Sets visibility sets of the Element.
