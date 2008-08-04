@@ -105,7 +105,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			LOG.debug("in getManagedCategory");
 		}
 		ManagedCategory ret = new ManagedCategory(profile);
-		String url = profile.getUrlCategory();
+		String url = profile.getCategoryURL();
 		String cacheKey = "CAT:" + profile.getId() + url;
 		System.currentTimeMillis();
 		Long lastcatAccess = managedCategoryLastAccess.get(cacheKey);

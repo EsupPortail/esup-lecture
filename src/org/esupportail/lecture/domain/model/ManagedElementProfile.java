@@ -17,31 +17,31 @@ import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
  */
 interface ManagedElementProfile extends ElementProfile {
 		
-//	/**
-//	 * Returns access mode of the Element.
-//	 * @return access 
-//	 * @throws CategoryNotLoadedException 
-//	 */
-//	Accessibility getAccess() throws CategoryNotLoadedException; 
-	
 	/**
-	 * Sets access mode of the Element.
-	 * @param access access groups
+	 * Returns visibility of the ManagedElementProfile, ready to use (taking care of inheritance rules).
+	 * @return visibility 
+	 * @throws CategoryNotLoadedException 
 	 */
-	void setAccess(Accessibility access);
-
-//	/**
-//	 * Returns visibility sets of the Element.
-//	 * @return visibility 
-//	 * @throws CategoryNotLoadedException 
-//	 */
-//	VisibilitySets getVisibility() throws  CategoryNotLoadedException;
+	VisibilitySets getVisibility() throws  CategoryNotLoadedException;
 	
 	/**
-	 * Sets visibility sets of the Element.
+	 * Sets visibility of the ManagedElementProfile (value defined in XML File).
 	 * @param visibility
 	 */
 	void setVisibility(VisibilitySets visibility);
+	
+	/**
+	 * Returns access mode of the ManagedElementProfile.
+	 * @return access 
+	 * @throws CategoryNotLoadedException 
+	 */
+	Accessibility getAccess() throws CategoryNotLoadedException; 
+	
+	/**
+	 * Sets access mode of the ManagedElementProfile.
+	 * @param access access groups
+	 */
+	void setAccess(Accessibility access);
 
 	/**
 	 * Return timeOut of the element.
@@ -57,21 +57,11 @@ interface ManagedElementProfile extends ElementProfile {
 	void setTimeOut(int timeOut);
 	
 	/**
-	 * Returns ttl of the Element.
+	 * Returns ttl of the ManagedElementProfile.
 	 * @return ttl 
 	 * @throws ElementNotLoadedException 
 	 */
 	int getTtl() throws ElementNotLoadedException;
-	
-//	/**
-//	 * Sets ttl of the Element.
-//	 * @param ttl
-//	 */		
-//	void setTtl(int ttl);
-	
-	/**
-	 * Sets allowed visibility group of the Element
-	 * @param d allowed group
-	 */	
+
 
 }

@@ -244,7 +244,7 @@ public class ChannelConfig  {
 			ManagedCategoryProfile mcp = new ManagedCategoryProfile();
 			mcp.setId(xmlFile.getString(pathCategoryProfile + "[@id]"));
 			mcp.setName(xmlFile.getString(pathCategoryProfile + "[@name]"));
-			mcp.setUrlCategory(xmlFile.getString(pathCategoryProfile + "[@urlCategory]"));
+			mcp.setCategoryURL(xmlFile.getString(pathCategoryProfile + "[@urlCategory]"));
 			//TODO (GB later) c.setEdit(...) param edit
 			mcp.setTrustCategory(xmlFile.getBoolean(pathCategoryProfile + "[@trustCategory]"));
 			mcp.setTtl(xmlFile.getInt(pathCategoryProfile + "[@ttl]"));

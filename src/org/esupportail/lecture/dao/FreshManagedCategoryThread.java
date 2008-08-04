@@ -93,7 +93,7 @@ public class FreshManagedCategoryThread extends Thread {
 		ManagedCategory ret = new ManagedCategory(profile);
 		try {
 			//get the XML
-			String categoryURL = profile.getUrlCategory();
+			String categoryURL = profile.getCategoryURL();
 			if (ptCas != null) {
 				if (categoryURL.contains("?")) { 
 					categoryURL = categoryURL + "&ticket=" + ptCas;

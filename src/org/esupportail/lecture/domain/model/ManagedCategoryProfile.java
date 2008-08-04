@@ -226,16 +226,18 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 
 	/**
-	 * Return visibility of the category, taking care of inheritance regulars.
+	 * Return visibility of the category (or categoryProfile), taking care of inheritance regulars.
 	 * @return visibility
 	 * @throws CategoryNotLoadedException 
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
 	 */
-	protected VisibilitySets getVisibility() throws CategoryNotLoadedException {
+	public VisibilitySets getVisibility() throws CategoryNotLoadedException {
 		computeFeatures();
 		return visibility;
 	}
 
 	/**
+	 * Sets visibility of category profile (value defined in XML file).
 	 * @param visibility 
 	 */
 	public void setVisibility(final VisibilitySets visibility) {
@@ -359,7 +361,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			}
 						
 		} else if (Accessibility.CAS.equals(accessibility)) {
-			String url = getUrlCategory();
+			String url = getCategoryURL();
 			String ptCas;
 			String errorMsg = "The managedCategory " + this.getId()
 			+ " is impossible to load.";
@@ -489,9 +491,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	
 	/**
 	 * Returns the URL of the remote managed category.
-	 * @return urlCategory
+	 * @return categoryURL
 	 */
-	public String getUrlCategory() {
+	public String getCategoryURL() {
 		return categoryURL;
 	}
 	
@@ -499,7 +501,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * Sets the URL of the remote managed category.
 	 * @param categoryURL the URL to set
 	 */
-	public void setUrlCategory(final String categoryURL) {
+	public void setCategoryURL(final String categoryURL) {
 		//RB categoryURL = DomainTools.replaceWithUserAttributes(categoryURL);
 		this.categoryURL = categoryURL;
 	}
@@ -523,7 +525,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * @return access
 	 */
-	protected Accessibility getAccess() {
+	public Accessibility getAccess() {
 		return access;
 	}
 	

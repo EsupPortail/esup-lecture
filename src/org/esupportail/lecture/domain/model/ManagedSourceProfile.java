@@ -104,7 +104,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @return access
 	 * @throws CategoryNotLoadedException 
 	 */
-	private Accessibility getAccess() throws CategoryNotLoadedException  {
+	public Accessibility getAccess() throws CategoryNotLoadedException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - getAccess()");
 		}
@@ -146,9 +146,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * Return visibility of the source, taking care of inheritance regulars.
 	 * @return visibility
-	 * @throws CategoryNotLoadedException 
+	 * @throws CategoryNotLoadedException
+	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility() 
 	 */
-	private VisibilitySets getVisibility() throws CategoryNotLoadedException {
+	public VisibilitySets getVisibility() throws CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - getVisibility()");
 		}
@@ -157,7 +158,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	}
 
 	/**
-	 * @see ManagedSourceProfile#visibility
+	 * Sets visibility of source profile (value defined in XML file).
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#setVisibility(
 	 * org.esupportail.lecture.domain.model.VisibilitySets)
 	 */
