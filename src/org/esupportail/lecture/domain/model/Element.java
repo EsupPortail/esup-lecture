@@ -12,8 +12,19 @@ package org.esupportail.lecture.domain.model;
  */
 interface Element {
 		
-//	/**
-//	 * @return the profile associated to this element
-//	 */
-//	ElementProfile getProfile();
+	/**
+	 * @return the profile associated to this element
+	 */
+	ElementProfile getProfile();
+	
+	/**
+	 * @return the profile ID
+	 */
+	String getProfileId();
+	
+	/**
+	 * @return the element name
+	 */
+	String getName();
+	
 }

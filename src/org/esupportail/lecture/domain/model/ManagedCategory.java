@@ -289,7 +289,7 @@ public class ManagedCategory extends Category {
 	 * @return name
 	 * */
 	@Override
-	protected String getName() {
+	public String getName() {
 		return name;
 	}
 

@@ -120,7 +120,7 @@ public abstract class Category implements Element, Serializable {
 	 * Returns the name of the category.
 	 * @return name
 	 */
-	protected String getName() {
+	public String getName() {
 		return getProfile().getName();
 	}
 
@@ -153,7 +153,7 @@ public abstract class Category implements Element, Serializable {
 	 * @return id
 	 * @see Category#profileId
 	 */
-	protected String getProfileId() {
+	public String getProfileId() {
 		return profileId;
 	}
 	

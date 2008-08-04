@@ -198,6 +198,10 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 */
 	public Source getSource(final SourceProfile sourceProfile, final String ptCas) 
 			throws InfoDaoException {
+		// TODO (RB <-- GB) Pourquoi ne déclare-tu pas un type Source alors que tu fais un new GlobalSource ?
+		// Je comprends que tu n'as pas le droit de faire un new Source car abstract, 
+		// mais en ne déclarant pas un GlobalSource, tu limites la potentialité du ret. 
+		// Ne crois tu pas ? Tu viens m'en parler ?
 		Source ret = new GlobalSource(sourceProfile);
 //		not yet implemented
 //		if (sourceProfile.isSpecificUserContent()) { 

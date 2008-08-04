@@ -46,6 +46,9 @@ import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
  *
  */
 
+// TODO (GB) Possibilité de passer la classe en protected si n'est pas utilisé dans le DAO 
+// (dans ce cas, le DAO utiliserait un GlobalSource) à étudier ...
+
 public abstract class Source implements Element, Serializable {
 
 	/*
@@ -145,6 +148,13 @@ public abstract class Source implements Element, Serializable {
 	 */
 	private String getSourceURL() {
 		return getProfile().getSourceURL();
+	}
+	
+	/**
+	 * @return the name of the source
+	 */
+	public String getName() {
+		return getProfile().getName();
 	}
 	
 	/**
@@ -416,14 +426,14 @@ public abstract class Source implements Element, Serializable {
 	/**
 	 * @return the ID of the sourceProfile associated to this source
 	 */
-	protected String getProfileId() {
+	public String getProfileId() {
 		return profileId;
 	}
 	
 	/**
 	 * @return the sourceProfile associated to this source
 	 */
-	protected SourceProfile getProfile() {
+	public SourceProfile getProfile() {
 		return profile;
 	}
 
