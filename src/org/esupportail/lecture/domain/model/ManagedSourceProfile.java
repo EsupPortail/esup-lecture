@@ -139,7 +139,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	@Override
 	public int getTtl() {
-		return category.getTtl();
+		return getParent().getTtl();
 	}
 	
 	

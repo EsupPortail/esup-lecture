@@ -31,16 +31,11 @@ public interface ElementProfile {
 	 */
 	void setName(String name);
 	
-	
 	/**
 	 * Returns the id of the element profile (same id as the corresponding element).
 	 * @return String id
 	 */
 	String getId();
-
-	
-
-
 
 	
 }

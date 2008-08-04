@@ -45,7 +45,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Referrenced category.
 	 */
-	private ManagedCategory category;
+	private ManagedCategory element;
 	/**
 	 * URL of the remote managed category.
 	 */
@@ -118,11 +118,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getId() + " - getElement()");
 		}
-		category = (ManagedCategory) super.getElement(); 
-		if (category == null) {
+		element = (ManagedCategory) super.getElement(); 
+		if (element == null) {
 			loadCategory();
 		}
-		return category;
+		return element;
 	}
 	
 	/**
@@ -275,11 +275,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		
 		if (!featuresComputed) {
 
-			if (trustCategory) {
+			if (getTrustCategory()) {
 				ManagedCategory cat = getElement();
 				
-				visibility = cat.inner.visibility;
-				edit = cat.inner.edit;
+				visibility = cat.inner.getVisibility();
+				edit = cat.inner.getEdit();
 					
 				// Inutile : edit obligatoire le XML d'une category				
 				if (edit == null) {

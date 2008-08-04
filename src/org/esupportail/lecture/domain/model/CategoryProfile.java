@@ -35,7 +35,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	/**
 	 * Category described by this CategoryProfile.
 	 */
-	private Category category;
+	private Category element;
 	/**
 	 *  Category profile id.
 	 */
@@ -74,7 +74,7 @@ public abstract class CategoryProfile implements ElementProfile {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + id + " - getElement()");
 		}
-		return category;
+		return element;
 	}
 	
 	/**
@@ -113,7 +113,7 @@ public abstract class CategoryProfile implements ElementProfile {
 		string += "	name : " + getName() + "\n";
 			
 		/* The category profile id */
-		string += "	id : " + id + "\n";
+		string += "	id : " + getId() + "\n";
 		
 		return string;
 	}
@@ -175,7 +175,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @param category The category to set.
 	 */
 	protected void setElement(final Category category) {
-		this.category = category;
+		this.element = category;
 	}
 
 	

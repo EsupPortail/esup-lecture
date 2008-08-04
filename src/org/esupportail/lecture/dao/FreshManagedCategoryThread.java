@@ -107,7 +107,7 @@ public class FreshManagedCategoryThread extends Thread {
 			// Category properties
 			ret.setName(root.valueOf("@name"));
 			ret.setDescription(root.valueOf("/category/description"));
-			// devenu inutile 
+			// GB : devenu inutile 
 			//ret.setProfileId(profile.getId());
 			// SourceProfiles loop
 			Hashtable<String, SourceProfile> sourceProfiles = new Hashtable<String, SourceProfile>();
@@ -148,6 +148,7 @@ public class FreshManagedCategoryThread extends Thread {
 					sp.setSpecificUserContent(false);
 				}
 				//TODO (RB) change xslt attributes here when this feature will be suported in sourceprofile
+				// TODO (RB <-- GB)  Que veut tu dire par là ?
 				sp.setXsltURL(srcProfile.valueOf("@xsltFile"));
 				sp.setItemXPath(srcProfile.valueOf("@itemXPath"));
 				String access = srcProfile.valueOf("@access");

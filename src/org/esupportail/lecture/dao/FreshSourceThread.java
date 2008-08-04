@@ -47,7 +47,7 @@ public class FreshSourceThread extends Thread {
 	/**
 	 * Constructor.
 	 * @param sourceProfile used to return a Source
-	 * @param creds - user and password. null for anonymous access
+	 * @param ptCas
 	 */
 	public FreshSourceThread(final SourceProfile sourceProfile, final String ptCas) {
 		this.profile = sourceProfile;
@@ -70,7 +70,7 @@ public class FreshSourceThread extends Thread {
 	/**
 	 * get a source form the Web (without cache).
 	 * @param sourceProfile source profile of source to get
-	 * @param creds - user and password. null for anonymous access
+	 * @param ptCas 
 	 * @return the source
 	 * @throws XMLParseException 
 	 */

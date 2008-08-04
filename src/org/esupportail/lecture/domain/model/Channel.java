@@ -52,11 +52,6 @@ public class Channel implements InitializingBean {
 	 */
 	private Hashtable<String, ManagedCategoryProfile> managedCategoryProfilesHash;
 	
-//	/**
-//	 * Hashtable of UserProfiles loaded from database, indexed by their userId.
-//	 */
-//	private Hashtable<String,UserProfile> userProfilesHash = new Hashtable<String,UserProfile>();
-	
 	/* mappings */
 	
 	/**
@@ -655,13 +650,6 @@ public class Channel implements InitializingBean {
 	public void setDaoService(final DaoService daoService) {
 		this.daoService = daoService;
 	}
-
-//	/**
-//	 * @return the external service
-//	 */
-//	public ExternalService getExternalService() {
-//		return externalService;
-//	}
 
 	/**
 	 * @param externalService

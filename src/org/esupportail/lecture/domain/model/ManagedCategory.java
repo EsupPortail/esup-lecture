@@ -80,10 +80,9 @@ public class ManagedCategory extends Category {
 	 */
 	public boolean containsSource(final String sourceId) {
 	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("profileId=" + super.getProfileId() + " - containsSource(" + sourceId + ")");
+    		LOG.debug("profileId=" + getProfileId() + " - containsSource(" + sourceId + ")");
     	}
 	   	Hashtable<String, SourceProfile> hashSourceProfile = getSourceProfilesHash();
-	   	
 	   	boolean result = hashSourceProfile.containsKey(sourceId);
 	   	return result;
 	}
@@ -94,7 +93,7 @@ public class ManagedCategory extends Category {
 	 */
 	protected Accessibility getAccess() {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getProfileId() + " - getAccessy()");
+			LOG.debug("id=" + getProfileId() + " - getAccessy()");
 		}
 		return getProfile().getAccess();
 	}
@@ -120,7 +119,7 @@ public class ManagedCategory extends Category {
 	 */
 	protected VisibilitySets getVisibility() throws CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getProfileId() + " - getVisibility()");
+			LOG.debug("id=" + getProfileId() + " - getVisibility()");
 		}
 		return getProfile().getVisibility();
 	}
@@ -130,7 +129,7 @@ public class ManagedCategory extends Category {
 	 */
 	public void setVisibility(final VisibilitySets visibility) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getProfileId() + " - setVisibility(visibility)");
+			LOG.debug("id=" + getProfileId() + " - setVisibility(visibility)");
 		}
 		inner.visibility = visibility;
 		getProfile().setFeaturesComputed(false);
@@ -143,7 +142,7 @@ public class ManagedCategory extends Category {
 	 */
 	protected Editability getEdit() throws CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getProfileId() + " - getEdit()");
+			LOG.debug("id = " + getProfileId() + " - getEdit()");
 		}
 		Editability e;
 		try {
@@ -162,7 +161,7 @@ public class ManagedCategory extends Category {
 	 */
 	public void setEdit(final Editability edit) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getProfileId() + " - setEditability()");
+			LOG.debug("id=" + getProfileId() + " - setEditability()");
 		}
 		inner.edit = edit;
 		getProfile().setFeaturesComputed(false);
@@ -181,11 +180,37 @@ public class ManagedCategory extends Category {
 		/** 
 		 * Managed category edit mode.
 		*/
-		public Editability edit;
+		private Editability edit;
 		/**
 		 * Visibility rights for groups on the remote source.
 		 */
-		public VisibilitySets visibility;
+		private VisibilitySets visibility;
+		
+
+		/**
+		 * @return edit
+		 */
+		protected Editability getEdit() {
+			return edit;
+		}
+		/**
+		 * @param edit
+		 */
+		protected void setEdit(final Editability edit) {
+			this.edit = edit;
+		}
+		/**
+		 * @return edit
+		 */
+		protected VisibilitySets getVisibility() {
+			return visibility;
+		}
+		/**
+		 * @param visibility
+		 */
+		protected void setVisibility(final VisibilitySets visibility) {
+			this.visibility = visibility;
+		}
 	
 	}
 	
@@ -205,7 +230,7 @@ public class ManagedCategory extends Category {
 	protected synchronized void updateCustom(final CustomManagedCategory customManagedCategory,
 			final ExternalService ex) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getProfileId() + " - updateCustom("
+			LOG.debug("id = " + getProfileId() + " - updateCustom("
 					+ customManagedCategory.getElementId() + ",externalService)");
 		}
 		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
@@ -238,7 +263,7 @@ public class ManagedCategory extends Category {
 			final CustomManagedCategory customManagedCategory,
 			final ExternalService ex) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getProfileId() + " - getVisibleSourcesAndUpdateCustom("
+			LOG.debug("id=" + getProfileId() + " - getVisibleSourcesAndUpdateCustom("
 					+ getProfileId() + ",externalService)");
 		}
 		List<CoupleProfileVisibility> couplesVisib = new Vector<CoupleProfileVisibility>();

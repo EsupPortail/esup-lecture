@@ -14,7 +14,6 @@ package org.esupportail.lecture.domain.model;
  * @see Source
  *
  */ 
-@SuppressWarnings("serial")
 public class GlobalSource extends Source {
 
 	
@@ -23,10 +22,17 @@ public class GlobalSource extends Source {
 /* 
  *************************** PROPERTIES ******************************** */	
 
-/*
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/*
  *************************** INIT ************************************** */	
+	
 	/**
 	 * Constructor.
+	 * @param sp 
 	 */
 	public GlobalSource(final SourceProfile sp) {
 		super(sp);
