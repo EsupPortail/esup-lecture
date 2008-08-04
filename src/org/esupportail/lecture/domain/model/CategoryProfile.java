@@ -165,7 +165,6 @@ public abstract class CategoryProfile implements ElementProfile {
 	/**
 	 * @param id
 	 * @see CategoryProfile#id
-	 * @see ElementProfile#setId(String)
 	 */
 	public void setId(final String id) {
 		this.id = id;
@@ -179,20 +178,5 @@ public abstract class CategoryProfile implements ElementProfile {
 		this.category = category;
 	}
 
-	/**
-	 * @return category
-	 */
-	protected Category getCategory() {
-		return category;
-	}
-
-	/**
-	 * @param category
-	 */
-	protected void setCategory(final Category category) {
-		this.category = category;
-	}
-
-
-
+	
 }

@@ -22,7 +22,7 @@ interface ManagedElementProfile extends ElementProfile {
 	 * @return visibility 
 	 * @throws CategoryNotLoadedException 
 	 */
-	VisibilitySets getVisibility() throws  CategoryNotLoadedException;
+	VisibilitySets getVisibility() throws CategoryNotLoadedException;
 	
 	/**
 	 * Sets visibility of the ManagedElementProfile (value defined in XML File).
@@ -48,7 +48,7 @@ interface ManagedElementProfile extends ElementProfile {
 	 * @return timeOut
 	 * @throws CategoryNotLoadedException 
 	 */
-	int getTimeOut() throws  CategoryNotLoadedException;
+	int getTimeOut() throws CategoryNotLoadedException;
 	
 	/**
 	 * Sets timeOut of the element.
