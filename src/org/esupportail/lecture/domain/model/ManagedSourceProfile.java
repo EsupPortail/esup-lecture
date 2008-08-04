@@ -273,33 +273,30 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * It evaluates visibility for user profile and subscribe it 
 	 * or not to customCategory.
 	 * @param customManagedCategory the customManagedCategory to update
-	 * @param ex access to externalService
 	 * @return true if the source is visible by the userProfile
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 */
 	protected VisibilityMode updateCustomCategory(
-			final CustomManagedCategory customManagedCategory, final ExternalService ex) 
+			final CustomManagedCategory customManagedCategory) 
 		throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustomCategory("
-					+ customManagedCategory.getElementId() + "externalService)");
+					+ customManagedCategory.getElementId() + ")");
 		}
 		// no loadSource(ex) is needed here
-		return setUpCustomCategoryVisibility(customManagedCategory, ex);	
+		return setUpCustomCategoryVisibility(customManagedCategory);	
 	}
 
 	/**
 	 * Load the source referenced by this ManagedSourceProfile.
-	 * @param ex access to externalService
 	 * @throws InfoDomainException 
-	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource(
-	 *   org.esupportail.lecture.domain.ExternalService)
+	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource()
 	 */
 	@Override
-	protected void loadSource(final ExternalService ex) throws InfoDomainException {
+	protected void loadSource() throws InfoDomainException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getId() + " - loadSource(externalService)");
+			LOG.debug("id = " + this.getId() + " - loadSource()");
 		}
 			
 		Accessibility accessibility = getAccess();
@@ -311,6 +308,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				setElement(source);
 
 			} else if (Accessibility.CAS.equals(accessibility)) {
+				ExternalService ex = DomainTools.getExternalService();
 				String ptCas = ex.getUserProxyTicketCAS(getSourceURL());
 				Source source = DomainTools.getDaoService().getSource(this, ptCas);
 				setElement(source);
@@ -329,7 +327,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * Evaluate visibility of current user for this managed source profile.
 	 * Update customManagedCategory (belongs to user) if needed :
 	 * add or remove customManagedSources associated with this ManagedSourceProfile
-	 * @param ex access to externalService to evaluate visibility
 	 * @param customManagedCategory customManagedCategory to set up
 	 * @return true if sourceProfile is visible by user (in Obliged or in autoSubscribed, or in Allowed)
 	 * @throws CategoryNotLoadedException 
@@ -337,12 +334,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 */
 	
 	private VisibilityMode setUpCustomCategoryVisibility(
-			final CustomManagedCategory customManagedCategory,
-			final ExternalService ex) 
+			final CustomManagedCategory customManagedCategory) 
 	throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - setUpCustomCategoryVisibility(" 
-					+ customManagedCategory.getElementId() + ",externalService)");
+					+ customManagedCategory.getElementId() + ")");
 		}
 		/*
 		 * Algo pour gerer les customSourceProfiles :
@@ -368,7 +364,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		
 		VisibilityMode mode = VisibilityMode.NOVISIBLE;
 
-		mode = visibilitySets.whichVisibility(ex);
+		mode = visibilitySets.whichVisibility();
 		
 		if (mode == VisibilityMode.OBLIGED) {
 			if (LOG.isTraceEnabled()) {

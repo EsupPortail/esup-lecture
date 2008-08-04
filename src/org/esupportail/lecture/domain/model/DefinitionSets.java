@@ -12,6 +12,7 @@ import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 /**
@@ -75,12 +76,11 @@ public class DefinitionSets {
 	
 	/**
 	 * Evaluate current user visibility for this DefinitionSets.
-	 * @param ex access to externalService, in order to know user rights
 	 * @return true if the user to the set defined by this DefinitionSets
 	 */
-	protected boolean evaluateVisibility(final ExternalService ex) {
+	protected boolean evaluateVisibility() {
 	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("evaluateVisibility(externalService)");
+    		LOG.debug("evaluateVisibility()");
     	}
 			
 		/* group evaluation */
@@ -91,6 +91,7 @@ public class DefinitionSets {
 				LOG.trace("DefinitionSets, evaluation on group : " + group);
 			}
 			try {
+				ExternalService ex = DomainTools.getExternalService();
 				if (ex.isUserInGroup(group)) {
 					return true;
 				}
@@ -109,7 +110,7 @@ public class DefinitionSets {
 				LOG.trace("DefinionSets, evaluation regular : attr(" 
 					+ reg.getAttribute() + ") val(" + reg.getValue() + ")");
 			}
-			if (reg.evaluate(ex)) {
+			if (reg.evaluate()) {
 				return true;
 			}
 		}

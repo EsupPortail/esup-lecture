@@ -15,7 +15,6 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
@@ -125,19 +124,18 @@ public class CustomContext implements CustomElement {
 
 	/**
 	 * Return the list of sorted customCategories displayed by this customContext.
-	 * @param ex access to externalService
 	 * @return the list of customCategories 
 	 * @throws ContextNotFoundException 
 	 */
-	public List<CustomCategory> getSortedCustomCategories(final ExternalService ex) 
+	public List<CustomCategory> getSortedCustomCategories() 
 			throws ContextNotFoundException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug(ID + elementId + " - getSortedCustomCategories(externalService)");
+			LOG.debug(ID + elementId + " - getSortedCustomCategories()");
 		}
 		// TODO (GB later) rewrite with custom personnal category (+ sorted display)
 	
 		/* update this customContext with context */
-		getContext().updateCustom(this, ex);
+		getContext().updateCustom(this);
 		
 		List<CustomCategory> listCustomCategories = new Vector<CustomCategory>();
 		for (CustomManagedCategory customCat : subscriptions.values()) {
@@ -150,11 +148,10 @@ public class CustomContext implements CustomElement {
 	/**
 	 * Return a list of (CategoryProfile, AvailabilityMode) corresponding to visible categories for user, 
 	 * in this customContext and update it.
-	 * @param ex access to external service 
 	 * @return list of CoupleProfileAvailability
 	 * @throws ContextNotFoundException 
 	 */
-	public List<CoupleProfileAvailability> getVisibleCategories(final ExternalService ex) 
+	public List<CoupleProfileAvailability> getVisibleCategories() 
 	throws ContextNotFoundException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + getElementId() + " - getVisibleCategories(ex)");
@@ -163,7 +160,7 @@ public class CustomContext implements CustomElement {
 		// category : en fonction de l'ordre d'affichage peut etre.
 		Context cxt = getContext();
 		List<CoupleProfileVisibility> couplesVisib;
-		couplesVisib = cxt.getVisibleCategoriesAndUpdateCustom(this, ex);
+		couplesVisib = cxt.getVisibleCategoriesAndUpdateCustom(this);
 			
 		List<CoupleProfileAvailability> couplesAvail = new Vector<CoupleProfileAvailability>();
 		for (CoupleProfileVisibility coupleV : couplesVisib) {
@@ -191,7 +188,6 @@ public class CustomContext implements CustomElement {
 	/**
 	 * after checking visibility rights, subcribe user to the category categoryId in this CustomContext.
 	 * @param categoryId category ID
-	 * @param ex external service
 	 * @throws ContextNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws CategoryTimeOutException 
@@ -199,12 +195,12 @@ public class CustomContext implements CustomElement {
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryOutOfReachException 
 	 */
-	public void subscribeToCategory(final String categoryId, final ExternalService ex) 
+	public void subscribeToCategory(final String categoryId) 
 	throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, 
 	CategoryTimeOutException, CategoryNotVisibleException, InternalDomainException, 
 	CategoryOutOfReachException {	
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("subscribeToCategory(" + categoryId + ", externalService)");
+			LOG.debug("subscribeToCategory(" + categoryId + ")");
 		}
 		context = getContext();
 		ManagedCategoryProfile catProfile = null;
@@ -215,7 +211,7 @@ public class CustomContext implements CustomElement {
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
-				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), ex);
+				userProfile.updateCustomContextsForOneManagedCategory(getElementId());
 				catProfile = context.getCatProfileById(categoryId);
 				mode = catProfile.updateCustomContext(this);
 			} catch (CategoryNotLoadedException e2) {
@@ -264,7 +260,6 @@ public class CustomContext implements CustomElement {
 	/**
 	 * after checking visibility rights, unsubcribe user to the category categoryId in this CustomContext.
 	 * @param categoryId category ID
-	 * @param externalService
 	 * @throws ContextNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws CategoryTimeOutException 
@@ -273,11 +268,11 @@ public class CustomContext implements CustomElement {
 	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryObligedException 
 	 */
-	public void unsubscribeToCategory(final String categoryId, final ExternalService externalService) 
+	public void unsubscribeToCategory(final String categoryId) 
 	throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, CategoryTimeOutException, 
 	CategoryNotVisibleException, InternalDomainException, CategoryOutOfReachException, CategoryObligedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("subscribeToCategory(" + categoryId + ", externalService)");
+			LOG.debug("subscribeToCategory(" + categoryId + ")");
 		}
 		context = getContext();
 		ManagedCategoryProfile catProfile = null;
@@ -288,7 +283,7 @@ public class CustomContext implements CustomElement {
 		} catch (CategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
-				userProfile.updateCustomContextsForOneManagedCategory(getElementId(), externalService);
+				userProfile.updateCustomContextsForOneManagedCategory(getElementId());
 				catProfile = context.getCatProfileById(categoryId);
 				mode = catProfile.updateCustomContext(this);
 			} catch (CategoryNotLoadedException e2) {

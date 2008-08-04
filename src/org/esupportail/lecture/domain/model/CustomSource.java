@@ -11,7 +11,6 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
@@ -88,7 +87,6 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * Returns the list of items contained in the source referred by this customSource.
 	 * Items are ready to be displayed
-	 * @param ex access to externalService
 	 * @return the list of items
 	 * @throws MappingNotFoundException
 	 * @throws ComputeItemsException
@@ -100,17 +98,17 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws InfoDomainException 
 	 * @throws SourceNotLoadedException 
 	 */
-	public List<Item> getItems(final ExternalService ex) 
+	public List<Item> getItems() 
 	throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
 	ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
 	SourceTimeOutException, InfoDomainException  {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + elementId + " - getItems(externalService)");
+			LOG.debug("id=" + elementId + " - getItems()");
 		}
 		SourceProfile profile = getProfile();
 		List<Item> listItems = null;
 		try {
-			listItems = profile.getItems(ex);
+			listItems = profile.getItems();
 			// pas de catch de categoryNotLoaded : cela entraine trop de compliaction
 		} catch (SourceNotLoadedException e) {
 			// Dans ce cas : la mise à jour du customCategory n'a pas été effectuée

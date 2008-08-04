@@ -8,7 +8,6 @@ package org.esupportail.lecture.domain.model;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
@@ -120,7 +119,6 @@ public abstract class CustomCategory implements CustomElement {
 	
 	/**
 	 * Return the list of sorted customSources displayed by this customCategory.
-	 * @param ex access to external service 
 	 * @return the list of customSource
 	 * @throws CategoryProfileNotFoundException
 	 * @throws CategoryNotVisibleException
@@ -128,7 +126,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryOutOfReachException 
 	 */
-	public abstract List<CustomSource> getSortedCustomSources(ExternalService ex) 
+	public abstract List<CustomSource> getSortedCustomSources() 
 		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, 
 		CategoryTimeOutException, CategoryOutOfReachException;
 
@@ -152,7 +150,6 @@ public abstract class CustomCategory implements CustomElement {
 	 * Return a list of (SourceProfile,AvailabilityMode).
 	 * This list corresponding to visible sources for user, 
 	 * in this customCategory.
-	 * @param ex access to external service 
 	 * @return list of CoupleProfileAvailability
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws CategoryNotVisibleException 
@@ -160,7 +157,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 */
-	public abstract List<CoupleProfileAvailability> getVisibleSources(ExternalService ex) 
+	public abstract List<CoupleProfileAvailability> getVisibleSources() 
 		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, 
 		InternalDomainException, CategoryTimeOutException;
 	
@@ -168,7 +165,6 @@ public abstract class CustomCategory implements CustomElement {
 	 * For a customManagedCategory, it subscribes sourceId.
 	 * But for a customPersonalcategory, there is not any subscription and throws a SubcriptionInPersonalException
 	 * @param sourceId source ID
-	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws SourceProfileNotFoundException 
 	 * @throws SourceNotVisibleException 
@@ -178,7 +174,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryOutOfReachException 
 	 */
 	// TODO (GB later) faire le throw SubcriptionInPersonalImpossibleException pour le personal
-	public abstract void subscribeToSource(String sourceId, ExternalService ex) 
+	public abstract void subscribeToSource(String sourceId) 
 		throws CategoryProfileNotFoundException, SourceProfileNotFoundException, 
 		SourceNotVisibleException, CategoryNotVisibleException, CategoryTimeOutException, 
 		InternalDomainException, CategoryOutOfReachException;
@@ -188,7 +184,6 @@ public abstract class CustomCategory implements CustomElement {
 	 * But for a customPersonalcategory, 
 	 * there is not any subscription and throws a SubcriptionInPersonalException
 	 * @param sourceId source ID
-	 * @param ex access to externalService
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws SourceObligedException 
 	 * @throws CategoryNotVisibleException 
@@ -196,7 +191,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @throws CategoryTimeOutException 
 	 * @throws InternalDomainException 
 	 */
-	public abstract void unsubscribeToSource(String sourceId, ExternalService ex) 
+	public abstract void unsubscribeToSource(String sourceId) 
 		throws CategoryProfileNotFoundException, SourceObligedException, CategoryOutOfReachException, 
 		CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException;
 	

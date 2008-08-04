@@ -13,7 +13,6 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 
@@ -223,22 +222,20 @@ public class ManagedCategory extends Category {
 	 * defined in ths ManagedCategory, according to managedSourceProfiles visibility
 	 * (there is not any loading of source at this time)
 	 * @param customManagedCategory customManagedCategory to update
-	 * @param  ex access to external service for visibility evaluation
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 */
-	protected synchronized void updateCustom(final CustomManagedCategory customManagedCategory,
-			final ExternalService ex) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
+	protected synchronized void updateCustom(final CustomManagedCategory customManagedCategory) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + getProfileId() + " - updateCustom("
-					+ customManagedCategory.getElementId() + ",externalService)");
+					+ customManagedCategory.getElementId() + ")");
 		}
 		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
 		
 		// update for managedSources defined in this managedCategory
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
-			msp.updateCustomCategory(customManagedCategory, ex);
+			msp.updateCustomCategory(customManagedCategory);
 		
 		}
 		
@@ -254,17 +251,15 @@ public class ManagedCategory extends Category {
 	 * defined in ths ManagedCategory, according to managedSourceProfiles visibility
 	 * (there is not any loading of source at this time)
 	 * @param customManagedCategory custom to update
-	 * @param ex access to external service for visibility evaluation
 	 * @return list of CoupleProfileVisibility
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 */
 	protected List<CoupleProfileVisibility> getVisibleSourcesAndUpdateCustom(
-			final CustomManagedCategory customManagedCategory,
-			final ExternalService ex) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
+			final CustomManagedCategory customManagedCategory) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getProfileId() + " - getVisibleSourcesAndUpdateCustom("
-					+ getProfileId() + ",externalService)");
+					+ getProfileId() + ")");
 		}
 		List<CoupleProfileVisibility> couplesVisib = new Vector<CoupleProfileVisibility>();
 		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
@@ -273,7 +268,7 @@ public class ManagedCategory extends Category {
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
 			CoupleProfileVisibility couple;
-			VisibilityMode mode = msp.updateCustomCategory(customManagedCategory, ex);
+			VisibilityMode mode = msp.updateCustomCategory(customManagedCategory);
 			if (mode != VisibilityMode.NOVISIBLE) {
 				couple = new CoupleProfileVisibility(msp, mode);
 				couplesVisib.add(couple);

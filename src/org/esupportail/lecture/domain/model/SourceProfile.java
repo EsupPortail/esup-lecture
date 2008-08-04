@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
@@ -105,18 +104,16 @@ public abstract class SourceProfile implements ElementProfile {
 
 	/**
 	 * Load the source referenced by this SourceProfile.
-	 * @param ex
 	 * @throws SourceTimeOutException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws InfoDomainException 
 	 */
-	protected abstract void loadSource(ExternalService ex) 
+	protected abstract void loadSource() 
 	throws SourceTimeOutException, CategoryNotLoadedException, InfoDomainException ; 
 	
 	
 	/**
 	 * Return the list of items to be displayed for this source.
-	 * @param ex access to externalService
 	 * @return a list of items
 	 * @throws SourceNotLoadedException
 	 * @throws MappingNotFoundException
@@ -126,13 +123,13 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @throws CategoryNotLoadedException 
 	 * @throws InfoDomainException 
 	 */
-	protected List<Item> getItems(final ExternalService ex) 
+	protected List<Item> getItems() 
 	throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
 	SourceTimeOutException, CategoryNotLoadedException, InfoDomainException  {
 	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("id = " + this.id + " - getItems(externalService)");
+    		LOG.debug("id = " + this.id + " - getItems()");
     	}
-		loadSource(ex);
+		loadSource();
 		Source s = getElement();
 		return s.getItems();
 	}

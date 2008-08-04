@@ -17,7 +17,6 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
@@ -113,11 +112,10 @@ public class Context {
 	 * It sets up subscriptions of customContext on managedCategoryProfiles
 	 * defined in this Context, according to managedCategory visibilities
 	 * @param customContext customContext to update
-	 * @param ex access to external service for visibility evaluation
 	 */
-	protected synchronized void updateCustom(final CustomContext customContext, final ExternalService ex) {
+	protected synchronized void updateCustom(final CustomContext customContext) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + id + " - updateCustom(" + customContext.getElementId() + ",externalService)");
+			LOG.debug("id=" + id + " - updateCustom(" + customContext.getElementId() + ")");
 		}
 		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
@@ -165,15 +163,14 @@ public class Context {
 	 * It sets up subscriptions of customContext on managedCategoriesProfiles
 	 * defined in this Context, according to managedCategoriesProfiles visibility
 	 * @param customContext custom to update
-	 * @param ex access to externalService
 	 * @return list of CoupleProfileVisibility
-	 * @see Context#updateCustom(CustomContext, ExternalService)
+	 * @see Context#updateCustom(CustomContext)
 	 */
 	protected synchronized List<CoupleProfileVisibility> getVisibleCategoriesAndUpdateCustom(
-			final CustomContext customContext, final ExternalService ex) {
+			final CustomContext customContext) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - getVisibleCategoriesAndUpdateCustom("
-					+ this.getId() + ",externalService)");
+					+ this.getId() + ")");
 		}
 		List<CoupleProfileVisibility> couplesVisib = new Vector<CoupleProfileVisibility>();
 		Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();

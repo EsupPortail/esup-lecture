@@ -7,6 +7,7 @@ package org.esupportail.lecture.domain.model;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
@@ -43,16 +44,16 @@ public class RegularOfSet {
 	/**
 	 * Return true if user checks this regular, else returns false
 	 * (returns false when no answer or error from externalService).
-	 * @param ex access to externalService
 	 * @return boolean
 	 */
-	protected boolean evaluate(final ExternalService ex) {
+	protected boolean evaluate() {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("evaluate(externalService)");
+			LOG.debug("evaluate()");
 		}
 		
 		String userAttributeValue;
 		try {
+			ExternalService ex = DomainTools.getExternalService();
 			userAttributeValue = ex.getUserAttribute(attribute);
 		} catch (NoExternalValueException e) {
 			LOG.warn("User attribute evaluation impossible (NoExternalValueException) : " + e.getMessage());

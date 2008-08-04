@@ -152,7 +152,7 @@ public class FacadeService implements InitializingBean {
 	 */
 	public List<CategoryBean> getDisplayedCategories(final String uid, final String contextId) 
 		throws ContextNotFoundException  {
-		return domainService.getDisplayedCategories(uid, contextId, externalService);
+		return domainService.getDisplayedCategories(uid, contextId);
 	}
 	
 	/**
@@ -174,7 +174,7 @@ public class FacadeService implements InitializingBean {
 	public List<SourceBean> getDisplayedSources(final String uid, final String categoryId) 
 		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, 
 			UserNotSubscribedToCategoryException, CategoryTimeOutException, CategoryOutOfReachException {
-		return domainService.getDisplayedSources(uid, categoryId, externalService);
+		return domainService.getDisplayedSources(uid, categoryId);
 	}
 	
 
@@ -194,7 +194,7 @@ public class FacadeService implements InitializingBean {
 	public List<ItemBean> getItems(final String uid, final String sourceId) 
 	throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, 
 			CategoryNotLoadedException, SourceTimeOutException {
-		return domainService.getItems(uid, sourceId, externalService);
+		return domainService.getItems(uid, sourceId);
 	}
 
 	
@@ -280,7 +280,7 @@ public class FacadeService implements InitializingBean {
 	 */
 	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId) 
 			throws ContextNotFoundException, CategoryNotLoadedException {
-		return domainService.getVisibleCategories(uid, contextId, externalService);
+		return domainService.getVisibleCategories(uid, contextId);
 	}
 	
 	/**
@@ -302,7 +302,7 @@ public class FacadeService implements InitializingBean {
 	throws ManagedCategoryProfileNotFoundException, CategoryProfileNotFoundException,
 	CategoryOutOfReachException, CategoryNotVisibleException, InternalDomainException, 
 	UserNotSubscribedToCategoryException, CategoryTimeOutException {
-		return domainService.getVisibleSources(uid, categoryId, externalService);
+		return domainService.getVisibleSources(uid, categoryId);
 	}
 	
 	/** 
@@ -321,7 +321,7 @@ public class FacadeService implements InitializingBean {
 	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
 	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
 	InternalDomainException {
-		domainService.subscribeToCategory(uid, contextId, categoryId, externalService);
+		domainService.subscribeToCategory(uid, contextId, categoryId);
 	}
 	
 	
@@ -345,7 +345,7 @@ public class FacadeService implements InitializingBean {
 	CategoryOutOfReachException, UserNotSubscribedToCategoryException, 
 	CategoryNotVisibleException, SourceProfileNotFoundException, SourceNotVisibleException, 
 	InternalDomainException, CategoryTimeOutException {
-		domainService.subscribeToSource(uid, categorieId, sourceId, externalService);
+		domainService.subscribeToSource(uid, categorieId, sourceId);
 	}
 	
 	/** 
@@ -365,7 +365,7 @@ public class FacadeService implements InitializingBean {
 	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
 	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
 	InternalDomainException, CategoryObligedException {
-		domainService.unsubscribeToCategory(uid, contextId, categoryId, externalService);
+		domainService.unsubscribeToCategory(uid, contextId, categoryId);
 	}
 
 	/**
@@ -385,7 +385,7 @@ public class FacadeService implements InitializingBean {
 	throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
 	CategoryProfileNotFoundException, CategoryOutOfReachException, SourceObligedException, 
 	InternalDomainException, CategoryTimeOutException {
-		domainService.unsubscribeToSource(uid, categorieId, sourceId, externalService);
+		domainService.unsubscribeToSource(uid, categorieId, sourceId);
 	}
 	
 	/**

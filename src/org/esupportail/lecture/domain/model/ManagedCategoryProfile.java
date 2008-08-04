@@ -15,7 +15,6 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
@@ -334,10 +333,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		throws InfoDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustomContext("
-					+ customContext.getElementId() + "externalService)");
+					+ customContext.getElementId() + ")");
 		}
 		loadCategory(); // TODO (GB) a retirer certainement
-		return setUpCustomContextVisibility(customContext, DomainTools.getExternalService());
+		return setUpCustomContextVisibility(customContext);
 		
 	}
 
@@ -347,7 +346,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	private synchronized void loadCategory() throws CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getId() + " - loadCategory(externalService)");
+			LOG.debug("id = " + this.getId() + " - loadCategory()");
 		}
 		Accessibility accessibility = getAccess();
 		if (Accessibility.PUBLIC.equals(accessibility)) {
@@ -385,17 +384,15 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * Update customContext (belongs to user) if needed :
 	 * add or remove subscription associated with this managedCategoryProfile
 	 * (true if in Obliged or in autoSubscribed, or in Allowed)
-	 * @param ex access to externalService to evaluate visibility
 	 * @param customContext customContext to set up
 	 * @return true if the mcp is visible by the user of the customContext else return false 
 	 * @throws CategoryNotLoadedException 
 	 */
-	private VisibilityMode setUpCustomContextVisibility(final CustomContext customContext,
-			final ExternalService ex) 
+	private VisibilityMode setUpCustomContextVisibility(final CustomContext customContext) 
 		throws CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - setUpCustomContextVisibility("
-					+ customContext.getElementId() + ",externalService)");
+					+ customContext.getElementId() + ")");
 		}
 		/*
 		 * Algo pour gerer les customCategories :
@@ -406,7 +403,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		 * user n'app. rien => effacer la cat.
 		 */
 
-		VisibilityMode mode = getVisibility().whichVisibility(ex);
+		VisibilityMode mode = getVisibility().whichVisibility();
 		
 		if (mode == VisibilityMode.OBLIGED) {
 			if (LOG.isTraceEnabled()) {
@@ -454,10 +451,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustom(" + customManagedCategory.getElementId()
-					+ ",externalService)");
+					+ ")");
 		}
 		ManagedCategory cat = getElement();
-		cat.updateCustom(customManagedCategory, DomainTools.getExternalService());
+		cat.updateCustom(customManagedCategory);
 	}
 	
 	/**
@@ -477,10 +474,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - getVisibleSourcesAndUpdateCustom("
-					+ this.getId() + ",externalService)");
+					+ this.getId() + ")");
 		}
 		ManagedCategory cat = getElement();
-		return cat.getVisibleSourcesAndUpdateCustom(customManagedCategory, DomainTools.getExternalService());
+		return cat.getVisibleSourcesAndUpdateCustom(customManagedCategory);
 	}
 	
 	

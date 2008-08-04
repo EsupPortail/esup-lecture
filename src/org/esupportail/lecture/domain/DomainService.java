@@ -57,18 +57,16 @@ public interface DomainService {
 	/**
 	 * @param uid
 	 * @param contextId
-	 * @param ex access to external service 
 	 * @return List(CategoryBean)
 	 * @throws ContextNotFoundException 
 	 * @see FacadeService#getDisplayedCategories(String, String)
 	 */
-	List<CategoryBean> getDisplayedCategories(String uid, String contextId, ExternalService ex) 
+	List<CategoryBean> getDisplayedCategories(String uid, String contextId) 
 	throws ContextNotFoundException;
 
 	/**
 	 * @param categoryId 
 	 * @param uid 
-	 * @param ex 
 	 * @return List(SourceBean)
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryProfileNotFoundException 
@@ -78,7 +76,7 @@ public interface DomainService {
 	 * @throws CategoryOutOfReachException 
 	 * @see FacadeService#getDisplayedSources(String, String)
 	 */
-	List<SourceBean> getDisplayedSources(String uid, String categoryId, ExternalService ex)  
+	List<SourceBean> getDisplayedSources(String uid, String categoryId)  
 	throws CategoryNotVisibleException, CategoryProfileNotFoundException, 
 	InternalDomainException, UserNotSubscribedToCategoryException, CategoryTimeOutException, 
 	CategoryOutOfReachException;
@@ -86,7 +84,6 @@ public interface DomainService {
 	/**
 	 * @param sourceId 
 	 * @param uid 
-	 * @param ex access to external service 
 	 * @return List(ItemBean)
 	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
@@ -95,7 +92,7 @@ public interface DomainService {
 	 * @throws SourceTimeOutException 
 	 * @see FacadeService#getItems(String, String)
 	 */
-	List<ItemBean> getItems(String uid, String sourceId, ExternalService ex)  
+	List<ItemBean> getItems(String uid, String sourceId)  
 	throws SourceNotLoadedException, InternalDomainException, 
 	ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceTimeOutException;
 
@@ -123,20 +120,18 @@ public interface DomainService {
 	/**
 	 * @param uid
 	 * @param contextId
-	 * @param ex
 	 * @return List(CategoryBean)
 	 * @throws ContextNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @see FacadeService#getVisibleCategories(String, String)
 	 */
 	List<CategoryBean> getVisibleCategories(
-		final String uid, final String contextId, final ExternalService ex) 
+		final String uid, final String contextId) 
 	throws ContextNotFoundException, CategoryNotLoadedException;
 	
 	/**
 	 * @param categoryId 
 	 * @param uid 
-	 * @param ex 
 	 * @return List(SourceBean)
 	 * @throws CategoryNotVisibleException 
 	 * @throws ManagedCategoryProfileNotFoundException 
@@ -149,7 +144,7 @@ public interface DomainService {
 	 * @throws CategoryTimeOutException 
 	 * @see FacadeService#getVisibleSources(String, String)
 	 */
-	List<SourceBean> getVisibleSources(String uid, String categoryId, ExternalService ex) 
+	List<SourceBean> getVisibleSources(String uid, String categoryId) 
 	throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, 
 	CategoryProfileNotFoundException, InternalDomainException, CategoryOutOfReachException, 
 	UserNotSubscribedToCategoryException, CategoryTimeOutException;
@@ -188,7 +183,6 @@ public interface DomainService {
 	 * @param uid
 	 * @param contextId
 	 * @param categoryId
-	 * @param externalService
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws ContextNotFoundException 
 	 * @throws InternalDomainException 
@@ -197,7 +191,7 @@ public interface DomainService {
 	 * @throws CategoryTimeOutException 
 	 * @see FacadeService#subscribeToCategory(String, String, String)
 	 */
-	void subscribeToCategory(String uid, String contextId, String categoryId, ExternalService externalService) 
+	void subscribeToCategory(String uid, String contextId, String categoryId) 
 	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
 	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
 	InternalDomainException;
@@ -206,7 +200,6 @@ public interface DomainService {
 	 * @param uid
 	 * @param contextId
 	 * @param categoryId
-	 * @param externalService
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws ContextNotFoundException 
 	 * @throws InternalDomainException 
@@ -216,7 +209,7 @@ public interface DomainService {
 	 * @throws CategoryObligedException 
 	 * @see FacadeService#unsubscribeToCategory(String, String, String)
 	 */
-	void unsubscribeToCategory(String uid, String contextId, String categoryId, ExternalService externalService)
+	void unsubscribeToCategory(String uid, String contextId, String categoryId)
 	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
 	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
 	InternalDomainException, CategoryObligedException;
@@ -224,7 +217,6 @@ public interface DomainService {
 	 * @param uid 
 	 * @param categorieId 
 	 * @param sourceId 
-	 * @param ex 
 	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws CategoryNotVisibleException 
@@ -236,7 +228,7 @@ public interface DomainService {
 	 * @throws CategoryOutOfReachException 
 	 * @see FacadeService#subscribeToSource(String, String, String)
 	 */
-	void subscribeToSource(String uid, String categorieId, String sourceId, ExternalService ex) 
+	void subscribeToSource(String uid, String categorieId, String sourceId) 
 	throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, 
 	CategoryNotVisibleException, CategoryProfileNotFoundException, 
 	SourceProfileNotFoundException, SourceNotVisibleException, InternalDomainException, 
@@ -245,7 +237,6 @@ public interface DomainService {
 	 * @param uid 
 	 * @param categorieId 
 	 * @param sourceId 
-	 * @param ex
 	 * @throws CategoryNotVisibleException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws UserNotSubscribedToCategoryException 
@@ -256,7 +247,7 @@ public interface DomainService {
 	 * @throws CategoryOutOfReachException 
 	 * @see FacadeService#unsubscribeToSource(String, String, String)
 	 */	
-	void unsubscribeToSource(String uid, String categorieId, String sourceId, ExternalService ex) 
+	void unsubscribeToSource(String uid, String categorieId, String sourceId) 
 	throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, 
 	UserNotSubscribedToCategoryException, InternalDomainException, 
 	CategoryProfileNotFoundException, SourceObligedException, CategoryTimeOutException, 

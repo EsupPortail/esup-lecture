@@ -8,7 +8,6 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
@@ -126,7 +125,6 @@ public class UserProfile {
 	 * Return the customCategory identified by the category id
 	 * if exist,else,create it.
 	 * @param categoryId identifier of the category refered by the customCategory
-	 * @param ex access to externalService
 	 * @return customCategory (or null)
 	 * @throws CategoryNotVisibleException 
 	 * @throws CustomCategoryNotFoundException 
@@ -134,7 +132,7 @@ public class UserProfile {
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryOutOfReachException 
 	 */
-	public CustomCategory getCustomCategory(final String categoryId, final ExternalService ex) 
+	public CustomCategory getCustomCategory(final String categoryId) 
 	throws  CategoryNotVisibleException, CustomCategoryNotFoundException, InternalDomainException, 
 	CategoryTimeOutException, CategoryOutOfReachException {
 	   	if (LOG.isDebugEnabled()) {
@@ -144,7 +142,7 @@ public class UserProfile {
 		CustomCategory customCategory = customCategories.get(categoryId);
 		if (customCategory == null) {
 			try {
-				updateCustomContextsForOneManagedCategory(categoryId, ex);
+				updateCustomContextsForOneManagedCategory(categoryId);
 			} catch (CategoryNotLoadedException e) {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
@@ -169,14 +167,12 @@ public class UserProfile {
 	/**
 	 * Update every customContext of this userProfile for (only one)categoryProfile identified by categoryProfileId.
 	 * @param categoryProfileId
-	 * @param ex access to externalService
 	 * @throws CategoryNotVisibleException
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotLoadedException 
 	 */
-	protected void updateCustomContextsForOneManagedCategory(final String categoryProfileId,
-			final ExternalService ex) 
+	protected void updateCustomContextsForOneManagedCategory(final String categoryProfileId) 
 		throws  CategoryNotVisibleException, InternalDomainException, 
 		CategoryTimeOutException, CategoryNotLoadedException {
 	   	if (LOG.isDebugEnabled()) {

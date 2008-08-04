@@ -7,7 +7,6 @@ package org.esupportail.lecture.domain.model;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.ExternalService;
 
 
 /**
@@ -63,26 +62,25 @@ public class VisibilitySets {
 	
 	/**
 	 * Return the visibility mode for current user (user connected to externalService).
-	 * @param ex externalService
 	 * @return visibilityMode 
 	 */
-	protected synchronized VisibilityMode whichVisibility(final ExternalService ex){
+	protected synchronized VisibilityMode whichVisibility() {
 		
 		VisibilityMode mode = VisibilityMode.NOVISIBLE;
 		
 		boolean isVisible = false;
 		
-		isVisible = obliged.evaluateVisibility(ex);
+		isVisible = obliged.evaluateVisibility();
 		if (isVisible) {
 			mode = VisibilityMode.OBLIGED;
 		
 		} else {
-			isVisible = autoSubscribed.evaluateVisibility(ex);
+			isVisible = autoSubscribed.evaluateVisibility();
 			if (isVisible) {
 				mode = VisibilityMode.AUTOSUBSCRIBED;
 			
 			} else {
-				isVisible = allowed.evaluateVisibility(ex);
+				isVisible = allowed.evaluateVisibility();
 				if (isVisible) {
 					mode = VisibilityMode.ALLOWED;
 				} else {

@@ -91,7 +91,7 @@ public class DomainServiceStub implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String)
 	 */
-	public ContextBean getContext(@SuppressWarnings("unused") final String uid, final String contextId) {
+	public ContextBean getContext(final String uid, final String contextId) {
 		ContextBean ret = null;
 		if (context.getId().equals(contextId)) {
 			ret = context;
@@ -100,62 +100,28 @@ public class DomainServiceStub implements DomainService {
 	}
 	
 	/**
-	 * @param uid
-	 * @param contextId
-	 * @param ex
-	 * @return a contextBean
-	 */
-	public ContextBean getContext(final String uid, final String contextId, final ExternalService ex) {
-		return getContext(uid, contextId);
-	}
-
-
-	/**
-	 * @param contextId
-	 * @param uid
-	 * @return list of CategoryBean
-	 */
-	public List<CategoryBean> getDisplayedCategories(final String contextId, final String uid) {
-		List<CategoryBean> ret = null;
-		ret = categories;
-		return ret;
-	}
-	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedCategories(
-	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 *   java.lang.String, java.lang.String)
 	 */
-	public List<CategoryBean> getDisplayedCategories(final String uid, final String contextId, 
-			@SuppressWarnings("unused") final ExternalService ex) {
+	public List<CategoryBean> getDisplayedCategories(final String uid, final String contextId) {
 		return getDisplayedCategories(contextId, uid);
 	}
 	
 	/**
-	 * @param categoryId
-	 * @param uid
-	 * @return list of sourceBean
-	 */
-	public List<SourceBean> getDisplayedSources(final String categoryId, final String uid) {
-		List<SourceBean> ret = null;
-		ret = sources;
-		return ret;
-	}
-	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(
-	 * java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 * java.lang.String, java.lang.String)
 	 */
-	public List<SourceBean> getDisplayedSources(final String uid, final String categoryId, 
-			@SuppressWarnings("unused") final ExternalService ex) {
+	public List<SourceBean> getDisplayedSources(final String uid, final String categoryId) {
 		return getDisplayedSources(categoryId, uid);
 	}
 	
 	
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(
-	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 *   java.lang.String, java.lang.String)
 	 */
 	public List<ItemBean> getItems(@SuppressWarnings("unused") final String sourceId, 
-			@SuppressWarnings("unused") final String uid, 
-			@SuppressWarnings("unused") final ExternalService ex) {
+			@SuppressWarnings("unused") final String uid) {
 		return items;
 	}
 
@@ -172,11 +138,11 @@ public class DomainServiceStub implements DomainService {
 
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(
-	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 *   java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
 	public List<CategoryBean> getVisibleCategories(
-			final String uid, final String contextId, final ExternalService ex) 
+			final String uid, final String contextId) 
 	throws ContextNotFoundException {
 		List<CategoryBean> ret = null;
 		ret = categories;
@@ -190,9 +156,9 @@ public class DomainServiceStub implements DomainService {
 	 * @param ex 
 	 * @return sources
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(
-	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 *   java.lang.String, java.lang.String)
 	 */
-	public List<SourceBean> getVisibleSources(final String uid, final String categoryId, final ExternalService ex) {
+	public List<SourceBean> getVisibleSources(final String uid, final String categoryId) {
 		List<SourceBean> ret = null;
 		ret = sources;
 		return ret;
@@ -227,11 +193,11 @@ public class DomainServiceStub implements DomainService {
 	
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#subscribeToSource(
-	 *   java.lang.String, java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 *   java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
 	public void subscribeToSource(
-		final String uid, final String categorieId, final String sourceId, final ExternalService ex)
+		final String uid, final String categorieId, final String sourceId)
 	throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, 
 	CategoryNotVisibleException, CategoryProfileNotFoundException, CategoryOutOfReachException, 
 	SourceProfileNotFoundException, SourceNotVisibleException, 
@@ -241,32 +207,31 @@ public class DomainServiceStub implements DomainService {
 	
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#subscribeToCategory(
-	 *   java.lang.String, java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
 	public void subscribeToCategory(final String uid, final String contextId, 
-			final String categoryId, final ExternalService externalService) {
+			final String categoryId) {
 		// nothing
 	}
 		
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToCategory(
-	 *   java.lang.String, java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void unsubscribeToCategory(
 			@SuppressWarnings("unused") final String uid, 
 			@SuppressWarnings("unused") final String contextId, 
-			@SuppressWarnings("unused") final String categoryId, 
-			@SuppressWarnings("unused") final ExternalService externalService) {
+			@SuppressWarnings("unused") final String categoryId) {
 //		 nothing
 	}
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToSource(
-	 *   java.lang.String, java.lang.String, java.lang.String, org.esupportail.lecture.domain.ExternalService)
+	 *   java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
 	public void unsubscribeToSource(
-			final String uid, final String categorieId, final String sourceId, final ExternalService ex) {
+			final String uid, final String categorieId, final String sourceId) {
 		// nothing
 	}
 
