@@ -96,27 +96,6 @@ public abstract class Category implements Element, Serializable {
 	}
 
 
-	
-	/*
-	 *************************** ACCESSORS *********************************/	
-	
-	
-	
-	/**
-	 * @return Returns the sourceProfilesHash of this category.
-	 */
-	protected Hashtable<String, SourceProfile> getSourceProfilesHash() {
-		return sourceProfilesHash;
-	}
-
-	/**
-	 * @param sourceProfilesHash to set.
-	 */
-	public void setSourceProfilesHash(final Hashtable<String, SourceProfile> sourceProfilesHash) {
-		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
-		this.sourceProfilesHash = sourceProfilesHash;
-	}
-	
 	/**
 	 * Returns the name of the category.
 	 * @return name
@@ -149,6 +128,27 @@ public abstract class Category implements Element, Serializable {
 		getProfile().setDescription(description);
 	}
 	
+	/*
+	 *************************** ACCESSORS *********************************/	
+	
+	
+	
+	/**
+	 * @return Returns the sourceProfilesHash of this category.
+	 */
+	protected Hashtable<String, SourceProfile> getSourceProfilesHash() {
+		return sourceProfilesHash;
+	}
+
+	/**
+	 * @param sourceProfilesHash to set.
+	 */
+	public void setSourceProfilesHash(final Hashtable<String, SourceProfile> sourceProfilesHash) {
+		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
+		this.sourceProfilesHash = sourceProfilesHash;
+	}
+	
+
 	/**
 	 * Returns the id of the categoryProfile associated to this Category.
 	 * @return id
@@ -171,7 +171,6 @@ public abstract class Category implements Element, Serializable {
 	 * @see Category#profileId
 	 */
 	public void setProfileId(final String profileId) {
-		// TODO (GB later) revoir la visibilite public qd on créera les sourcesProfiles avec des daoBeans
 		this.profileId = profileId;
 	}
 

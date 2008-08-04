@@ -14,6 +14,7 @@ import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
+import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 
 
 /**
@@ -326,40 +327,41 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			LOG.debug("id = " + this.getId() + " - updateCustomCategory("
 					+ customManagedCategory.getElementId() + ")");
 		}
-		// no loadSource(ex) is needed here
 		return setUpCustomCategoryVisibility(customManagedCategory);	
 	}
 
 	/**
 	 * Load the source referenced by this ManagedSourceProfile.
-	 * @throws InfoDomainException 
+	 * @throws SourceNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource()
 	 */
 	@Override
-	protected void loadSource() throws InfoDomainException {
+	protected void loadSource() throws SourceNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - loadSource()");
 		}
-			
-		Accessibility accessibility = getAccess();
 		try {
+			Accessibility accessibility = getAccess();
 			if (Accessibility.PUBLIC.equals(accessibility)) {
-				// managed Source Profile => single or globalSource
 				Source source;
 				source = DomainTools.getDaoService().getSource(this);
 				setElement(source);
-
 			} else if (Accessibility.CAS.equals(accessibility)) {
 				ExternalService ex = DomainTools.getExternalService();
-				String ptCas = ex.getUserProxyTicketCAS(getSourceURL());
+				String sourceUrl = getSourceURL();
+				String ptCas = ex.getUserProxyTicketCAS(sourceUrl);
 				Source source = DomainTools.getDaoService().getSource(this, ptCas);
 				setElement(source);
-
-			}
+			} 
 		} catch (InfoDaoException e) {
-			String errorMsg = "Impossible to load source with ID: " + this.getId();
+			String errorMsg = "The source " + this.getId() 
+				+ " is impossible to be loaded because of DaoException.";
 			LOG.error(errorMsg);
-			throw new InfoDomainException(errorMsg, e);
+			throw new SourceNotLoadedException(errorMsg, e);
+		} catch (InfoDomainException e) {
+			String errorMsg = "The source " + this.getId() + " is impossible to be loaded.";
+			LOG.error(errorMsg);
+			throw new SourceNotLoadedException(errorMsg, e);
 		}
 		
 	}

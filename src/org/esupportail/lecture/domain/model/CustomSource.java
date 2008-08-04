@@ -88,20 +88,21 @@ public abstract class CustomSource implements CustomElement {
 	 * Returns the list of items contained in the source referred by this customSource.
 	 * Items are ready to be displayed
 	 * @return the list of items
-	 * @throws MappingNotFoundException
-	 * @throws ComputeItemsException
-	 * @throws Xml2HtmlException
 	 * @throws SourceProfileNotFoundException 
 	 * @throws CategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws SourceTimeOutException 
-	 * @throws InfoDomainException 
+	 * @throws MappingNotFoundException
+	 * @throws ComputeItemsException
+	 * @throws Xml2HtmlException 
+	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws Xml2HtmlException 
+	 * @throws ComputeItemsException 
+	 * @throws MappingNotFoundException 
 	 * @throws SourceNotLoadedException 
 	 */
-	public List<Item> getItems() 
-	throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
-	ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, 
-	SourceTimeOutException, InfoDomainException  {
+	public List<Item> getItems() throws ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, 
+	SourceProfileNotFoundException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException, SourceNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + elementId + " - getItems()");
 		}

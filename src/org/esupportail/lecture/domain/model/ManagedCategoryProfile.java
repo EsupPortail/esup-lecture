@@ -380,34 +380,26 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - loadCategory()");
 		}
-		Accessibility accessibility = getAccess();
-		if (Accessibility.PUBLIC.equals(accessibility)) {
-			try {
+		try {
+			Accessibility accessibility = getAccess();
+			if (Accessibility.PUBLIC.equals(accessibility)) {
 				setElement(DomainTools.getDaoService().getManagedCategory(this));
-			} catch (InfoDaoException e) {
-				String errorMsg = "The managedCategory " + this.getId()
-					+ " is impossible to load.";
-				LOG.error(errorMsg);
-				throw new CategoryNotLoadedException(errorMsg, e);
-			}
-						
-		} else if (Accessibility.CAS.equals(accessibility)) {
-			String url = getCategoryURL();
-			String ptCas;
-			String errorMsg = "The managedCategory " + this.getId()
-			+ " is impossible to load.";
-			try {
+			} else if (Accessibility.CAS.equals(accessibility)) {
+				String url = getCategoryURL();
+				String ptCas;
 				ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);
-			} catch (InfoDomainException e1) {
-				LOG.error(errorMsg);
-				throw new CategoryNotLoadedException(errorMsg, e1);
-			}
-			try {
 				setElement(DomainTools.getDaoService().getManagedCategory(this, ptCas));
-			} catch (InfoDaoException e2) {
-				LOG.error(errorMsg);
-				throw new CategoryNotLoadedException(errorMsg, e2);
 			}
+		} catch (InfoDaoException e) {
+			String errorMsg = "The managedCategory " + this.getId()
+				+ " is impossible to be loaded because od DaoException.";
+			LOG.error(errorMsg);
+			throw new CategoryNotLoadedException(errorMsg, e);
+		} catch (InfoDomainException e) {
+			String errorMsg = "The managedCategory " + this.getId()
+			+ " is impossible to be loaded.";
+			LOG.error(errorMsg);
+			throw new CategoryNotLoadedException(errorMsg, e);
 		}
 	}
 	

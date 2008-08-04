@@ -105,12 +105,9 @@ public abstract class SourceProfile implements ElementProfile {
 
 	/**
 	 * Load the source referenced by this SourceProfile.
-	 * @throws SourceTimeOutException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws InfoDomainException 
+	 * @throws SourceNotLoadedException 
 	 */
-	protected abstract void loadSource() 
-	throws SourceTimeOutException, CategoryNotLoadedException, InfoDomainException ; 
+	protected abstract void loadSource() throws SourceNotLoadedException; 
 	
 	
 	/**
@@ -120,13 +117,10 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @throws MappingNotFoundException
 	 * @throws ComputeItemsException
 	 * @throws Xml2HtmlException
-	 * @throws SourceTimeOutException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws InfoDomainException 
 	 */
 	protected List<Item> getItems() 
 	throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
-	SourceTimeOutException, CategoryNotLoadedException, InfoDomainException  {
+	SourceNotLoadedException  {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id = " + this.id + " - getItems()");
     	}
@@ -153,18 +147,17 @@ public abstract class SourceProfile implements ElementProfile {
 	/**
 	 * Returns source of this managed source profile (if loaded).
 	 * @return source
-	 * @throws SourceNotLoadedException 
+	 * @throws SourceNotLoadedException
 	 */
 	protected Source getElement() throws SourceNotLoadedException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.id + " - getElement()");
     	}
 		if (source == null) {
-			String errorMsg = "Source " + id + " is not loaded in profile";
-			LOG.error(errorMsg);
-			throw new SourceNotLoadedException(errorMsg);
+			loadSource();
 		}
 		return source;
+		
 	}
 	
 	
