@@ -18,7 +18,6 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 /**
@@ -129,10 +128,7 @@ public class Context {
 						+ " because its category is not loaded - " 
 						+ " It is very strange because loadCategory() has " 
 						+ "been called before in mcp.updateCustomContext() ...", e);
-			} catch (InfoDomainException e) {
-				LOG.error("Impossible to update CustomContext associated to context " + getId()
-						+ " for managedCategoryProfile " + mcp.getId());
-			}
+			} 
 		}
 		// update for managedCategories not anymore in this context
 		updateCustomForVanishedSubscriptions(customContext);
@@ -191,10 +187,7 @@ public class Context {
 						+ " because its category is not loaded - " 
 						+ " It is very strange because loadCategory() has " 
 						+ "been called before in mcp.updateCustomContext() ...", e);
-			} catch (InfoDomainException e) {
-				LOG.error("Impossible to update CustomContext associated to context " + getId()
-						+ " for managedCategoryProfile " + mcp.getId());
-			}
+			} 
 		}
 		
 		// update for managedCategories not anymore in this Context

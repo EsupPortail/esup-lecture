@@ -61,7 +61,7 @@ public class MappingFile {
 	/**
 	 * Indicates if file has been modified since the last getInstance() calling.
 	 */
-	private static boolean modified = false;
+	private static boolean modified;
 	
 	/**
 	 * List of loaded mappings for file to be set in channel.
@@ -79,6 +79,7 @@ public class MappingFile {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("MappingFile()");
 		}
+		modified = false;
 		
 		try {
 			xmlFile = new XMLConfiguration();
@@ -231,7 +232,7 @@ public class MappingFile {
 			int nbXPathNameSpaces = xmlFile.getMaxIndex(pathMapping + ".XPathNameSpace") + 1;
 			HashMap<String, String> xPathNameSpaces = new HashMap<String, String>();
 			for (int j = 0; j < nbXPathNameSpaces; j++) {
-				String pathXPathNameSpace = pathMapping + ".XPathNameSpace("+j+")";
+				String pathXPathNameSpace = pathMapping + ".XPathNameSpace(" + j + ")";
 				String prefix = xmlFile.getString(pathXPathNameSpace + "[@prefix]");
 				String uri = xmlFile.getString(pathXPathNameSpace + "[@uri]");
 				xPathNameSpaces.put(prefix, uri);

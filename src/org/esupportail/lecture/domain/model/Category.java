@@ -48,7 +48,7 @@ public abstract class Category implements Element, Serializable {
 	/**
 	 * SourcesProfiles contained by this Category.
 	 */
-	private Hashtable<String, SourceProfile> sourceProfilesHash = new Hashtable<String, SourceProfile>();
+	private Hashtable<String, SourceProfile> sourceProfilesHash;
 
 	/**
 	 * orderedSourceIDs store SourceID and ordering order in the CategoryProfile definition.
@@ -69,6 +69,7 @@ public abstract class Category implements Element, Serializable {
     	}
 		profile = cp;
 		profileId = cp.getId();
+		sourceProfilesHash = new Hashtable<String, SourceProfile>();
 	}
 	
 	/*

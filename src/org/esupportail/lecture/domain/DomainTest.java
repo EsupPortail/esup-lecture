@@ -73,6 +73,12 @@ public class DomainTest {
 	 */
 	private static String sourceId;
 	
+	/**
+	 * Constructor. 
+	 */
+	public DomainTest() {
+		// Nothing to do
+	}
 	
 	/*
 	 ************************** MAIN *************************************** */	

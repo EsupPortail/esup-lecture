@@ -94,7 +94,7 @@ public class Channel implements InitializingBean {
 	/**
 	 * configLoaded = true if channel config has ever been loaded in channel.
 	 */
-	private boolean configLoaded = false;
+	private boolean configLoaded;
 	
 	/**
 	 * relative file path of the mapping file.
@@ -104,7 +104,7 @@ public class Channel implements InitializingBean {
 	/**
 	 * mappingsLoaded = true if channel config has ever been loaded in channel.
 	 */
-	private boolean mappingsLoaded = false;
+	private boolean mappingsLoaded;
 	
 	/* Some services */
 	
@@ -122,12 +122,13 @@ public class Channel implements InitializingBean {
 	/*
 	 ************************** INIT *********************************/	
 
-//	/**
-//	 * default constructor
-//	 */
-//	public Channel(){
-//		userProfilesHash = new Hashtable<String,UserProfile>();
-//	}
+	/**
+	 * default constructor.
+	 */
+	public Channel() {
+		configLoaded = false;
+		mappingsLoaded = false;
+	}
 	
 	/**
 	 * @throws FatalException

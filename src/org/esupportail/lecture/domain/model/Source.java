@@ -112,7 +112,7 @@ public abstract class Source implements Element, Serializable {
 	/**
 	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI).
 	 */
-	private HashMap<String, String> xPathNameSpaces = new HashMap<String, String>();
+	private HashMap<String, String> xPathNameSpaces;
 
 	/**
 	 * Items List of this source.
@@ -137,6 +137,7 @@ public abstract class Source implements Element, Serializable {
 		profile = sp;
 		profileId = sp.getId();
 		itemComputed = false;
+		xPathNameSpaces = new HashMap<String, String>();
 	}
 
 	/*
@@ -219,7 +220,7 @@ public abstract class Source implements Element, Serializable {
 			if (xsltURL == null || itemXPath == null || xPathNameSpaces.size() == 0) {
 				Mapping m = new Mapping();
 				String url = getSourceURL();
-				if ( url != null) {
+				if (url != null) {
 					//Try to find a mapping from url
 					m = channel.getMappingBySourceURL(url);
 				} else {
@@ -254,10 +255,10 @@ public abstract class Source implements Element, Serializable {
 					LOG.error(errorMsg);
 					throw new MappingNotFoundException("Mapping not found for source " + profileId);
 				}
-				if (xsltURL == null || xsltURL == "") {
+				if (xsltURL == null || xsltURL.equals("")) {
 					xsltURL = m.getXsltUrl();
 				} 
-				if (itemXPath == null || itemXPath == "") {
+				if (itemXPath == null || itemXPath.equals("")) {
 					itemXPath = m.getItemXPath();
 				} 
 				if (xPathNameSpaces.size() == 0) {

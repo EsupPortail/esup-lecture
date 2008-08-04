@@ -16,10 +16,8 @@ import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
-import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
@@ -91,7 +89,7 @@ public class DomainServiceStub implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String)
 	 */
-	public ContextBean getContext(final String uid, final String contextId) {
+	public ContextBean getContext(@SuppressWarnings("unused") final String uid, final String contextId) {
 		ContextBean ret = null;
 		if (context.getId().equals(contextId)) {
 			ret = context;
@@ -153,7 +151,6 @@ public class DomainServiceStub implements DomainService {
 	/**
 	 * @param uid 
 	 * @param categoryId 
-	 * @param ex 
 	 * @return sources
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(
 	 *   java.lang.String, java.lang.String)
@@ -193,7 +190,7 @@ public class DomainServiceStub implements DomainService {
 	
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#subscribeToSource(
-	 *   java.lang.String, java.lang.String)
+	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
 	public void subscribeToSource(
@@ -227,7 +224,7 @@ public class DomainServiceStub implements DomainService {
 	}
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToSource(
-	 *   java.lang.String, java.lang.String)
+	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
 	public void unsubscribeToSource(

@@ -96,7 +96,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Constructor. 
 	 */
-	@SuppressWarnings("synthetic-access")
 	public ManagedCategoryProfile() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("ManagedCategoryProfile()");
@@ -240,7 +239,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param visibility 
 	 */
 	public void setVisibility(final VisibilitySets visibility) {
-		inner.visibility = visibility;
+		inner.setVisibility(visibility);
 		featuresComputed = false;
 	}
 	
@@ -258,7 +257,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @param edit 
 	 */
 	public void setEdit(final Editability edit) {
-		inner.edit = edit;
+		inner.setEdit(edit);
 		featuresComputed = false;
 	}
 	
@@ -282,17 +281,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 					
 				// Inutile : edit obligatoire le XML d'une category				
 				if (edit == null) {
-					edit = inner.edit;
+					edit = inner.getEdit();
 				}
 				if (visibility == null) {
-					visibility = inner.visibility;
+					visibility = inner.getVisibility();
 				} else if (visibility.isEmpty()) {
-					visibility = inner.visibility;
+					visibility = inner.getVisibility();
 				}
 			} else {
 				// No trust => features of categoryProfile 
-				edit = inner.edit;
-				visibility = inner.visibility;
+				edit = inner.getEdit();
+				visibility = inner.getVisibility();
 			}
 			featuresComputed = true;
 		}
@@ -312,11 +311,43 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
  		/** 
 		 * Managed category edit mode .
 		*/
-		protected Editability edit;
+		private Editability edit;
 		/**
 		 * Visibility rights for groups on the remote source.
 		 */
-		protected VisibilitySets visibility;
+		private VisibilitySets visibility;
+	
+		/**
+		 * Constructor. 
+		 */
+		protected InnerFeatures() {
+			// Nothing to do
+		}
+		
+		/**
+		 * @return edit
+		 */
+		protected Editability getEdit() {
+			return edit;
+		}
+		/**
+		 * @param edit
+		 */
+		protected void setEdit(final Editability edit) {
+			this.edit = edit;
+		}
+		/**
+		 * @return visibility
+		 */
+		protected VisibilitySets getVisibility() {
+			return visibility;
+		}
+		/**
+		 * @param visibility
+		 */
+		protected void setVisibility(final VisibilitySets visibility) {
+			this.visibility = visibility;
+		}
 	}
 
 	/* UPDATING */
@@ -327,15 +358,16 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * or not to customContext.
 	 * @param customContext the customContext to update
 	 * @return true if the category is visible by the userProfile
-	 * @throws InfoDomainException 
+	 * @throws CategoryNotLoadedException 
 	 */
 	protected VisibilityMode updateCustomContext(final CustomContext customContext) 
-		throws InfoDomainException {
+	throws CategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustomContext("
 					+ customContext.getElementId() + ")");
 		}
-		loadCategory(); // TODO (GB) a retirer certainement
+		// GB : devenu intuile : loadCategory appelée par getElement() 
+		// loadCategory(); 
 		return setUpCustomContextVisibility(customContext);
 		
 	}

@@ -106,6 +106,7 @@ public class CustomManagedCategory extends CustomCategory {
 		// TODO (GB later) redéfinir avec les custom personnal 
 		// category : en fonction de l'ordre d'affichage peut etre.
 		
+		UserProfile userProfile = super.getUserProfile();
 		ManagedCategoryProfile profile = getProfile();
 		try {
 			profile.updateCustom(this);
@@ -125,7 +126,7 @@ public class CustomManagedCategory extends CustomCategory {
 		}
 		
 		List<CustomSource> listSources = new Vector<CustomSource>();
-		for (CustomSource customSource : subscriptions.values()){
+		for (CustomSource customSource : subscriptions.values()) {
 			listSources.add(customSource);
 			LOG.trace("Add source");
 		}
@@ -153,6 +154,7 @@ public class CustomManagedCategory extends CustomCategory {
 		}
 		// TODO (GB later) redéfinir avec les custom personnal 
 		// category : en fonction de l'ordre d'affichage peut etre.
+		UserProfile userProfile = super.getUserProfile();
 		ManagedCategoryProfile profile = getProfile();
 		List<CoupleProfileVisibility> couplesVisib;
 		try {
@@ -182,7 +184,8 @@ public class CustomManagedCategory extends CustomCategory {
 			} else { 
 				// It must be ALLOWED OR AUTOSUBSRIBED
 				if (subscriptions.containsKey(sourceProfile.getId())) {
-					coupleA = new CoupleProfileAvailability(sourceProfile, AvailabilityMode.SUBSCRIBED);
+					coupleA = new CoupleProfileAvailability(sourceProfile,
+						AvailabilityMode.SUBSCRIBED);
 				} else {
 					coupleA = new CoupleProfileAvailability(sourceProfile, 
 						AvailabilityMode.NOTSUBSCRIBED);
@@ -213,6 +216,7 @@ public class CustomManagedCategory extends CustomCategory {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + sourceId + ")");
 		}
+		UserProfile userProfile = super.getUserProfile();
 		ManagedCategoryProfile catProfile = getProfile();
 		ManagedSourceProfile soProfile = null;
 		VisibilityMode mode = null;
@@ -279,6 +283,7 @@ public class CustomManagedCategory extends CustomCategory {
 			LOG.debug("unsubscribeToSource(" + sourceId + ")");
 		}
 		try {
+			UserProfile userProfile = super.getUserProfile();
 			ManagedCategoryProfile catProfile = getProfile();
 			ManagedSourceProfile soProfile = null;
 			VisibilityMode mode = null;
@@ -477,7 +482,7 @@ public class CustomManagedCategory extends CustomCategory {
 		StringBuffer string = new StringBuffer(getClass().getSimpleName() + "#" + hashCode() 
 				+ "[elementId=[" + getElementId()
 				+ "], customCategoryPK=[" + getCustomCategoryPK() 
-				+ "], userProfile.id=[" + userProfile.getUserId() + "],");
+				+ "], userProfile.id=[" + super.getUserProfile().getUserId() + "],");
 		// subscriptions
 		string.append("\n subscriptions=[");
 		for (String key : subscriptions.keySet()) {

@@ -71,11 +71,17 @@ public class Mapping {
 	/**
 	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI).
 	 */
-	private HashMap<String, String> XPathNameSpaces = new HashMap<String, String>();
+	private HashMap<String, String> XPathNameSpaces;
 	
 	/*
 	 ************************** INIT *********************************/	
 	
+	/**
+	 * Constructor. 
+	 */
+	Mapping() {
+		XPathNameSpaces = new HashMap<String, String>();
+	}
 	
 	/*
 	 ************************** METHODS ******************************** */	

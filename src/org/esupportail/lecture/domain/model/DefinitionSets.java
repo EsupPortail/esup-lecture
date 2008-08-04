@@ -6,9 +6,9 @@
 package org.esupportail.lecture.domain.model;
 
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -44,6 +44,13 @@ public class DefinitionSets {
 	/* 
 	 ************************** INIT **********************************/
 
+	/**
+	 * Constructor.
+	 */
+	public DefinitionSets() {
+		// Nothing to do
+	}
+	
 	/*
 	 *************************** METHODS ******************************** */	
 	

@@ -130,7 +130,7 @@ public class ManagedCategory extends Category {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getProfileId() + " - setVisibility(visibility)");
 		}
-		inner.visibility = visibility;
+		inner.setVisibility(visibility);
 		getProfile().setFeaturesComputed(false);
 	}
 	
@@ -162,7 +162,7 @@ public class ManagedCategory extends Category {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getProfileId() + " - setEditability()");
 		}
-		inner.edit = edit;
+		inner.setEdit(edit);
 		getProfile().setFeaturesComputed(false);
 	}
 	
@@ -185,6 +185,12 @@ public class ManagedCategory extends Category {
 		 */
 		private VisibilitySets visibility;
 		
+		/**
+		 * Constructor. 
+		 */
+		protected InnerFeatures() {
+			// Nothing to do
+		}
 
 		/**
 		 * @return edit
@@ -225,7 +231,8 @@ public class ManagedCategory extends Category {
 	 * @throws CategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 */
-	protected synchronized void updateCustom(final CustomManagedCategory customManagedCategory) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
+	protected synchronized void updateCustom(final CustomManagedCategory customManagedCategory) 
+	throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + getProfileId() + " - updateCustom("
 					+ customManagedCategory.getElementId() + ")");
@@ -256,7 +263,8 @@ public class ManagedCategory extends Category {
 	 * @throws CategoryProfileNotFoundException 
 	 */
 	protected List<CoupleProfileVisibility> getVisibleSourcesAndUpdateCustom(
-			final CustomManagedCategory customManagedCategory) throws CategoryNotLoadedException, CategoryProfileNotFoundException {
+			final CustomManagedCategory customManagedCategory)
+	throws CategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getProfileId() + " - getVisibleSourcesAndUpdateCustom("
 					+ getProfileId() + ")");

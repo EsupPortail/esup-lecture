@@ -85,7 +85,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * Constructor.
 	 * @param mc managedCategory parent of this ManagedSourceProfile
 	 */
-	@SuppressWarnings("synthetic-access")
 	public ManagedSourceProfile(final ManagedCategory mc) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("ManagedSourceProfile(" + mc.getProfileId() + ")");
@@ -122,7 +121,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - setAccess()");
 		}
-		inner.access = access;
+		inner.setAccess(access);
 		featuresComputed = false;
 	}
 
@@ -166,7 +165,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - setVisibility(visibility)");
 		}
-		inner.visibility = visibility;
+		inner.setVisibility(visibility);
 		featuresComputed = false;
 	}
 
@@ -192,7 +191,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - setTimeOut(" + timeOut + ")");
 		}
-		inner.timeOut = timeOut;
+		inner.setTimeOut(timeOut);
 		featuresComputed = false;
 	}
 
@@ -209,9 +208,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (!featuresComputed) {
 			try {
 				if (categoryProfile.getTrustCategory()) {		
-					access = inner.access;
-					visibility = inner.visibility;
-					timeOut = inner.timeOut;
+					access = inner.getAccess();
+					visibility = inner.getVisibility();
+					timeOut = inner.getTimeOut();
 					
 					if (access == null) {
 						access = category.getAccess();
@@ -253,16 +252,59 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		/**
 		 * Access mode on the remote source.
 		 */
-		public Accessibility access;
+		private Accessibility access;
 		/**
 		 * Visibility rights for groups on the remote source.
 		 */
-		public VisibilitySets visibility;
+		private VisibilitySets visibility;
 		/**
 		 * timeOut to get the remote source.
 		 */
-		public int timeOut;
+		private int timeOut;
 		
+		/**
+		 * Constructor. 
+		 */
+		protected InnerFeatures() {
+			// Nothing to do
+		}
+
+		/**
+		 * @return access
+		 */
+		protected Accessibility getAccess() {
+			return access;
+		}
+		/**
+		 * @param access
+		 */
+		protected void setAccess(final Accessibility access) {
+			this.access = access;
+		}
+		/**
+		 * @return visibility
+		 */
+		protected VisibilitySets getVisibility() {
+			return visibility;
+		}
+		/**
+		 * @param visibility
+		 */
+		protected void setVisibility(final VisibilitySets visibility) {
+			this.visibility = visibility;
+		}
+		/**
+		 * @return timeOut
+		 */
+		protected int getTimeOut() {
+			return timeOut;
+		}
+		/**
+		 * @param timeOut
+		 */
+		protected void setTimeOut(final int timeOut) {
+			this.timeOut = timeOut;
+		}
 				
 	}
 	

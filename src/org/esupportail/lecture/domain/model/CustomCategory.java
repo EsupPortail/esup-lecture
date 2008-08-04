@@ -34,7 +34,7 @@ public abstract class CustomCategory implements CustomElement {
 	/**
 	 * The Id of the categoryProfile referring by this CustomCategory.
 	 */
-	protected UserProfile userProfile;
+	private UserProfile userProfile;
 	/**
 	 * Log instance.
 	 */

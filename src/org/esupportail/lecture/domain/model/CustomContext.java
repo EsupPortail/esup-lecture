@@ -21,7 +21,6 @@ import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
-import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
@@ -173,7 +172,8 @@ public class CustomContext implements CustomElement {
 			} else { 
 				// It must be ALLOWED OR AUTOSUBSRIBED
 				if (subscriptions.containsKey(categoryProfile.getId())) {
-					coupleA = new CoupleProfileAvailability(categoryProfile, AvailabilityMode.SUBSCRIBED);
+					coupleA = new CoupleProfileAvailability(categoryProfile, 
+						AvailabilityMode.SUBSCRIBED);
 				} else {
 					coupleA = new CoupleProfileAvailability(categoryProfile, 
 						AvailabilityMode.NOTSUBSCRIBED);
@@ -221,14 +221,8 @@ public class CustomContext implements CustomElement {
 				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
 					+ "is not refered by any customContext in userProfile "
 					+ userProfile.getUserId());
-			} catch (InfoDomainException e) {
-				throw new RuntimeException("Exception in subscribeToCategory", e);
-			}
-		} catch (InfoDomainException e) {
-			throw new RuntimeException("Exception in subscribeToCategory(" + getElementId()
-					+ ")", e);
-		}
-
+			} 
+		} 
 		
 		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
 			if (subscriptions.containsKey(categoryId)) {
@@ -293,12 +287,8 @@ public class CustomContext implements CustomElement {
 				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
 					+ "is not refered by any customContext in userProfile "
 					+ userProfile.getUserId());
-			} catch (InfoDomainException e) {
-				throw new RuntimeException("Exception in unsubscribeToCategory", e);
 			}
-		} catch (InfoDomainException e) {
-			throw new RuntimeException("Exception in unsubscribeToCategory", e);
-		}
+		} 
 		
 		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
 			if (!subscriptions.containsKey(categoryId)) {

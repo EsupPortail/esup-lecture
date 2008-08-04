@@ -37,6 +37,14 @@ public class RegularOfSet {
 	 */
 	private String value = "";
 
+	/*
+	 ************************** INIT *********************************/	
+	/**
+	 * Constructor. 
+	 */
+	public RegularOfSet() {
+		// Nothing to do
+	}
 
 	/*
 	 *************************** METHODS ******************************** */	

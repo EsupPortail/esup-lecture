@@ -23,13 +23,13 @@ import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.Channel;
+import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomManagedSource;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
@@ -50,7 +50,6 @@ import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
 import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
@@ -515,7 +514,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(
-	 *   java.lang.String, java.lang.Stringe)
+	 *   java.lang.String, java.lang.String)
 	 */
 	public List<SourceBean> getVisibleSources(final String uid, final String categoryId) 
 	throws CategoryNotVisibleException, CategoryOutOfReachException, 

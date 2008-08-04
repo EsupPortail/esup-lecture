@@ -25,6 +25,9 @@ public class SingleSource extends Source {
 	/**
 	 * Constructor.
 	 */
+	/**
+	 * @param sp
+	 */
 	public SingleSource(final SourceProfile sp) {
 		super(sp);
 	   	if (LOG.isDebugEnabled()) {

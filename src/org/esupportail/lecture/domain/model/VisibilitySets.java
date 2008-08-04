@@ -25,19 +25,27 @@ public class VisibilitySets {
 	/**
 	 * Group of allowed users to subscribe to element.
 	 */
-	private DefinitionSets allowed = new DefinitionSets();
+	private DefinitionSets allowed;
 	/**
 	 * Group of autoSubribed users to element (subscribed automatically, unsubscription possible).
 	 */
-	private DefinitionSets autoSubscribed = new DefinitionSets();
+	private DefinitionSets autoSubscribed;
 	/**
 	 * Group of obliged users (no unsubscription possible).
 	 */
-	private DefinitionSets obliged = new DefinitionSets();
+	private DefinitionSets obliged;
 
 	/*
 	 *************************** INIT  *********************************** */	
 
+	/**
+	 * Constructor. 
+	 */
+	public VisibilitySets() {
+		allowed = new DefinitionSets();
+		autoSubscribed = new DefinitionSets();
+		obliged = new DefinitionSets();
+	}
 
 	/*
 	 ************************** METHODS ********************************** */	

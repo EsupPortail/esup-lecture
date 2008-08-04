@@ -74,7 +74,7 @@ public abstract class SourceProfile implements ElementProfile {
 	/**
 	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI).
 	 */
-	private HashMap<String, String> xPathNameSpaces = new HashMap<String, String>();
+	private HashMap<String, String> xPathNameSpaces;
 
 	/**
 	 * Ttl of remote reloading.
@@ -97,6 +97,7 @@ public abstract class SourceProfile implements ElementProfile {
 		}
 		ttl = DEFAULTTTL;
 		timeOut = DEFAULTTIMEOUT;
+		xPathNameSpaces = new HashMap<String, String>();
 	}
 
 	/*
