@@ -14,7 +14,7 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
@@ -110,12 +110,12 @@ public class CustomManagedCategory extends CustomCategory {
 		ManagedCategoryProfile profile = getProfile();
 		try {
 			profile.updateCustom(this);
-		} catch (CategoryNotLoadedException e1) {
+		} catch (ManagedCategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectué
 			try {
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId());
 				profile.updateCustom(this);
-			} catch (CategoryNotLoadedException e2) {
+			} catch (ManagedCategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
@@ -159,14 +159,14 @@ public class CustomManagedCategory extends CustomCategory {
 		List<CoupleProfileVisibility> couplesVisib;
 		try {
 			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this);
-		} catch (CategoryNotLoadedException e1) {
+		} catch (ManagedCategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId());
 				couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this);
-			} catch (CategoryNotLoadedException e2) {
+			} catch (ManagedCategoryNotLoadedException e2) {
 				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
 					+ "is not refered by any customContext in userProfile " 
 					+ userProfile.getUserId());
@@ -223,13 +223,13 @@ public class CustomManagedCategory extends CustomCategory {
 		try {
 			soProfile = catProfile.getSourceProfileById(sourceId);
 			mode = soProfile.updateCustomCategory(this);
-		} catch (CategoryNotLoadedException e1) {
+		} catch (ManagedCategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId());
 				soProfile = catProfile.getSourceProfileById(sourceId);
 				mode = soProfile.updateCustomCategory(this);
-			} catch (CategoryNotLoadedException e2) {
+			} catch (ManagedCategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
@@ -290,13 +290,13 @@ public class CustomManagedCategory extends CustomCategory {
 			try {
 				soProfile = catProfile.getSourceProfileById(sourceId);
 				mode = soProfile.updateCustomCategory(this);
-			} catch (CategoryNotLoadedException e1) {
+			} catch (ManagedCategoryNotLoadedException e1) {
 				// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 				try {
 					userProfile.updateCustomContextsForOneManagedCategory(getElementId());
 					soProfile = catProfile.getSourceProfileById(sourceId);
 					mode = soProfile.updateCustomCategory(this);
-				} catch (CategoryNotLoadedException e2) {
+				} catch (ManagedCategoryNotLoadedException e2) {
 					// Dans ce cas : la managedCategory n'est pointée par aucun 
 					// context correspondant à des customContext du userProfile => supression ?
 					userProfile.removeCustomManagedCategoryIfOrphan(getElementId());

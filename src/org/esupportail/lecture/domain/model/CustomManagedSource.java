@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
@@ -72,12 +72,12 @@ public class CustomManagedSource extends CustomSource {
 	 * Returns the ManagedSourceProfile of this CustomManagedSource.
 	 * @throws SourceProfileNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.CustomSource#getProfile()
 	 */
 	@Override
 	public SourceProfile getProfile() 
-	throws SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException {
+	throws SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException, ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + super.getElementId() + " - getProfile()");
 		}

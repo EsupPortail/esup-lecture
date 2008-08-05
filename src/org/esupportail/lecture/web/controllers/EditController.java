@@ -12,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.web.WebException;
@@ -151,7 +151,7 @@ public class EditController extends TwoPanesController {
 		List<CategoryBean> categories;
 		try {
 			categories = getFacadeService().getVisibleCategories(getUID(), ctxtId);
-		} catch (CategoryNotLoadedException e) {
+		} catch (ManagedCategoryNotLoadedException e) {
 			throw new WebException("Error in getCategories", e);
 		}
 		return categories;

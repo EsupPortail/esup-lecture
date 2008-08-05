@@ -14,7 +14,7 @@ import org.esupportail.lecture.domain.model.CategoryProfile;
 import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 
@@ -71,10 +71,10 @@ public class CategoryBean {
 	 * @param customCategory
 	 * @param customContext
 	 * @throws CategoryProfileNotFoundException
-	 * @throws CategoryNotLoadedException
+	 * @throws ManagedCategoryNotLoadedException
 	 */
 	public CategoryBean(final CustomCategory customCategory, final CustomContext customContext) 
-			throws CategoryProfileNotFoundException, CategoryNotLoadedException {
+			throws CategoryProfileNotFoundException, ManagedCategoryNotLoadedException {
 		CategoryProfile profile = customCategory.getProfile();
 		this.name = profile.getName();
 		this.description = profile.getDescription();
@@ -86,9 +86,9 @@ public class CategoryBean {
 	/**
 	 * constructor initializing object with CoupleProfileAvailability.
 	 * @param profAv CoupleProfileAvailability
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	public CategoryBean(final CoupleProfileAvailability profAv) throws CategoryNotLoadedException {
+	public CategoryBean(final CoupleProfileAvailability profAv) throws ManagedCategoryNotLoadedException {
 		CategoryProfile profile = (CategoryProfile) profAv.getProfile(); 
 		this.name = profile.getName();
 		this.id = profile.getId();

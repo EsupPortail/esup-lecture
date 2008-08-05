@@ -15,7 +15,7 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
@@ -87,14 +87,14 @@ public interface DomainService {
 	 * @return List(ItemBean)
 	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceTimeOutException 
 	 * @see FacadeService#getItems(String, String)
 	 */
 	List<ItemBean> getItems(String uid, String sourceId)  
 	throws SourceNotLoadedException, InternalDomainException, 
-	ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceTimeOutException;
+	ManagedCategoryProfileNotFoundException, ManagedCategoryNotLoadedException, SourceTimeOutException;
 
 	/**
 	 * @param uid 
@@ -122,12 +122,12 @@ public interface DomainService {
 	 * @param contextId
 	 * @return List(CategoryBean)
 	 * @throws ContextNotFoundException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @see FacadeService#getVisibleCategories(String, String)
 	 */
 	List<CategoryBean> getVisibleCategories(
 		final String uid, final String contextId) 
-	throws ContextNotFoundException, CategoryNotLoadedException;
+	throws ContextNotFoundException, ManagedCategoryNotLoadedException;
 	
 	/**
 	 * @param categoryId 

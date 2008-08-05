@@ -8,7 +8,7 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
@@ -142,7 +142,7 @@ public class UserProfile {
 		if (customCategory == null) {
 			try {
 				updateCustomContextsForOneManagedCategory(categoryId);
-			} catch (CategoryNotLoadedException e) {
+			} catch (ManagedCategoryNotLoadedException e) {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				removeCustomManagedCategoryIfOrphan(categoryId);
@@ -169,11 +169,11 @@ public class UserProfile {
 	 * @throws CategoryNotVisibleException
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
 	protected void updateCustomContextsForOneManagedCategory(final String categoryProfileId) 
 		throws  CategoryNotVisibleException, InternalDomainException, 
-		CategoryTimeOutException, CategoryNotLoadedException {
+		CategoryTimeOutException, ManagedCategoryNotLoadedException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug(ID + userId + " - updateCustomContextsForOneManagedCategory(" + categoryProfileId + ",ex)");
     	}

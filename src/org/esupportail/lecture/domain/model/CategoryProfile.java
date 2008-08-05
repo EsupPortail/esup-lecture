@@ -9,7 +9,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
@@ -68,9 +68,9 @@ public abstract class CategoryProfile implements ElementProfile {
 	
 	/**
 	 * @return Returns the category referenced by this CategoryProfile
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected Category getElement() throws CategoryNotLoadedException {
+	protected Category getElement() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + id + " - getElement()");
 		}
@@ -79,9 +79,9 @@ public abstract class CategoryProfile implements ElementProfile {
 	
 	/**
 	 * @return the Map of Ordered Source IDs
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	public Map<String, Integer> getOrderedSourceIDs() throws CategoryNotLoadedException {
+	public Map<String, Integer> getOrderedSourceIDs() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + id + " - getName()");
 		}
@@ -94,11 +94,11 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * (Defined in Category referred by this categoryProfile)
 	 * @param sourceProfileId id of the sourceProfile
 	 * @return the sourceProfile
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws SourceProfileNotFoundException 
 	 */
 	protected abstract SourceProfile getSourceProfileById(String sourceProfileId) 
-	throws CategoryNotLoadedException, SourceProfileNotFoundException;
+	throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException;
 
 	
 	/** 

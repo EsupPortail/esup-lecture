@@ -5,7 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 
 /**
@@ -20,9 +20,9 @@ interface ManagedElementProfile extends ElementProfile {
 	/**
 	 * Returns visibility of the ManagedElementProfile, ready to use (taking care of inheritance rules).
 	 * @return visibility 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	VisibilitySets getVisibility() throws CategoryNotLoadedException;
+	VisibilitySets getVisibility() throws ManagedCategoryNotLoadedException;
 	
 	/**
 	 * Sets visibility of the ManagedElementProfile (value defined in XML File).
@@ -33,9 +33,9 @@ interface ManagedElementProfile extends ElementProfile {
 	/**
 	 * Returns access mode of the ManagedElementProfile.
 	 * @return access 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	Accessibility getAccess() throws CategoryNotLoadedException; 
+	Accessibility getAccess() throws ManagedCategoryNotLoadedException; 
 	
 	/**
 	 * Sets access mode of the ManagedElementProfile.
@@ -46,9 +46,9 @@ interface ManagedElementProfile extends ElementProfile {
 	/**
 	 * Return timeOut of the element.
 	 * @return timeOut
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	int getTimeOut() throws CategoryNotLoadedException;
+	int getTimeOut() throws ManagedCategoryNotLoadedException;
 	
 	/**
 	 * Sets timeOut of the element.

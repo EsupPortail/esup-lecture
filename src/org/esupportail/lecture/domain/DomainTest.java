@@ -16,7 +16,7 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
@@ -250,7 +250,7 @@ public class DomainTest {
 			}	
 		} catch (ContextNotFoundException e) {
 			System.out.println("ContextNotFoundException !!!! sur context " + contextId);
-		} catch (CategoryNotLoadedException e) {
+		} catch (ManagedCategoryNotLoadedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -485,13 +485,13 @@ public class DomainTest {
 	 * Test of service "getItems".
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceNotLoadedException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws SourceTimeOutException 
 	 * @throws InternalDomainException 
 	 */
 	@SuppressWarnings("unused")
 	private static void testTimeOutValues() 
-	throws ManagedCategoryProfileNotFoundException, SourceNotLoadedException, CategoryNotLoadedException, SourceTimeOutException, InternalDomainException {
+	throws ManagedCategoryProfileNotFoundException, SourceNotLoadedException, ManagedCategoryNotLoadedException, SourceTimeOutException, InternalDomainException {
 		printIntro("testTimeOutValues");
 		System.out.println(" ** category CP1 ( no trust category) **********");
 		System.out.println(" ***** source un (timeout present) **********");
@@ -513,13 +513,13 @@ public class DomainTest {
 	 * @throws InternalDomainException 
 	 * @throws SourceNotLoadedException 
 	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws SourceTimeOutException 
 	 */
 	@SuppressWarnings("unused")
 	private static void testMarkItemReadMode() 
-	throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException {
+	throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, ManagedCategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException {
 		printIntro("markItemReadMode");
 		System.out.println("Marquage de l'item " + itemId + " comme lu");
 		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId, true);
@@ -584,12 +584,12 @@ public class DomainTest {
 	 * @throws SourceNotLoadedException
 	 * @throws InternalDomainException 
 	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws SourceProfileNotFoundException 
 	 * @throws SourceTimeOutException 
 	 */
 	private static void testGetItems() 
-	throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException  {
+	throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, ManagedCategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException  {
 		printIntro("getItems");
 		System.out.println(" **** source " + sourceId + " **********");
 		List<ItemBean> items = facadeService.getItems(userId, sourceId);

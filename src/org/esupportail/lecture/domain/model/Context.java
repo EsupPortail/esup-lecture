@@ -17,7 +17,7 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 /**
@@ -122,7 +122,7 @@ public class Context {
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet) {
 			try {
 				mcp.updateCustomContext(customContext);
-			} catch (CategoryNotLoadedException e) {
+			} catch (ManagedCategoryNotLoadedException e) {
 				LOG.error("Impossible to update CustomContext associated to context " + getId()
 						+ " for managedCategoryProfile " + mcp.getId()
 						+ " because its category is not loaded - " 
@@ -181,7 +181,7 @@ public class Context {
 					couple = new CoupleProfileVisibility(mcp, mode);
 					couplesVisib.add(couple);
 				}
-			} catch (CategoryNotLoadedException e) {
+			} catch (ManagedCategoryNotLoadedException e) {
 				LOG.error("Impossible to update CustomContext associated to context " + getId()
 						+ " for managedCategoryProfile " + mcp.getId()
 						+ " because its category is not loaded - " 
@@ -268,8 +268,7 @@ public class Context {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - getCatProfileById(" + categoryId + ")");
 		}
-		
-		
+			
 		if (refIdManagedCategoryProfilesSet.contains(categoryId)) {
 			for (ManagedCategoryProfile m : managedCategoryProfilesSet) {
 				if (m.getId().equals(categoryId)) {

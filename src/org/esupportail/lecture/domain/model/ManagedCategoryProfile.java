@@ -16,7 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
@@ -109,10 +109,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	
 	/**
 	 * @return Returns the category referenced by this CategoryProfile
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
 	@Override
-	protected ManagedCategory getElement() throws CategoryNotLoadedException {
+	protected ManagedCategory getElement() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getId() + " - getElement()");
 		}
@@ -146,7 +146,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		
 		try {
 			currentName = getElement().getName();
-		} catch (CategoryNotLoadedException e) {
+		} catch (ManagedCategoryNotLoadedException e) {
 			LOG.warn("Category " + getId() + " is not loaded");
 			currentName = super.getName();
 		}
@@ -167,7 +167,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		
 		try {
 			currentDesc = getElement().getDescription();
-		} catch (CategoryNotLoadedException e) {
+		} catch (ManagedCategoryNotLoadedException e) {
 			LOG.warn("Category " + getId() + " is not loaded");
 			currentDesc = super.getDescription();
 		}
@@ -192,12 +192,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * (Defined in ManagedCategory referred by this ManagedCategoryProfile)
 	 * @param id id of the sourceProfile to get
 	 * @return the sourceProfile
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws SourceProfileNotFoundException 
 	 */
 	@Override
 	protected ManagedSourceProfile getSourceProfileById(final String id) 
-			throws CategoryNotLoadedException, SourceProfileNotFoundException {
+			throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - getSourceProfileById(" + id + ")");
 		}
@@ -226,10 +226,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Return visibility of the category (or categoryProfile), taking care of inheritance regulars.
 	 * @return visibility
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
 	 */
-	public VisibilitySets getVisibility() throws CategoryNotLoadedException {
+	public VisibilitySets getVisibility() throws ManagedCategoryNotLoadedException {
 		computeFeatures();
 		return visibility;
 	}
@@ -246,9 +246,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Return editability mode of the category, taking care of inheritance regulars.
 	 * @return edit
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected Editability getEdit() throws CategoryNotLoadedException {
+	protected Editability getEdit() throws ManagedCategoryNotLoadedException {
 		computeFeatures();
 		return edit;
 	}
@@ -264,9 +264,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Computes rights on parameters shared between parent ManagedCategory and managedCategoryProfile.
 	 * taking care of inheritance rules (on param visibility,edit)
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	private void computeFeatures() throws CategoryNotLoadedException {
+	private void computeFeatures() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - computeFeatures()");
 		}
@@ -358,10 +358,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * or not to customContext.
 	 * @param customContext the customContext to update
 	 * @return true if the category is visible by the userProfile
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
 	protected VisibilityMode updateCustomContext(final CustomContext customContext) 
-	throws CategoryNotLoadedException {
+	throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustomContext("
 					+ customContext.getElementId() + ")");
@@ -374,9 +374,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 	/**
 	 *  Load the category referenced by this ManagedCategoryProfile.
-	 *  @throws CategoryNotLoadedException 
+	 *  @throws ManagedCategoryNotLoadedException 
 	 */
-	private synchronized void loadCategory() throws CategoryNotLoadedException {
+	private synchronized void loadCategory() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - loadCategory()");
 		}
@@ -394,12 +394,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			String errorMsg = "The managedCategory " + this.getId()
 				+ " is impossible to be loaded because od DaoException.";
 			LOG.error(errorMsg);
-			throw new CategoryNotLoadedException(errorMsg, e);
+			throw new ManagedCategoryNotLoadedException(errorMsg, e);
 		} catch (InfoDomainException e) {
 			String errorMsg = "The managedCategory " + this.getId()
 			+ " is impossible to be loaded.";
 			LOG.error(errorMsg);
-			throw new CategoryNotLoadedException(errorMsg, e);
+			throw new ManagedCategoryNotLoadedException(errorMsg, e);
 		}
 	}
 	
@@ -410,10 +410,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * (true if in Obliged or in autoSubscribed, or in Allowed)
 	 * @param customContext customContext to set up
 	 * @return true if the mcp is visible by the user of the customContext else return false 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
 	private VisibilityMode setUpCustomContextVisibility(final CustomContext customContext) 
-		throws CategoryNotLoadedException {
+		throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - setUpCustomContextVisibility("
 					+ customContext.getElementId() + ")");
@@ -468,11 +468,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * defined in ManagedCategory of this Profile, according to managedSourceProfiles visibility
 	 * (there is not any loading of source at this time)
 	 * @param customManagedCategory customManagedCategory to update
-	 * @throws CategoryNotLoadedException
+	 * @throws ManagedCategoryNotLoadedException
 	 * @throws CategoryProfileNotFoundException 
 	 */
 	protected void updateCustom(final CustomManagedCategory customManagedCategory) 
-		throws CategoryNotLoadedException, CategoryProfileNotFoundException {
+		throws ManagedCategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustom(" + customManagedCategory.getElementId()
 					+ ")");
@@ -489,13 +489,13 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * defined in ManagedCategory of this Profile, according to managedSourceProfiles visibility
 	 * @param customManagedCategory custom to update
 	 * @return list of (ProfileVisibility)
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @see ManagedCategoryProfile#updateCustom(CustomManagedCategory)
 	 */
 	protected List<CoupleProfileVisibility> getVisibleSourcesAndUpdateCustom(
 			final CustomManagedCategory customManagedCategory) 
-		throws CategoryNotLoadedException, CategoryProfileNotFoundException {
+		throws ManagedCategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - getVisibleSourcesAndUpdateCustom("
 					+ this.getId() + ")");

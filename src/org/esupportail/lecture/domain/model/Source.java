@@ -271,13 +271,10 @@ public abstract class Source implements Element, Serializable {
 	
 	/**
 	 * Make Items objects in fonction of itemXPath, xsltURL, xmlStream.
-	 * @throws MappingNotFoundException 
 	 * @throws ComputeItemsException 
-	 * @throws Xml2HtmlException 
 	 */
 	@SuppressWarnings("unchecked")
-	private void computeItems() 
-		throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException {
+	private void computeItems() throws ComputeItemsException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.profileId + " - computeItems()");
     	}
@@ -331,6 +328,14 @@ public abstract class Source implements Element, Serializable {
 				String errorMsg = "Xpath with NameSpace not specified in mappings.xml";
 				LOG.error(errorMsg);
 				throw new ComputeItemsException(errorMsg, e);
+			} catch (MappingNotFoundException e) {
+				String errorMsg = "Impossible to get itemXPath,XPathNameSpaces and xsltURL";
+				LOG.error(errorMsg);
+				throw new ComputeItemsException(errorMsg, e);
+			} catch (Xml2HtmlException e) {
+				String errorMsg = "Impossible to make html content";
+				LOG.error(errorMsg);
+				throw new ComputeItemsException(errorMsg, e);
 			}
 		itemComputed = true;
 	   	}
@@ -344,8 +349,8 @@ public abstract class Source implements Element, Serializable {
 	 * @return html content
 	 * @throws Xml2HtmlException 
 	 */
-	private String xml2html(final String xml, final String xsltFileURL,
-			final String encoding) throws Xml2HtmlException {
+	private String xml2html(final String xml, final String xsltFileURL, final String encoding) 
+	throws Xml2HtmlException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.profileId + " - xml2html(xml,xsltFileURL)");
     	}
@@ -388,12 +393,10 @@ public abstract class Source implements Element, Serializable {
 
 	/**
 	 * get Items list of this source.
-	 * @return the items lits
-	 * @throws Xml2HtmlException 
+	 * @return the items lits 
 	 * @throws ComputeItemsException 
-	 * @throws MappingNotFoundException 
 	 */
-	protected List<Item> getItems() throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException {
+	protected List<Item> getItems() throws ComputeItemsException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.profileId + " - getItems()");
     	}

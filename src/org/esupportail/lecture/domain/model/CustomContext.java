@@ -15,7 +15,7 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
@@ -208,13 +208,13 @@ public class CustomContext implements CustomElement {
 		try {
 			catProfile = context.getCatProfileById(categoryId);
 			mode = catProfile.updateCustomContext(this);
-		} catch (CategoryNotLoadedException e1) {
+		} catch (ManagedCategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId());
 				catProfile = context.getCatProfileById(categoryId);
 				mode = catProfile.updateCustomContext(this);
-			} catch (CategoryNotLoadedException e2) {
+			} catch (ManagedCategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
@@ -274,13 +274,13 @@ public class CustomContext implements CustomElement {
 		try {
 			catProfile = context.getCatProfileById(categoryId);
 			mode = catProfile.updateCustomContext(this);
-		} catch (CategoryNotLoadedException e1) {
+		} catch (ManagedCategoryNotLoadedException e1) {
 			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId());
 				catProfile = context.getCatProfileById(categoryId);
 				mode = catProfile.updateCustomContext(this);
-			} catch (CategoryNotLoadedException e2) {
+			} catch (ManagedCategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());

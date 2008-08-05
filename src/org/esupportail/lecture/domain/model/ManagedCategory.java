@@ -13,7 +13,7 @@ import java.util.Vector;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 
 
@@ -114,9 +114,9 @@ public class ManagedCategory extends Category {
 	/**
 	 * Return visibility of the category, taking care of inheritance regulars.
 	 * @return visibility
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected VisibilitySets getVisibility() throws CategoryNotLoadedException {
+	protected VisibilitySets getVisibility() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getProfileId() + " - getVisibility()");
 		}
@@ -137,9 +137,9 @@ public class ManagedCategory extends Category {
 	/**	
 	 * Return editability of the category, taking care of inheritance regulars.
 	 * @return edit
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected Editability getEdit() throws CategoryNotLoadedException {
+	protected Editability getEdit() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + getProfileId() + " - getEdit()");
 		}
@@ -147,7 +147,7 @@ public class ManagedCategory extends Category {
 		try {
 			e = getProfile().getEdit();
 			
-		} catch (CategoryNotLoadedException ex) {
+		} catch (ManagedCategoryNotLoadedException ex) {
 			LOG.error("Impossible situation : " 
 					+ "CategoryNotLoadedException in a ManagedCategory, please contact developer");
 			e = null;
@@ -228,11 +228,11 @@ public class ManagedCategory extends Category {
 	 * defined in ths ManagedCategory, according to managedSourceProfiles visibility
 	 * (there is not any loading of source at this time)
 	 * @param customManagedCategory customManagedCategory to update
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 */
 	protected synchronized void updateCustom(final CustomManagedCategory customManagedCategory) 
-	throws CategoryNotLoadedException, CategoryProfileNotFoundException {
+	throws ManagedCategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + getProfileId() + " - updateCustom("
 					+ customManagedCategory.getElementId() + ")");
@@ -259,12 +259,12 @@ public class ManagedCategory extends Category {
 	 * (there is not any loading of source at this time)
 	 * @param customManagedCategory custom to update
 	 * @return list of CoupleProfileVisibility
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws CategoryProfileNotFoundException 
 	 */
 	protected List<CoupleProfileVisibility> getVisibleSourcesAndUpdateCustom(
 			final CustomManagedCategory customManagedCategory)
-	throws CategoryNotLoadedException, CategoryProfileNotFoundException {
+	throws ManagedCategoryNotLoadedException, CategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getProfileId() + " - getVisibleSourcesAndUpdateCustom("
 					+ getProfileId() + ")");

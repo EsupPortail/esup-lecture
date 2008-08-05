@@ -32,7 +32,7 @@ import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
@@ -283,12 +283,12 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @return a list of itemBean
 	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(
 	 *   java.lang.String, java.lang.String)
 	 */
 	public List<ItemBean> getItems(final String uid, final String sourceId) 
-			throws SourceNotLoadedException, InternalDomainException, CategoryNotLoadedException {
+			throws SourceNotLoadedException, InternalDomainException, ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getItems(" + uid + "," + sourceId + ")");
 		}
@@ -326,18 +326,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				+ uid + ", source " + sourceId + ")";
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
-		} catch (MappingNotFoundException e) {
-			String errorMsg = "MappingNotFoundException for service 'getItems(user "
-				+ uid + ", source " + sourceId + ")";
-			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg, e);
 		} catch (ComputeItemsException e) {
 			String errorMsg = "ComputeItemsException for service 'getItems(user "
-				+ uid + ", source " + sourceId + ")";
-			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg, e);
-		} catch (Xml2HtmlException e) {
-			String errorMsg = "Xml2HtmlException for service 'getItems(user "
 				+ uid + ", source " + sourceId + ")";
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
@@ -487,13 +477,13 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	
 	/**
 	 * @throws ContextNotFoundException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(
 	 *   java.lang.String, java.lang.String)
 	 */
 	public List<CategoryBean> getVisibleCategories(
 			final String uid, final String contextId) 
-		throws ContextNotFoundException, CategoryNotLoadedException {
+		throws ContextNotFoundException, ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getVisibleCategories(" + uid + "," + contextId + ")");
 		}

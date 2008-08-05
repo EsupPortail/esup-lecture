@@ -394,7 +394,7 @@ public class ChannelConfig  {
 	 * @see ChannelConfig#filePath
 	 */
 	protected static synchronized void setfilePath(final String filePath) {
-		// TODO (GB later) sera utilis� lorsque le file sera externalis�
+		// TODO (GB later) sera utilisé lorsque le file sera externalisé
 		LOG.debug("setFilePath(" + filePath + ")");
 		ChannelConfig.filePath = filePath;
 	}

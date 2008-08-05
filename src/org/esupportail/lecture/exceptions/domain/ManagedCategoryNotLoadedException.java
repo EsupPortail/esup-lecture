@@ -9,19 +9,19 @@ package org.esupportail.lecture.exceptions.domain;
  * The category is not loaded in CategoryProfile from remote URL
  * @author gbouteil
  */
-public class CategoryNotLoadedException extends ElementNotLoadedException {
+public class ManagedCategoryNotLoadedException extends ElementNotLoadedException {
 
 	/**
 	 * @param string
 	 */
-	public CategoryNotLoadedException(String string) {
+	public ManagedCategoryNotLoadedException(String string) {
 		super(string);
 	}
 
 	/**
 	 * @param string
 	 */
-	public CategoryNotLoadedException(String string, Exception cause) {
+	public ManagedCategoryNotLoadedException(String string, Exception cause) {
 		super(string,cause);
 	}
 

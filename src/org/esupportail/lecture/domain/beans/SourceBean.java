@@ -11,7 +11,7 @@ import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.ElementProfile;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.SourceProfile;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
@@ -60,11 +60,11 @@ public class SourceBean {
 	 * constructor initializing object with a customSource.
 	 * @param customSource
 	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
 	public SourceBean(final CustomSource customSource) throws ManagedCategoryProfileNotFoundException, 
-			CategoryNotLoadedException, SourceProfileNotFoundException {
+			ManagedCategoryNotLoadedException, SourceProfileNotFoundException {
 		SourceProfile profile = customSource.getProfile();
 		
 		this.name = profile.getName();

@@ -11,14 +11,12 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
-import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 
 /**
@@ -89,20 +87,16 @@ public abstract class CustomSource implements CustomElement {
 	 * Items are ready to be displayed
 	 * @return the list of items
 	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws MappingNotFoundException
-	 * @throws ComputeItemsException
-	 * @throws Xml2HtmlException 
-	 * @throws CategoryNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws Xml2HtmlException 
-	 * @throws ComputeItemsException 
-	 * @throws MappingNotFoundException 
+	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException
 	 * @throws SourceNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws ComputeItemsException 
 	 */
-	public List<Item> getItems() throws ManagedCategoryProfileNotFoundException, CategoryNotLoadedException, 
-	SourceProfileNotFoundException, MappingNotFoundException, ComputeItemsException, Xml2HtmlException, SourceNotLoadedException {
+	public List<Item> getItems() 
+	throws SourceNotLoadedException, ManagedCategoryProfileNotFoundException, 
+	ManagedCategoryNotLoadedException, SourceProfileNotFoundException, ComputeItemsException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + elementId + " - getItems()");
 		}
@@ -125,12 +119,12 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * The name of the source profile associated to this CustomSource.
 	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
 	public String getName() 
-	throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException {
+	throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + elementId + " - getName()");
 		}
@@ -227,11 +221,11 @@ public abstract class CustomSource implements CustomElement {
 	 * The SourceProfile associated to this CustomSource.
 	 * @return the SourceProfile 
 	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
 	public abstract SourceProfile getProfile() 
-	throws CategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException;
+	throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException;
 	
 
 

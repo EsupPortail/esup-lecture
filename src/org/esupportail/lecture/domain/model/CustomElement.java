@@ -6,7 +6,7 @@
 package org.esupportail.lecture.domain.model;
 
 
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ElementNotFoundException;
 
 /**
@@ -19,9 +19,9 @@ public interface CustomElement {
 	/**
 	 * @return element name 
 	 * @throws ElementNotFoundException
-	 * @throws CategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	String getName()throws ElementNotFoundException, CategoryNotLoadedException;
+	String getName()throws ElementNotFoundException, ManagedCategoryNotLoadedException;
 	
 	/**
 	 * @return user profile : owner of this customElement

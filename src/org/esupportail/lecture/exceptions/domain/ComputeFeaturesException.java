@@ -14,7 +14,7 @@ public class ComputeFeaturesException extends PrivateException {
 	/**
 	 * @param e
 	 */
-	public ComputeFeaturesException(CategoryNotLoadedException e) {
+	public ComputeFeaturesException(ManagedCategoryNotLoadedException e) {
 		super(e);
 	}
 
@@ -22,7 +22,7 @@ public class ComputeFeaturesException extends PrivateException {
 	 * @param string
 	 * @param e
 	 */
-	public ComputeFeaturesException(String string, CategoryNotLoadedException e) {
+	public ComputeFeaturesException(String string, ManagedCategoryNotLoadedException e) {
 		super(string,e);
 	}
 

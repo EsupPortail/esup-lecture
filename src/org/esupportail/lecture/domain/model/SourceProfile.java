@@ -10,13 +10,8 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.exceptions.domain.CategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
-import org.esupportail.lecture.exceptions.domain.InfoDomainException;
-import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
-import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 
 /**
  * Source profile element : a source profile can be a managed or personal one.
@@ -114,13 +109,9 @@ public abstract class SourceProfile implements ElementProfile {
 	 * Return the list of items to be displayed for this source.
 	 * @return a list of items
 	 * @throws SourceNotLoadedException
-	 * @throws MappingNotFoundException
-	 * @throws ComputeItemsException
-	 * @throws Xml2HtmlException
+	 * @throws ComputeItemsException 
 	 */
-	protected List<Item> getItems() 
-	throws MappingNotFoundException, ComputeItemsException, Xml2HtmlException, 
-	SourceNotLoadedException  {
+	protected List<Item> getItems() throws SourceNotLoadedException, ComputeItemsException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id = " + this.id + " - getItems()");
     	}
@@ -274,9 +265,8 @@ public abstract class SourceProfile implements ElementProfile {
 
 	/**
 	 * @return timeOut
-	 * @throws CategoryNotLoadedException 
 	 */
-	public int getTimeOut() throws CategoryNotLoadedException {
+	public int getTimeOut() {
 		return timeOut;
 	}
 
