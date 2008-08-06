@@ -201,37 +201,37 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			LOG.debug("id = " + this.getId() + " - computeFeatures()");
 		}
 		
-		try {
-			if (!featuresComputed) {
-				if (categoryProfile.getTrustCategory()) {		
-					access = inner.getAccess();
-					visibility = inner.getVisibility();
-					timeOut = inner.getTimeOut();
-						
-					if (access == null) {
-						access = category.getAccess();
-					}
-					if (visibility == null) {
-						visibility = category.getVisibility();
-					} else if (visibility.isEmpty()) {
-						visibility = category.getVisibility();
-					}
-					if (timeOut == 0) {
-						timeOut = category.getTimeOut();
-					}
-				} else {
-					// No trust => features of categoryProfile 
-					access = categoryProfile.getAccess();
-					visibility = categoryProfile.getVisibility();
-					timeOut = categoryProfile.getTimeOut();
+		if (!featuresComputed) {
+			if (categoryProfile.getTrustCategory()) {		
+				access = inner.getAccess();
+				visibility = inner.getVisibility();
+				timeOut = inner.getTimeOut();
+					
+				if (access == null) {
+					access = category.getAccess();
 				}
-				featuresComputed = true;
+				if (visibility == null) {
+					visibility = category.getVisibility();
+				} else if (visibility.isEmpty()) {
+					visibility = category.getVisibility();
+				}
+				if (timeOut == 0) {
+					timeOut = category.getTimeOut();
+				}
+			} else {
+				// No trust => features of categoryProfile 
+				access = categoryProfile.getAccess();
+				try {
+					visibility = categoryProfile.getVisibility();
+				} catch (ManagedCategoryNotLoadedException e) {
+					String errorMsg = "A ManagedCategoryNotLoadedException is thrown whereas code "
+						+ "is in a managedSourceProfile (defined in managedCategory file,"
+						+ "please contact developper)";
+				LOG.warn(errorMsg);
 			}
-		} catch (ManagedCategoryNotLoadedException e) {
-			String errorMsg = "A ManagedCategoryNotLoadedException is thrown whereas code "
-					+ "is caught by a managedSourceProfile (defined in managedCategory file,"
-					+ "please contact developper)";
-			LOG.warn(errorMsg);
+				timeOut = categoryProfile.getTimeOut();
+			}
+			featuresComputed = true;
 		}
 	}
 	

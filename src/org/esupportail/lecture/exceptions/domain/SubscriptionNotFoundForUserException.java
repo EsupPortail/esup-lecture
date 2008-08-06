@@ -6,19 +6,20 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * The user is not subscribed to Category requested
+ * The user is not subscribed to element requested.
  * @author gbouteil
  *
  */
-public class UserNotSubscribedToCategoryException extends InfoDomainException {
+public class SubscriptionNotFoundForUserException extends InfoDomainException {
 
 	/**
 	 * @param errorMsg
 	 * @param e
 	 */
-	public UserNotSubscribedToCategoryException(String errorMsg, CustomCategoryNotFoundException e) {
+	public SubscriptionNotFoundForUserException(String errorMsg, CustomElementNotFoundException e) {
 		super(errorMsg,e);
 	}
+
 	
 
 }

@@ -12,6 +12,8 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
+import org.esupportail.lecture.exceptions.domain.ElementNotFoundException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
@@ -84,28 +86,33 @@ public abstract class CustomSource implements CustomElement {
 	 * Returns the list of items contained in the source referred by this customSource.
 	 * Items are ready to be displayed
 	 * @return the list of items
-	 * @throws SourceProfileNotFoundException 
 	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException
 	 * @throws SourceNotLoadedException 
 	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws ComputeItemsException 
+	 * @throws InternalDomainException 
 	 */
 	public List<Item> getItems() 
-	throws SourceNotLoadedException, ManagedCategoryProfileNotFoundException, 
-	ManagedCategoryNotLoadedException, SourceProfileNotFoundException, ComputeItemsException {
+	throws SourceNotLoadedException, ManagedCategoryNotLoadedException, 
+	ComputeItemsException, InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + elementId + " - getItems()");
 		}
-		SourceProfile profile = getProfile();
+		SourceProfile profile;
+		try {
+			profile = getProfile();
+		} catch (ElementNotFoundException e1) {
+			String errorMsg = "Unable to get items because of an element is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e1);
+		}
 		List<Item> listItems = null;
 		try {
 			listItems = profile.getItems();
 			// pas de catch de categoryNotLoaded : cela entraine trop de compliaction
 		} catch (SourceNotLoadedException e) {
 			// Dans ce cas : la mise à jour du customCategory n'a pas été effectuée
-			LOG.error("Impossible to update getItems for customSource " + getElementId()
+			LOG.error("Impossible to getItems for customSource " + getElementId()
 					+ " because its source is not loaded - " 
 					+ " It is very strange because loadSource() has been "
 					+ "called before in mcp.updateCustomContext() ...", e);
@@ -116,17 +123,24 @@ public abstract class CustomSource implements CustomElement {
 
 	/**
 	 * The name of the source profile associated to this CustomSource.
-	 * @throws SourceProfileNotFoundException 
+	 * @throws InternalDomainException 
 	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
-	public String getName() 
-	throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException {
+	public String getName() throws InternalDomainException, ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + elementId + " - getName()");
 		}
-		return getProfile().getName();
+		SourceProfile sp = null;
+		try {
+			sp = getProfile();
+		} catch (ElementNotFoundException e) {
+			String errorMsg = "Unable to get name because of an element is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
+		String name = sp.getName();
+		return name;
 	}
 
 
@@ -223,7 +237,8 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
 	public abstract SourceProfile getProfile() 
-	throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException;
+	throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException, 
+	ManagedCategoryProfileNotFoundException;
 	
 
 

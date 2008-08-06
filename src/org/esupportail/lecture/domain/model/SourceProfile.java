@@ -252,7 +252,7 @@ public abstract class SourceProfile implements ElementProfile {
 	/**
 	 * @param pathNameSpaces
 	 */
-	public void setXPathNameSpaces(HashMap<String, String> pathNameSpaces) {
+	public void setXPathNameSpaces(final HashMap<String, String> pathNameSpaces) {
 		xPathNameSpaces = pathNameSpaces;
 	}
 

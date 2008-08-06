@@ -14,12 +14,11 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
-import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
@@ -89,17 +88,15 @@ public class CustomManagedCategory extends CustomCategory {
 	 * Return the list of sorted customSources displayed by this customCategory.
 	 * and update it
 	 * @return the list of customSource
-	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryOutOfReachException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources()
 	 */
 	@Override
 	public List<CustomSource> getSortedCustomSources() 
-	throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryTimeOutException, 
-	InternalDomainException, CategoryOutOfReachException {
+	throws InternalDomainException, CategoryNotVisibleException, 
+	CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + super.getElementId() + " - getSortedCustomSources()");
 		}
@@ -107,7 +104,14 @@ public class CustomManagedCategory extends CustomCategory {
 		// category : en fonction de l'ordre d'affichage peut etre.
 		
 		UserProfile userProfile = super.getUserProfile();
-		ManagedCategoryProfile profile = getProfile();
+		ManagedCategoryProfile profile;
+		try {
+			profile = getProfile();
+		} catch (CategoryProfileNotFoundException e) {
+			String errorMsg = "Unable to getSortedCustomSources because of categoryProfile is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		try {
 			profile.updateCustom(this);
 		} catch (ManagedCategoryNotLoadedException e1) {
@@ -117,11 +121,12 @@ public class CustomManagedCategory extends CustomCategory {
 				profile.updateCustom(this);
 			} catch (ManagedCategoryNotLoadedException e2) {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
-				// context correspondant à des customContext du userProfile => supression ?
+				// context correspondant à des customContext du userProfile => suppression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
-				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
-					+ "is not refered by any customContext in userProfile " 
-					+ userProfile.getUserId());
+				String errorMsg = "ManagedCategory " + getElementId()
+					+ "is not refered by any customContext in userProfile";
+				LOG.error(errorMsg);
+				throw new InternalDomainException(errorMsg, e2);
 			}
 		}
 		
@@ -138,24 +143,29 @@ public class CustomManagedCategory extends CustomCategory {
 	 * Return a list of "SourceProfile, AvailabilityMode" corresponding to visible sources for user, 
 	 * in this customCategory and update it.
 	 * @return list of CoupleProfileAvailability
-	 * @throws CategoryProfileNotFoundException 
+	 * @throws InternalDomainException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryOutOfReachException 
+	 * @throws CategoryNotVisibleException
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getVisibleSources()
 	 */
 	@Override
 	public List<CoupleProfileAvailability> getVisibleSources() 
-	throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryTimeOutException, 
-	InternalDomainException, CategoryOutOfReachException {
+	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + super.getElementId() + " - getVisibleSources(ex)");
 		}
 		// TODO (GB later) redéfinir avec les custom personnal 
 		// category : en fonction de l'ordre d'affichage peut etre.
 		UserProfile userProfile = super.getUserProfile();
-		ManagedCategoryProfile profile = getProfile();
+		ManagedCategoryProfile profile;
+		try {
+			profile = getProfile();
+		} catch (CategoryProfileNotFoundException e) {
+			String errorMsg = "Unable to getVisibleSources because of categoryProfile is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		List<CoupleProfileVisibility> couplesVisib;
 		try {
 			couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this);
@@ -167,9 +177,10 @@ public class CustomManagedCategory extends CustomCategory {
 				userProfile.updateCustomContextsForOneManagedCategory(getElementId());
 				couplesVisib = profile.getVisibleSourcesAndUpdateCustom(this);
 			} catch (ManagedCategoryNotLoadedException e2) {
-				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
-					+ "is not refered by any customContext in userProfile " 
-					+ userProfile.getUserId());
+				String errorMsg = "ManagedCategory " + getElementId()
+					+ "is not refered by any customContext in userProfile.";
+				LOG.error(errorMsg);
+				throw new InternalDomainException(errorMsg, e2);
 			}
 		}
 		
@@ -200,9 +211,6 @@ public class CustomManagedCategory extends CustomCategory {
 	/**
 	 * after checking visibility rights, subcribe user to the source sourceId in this CustomMAnagedCategory.
 	 * @param sourceId source ID
-	 * @throws CategoryOutOfReachException 
-	 * @throws CategoryProfileNotFoundException 
-	 * @throws SourceProfileNotFoundException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
@@ -211,13 +219,20 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	@Override
 	public void subscribeToSource(final String sourceId) 
-	throws CategoryOutOfReachException, CategoryProfileNotFoundException, SourceProfileNotFoundException, 
-	CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException, SourceNotVisibleException {
+	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException, 
+	SourceNotVisibleException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + sourceId + ")");
 		}
 		UserProfile userProfile = super.getUserProfile();
-		ManagedCategoryProfile catProfile = getProfile();
+		ManagedCategoryProfile catProfile;
+		try {
+			catProfile = getProfile();
+		} catch (CategoryProfileNotFoundException e) {
+			String errorMsg = "Unable to subscribeToSource because of categoryProfile is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		ManagedSourceProfile soProfile = null;
 		VisibilityMode mode = null;
 		try {
@@ -233,10 +248,20 @@ public class CustomManagedCategory extends CustomCategory {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
-				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
-					+ "is not refered by any customContext in userProfile "
-					+ userProfile.getUserId());
+				String errorMsg = "ManagedCategory " + getElementId()
+					+ "is not refered by any customContext in userProfile.";
+				LOG.error(errorMsg);
+				throw new InternalDomainException(errorMsg, e2);
+			} catch (SourceProfileNotFoundException e) {
+				String errorMsg = 
+					"Unable to subscribeToSource because of sourceProfile is not found";
+				LOG.error(errorMsg);
+				throw new InternalDomainException(errorMsg, e);
 			}
+		} catch (SourceProfileNotFoundException e) {
+			String errorMsg = "Unable to subscribeToSource because of sourceProfile is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
 		}
 		
 		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
@@ -270,70 +295,81 @@ public class CustomManagedCategory extends CustomCategory {
 	/**
 	 * after checking visibility rights, unsubcribe user to the source sourceId in this CustomMAnagedCategory.
 	 * @param sourceId source ID
-	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryOutOfReachException 
 	 * @throws SourceObligedException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#unsubscribeToSource(String)
 	 */
 	@Override
 	public void unsubscribeToSource(final String sourceId) 
-	throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryTimeOutException, 
-	InternalDomainException, CategoryOutOfReachException, SourceObligedException {
+	throws InternalDomainException, CategoryNotVisibleException, 
+	CategoryTimeOutException, SourceObligedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("unsubscribeToSource(" + sourceId + ")");
 		}
+		UserProfile userProfile = super.getUserProfile();
+		ManagedCategoryProfile catProfile;
 		try {
-			UserProfile userProfile = super.getUserProfile();
-			ManagedCategoryProfile catProfile = getProfile();
-			ManagedSourceProfile soProfile = null;
-			VisibilityMode mode = null;
+			catProfile = getProfile();
+		} catch (CategoryProfileNotFoundException e) {
+			String errorMsg = "Unable to subscribeToSource because of categoryProfile is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
+		ManagedSourceProfile soProfile = null;
+		VisibilityMode mode = null;
+		try {
+			soProfile = catProfile.getSourceProfileById(sourceId);
+			mode = soProfile.updateCustomCategory(this);
+		} catch (ManagedCategoryNotLoadedException e1) {
+			// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
 			try {
+				userProfile.updateCustomContextsForOneManagedCategory(getElementId());
 				soProfile = catProfile.getSourceProfileById(sourceId);
 				mode = soProfile.updateCustomCategory(this);
-			} catch (ManagedCategoryNotLoadedException e1) {
-				// Dans ce cas : la mise à jour du customContext n'a pas été effectuée
-				try {
-					userProfile.updateCustomContextsForOneManagedCategory(getElementId());
-					soProfile = catProfile.getSourceProfileById(sourceId);
-					mode = soProfile.updateCustomCategory(this);
-				} catch (ManagedCategoryNotLoadedException e2) {
-					// Dans ce cas : la managedCategory n'est pointée par aucun 
-					// context correspondant à des customContext du userProfile => supression ?
-					userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
-					throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
-						+ "is not refered by any customContext in userProfile "
-						+ userProfile.getUserId());
-				}
-			}			
-			if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
-				if (!subscriptions.containsKey(sourceId)) {
-					LOG.warn("Nothing is done for UnsubscribeToSource requested on source " 
-						+ sourceId + " in category " + this.getElementId() + "\nfor user "
-						+ getUserProfile().getUserId() 
-						+ " because this source is not in subscriptions");
-				} else {
-					removeCustomManagedSourceFromProfile(sourceId);
-					LOG.trace("removeCustomManagedSource to source " + sourceId);
-				}
-				
-			} else if (mode == VisibilityMode.OBLIGED) {
-				String errorMsg = "UnsubscribeToSource(" + sourceId
-					+ ") is impossible because this source is OBLIGED for user "
-					+ getUserProfile().getUserId() + "in category " + getElementId();
+			} catch (ManagedCategoryNotLoadedException e2) {
+				// Dans ce cas : la managedCategory n'est pointée par aucun 
+				// context correspondant à des customContext du userProfile => supression ?
+				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
+				String errorMsg = "ManagedCategory " + getElementId()
+					+ "is not refered by any customContext in userProfile.";
 				LOG.error(errorMsg);
-				throw new SourceObligedException(errorMsg);
-			} else if (mode == VisibilityMode.NOVISIBLE) {
-				LOG.warn("Nothing is done for UnsubscribeToSource requested on source "
-					+ sourceId + " in category " + this.getElementId() + "\nfor user " 
-					+ getUserProfile().getUserId()
-					+ " because this source is NOVISIBLE in this case");
+				throw new InternalDomainException(errorMsg, e2);
+			} catch (SourceProfileNotFoundException e) {
+				String errorMsg = 
+					"Unable to unsubscribeToSource because of sourceProfile is not found";
+				LOG.error(errorMsg);
+				throw new InternalDomainException(errorMsg, e);
 			}
 		} catch (SourceProfileNotFoundException e) {
-			removeCustomManagedSourceFromProfile(sourceId);
-			LOG.trace("removeCustomManagedSource to source " + sourceId);
+			String errorMsg = 
+				"Unable to unsubscribeToSource because of sourceProfile is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}			
+		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
+			if (!subscriptions.containsKey(sourceId)) {
+				LOG.warn("Nothing is done for UnsubscribeToSource requested on source " 
+					+ sourceId + " in category " + this.getElementId() + "\nfor user "
+					+ getUserProfile().getUserId() 
+					+ " because this source is not in subscriptions");
+			} else {
+				removeCustomManagedSourceFromProfile(sourceId);
+				LOG.trace("removeCustomManagedSource to source " + sourceId);
+			}
+				
+		} else if (mode == VisibilityMode.OBLIGED) {
+			String errorMsg = "UnsubscribeToSource(" + sourceId
+				+ ") is impossible because this source is OBLIGED for user "
+				+ getUserProfile().getUserId() + "in category " + getElementId();
+			LOG.error(errorMsg);
+			throw new SourceObligedException(errorMsg);
+		} else if (mode == VisibilityMode.NOVISIBLE) {
+			LOG.warn("Nothing is done for UnsubscribeToSource requested on source "
+				+ sourceId + " in category " + this.getElementId() + "\nfor user " 
+				+ getUserProfile().getUserId()
+				+ " because this source is NOVISIBLE in this case");
 		}
 	}
 	

@@ -6,8 +6,8 @@
 package org.esupportail.lecture.domain.model;
 
 
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.ElementNotFoundException;
 
 /**
  * @author gbouteil
@@ -18,10 +18,10 @@ public interface CustomElement {
 
 	/**
 	 * @return element name 
-	 * @throws ElementNotFoundException
+	 * @throws InternalDomainException 
 	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	String getName()throws ElementNotFoundException, ManagedCategoryNotLoadedException;
+	String getName() throws InternalDomainException, ManagedCategoryNotLoadedException;
 	
 	/**
 	 * @return user profile : owner of this customElement

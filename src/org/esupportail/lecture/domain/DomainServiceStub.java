@@ -15,15 +15,7 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
-import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
-import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
-import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
 
 /**
  * @author bourges
@@ -140,8 +132,7 @@ public class DomainServiceStub implements DomainService {
 	 */
 	@SuppressWarnings("unused")
 	public List<CategoryBean> getVisibleCategories(
-			final String uid, final String contextId) 
-	throws ContextNotFoundException {
+			final String uid, final String contextId) {
 		List<CategoryBean> ret = null;
 		ret = categories;
 		return ret;
@@ -194,11 +185,7 @@ public class DomainServiceStub implements DomainService {
 	 */
 	@SuppressWarnings("unused")
 	public void subscribeToSource(
-		final String uid, final String categorieId, final String sourceId)
-	throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, 
-	CategoryNotVisibleException, CategoryProfileNotFoundException, CategoryOutOfReachException, 
-	SourceProfileNotFoundException, SourceNotVisibleException, 
-	InternalDomainException {
+		final String uid, final String categorieId, final String sourceId) {
 		// nothing
 	}
 	

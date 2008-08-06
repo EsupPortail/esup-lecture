@@ -15,22 +15,15 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
-import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
-import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
-import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
-import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.SourceTimeOutException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
-import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
 
 /**
  * @author bourges
@@ -49,37 +42,31 @@ public interface DomainService {
 	 * @param uid
 	 * @param contextId
 	 * @return ContextBean
-	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
 	 * @see FacadeService#getContext(String,String)
 	 */
-	ContextBean getContext(String uid, String contextId) throws ContextNotFoundException;
+	ContextBean getContext(String uid, String contextId) throws InternalDomainException;
 
 	/**
 	 * @param uid
 	 * @param contextId
-	 * @return List(CategoryBean)
-	 * @throws ContextNotFoundException 
+	 * @return List(CategoryBean) 
+	 * @throws InternalDomainException 
 	 * @see FacadeService#getDisplayedCategories(String, String)
 	 */
-	List<CategoryBean> getDisplayedCategories(String uid, String contextId) 
-	throws ContextNotFoundException;
+	List<CategoryBean> getDisplayedCategories(String uid, String contextId) throws InternalDomainException;
 
 	/**
 	 * @param categoryId 
 	 * @param uid 
 	 * @return List(SourceBean)
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryProfileNotFoundException 
+	 * @throws CategoryNotVisibleException  
 	 * @throws InternalDomainException 
-	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws CategoryTimeOutException 
-	 * @throws CategoryOutOfReachException 
 	 * @see FacadeService#getDisplayedSources(String, String)
 	 */
 	List<SourceBean> getDisplayedSources(String uid, String categoryId)  
-	throws CategoryNotVisibleException, CategoryProfileNotFoundException, 
-	InternalDomainException, UserNotSubscribedToCategoryException, CategoryTimeOutException, 
-	CategoryOutOfReachException;
+	throws CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException;
 
 	/**
 	 * @param sourceId 
@@ -88,13 +75,10 @@ public interface DomainService {
 	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
 	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws SourceTimeOutException 
 	 * @see FacadeService#getItems(String, String)
 	 */
 	List<ItemBean> getItems(String uid, String sourceId)  
-	throws SourceNotLoadedException, InternalDomainException, 
-	ManagedCategoryProfileNotFoundException, ManagedCategoryNotLoadedException, SourceTimeOutException;
+	throws SourceNotLoadedException, InternalDomainException, ManagedCategoryNotLoadedException;
 
 	/**
 	 * @param uid 
@@ -121,140 +105,103 @@ public interface DomainService {
 	 * @param uid
 	 * @param contextId
 	 * @return List(CategoryBean)
-	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
 	 * @throws ManagedCategoryNotLoadedException 
 	 * @see FacadeService#getVisibleCategories(String, String)
 	 */
-	List<CategoryBean> getVisibleCategories(
-		final String uid, final String contextId) 
-	throws ContextNotFoundException, ManagedCategoryNotLoadedException;
+	List<CategoryBean> getVisibleCategories(final String uid, final String contextId) 
+	throws InternalDomainException, ManagedCategoryNotLoadedException;
 	
 	/**
 	 * @param categoryId 
 	 * @param uid 
 	 * @return List(SourceBean)
 	 * @throws CategoryNotVisibleException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
-	 * @throws CategoryOutOfReachException 
-	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws CategoryTimeOutException 
 	 * @see FacadeService#getVisibleSources(String, String)
 	 */
 	List<SourceBean> getVisibleSources(String uid, String categoryId) 
-	throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, 
-	CategoryProfileNotFoundException, InternalDomainException, CategoryOutOfReachException, 
-	UserNotSubscribedToCategoryException, CategoryTimeOutException;
+	throws CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException;
 	
 	/**
 	 * @param uid
 	 * @param contextId
 	 * @param size
+	 * @throws InternalDomainException 
 	 * @throws TreeSizeErrorException 
-	 * @throws ContextNotFoundException 
 	 * @see FacadeService#setTreeSize(String, String, int)
 	 */
-	void setTreeSize(String uid, String contextId, int size) 
-	throws TreeSizeErrorException, ContextNotFoundException;
+	void setTreeSize(String uid, String contextId, int size) throws InternalDomainException, TreeSizeErrorException;
 	
 	/**
 	 * @param uid
 	 * @param cxtId
 	 * @param catId
-	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
 	 * @see FacadeService#foldCategory(String, String, String)
 	 */
-	void foldCategory(String uid, String cxtId, String catId) throws ContextNotFoundException;
+	void foldCategory(String uid, String cxtId, String catId) throws InternalDomainException;
 	
 	/**
 	 * @param uid
 	 * @param cxtId
 	 * @param catId
-	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
 	 * @see FacadeService#unfoldCategory(String, String, String)
 	 */
-	void unfoldCategory(String uid, String cxtId, String catId) throws ContextNotFoundException;
+	void unfoldCategory(String uid, String cxtId, String catId) throws InternalDomainException;
 	
 
 	/**
 	 * @param uid
 	 * @param contextId
 	 * @param categoryId
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws ContextNotFoundException 
 	 * @throws InternalDomainException 
-	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryTimeOutException 
 	 * @see FacadeService#subscribeToCategory(String, String, String)
 	 */
 	void subscribeToCategory(String uid, String contextId, String categoryId) 
-	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
-	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
-	InternalDomainException;
+	throws InternalDomainException, CategoryNotVisibleException;
 
 	/**
 	 * @param uid
 	 * @param contextId
 	 * @param categoryId
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws ContextNotFoundException 
-	 * @throws InternalDomainException 
-	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryTimeOutException 
+	 * @throws InternalDomainException 
 	 * @throws CategoryObligedException 
 	 * @see FacadeService#unsubscribeToCategory(String, String, String)
 	 */
 	void unsubscribeToCategory(String uid, String contextId, String categoryId)
-	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
-	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
-	InternalDomainException, CategoryObligedException;
+	throws InternalDomainException, CategoryNotVisibleException, CategoryObligedException;
 	/**
 	 * @param uid 
 	 * @param categorieId 
 	 * @param sourceId 
-	 * @throws UserNotSubscribedToCategoryException 
-	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws SourceNotVisibleException 
-	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
-	 * @throws CategoryOutOfReachException 
+	 * @throws SourceNotVisibleException 
 	 * @see FacadeService#subscribeToSource(String, String, String)
 	 */
 	void subscribeToSource(String uid, String categorieId, String sourceId) 
-	throws UserNotSubscribedToCategoryException, ManagedCategoryProfileNotFoundException, 
-	CategoryNotVisibleException, CategoryProfileNotFoundException, 
-	SourceProfileNotFoundException, SourceNotVisibleException, InternalDomainException, 
-	CategoryTimeOutException, CategoryOutOfReachException;
+	throws CategoryNotVisibleException, InternalDomainException, 
+	CategoryTimeOutException, SourceNotVisibleException;
+	
 	/**
 	 * @param uid 
 	 * @param categorieId 
 	 * @param sourceId 
-	 * @throws CategoryNotVisibleException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws InternalDomainException 
-	 * @throws SourceObligedException 
-	 * @throws CategoryProfileNotFoundException 
+	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryTimeOutException 
-	 * @throws CategoryOutOfReachException 
+	 * @throws SourceObligedException 
 	 * @see FacadeService#unsubscribeToSource(String, String, String)
 	 */	
 	void unsubscribeToSource(String uid, String categorieId, String sourceId) 
-	throws ManagedCategoryProfileNotFoundException, CategoryNotVisibleException, 
-	UserNotSubscribedToCategoryException, InternalDomainException, 
-	CategoryProfileNotFoundException, SourceObligedException, CategoryTimeOutException, 
-	CategoryOutOfReachException;
+	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException, SourceObligedException;
 
-	
-	
 	/**
 	 * @return the database version.
 	 * @throws ConfigException when the database is not initialized

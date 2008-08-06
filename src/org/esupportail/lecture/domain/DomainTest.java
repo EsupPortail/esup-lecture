@@ -16,13 +16,12 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
-import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
@@ -179,10 +178,10 @@ public class DomainTest {
 	/**
 	 * Test of service "getContext".
 	 * @throws InternalExternalException 
-	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
 	 */
 	private static void testGetContext() 
-	throws InternalExternalException, ContextNotFoundException {
+	throws InternalExternalException, InternalDomainException {
 		printIntro("getContext");
 		contextId = facadeService.getCurrentContextId();
 		ContextBean context = facadeService.getContext(userId, contextId);
@@ -190,11 +189,11 @@ public class DomainTest {
 	}
 	/**
 	 * @param cid
-	 * @throws ContextNotFoundException
+	 * @throws InternalDomainException 
 	 */
 	@SuppressWarnings("unused")
 	private static void testGetContextBis(final String cid) 
-	throws ContextNotFoundException  {
+	throws InternalDomainException  {
 		printIntro("getContext");
 		ContextBean context = facadeService.getContext(userId, cid);
 		System.out.println(context.toString());
@@ -202,11 +201,10 @@ public class DomainTest {
 
 	/**
 	 * Test of service "getCategories".
-	 * @throws ContextNotFoundException 
 	 * @throws DomainServiceException 
 	 */
 	private static void testGetDisplayedCategories() 
-	throws ContextNotFoundException, DomainServiceException {
+	throws DomainServiceException {
 		printIntro("getDisplayedCategories");
 		List<CategoryBean> categories = facadeService.getDisplayedCategories(userId, contextId);
 		categoryIds = new ArrayList<String>();
@@ -238,8 +236,9 @@ public class DomainTest {
 	
 	/**
 	 * Test of service "getVisibleCategories".
+	 * @throws InternalDomainException 
 	 */
-	private static void testGetVisibleCategories()  {
+	private static void testGetVisibleCategories() throws InternalDomainException  {
 		printIntro("getVisibleCategories");
 		List<CategoryBean> cats;
 		try {
@@ -248,8 +247,6 @@ public class DomainTest {
 				System.out.println("  **** category ****");
 				System.out.println(ca.toString());
 			}	
-		} catch (ContextNotFoundException e) {
-			System.out.println("ContextNotFoundException !!!! sur context " + contextId);
 		} catch (ManagedCategoryNotLoadedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -370,8 +367,9 @@ public class DomainTest {
 	
 	/**
 	 * Test of service "subscribeToCategory" and "unsubscribeToCategory".
+	 * @throws InternalDomainException 
 	 */
-	private static void testSubUnSubscribeToCategory() {
+	private static void testSubUnSubscribeToCategory() throws InternalDomainException {
 		printIntro("getSubscribeToCategory");
 		
 		try {
@@ -483,15 +481,13 @@ public class DomainTest {
 
 	/**
 	 * Test of service "getItems".
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws SourceNotLoadedException 
-	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws SourceTimeOutException 
 	 * @throws InternalDomainException 
+	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws SourceNotLoadedException 
 	 */
 	@SuppressWarnings("unused")
 	private static void testTimeOutValues() 
-	throws ManagedCategoryProfileNotFoundException, SourceNotLoadedException, ManagedCategoryNotLoadedException, SourceTimeOutException, InternalDomainException {
+	throws SourceNotLoadedException, ManagedCategoryNotLoadedException, InternalDomainException {
 		printIntro("testTimeOutValues");
 		System.out.println(" ** category CP1 ( no trust category) **********");
 		System.out.println(" ***** source un (timeout present) **********");
@@ -511,15 +507,16 @@ public class DomainTest {
 	/**
 	 * Test of service markItemAsRead and markItemAsUnread.
 	 * @throws InternalDomainException 
-	 * @throws SourceNotLoadedException 
+	 * @throws SourceTimeOutException 
 	 * @throws SourceProfileNotFoundException 
 	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws SourceTimeOutException 
+	 * @throws SourceNotLoadedException 
 	 */
 	@SuppressWarnings("unused")
 	private static void testMarkItemReadMode() 
-	throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, ManagedCategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException {
+	throws InternalDomainException, SourceNotLoadedException, ManagedCategoryProfileNotFoundException, 
+	ManagedCategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException {
 		printIntro("markItemReadMode");
 		System.out.println("Marquage de l'item " + itemId + " comme lu");
 		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId, true);
@@ -545,13 +542,12 @@ public class DomainTest {
 	
 	/**
 	 * Test of service setTreeSize.
+	 * @throws InternalDomainException 
 	 * @throws TreeSizeErrorException 
-	 * @throws ContextNotFoundException 
 	 * @throws InternalExternalException 
 	 */
 	@SuppressWarnings("unused")
-	private static void testSetTreeSize() 
-	throws ContextNotFoundException, TreeSizeErrorException, InternalExternalException {
+	private static void testSetTreeSize() throws TreeSizeErrorException, InternalDomainException, InternalExternalException {
 		printIntro("setTreeSize");
 		int newTreeSize = 10;
 		System.out.println("Set tree size to " + newTreeSize);
@@ -581,15 +577,12 @@ public class DomainTest {
 
 	/**
 	 * Test of timeOut Values.
-	 * @throws SourceNotLoadedException
 	 * @throws InternalDomainException 
-	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws SourceProfileNotFoundException 
-	 * @throws SourceTimeOutException 
+	 * @throws SourceNotLoadedException 
 	 */
 	private static void testGetItems() 
-	throws SourceNotLoadedException, InternalDomainException, ManagedCategoryProfileNotFoundException, ManagedCategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException  {
+	throws SourceNotLoadedException, ManagedCategoryNotLoadedException, InternalDomainException {
 		printIntro("getItems");
 		System.out.println(" **** source " + sourceId + " **********");
 		List<ItemBean> items = facadeService.getItems(userId, sourceId);

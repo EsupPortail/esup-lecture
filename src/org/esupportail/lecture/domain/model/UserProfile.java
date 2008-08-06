@@ -8,14 +8,12 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
-import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
-import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 
 
@@ -125,15 +123,12 @@ public class UserProfile {
 	 * if exist,else,create it.
 	 * @param categoryId identifier of the category refered by the customCategory
 	 * @return customCategory (or null)
+	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CustomCategoryNotFoundException 
-	 * @throws InternalDomainException 
-	 * @throws CategoryTimeOutException 
-	 * @throws CategoryOutOfReachException 
 	 */
 	public CustomCategory getCustomCategory(final String categoryId) 
-	throws  CategoryNotVisibleException, CustomCategoryNotFoundException, InternalDomainException, 
-	CategoryTimeOutException, CategoryOutOfReachException {
+	throws CategoryNotVisibleException, InternalDomainException, CustomCategoryNotFoundException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug(ID + userId + " - getCustomCategory(" + categoryId + ")");
     	}
@@ -146,8 +141,11 @@ public class UserProfile {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				removeCustomManagedCategoryIfOrphan(categoryId);
-				throw new CategoryOutOfReachException("ManagedCategory " + categoryId 
-						+ "is not refered by any customContext in userProfile " + getUserId());
+				String errorMsg = "ManagedCategory " + categoryId 
+					+ "is not refered by any customContext in userProfile " 
+					+ getUserId() + ".";
+				LOG.error(errorMsg);
+				throw new InternalDomainException(errorMsg, e);
 			}
 			customCategory = customCategories.get(categoryId);
 			if (customCategory == null) {
@@ -166,25 +164,16 @@ public class UserProfile {
 	/**
 	 * Update every customContext of this userProfile for (only one)categoryProfile identified by categoryProfileId.
 	 * @param categoryProfileId
-	 * @throws CategoryNotVisibleException
-	 * @throws InternalDomainException 
-	 * @throws CategoryTimeOutException 
 	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryNotVisibleException 
 	 */
 	protected void updateCustomContextsForOneManagedCategory(final String categoryProfileId) 
-		throws  CategoryNotVisibleException, InternalDomainException, 
-		CategoryTimeOutException, ManagedCategoryNotLoadedException {
+	throws ManagedCategoryNotLoadedException, InternalDomainException, CategoryNotVisibleException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug(ID + userId + " - updateCustomContextsForOneManagedCategory(" + categoryProfileId + ",ex)");
     	}
 		
-//		} catch (ManagedCategoryProfileNotFoundException e) {
-//			String errorMsg = "Unable to getCustomCategory(categoryId=" + categoryId 
-//	   			+ ") because of a ManagedCategoryProfileNotFoundException";
-//			log.error(errorMsg);
-//			cleanCustomCategoryFromProfile(categoryId);
-//			throw new InternalDomainException(errorMsg,e);
-//		}
 	   	boolean categoryIsVisible = true;
 		try {
 			ManagedCategoryProfile mcp = 
@@ -210,8 +199,7 @@ public class UserProfile {
 							+ " because context not found", e);
 					}
 				}
-			}
-		
+			}		
 		} catch (ManagedCategoryProfileNotFoundException e) {
 			String errorMsg = "Unable to updateCustomContextsForOneManagedCategory(categoryId="
 				+ categoryProfileId + ") because of a ManagedCategoryProfileNotFoundException";
@@ -245,8 +233,7 @@ public class UserProfile {
 			String errorMsg = "CustomSource " + sourceId + " is not found in userProfile " + this.userId;
 			LOG.error(errorMsg);
 			throw new CustomSourceNotFoundException(errorMsg);
-		}
-		
+		}		
 		return customSource;
 	}
 

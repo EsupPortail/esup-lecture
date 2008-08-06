@@ -18,7 +18,6 @@ import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.CategoryDummyBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
-import org.esupportail.lecture.domain.beans.ItemDummyBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
@@ -26,16 +25,13 @@ import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.domain.model.CustomManagedSource;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
-import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
@@ -44,15 +40,11 @@ import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
-import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
-import org.esupportail.lecture.exceptions.domain.UserNotSubscribedToCategoryException;
-import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.util.Assert;
@@ -143,11 +135,10 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param userId id of the current user
 	 * @param contextId id of the context to get
 	 * @return contextBean
-	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
 	 * @see org.esupportail.lecture.domain.DomainService#getContext(String,String)
 	 */
-	public ContextBean getContext(final String userId, final String contextId) 
-			throws ContextNotFoundException {
+	public ContextBean getContext(final String userId, final String contextId) throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getContext(" + userId + "," + contextId + ")");
 		}
@@ -155,10 +146,16 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		ContextBean contextBean;
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(userId);
-		CustomContext customContext = userProfile.getCustomContext(contextId);
-		
-		/* Make the contextUserBean to display */
-		contextBean = new ContextBean(customContext);
+		try {
+			CustomContext customContext = userProfile.getCustomContext(contextId);
+			
+			/* Make the contextUserBean to display */
+			contextBean = new ContextBean(customContext);
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to getContext because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		
 		return contextBean;		
 	}
@@ -172,18 +169,25 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param userId id of the current user
 	 * @param contextId  id of the current context 
 	 * @return a list of CategoryBean
-	 * @throws ContextNotFoundException
+	 * @throws InternalDomainException
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedCategories(String,String)
 	 */
 	public List<CategoryBean> getDisplayedCategories(final String userId, final String contextId) 
-			throws ContextNotFoundException {
+	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getDisplayedCategories(" + userId + "," + contextId + ")");
 		}
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(userId);
-		CustomContext customContext = userProfile.getCustomContext(contextId);
+		CustomContext customContext;
+		try {
+			customContext = userProfile.getCustomContext(contextId);
+		} catch (ContextNotFoundException e1) {
+			String errorMsg = "Unable to getDisplayedCategories because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e1);
+		}
 
 		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
 		List<CustomCategory> customCategories = customContext.getSortedCustomCategories();
@@ -218,17 +222,14 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid Id of the user
 	 * @param categoryId id of the category to display sources
 	 * @return a list of sourceBean
-	 * @throws CategoryNotVisibleException 
 	 * @throws InternalDomainException 
+	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryTimeOutException 
-	 * @throws CategoryOutOfReachException 
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(
 	 *   java.lang.String, java.lang.String)
 	 */
-	public List<SourceBean> getDisplayedSources(
-		final String uid, final String categoryId) 
-	throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
-			InternalDomainException, CategoryTimeOutException, CategoryOutOfReachException  {
+	public List<SourceBean> getDisplayedSources(final String uid, final String categoryId) 
+	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getDisplayedSources(" + uid + "," + categoryId + ")");
 		}
@@ -244,10 +245,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				try {
 					source = new SourceBean(customSource);
 					listSourceBean.add(source);
-				} catch (SourceProfileNotFoundException e) {
-					LOG.warn("Warning on service 'getDisplayedSources(user " 
-						+ uid + ", category " + categoryId + ") : clean custom source ");
-					userProfile.removeCustomSourceFromProfile(customSource.getElementId());
+// GB : No needed because of improve of exception management					
+//				} catch (SourceProfileNotFoundException e) {
+//					LOG.warn("Warning on service 'getDisplayedSources(user " 
+//						+ uid + ", category " + categoryId + ") : clean custom source ");
+//					userProfile.removeCustomSourceFromProfile(customSource.getElementId());
 				} catch (InfoDomainException e) {
 					LOG.error("Error on service 'getDisplayedSources(user "
 						+ uid + ", category " + categoryId + ") : " 
@@ -256,19 +258,21 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 					listSourceBean.add(source);
 				}
 			}
-		} catch	(CategoryProfileNotFoundException e) {
-			String errorMsg = "CategoryProfileNotFoundException for service 'getDisplayedSources(user "
-				+ uid + ", category " + categoryId + ")";
-			LOG.error(errorMsg);
-			//userProfile.cleanCustomCategoryFromProfile(categoryId);
-			userProfile.removeCustomCategoryFromProfile(categoryId);
-			throw new InternalDomainException(errorMsg, e);
+// GB : No needed because of improve of exception management	
+//		} catch	(CategoryProfileNotFoundException e) {
+//			String errorMsg = "CategoryProfileNotFoundException for service 'getDisplayedSources(user "
+//				+ uid + ", category " + categoryId + ")";
+//			LOG.error(errorMsg);
+//			//userProfile.cleanCustomCategoryFromProfile(categoryId);
+//			userProfile.removeCustomCategoryFromProfile(categoryId);
+//			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'getDisplayedSources(user "
 				+ uid + ", category " + categoryId + ")\n" 
 				+ "User " + uid + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);
-			throw new UserNotSubscribedToCategoryException(errorMsg, e);
+			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
+			throw new InternalDomainException(errorMsg, e);
 		}
 		
 		return listSourceBean;
@@ -281,14 +285,14 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user Id
 	 * @param sourceId source Id to display items
 	 * @return a list of itemBean
-	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
 	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws SourceNotLoadedException 
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(
 	 *   java.lang.String, java.lang.String)
 	 */
 	public List<ItemBean> getItems(final String uid, final String sourceId) 
-			throws SourceNotLoadedException, InternalDomainException, ManagedCategoryNotLoadedException {
+	throws InternalDomainException, SourceNotLoadedException, ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getItems(" + uid + "," + sourceId + ")");
 		}
@@ -306,41 +310,33 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				ItemBean itemBean = new ItemBean(item, customSource);
 				listItemBean.add(itemBean);
 			}
-		} catch (ManagedCategoryProfileNotFoundException e) {
-			String errorMsg = "ManagedCategoryProfileNotFoundException for service 'getItems(user "
-				+ uid + ", source " + sourceId + ")";
-			LOG.error(errorMsg);
-			CustomManagedSource customManagedSource = (CustomManagedSource) customSource;
-			String categoryId = customManagedSource.getManagedSourceProfileParentId();
-			//userProfile.cleanCustomCategoryFromProfile(categoryId);
-			userProfile.removeCustomCategoryFromProfile(categoryId);
-			throw new InternalDomainException(errorMsg, e);
-		} catch	(SourceProfileNotFoundException e) {
-			String errorMsg = "SourceProfileNotFoundException for service 'getItems(user "
-				+ uid + ", source " + sourceId + ")";
-			LOG.error(errorMsg);
-			userProfile.removeCustomSourceFromProfile(sourceId);
-			throw new InternalDomainException(errorMsg, e);
+// GB : No needed because of improve of exception management	
+//		} catch (ManagedCategoryProfileNotFoundException e) {
+//			String errorMsg = "ManagedCategoryProfileNotFoundException for service 'getItems(user "
+//				+ uid + ", source " + sourceId + ")";
+//			LOG.error(errorMsg);
+//			CustomManagedSource customManagedSource = (CustomManagedSource) customSource;
+//			String categoryId = customManagedSource.getManagedSourceProfileParentId();
+//			//userProfile.cleanCustomCategoryFromProfile(categoryId);
+//			userProfile.removeCustomCategoryFromProfile(categoryId);
+//			throw new InternalDomainException(errorMsg, e);
+//		} catch	(SourceProfileNotFoundException e) {
+//			String errorMsg = "SourceProfileNotFoundException for service 'getItems(user "
+//				+ uid + ", source " + sourceId + ")";
+//			LOG.error(errorMsg);
+//			userProfile.removeCustomSourceFromProfile(sourceId);
+//			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomSourceNotFoundException e) {
 			String errorMsg = "CustomSourceNotFoundException for service 'getItems(user "
 				+ uid + ", source " + sourceId + ")";
 			LOG.error(errorMsg);
+			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
 			throw new InternalDomainException(errorMsg, e);
 		} catch (ComputeItemsException e) {
 			String errorMsg = "ComputeItemsException for service 'getItems(user "
 				+ uid + ", source " + sourceId + ")";
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
-		} catch (InfoDomainException e) {
-			String errorMsg = "InfoDomainException for service 'getItems(user "
-				+ uid + ", source " + sourceId + ")";
-			LOG.error(errorMsg);
-			//get error message form i18n service
-			String mes = i18nService.getString("itemDummy");
-			//build new exception with this first translated message in stack trace
-			InfoDomainException e2 = new InfoDomainException(mes, e); 
-			ItemBean itemBean = new ItemDummyBean(e2);
-			listItemBean.add(itemBean);
 		} 		
 		return listItemBean;
 	}
@@ -356,8 +352,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 *   java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
 	public void marckItemReadMode(final String uid, final String sourceId, 
-			final String itemId, final boolean isRead) 
-			throws InternalDomainException {
+		final String itemId, final boolean isRead) 
+	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("marckItemReadMode(" + uid + "," + sourceId + "," + itemId + "," + isRead + ")");
 		}
@@ -372,6 +368,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			String errorMsg = "CustomSourceNotFoundException for service 'marckItemReadMode(user "
 				+ uid + ", source " + sourceId + ", item " + itemId + ", isRead " + isRead + ")";
 			LOG.error(errorMsg);
+			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
 			throw new InternalDomainException(errorMsg, e);
 		}
 		
@@ -402,6 +399,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			String errorMsg = "CustomSourceNotFoundException for service 'markItemDisplayMode(user "
 				+ uid + ", source " + sourceId + ", mode " + mode + ")";
 			LOG.error(errorMsg);
+			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
 			throw new InternalDomainException(errorMsg, e);
 		}
 		
@@ -413,19 +411,26 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user Id for user uid
 	 * @param contextId context Id
 	 * @param size size to set
-	 * @throws ContextNotFoundException 
-	 * @throws TreeSizeErrorException
+	 * @throws InternalDomainException 
+	 * @throws TreeSizeErrorException 
 	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(java.lang.String, java.lang.String, int)
 	 */
-	public void setTreeSize(final String uid, final String contextId, final int size)
-		throws TreeSizeErrorException, ContextNotFoundException {
+	public void setTreeSize(final String uid, final String contextId, final int size) 
+	throws InternalDomainException, TreeSizeErrorException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("setTreeSize(" + uid + "," + contextId + "," + size + ")");
 		}
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
-		CustomContext customContext = userProfile.getCustomContext(contextId);
-		customContext.modifyTreeSize(size);	
+		CustomContext customContext;
+		try {
+			customContext = userProfile.getCustomContext(contextId);
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to setTreeSize because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
+		customContext.modifyTreeSize(size);
 	}
 
 	/**
@@ -434,19 +439,26 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user Id
 	 * @param cxtId context Id 
 	 * @param catId category Id
-	 * @throws ContextNotFoundException
+	 * @throws InternalDomainException 
 	 * @see org.esupportail.lecture.domain.DomainService#foldCategory(
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void foldCategory(final String uid, final String cxtId, 
-			final String catId) throws ContextNotFoundException {
+	public void foldCategory(final String uid, final String cxtId, final String catId) 
+	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("foldCategory(" + uid + "," + cxtId + "," + catId + ")");
 		}
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
-		CustomContext customContext = userProfile.getCustomContext(cxtId);
+		CustomContext customContext;
+		try {
+			customContext = userProfile.getCustomContext(cxtId);
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to foldCategory because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		customContext.foldCategory(catId);
 	}
 	
@@ -456,19 +468,26 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user Id
 	 * @param cxtId context Id 
 	 * @param catId category Id
-	 * @throws ContextNotFoundException
+	 * @throws InternalDomainException 
 	 * @see org.esupportail.lecture.domain.DomainService#unfoldCategory(
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void unfoldCategory(final String uid, final String cxtId,
-			final String catId) throws ContextNotFoundException {
+	public void unfoldCategory(final String uid, final String cxtId, final String catId) 
+	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("unfoldCategory(" + uid + "," + cxtId + "," + catId + ")");
 		}
 		
 		/* Get current user profile and customContext */
 		UserProfile userProfile = channel.getUserProfile(uid);
-		CustomContext customContext = userProfile.getCustomContext(cxtId);
+		CustomContext customContext;
+		try {
+			customContext = userProfile.getCustomContext(cxtId);
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to unfoldCategory because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		customContext.unfoldCategory(catId);
 	}
 	
@@ -476,20 +495,26 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 ************************** Methodes - services - mode EDIT ************************************/
 	
 	/**
-	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
 	 * @throws ManagedCategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(
 	 *   java.lang.String, java.lang.String)
 	 */
-	public List<CategoryBean> getVisibleCategories(
-			final String uid, final String contextId) 
-		throws ContextNotFoundException, ManagedCategoryNotLoadedException {
+	public List<CategoryBean> getVisibleCategories(final String uid, final String contextId) 
+	throws InternalDomainException, ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getVisibleCategories(" + uid + "," + contextId + ")");
 		}
 		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
 		UserProfile userProfile = channel.getUserProfile(uid);
-		CustomContext customContext = userProfile.getCustomContext(contextId);
+		CustomContext customContext;
+		try {
+			customContext = userProfile.getCustomContext(contextId);
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to getVisibleCategories because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		List<CoupleProfileAvailability> couples = customContext.getVisibleCategories();
 		for (CoupleProfileAvailability couple : couples) {
 			CategoryBean category;
@@ -500,15 +525,15 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 
 	}
 
-
-
 	/**
+	 * @throws InternalDomainException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryTimeOutException 
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(
 	 *   java.lang.String, java.lang.String)
 	 */
 	public List<SourceBean> getVisibleSources(final String uid, final String categoryId) 
-	throws CategoryNotVisibleException, CategoryOutOfReachException, 
-	UserNotSubscribedToCategoryException, InternalDomainException, CategoryTimeOutException {
+	throws CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getVisibleSources(" + uid + "," + categoryId + ")");
 		}
@@ -520,30 +545,32 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			List<CoupleProfileAvailability> couples = customCategory.getVisibleSources();
 			for (CoupleProfileAvailability couple : couples) {
 				SourceBean source;
-				//try {
+//				try {
 					source = new SourceBean(couple);
 					listSourceBean.add(source);
-					////////////////
+// GB : No needed because of improve of exception management	
 //				}catch (InfoDomainException e) {
-//					log.error("Error on service 'getVisibleSources(user "
+//					LOG.error("Error on service 'getVisibleSources(user "
 //						+uid+", category "+categoryId+") : creation of a SourceDummyBean");
 //					source = new SourceDummyBean(e);
 //					listSourceBean.add(source);
 //				}
-			}			
-		} catch	(CategoryProfileNotFoundException e) {
-			String errorMsg = "CategoryProfileNotFoundException for service 'getVisibleSources(user "
-				+ uid + ", category " + categoryId + ")";
-			LOG.error(errorMsg);
-			//userProfile.cleanCustomCategoryFromProfile(categoryId);
-			userProfile.removeCustomCategoryFromProfile(categoryId);
-			throw new InternalDomainException(errorMsg, e);
+			}	
+// GB : No needed because of improve of exception management	
+//		} catch	(CategoryProfileNotFoundException e) {
+//			String errorMsg = "CategoryProfileNotFoundException for service 'getVisibleSources(user "
+//				+ uid + ", category " + categoryId + ")";
+//			LOG.error(errorMsg);
+//			//userProfile.cleanCustomCategoryFromProfile(categoryId);
+//			userProfile.removeCustomCategoryFromProfile(categoryId);
+//			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'getVisibleSources(user " 
 				+ uid + ", category " + categoryId + ")" 
 				+ "User " + uid + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);
-			throw new UserNotSubscribedToCategoryException(errorMsg, e);
+			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
+			throw new InternalDomainException(errorMsg, e);
 		}
 		 return listSourceBean;
 		
@@ -554,18 +581,12 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user ID
 	 * @param contextId context ID
 	 * @param categoryId category ID
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws ContextNotFoundException 
 	 * @throws InternalDomainException 
-	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryTimeOutException 
 	 * 
 	 */
-	public void subscribeToCategory(final String uid, final String contextId, 
-		final String categoryId) 
-	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
-	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, InternalDomainException  {
+	public void subscribeToCategory(final String uid, final String contextId, final String categoryId) 
+	throws InternalDomainException, CategoryNotVisibleException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToCategory(" + uid + "," + contextId 
 				+ "," + categoryId + ")");
@@ -573,7 +594,13 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		UserProfile userProfile = channel.getUserProfile(uid);
 		
 		CustomContext customContext;
-		customContext = userProfile.getCustomContext(contextId);
+		try {
+			customContext = userProfile.getCustomContext(contextId);
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to subscribeToCategory because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		customContext.subscribeToCategory(categoryId);
 	}
 
@@ -584,19 +611,14 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user ID
 	 * @param categoryId category ID
 	 * @param sourceId source ID
-	 * @throws UserNotSubscribedToCategoryException 
+	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws SourceNotVisibleException 
-	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryOutOfReachException
-	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 */
-	public void subscribeToSource(final String uid, final String categoryId, 
-		final String sourceId) 
-	throws UserNotSubscribedToCategoryException, CategoryNotVisibleException,
-	CategoryOutOfReachException, SourceProfileNotFoundException, SourceNotVisibleException,
-	InternalDomainException, CategoryTimeOutException {
+	public void subscribeToSource(final String uid, final String categoryId, final String sourceId) 
+	throws CategoryNotVisibleException, InternalDomainException, 
+	CategoryTimeOutException, SourceNotVisibleException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + uid + "," + categoryId 
 				+ "," + sourceId + ")");
@@ -605,19 +627,21 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		try {
 			CustomCategory customCategory = userProfile.getCustomCategory(categoryId);
 			customCategory.subscribeToSource(sourceId);
-		} catch	(CategoryProfileNotFoundException e) {
-			String errorMsg = "CategoryProfileNotFoundException for service 'subscribeToSource(user "
-				+ uid + ", category " + categoryId + ", source " + sourceId + ")";
-			LOG.error(errorMsg);
-			//userProfile.cleanCustomCategoryFromProfile(categoryId);
-			userProfile.removeCustomCategoryFromProfile(categoryId);
-			throw new InternalDomainException(errorMsg, e);
+// GB : No needed because of improve of exception management	
+//			} catch	(CategoryProfileNotFoundException e) {
+//			String errorMsg = "CategoryProfileNotFoundException for service 'subscribeToSource(user "
+//				+ uid + ", category " + categoryId + ", source " + sourceId + ")";
+//			LOG.error(errorMsg);
+//			//userProfile.cleanCustomCategoryFromProfile(categoryId);
+//			userProfile.removeCustomCategoryFromProfile(categoryId);
+//			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'subscribeToSource(user "
 				+ uid + ", category " + categoryId + ", source " + sourceId + ").\n" 
 				+ "User " + uid + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);
-			throw new UserNotSubscribedToCategoryException(errorMsg, e);
+			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
+			throw new InternalDomainException(errorMsg, e);
 		} 
 	}
 	
@@ -626,26 +650,25 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user ID
 	 * @param contextId context ID
 	 * @param categoryId category ID
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws ContextNotFoundException 
 	 * @throws InternalDomainException 
-	 * @throws CategoryOutOfReachException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryTimeOutException 
 	 * @throws CategoryObligedException 
+	 * @throws CategoryNotVisibleException 
 	 * 
 	 */
-	public void unsubscribeToCategory(final String uid, final String contextId, 
-		final String categoryId) 
-	throws ManagedCategoryProfileNotFoundException, ContextNotFoundException, 
-	CategoryTimeOutException, CategoryNotVisibleException, CategoryOutOfReachException, 
-	InternalDomainException, CategoryObligedException {
+	public void unsubscribeToCategory(final String uid, final String contextId, final String categoryId) 
+	throws InternalDomainException, CategoryNotVisibleException, CategoryObligedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("unsubscribeToCategory(" + uid + "," + contextId + "," + categoryId + ")");
 		}
 		UserProfile userProfile = channel.getUserProfile(uid);			
 		CustomContext customContext;
-		customContext = userProfile.getCustomContext(contextId);
+		try {
+			customContext = userProfile.getCustomContext(contextId);
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to unsubscribeToCategory because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		customContext.unsubscribeToCategory(categoryId);
 	}
 
@@ -654,18 +677,13 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user ID
 	 * @param categoryId category ID
 	 * @param sourceId source ID
-	 * @throws CategoryNotVisibleException 
-	 * @throws UserNotSubscribedToCategoryException 
 	 * @throws InternalDomainException 
+	 * @throws CategoryNotVisibleException 
 	 * @throws SourceObligedException 
-	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryTimeOutException 
 	 */
-	public void unsubscribeToSource(final String uid, final String categoryId, 
-		final String sourceId) 
-	throws CategoryNotVisibleException, UserNotSubscribedToCategoryException, 
-	InternalDomainException, CategoryOutOfReachException, SourceObligedException, 
-	CategoryTimeOutException {
+	public void unsubscribeToSource(final String uid, final String categoryId, final String sourceId) 
+	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException, SourceObligedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + uid + "," + categoryId + "," 
 				+ sourceId + ")");
@@ -674,19 +692,21 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		try {
 			CustomCategory customCategory = userProfile.getCustomCategory(categoryId);
 			customCategory.unsubscribeToSource(sourceId);
-		} catch	(CategoryProfileNotFoundException e) {
-			String errorMsg = "CategoryProfileNotFoundException for service 'unsubscribeToSource(user "
-				+ uid + ", category " + categoryId + ", source " + sourceId + ")";
-			LOG.error(errorMsg);
-			//userProfile.cleanCustomCategoryFromProfile(categoryId);
-			userProfile.removeCustomCategoryFromProfile(categoryId);
-			throw new InternalDomainException(errorMsg, e);
+// GB : No needed because of improve of exception management	
+//		} catch	(CategoryProfileNotFoundException e) {
+//			String errorMsg = "CategoryProfileNotFoundException for service 'unsubscribeToSource(user "
+//				+ uid + ", category " + categoryId + ", source " + sourceId + ")";
+//			LOG.error(errorMsg);
+//			//userProfile.cleanCustomCategoryFromProfile(categoryId);
+//			userProfile.removeCustomCategoryFromProfile(categoryId);
+//			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'unsubscribeToSource(user "
 				+ uid + ", category " + categoryId + ", source " + sourceId + ").\n" 
 				+ "User " + uid + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);
-			throw new UserNotSubscribedToCategoryException(errorMsg, e);
+			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
+			throw new InternalDomainException(errorMsg, e);
 		} 	
 	}
 	

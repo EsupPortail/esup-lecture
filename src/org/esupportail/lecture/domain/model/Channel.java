@@ -316,7 +316,8 @@ public class Channel implements InitializingBean {
 		}
 	
 		if (userId == null) {
-			String mes = "userId not found. Check Channel configuation.";
+			// TODO (RB <-- GB) Pourras tu noter dans le msg, le lieu où se configure le userId ? Merci
+			String mes = "userId not found. Check configuration.";
 			LOG.error(mes);
 			throw new ConfigException(mes);
 		}

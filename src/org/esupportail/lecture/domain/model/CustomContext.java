@@ -15,13 +15,11 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
-import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
-import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 
@@ -124,18 +122,24 @@ public class CustomContext implements CustomElement {
 	/**
 	 * Return the list of sorted customCategories displayed by this customContext.
 	 * @return the list of customCategories 
-	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
 	 */
-	public List<CustomCategory> getSortedCustomCategories() 
-			throws ContextNotFoundException {
+	public List<CustomCategory> getSortedCustomCategories() throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + elementId + " - getSortedCustomCategories()");
 		}
 		// TODO (GB later) rewrite with custom personnal category (+ sorted display)
 	
 		/* update this customContext with context */
-		getContext().updateCustom(this);
-		
+		Context c;
+		try {
+			c = getContext();
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to getSortedCustomCategories because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
+		c.updateCustom(this);
 		List<CustomCategory> listCustomCategories = new Vector<CustomCategory>();
 		for (CustomManagedCategory customCat : subscriptions.values()) {
 			// later : add other custom elements (imported et personal)
@@ -148,16 +152,22 @@ public class CustomContext implements CustomElement {
 	 * Return a list of (CategoryProfile, AvailabilityMode) corresponding to visible categories for user, 
 	 * in this customContext and update it.
 	 * @return list of CoupleProfileAvailability
-	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
 	 */
-	public List<CoupleProfileAvailability> getVisibleCategories() 
-	throws ContextNotFoundException  {
+	public List<CoupleProfileAvailability> getVisibleCategories() throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + getElementId() + " - getVisibleCategories(ex)");
 		}
 		// TODO (GB later) redéfinir avec les custom personnal 
 		// category : en fonction de l'ordre d'affichage peut etre.
-		Context cxt = getContext();
+		Context cxt;
+		try {
+			cxt = getContext();
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to getVisibleCategories because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		List<CoupleProfileVisibility> couplesVisib;
 		couplesVisib = cxt.getVisibleCategoriesAndUpdateCustom(this);
 			
@@ -188,21 +198,21 @@ public class CustomContext implements CustomElement {
 	/**
 	 * after checking visibility rights, subcribe user to the category categoryId in this CustomContext.
 	 * @param categoryId category ID
-	 * @throws ContextNotFoundException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws CategoryTimeOutException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryOutOfReachException 
 	 */
 	public void subscribeToCategory(final String categoryId) 
-	throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, 
-	CategoryTimeOutException, CategoryNotVisibleException, InternalDomainException, 
-	CategoryOutOfReachException {	
+	throws InternalDomainException, CategoryNotVisibleException {	
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToCategory(" + categoryId + ")");
 		}
-		context = getContext();
+		try {
+			context = getContext();
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to subscribeToCategory because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		ManagedCategoryProfile catProfile = null;
 		VisibilityMode mode = null;
 		try {
@@ -218,10 +228,21 @@ public class CustomContext implements CustomElement {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
-				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
+				String errorMsg = "ManagedCategory " + getElementId()
 					+ "is not refered by any customContext in userProfile "
-					+ userProfile.getUserId());
+					+ userProfile.getUserId() + ".";
+				LOG.error(errorMsg);
+				throw new InternalDomainException(errorMsg, e2);
+			} catch (ManagedCategoryProfileNotFoundException e) {
+				String errorMsg = 
+					"Unable to subscribeToCategory because managedCategoryProfile is not found";
+				LOG.error(errorMsg);
+				throw new InternalDomainException(errorMsg, e);
 			} 
+		} catch (ManagedCategoryProfileNotFoundException e) {
+			String errorMsg = "Unable to subscribeToCategory because managedCategoryProfile is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
 		} 
 		
 		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
@@ -254,21 +275,22 @@ public class CustomContext implements CustomElement {
 	/**
 	 * after checking visibility rights, unsubcribe user to the category categoryId in this CustomContext.
 	 * @param categoryId category ID
-	 * @throws ContextNotFoundException 
-	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws CategoryTimeOutException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryObligedException 
 	 */
 	public void unsubscribeToCategory(final String categoryId) 
-	throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, CategoryTimeOutException, 
-	CategoryNotVisibleException, InternalDomainException, CategoryOutOfReachException, CategoryObligedException {
+	throws InternalDomainException, CategoryNotVisibleException, CategoryObligedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToCategory(" + categoryId + ")");
 		}
-		context = getContext();
+		try {
+			context = getContext();
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to unsubscribeToCategory because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		ManagedCategoryProfile catProfile = null;
 		VisibilityMode mode = null;
 		try {
@@ -284,10 +306,21 @@ public class CustomContext implements CustomElement {
 				// Dans ce cas : la managedCategory n'est pointée par aucun 
 				// context correspondant à des customContext du userProfile => supression ?
 				userProfile.removeCustomManagedCategoryIfOrphan(getElementId());
-				throw new CategoryOutOfReachException("ManagedCategory " + getElementId()
-					+ "is not refered by any customContext in userProfile "
-					+ userProfile.getUserId());
+				String errorMsg = "ManagedCategory " + getElementId()
+				+ "is not refered by any customContext in userProfile "
+				+ userProfile.getUserId() + ".";
+				LOG.error(errorMsg);
+				throw new InternalDomainException(errorMsg, e2);
+			} catch (ManagedCategoryProfileNotFoundException e) {
+				String errorMsg = 
+					"Unable to subscribeToCategory because managedCategoryProfile is not found";
+				LOG.error(errorMsg);
+				throw new InternalDomainException(errorMsg, e);
 			}
+		} catch (ManagedCategoryProfileNotFoundException e) {
+			String errorMsg = "Unable to unsubscribeToCategory because context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
 		} 
 		
 		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
@@ -416,14 +449,23 @@ public class CustomContext implements CustomElement {
 	
 	/**
 	 * Returns the name of this context.
-	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
-	public String getName() throws ContextNotFoundException {
+	public String getName() throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + elementId + " - getName()");
 		}
-		return getContext().getName();
+		Context c = null;
+		try {
+			c = getContext();
+		} catch (ContextNotFoundException e) {
+			String errorMsg = "Unable to get name because of context is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
+		String name = c.getName();
+		return name;
 	}
 	
 	/**
@@ -432,7 +474,7 @@ public class CustomContext implements CustomElement {
 	 * @param size
 	 * @throws TreeSizeErrorException
 	 */
-	public void modifyTreeSize(final int size)throws TreeSizeErrorException {
+	public void modifyTreeSize(final int size) throws TreeSizeErrorException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + elementId + " - modifyTreeSize(size " + size + ")");
 		}

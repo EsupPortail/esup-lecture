@@ -6,7 +6,6 @@
 package org.esupportail.lecture.domain.model;
 
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.ElementNotLoadedException;
 
 /**
  * Managed Element profile element
@@ -32,10 +31,9 @@ interface ManagedElementProfile extends ElementProfile {
 	
 	/**
 	 * Returns access mode of the ManagedElementProfile.
-	 * @return access 
-	 * @throws ManagedCategoryNotLoadedException 
+	 * @return access  
 	 */
-	Accessibility getAccess() throws ManagedCategoryNotLoadedException; 
+	Accessibility getAccess(); 
 	
 	/**
 	 * Sets access mode of the ManagedElementProfile.
@@ -46,9 +44,8 @@ interface ManagedElementProfile extends ElementProfile {
 	/**
 	 * Return timeOut of the element.
 	 * @return timeOut
-	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	int getTimeOut() throws ManagedCategoryNotLoadedException;
+	int getTimeOut();
 	
 	/**
 	 * Sets timeOut of the element.
@@ -59,9 +56,8 @@ interface ManagedElementProfile extends ElementProfile {
 	/**
 	 * Returns ttl of the ManagedElementProfile.
 	 * @return ttl 
-	 * @throws ElementNotLoadedException 
 	 */
-	int getTtl() throws ElementNotLoadedException;
+	int getTtl();
 
 
 }

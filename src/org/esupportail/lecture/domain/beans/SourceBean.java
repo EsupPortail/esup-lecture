@@ -5,12 +5,17 @@
 */
 package org.esupportail.lecture.domain.beans;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
+import org.esupportail.lecture.domain.model.CustomManagedSource;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.ElementProfile;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.SourceProfile;
+import org.esupportail.lecture.exceptions.domain.ElementNotFoundException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
@@ -24,6 +29,10 @@ public class SourceBean {
 	
 	/* 
 	 *************************** PROPERTIES ******************************** */	
+	/**
+	 * Log instance.
+	 */
+	protected static final Log LOG = LogFactory.getLog(CustomManagedSource.class);
 	/**
 	 * id of source.
 	 */
@@ -59,13 +68,20 @@ public class SourceBean {
 	/**
 	 * constructor initializing object with a customSource.
 	 * @param customSource
-	 * @throws SourceProfileNotFoundException 
+	 * @throws InternalDomainException 
 	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	public SourceBean(final CustomSource customSource) throws ManagedCategoryProfileNotFoundException, 
-			ManagedCategoryNotLoadedException, SourceProfileNotFoundException {
-		SourceProfile profile = customSource.getProfile();
+	public SourceBean(final CustomSource customSource) 
+	throws InternalDomainException, ManagedCategoryNotLoadedException {
+		SourceProfile profile;
+		try {
+			profile = customSource.getProfile();
+		} catch (ElementNotFoundException e) {
+			String errorMsg = "Unable to create SourceBean"
+   			+ ") because of an element not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
 		
 		this.name = profile.getName();
 		this.id = profile.getId();

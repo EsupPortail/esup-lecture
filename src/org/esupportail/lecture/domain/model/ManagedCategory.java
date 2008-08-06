@@ -14,7 +14,6 @@ import java.util.Vector;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 
 
 /**
@@ -113,14 +112,21 @@ public class ManagedCategory extends Category {
 	
 	/**
 	 * Return visibility of the category, taking care of inheritance regulars.
-	 * @return visibility
-	 * @throws ManagedCategoryNotLoadedException 
+	 * @return visibility 
 	 */
-	protected VisibilitySets getVisibility() throws ManagedCategoryNotLoadedException {
+	protected VisibilitySets getVisibility() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getProfileId() + " - getVisibility()");
 		}
-		return getProfile().getVisibility();
+		VisibilitySets v;
+		try {
+			v = getProfile().getVisibility();
+		} catch (ManagedCategoryNotLoadedException e) {
+			LOG.error("Impossible situation : ManagedCategoryNotLoadedException "
+					+ "in a ManagedCategory - please contact developer");
+			v = null;
+		}
+		return v;
 	}
 	
 	/**
@@ -137,9 +143,8 @@ public class ManagedCategory extends Category {
 	/**	
 	 * Return editability of the category, taking care of inheritance regulars.
 	 * @return edit
-	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected Editability getEdit() throws ManagedCategoryNotLoadedException {
+	protected Editability getEdit() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + getProfileId() + " - getEdit()");
 		}
@@ -148,8 +153,8 @@ public class ManagedCategory extends Category {
 			e = getProfile().getEdit();
 			
 		} catch (ManagedCategoryNotLoadedException ex) {
-			LOG.error("Impossible situation : " 
-					+ "CategoryNotLoadedException in a ManagedCategory, please contact developer");
+			LOG.error("Impossible situation : ManagedCategoryNotLoadedException"
+					+ " in a ManagedCategory, please contact developer");
 			e = null;
 		}
 		return e;

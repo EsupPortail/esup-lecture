@@ -197,8 +197,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - getSourceProfileById(" + id + ")");
 		}
-		return (ManagedSourceProfile) getElement().getSourceProfileById(id);
-
+		return (ManagedSourceProfile) super.getSourceProfileById(id);
 	}
 
 	/**

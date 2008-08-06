@@ -6,7 +6,7 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * Size provided for tree in context display is wrong
+ * Size provided for tree in context display is wrong.
  * Bounds are :  0 <= size <= 100
  * @author gbouteil
  */

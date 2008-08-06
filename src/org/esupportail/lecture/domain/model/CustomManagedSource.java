@@ -77,7 +77,8 @@ public class CustomManagedSource extends CustomSource {
 	 */
 	@Override
 	public SourceProfile getProfile() 
-	throws SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException, ManagedCategoryNotLoadedException {
+	throws SourceProfileNotFoundException, ManagedCategoryProfileNotFoundException, 
+	ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + super.getElementId() + " - getProfile()");
 		}

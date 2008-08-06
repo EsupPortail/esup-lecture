@@ -92,14 +92,20 @@ public abstract class CategoryProfile implements ElementProfile {
 	/**
 	 * Returns the sourceProfile identified by id, accessible by CategoryProfile.
 	 * (Defined in Category referred by this categoryProfile)
-	 * @param sourceProfileId id of the sourceProfile
+	 * @param profileId id of the sourceProfile
 	 * @return the sourceProfile
 	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws SourceProfileNotFoundException 
 	 */
-	protected abstract SourceProfile getSourceProfileById(String sourceProfileId) 
-	throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException;
+	protected SourceProfile getSourceProfileById(final String profileId) 
+	throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - getSourceProfileById(" + id + ")");
+		}
+		SourceProfile msp = getElement().getSourceProfileById(profileId);
+		return msp;
 
+	}
 	
 	/** 
 	 * @see java.lang.Object#toString()

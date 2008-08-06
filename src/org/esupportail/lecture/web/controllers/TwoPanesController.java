@@ -26,7 +26,6 @@ import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
@@ -384,10 +383,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	/**
 	 * @param ctxtId
 	 * @return list of available categories
-	 * @throws InternalDomainException
-	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
 	 */
-	protected List<CategoryBean> getCategories(final String ctxtId) throws ContextNotFoundException {
+	protected List<CategoryBean> getCategories(final String ctxtId) throws InternalDomainException {
 		//Note: this method need to be overwrite in edit controller
 		List<CategoryBean> ret = new ArrayList<CategoryBean>();
 		List<CategoryBean> categories = getFacadeService().getDisplayedCategories(getUID(), ctxtId);

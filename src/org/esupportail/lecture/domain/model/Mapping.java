@@ -71,7 +71,7 @@ public class Mapping {
 	/**
 	 * Map of namespaces used by Xpath (key: NamesSpace prefix; value: NamaSpace URI).
 	 */
-	private HashMap<String, String> XPathNameSpaces;
+	private HashMap<String, String> xPathNameSpaces;
 	
 	/*
 	 ************************** INIT *********************************/	
@@ -80,7 +80,7 @@ public class Mapping {
 	 * Constructor. 
 	 */
 	Mapping() {
-		XPathNameSpaces = new HashMap<String, String>();
+		xPathNameSpaces = new HashMap<String, String>();
 	}
 	
 	/*
@@ -237,7 +237,7 @@ public class Mapping {
 	 * @return map of XPathNameSpaces
 	 */
 	protected HashMap<String, String> getXPathNameSpaces() {
-		return XPathNameSpaces;
+		return xPathNameSpaces;
 	}
 	
 	/**
@@ -245,7 +245,7 @@ public class Mapping {
 	 * @param pathNameSpace
 	 */
 	protected void setXPathNameSpaces(final HashMap<String, String> pathNameSpace) {
-		XPathNameSpaces = pathNameSpace;
+		xPathNameSpaces = pathNameSpace;
 	}
 	
 	

@@ -9,13 +9,11 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
-import org.esupportail.lecture.exceptions.domain.CategoryOutOfReachException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
-import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 
 /**
@@ -74,15 +72,24 @@ public abstract class CustomCategory implements CustomElement {
 	
 	/**
 	 * The used name of the categoryProfile.
-	 * @throws CategoryProfileNotFoundException 
+	 * @throws InternalDomainException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
-	public String getName() throws CategoryProfileNotFoundException {
+	public String getName() throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + elementId + " - getName()");
 		}
 		
-		return getProfile().getName();
+		CategoryProfile cp = null;
+		try {
+			cp = getProfile();
+		} catch (CategoryProfileNotFoundException e) {
+			String errorMsg = "Unable to get name because of category profile is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		}
+		String name = cp.getName();
+		return name;
 	}
 	
 	/**
@@ -120,15 +127,12 @@ public abstract class CustomCategory implements CustomElement {
 	/**
 	 * Return the list of sorted customSources displayed by this customCategory.
 	 * @return the list of customSource
-	 * @throws CategoryProfileNotFoundException
-	 * @throws CategoryNotVisibleException
 	 * @throws InternalDomainException 
+	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryTimeOutException 
-	 * @throws CategoryOutOfReachException 
 	 */
 	public abstract List<CustomSource> getSortedCustomSources() 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, 
-		CategoryTimeOutException, CategoryOutOfReachException;
+	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException;
 
 	/**
 	 * remove a CustomManegedSource displayed in this CustomCategory.
@@ -151,49 +155,43 @@ public abstract class CustomCategory implements CustomElement {
 	 * This list corresponding to visible sources for user, 
 	 * in this customCategory.
 	 * @return list of CoupleProfileAvailability
-	 * @throws CategoryProfileNotFoundException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryOutOfReachException 
 	 * @throws InternalDomainException 
+	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryTimeOutException 
 	 */
-	public abstract List<CoupleProfileAvailability> getVisibleSources() 
-		throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, 
-		InternalDomainException, CategoryTimeOutException;
+	// TODO (GB) je n'ai pas l'impression que cette method doit est définie icic : 
+	// n'a -t-elle pas son sens univquement dans CustomManagedCategory ? 
+	// à reflechir ...
+	public abstract List<CoupleProfileAvailability> getVisibleSources()  
+	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException;
 	
 	/**
 	 * For a customManagedCategory, it subscribes sourceId.
 	 * But for a customPersonalcategory, there is not any subscription and throws a SubcriptionInPersonalException
 	 * @param sourceId source ID
-	 * @throws CategoryProfileNotFoundException 
-	 * @throws SourceProfileNotFoundException 
 	 * @throws SourceNotVisibleException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryOutOfReachException 
 	 */
 	// TODO (GB later) faire le throw SubcriptionInPersonalImpossibleException pour le personal
-	public abstract void subscribeToSource(String sourceId) 
-		throws CategoryProfileNotFoundException, SourceProfileNotFoundException, 
-		SourceNotVisibleException, CategoryNotVisibleException, CategoryTimeOutException, 
-		InternalDomainException, CategoryOutOfReachException;
+	public abstract void subscribeToSource(String sourceId)
+	throws InternalDomainException, CategoryNotVisibleException, 
+	CategoryTimeOutException, SourceNotVisibleException;
 
 	/**
 	 * For a customManagedCategory, it unsubscribes sourceId.
 	 * But for a customPersonalcategory, 
 	 * there is not any subscription and throws a SubcriptionInPersonalException
 	 * @param sourceId source ID
-	 * @throws CategoryProfileNotFoundException 
 	 * @throws SourceObligedException 
 	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryTimeOutException 
 	 * @throws InternalDomainException 
 	 */
 	public abstract void unsubscribeToSource(String sourceId) 
-		throws CategoryProfileNotFoundException, SourceObligedException, CategoryOutOfReachException, 
-		CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException;
+	throws InternalDomainException, CategoryNotVisibleException, 
+	CategoryTimeOutException, SourceObligedException;
 	
 	/**
 	 * @param sourceId Id for customManagedSource
