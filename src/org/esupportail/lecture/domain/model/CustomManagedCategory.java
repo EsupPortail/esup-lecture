@@ -89,17 +89,17 @@ public class CustomManagedCategory extends CustomCategory {
 	 * Return the list of sorted customSources displayed by this customCategory.
 	 * and update it
 	 * @return the list of customSource
-	 * @throws CategoryProfileNotFoundException
-	 * @throws CategoryNotVisibleException
+	 * @throws CategoryProfileNotFoundException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
+	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryOutOfReachException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources()
 	 */
 	@Override
 	public List<CustomSource> getSortedCustomSources() 
-	throws CategoryProfileNotFoundException, CategoryNotVisibleException, InternalDomainException, 
-	CategoryTimeOutException, CategoryOutOfReachException {
+	throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryTimeOutException, 
+	InternalDomainException, CategoryOutOfReachException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + super.getElementId() + " - getSortedCustomSources()");
 		}
@@ -139,16 +139,16 @@ public class CustomManagedCategory extends CustomCategory {
 	 * in this customCategory and update it.
 	 * @return list of CoupleProfileAvailability
 	 * @throws CategoryProfileNotFoundException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryOutOfReachException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
+	 * @throws CategoryNotVisibleException 
+	 * @throws CategoryOutOfReachException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getVisibleSources()
 	 */
 	@Override
 	public List<CoupleProfileAvailability> getVisibleSources() 
-	throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryOutOfReachException, 
-	InternalDomainException, CategoryTimeOutException {
+	throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryTimeOutException, 
+	InternalDomainException, CategoryOutOfReachException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + super.getElementId() + " - getVisibleSources(ex)");
 		}
@@ -200,19 +200,19 @@ public class CustomManagedCategory extends CustomCategory {
 	/**
 	 * after checking visibility rights, subcribe user to the source sourceId in this CustomMAnagedCategory.
 	 * @param sourceId source ID
+	 * @throws CategoryOutOfReachException 
 	 * @throws CategoryProfileNotFoundException 
 	 * @throws SourceProfileNotFoundException 
-	 * @throws CategoryOutOfReachException 
-	 * @throws SourceNotVisibleException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
-	 * @see org.esupportail.lecture.domain.model.CustomCategory#subscribeToSource()
+	 * @throws SourceNotVisibleException 
+	 * @see org.esupportail.lecture.domain.model.CustomCategory#subscribeToSource(java.lang.String)
 	 */
 	@Override
 	public void subscribeToSource(final String sourceId) 
-	throws CategoryProfileNotFoundException, CategoryOutOfReachException, SourceProfileNotFoundException, SourceNotVisibleException, 
-	CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException {
+	throws CategoryOutOfReachException, CategoryProfileNotFoundException, SourceProfileNotFoundException, 
+	CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException, SourceNotVisibleException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + sourceId + ")");
 		}
@@ -271,14 +271,17 @@ public class CustomManagedCategory extends CustomCategory {
 	 * after checking visibility rights, unsubcribe user to the source sourceId in this CustomMAnagedCategory.
 	 * @param sourceId source ID
 	 * @throws CategoryProfileNotFoundException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryTimeOutException 
+	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryOutOfReachException 
 	 * @throws SourceObligedException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#unsubscribeToSource(String)
 	 */
 	@Override
 	public void unsubscribeToSource(final String sourceId) 
-	throws CategoryProfileNotFoundException, CategoryOutOfReachException, CategoryNotVisibleException, 
-	CategoryTimeOutException, SourceObligedException, InternalDomainException {
+	throws CategoryProfileNotFoundException, CategoryNotVisibleException, CategoryTimeOutException, 
+	InternalDomainException, CategoryOutOfReachException, SourceObligedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("unsubscribeToSource(" + sourceId + ")");
 		}

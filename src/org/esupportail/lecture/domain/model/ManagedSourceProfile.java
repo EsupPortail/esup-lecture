@@ -11,10 +11,8 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
-import org.esupportail.lecture.exceptions.domain.ChannelConfigException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 
 
@@ -314,12 +312,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * or not to customCategory.
 	 * @param customManagedCategory the customManagedCategory to update
 	 * @return true if the source is visible by the userProfile
-	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws CategoryProfileNotFoundException 
 	 */
-	protected VisibilityMode updateCustomCategory(
-			final CustomManagedCategory customManagedCategory) 
-		throws ManagedCategoryNotLoadedException, CategoryProfileNotFoundException {
+	protected VisibilityMode updateCustomCategory(final CustomManagedCategory customManagedCategory) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustomCategory("
 					+ customManagedCategory.getElementId() + ")");
@@ -370,13 +364,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * add or remove customManagedSources associated with this ManagedSourceProfile
 	 * @param customManagedCategory customManagedCategory to set up
 	 * @return true if sourceProfile is visible by user (in Obliged or in autoSubscribed, or in Allowed)
-	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws CategoryProfileNotFoundException 
 	 */
 	
-	private VisibilityMode setUpCustomCategoryVisibility(
-			final CustomManagedCategory customManagedCategory) 
-	throws ManagedCategoryNotLoadedException, CategoryProfileNotFoundException {
+	private VisibilityMode setUpCustomCategoryVisibility(final CustomManagedCategory customManagedCategory) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - setUpCustomCategoryVisibility(" 
 					+ customManagedCategory.getElementId() + ")");

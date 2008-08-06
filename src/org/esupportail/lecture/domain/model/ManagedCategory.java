@@ -228,11 +228,8 @@ public class ManagedCategory extends Category {
 	 * defined in ths ManagedCategory, according to managedSourceProfiles visibility
 	 * (there is not any loading of source at this time)
 	 * @param customManagedCategory customManagedCategory to update
-	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws CategoryProfileNotFoundException 
 	 */
-	protected synchronized void updateCustom(final CustomManagedCategory customManagedCategory) 
-	throws ManagedCategoryNotLoadedException, CategoryProfileNotFoundException {
+	protected synchronized void updateCustom(final CustomManagedCategory customManagedCategory) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + getProfileId() + " - updateCustom("
 					+ customManagedCategory.getElementId() + ")");
@@ -259,12 +256,9 @@ public class ManagedCategory extends Category {
 	 * (there is not any loading of source at this time)
 	 * @param customManagedCategory custom to update
 	 * @return list of CoupleProfileVisibility
-	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws CategoryProfileNotFoundException 
 	 */
 	protected List<CoupleProfileVisibility> getVisibleSourcesAndUpdateCustom(
-			final CustomManagedCategory customManagedCategory)
-	throws ManagedCategoryNotLoadedException, CategoryProfileNotFoundException {
+			final CustomManagedCategory customManagedCategory) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getProfileId() + " - getVisibleSourcesAndUpdateCustom("
 					+ getProfileId() + ")");
