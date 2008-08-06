@@ -11,7 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
-import org.esupportail.lecture.exceptions.domain.InfoDomainException;
+import org.esupportail.lecture.exceptions.domain.InfoExternalException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 
@@ -349,7 +349,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				+ " is impossible to be loaded because of DaoException.";
 			LOG.error(errorMsg);
 			throw new SourceNotLoadedException(errorMsg, e);
-		} catch (InfoDomainException e) {
+		} catch (InfoExternalException e) {
 			String errorMsg = "The source " + this.getId() + " is impossible to be loaded.";
 			LOG.error(errorMsg);
 			throw new SourceNotLoadedException(errorMsg, e);

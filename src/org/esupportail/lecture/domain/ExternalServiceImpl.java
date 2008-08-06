@@ -15,7 +15,7 @@ import org.esupportail.commons.services.cas.CasException;
 import org.esupportail.commons.services.cas.CasService;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.lecture.domain.utils.ModeService;
-import org.esupportail.lecture.exceptions.domain.InfoDomainException;
+import org.esupportail.lecture.exceptions.domain.InfoExternalException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.springframework.beans.factory.InitializingBean;
@@ -142,17 +142,17 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	}
 
 	/**
-	 * @throws InfoDomainException
+	 * @throws InfoExternalException
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserProxyTicketCAS(String)
 	 */
-	public String getUserProxyTicketCAS(final String casTargetService) throws InfoDomainException {
+	public String getUserProxyTicketCAS(final String casTargetService) throws InfoExternalException {
 	    if (LOG.isDebugEnabled()) {
 			LOG.debug("getUserProxyTicketCAS(" + casTargetService + ")");
 		}
 	    try {
 			return casService.getProxyTicket(casTargetService);
 		} catch (CasException e) {
-			throw new InfoDomainException("Error getting CAS Proxy Ticket", e); 
+			throw new InfoExternalException("Error getting CAS Proxy Ticket", e); 
 		}
 		
 	}

@@ -6,10 +6,10 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * There is not any value returned from external service
+ * There is not any value returned from external service.
  * @author gbouteil
  */
-public class NoExternalValueException extends InternalExternalException {
+public class NoExternalValueException extends InfoExternalException {
 	/**
 	 * @param e
 	 */

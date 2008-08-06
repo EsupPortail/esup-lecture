@@ -12,7 +12,6 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.portal.ws.client.PortalService;
 import org.esupportail.portal.ws.client.exceptions.PortalGroupNotFoundException;
@@ -76,7 +75,7 @@ public class ServletService implements ModeService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getUserAttribute(java.lang.String)
 	 */
-	public String getUserAttribute(final String attribute) throws InternalExternalException {
+	public String getUserAttribute(final String attribute) throws NoExternalValueException {
 		String ret = null;
 		String userId = authenticationService.getCurrentUserId();
 		List<String> attributeList = portalService.getUserAttributeValues(userId, attribute);

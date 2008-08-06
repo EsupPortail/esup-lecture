@@ -16,9 +16,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
+import org.esupportail.lecture.exceptions.domain.InfoExternalException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
@@ -272,9 +271,6 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 			if (getTrustCategory()) {
 				ManagedCategory cat = getElement();
-				// TEST
-				Accessibility a = cat.getAccess();
-				//
 				visibility = cat.inner.getVisibility();
 				edit = cat.inner.getEdit();
 					
@@ -395,7 +391,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 				+ " is impossible to be loaded because od DaoException.";
 			LOG.error(errorMsg);
 			throw new ManagedCategoryNotLoadedException(errorMsg, e);
-		} catch (InfoDomainException e) {
+		} catch (InfoExternalException e) {
 			String errorMsg = "The managedCategory " + this.getId()
 			+ " is impossible to be loaded.";
 			LOG.error(errorMsg);

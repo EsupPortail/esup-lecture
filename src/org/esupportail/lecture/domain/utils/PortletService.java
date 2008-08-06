@@ -45,10 +45,12 @@ public class PortletService implements ModeService {
 	 ************************** METHODS *************************************/
 
 	/**
+	 * @throws InternalExternalException 
 	 * @throws InternalExternalException,NoExternalValueException  
+	 * @throws NoExternalValueException 
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getPreference(java.lang.String)
 	 */
-	public String getPreference(final String name)throws InternalExternalException  {
+	public String getPreference(final String name) throws InternalExternalException, NoExternalValueException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getPreference(" + name + ")");
 		}
@@ -72,9 +74,11 @@ public class PortletService implements ModeService {
 
 	/**
 	 * @throws InternalExternalException,NoExternalValueException 
+	 * @throws NoExternalValueException 
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getUserAttribute(java.lang.String)
 	 */
-	public String getUserAttribute(final String attribute) throws InternalExternalException {
+	public String getUserAttribute(final String attribute) 
+	throws InternalExternalException, NoExternalValueException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getUserAttribute(" + attribute + ")");
 		}

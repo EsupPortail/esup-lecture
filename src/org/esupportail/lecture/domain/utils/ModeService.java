@@ -6,6 +6,7 @@
 package org.esupportail.lecture.domain.utils;
 
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
 /**
  * @author gbouteil
@@ -18,15 +19,17 @@ public interface ModeService {
 	 * @param name name of the preference
 	 * @return the value of the preference
 	 * @throws InternalExternalException 
+	 * @throws NoExternalValueException 
 	 */
-	String getPreference(String name) throws InternalExternalException;
+	String getPreference(String name) throws InternalExternalException, NoExternalValueException;
 	/**
 	 * Get attribute value from the external service.
 	 * @param attribute
 	 * @return the attribute value defined by "attributeName"
 	 * @throws InternalExternalException 
+	 * @throws NoExternalValueException 
 	 */
-	String getUserAttribute(String attribute) throws InternalExternalException;
+	String getUserAttribute(String attribute) throws InternalExternalException, NoExternalValueException;
 	/**
 	 * Return true if the current user of the is in "group" of the external service.
 	 * @param group
