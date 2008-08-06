@@ -1,11 +1,11 @@
 package org.esupportail.lecture.exceptions.domain;
 
 /**
- * The Element is not found 
+ * The Element is not found.
  * (it can be anything : customElement, CategoryProfile, Context, SourceProfile ...)
  * @author gbouteil
  */
-public class ElementNotFoundException extends InfoDomainException {
+public class ElementNotFoundException extends PrivateException {
 
 	/**
 	 * @param string
@@ -15,7 +15,7 @@ public class ElementNotFoundException extends InfoDomainException {
 	}
 	
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 */
 	public ElementNotFoundException() {
 		super();

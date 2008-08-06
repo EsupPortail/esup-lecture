@@ -148,17 +148,6 @@ public class Channel implements InitializingBean {
 			String errorMsg = "Unable to startup channel because of a PrivateException.";
 			LOG.fatal(errorMsg);
 			throw new FatalException(errorMsg, e);
-		} catch (ContextNotFoundException e) {
-			// TODO (GB) Passer en privateException ?
-			String errorMsg = "Unable to startup channel because of a ContextNotFoundException.";
-			LOG.fatal(errorMsg);
-			throw new FatalException(errorMsg, e);
-		} catch (ManagedCategoryProfileNotFoundException e) {
-			// TODO (GB) Passer en privateException ?
-			String errorMsg = 
-				"Unable to startup channel because of a ManagedCategoryProfileNotFoundException.";
-			LOG.fatal(errorMsg);
-			throw new FatalException(errorMsg, e);
 		} 
 		DomainTools.setChannel(this);
 		DomainTools.setDaoService(daoService);

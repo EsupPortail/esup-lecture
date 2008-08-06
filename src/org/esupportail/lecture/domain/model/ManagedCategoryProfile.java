@@ -193,7 +193,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	@Override
 	protected ManagedSourceProfile getSourceProfileById(final String id) 
-			throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException {
+	throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - getSourceProfileById(" + id + ")");
 		}
@@ -409,7 +409,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * @throws ManagedCategoryNotLoadedException 
 	 */
 	private VisibilityMode setUpCustomContextVisibility(final CustomContext customContext) 
-		throws ManagedCategoryNotLoadedException {
+	throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - setUpCustomContextVisibility("
 					+ customContext.getElementId() + ")");
