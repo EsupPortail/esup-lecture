@@ -75,7 +75,8 @@
     		</description>
     		<list>
     			<value>../media/portlet.css</value>
-    			<value>../media/commons.css</value>
+                <value>../media/commons.css</value>
+                <value>../media/lecture.css</value>
     		</list>
     	</property>
     	<property name="documentBodyStyleClass" value="portlet-section-body" >

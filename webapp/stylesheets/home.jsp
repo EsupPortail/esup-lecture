@@ -25,7 +25,6 @@ toggleButton: read/unread toggle button
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
 	<e:page stringsVar="msgs" menuItem="welcome"
 		locale="#{homeController.locale}">
-		<t:stylesheet path="/media/lecture.css" media="screen"/>
 		<h:form id="home">
 			<!-- ********* Rendering ********* -->
 			<h:outputText id="left" escape="false"

@@ -134,91 +134,50 @@
 	    </java>
 	</target>
 
-	<target name="use-default-conf" description="use default ESUP-Lecture configuration files">
-		<antcall target="copy-conf">
-			<param name="conf-type" value="default"/>
-		</antcall>
+    <target name="use-default-conf" description="use default ESUP-Lecture configuration files">
+    	<antcall target="copy-conf">
+            <param name="conf-type" value="default"/>
+    	</antcall>
 	</target>
 	
 	<target name="use-test-conf" depends="use-default-conf" description="use test ESUP-Lecture configuration files">
-		<antcall target="copy-conf">
-			<param name="conf-type" value="${developer.name}"/>
-		</antcall>
+        <antcall target="copy-conf">
+            <param name="conf-type" value="${developer.name}"/>
+        </antcall>
 	</target>
 
 	<target name="copy-conf">
+        <!-- iteration for xml files -->
+        <foreach list="properties/esup-lecture,properties/mappings,properties/domain/domain,properties/auth/auth,properties/applicationContext" 
+            param="file-to-copy" target="copy-conf2">
+            <param name="conf-type" value="${conf-type}"/>
+            <param name="file-type" value="xml"/>
+        </foreach>
+        <!-- iteration for xml files -->
+        <foreach list="properties/logging/log4j" 
+            param="file-to-copy" target="copy-conf2">
+            <param name="conf-type" value="${conf-type}"/>
+            <param name="file-type" value="properties"/>
+        </foreach>
+	</target>
+	
+	<target name="copy-conf2">
 		<if>
-			<available file="properties/esup-lecture.${conf-type}.xml"/>
+			<available file="${file-to-copy}.${conf-type}.${file-type}"/>
 		    <then>
-		    	<copy file="properties/esup-lecture.${conf-type}.xml" tofile="properties/esup-lecture.xml" overwrite="true" verbose="true"/>
+		    	<copy file="${file-to-copy}.${conf-type}.${file-type}" tofile="${file-to-copy}.${file-type}" overwrite="true" verbose="true"/>
 			</then>
 			<else>
 				<if> 
 					<equals arg1="${conf-type}" arg2="default" />
 					<then> 
-						<fail message="A properties/esup-lecture.${conf-type}.xml is needed."/>
-					</then>
-				</if>
-			</else>
-		</if>
-		<if>
-			<available file="properties/mappings.${conf-type}.xml"/>
-		    <then>
-		    	<copy file="properties/mappings.${conf-type}.xml" tofile="properties/mappings.xml" overwrite="true" verbose="true"/>
-			</then>
-			<else>
-				<if> 
-					<equals arg1="${conf-type}" arg2="default" />
-					<then> 
-						<fail message="A properties/mappings.${conf-type}.xml is needed."/>
-					</then>
-				</if>
-			</else>
-		</if>
-		<if>
-			<available file="properties/domain/domain.${conf-type}.xml"/>
-		    <then>
-		    	<copy file="properties/domain/domain.${conf-type}.xml" tofile="properties/domain/domain.xml" overwrite="true" verbose="true"/>
-			</then>
-			<else>
-				<if> 
-					<equals arg1="${conf-type}" arg2="default" />
-					<then> 
-						<fail message="A properties/domain/domain.${conf-type}.xml is needed."/>
-					</then>
-				</if>
-			</else>
-		</if>
-		<if>
-			<available file="properties/auth/auth.${conf-type}.xml"/>
-		    <then>
-		    	<copy file="properties/auth/auth.${conf-type}.xml" tofile="properties/auth/auth.xml" overwrite="true" verbose="true"/>
-			</then>
-			<else>
-				<if> 
-					<equals arg1="${conf-type}" arg2="default" />
-					<then> 
-						<fail message="A properties/auth/auth.${conf-type}.xml is needed."/>
-					</then>
-				</if>
-			</else>
-		</if>
-		<if>
-			<available file="properties/applicationContext.${conf-type}.xml"/>
-		    <then>
-		    	<copy file="properties/applicationContext.${conf-type}.xml" tofile="properties/applicationContext.xml" overwrite="true" verbose="true"/>
-			</then>
-			<else>
-				<if> 
-					<equals arg1="${conf-type}" arg2="default" />
-					<then> 
-						<fail message="A properties/applicationContext.${conf-type}.xml is needed."/>
+						<fail message="A ${file-to-copy}.${conf-type}.${file-type} is needed."/>
 					</then>
 				</if>
 			</else>
 		</if>
 	</target>
-	
+
 </project>
 
 

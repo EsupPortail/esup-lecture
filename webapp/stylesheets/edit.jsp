@@ -9,7 +9,6 @@
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
 	<e:page stringsVar="msgs" menuItem="welcome"
 		locale="#{editController.locale}">
-		<t:stylesheet path="/media/lecture.css" media="screen"/>
 		<h:form id="edit">
 			<t:htmlTag value="table" styleClass="portlet-table-body"
 				style="width: 100%">

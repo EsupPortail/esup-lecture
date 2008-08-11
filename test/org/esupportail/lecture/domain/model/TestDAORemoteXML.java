@@ -37,7 +37,7 @@ public class TestDAORemoteXML {
 		DaoService dao = (DaoService)factory.getBean("daoService");
 		ManagedCategoryProfile test = new ManagedCategoryProfile();
 		String url = "http://localhost:8080/data/demo2.xml";
-		test.setUrlCategory(url);
+//		test.setUrlCategory(url);
 		//test.init();
 		test.setTtl(100);
 		test.setId("test");

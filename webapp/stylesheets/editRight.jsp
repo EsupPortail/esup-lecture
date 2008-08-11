@@ -9,48 +9,29 @@
 	<f:subview id="rightSubview">
 		<!-- MENU with Source name -->
 		<t:htmlTag value="p" styleClass="portlet-section-header  !!">
-			<h:outputText value="#{msgs['root']}" rendered="#{!editController.context.withSelectedCategory}"/>
-			<h:outputText value="#{editController.selectionTitle}" rendered="#{editController.context.withSelectedCategory}"/>
+			<h:outputText value="#{editController.selectionTitle}"/>
 		</t:htmlTag>
 		<t:htmlTag value="hr"/>
-		<!-- Categories display -->
-		<t:htmlTag value="ul" rendered="#{!editController.context.withSelectedCategory}">
-			<t:dataList value="#{editController.visibleCategories}" var="cat" layout="simple">
-				<t:htmlTag value="li" styleClass="edit">
-					<h:commandButton action="#{editController.toogleCategorySubcribtion}"
-						image="/media/subscribe.png" alt="#{msgs['subscribeCategory']}"
-						title="#{msgs['subscribeCategory']}" rendered="#{cat.notSubscribed}">
-						<t:updateActionListener property="#{editController.ualCategory}" value="#{cat}" />
-					</h:commandButton>
-					<h:commandButton action="#{editController.toogleCategorySubcribtion}"
-						image="/media/unsubscribe.png" alt="#{msgs['unsubscribeCategory']}"
-						title="#{msgs['unsubscribeCategory']}" rendered="#{cat.subscribed}">
-						<t:updateActionListener property="#{editController.ualCategory}" value="#{cat}" />
-					</h:commandButton>
-					<h:graphicImage value="/media/forced.png"
-						alt="#{msgs['forcedCategory']}" title="#{msgs['forcedCategory']}"
-						rendered="#{cat.obliged}" />
-					<h:outputText value="#{cat.name}" />
-				</t:htmlTag>
-			</t:dataList>
-		</t:htmlTag>
 		<!-- Sources display -->
 		<t:htmlTag value="ul" rendered="#{editController.context.withSelectedCategory}">
 			<t:dataList value="#{editController.visibleSources}" var="src" layout="simple">
 				<t:htmlTag value="li" styleClass="edit">
 					<h:commandButton action="#{editController.toogleSourceSubcribtion}"
 						image="/media/subscribe.png" alt="#{msgs['subscribeSource']}"
-						title="#{msgs['subscribeSource']}" rendered="#{src.notSubscribed}">
+						title="#{msgs['subscribeSource']}" rendered="#{src.notSubscribed}"
+						styleClass="valign">
 						<t:updateActionListener property="#{editController.ualSource}" value="#{src}" />
 					</h:commandButton>
 					<h:commandButton action="#{editController.toogleSourceSubcribtion}"
 						image="/media/unsubscribe.png" alt="#{msgs['unsubscribeSource']}"
-						title="#{msgs['unsubscribeSource']}" rendered="#{src.subscribed}">
+						title="#{msgs['unsubscribeSource']}" rendered="#{src.subscribed}"
+						styleClass="valign">
 						<t:updateActionListener property="#{editController.ualSource}" value="#{src}" />
 					</h:commandButton>
 					<h:graphicImage value="/media/forced.png"
 						alt="#{msgs['forcedSource']}" title="#{msgs['forcedSource']}"
-						rendered="#{src.obliged}" />
+						rendered="#{src.obliged}" styleClass="valign"/>
+					<f:verbatim>&#160;</f:verbatim>
 					<h:outputText value="#{src.name}" />
 				</t:htmlTag>
 			</t:dataList>

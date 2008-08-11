@@ -31,11 +31,13 @@
 					</t:htmlTag>
 					<t:htmlTag id="menuAndXML" value="li" rendered="#{!homeController.treeVisible}">
 						<h:commandButton action="#{homeController.toggleTreeVisibility}"
-							image="/media/menuAndXML.gif" alt="#{msgs['showTree']}" title="#{msgs['showTree']}"/>
+							image="/media/menuAndXML.gif" alt="#{msgs['showTree']}" title="#{msgs['showTree']}"
+							styleClass="valign"/>
 					</t:htmlTag>
 					<t:htmlTag id="XMLWithoutMenu" value="li" rendered="#{homeController.treeVisible}">
 						<h:commandButton action="#{homeController.toggleTreeVisibility}"
-							image="/media/XMLWithoutMenu.gif" alt="#{msgs['hideTree']}" title="#{msgs['hideTree']}"/>             
+							image="/media/XMLWithoutMenu.gif" alt="#{msgs['hideTree']}" title="#{msgs['hideTree']}"
+							styleClass="valign"/>             
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>

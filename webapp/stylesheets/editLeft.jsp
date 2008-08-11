@@ -14,27 +14,36 @@
 			<t:htmlTag value="p" styleClass="portlet-section-header">
 				<h:outputText value="#{editController.context.name} (EDIT)" />
 			</t:htmlTag>
-			<!-- root -->
-			<h:commandButton action="#{editController.selectElement}"
-				alt="#{msgs['editContext']}" value="#{msgs['root']}"
-				title="#{msgs['editContext']}" styleClass="elementButton">
-				<t:updateActionListener property="#{editController.ualCategory}" value="#{null}" />
-                <t:updateActionListener property="#{homeController.ualSource}" value="#{src}" />
-			</h:commandButton>
 			<!-- Categories -->
 			<t:htmlTag value="ul">
 				<t:dataList value="#{editController.context.categories}" var="cat"
 					layout="simple">
 					<t:htmlTag value="li" styleClass="edit">
-						<h:commandButton action="#{editController.selectElement}"
-							image="/media/puce.gif" alt="#{msgs['editCategory']}"
-							title="#{msgs['editCategory']}">
-							<t:updateActionListener property="#{editController.ualCategory}" value="#{cat}" />
+						<h:commandButton
+							action="#{editController.toogleCategorySubcribtion}"
+							image="/media/subscribe.png" alt="#{msgs['subscribeCategory']}"
+							title="#{msgs['subscribeCategory']}"
+							rendered="#{cat.notSubscribed}" styleClass="valign">
+							<t:updateActionListener property="#{editController.ualCategory}"
+								value="#{cat}" />
 						</h:commandButton>
+						<h:commandButton
+							action="#{editController.toogleCategorySubcribtion}"
+							image="/media/unsubscribe.png"
+							alt="#{msgs['unsubscribeCategory']}"
+							title="#{msgs['unsubscribeCategory']}"
+							rendered="#{cat.subscribed}" styleClass="valign">
+							<t:updateActionListener property="#{editController.ualCategory}"
+								value="#{cat}" />
+						</h:commandButton>
+						<h:graphicImage value="/media/forced.png"
+							alt="#{msgs['forcedCategory']}" title="#{msgs['forcedCategory']}"
+							rendered="#{cat.obliged}"  styleClass="valign"/>
 						<h:commandButton action="#{editController.selectElement}"
 							alt="#{cat.name}" title="#{cat.name}" value="#{cat.name}"
 							styleClass="elementButton">
-							<t:updateActionListener property="#{editController.ualCategory}" value="#{cat}" />
+							<t:updateActionListener property="#{editController.ualCategory}"
+								value="#{cat}" />
 						</h:commandButton>
 					</t:htmlTag>
 				</t:dataList>

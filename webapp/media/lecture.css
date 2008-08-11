@@ -105,3 +105,6 @@ a img {
 img {
 	border: none;
 }
+.valign {
+	vertical-align: middle;
+}	
