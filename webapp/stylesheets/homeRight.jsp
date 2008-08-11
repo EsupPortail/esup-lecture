@@ -10,7 +10,7 @@
 		<!-- MENU with Source name, sort list and zoom -->
 		<t:htmlTag value="div" id="menuRight" forceId="true">
 			<t:htmlTag value="p" styleClass="portlet-section-header" rendered="#{homeController.guestMode}">
-				<h:outputText value="#{homeController.selectedCategory}"/>
+				<h:outputText value="#{homeController.selectedCategory.name}"/>
 			</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuTitle" rendered="#{!homeController.guestMode}">
 				<t:htmlTag value="span" styleClass="portlet-section-header">

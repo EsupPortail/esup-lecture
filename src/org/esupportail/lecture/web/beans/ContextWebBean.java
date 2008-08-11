@@ -66,6 +66,9 @@ public class ContextWebBean {
 	 * @return selected category
 	 */
 	public CategoryWebBean getSelectedCategory() {
+		if (selectedCategory == null && categories.size() > 0) {
+			selectedCategory = categories.get(0);
+		}
 		return selectedCategory;
 	}
 	/**
