@@ -8,7 +8,7 @@
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
 	<f:subview id="rightSubview">
 		<!-- MENU with Source name -->
-		<t:htmlTag value="p" styleClass="portlet-section-header  !!">
+		<t:htmlTag value="span" styleClass="portlet-section-header">
 			<h:outputText value="#{editController.selectionTitle}"/>
 		</t:htmlTag>
 		<t:htmlTag value="hr"/>

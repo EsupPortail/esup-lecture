@@ -79,7 +79,7 @@
                 <value>../media/lecture.css</value>
     		</list>
     	</property>
-    	<property name="documentBodyStyleClass" value="portlet-section-body" >
+    	<property name="documentBodyStyleClass" value="portlet-section-body esup-lecture" >
     		<description>
     			The default value used for attribute class of HTML tag BODY. 
     		</description>

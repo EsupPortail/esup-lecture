@@ -11,7 +11,7 @@
 		<!-- TREE -->
 		<t:htmlTag value="div" id="left" forceId="true">
 			<!-- Title -->
-			<t:htmlTag value="p" styleClass="portlet-section-header">
+			<t:htmlTag value="span" styleClass="portlet-section-header">
 				<h:outputText value="#{editController.context.name} (EDIT)" />
 			</t:htmlTag>
 			<!-- Categories -->

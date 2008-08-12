@@ -1,110 +1,128 @@
 @CHARSET "ISO-8859-1";
 
 /* main divs style */
-#left {
+.esup-lecture #left {
 	padding: 0px 10px;
 	overflow: auto;
 }
 
-#right {
+.esup-lecture #right {
 	padding: 0px;
 	margin: 0px;
 	clear: both;
 }
 
-#menuRight {
+.esup-lecture #menuRight {
 	margin: 0px;
 }
 
 /* menu style */
-.menuTitle {
+.esup-lecture .menuTitle {
 	float: left;
 /*	margin-left: 5px; */
 /*	vertical-align: middle; */
 }
-.menuButton{
+.esup-lecture .menuButton{
 	text-align: right;
 	padding-right: 5px;
 	vertical-align: bottom;
 }
-.menuButton ul {
+.esup-lecture .menuButton ul {
      list-style-type:none;
     display:block;
 	text-align: right;
 } 
-.menuButton li {
+.esup-lecture .menuButton li {
 	display:inline;
 	margin: 0 0 0 3px;
 	padding:0%;
 }
 
 /* Tree Style */
-li.collapsed {
+.esup-lecture li.collapsed {
 list-style: none;
 margin-left: -30px;
 }
-li.expanded {
+
+.esup-lecture li.expanded {
 list-style: none;
 margin-left: -30px;
 }
-li.edit {
+
+.esup-lecture li.edit {
 list-style: none;
 margin-left: -30px;
 }
-li ul li {
-/*	list-style-image: none;
-	list-style-type: square; */
+
+.esup-lecture li ul li {
 list-style: none;	
 margin-left: -30px;
 }
-.elementButton {
+
+.esup-lecture .elementButton {
 	background: transparent;
     border: none;
     cursor: pointer;
+    text-align: left;
 }
 
 /* Articles Style */
-div.toggleButton {
+.esup-lecture div.toggleButton {
 	float: left;
 	margin: 0px 0px 10px 5px; 
 	padding: 5px;
 }
-div.unreadArticle {
-	margin: 0px 0px 10px 5px; 
+
+.esup-lecture div.unreadArticle {
+	margin: 0px 0px 0px 5px; 
 	padding: 5px;
 	background-color: #FEC98D;
-	border-style: dotted;
-	border-width: 1px;
-	border-color: black;
-}
-div.readArticle {
-	margin: 0px 0px 10px 5px; 
-	padding: 5px;
-	background-color: #CACACA;
-/*	filter:alpha(opacity=70); 
-	-moz-opacity:0.7;
-	opacity: 0.7;	*/
-	border-style: dotted;
+    -moz-border-radius:15px;
+	border-style: inset;
 	border-width: 1px;
 	border-color: black;
 }
 
+.esup-lecture div.readArticle {
+    margin: 0px 0px 0px 5px; 
+    padding: 5px;
+    background-color: #CACACA;
+    -moz-border-radius:15px;
+    border-style: inset;
+    border-width: 1px;
+    border-color: black;
+}
+
+.esup-lecture div.readArticle > * {
+    -moz-opacity:0.3;
+}
+
+.esup-lecture .source-title {
+	text-align: center;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
 /* other */
-#TDLeft  {
+.esup-lecture #TDLeft {
 	vertical-align: top;
 	border-right-style: solid;
 	border-right-color: black;
 	border-right-width: 1px;
 }
-#TDRight {
+
+.esup-lecture #TDRight {
 	vertical-align: top;
 }
-a img { 
+
+.esup-lecture a img { 
 	border: none; 
 }
-img {
+
+.esup-lecture img {
 	border: none;
 }
-.valign {
+
+.esup-lecture .valign {
 	vertical-align: middle;
 }	

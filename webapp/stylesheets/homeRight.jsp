@@ -9,12 +9,12 @@
 	<f:subview id="rightSubview">
 		<!-- MENU with Source name, sort list and zoom -->
 		<t:htmlTag value="div" id="menuRight" forceId="true">
-			<t:htmlTag value="p" styleClass="portlet-section-header" rendered="#{homeController.guestMode}">
+			<t:htmlTag value="span" styleClass="portlet-section-header" rendered="#{homeController.guestMode}">
 				<h:outputText value="#{homeController.selectedCategory.name}"/>
 			</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuTitle" rendered="#{!homeController.guestMode}">
 				<t:htmlTag value="span" styleClass="portlet-section-header">
-					<h:outputText value="#{homeController.selectionTitle}"/><!-- TODO used selected cat name -->
+					<h:outputText value="#{homeController.selectedCategory.name}"/>
 				</t:htmlTag>
 			</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuButton" rendered="#{!homeController.guestMode}">
@@ -46,7 +46,7 @@
 		<t:htmlTag value="div" id="right">
 			<t:htmlTag value="hr"/>
             <t:dataList value="#{homeController.selectedCategory.selectedOrAllSources}" var="source" layout="simple" >
-				<t:htmlTag value="div" styleClass="portlet-section-header">
+				<t:htmlTag value="div" styleClass="portlet-section-subheader source-title">
 				    <h:outputText value="#{source.name}"/>
 				</t:htmlTag>
 	            <t:dataList value="#{source.sortedItems}" var="item" layout="simple">

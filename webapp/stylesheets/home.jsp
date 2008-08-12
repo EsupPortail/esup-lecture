@@ -23,8 +23,7 @@ toggleButton: read/unread toggle button
 	xmlns:e="http://commons.esup-portail.org">
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
-	<e:page stringsVar="msgs" menuItem="welcome"
-		locale="#{homeController.locale}">
+	<e:page stringsVar="msgs" menuItem="welcome" locale="#{homeController.locale}">
 		<h:form id="home">
 			<!-- ********* Rendering ********* -->
 			<h:outputText id="left" escape="false"

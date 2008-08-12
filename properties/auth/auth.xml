@@ -22,7 +22,7 @@
 		<description>
 			The name of the Portal attribute that holds the uid of users, as set in portlet.xml.
 		</description>
-		<property name="userId" value="germes" />
+		<property name="userId" value="bourges" />
 	</bean>
 <!-- 
 
