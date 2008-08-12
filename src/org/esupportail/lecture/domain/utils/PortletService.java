@@ -77,6 +77,7 @@ public class PortletService implements ModeService {
 	 * @throws NoExternalValueException 
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getUserAttribute(java.lang.String)
 	 */
+	@SuppressWarnings("unchecked")
 	public String getUserAttribute(final String attribute) 
 	throws InternalExternalException, NoExternalValueException {
 		if (LOG.isDebugEnabled()) {
@@ -87,7 +88,8 @@ public class PortletService implements ModeService {
 			FacesContext facesContext = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = facesContext.getExternalContext();
 			PortletRequest request = (PortletRequest) externalContext.getRequest();
-			Map<String, String> userInfo = (Map)request.getAttribute(PortletRequest.USER_INFO);
+			Map<String, String> userInfo = 
+				(Map<String, String>) request.getAttribute(PortletRequest.USER_INFO);
 			value = userInfo.get(attribute);
 		} catch (Exception e) {
 			throw new InternalExternalException(e);

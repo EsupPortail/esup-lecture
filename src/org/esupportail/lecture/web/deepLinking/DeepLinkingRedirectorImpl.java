@@ -52,4 +52,12 @@ public class DeepLinkingRedirectorImpl implements DeepLinkingRedirector {
 		this.homeController = controller;
 	}
 
+	/**
+	 * @see org.esupportail.commons.web.deepLinking.DeepLinkingRedirector#firstCall()
+	 */
+	public boolean firstCall() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

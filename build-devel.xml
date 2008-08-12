@@ -65,7 +65,7 @@
 		properties/i18n/bundles/Custom_*.properties
 	" />
 
-	<property name="commons.basedir" value="${basedir}/../esup-commons-0.17.3"/>
+	<property name="commons.basedir" value="${basedir}/../esup-commons-0.19.0"/>
 	
 	<property file="${basedir}/build-devel.properties"/>
 	

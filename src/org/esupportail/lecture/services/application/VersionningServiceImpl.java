@@ -128,17 +128,18 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	/**
 	 * @see org.esupportail.commons.services.application.VersionningService#upgradeDatabase()
 	 */
-	public void upgradeDatabase() {
+	public boolean upgradeDatabase() {
 		log.info("update database !");
 		if (getDatabaseVersion().equals(getApplicationService().getVersion())) {
 			log.info("The database is up to date, no need to upgrade.");
-			return;
+			return false;
 		}
 		DatabaseUtils.update();
 		upgradeDatabaseIfNeeded("0.1.0");
 		if (!getDatabaseVersion().equals(getApplicationService().getVersion())) {
 			setDatabaseVersion(getApplicationService().getVersion().toString(), false);
 		}
+		return false;
 	}
 
 	/**
