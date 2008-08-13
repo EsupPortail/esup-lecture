@@ -8,6 +8,7 @@
 		properties/domain/domain.xml
 		properties/domain/portal.xml
 		properties/i18n/bundles/Custom_*.properties
+		properties/config.properties
 		" />
 	<property name="batch-class"
 		value="org.esupportail.lecture.batch.Batch" />
@@ -56,6 +57,14 @@
 	<target name="compile" depends="compile-web,compile-batch" description="compile the project" />
 
 	<target name="deploy" depends="compile-web,commons-deploy" description="deploy the application" >
+        <if>
+            <not>
+                <isset property="use.cas" />
+            </not>
+            <then>
+                <property name="use.cas" value="true" />
+            </then>
+        </if>
 		<if>
 			<equals arg1="${deploy.type}" arg2="portlet" />
 			<then> <!-- portket -->
@@ -77,14 +86,6 @@
                     replace="" />
 			</then>
 			<else> <!-- servlet or quickstart -->
-				<if>
-					<not>
-						<isset property="use.cas" />
-					</not>
-					<then>
-						<property name="use.cas" value="true" />
-					</then>
-				</if>
                 <replaceregexp file="${deploy.home}/WEB-INF/web.xml" byline="false"
                            flags="g"
                            match=".!-- IS_SERVLET" 

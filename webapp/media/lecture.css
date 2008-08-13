@@ -74,27 +74,23 @@ margin-left: -30px;
 }
 
 .esup-lecture div.unreadArticle {
-	margin: 0px 0px 0px 5px; 
+	margin: 2px 0px 0px 5px; 
 	padding: 5px;
-	background-color: #FEC98D;
+	background-color: Khaki;
     -moz-border-radius:15px;
 	border-style: inset;
 	border-width: 1px;
-	border-color: black;
+	border-color: #660033;
 }
 
 .esup-lecture div.readArticle {
-    margin: 0px 0px 0px 5px; 
+    margin: 2px 0px 0px 5px; 
     padding: 5px;
     background-color: #CACACA;
     -moz-border-radius:15px;
     border-style: inset;
     border-width: 1px;
-    border-color: black;
-}
-
-.esup-lecture div.readArticle > * {
-    -moz-opacity:0.3;
+    border-color: #660033;
 }
 
 .esup-lecture .source-title {
@@ -121,8 +117,24 @@ margin-left: -30px;
 
 .esup-lecture img {
 	border: none;
+	float:none;
+    margin:0 0.5em 0 0;
+    padding:0;
 }
 
 .esup-lecture .valign {
 	vertical-align: middle;
-}	
+}
+
+.esup-lecture p {
+    margin: 0;
+}
+
+.esup-lecture p + br {
+    display: none;
+}
+
+.esup-lecture h1 + br {
+    display: none;
+}
+

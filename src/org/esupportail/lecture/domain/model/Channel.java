@@ -549,10 +549,18 @@ public class Channel implements InitializingBean {
 	 * @return mapping for this sourceURL
 	 */
 	protected Mapping getMappingBySourceURL(final String sourceURL) {
+		Mapping ret = null;
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getMappingBySourceURL(" + sourceURL + ")");
 		}
-		return mappingHashBySourceURL.get(sourceURL);
+		for (String mappingURL  : mappingHashBySourceURL.keySet()) {
+			if (sourceURL.startsWith(mappingURL)) {
+				ret = mappingHashBySourceURL.get(mappingURL);
+				//exit at first mapping corresponding to the beginning of sourceURL
+				return ret;
+			}
+		}
+		return ret;
 	}
 //	/**
 //	 * Return a string containing channel content : mapping file, contexts, managed category profiles,
