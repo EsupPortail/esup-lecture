@@ -2,13 +2,15 @@
 
 	<property name="recover.previous-versions" value="1.1.0,1.0.0,0.9.1,0.9.0,0.8.3,0.8.2,0.8.1,0.8.0" />
     <property file="properties/config.properties"/>
+	<!-- Wee do not use esup-commons's recover file definition -->
+    <property name="commons.recover.files" value="" />
+	<!-- file to recover -->
 	<property name="app.recover.files"
 		value="
-		properties/init/init.xml
-		properties/domain/domain.xml
-		properties/domain/portal.xml
 		properties/i18n/bundles/Custom_*.properties
 		properties/config.properties
+		properties/esup-lecture.xml
+		properties/mappings.xml
 		" />
 	<property name="batch-class"
 		value="org.esupportail.lecture.batch.Batch" />

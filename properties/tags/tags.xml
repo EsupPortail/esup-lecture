@@ -55,28 +55,37 @@
     			The doctype of the document, optional.
     		</description>
     	</property>
+    	<property name="servletMediaPath" value="${mediaPath.servlet}" >
+    		<description>
+    			The path to the media files, used for scripts and stylesheets.
+    		</description>
+    	</property>
+    	<property name="portletMediaPath" value="${mediaPath.portlet}" >
+    		<description>
+    			The path to the media files, used for scripts.
+    		</description>
+    	</property>
     	<property name="scripts" >
     		<description>
     			A list of URLs that will be automatically included in the head part
-    			of the output document as scripts. Other stylesheets may be specified 
-    			at document-level thanks to tag script.
-    			Warning: URLs may not be the same for servlet and portlet installations!
+    			of the output document as scripts. Absolute URLs are used as-is, relative
+    			URLs are prefixed by property portletMediaPath or servletMediaPath.
     		</description>
     		<list>
-    			<value>../media/functions.js</value>
+    			<value>functions.js</value>
     		</list>
     	</property>
     	<property name="stylesheets" >
     		<description>
     			A list of URLs that will be automatically included in the head part
-    			of the output document. Other stylesheets may be specified at 
-    			document-level thanks to tag stylesheet.
+    			of the output document. Absolute URLs are used as-is, relative
+    			URLs are prefixed by property servletMediaPath.
     			Warning: this tag is ignored for portlet installations.
     		</description>
     		<list>
-    			<value>../media/portlet.css</value>
-                <value>../media/commons.css</value>
-                <value>../media/lecture.css</value>
+    			<value>commons.css</value>
+    			<value>portlet.css</value>
+                <value>lecture.css</value>
     		</list>
     	</property>
     	<property name="documentBodyStyleClass" value="portlet-section-body esup-lecture" >
