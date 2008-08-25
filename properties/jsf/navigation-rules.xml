@@ -35,14 +35,17 @@
 		<navigation-case> 
 			<from-outcome>applicationRestarted</from-outcome>
 			<to-view-id>/stylesheets/home.jsp</to-view-id>
+			<redirect/>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>navigationHome</from-outcome>
 			<to-view-id>/stylesheets/home.jsp</to-view-id>
+            <redirect/>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>navigationEdit</from-outcome>
 			<to-view-id>/stylesheets/edit.jsp</to-view-id>
+            <redirect/>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>navigationLogin</from-outcome>

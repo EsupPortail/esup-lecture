@@ -26,7 +26,7 @@ toggleButton: read/unread toggle button
 	<e:page stringsVar="msgs" menuItem="welcome" locale="#{homeController.locale}">
 		<h:form id="home">
 			<!-- ********* Rendering ********* -->
-			<h:outputText id="left" escape="false"
+			<h:outputText id="homeLeft" escape="false"
 				rendered="#{homeController.treeVisible}">
 				<t:htmlTag value="table" styleClass="portlet-table-body"
 					style="width: 100%">
@@ -42,7 +42,7 @@ toggleButton: read/unread toggle button
 					</t:htmlTag>
 				</t:htmlTag>
 			</h:outputText>
-			<h:outputText id="right" escape="false"
+			<h:outputText id="homeRight" escape="false"
 				rendered="#{!homeController.treeVisible}">
 				<jsp:include page="homeRight.jsp" />
 			</h:outputText>

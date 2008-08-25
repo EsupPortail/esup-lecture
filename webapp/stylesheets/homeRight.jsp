@@ -6,7 +6,9 @@
 	xmlns:t="http://myfaces.apache.org/tomahawk">
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+<!-- 
 	<f:subview id="rightSubview">
+ -->
 		<!-- MENU with Source name, sort list and zoom -->
 		<t:htmlTag value="div" id="menuRight" forceId="true">
 			<t:htmlTag value="span" styleClass="portlet-section-header" rendered="#{homeController.guestMode}">
@@ -75,5 +77,7 @@
 	            </t:dataList>
             </t:dataList>
 		</t:htmlTag>
+<!-- 
 	</f:subview>
+ -->
 </jsp:root>

@@ -12,7 +12,6 @@ import javax.faces.application.Application;
 import javax.faces.application.ApplicationFactory;
 import javax.faces.application.ViewHandler;
 import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
@@ -117,12 +116,13 @@ public class FacesPortlet extends MyFacesGenericPortlet implements Serializable 
             (ApplicationFactory) FactoryFinder.getFactory(FactoryFinder.APPLICATION_FACTORY);
         Application application = appFactory.getApplication();
         ViewHandler viewHandler = application.getViewHandler();
-        ServletFacesContextImpl facesContext = 
-        	(ServletFacesContextImpl) FacesContext.getCurrentInstance();
-        if (facesContext == null) {
+        ServletFacesContextImpl facesContext; 
+//      ServletFacesContextImpl facesContext = 
+//        	(ServletFacesContextImpl) FacesContext.getCurrentInstance();
+//        if (facesContext == null) {
         	facesContext = (ServletFacesContextImpl) facesContext(request, response);
     		facesContext.setExternalContext(makeExternalContext(request, response));
-        }
+//        }
         String viewToRender = view;
         if (viewToRender == null) {
         	// the call to selectDefaultView was moved here to be sure 

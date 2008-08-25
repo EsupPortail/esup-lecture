@@ -7,7 +7,9 @@
 	xmlns:e="http://commons.esup-portail.org">
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
+<!-- 
 	<f:subview id="leftSubview">
+ -->
 		<!-- TREE -->
 		<t:htmlTag value="div" id="left" forceId="true">
 			<!-- Title -->
@@ -79,5 +81,7 @@
 				</t:htmlTag>
 			</t:htmlTag>
 		</t:htmlTag>
+<!-- 
 	</f:subview>
+ -->
 </jsp:root>
