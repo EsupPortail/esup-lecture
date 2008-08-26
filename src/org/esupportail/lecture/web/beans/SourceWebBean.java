@@ -59,7 +59,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	/**
 	 * Default constructor.
 	 */
-	public SourceWebBean(FacadeService facadeService) {
+	public SourceWebBean(final FacadeService facadeService) {
 		super();
 		this.facadeService = facadeService;
 	}
@@ -132,7 +132,6 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	
 	/**
 	 * sort items list in function of itemDisplayMode.
-	 * @param items List to sort
 	 * @return Sorted items list
 	 */
 	public List<ItemWebBean> getSortedItems() {
