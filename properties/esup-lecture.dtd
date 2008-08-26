@@ -29,8 +29,6 @@
 <!ELEMENT visibility (allowed,autoSubscribed,obliged)>
 
 <!ELEMENT allowed (regular*, group*)>
-<!-- Element "autoSubscribed" is not yet supported 
-	but must be declared -->
 <!ELEMENT autoSubscribed (regular*, group*)>
 <!ELEMENT obliged (regular*, group*)>
 

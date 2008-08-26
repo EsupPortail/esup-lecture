@@ -51,9 +51,8 @@ Pour plus d'informations voir le
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
-		timeout = "3000" >
+		timeout = "3" >
 		<visibility>
-	 	<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>
@@ -71,9 +70,8 @@ Pour plus d'informations voir le
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
-		timeout = "3000">
+		timeout = "3">
 	 	<visibility>
-	 	<!-- autoSubscribed not yet supported -->
 	 		<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -90,9 +88,8 @@ Pour plus d'informations voir le
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
-		timeout = "3000"  >
+		timeout = "3"  >
 		<visibility>
-	 	<!-- autoSubscribed not yet supported -->
 			<allowed/> 
 			<autoSubscribed/>
 			<obliged>
@@ -109,9 +106,8 @@ Pour plus d'informations voir le
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
-		timeout = "3000"  > 
+		timeout = "3"  > 
 		<visibility>
-		<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -127,9 +123,8 @@ Pour plus d'informations voir le
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
-		timeout = "3000"  > 
+		timeout = "3"  > 
 		<visibility>
-		<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -146,9 +141,8 @@ Pour plus d'informations voir le
 		trustCategory="yes"
 		access="public"
 		ttl = "3600" 
-		timeout = "3000" > 
+		timeout = "3" > 
 		<visibility>
-			<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -165,9 +159,8 @@ Pour plus d'informations voir le
 		trustCategory="no"
 		access="public"
 		ttl = "3600" 
-		timeout = "3000" > 
+		timeout = "3" > 
 		<visibility>
-			<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -184,9 +177,8 @@ Pour plus d'informations voir le
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
-		timeout = "3000"  > 
+		timeout = "3"  > 
 		<visibility>
-			<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -203,9 +195,8 @@ Pour plus d'informations voir le
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
-		timeout = "3000"  > 
+		timeout = "3"  > 
 		<visibility>
-			<!-- autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	

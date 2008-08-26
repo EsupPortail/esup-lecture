@@ -84,7 +84,6 @@ Version de test. Merci de signaler tout problème à <a title="Envoyer un mail �
 		ttl = "3600" 
 		timeout = "3000" > 
 		<visibility>
-			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	

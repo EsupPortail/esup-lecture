@@ -47,7 +47,6 @@
 	</bean> 
 
 	<!-- Main domain model class -->
-	<!-- not yet implemented -->
 	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
 		<description>
 			This bean is the main domain model class, used by the domainService.
