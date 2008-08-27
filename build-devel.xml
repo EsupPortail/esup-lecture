@@ -2,6 +2,7 @@
 
 	<property name="commons.zip-files.exclude" value="
 		webapp/index.jsp
+		webapp/stylesheets/exception.jsp
 	" />
 	<property name="app.zip-files.shared.include" value="
     	build.xml 
