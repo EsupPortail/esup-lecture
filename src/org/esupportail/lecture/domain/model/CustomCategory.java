@@ -96,18 +96,29 @@ public abstract class CustomCategory implements CustomElement {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
 		}
-		if (o == null) {
+		if (obj == null) {
 			return false;
 		}
-		if (!(o instanceof CustomCategory)) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final CustomCategory customCategory = (CustomCategory) o;
-		if (!customCategory.getElementId().equals(this.getElementId())) {
+		CustomCategory other = (CustomCategory) obj;
+		if (elementId == null) {
+			if (other.elementId != null) {
+				return false;
+			}
+		} else if (!elementId.equals(other.elementId)) {
+			return false;
+		}
+		if (userProfile == null) {
+			if (other.userProfile != null) {
+				return false;
+			}
+		} else if (!userProfile.equals(other.userProfile)) {
 			return false;
 		}
 		return true;

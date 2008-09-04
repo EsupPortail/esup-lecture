@@ -58,60 +58,60 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	public void checkVersion(
 			final boolean throwException,
 			final boolean printLatestVersion) throws VersionException {
-//		Version databaseVersion = getDomainService().getDatabaseVersion();
-//		Version applicationVersion = getApplicationService().getVersion();
-//		if (databaseVersion == null) {
-//			String msg = "Your database is not initialized, please run 'ant init'.";
-//			if (throwException) {
-//				throw new VersionException(msg);
-//			}
-//			log.error(msg);
-//			if (printLatestVersion) {
-//				printLastVersion();
-//			}
-//			return;
-//		}
-//		if (applicationVersion.equals(databaseVersion)) {
-//			String msg = "The database is up to date.";
-//			if (throwException) {
-//				if (log.isDebugEnabled()) {
-//					log.debug(msg);
-//				}
-//			} else {
-//				log.info(msg);
-//			}
-//			if (printLatestVersion) {
-//				printLastVersion();
-//			}
-//			return;
-//		}
-//		if (applicationVersion.isSameMajorAndMinor(databaseVersion)) {
-//			log.info("Database version is " + databaseVersion + ", upgrading...");
-//			upgradeDatabase();
-//			if (printLatestVersion) {
-//				printLastVersion();
-//			}
-//			return;
-//		}
-//		if (databaseVersion.isOlderThan(applicationVersion)) {
-//			String msg = "The database is too old (" + databaseVersion + "), please run 'ant upgrade'.";
-//			if (throwException) {
-//				throw new VersionException(msg);
-//			}
-//			log.error(msg);
-//			if (printLatestVersion) {
-//				printLastVersion();
-//			}
-//			return;
-//		}
-//		String msg = "The application is too old (" + databaseVersion + "), please upgrade.";
-//		if (throwException) {
-//			throw new VersionException(msg);
-//		}
-//		if (printLatestVersion) {
-//			printLastVersion();
-//		}
-//		log.error(msg);
+		Version databaseVersion = getDomainService().getDatabaseVersion();
+		Version applicationVersion = getApplicationService().getVersion();
+		if (databaseVersion == null) {
+			String msg = "Your database is not initialized, please run 'ant init'.";
+			if (throwException) {
+				throw new VersionException(msg);
+			}
+			log.error(msg);
+			if (printLatestVersion) {
+				printLastVersion();
+			}
+			return;
+		}
+		if (applicationVersion.equals(databaseVersion)) {
+			String msg = "The database is up to date.";
+			if (throwException) {
+				if (log.isDebugEnabled()) {
+					log.debug(msg);
+				}
+			} else {
+				log.info(msg);
+			}
+			if (printLatestVersion) {
+				printLastVersion();
+			}
+			return;
+		}
+		if (applicationVersion.isSameMajorAndMinor(databaseVersion)) {
+			log.info("Database version is " + databaseVersion + ", upgrading...");
+			upgradeDatabase();
+			if (printLatestVersion) {
+				printLastVersion();
+			}
+			return;
+		}
+		if (databaseVersion.isOlderThan(applicationVersion)) {
+			String msg = "The database is too old (" + databaseVersion + "), please run 'ant upgrade'.";
+			if (throwException) {
+				throw new VersionException(msg);
+			}
+			log.error(msg);
+			if (printLatestVersion) {
+				printLastVersion();
+			}
+			return;
+		}
+		String msg = "The application is too old (" + databaseVersion + "), please upgrade.";
+		if (throwException) {
+			throw new VersionException(msg);
+		}
+		if (printLatestVersion) {
+			printLastVersion();
+		}
+		log.error(msg);
 	}
 
 	/**

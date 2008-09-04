@@ -2,32 +2,34 @@
 <!DOCTYPE hibernate-mapping PUBLIC
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
-
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
 	<class name="CustomSource" table="LECT_CUSTOMSOURCE">
 		<id name="customSourcePK" type="long">
-			<column name="CUSTOMSOURCEPK"/>
-			<generator class="native"/>
+			<column name="CUSTOMSOURCEPK" />
+			<generator class="native" />
 		</id>
 		<discriminator type="string">
-			<column name="NATURE" not-null="true" length="1"/>
+			<column name="NATURE" not-null="true" length="1" />
 		</discriminator>
-		<many-to-one name="userProfile" class="UserProfile">
-			<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
-		</many-to-one>
-		<property name="elementId" type="string">
-			<column name="ELEMENTID" length="250" not-null="true"/>
-		</property>
+		<natural-id>
+			<property name="elementId" type="string">
+				<column name="ELEMENTID" length="250" not-null="true" />
+			</property>
+			<many-to-one name="userProfile" class="UserProfile">
+				<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
+			</many-to-one>
+		</natural-id>
 		<set name="readItems" table="LECT_READITEM" cascade="save-update,lock,merge">
 			<key foreign-key="FK_READITEM_CUSTOMSOURCE_CUSTOMSOURCEPK">
-				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true"/>
+				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true" />
 			</key>
 			<element type="string" length="50">
-				<column name="ITEMID" not-null="true"/>
+				<column name="ITEMID" not-null="true" />
 			</element>
 		</set>
-		<property name="itemDisplayMode" type="org.esupportail.lecture.dao.ItemDisplayModeUserType">
-			<column name="ITEMDISPLAYMODE" not-null="true" length="32"/>
+		<property name="itemDisplayMode"
+			type="org.esupportail.lecture.dao.ItemDisplayModeUserType">
+			<column name="ITEMDISPLAYMODE" not-null="true" length="32" />
 		</property>
 		<subclass name="CustomManagedSource" discriminator-value="M">
 		</subclass>

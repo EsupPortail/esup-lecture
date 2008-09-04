@@ -9,15 +9,17 @@
 			<column name="CUSTOMCONTEXTPK"/>
 			<generator class="native" />
 		</id>
+        <natural-id>
+            <property name="elementId" type="string">
+                <column name="ELEMENTID" length="250" not-null="true"/>
+            </property>
+            <many-to-one name="userProfile" class="UserProfile">
+                <column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
+            </many-to-one>
+        </natural-id>
 		<property name="treeSize" type="int">
 			<column name="TREEWINWIDTH" not-null="true"/>
 		</property>
-		<property name="elementId" type="string">
-			<column name="ELEMENTID" length="250" not-null="true"/>
-		</property>
-		<many-to-one name="userProfile" class="UserProfile">
-			<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
-		</many-to-one>
 		<map name="subscriptions" cascade="save-update,lock,merge">
 			<key foreign-key="FK_CUSTOMCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED">
 				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED"/>

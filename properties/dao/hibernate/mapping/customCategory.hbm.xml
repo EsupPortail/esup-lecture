@@ -2,33 +2,34 @@
 <!DOCTYPE hibernate-mapping PUBLIC
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
-
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
 	<class name="CustomCategory" table="LECT_CUSTOMCATEGORY">
 		<id name="customCategoryPK" type="long">
-			<column name="CUSTOMCATEGORYPK"/>
+			<column name="CUSTOMCATEGORYPK" />
 			<generator class="native" />
 		</id>
-		<discriminator type="string">
-			<column name="NATURE" not-null="true" length="1" />
-		</discriminator>
-		<many-to-one name="userProfile" class="UserProfile">
-			<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
-		</many-to-one>
-		<property name="elementId" type="string">
-			<column name="ELEMENTID" length="250" not-null="true"/>
-		</property>
-		<subclass name="CustomManagedCategory"
-			discriminator-value="M">
+        <discriminator type="string">
+            <column name="NATURE" not-null="true" length="1" />
+        </discriminator>
+		<natural-id mutable="false">
+            <property name="elementId" type="string">
+                <column name="ELEMENTID" length="250" not-null="true" />
+            </property>
+			<many-to-one name="userProfile" class="UserProfile">
+				<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
+			</many-to-one>
+		</natural-id>
+		<subclass name="CustomManagedCategory" discriminator-value="M">
 			<map name="subscriptions" cascade="save-update,lock,merge">
 				<key foreign-key="FK_CUSTOMSOURCE_CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED">
-					<column
-						name="CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED" />
+					<column name="CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED" />
 				</key>
 				<map-key type="string">
-					<!-- 
-						I use a formula (so just a read-only access) because when I use a <column> hibernate tries to put null in the key when
-						I remove CustomManagedCategory from CustomContext.subscriptions and this violates not null constraint on the column table
+					<!--
+						I use a formula (so just a read-only access) because when I use a
+						<column> hibernate tries to put null in the key when I remove
+						CustomManagedCategory from CustomContext.subscriptions and this
+						violates not null constraint on the column table
 					-->
 					<formula>ELEMENTID</formula>
 				</map-key>

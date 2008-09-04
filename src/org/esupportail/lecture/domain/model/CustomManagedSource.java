@@ -112,35 +112,6 @@ public class CustomManagedSource extends CustomSource {
 	}
 
 	/**
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
-	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null) {
-			return false;
-		}
-		if (!(o instanceof CustomManagedSource)) {
-			return false;
-		}
-		final CustomManagedSource customManagedSource = (CustomManagedSource) o;
-		if (!customManagedSource.getElementId().equals(this.getElementId())) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		return this.getElementId().hashCode();
-	}
-	
-	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

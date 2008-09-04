@@ -200,18 +200,29 @@ public abstract class CustomSource implements CustomElement {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
+	public boolean equals(final Object obj) {
+		if (this == obj) {
 			return true;
 		}
-		if (o == null) {
+		if (obj == null) {
 			return false;
 		}
-		if (!(o instanceof CustomSource)) {
+		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		final CustomSource customSource = (CustomSource) o;
-		if (!customSource.getElementId().equals(this.getElementId())) {
+		CustomSource other = (CustomSource) obj;
+		if (elementId == null) {
+			if (other.elementId != null) {
+				return false;
+			}
+		} else if (!elementId.equals(other.elementId)) {
+			return false;
+		}
+		if (userProfile == null) {
+			if (other.userProfile != null) {
+				return false;
+			}
+		} else if (!userProfile.equals(other.userProfile)) {
 			return false;
 		}
 		return true;
