@@ -48,7 +48,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * item display mode of this customSource. 
 	 */
-	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.ALL;
+	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.UNREAD;
 	/**
 	 * Database Primary Key.
 	 */
