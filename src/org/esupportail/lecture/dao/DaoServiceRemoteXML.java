@@ -69,13 +69,15 @@ public class DaoServiceRemoteXML implements InitializingBean {
 
 	/**
 	 * get a Category form cache.
+	 * Synchronized to avoid multiple source get in case of simultaneous first access
 	 * @param profile - Category profile of category to get
 	 * @param ptCas CAS proxy ticket 
 	 * @return the Category
 	 * @throws TimeoutException 
 	 * @throws InfoDaoException 
 	 */
-	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile, final String ptCas) 
+	public synchronized ManagedCategory getManagedCategory(final ManagedCategoryProfile profile, 
+			final String ptCas) 
 	throws InfoDaoException {
 
 		/* *************************************
@@ -191,12 +193,13 @@ public class DaoServiceRemoteXML implements InitializingBean {
 
 	/**
 	 * get a source form cache.
+	 * Synchronized to avoid multiple source get in case of simultaneous first access
 	 * @param sourceProfile source profile of source to get
 	 * @param ptCas CAS proxy ticket 
 	 * @return the source
 	 * @throws InfoDaoException 
 	 */
-	public Source getSource(final SourceProfile sourceProfile, final String ptCas) 
+	public synchronized Source getSource(final SourceProfile sourceProfile, final String ptCas) 
 			throws InfoDaoException {
 		// TODO (RB <-- GB) Pourquoi ne déclare-tu pas un type Source alors que tu fais un new GlobalSource ?
 		// Je comprends que tu n'as pas le droit de faire un new Source car abstract, 

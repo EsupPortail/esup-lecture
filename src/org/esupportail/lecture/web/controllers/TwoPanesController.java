@@ -124,13 +124,13 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		int treeSize = getTreeSize();
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		String id = actionEvent.getComponent().getClientId(ctx);
-		if (id.equals("home:leftSubview:treeSmallerButton") 
+		if (id.equals("home:treeSmallerButton") 
 			|| id.equals("edit:leftSubview:treeSmallerButton")) {
 			if (treeSize > MIN_TREE_SIZE) {
 				treeSize -= TREE_SIZE_STEP;
 			}
 		}
-		if (id.equals("home:leftSubview:treeLargerButton") 
+		if (id.equals("home:treeLargerButton") 
 			|| id.equals("edit:leftSubview:treeLargerButton")) {
 			if (treeSize < MAX_TREE_SIZE) {
 				treeSize += TREE_SIZE_STEP;

@@ -57,7 +57,7 @@
 				</t:dataList>
 			</t:htmlTag>
 		</t:htmlTag>
-		<!-- Ajust Tree Size buttons -->
+		<!-- Adjust Tree Size buttons -->
 		<t:htmlTag value="hr" />
 		<t:htmlTag value="div" id="menuLeft" forceId="true" rendered="#{!homeController.guestMode}">
 			<t:htmlTag value="div" styleClass="menuTitle">
