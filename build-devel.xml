@@ -154,7 +154,7 @@
             <param name="conf-type" value="${conf-type}"/>
             <param name="file-type" value="xml"/>
         </foreach>
-        <!-- iteration for xml files -->
+        <!-- iteration for properties files -->
         <foreach list="properties/logging/log4j" 
             param="file-to-copy" target="copy-conf2">
             <param name="conf-type" value="${conf-type}"/>

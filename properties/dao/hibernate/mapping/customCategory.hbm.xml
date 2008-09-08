@@ -15,6 +15,7 @@
             <property name="elementId" type="string">
                 <column name="ELEMENTID" length="250" not-null="true" />
             </property>
+            <!-- userProfile/CustomCategory is bidirectional -->        
 			<many-to-one name="userProfile" class="UserProfile">
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
 			</many-to-one>
@@ -22,17 +23,9 @@
 		<subclass name="CustomManagedCategory" discriminator-value="M">
 			<map name="subscriptions" cascade="save-update,lock,merge">
 				<key foreign-key="FK_CUSTOMSOURCE_CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED">
-					<column name="CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED" />
+					<column name="CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED"/>
 				</key>
-				<map-key type="string">
-					<!--
-						I use a formula (so just a read-only access) because when I use a
-						<column> hibernate tries to put null in the key when I remove
-						CustomManagedCategory from CustomContext.subscriptions and this
-						violates not null constraint on the column table
-					-->
-					<formula>ELEMENTID</formula>
-				</map-key>
+				<map-key type="string" formula="ELEMENTID"/>
 				<one-to-many class="CustomManagedSource" />
 			</map>
 		</subclass>

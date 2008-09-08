@@ -13,6 +13,7 @@
             <property name="elementId" type="string">
                 <column name="ELEMENTID" length="250" not-null="true"/>
             </property>
+            <!-- userProfile/CustomContexts is bidirectional -->
             <many-to-one name="userProfile" class="UserProfile">
                 <column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
             </many-to-one>
@@ -24,18 +25,12 @@
 			<key foreign-key="FK_CUSTOMCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED">
 				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED"/>
 			</key>
-			<map-key type="string" >
-				<!-- 
-				I use a formula (so just a read-only access) because when I use a <column> hibernate tries to put null in the key when
-				I remove CustomManagedCategory from CustomContext.subscriptions and this violates not null constraint on the column table
-				 -->
-				<formula>ELEMENTID</formula>
-			</map-key>
-			<one-to-many class="CustomManagedCategory" />
+			<map-key type="string" formula="ELEMENTID" />
+			<one-to-many class="CustomCategory"/>
 		</map>
 		<set name="unfoldedCategories" table="LECT_UNFOLDEDCATEGORY">
-			<key foreign-key="FK_UNFOLDEDCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK">
-				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK" not-null="true"/>
+			<key foreign-key="FK_UNFOLDEDCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK" not-null="true">
+				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK"/>
 			</key>
 			<element type="string" length="250">
 				<column name="CATEGORYID" not-null="true"/>

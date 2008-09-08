@@ -15,12 +15,13 @@
 			<property name="elementId" type="string">
 				<column name="ELEMENTID" length="250" not-null="true" />
 			</property>
+            <!-- userProfile/CustomSource is bidirectional -->
 			<many-to-one name="userProfile" class="UserProfile">
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
 			</many-to-one>
 		</natural-id>
-		<set name="readItems" table="LECT_READITEM" cascade="save-update,lock,merge">
-			<key foreign-key="FK_READITEM_CUSTOMSOURCE_CUSTOMSOURCEPK">
+		<set name="readItems" table="LECT_READITEM" cascade="save-update,lock,merge,delete-orphan">
+			<key foreign-key="FK_READITEM_CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true">
 				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true" />
 			</key>
 			<element type="string" length="50">

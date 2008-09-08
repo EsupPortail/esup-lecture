@@ -13,42 +13,33 @@
             <column name="USERID" length="250" not-null="true" unique="true">
             </column>		
 		</property>
-		<map name="customContexts" inverse="true" cascade="save-update,lock,merge">
-			<key foreign-key="FK_CUSTOMCONTEXT_USERPROFILE_USERPROFILEPK">
+		<!-- userProfile/CustomContext is bidirectional -->
+		<map name="customContexts" cascade="save-update,lock,merge,delete-orphan" inverse="true"> 
+			<key foreign-key="FK_CUSTOMCONTEXT_USERPROFILE_USERPROFILEPK" not-null="true">
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
 			</key>
 			<map-key type="string" >
-				<!-- 
-				I use a formula (so just a read-only access) because when I use a <column> hibernate tries to put null in the key when
-				I remove CustomManagedCategory from CustomContext.subscriptions and this violates not null constraint on the column table
-				 -->
-				<formula>ELEMENTID</formula>
+                <column name="ELEMENTID"/>
 			</map-key>
 			<one-to-many class="CustomContext" />
 		</map>
-		<map name="customCategories" inverse="true" cascade="save-update,lock,merge">
-			<key foreign-key="FK_CUSTOMCATEGORY_USERPROFILE_USERPROFILEPK">
+        <!-- userProfile/CustomCategory is bidirectional -->
+		<map name="customCategories" cascade="save-update,lock,merge,delete-orphan" inverse="true">
+			<key foreign-key="FK_CUSTOMCATEGORY_USERPROFILE_USERPROFILEPK" not-null="true">
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
 			</key>
 			<map-key type="string" >
-				<!-- 
-				I use a formula (so just a read-only access) because when I use a <column> hibernate tries to put null in the key when
-				I remove CustomManagedCategory from CustomContext.subscriptions and this violates not null constraint on the column table
-				 -->
-				<formula>ELEMENTID</formula>
+                <column name="ELEMENTID" />
 			</map-key>
 			<one-to-many class="CustomCategory" />
 		</map>
-		<map name="customSources" inverse="true" cascade="save-update,lock,merge">
-			<key foreign-key="FK_CUSTOMSOURCE_USERPROFILE_USERPROFILEPK">
+        <!-- userProfile/CustomSource is bidirectional -->
+		<map name="customSources" cascade="save-update,lock,merge,delete-orphan" inverse="true">
+			<key foreign-key="FK_CUSTOMSOURCE_USERPROFILE_USERPROFILEPK" not-null="true">
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
 			</key>
 			<map-key type="string" >
-				<!-- 
-				I use a formula (so just a read-only access) because when I use a <column> hibernate tries to put null in the key when
-				I remove CustomManagedCategory from CustomContext.subscriptions and this violates not null constraint on the column table
-				 -->
-				<formula>ELEMENTID</formula>
+                <column name="ELEMENTID" />
 			</map-key>
 			<one-to-many class="CustomSource" />
 		</map>

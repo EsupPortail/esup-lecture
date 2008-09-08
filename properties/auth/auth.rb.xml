@@ -14,7 +14,6 @@
 		This file should not be modified but by the developers.
 		This file is referenced by /properties/applicationContext.xml.
 	-->
-<!-- 
 
 	<bean 
 		id="authenticationService"
@@ -25,7 +24,7 @@
 		</description>
 		<property name="userId" value="bourges" />
 	</bean>
- -->
+<!-- 
 
     <bean 
         id="authenticationService"
@@ -36,6 +35,7 @@
         </description>
         <property name="uidPortalAttribute" value="uid" />
     </bean>
+ -->
 
     <bean 
         id="servletCasService"

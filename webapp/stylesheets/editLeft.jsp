@@ -26,6 +26,7 @@
 							rendered="#{cat.notSubscribed}" styleClass="valign">
 							<t:updateActionListener property="#{editController.ualCategory}"
 								value="#{cat}" />
+							<t:updateActionListener property="#{editController.ualSource}" value="#{null}" />
 						</h:commandButton>
 						<h:commandButton
 							action="#{editController.toogleCategorySubcribtion}"
@@ -35,6 +36,7 @@
 							rendered="#{cat.subscribed}" styleClass="valign">
 							<t:updateActionListener property="#{editController.ualCategory}"
 								value="#{cat}" />
+							<t:updateActionListener property="#{editController.ualSource}" value="#{null}" />
 						</h:commandButton>
 						<h:graphicImage value="/media/forced.png"
 							alt="#{msgs['forcedCategory']}" title="#{msgs['forcedCategory']}"
@@ -44,6 +46,7 @@
 							styleClass="elementButton">
 							<t:updateActionListener property="#{editController.ualCategory}"
 								value="#{cat}" />
+							<t:updateActionListener property="#{editController.ualSource}" value="#{null}" />
 						</h:commandButton>
 					</t:htmlTag>
 				</t:dataList>
