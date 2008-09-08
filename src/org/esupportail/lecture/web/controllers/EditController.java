@@ -101,8 +101,11 @@ public class EditController extends TwoPanesController {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("invalidate home page cache");
 		}
+		//clear information form session for homeController and this (EditController)
 		homeController.flushContextFormVirtualSession();
 		this.flushContextFormVirtualSession();
+		//set selectedCategory to currentCategory (but just with Id in order to have a fresh category)
+		getContext().setSelectedCategoryById(currentCategory.getId());
 		return "OK";		
 	}
 	

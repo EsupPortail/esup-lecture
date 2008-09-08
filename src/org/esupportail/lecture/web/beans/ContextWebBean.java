@@ -78,6 +78,18 @@ public class ContextWebBean {
 	public void setSelectedCategory(final CategoryWebBean selectedCategory) {
 		this.selectedCategory = selectedCategory;
 	}
+	
+	/**
+	 * set the selected category of the context.
+	 * @param catId - Id of category to assign as selected category
+	 */
+	public void setSelectedCategoryById(final String catId) {
+		for (CategoryWebBean cat : categories) {
+			if (cat.getId().equals(catId)) {
+				this.selectedCategory = cat;
+			}
+		}
+	}
 	/**
 	 * @return list of categories
 	 */
