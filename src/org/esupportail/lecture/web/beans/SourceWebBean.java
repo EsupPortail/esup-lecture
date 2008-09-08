@@ -242,5 +242,40 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	public void setXmlOrder(final int xmlOrder) {
 		this.xmlOrder = xmlOrder;
 	}
+
+	/**
+	 * @return number of Items in the source
+	 */
+	private int getItemsNumber() {
+		return getItems().size();
+	}
 	
+	/**
+	 * @return number of Unread Items in the source
+	 */
+	private int getUnreadItemsNumbers() {
+		int ret = 0;
+		for (ItemWebBean item : getItems()) {
+			if (!item.isRead()) {
+				ret += 1;
+			}
+		}
+		return ret;
+	}
+	
+	/**
+	 * @return if source contains Items to display or not
+	 */
+	public boolean isWithDisplayedItems() {
+		if (itemDisplayMode == ItemDisplayMode.UNREAD) {
+			if (getUnreadItemsNumbers() > 0) {
+				return true;
+			}
+		} else {
+			if (getItemsNumber() > 0) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
