@@ -72,7 +72,9 @@
     			URLs are prefixed by property portletMediaPath or servletMediaPath.
     		</description>
     		<list>
-    			<value>functions.js</value>
+                <value>functions.js</value>
+                <value>prototype.js</value>
+                <value>lightbox-iframe.js</value>
     		</list>
     	</property>
     	<property name="stylesheets" >
@@ -86,6 +88,7 @@
     			<value>commons.css</value>
     			<value>portlet.css</value>
                 <value>lecture.css</value>
+                <value>lightbox.css</value>
     		</list>
     	</property>
     	<property name="documentBodyStyleClass" value="portlet-section-body esup-lecture" >
