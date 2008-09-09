@@ -3,11 +3,6 @@
 <!ENTITY repConf "file:///d:/tmp/conf_lecture_gwe_ray/" >
 ] >
 <mappings>
-        <mapping 
-                sourceURL="http://ent.univ-rennes1.fr/newsPortlet"
-                xsltFile="&repConf;rss-newsPortlet.xsl"
-                itemXPath="/rss/channel/item">
-        </mapping>
 	<mapping 
 		sourceURL="http://info.cri.univ-rennes1.fr/rss/rss.php"
 		xsltFile="&repConf;stylesheet01.xsl"
