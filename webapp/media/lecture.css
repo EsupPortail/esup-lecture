@@ -76,7 +76,7 @@
 /* Articles Style */
 .esup-lecture div.toggleButton {
 	float: left;
-	margin: 7px 0px 10px 5px;
+	margin: 2px 0px 20px 5px;
 	padding: 10px;
 	width: 16px;
 	height: 16px;
@@ -84,7 +84,7 @@
 
 .esup-lecture div.unreadArticle {
 	margin: 2px 0px 0px 35px;
-	padding: 5px;
+	padding: 2px;
 	background-color: transparent;
 	line-height: 17px;
 	margin-bottom: 10px;
@@ -92,13 +92,13 @@
 	font-size: 95%;
 	padding-bottom: 15px;
 	letter-spacing: .4px;
+
 }
 
 .esup-lecture div.readArticle {
 	margin: 2px 0px 0px 35px;
-	padding: 5px;
-	color: #000;
-	filter: alpha(opacity =   30);
+	padding: 2px;
+	filter: alpha(opacity=80);
 	-moz-opacity: 0.30;
 	margin-bottom: 15px;
 	border-bottom: dotted thin;
@@ -242,7 +242,7 @@ h1 {
 	color: #a71817 ! important;
 	text-decoration: underligne ! important;
 	font-size: 1.5em ! important;
-	text-shadow: black 0px 0px 5px ! important;
+
 }
 
 /*##  Section 10.6.4 Sections ##*/
