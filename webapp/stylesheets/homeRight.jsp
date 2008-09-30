@@ -17,19 +17,20 @@
 		</t:htmlTag>
 		<t:htmlTag value="div" styleClass="menuTitle"
 			rendered="#{!homeController.guestMode}">
-			<t:htmlTag value="span" styleClass="portlet-section-header">
+			<t:htmlTag value="span" styleClass="portlet-section-header ">
 				<h:outputText value="#{homeController.selectedCategory.name}" />
 			</t:htmlTag>
 		</t:htmlTag>
 		<t:htmlTag value="div" styleClass="menuButton"
 			rendered="#{!homeController.guestMode}">
 			<t:htmlTag value="ul">
+				<!--
 				<t:htmlTag value="li"
 					rendered="#{homeController.selectedCategory.withSelectedSource}">
 					<h:outputText value="#{msgs['selectorLabel']}" />
 					<h:selectOneMenu value="#{homeController.itemDisplayMode}"
 						converter="#{itemDisplayModeConverter}">
-						<!--  onchange="submit();" -->
+						  onchange="submit();" 
 						<f:selectItem itemValue="#{homeController.all}"
 							itemLabel="#{msgs['all']}" />
 						<f:selectItem itemValue="#{homeController.unread}"
@@ -41,24 +42,42 @@
 						value="#{msgs['changeItemDisplayModeButtonLabel']}"
 						action="#{homeController.changeItemDisplayMode}" />
 				</t:htmlTag>
-				<t:htmlTag id="menuAndXML" value="li"
-					rendered="#{!homeController.treeVisible}">
-					<h:commandButton action="#{homeController.toggleTreeVisibility}"
-						image="/media/menuAndXML.gif" alt="#{msgs['showTree']}"
-						title="#{msgs['showTree']}" styleClass="valign" />
-				</t:htmlTag>
-				<t:htmlTag id="XMLWithoutMenu" value="li"
-					rendered="#{homeController.treeVisible}">
-					<h:commandButton action="#{homeController.toggleTreeVisibility}"
-						image="/media/XMLWithoutMenu.gif" alt="#{msgs['hideTree']}"
-						title="#{msgs['hideTree']}" styleClass="valign" />
-				</t:htmlTag>
+				-->
+				<t:div styleClass="menuNonLu">
+
+					<h:commandLink styleClass="buttonNoStyle" id="tousButton">
+						<h:outputText value="Tous" />
+					</h:commandLink>
+						<h:outputText value="|" />
+					<h:commandLink styleClass="buttonNoStyle" id="nonLusButton">
+						<h:outputText value="Non lus" />
+					</h:commandLink>
+						<h:outputText value="|"/>			
+					<h:commandLink styleClass="buttonNoStyle" id="firtsNonLusButton">
+						<h:outputText value="Non lus en premier" />
+					</h:commandLink>
+						<h:outputText value="|" />
+					<t:htmlTag id="menuAndXML" value="li"
+						rendered="#{!homeController.treeVisible}">
+						<h:commandButton action="#{homeController.toggleTreeVisibility}"
+							image="/media/menuAndXML.gif" alt="#{msgs['showTree']}"
+							title="#{msgs['showTree']}" styleClass="valign" />
+					</t:htmlTag>
+					<t:htmlTag id="XMLWithoutMenu" value="li"
+						rendered="#{homeController.treeVisible}">
+						<h:commandButton action="#{homeController.toggleTreeVisibility}"
+							image="/media/XMLWithoutMenu.gif" alt="#{msgs['hideTree']}"
+							title="#{msgs['hideTree']}" styleClass="valign" />
+					</t:htmlTag>
+				</t:div>
+
+
 			</t:htmlTag>
 		</t:htmlTag>
 	</t:htmlTag>
 	<!-- Source(s) and Items display -->
 	<t:htmlTag value="div" id="right">
-		<t:htmlTag value="hr" />
+
 		<!-- source(s) display -->
 		<t:dataList
 			value="#{homeController.selectedCategory.selectedOrAllSources}"
