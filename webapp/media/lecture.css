@@ -92,13 +92,12 @@
 	font-size: 95%;
 	padding-bottom: 15px;
 	letter-spacing: .4px;
-
 }
 
 .esup-lecture div.readArticle {
 	margin: 2px 0px 0px 35px;
 	padding: 2px;
-	filter: alpha(opacity=80);
+	filter: alpha(opacity = 80);
 	-moz-opacity: 0.30;
 	margin-bottom: 15px;
 	border-bottom: dotted thin;
@@ -114,12 +113,11 @@
 	height: 25px;
 	color: black;
 	text-align: left;
-	letter-spacing: 1 px;
+	letter-spacing: 1px;
 	color: black;
 	text-align: left;
 	text-indent: 5px;
 	font-weight: lighter;
-	padding-left: 10 px;
 	margin-bottom: 10px;
 	padding-top: 5px;
 }
@@ -165,8 +163,8 @@
 	display: block;
 }
 
-.buttonNoStyle {
-	BACKGROUND: #fff;
+.esup-lecture .buttonNoStyle {
+	background: #fff;
 	color: #a71817;
 	TEXT-ALIGN: right;
 	text-decoration: underline;
@@ -174,51 +172,28 @@
 	margin-right: auto;
 	margin-bottom: 0px;
 	margin-left: auto;
-	border-top-width: 1px;
-	border-right-width: 1px;
-	border-bottom-width: 1px;
-	border-left-width: 1px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #fff;
-	border-right-color: #fff;
-	border-bottom-color: #fff;
-	border-left-color: #fff;
+	border: 1px solid #fff;
 	letter-spacing: .4px;
 	cursor: pointer;
 	padding-left: 1px;
 	padding-right: 1px;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-
 }
 
-.buttonStyle {
-	BACKGROUND: #fff;
-	TEXT-ALIGN: left;
-	margin-top: 0px;
+.esup-lecture .buttonStyle {
+	background: #fff;
+	text-align: left;
+	margin-top: 0;
 	margin-right: auto;
-	margin-bottom: 0px;
+	margin-bottom: 0;
 	margin-left: auto;
-	border-top-width: 1px;
-	border-right-width: 1px;
-	border-bottom-width: 1px;
-	border-left-width: 1px;
-	border-top-style: solid;
-	border-right-style: solid;
-	border-bottom-style: solid;
-	border-left-style: solid;
-	border-top-color: #fff;
-	border-right-color: #fff;
-	border-bottom-color: #fff;
-	border-left-color: #fff;
-	letter-spacing: .5px;
+	border: 1px solid #fff;
+	letter-spacing: 0.5px;
 	cursor: pointer;
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 }
 
-.menuBas {
+.esup-lecture .menuBas {
 	width: 100%;
 	height: 150px;
 	text-align: right;
@@ -229,43 +204,42 @@
 	border-top-style: solid;
 }
 
-.menuNonLu {
+.esup-lecture .menuNonLu {
 	font-size: .8em;
 	color: #a71817;
 }
 
 /* ------------ ! important ------------------- */
-h1 {
+.esup-lecture h1 {
 	font-weight: lighter;
 	line-height: 1 ! important;
 	margin-bottom: 7px ! important;
 	color: #a71817 ! important;
-	text-decoration: underligne ! important;
+	text-decoration: underline ! important;
 	font-size: 1.5em ! important;
-
 }
 
 /*##  Section 10.6.4 Sections ##*/
-.portlet-section-header {
+.esup-lecture .portlet-section-header {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 1.8em ! important;
 	color: #A71817 ! important;
 	font-weight: bold;
 }
 
-a:focus,a:hover {
+.esup-lecture a:focus,a:hover {
 	color: #a71817 ! important;
-	text-decoration: underligne ! important;
+	text-decoration: underline ! important;
 	font-size: 1em ! important;
 }
 
-a {
+.esup-lecture a {
 	color: #a71817 ! important;
-	text-decoration: underligne ! important;
+	text-decoration: underline ! important;
 	font-size: 1em ! important;
 }
 
-.conteneurLogo {
+.esup-lecture .conteneurLogo {
 	background-image: url(../media/im_trash.JPG);
 	background-repeat: no-repeat;
 	width: 100%;
