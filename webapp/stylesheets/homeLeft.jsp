@@ -96,20 +96,9 @@
 		<t:div styleClass="menuBas">
 			<t:div>
 				<h:commandButton styleClass="buttonNoStyle" id="editButton"
-					action="navigationEdit" value="Personnaliser l'application"
+					action="navigationEdit" value="#{msgs['edit']}"
 					alt="#{msgs['edit']}" title="#{msgs['edit']}" />
 			</t:div>
-			<t:div>
-				<h:commandButton styleClass="buttonNoStyle" id="helpButton"
-					action="navigationEdit" value="Centre d'aide" alt="#{msgs['edit']}"
-					title="#{msgs['edit']}" />
-			</t:div>
-			<t:div>
-				<h:commandButton styleClass="buttonNoStyle" id="proposButton"
-					action="navigationEdit" value="A propos" alt="#{msgs['edit']}"
-					title="#{msgs['edit']}" />
-			</t:div>
-
 		</t:div>
 	</t:htmlTag>
 

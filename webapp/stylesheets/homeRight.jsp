@@ -44,19 +44,44 @@
 				</t:htmlTag>
 				-->
 				<t:div styleClass="menuNonLu">
-
-					<h:commandLink styleClass="buttonNoStyle" id="tousButton">
-						<h:outputText value="Tous" />
-					</h:commandLink>
-						<h:outputText value="|" />
-					<h:commandLink styleClass="buttonNoStyle" id="nonLusButton">
-						<h:outputText value="Non lus" />
-					</h:commandLink>
-						<h:outputText value="|"/>			
-					<h:commandLink styleClass="buttonNoStyle" id="firtsNonLusButton">
-						<h:outputText value="Non lus en premier" />
-					</h:commandLink>
-						<h:outputText value="|" />
+					<h:commandButton styleClass="buttonNoStyle"
+						action="#{homeController.changeItemDisplayMode}"
+						value="#{msgs['all']}" alt="#{msgs['all']}" title="#{msgs['all']}"
+						rendered="#{homeController.selectedCategory.withSelectedSource}">
+						<t:updateActionListener
+							property="#{homeController.itemDisplayMode}"
+							value="#{homeController.all}" />
+					</h:commandButton>
+<!-- 
+					<h:outputText value="|"
+						rendered="#{homeController.selectedCategory.withSelectedSource}" />
+ -->
+					<h:commandButton styleClass="buttonNoStyle"
+						action="#{homeController.changeItemDisplayMode}"
+						value="#{msgs['notRead']}" alt="#{msgs['notRead']}"
+						title="#{msgs['notRead']}"
+						rendered="#{homeController.selectedCategory.withSelectedSource}">
+						<t:updateActionListener
+							property="#{homeController.itemDisplayMode}"
+							value="#{homeController.unread}" />
+					</h:commandButton>
+<!-- 
+					<h:outputText value="|"
+						rendered="#{homeController.selectedCategory.withSelectedSource}" />
+ -->
+					<h:commandButton styleClass="buttonNoStyle"
+						action="#{homeController.changeItemDisplayMode}"
+						value="#{msgs['unreadFirst']}" alt="#{msgs['unreadFirst']}"
+						title="#{msgs['unreadFirst']}"
+						rendered="#{homeController.selectedCategory.withSelectedSource}">
+						<t:updateActionListener
+							property="#{homeController.itemDisplayMode}"
+							value="#{homeController.unreadfirt}" />
+					</h:commandButton>
+<!-- 
+					<h:outputText value="|"
+						rendered="#{homeController.selectedCategory.withSelectedSource}" />
+ -->
 					<t:htmlTag id="menuAndXML" value="li"
 						rendered="#{!homeController.treeVisible}">
 						<h:commandButton action="#{homeController.toggleTreeVisibility}"

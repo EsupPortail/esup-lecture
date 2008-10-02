@@ -26,7 +26,8 @@
 							rendered="#{cat.notSubscribed}" styleClass="valign">
 							<t:updateActionListener property="#{editController.ualCategory}"
 								value="#{cat}" />
-							<t:updateActionListener property="#{editController.ualSource}" value="#{null}" />
+							<t:updateActionListener property="#{editController.ualSource}"
+								value="#{null}" />
 						</h:commandButton>
 						<h:commandButton
 							action="#{editController.toogleCategorySubcribtion}"
@@ -36,30 +37,26 @@
 							rendered="#{cat.subscribed}" styleClass="valign">
 							<t:updateActionListener property="#{editController.ualCategory}"
 								value="#{cat}" />
-							<t:updateActionListener property="#{editController.ualSource}" value="#{null}" />
+							<t:updateActionListener property="#{editController.ualSource}"
+								value="#{null}" />
 						</h:commandButton>
 						<h:graphicImage value="/media/forced.png"
 							alt="#{msgs['forcedCategory']}" title="#{msgs['forcedCategory']}"
-							rendered="#{cat.obliged}"  styleClass="valign"/>
+							rendered="#{cat.obliged}" styleClass="valign" />
 						<h:commandButton action="#{editController.selectElement}"
 							alt="#{cat.name}" title="#{cat.name}" value="#{cat.name}"
 							styleClass="elementButton">
 							<t:updateActionListener property="#{editController.ualCategory}"
 								value="#{cat}" />
-							<t:updateActionListener property="#{editController.ualSource}" value="#{null}" />
+							<t:updateActionListener property="#{editController.ualSource}"
+								value="#{null}" />
 						</h:commandButton>
 					</t:htmlTag>
 				</t:dataList>
 			</t:htmlTag>
 		</t:htmlTag>
 		<!-- Adjust Tree Size buttons -->
-		<t:htmlTag value="hr" />
 		<t:htmlTag value="div" id="menuLeft" forceId="true">
-			<t:htmlTag value="div" styleClass="menuTitle">
-				<h:commandButton id="homeButton" action="navigationHome"
-					image="/media/go-home.png" alt="#{msgs['home']}"
-					title="#{msgs['home']}" />
-			</t:htmlTag>
 			<t:htmlTag value="div" styleClass="menuButton">
 				<t:htmlTag value="ul">
 					<t:htmlTag value="li">
@@ -76,6 +73,13 @@
 					</t:htmlTag>
 				</t:htmlTag>
 			</t:htmlTag>
+			<t:div styleClass="menuBas">
+				<t:div>
+					<h:commandButton styleClass="buttonNoStyle" id="homeButton"
+						action="navigationHome" value="#{msgs['home']}"
+						alt="#{msgs['home']}" title="#{msgs['home']}" />
+				</t:div>
+			</t:div>
 		</t:htmlTag>
 	</f:subview>
 </jsp:root>
