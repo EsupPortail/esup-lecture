@@ -151,20 +151,27 @@ public class FacesPortlet extends MyFacesGenericPortlet implements Serializable 
 	throws PortletException, IOException {
 		PortletRequestAttributes previousRequestAttributes = 
 			ContextUtils.bindRequestAndContext(request, getPortletContext());
+		boolean error = true;
 		if (!ExceptionUtils.exceptionAlreadyCaught()) {
 			try {
 				DatabaseUtils.open();
 				DatabaseUtils.begin();
 				super.facesRender(request, response);
 				DatabaseUtils.commit();
-				DatabaseUtils.close();
-				ContextUtils.unbindRequest(previousRequestAttributes);
 				if (logger.isDebugEnabled()) {
 					logger.debug("==== END facesRender ====");
 				}
+				error = false;
 				return;
 			} catch (Exception e) {
 				catchException(e);
+			} finally {
+				DatabaseUtils.close();
+				if (!error) {
+					//Just call ContextUtils.unbindRequest if no error because 
+					//informations is used by ExceptionUtils.getMarkedExceptionService()
+					ContextUtils.unbindRequest(previousRequestAttributes);									
+				}
 			}
 		}
 		try {
@@ -221,13 +228,13 @@ public class FacesPortlet extends MyFacesGenericPortlet implements Serializable 
     		}
         } catch (Exception e) {
 			ExceptionService exceptionService = catchException(e);
-            DatabaseUtils.close();
 			response.setRenderParameter(VIEW_ID, exceptionService.getExceptionView());
 //			if (facesContext != null) {
 //				facesContext.release();
 //			}
         } finally {
         	saveRequestAttributes(request);
+            DatabaseUtils.close();
         	ContextUtils.unbindRequest(previousRequestAttributes);
         }
     }
