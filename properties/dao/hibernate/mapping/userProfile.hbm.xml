@@ -9,10 +9,12 @@
 			<column name="USERPROFILEPK"/>
 			<generator class="native" />
 		</id>
-		<property name="userId" type="string">
-            <column name="USERID" length="250" not-null="true" unique="true">
-            </column>		
-		</property>
+		<natural-id>
+	        <property name="userId" type="string">
+	            <column name="USERID" length="250" not-null="true" unique="true">
+	            </column>       
+	        </property>
+		</natural-id>
 		<!-- userProfile/CustomContext is bidirectional -->
 		<map name="customContexts" cascade="save-update,lock,merge,delete-orphan" inverse="true"> 
 			<key foreign-key="FK_CUSTOMCONTEXT_USERPROFILE_USERPROFILEPK" not-null="true">

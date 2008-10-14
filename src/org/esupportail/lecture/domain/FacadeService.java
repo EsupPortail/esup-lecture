@@ -81,21 +81,6 @@ public class FacadeService implements InitializingBean {
 	/* 
 	 ************************** SERVICES **********************************/
 
-	/**
-	 * Return ID of the current connected user to exetrnalService.
-	 * @return the user ID
-	 * @throws InternalExternalException
-	 */
-	public String getConnectedUserId() throws InternalExternalException {
-		try {
-			return externalService.getConnectedUserId();
-		} catch (NoExternalValueException e) {
-			String errorMsg = "Service getConnectedUserId not available : (NoExternalValueException)";
-			LOG.error(errorMsg);
-			throw new InternalExternalException(errorMsg, e);
-		} 
-	}
-	
 	/**	
 	 * Return the userBean identified by uid.
 	 * @param uid id of connected user

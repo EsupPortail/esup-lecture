@@ -15,6 +15,8 @@ import org.esupportail.lecture.domain.beans.User;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.utils.Assert;
+import org.esupportail.commons.utils.ContextUtils;
+import org.esupportail.commons.utils.ExternalContextUtils;
 import org.esupportail.commons.utils.strings.StringUtils;
 import org.esupportail.commons.web.controllers.ExceptionController;
 
@@ -66,18 +68,19 @@ public class SessionController extends AbstractDomainAwareBean {
 	 */
 	@Override
 	public User getCurrentUser() {
-//		if (ExternalContextUtils.getRequestVar(CURRENT_USER_ATTRIBUTE) == null) {
-//			String currentUserId = authenticationService.getCurrentUserId();
-//			if (currentUserId == null) {
-//				return null;
-//			}
-//			User user = getDomainService().getUser(currentUserId);
-//			// update the information
-//			getDomainService().updateUserInfo(user);
-//			ExternalContextUtils.setRequestVar(CURRENT_USER_ATTRIBUTE, user);
-//		}
-//		return (User) ExternalContextUtils.getRequestVar(CURRENT_USER_ATTRIBUTE);
-		return null;
+		if (ContextUtils.getRequestAttribute(CURRENT_USER_ATTRIBUTE) == null) {
+			String currentUserId = authenticationService.getCurrentUserId();
+			if (currentUserId == null) {
+				return null;
+			}
+			User user = new User();
+			user.setDisplayName(currentUserId);
+			user.setId(currentUserId);
+			user.setAdmin(false);
+			resetSessionLocale();
+			ContextUtils.setRequestAttribute(CURRENT_USER_ATTRIBUTE, user);
+		}
+		return (User) ContextUtils.getRequestAttribute(CURRENT_USER_ATTRIBUTE);
 	}
 
 	/**

@@ -21,6 +21,7 @@ import org.esupportail.lecture.domain.FacadeService;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.CategoryDummyBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
+import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
@@ -304,8 +305,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @throws DomainServiceException
 	 */
 	protected SourceWebBean populateSourceWebBean(final SourceBean sourceBean) throws DomainServiceException {
-		SourceWebBean sourceWebBean = new SourceWebBean(facadeService);
+		SourceWebBean sourceWebBean;
 		if (sourceBean instanceof SourceDummyBean) {
+			sourceWebBean = new SourceWebBean(null);
 			String cause = ((SourceDummyBean) sourceBean).getCause().getMessage();
 			String id = "DummySrc:" + dummyId++;
 			sourceWebBean.setId(id);
@@ -313,6 +315,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			sourceWebBean.setType(AvailabilityMode.OBLIGED);
 			sourceWebBean.setItemDisplayMode(ItemDisplayMode.ALL);
 		} else {
+			//get Item for the source
+			List<ItemBean> itemsBeans = facadeService.getItems(uid, sourceBean.getId());
+			sourceWebBean = new SourceWebBean(itemsBeans);
 			sourceWebBean.setId(sourceBean.getId());
 			sourceWebBean.setName(sourceBean.getName());
 			sourceWebBean.setType(sourceBean.getType());		
@@ -407,7 +412,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			//init the user
 			String userId;
 			try {
-				userId = getFacadeService().getConnectedUserId();
+				userId = getSessionController().getCurrentUser().getId(); 
 			} catch (Exception e) {
 				throw new WebException("Error in getUID", e);
 			}

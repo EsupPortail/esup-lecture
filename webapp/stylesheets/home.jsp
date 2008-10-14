@@ -47,11 +47,9 @@ toggleButton: read/unread toggle button
 				<jsp:include page="homeRight.jsp" />
 			</h:outputText>
 		</h:form>
-<!-- 
 		<script type="text/javascript">
-		   hideButton("home:rightSubview:submit");
+		document.getElementById("home:itemDisplayModeButton").style.display = "none";
         </script>
- -->
 	</e:page>
 </jsp:root>
 

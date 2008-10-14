@@ -51,17 +51,23 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 * xmlOrder is used to store the order of the corresponding sourceProfile in an Category XML file.
 	 */
 	private int xmlOrder = Integer.MAX_VALUE;
-	/**
-	 * facadeService bean.
-	 */
-	private FacadeService facadeService;
 
 	/**
 	 * Default constructor.
 	 */
-	public SourceWebBean(final FacadeService facadeService) {
+	public SourceWebBean(final List<ItemBean> itemsBeans) {
 		super();
-		this.facadeService = facadeService;
+		items = new ArrayList<ItemWebBean>();
+		if (itemsBeans != null) {
+			for (ItemBean itemBean : itemsBeans) {
+				ItemWebBean itemWebBean = new ItemWebBean();
+				itemWebBean.setId(itemBean.getId());
+				itemWebBean.setHtmlContent(itemBean.getHtmlContent());
+				itemWebBean.setRead(itemBean.isRead());
+				itemWebBean.setDummy(itemBean.isDummy());
+				items.add(itemWebBean);				
+			}			
+		}
 	}
 	/**
 	 * @return name of source
@@ -103,30 +109,6 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 * @return list of items
 	 */
 	public List<ItemWebBean> getItems() {
-		if (items == null) {
-			//we need to put item in the source
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("Put items in source");
-			}
-			List<ItemBean> list;
-			try {
-				String uid = facadeService.getConnectedUserId();
-				list = facadeService.getItems(uid, id);
-			} catch (Exception e) {
-				throw new WebException("Error in getItems", e);
-			}
-			items = new ArrayList<ItemWebBean>();
-			if (list != null) {
-				for (ItemBean itemBean : list) {
-					ItemWebBean itemWebBean = new ItemWebBean();
-					itemWebBean.setId(itemBean.getId());
-					itemWebBean.setHtmlContent(itemBean.getHtmlContent());
-					itemWebBean.setRead(itemBean.isRead());
-					itemWebBean.setDummy(itemBean.isDummy());
-					items.add(itemWebBean);				
-				}
-			}
-		}
 		return items;
 	}
 	

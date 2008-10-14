@@ -1,93 +1,195 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" [
-<!ENTITY repConf "file:///d:/tmp/conf_lecture_gwe_ray/" >
-]>
+<!ENTITY repConf "file:///data/webapps/ent.univ-rennes1.fr/application/uPortal/html/esup-lecture/"
+>
+]
+>
+<!-- <!ENTITY repConf "http://localhost:8854/html/esup-lecture/" > -->
+
 <channelConfig>
 	<guestUser>guest</guestUser>
-
-	<context name="CRI" id="default">
-		<description>
-			<![CDATA[
-<h1>Portlet Lecture du CRI</h1>
-Version de test. Merci de signaler tout problème à <a title="Envoyer un mail à raymond.bourges@univ-rennes1.fr" href="mailto:raymond.bourges@univ-rennes1.fr">raymond.bourges@univ-rennes1.fr</a>
-]]>
-		</description>
-		<refCategoryProfile refId="liens" />
-        <refCategoryProfile refId="rss" />
-        <refCategoryProfile refId="news" />
+	
+	<context 
+	  name = "Actualités"
+	  id = "default">
+	  <description>Actualités Rennes 1</description> 
+	  <refCategoryProfile refId="annonces"/>       <!-- portlet news : categorie Annonces Rennes 1 -->
+	  <refCategoryProfile refId="annonces-persufr"/>   <!-- portlet news : categorie Annonces Intranet UFR -->
+	  <refCategoryProfile refId="annonces-ufr"/>       <!-- portlet news : categorie Annonces publiques UFR  -->
+	  <refCategoryProfile refId="rss-rennes1"/>       <!-- flux rss Rennes 1 -->
+	  <refCategoryProfile refId="actu-generales"/> <!-- RSS ville de Rennes... -->
+	  <refCategoryProfile refId="presse"/>         <!-- le monde, l'equipe ... -->
 	</context>
 
 	<context 
-	  name = "Contexte d'exemple"
-	  id = "context">
-		<description><![CDATA[
-<h1>Servlet Lecture du CRI</h1>
-Version de test. Merci de signaler tout problème à <a title="Envoyer un mail à raymond.bourges@univ-rennes1.fr" href="mailto:raymond.bourges@univ-rennes1.fr">raymond.bourges@univ-rennes1.fr</a>
-]]>
-		</description> 
-		<refCategoryProfile refId="liens" />
-		<refCategoryProfile refId="rss" />
+	  name = "Actualités"
+	  id = "IEP">
+	  <description>Annonces</description> 
+	  <refCategoryProfile refId="annonces-iep"/>   <!-- portlet news : categorie Annonces IEP -->
+	  <refCategoryProfile refId="actu-generales"/> <!-- RSS ville de Rennes... -->
+	  <refCategoryProfile refId="presse"/>         <!-- le monde, l'equipe ... -->
 	</context>
 
-	<categoryProfile name="Les liens utiles au CRI" id="liens"
-		urlCategory="&repConf;liens.xml"
-		trustCategory="yes" access="public" ttl="3600" timeout="3000">
-		<visibility>
-			<allowed />
-			<autoSubscribed />
-			<obliged>
-				<regular attribute="uid" value="admin"/>
-				<regular attribute="uid" value="bourges"/>
-				<group name="pags.PERS_957" />
-			</obliged>
-		</visibility>
-	</categoryProfile>
+	<context 
+	  name = "Actualités"
+	  id = "ENSCR">
+	  <description>Annonces</description> 
+	  <refCategoryProfile refId="annonces-enscr"/>       <!-- portlet news : categorie Annonces IEP -->
+	  <refCategoryProfile refId="actu-generales"/>       <!-- RSS ville de Rennes... -->
+	  <refCategoryProfile refId="presse"/>               <!-- le monde, l'equipe ... -->
+	</context>
 
-    <categoryProfile name="Les rss utiles au CRI" id="rss"
-        urlCategory="&repConf;rss.xml"
-        trustCategory="no" access="public" ttl="3600" timeout="3000">
-        <visibility>
-            <allowed>
-                <regular attribute="uid" value="admin"/>
-                <regular attribute="uid" value="bourges"/>
-                <group name="pags.PERS_957" />
-            </allowed>
-            <autoSubscribed />
-            <obliged>
-            </obliged>
-        </visibility>
-    </categoryProfile>
-
-    <categoryProfile name="Les rss du portlet news" id="news"
-        urlCategory="http://ent.univ-rennes1.fr/newsPortlet/feeds/pub/rss?t=3&amp;cID=3"
-        trustCategory="no" access="public" ttl="3600" timeout="3000">
-        <visibility>
-            <allowed />
-            <autoSubscribed />
-            <obliged>
-                <regular attribute="uid" value="admin"/>
-                <regular attribute="uid" value="bourges"/>
-                <group name="pags.PERS_957" />
-            </obliged>
-        </visibility>
-    </categoryProfile>
-
-	<categoryProfile 
-		name="Categorie de démo 2"
-		id="demo2"
-		urlCategory="&repConf;demo2.xml"
+ 	<categoryProfile 
+		name="RSS Rennes 1"
+		id="rss-rennes1"
+		urlCategory="&repConf;rss-rennes1.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" 
-		timeout = "3000" > 
-		<visibility>
-			<allowed/>
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed supported -->
+	 		<allowed/>
 			<autoSubscribed/>
 			<obliged>	
-				<group
-					name="local.0"/>
+				<group name="local.0"/> <!-- Tous les groupes de personnes -->
+				<group name="local.15"/> <!-- Anonymes -->
 			</obliged>	
 		</visibility>
 	</categoryProfile>
-		
+
+ 	<categoryProfile 
+		name="categorie actus generales"
+		id="actu-generales"
+		urlCategory="&repConf;actu-generales.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.0"/> <!-- Tous les groupes de personnes -->
+				<group name="local.15"/> <!-- Anonymes -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+<!-- http://localhost:8860/newsPortlet ... -->
+ 	<categoryProfile 
+		name="annonces generales Rennes 1"
+		id="annonces"
+		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=3"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.0"/> <!-- Tous les groupes de personnes -->
+				<group name="local.15"/> <!-- Anonymes -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+ 	<categoryProfile 
+		name="annonces intranet UFR"
+		id="annonces-persufr"
+		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=25"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.0"/> <!-- Tous les groupes de personnes -->
+				<group name="local.15"/> <!-- Anonymes -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+ 	<categoryProfile 
+		name="annonces publiques UFR"
+		id="annonces-ufr"
+		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=24"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.0"/> <!-- Tous les groupes de personnes -->
+				<group name="local.15"/> <!-- Anonymes -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+
+ 	<categoryProfile 
+		name="categorie annonces"
+		id="annonces-iep"
+		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=4"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.205"/> <!-- Etablissement IEP -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+
+ 	<categoryProfile 
+		name="categorie annonces"
+		id="annonces-enscr"
+		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=5"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.128"/> <!-- Etablissement ENSCR -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+ 	<categoryProfile 
+		name="categorie presse"
+		id="presse"
+		urlCategory="&repConf;presse.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed>
+				<group name="local.0"/> <!-- Tous les groupes de personnes -->
+				<group name="local.15"/> <!-- Anonymes -->
+			</allowed>
+			<autoSubscribed/>
+			<obliged/>	
+		</visibility>
+	</categoryProfile>
+
 </channelConfig>

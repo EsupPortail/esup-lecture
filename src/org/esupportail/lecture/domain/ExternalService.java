@@ -16,14 +16,6 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 public interface ExternalService {
 
 	/**
-	 * Return ID of the connected user.
-	 * @return String
-	 * @throws InternalExternalException 
-	 * @throws NoExternalValueException 
-	 */
-	String getConnectedUserId() throws NoExternalValueException, InternalExternalException;
-
-	/**
 	 * Return ID of the current context (from channel instantiation).
 	 * @return string
 	 * @throws InternalExternalException 

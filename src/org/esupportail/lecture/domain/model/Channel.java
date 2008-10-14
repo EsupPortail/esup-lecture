@@ -321,18 +321,11 @@ public class Channel implements InitializingBean {
 			LOG.error(mes);
 			throw new ConfigException(mes);
 		}
-//		UserProfile userProfile = userProfilesHash.get(userId);
-//		if (userProfile == null) {
 		UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
 		if (userProfile == null) {
 			userProfile = new UserProfile(userId);
 			DomainTools.getDaoService().saveUserProfile(userProfile);
 		}
-//			userProfilesHash.put(userId, userProfile);
-//		} else {
-//			// Reatach userProfile to hibernate session
-//			userProfile = DomainTools.getDaoService().refreshUserProfile(userProfile);
-//		}
 		return userProfile;
 	}
 	

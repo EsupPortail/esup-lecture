@@ -12,14 +12,16 @@
 		<e:panelGrid columns="2" columnClasses="colLeft,colRight" width="100%">
 			<e:section value="#{msgs['EXCEPTION.TITLE']}" />
 			<h:panelGroup>
-				<t:panelGroup id="hideExceptionDetails" style="cursor: pointer;display:none;"
+				<t:panelGroup id="hideExceptionDetails"
+					style="cursor: pointer;display:none;"
 					onclick="hideExceptionDetails(); return false;" forceId="true">
-					<e:bold value="#{msgs['EXCEPTION.TEXT.HIDE_DETAILS']} "/>
-					<t:graphicImage value="/media/hide.png" 
+					<e:bold value="#{msgs['EXCEPTION.TEXT.HIDE_DETAILS']} " />
+					<t:graphicImage value="/media/hide.png"
 						alt="#{msgs['EXCEPTION.TEXT.HIDE_DETAILS']}"
 						title="#{msgs['EXCEPTION.TEXT.HIDE_DETAILS']}" />
 				</t:panelGroup>
-				<t:panelGroup id="showExceptionDetails" style="cursor: pointer;display:none;"
+				<t:panelGroup id="showExceptionDetails"
+					style="cursor: pointer;display:none;"
 					onclick="showExceptionDetails(); return false;" forceId="true">
 					<e:bold value="#{msgs['EXCEPTION.TEXT.SHOW_DETAILS']} " />
 					<t:graphicImage value="/media/show.png"
@@ -47,7 +49,8 @@
 			</h:panelGroup>
 		</h:form>
 		<!-- exceptionDetails -->
-		<t:panelGroup id="exceptionDetails" rendered="#{printDetails}" forceId="true">
+		<t:panelGroup id="exceptionDetails" rendered="#{printDetails}"
+			forceId="true">
 			<t:htmlTag value="br" />
 			<e:panelGrid alternateColors="true" columns="2" width="100%"
 				cellspacing="0" cellpadding="0">
@@ -322,21 +325,21 @@
 				<f:param value="#{exceptionController.recipientEmail}" />
 			</e:paragraph>
 		</t:panelGroup>
+		<script>
+	    <![CDATA[
+	    function hideExceptionDetails() {
+	        hideElement('hideExceptionDetails');
+	        showElement('showExceptionDetails');
+	        hideElement('exceptionDetails');
+	    }
+	    function showExceptionDetails() {
+	        showElement('hideExceptionDetails');
+	        hideElement('showExceptionDetails');
+	        showElement('exceptionDetails');
+	    }
+	    hideExceptionDetails();
+	    ]]>
+        </script>
 	</e:page>
-	<script>
-	<![CDATA[
-	function hideExceptionDetails() {
-		hideElement('hideExceptionDetails');
-		showElement('showExceptionDetails');
-		hideElement('exceptionDetails');
-	}
-	function showExceptionDetails() {
-		showElement('hideExceptionDetails');
-		hideElement('showExceptionDetails');
-		showElement('exceptionDetails');
-	}
-	hideExceptionDetails();
-	]]>
-</script>
 
 </jsp:root>

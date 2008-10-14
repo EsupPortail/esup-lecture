@@ -24,13 +24,12 @@
 		<t:htmlTag value="div" styleClass="menuButton"
 			rendered="#{!homeController.guestMode}">
 			<t:htmlTag value="ul">
-				<!--
 				<t:htmlTag value="li"
 					rendered="#{homeController.selectedCategory.withSelectedSource}">
 					<h:outputText value="#{msgs['selectorLabel']}" />
 					<h:selectOneMenu value="#{homeController.itemDisplayMode}"
-						converter="#{itemDisplayModeConverter}">
-						  onchange="submit();" 
+						converter="#{itemDisplayModeConverter}"
+						onchange="simulateLinkClick('home:itemDisplayModeButton');">
 						<f:selectItem itemValue="#{homeController.all}"
 							itemLabel="#{msgs['all']}" />
 						<f:selectItem itemValue="#{homeController.unread}"
@@ -38,12 +37,11 @@
 						<f:selectItem itemValue="#{homeController.unreadfirt}"
 							itemLabel="#{msgs['unreadFirst']}" />
 					</h:selectOneMenu>
-					<h:commandButton id="submit"
+					<h:commandButton id="itemDisplayModeButton"
 						value="#{msgs['changeItemDisplayModeButtonLabel']}"
 						action="#{homeController.changeItemDisplayMode}" />
 				</t:htmlTag>
-				-->
-				<t:div styleClass="menuNonLu">
+				<!-- 
 					<h:commandButton styleClass="buttonNoStyle"
 						action="#{homeController.changeItemDisplayMode}"
 						value="#{msgs['all']}" alt="#{msgs['all']}" title="#{msgs['all']}"
@@ -52,10 +50,8 @@
 							property="#{homeController.itemDisplayMode}"
 							value="#{homeController.all}" />
 					</h:commandButton>
-<!-- 
 					<h:outputText value="|"
 						rendered="#{homeController.selectedCategory.withSelectedSource}" />
- -->
 					<h:commandButton styleClass="buttonNoStyle"
 						action="#{homeController.changeItemDisplayMode}"
 						value="#{msgs['notRead']}" alt="#{msgs['notRead']}"
@@ -65,10 +61,8 @@
 							property="#{homeController.itemDisplayMode}"
 							value="#{homeController.unread}" />
 					</h:commandButton>
-<!-- 
 					<h:outputText value="|"
 						rendered="#{homeController.selectedCategory.withSelectedSource}" />
- -->
 					<h:commandButton styleClass="buttonNoStyle"
 						action="#{homeController.changeItemDisplayMode}"
 						value="#{msgs['unreadFirst']}" alt="#{msgs['unreadFirst']}"
@@ -78,25 +72,21 @@
 							property="#{homeController.itemDisplayMode}"
 							value="#{homeController.unreadfirt}" />
 					</h:commandButton>
-<!-- 
 					<h:outputText value="|"
 						rendered="#{homeController.selectedCategory.withSelectedSource}" />
- -->
-					<t:htmlTag id="menuAndXML" value="li"
-						rendered="#{!homeController.treeVisible}">
-						<h:commandButton action="#{homeController.toggleTreeVisibility}"
-							image="/media/menuAndXML.gif" alt="#{msgs['showTree']}"
-							title="#{msgs['showTree']}" styleClass="valign" />
-					</t:htmlTag>
-					<t:htmlTag id="XMLWithoutMenu" value="li"
-						rendered="#{homeController.treeVisible}">
-						<h:commandButton action="#{homeController.toggleTreeVisibility}"
-							image="/media/XMLWithoutMenu.gif" alt="#{msgs['hideTree']}"
-							title="#{msgs['hideTree']}" styleClass="valign" />
-					</t:htmlTag>
-				</t:div>
-
-
+-->
+				<t:htmlTag id="menuAndXML" value="li"
+					rendered="#{!homeController.treeVisible}">
+					<h:commandButton action="#{homeController.toggleTreeVisibility}"
+						image="/media/menuAndXML.gif" alt="#{msgs['showTree']}"
+						title="#{msgs['showTree']}" styleClass="valign" />
+				</t:htmlTag>
+				<t:htmlTag id="XMLWithoutMenu" value="li"
+					rendered="#{homeController.treeVisible}">
+					<h:commandButton action="#{homeController.toggleTreeVisibility}"
+						image="/media/XMLWithoutMenu.gif" alt="#{msgs['hideTree']}"
+						title="#{msgs['hideTree']}" styleClass="valign" />
+				</t:htmlTag>
 			</t:htmlTag>
 		</t:htmlTag>
 	</t:htmlTag>

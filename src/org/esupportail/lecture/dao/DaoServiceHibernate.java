@@ -71,10 +71,10 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 * 	org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public UserProfile refreshUserProfile(final UserProfile userProfile) {
-		//TODO (RB) renommer en attachCleanUserProfile
+		//TODO (RB) rename attachCleanUserProfile
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("refreshUserProfile(" 
-				+ userProfile + ")");			
+				+ userProfile.getUserId() + ")");			
 		}
 		UserProfile ret = userProfile;
 		//getHibernateTemplate().lock(userProfile, LockMode.NONE);
@@ -91,7 +91,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	public void saveUserProfile(final UserProfile userProfile) {
 		//TODO (RB/GB) Pourquoi n'existe-t-il pas de saveCustomContrxt, saveCustomCategory, saveCustomSource ? 
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("saveUserProfile PK=" + userProfile.getUserProfilePK());			
+			LOG.debug("saveUserProfile(" + userProfile.getUserId() + ")");			
 		}
 		//Object merged = getHibernateTemplate().merge(userProfile);
 		getHibernateTemplate().saveOrUpdate(userProfile);
@@ -107,7 +107,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void deleteUserProfile(final UserProfile userProfile) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("deleteUserProfile PK=" + userProfile.getUserProfilePK());			
+			LOG.debug("deleteUserProfile(" + userProfile.getUserId() + ")");			
 		}
 		getHibernateTemplate().delete(userProfile);
 		if (USEFLUSH) {
@@ -122,7 +122,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 */
 	public void updateUserProfile(final UserProfile userProfile) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("updateUserProfile(" + userProfile + ")");			
+			LOG.debug("updateUserProfile(" + userProfile.getUserId() + ")");			
 		}
 		//Object merged = getHibernateTemplate().merge(userProfile);
 		getHibernateTemplate().saveOrUpdate(userProfile);
