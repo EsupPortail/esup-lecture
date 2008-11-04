@@ -1,18 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mappings SYSTEM "mappings.dtd" [
-<!ENTITY repConf "file:///d:/tmp/conf_lecture_gwe_ray/" >
-] >
+<!ENTITY repConf "file:///data/webapps/ent.univ-rennes1.fr/application/uPortal/html/esup-lecture/"
+>
+] 
+>
 <mappings>
 	<mapping 
+		sourceURL="http://localhost:8854/newsPortlet/"
+		xsltFile="&repConf;rss-newsPortlet.xsl"
+		itemXPath="/rss/channel/item">
+	</mapping>
+	<mapping 
 		sourceURL="http://info.cri.univ-rennes1.fr/rss/rss.php"
-		xsltFile="&repConf;stylesheet01.xsl"
+		xsltFile="&repConf;info.cri.xsl"
+		itemXPath="/rdf:RDF/default:item">
+		<XPathNameSpace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+		<XPathNameSpace prefix="default" uri="http://purl.org/rss/1.0/" />
+	</mapping>
+	<mapping 
+		sourceURL="http://www.univ-rennes1.fr/bas-de-page/RSS/actualites/"
+		xsltFile="&repConf;actu-infoglue.xsl"
+		itemXPath="/rdf:RDF/default:item">
+		<XPathNameSpace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+		<XPathNameSpace prefix="default" uri="http://purl.org/rss/1.0/" />
+	</mapping>
+	<mapping 
+		rootElement="rdf:RDF"
+		xsltFile="&repConf;rss.xsl"
+		itemXPath="/rdf:RDF/default:item">
+		<XPathNameSpace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+		<XPathNameSpace prefix="default" uri="http://purl.org/rss/1.0/" />
+	</mapping>
+	<mapping 
+		rootElement="RDF"
+		xsltFile="&repConf;rss.xsl"
+		itemXPath="/rdf:RDF/default:item">
+		<XPathNameSpace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+		<XPathNameSpace prefix="default" uri="http://purl.org/rss/1.0/" />
+	</mapping>
+	<mapping 
+		rootElement="rdf"
+		xsltFile="&repConf;rss.xsl"
 		itemXPath="/rdf:RDF/default:item">
 		<XPathNameSpace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
 		<XPathNameSpace prefix="default" uri="http://purl.org/rss/1.0/" />
 	</mapping>
 	<mapping 
 		rootElement="rss"
-		xsltFile="&repConf;stylesheet02.xsl"
+		xsltFile="&repConf;rss-simple.xsl"
 		itemXPath="/rss/channel/item">
 	</mapping>
 	<mapping 
