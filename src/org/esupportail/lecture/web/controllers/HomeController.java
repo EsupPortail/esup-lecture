@@ -204,18 +204,4 @@ public class HomeController extends TwoPanesController {
 		return CONTEXT;
 	}
 
-	/**
-	 * @param sourceBean
-	 * @return
-	 * @throws SourceNotLoadedException
-	 * @throws ManagedCategoryNotLoadedException
-	 * @throws InternalDomainException
-	 * @throws ElementDummyBeanException
-	 */
-	private List<ItemBean> getItems(final SourceBean sourceBean) throws SourceNotLoadedException,
-			ManagedCategoryNotLoadedException, InternalDomainException,
-			ElementDummyBeanException {
-				return getFacadeService().getItems(getUID(), sourceBean.getId());
-			}
-
 }
