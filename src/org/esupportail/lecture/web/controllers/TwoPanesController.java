@@ -31,6 +31,8 @@ import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
@@ -316,7 +318,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			sourceWebBean.setItemDisplayMode(ItemDisplayMode.ALL);
 		} else {
 			//get Item for the source
-			List<ItemBean> itemsBeans = facadeService.getItems(uid, sourceBean.getId());
+			List<ItemBean> itemsBeans = getItems(sourceBean);
 			sourceWebBean = new SourceWebBean(itemsBeans);
 			sourceWebBean.setId(sourceBean.getId());
 			sourceWebBean.setName(sourceBean.getName());
@@ -356,7 +358,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @throws DomainServiceException
 	 */
 	protected List<SourceBean> getSources(final CategoryBean categoryBean) throws DomainServiceException {
-		//this method need to be overwrite in edit controller
+		//this method need to be overwrite in edit controller (VisibledSource and not just DisplayedSources)
 		List<SourceBean> tempListSourceBean = null;
 		List<SourceBean> ret = new ArrayList<SourceBean>();
 		String catId;
@@ -595,6 +597,23 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		ctx.setSelectedCategory(selectedCategory);
 		return "OK";
 	}
+
+	/**
+	 * @param sourceBean
+	 * @return a list of ItemBean
+	 * @throws SourceNotLoadedException
+	 * @throws ManagedCategoryNotLoadedException
+	 * @throws InternalDomainException
+	 * @throws ElementDummyBeanException
+	 */
+	protected List<ItemBean> getItems(final SourceBean sourceBean) throws SourceNotLoadedException,
+			ManagedCategoryNotLoadedException, InternalDomainException,
+			ElementDummyBeanException {
+				//must be overwritten in edit mode 
+				//(return null and not items because user isn't 
+				//probably not already subscribed to source)
+				return getFacadeService().getItems(getUID(), sourceBean.getId());
+			}
 
 
 }

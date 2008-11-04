@@ -5,9 +5,17 @@
  */
 package org.esupportail.lecture.web.controllers;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.beans.ItemBean;
+import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
@@ -195,5 +203,19 @@ public class HomeController extends TwoPanesController {
 	String getContextKey() {
 		return CONTEXT;
 	}
+
+	/**
+	 * @param sourceBean
+	 * @return
+	 * @throws SourceNotLoadedException
+	 * @throws ManagedCategoryNotLoadedException
+	 * @throws InternalDomainException
+	 * @throws ElementDummyBeanException
+	 */
+	private List<ItemBean> getItems(final SourceBean sourceBean) throws SourceNotLoadedException,
+			ManagedCategoryNotLoadedException, InternalDomainException,
+			ElementDummyBeanException {
+				return getFacadeService().getItems(getUID(), sourceBean.getId());
+			}
 
 }

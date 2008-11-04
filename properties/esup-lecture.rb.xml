@@ -75,7 +75,7 @@
  	<categoryProfile 
 		name="annonces generales Rennes 1"
 		id="annonces"
-		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=3"
+		urlCategory="http://ent.univ-rennes1.fr/newsPortlet/feeds/pub/rss?t=3&#38;cID=3"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
@@ -93,7 +93,7 @@
  	<categoryProfile 
 		name="annonces intranet UFR"
 		id="annonces-persufr"
-		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=25"
+		urlCategory="http://ent.univ-rennes1.fr/newsPortlet/feeds/pub/rss?t=3&#38;cID=25"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
@@ -111,7 +111,7 @@
  	<categoryProfile 
 		name="annonces publiques UFR"
 		id="annonces-ufr"
-		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=24"
+		urlCategory="http://ent.univ-rennes1.fr/newsPortlet/feeds/pub/rss?t=3&#38;cID=24"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
@@ -130,7 +130,7 @@
  	<categoryProfile 
 		name="categorie annonces"
 		id="annonces-iep"
-		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=4"
+		urlCategory="http://ent.univ-rennes1.fr/newsPortlet/feeds/pub/rss?t=3&#38;cID=4"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
@@ -149,7 +149,7 @@
  	<categoryProfile 
 		name="categorie annonces"
 		id="annonces-enscr"
-		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=5"
+		urlCategory="http://ent.univ-rennes1.fr/newsPortlet/feeds/pub/rss?t=3&#38;cID=5"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
