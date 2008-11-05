@@ -147,8 +147,8 @@ public class FreshManagedCategoryThread extends Thread {
 				} else {
 					sp.setSpecificUserContent(false);
 				}
-				//TODO (RB) change xslt attributes here when this feature will be suported in sourceprofile
-				// TODO (RB <-- GB)  Que veut tu dire par là ?
+				//TODO (RB) change xslt attributes here when this feature will be supported in sourceprofile
+				// TODO (RB <-- GB)  Que veux tu dire par là ?
 				sp.setXsltURL(srcProfile.valueOf("@xsltFile"));
 				sp.setItemXPath(srcProfile.valueOf("@itemXPath"));
 				String access = srcProfile.valueOf("@access");
