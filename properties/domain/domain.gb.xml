@@ -56,6 +56,10 @@
 		<property name="externalService" ref="externalService"/>
 		<property name="configFilePath" value="/properties/esup-lecture.xml"/>
 		<property name="mappingFilePath" value="/properties/mappings.xml"/>		
+		<property name="dummyTtl" value="60" />
+		<!-- A CHANGER	
+		<property name="dummyTtl" value="${domain.dummyTtl}" />
+		-->
 	</bean>
 	
 	<!-- 
