@@ -5,10 +5,7 @@
 */
 package org.esupportail.lecture.domain.beans;
 
-import org.esupportail.lecture.domain.model.AvailabilityMode;
-import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
-import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.UnknownException;
 
 /**
@@ -34,12 +31,17 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	 */
 	public SourceDummyBean() {
 		cause = new UnknownException();
+		super.setId(null);
+		super.setName(null);
+		super.setType(null);
+		super.setItemDisplayMode(null);
 	}
 	/**
 	 * Constructor.
 	 * @param e exception cause of dummyBean creation.
 	 */
 	public SourceDummyBean(final DomainServiceException e) {
+		new SourceDummyBean();
 		cause = e;
 	}
 
@@ -52,76 +54,7 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 		return cause;
 	}
 
-	/**
-	 * @see org.esupportail.lecture.domain.beans.SourceBean#getName()
-	 */
-	@Override
-	public String getName() throws ElementDummyBeanException {
-		throw new ElementDummyBeanException("Method getName() not available on a SourceDummyBean");
-	}
 		
-	/**
-	 * @see org.esupportail.lecture.domain.beans.SourceBean#setName(java.lang.String)
-	 */
-	@Override
-	public void setName(@SuppressWarnings("unused") final	String name) throws ElementDummyBeanException {
-		throw new ElementDummyBeanException("Method setName() not available on a SourceDummyBean");
-	}
-
-	/**
-	 * @see org.esupportail.lecture.domain.beans.SourceBean#getId()
-	 */
-	@Override
-	public String getId() throws ElementDummyBeanException {
-		throw new ElementDummyBeanException("Method getId() not available on a SourceDummyBean");
-	}
-	
-	/**
-	 * @see org.esupportail.lecture.domain.beans.SourceBean#setId(java.lang.String)
-	 */
-	@Override
-	public void setId(@SuppressWarnings("unused") final String id) throws ElementDummyBeanException {
-		throw new ElementDummyBeanException("Method setId() not available on a SourceDummyBean");
-	}
-
-	/**
-	 * @see org.esupportail.lecture.domain.beans.SourceBean#getType()
-	 */
-	@Override
-	public AvailabilityMode getType() throws ElementDummyBeanException {
-		throw new ElementDummyBeanException("Method getType() not available on a SourceDummyBean");
-	}
-	
-	/**
-	 * @see org.esupportail.lecture.domain.beans.SourceBean#setType(
-	 *  org.esupportail.lecture.domain.model.AvailabilityMode)
-	 */
-	@Override
-	public void setType(@SuppressWarnings("unused") final AvailabilityMode type) throws ElementDummyBeanException {
-		throw new ElementDummyBeanException("Method setType() not available on a SourceDummyBean");
-	}
-	
-	
-	/**
-	 * @see org.esupportail.lecture.domain.beans.SourceBean#getItemDisplayMode()
-	 */
-	@Override
-	public ItemDisplayMode getItemDisplayMode() throws ElementDummyBeanException {
-		throw new ElementDummyBeanException("Method getItemDisplayMode() not available on a SourceDummyBean");
-	}
-
-
-	/**
-	 * @see org.esupportail.lecture.domain.beans.SourceBean#setItemDisplayMode(
-	 *  org.esupportail.lecture.domain.model.ItemDisplayMode)
-	 */
-	@Override
-	public void setItemDisplayMode(@SuppressWarnings("unused") final ItemDisplayMode itemDisplayMode) 
-	throws ElementDummyBeanException {
-		throw new ElementDummyBeanException("Method setItemDisplayMode() not available on a SourceDummyBean");
-	}
-	
-	
 	/*
 	 *************************** METHODS *********************************** */		
 

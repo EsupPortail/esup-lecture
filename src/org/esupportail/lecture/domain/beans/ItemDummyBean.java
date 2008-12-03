@@ -35,6 +35,9 @@ public class ItemDummyBean extends ItemBean implements DummyBean {
 	 */
 	public ItemDummyBean() {
 		cause = new UnknownException();
+		super.setHtmlContent(null);
+		super.setId(null);
+		super.setRead(false);
 	}
 	/**
 	 * Constructor.

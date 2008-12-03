@@ -90,6 +90,8 @@ public class ItemBean {
 		this.read = read;
 	}
 
+	
+	// TODO (RB/VR<-GB) C'est pas très objet ça ;-)
 	/**
 	 * @return false because it is not a dummy Item
 	 */

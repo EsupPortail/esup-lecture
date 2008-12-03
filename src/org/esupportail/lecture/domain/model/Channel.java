@@ -696,13 +696,13 @@ public class Channel implements InitializingBean {
 	public int getDummyTtl() {
 		return dummyTtl;
 	}
-
 	/**
-	 * set ttl for dummy elements
+	 * set ttl for dummy elements.
 	 * @param dummyTtl
 	 */
-	public void setDummyTtl(int dummyTtl) {
+	public void setDummyTtl(final int dummyTtl) {
 		this.dummyTtl = dummyTtl;
 	}
 	
+
 }

@@ -88,6 +88,7 @@ public class DomainTest {
 	public static void main(final String[] args)  {
 		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
+//		org.springframework.beans.factory.config.PropertyPlaceholderConfigurer prop = (org.springframework.beans.factory.config.PropertyPlaceholderConfigurer) factory.getBean("propertyConfigurer");
 		facadeService = (FacadeService) factory.getBean("facadeService");
 		
 		try {

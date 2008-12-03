@@ -101,74 +101,64 @@ public class CategoryBean {
 	
 	/**
 	 * @return description of the category
-	 * @throws ElementDummyBeanException 
 	 */
-	public String getDescription() throws ElementDummyBeanException {
+	public String getDescription() {
 		return description;
 	}
 	/**
 	 * @param description description of the category
-	 * @throws ElementDummyBeanException 
 	 */
-	public void setDescription(final String description) throws ElementDummyBeanException {
+	public void setDescription(final String description) {
 		this.description = description;
 	}
 	/**
 	 * @return if category is folded or not
-	 * @throws ElementDummyBeanException 
 	 */
-	public boolean isFolded() throws ElementDummyBeanException {
+	public boolean isFolded() {
 		return folded;
 	}
 	/**
 	 * @param folded
-	 * @throws ElementDummyBeanException 
 	 */
-	public void setFolded(final boolean folded) throws ElementDummyBeanException {
+	public void setFolded(final boolean folded) {
 		this.folded = folded;
 	}
 	/**
 	 * @return id of category
-	 * @throws ElementDummyBeanException 
 	 */
-	public String getId() throws ElementDummyBeanException {
+	public String getId() {
 		return id;
 	}
 	/**
 	 * @param id
-	 * @throws ElementDummyBeanException 
 	 */
-	public void setId(final String id) throws ElementDummyBeanException {
+	public void setId(final String id) {
 		this.id = id;
 	}
 	/**
 	 * @return name of category
-	 * @throws ElementDummyBeanException 
 	 */
-	public String getName() throws ElementDummyBeanException {
+	public String getName() {
 		return name;
 	}
 	/**
 	 * @param name
-	 * @throws ElementDummyBeanException 
 	 */
-	public void setName(final String name) throws ElementDummyBeanException {
+	public void setName(final String name) {
 		this.name = name;
 	}
 
 	/**
 	 * @return type of category
-	 * @throws ElementDummyBeanException 
 	 */
-	public AvailabilityMode getType()  throws ElementDummyBeanException {
+	public AvailabilityMode getType() {
 		return type;
 	}
 	
 	/**
 	 * @param type
-	 * @throws ElementDummyBeanException 
 	 */
-	public void setType(final AvailabilityMode type) throws ElementDummyBeanException {
+	public void setType(final AvailabilityMode type) {
 		this.type = type;
 	}
 	

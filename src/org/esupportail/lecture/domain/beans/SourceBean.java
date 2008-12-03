@@ -17,9 +17,6 @@ import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.exceptions.domain.ElementNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
  * used to store source informations.
@@ -107,63 +104,55 @@ public class SourceBean {
 
 	/**
 	 * @return name of source
-	 * @throws ElementDummyBeanException 
 	 */
-	public String getName() throws ElementDummyBeanException {
+	public String getName() {
 		return name;
 	}
 	
 	/**
 	 * @param name
-	 * @throws ElementDummyBeanException 
 	 */
-	public void setName(final String name) throws ElementDummyBeanException {
+	public void setName(final String name) {
 		this.name = name;
 	}
 	/**
 	 * @return id of source
-	 * @throws ElementDummyBeanException 
 	 */
-	public String getId()  throws ElementDummyBeanException {
+	public String getId() {
 		return id;
 	}
 	/**
 	 * @param id
-	 * @throws ElementDummyBeanException 
 	 */
-	public void setId(final String id)  throws ElementDummyBeanException {
+	public void setId(final String id) {
 		this.id = id;
 	}
 	
 	/**
 	 * @return type of source
-	 * @throws ElementDummyBeanException 
 	 */
-	public AvailabilityMode getType()  throws ElementDummyBeanException {
+	public AvailabilityMode getType() {
 		return type;
 	}
 	
 	/**
 	 * @param type
-	 * @throws ElementDummyBeanException 
 	 */
-	public void setType(final AvailabilityMode type) throws ElementDummyBeanException {
+	public void setType(final AvailabilityMode type) {
 		this.type = type;
 	}
 	
 	/**
 	 * @return item display mode
-	 * @throws ElementDummyBeanException 
 	 */
-	public ItemDisplayMode getItemDisplayMode() throws ElementDummyBeanException {
+	public ItemDisplayMode getItemDisplayMode() {
 		return itemDisplayMode;
 	}
 
 	/**
 	 * @param itemDisplayMode
-	 * @throws ElementDummyBeanException 
 	 */
-	public void setItemDisplayMode(final ItemDisplayMode itemDisplayMode) throws ElementDummyBeanException {
+	public void setItemDisplayMode(final ItemDisplayMode itemDisplayMode) {
 		this.itemDisplayMode = itemDisplayMode;
 	}
 	/*
