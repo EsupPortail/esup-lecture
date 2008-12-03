@@ -106,6 +106,11 @@ public class Channel implements InitializingBean {
 	 */
 	private boolean mappingsLoaded;
 	
+	/**
+	 * ttl for dummy elements.
+	 */
+	private int dummyTtl;
+	
 	/* Some services */
 	
 	/**
@@ -142,6 +147,7 @@ public class Channel implements InitializingBean {
 		Assert.notNull(externalService, "property externalService can not be null");
 		Assert.notNull(configFilePath, "property configFilePath cannot be null");
 		Assert.notNull(mappingFilePath, "property mappingFilePath cannot be null");
+		Assert.notNull(dummyTtl, "property dummyTlt cannot be null");
 		try {
 			startup();
 		} catch (PrivateException e) {
@@ -152,6 +158,8 @@ public class Channel implements InitializingBean {
 		DomainTools.setChannel(this);
 		DomainTools.setDaoService(daoService);
 		DomainTools.setExternalService(externalService);
+		DomainTools.setDummyTtl(dummyTtl);
+		
 	}
 	
 	/**
@@ -680,6 +688,21 @@ public class Channel implements InitializingBean {
 	 */
 	public void setMappingFilePath(final String mappingFilePath) {
 		this.mappingFilePath = mappingFilePath;
+	}
+
+	/**
+	 * @return the ttl of dummy elements
+	 */
+	public int getDummyTtl() {
+		return dummyTtl;
+	}
+
+	/**
+	 * set ttl for dummy elements
+	 * @param dummyTtl
+	 */
+	public void setDummyTtl(int dummyTtl) {
+		this.dummyTtl = dummyTtl;
 	}
 	
 }

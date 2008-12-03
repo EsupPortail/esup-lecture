@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" >
+<!-- 
+<!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" [
+<!ENTITY repConf "file:///d:/path/" >
+]>
+ -->
 <channelConfig>
-	<guestUser>guest</guestUser>
+	<!-- user attribute to define a user Id -->
+	<!-- <userId>username</userId>-->
 	<context 
 	  name = "Très beau context1"
 	  id = "c1">
@@ -41,6 +47,17 @@ Pour plus d'informations voir le
   	  <refCategoryProfile refId="demo1"/>
   	  <refCategoryProfile refId="demo2"/>
   	  <refCategoryProfile refId="demo3"/>
+  	  <refCategoryProfile refId="demo4"/>
+	</context>
+
+	<context 
+	  name = "Servlet mode context"
+	  id = "context">
+	  <description>Test Context used in servlet mode (NOT NORMAL MODE!)</description> 
+  	  <refCategoryProfile refId="demo1"/>
+  	  <refCategoryProfile refId="demo2"/>
+  	  <refCategoryProfile refId="demo3"/>
+  	  <refCategoryProfile refId="demo4"/>
 	</context>
 
 	<categoryProfile 
@@ -53,12 +70,17 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000" >
 		<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
-			<autoSubscribed/>
+			<autoSubscribed>
+				<regular
+					attribute="sn"
+					value="User"/>
+			</autoSubscribed>		
 			<obliged>
 				<regular
 					attribute="sn"
-					value="User"/>					
+					value="User"/>	
 			</obliged>
 		</visibility>
 	</categoryProfile>
@@ -72,6 +94,7 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000">
 	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
 	 		<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -90,6 +113,7 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000"  >
 		<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/> 
 			<autoSubscribed/>
 			<obliged>
@@ -108,11 +132,15 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000"  > 
 		<visibility>
-			<allowed/>
-			<autoSubscribed/>
-			<obliged>	
-				<group
+		<!-- allowed and autoSubscribed not yet supported -->
+			<allowed>
+			</allowed>					
+			<autoSubscribed>
+			
+			<group
 					name="local.0"/>
+			</autoSubscribed>
+			<obliged>
 			</obliged>	
 		</visibility>
 	</categoryProfile>
@@ -125,8 +153,10 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000"  > 
 		<visibility>
+		<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
-			<autoSubscribed/>
+			<autoSubscribed>
+			</autoSubscribed>
 			<obliged>	
 				<group
 					name="local.0"/>
@@ -138,11 +168,12 @@ Pour plus d'informations voir le
 		name="Categorie de démo 1"
 		id="demo1"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo1.xml"
-		trustCategory="yes"
+		trustCategory="no"
 		access="public"
 		ttl = "3600" 
 		timeout = "3000" > 
 		<visibility>
+			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -161,6 +192,7 @@ Pour plus d'informations voir le
 		ttl = "3600" 
 		timeout = "3000" > 
 		<visibility>
+			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -179,6 +211,7 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000"  > 
 		<visibility>
+			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	
@@ -197,6 +230,7 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000"  > 
 		<visibility>
+			<!-- allowed and autoSubscribed not yet supported -->
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>	

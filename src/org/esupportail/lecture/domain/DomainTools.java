@@ -61,6 +61,11 @@ public class DomainTools {
 	 */
 	private static String guestUser;
 	
+	/**
+	 * ttl for dummy elements.
+	 */
+	private static int dummyTtl; 
+	
 	
 	/*
 	 ************************** INIT ******************************** */	
@@ -188,6 +193,22 @@ public class DomainTools {
 	 */
 	public static void setGuestUser(final String guestUser) {
 		DomainTools.guestUser = guestUser;
+	}
+
+
+	/**
+	 * @return dummyTtl
+	 */
+	public static int getDummyTtl() {
+		return dummyTtl;
+	}
+
+
+	/**
+	 * @param dummyTtl
+	 */
+	public static void setDummyTtl(final int dummyTtl) {
+		DomainTools.dummyTtl = dummyTtl;
 	}
 
 }
