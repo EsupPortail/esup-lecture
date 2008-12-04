@@ -8,9 +8,11 @@ package org.esupportail.lecture.domain.beans;
 
 import org.esupportail.commons.utils.strings.StringUtils;
 
+// TODO (RB <-- GB : Cette classe est utile ? ne doit-elle pas etre rangee dans un autre package ?
 /**
  * The class that represent users.
  * @author bourges
+ *
  */
 public class User {
 	
