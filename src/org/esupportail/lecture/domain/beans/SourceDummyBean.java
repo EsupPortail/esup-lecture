@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.beans;
 
+import org.esupportail.lecture.domain.utils.DummyInterface;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.UnknownException;
 
@@ -13,7 +14,7 @@ import org.esupportail.lecture.exceptions.domain.UnknownException;
  * @author gbouteil
  *
  */
-public class SourceDummyBean extends SourceBean implements DummyBean {
+public class SourceDummyBean extends SourceBean implements DummyInterface {
 	// TODO (RB/GB) Revoir le traitement des Dummy (autre que par des ifs) 
 	// pour faire du vrai objet
 	/* 
@@ -48,7 +49,7 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	/*
 	 *************************** ACCESSORS ********************************* */	
 	/**
-	 * @see org.esupportail.lecture.domain.beans.DummyBean#getCause()
+	 * @see org.esupportail.lecture.domain.utils.DummyInterface#getCause()
 	 */
 	public DomainServiceException getCause() {
 		return cause;
@@ -59,7 +60,7 @@ public class SourceDummyBean extends SourceBean implements DummyBean {
 	 *************************** METHODS *********************************** */		
 
 	/**
-	 * @see org.esupportail.lecture.domain.beans.DummyBean#toString()
+	 * @see org.esupportail.lecture.domain.utils.DummyInterface#toString()
 	 */
 	@Override
 	public String toString() {

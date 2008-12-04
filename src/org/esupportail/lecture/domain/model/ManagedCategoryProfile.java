@@ -32,6 +32,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * Log instance.
 	 */
 	protected static final Log LOG = LogFactory.getLog(ManagedCategoryProfile.class); 
+	/**
+	 * Used in log messages.
+	 */
+	private static final  String IDEGAL = "id=";
 	
 	/*
 	 ************************** PROPERTIES ******************************** */	
@@ -109,7 +113,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	@Override
 	protected ManagedCategory getElement() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + getId() + " - getElement()");
+			LOG.debug(IDEGAL + getId() + " - getElement()");
 		}
 		ManagedCategory element = (ManagedCategory) super.getElement(); 
 		if (element == null) {
@@ -136,7 +140,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	@Override
 	public String getName() {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + getId() + " - getName()");
+			LOG.debug(IDEGAL + getId() + " - getName()");
 		}
 		String currentName;
 		
@@ -157,7 +161,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	@Override
 	public String getDescription() {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + getId() + " - getDescription()");
+			LOG.debug(IDEGAL + getId() + " - getDescription()");
 		}
 		String currentDesc;
 		
@@ -178,7 +182,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	protected void addContext(final Context c) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getId() + " - addContext(" + c.getId() + ")");
+			LOG.debug(IDEGAL + this.getId() + " - addContext(" + c.getId() + ")");
 		}
 		contextsSet.add(c);
 	}
@@ -195,7 +199,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	protected ManagedSourceProfile getSourceProfileById(final String id) 
 	throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getId() + " - getSourceProfileById(" + id + ")");
+			LOG.debug(IDEGAL + this.getId() + " - getSourceProfileById(" + id + ")");
 		}
 		return (ManagedSourceProfile) super.getSourceProfileById(id);
 	}
@@ -263,7 +267,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	private void computeFeatures() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getId() + " - computeFeatures()");
+			LOG.debug(IDEGAL + this.getId() + " - computeFeatures()");
 		}
 		
 		if (!featuresComputed) {
@@ -357,7 +361,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	protected VisibilityMode updateCustomContext(final CustomContext customContext) 
 	throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getId() + " - updateCustomContext("
+			LOG.debug(IDEGAL + this.getId() + " - updateCustomContext("
 					+ customContext.getElementId() + ")");
 		}
 		// GB : devenu intuile : loadCategory appelée par getElement() 
@@ -372,7 +376,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	private synchronized void loadCategory() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getId() + " - loadCategory()");
+			LOG.debug(IDEGAL + this.getId() + " - loadCategory()");
 		}
 		try {
 			Accessibility accessibility = getAccess();
@@ -410,7 +414,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	private VisibilityMode setUpCustomContextVisibility(final CustomContext customContext) 
 	throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getId() + " - setUpCustomContextVisibility("
+			LOG.debug(IDEGAL + this.getId() + " - setUpCustomContextVisibility("
 					+ customContext.getElementId() + ")");
 		}
 		/*
@@ -468,7 +472,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	protected void updateCustom(final CustomManagedCategory customManagedCategory) 
 	throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getId() + " - updateCustom(" + customManagedCategory.getElementId()
+			LOG.debug(IDEGAL + this.getId() + " - updateCustom(" + customManagedCategory.getElementId()
 					+ ")");
 		}
 		ManagedCategory cat = getElement();
@@ -489,7 +493,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	protected List<CoupleProfileVisibility> getVisibleSourcesAndUpdateCustom(
 			final CustomManagedCategory customManagedCategory) throws ManagedCategoryNotLoadedException  {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + this.getId() + " - getVisibleSourcesAndUpdateCustom("
+			LOG.debug(IDEGAL + this.getId() + " - getVisibleSourcesAndUpdateCustom("
 					+ this.getId() + ")");
 		}
 		ManagedCategory cat = getElement();

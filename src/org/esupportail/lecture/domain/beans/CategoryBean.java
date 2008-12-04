@@ -14,10 +14,8 @@ import org.esupportail.lecture.domain.model.CategoryProfile;
 import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
-
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 /**
  * used to store category informations.
  * @author bourges

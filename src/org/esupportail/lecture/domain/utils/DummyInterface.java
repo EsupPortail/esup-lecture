@@ -3,21 +3,20 @@
 * For any information please refer to http://esup-helpdesk.sourceforge.net
 * You may obtain a copy of the licence at http://www.esup-portail.org/license/
 */
-package org.esupportail.lecture.domain.beans;
+package org.esupportail.lecture.domain.utils;
 
-import org.esupportail.lecture.exceptions.domain.DomainServiceException;
-
+import org.esupportail.lecture.exceptions.LectureException;
 /**
  * Bean simulator. It is created when a real bean cannot be create 
  * while throwing an exception is too much.
  * @author gbouteil
  */
-public interface DummyBean {
+public interface DummyInterface {
 
 	/**
 	 * @return the Exception causing DummyBean creation 
 	 */
-	DomainServiceException getCause();
+	LectureException getCause();
 	
 	/**
 	 * @return message of the Exception cause

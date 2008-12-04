@@ -33,6 +33,11 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	private static final Log LOG = LogFactory.getLog(CustomSource.class);
 	/**
+	 * Used in log messages.
+	 */
+	private static final  String IDEGAL = "id=";
+	
+	/**
 	 * Id of the source refered by this.
 	 */
 	private String elementId;
@@ -53,6 +58,7 @@ public abstract class CustomSource implements CustomElement {
 	 * Database Primary Key.
 	 */
 	private long customSourcePK;
+	
 	
 	/* 
 	 ************************** INIT **********************************/
@@ -96,7 +102,7 @@ public abstract class CustomSource implements CustomElement {
 	throws SourceNotLoadedException, ManagedCategoryNotLoadedException, 
 	ComputeItemsException, InternalDomainException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + elementId + " - getItems()");
+			LOG.debug(IDEGAL + elementId + " - getItems()");
 		}
 		SourceProfile profile;
 		try {
@@ -129,7 +135,7 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	public String getName() throws InternalDomainException, ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + elementId + " - getName()");
+			LOG.debug(IDEGAL + elementId + " - getName()");
 		}
 		SourceProfile sp = null;
 		try {
@@ -151,7 +157,7 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	public void setItemReadMode(final String itemId, final boolean isRead) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + elementId + " - setItemReadMode(" + itemId + "," + isRead + ")");
+			LOG.debug(IDEGAL + elementId + " - setItemReadMode(" + itemId + "," + isRead + ")");
 		}
 		if (isRead) {
 			readItems.add(itemId);	
@@ -167,7 +173,7 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	public boolean isItemRead(final String itemId) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + elementId + " - isItemRead(" + itemId + ")");
+			LOG.debug(IDEGAL + elementId + " - isItemRead(" + itemId + ")");
 		}
 		return readItems.contains(itemId);
 	}
@@ -177,7 +183,7 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	public void modifyItemDisplayMode(final ItemDisplayMode mode) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + elementId + " - modifyItemDisplayMode(" + mode + ")");
+			LOG.debug(IDEGAL + elementId + " - modifyItemDisplayMode(" + mode + ")");
 		}
 		/* old name was setItemDisplayMode but it has been changed to prevent 
 		 * loop by calling dao
@@ -191,7 +197,7 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	public ItemDisplayMode getItemDisplayMode() {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + elementId + " - itemDisplayMode(" + itemDisplayMode + ")");
+			LOG.debug(IDEGAL + elementId + " - itemDisplayMode(" + itemDisplayMode + ")");
 		}
 		return itemDisplayMode;
 	}

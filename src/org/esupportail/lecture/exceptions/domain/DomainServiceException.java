@@ -5,12 +5,14 @@
 */
 package org.esupportail.lecture.exceptions.domain;
 
+import org.esupportail.lecture.exceptions.LectureException;
+
 
 /**
  * Exceptions throwed by domain services, in order to be catched by calling layer
  * @author gbouteil
  */
-public class DomainServiceException extends Exception {
+public class DomainServiceException extends LectureException {
 	
 	/**
 	 * Default constructor 

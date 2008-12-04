@@ -9,6 +9,7 @@ import java.util.Collection;
 
 import org.esupportail.commons.services.exceptionHandling.ExceptionUtils;
 import org.esupportail.commons.utils.strings.StringUtils;
+import org.esupportail.lecture.domain.utils.DummyInterface;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.UnknownException;
 
@@ -17,7 +18,7 @@ import org.esupportail.lecture.exceptions.domain.UnknownException;
  * @author bourges
  *
  */
-public class ItemDummyBean extends ItemBean implements DummyBean {
+public class ItemDummyBean extends ItemBean implements DummyInterface {
 	// TODO (RB/GB) Revoir le traitement des Dummy (autre que par des ifs) 
 	// pour faire du vrai objet
 	/* 
@@ -50,7 +51,7 @@ public class ItemDummyBean extends ItemBean implements DummyBean {
 	/*
 	 *************************** ACCESSORS ********************************* */	
 	/**
-	 * @see org.esupportail.lecture.domain.beans.DummyBean#getCause()
+	 * @see org.esupportail.lecture.domain.utils.DummyInterface#getCause()
 	 */
 	public DomainServiceException getCause() {
 		return cause;
@@ -105,6 +106,8 @@ public class ItemDummyBean extends ItemBean implements DummyBean {
 		return result.toString();
 	}
 	
+	
+	// TODO (RB/VC <-- GB : hum hum ...)
 	/**
 	 * @see org.esupportail.lecture.domain.beans.ItemBean#isDummy()
 	 * return true because this a dummy bean

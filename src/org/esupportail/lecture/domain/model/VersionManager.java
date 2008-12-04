@@ -9,6 +9,7 @@ import org.esupportail.commons.domain.beans.AbstractVersionManager;
 /**
  * A class to store the version number in the database.
  */
+@SuppressWarnings("serial")
 public class VersionManager extends AbstractVersionManager {
 
 	/**
