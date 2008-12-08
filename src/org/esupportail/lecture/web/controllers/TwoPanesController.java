@@ -28,7 +28,6 @@ import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
-import org.esupportail.lecture.exceptions.domain.ElementDummyBeanException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
@@ -608,11 +607,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @throws SourceNotLoadedException
 	 * @throws ManagedCategoryNotLoadedException
 	 * @throws InternalDomainException
-	 * @throws ElementDummyBeanException
 	 */
 	protected List<ItemBean> getItems(final SourceBean sourceBean) throws SourceNotLoadedException,
-			ManagedCategoryNotLoadedException, InternalDomainException,
-			ElementDummyBeanException {
+			ManagedCategoryNotLoadedException, InternalDomainException {
 				//must be overwritten in edit mode 
 				//(return null and not items because user isn't 
 				//probably not already subscribed to source)

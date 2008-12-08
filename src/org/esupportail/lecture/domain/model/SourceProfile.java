@@ -11,6 +11,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 
 /**
@@ -101,8 +102,9 @@ public abstract class SourceProfile implements ElementProfile {
 	/**
 	 * Load the source referenced by this SourceProfile.
 	 * @throws SourceNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected abstract void loadSource() throws SourceNotLoadedException; 
+	protected abstract void loadSource() throws SourceNotLoadedException, ManagedCategoryNotLoadedException; 
 	
 	
 	/**
@@ -110,8 +112,10 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @return a list of items
 	 * @throws SourceNotLoadedException
 	 * @throws ComputeItemsException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected List<Item> getItems() throws SourceNotLoadedException, ComputeItemsException {
+	protected List<Item> getItems() 
+	throws SourceNotLoadedException, ComputeItemsException, ManagedCategoryNotLoadedException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id = " + this.id + " - getItems()");
     	}
@@ -139,8 +143,9 @@ public abstract class SourceProfile implements ElementProfile {
 	 * Returns source of this managed source profile (if loaded).
 	 * @return source
 	 * @throws SourceNotLoadedException
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected Source getElement() throws SourceNotLoadedException {
+	protected Source getElement() throws SourceNotLoadedException, ManagedCategoryNotLoadedException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.id + " - getElement()");
     	}

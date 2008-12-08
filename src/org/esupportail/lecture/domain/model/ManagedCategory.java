@@ -113,14 +113,16 @@ public class ManagedCategory extends Category {
 	/**
 	 * Return visibility of the category, taking care of inheritance regulars.
 	 * @return visibility 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected VisibilitySets getVisibility() {
+	protected VisibilitySets getVisibility() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getProfileId() + " - getVisibility()");
 		}
 		VisibilitySets v;
 		try {
 			v = getProfile().getVisibility();
+			// Visibility is computed in ManagedCategoryProfile
 		} catch (ManagedCategoryNotLoadedException e) {
 			LOG.error("Impossible situation : ManagedCategoryNotLoadedException "
 					+ "in a ManagedCategory - please contact developer");
@@ -143,14 +145,16 @@ public class ManagedCategory extends Category {
 	/**	
 	 * Return editability of the category, taking care of inheritance regulars.
 	 * @return edit
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected Editability getEdit() {
+	protected Editability getEdit() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + getProfileId() + " - getEdit()");
 		}
 		Editability e;
 		try {
 			e = getProfile().getEdit();
+			// Editability is computed in ManagedCategoryProfile
 			
 		} catch (ManagedCategoryNotLoadedException ex) {
 			LOG.error("Impossible situation : ManagedCategoryNotLoadedException"
@@ -244,7 +248,13 @@ public class ManagedCategory extends Category {
 		// update for managedSources defined in this managedCategory
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
-			msp.updateCustomCategory(customManagedCategory);
+			try {
+				msp.updateCustomCategory(customManagedCategory);
+			} catch (ManagedCategoryNotLoadedException e) {
+				String errorMsg = "Impossible to update customCategory " + getProfileId()
+				+ " because of managedCategory not loaded.";
+				LOG.error(errorMsg);
+			}
 		
 		}
 		
@@ -275,10 +285,18 @@ public class ManagedCategory extends Category {
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
 			CoupleProfileVisibility couple;
-			VisibilityMode mode = msp.updateCustomCategory(customManagedCategory);
-			if (mode != VisibilityMode.NOVISIBLE) {
-				couple = new CoupleProfileVisibility(msp, mode);
-				couplesVisib.add(couple);
+			VisibilityMode mode;
+			try {
+				mode = msp.updateCustomCategory(customManagedCategory);
+			
+				if (mode != VisibilityMode.NOVISIBLE) {
+					couple = new CoupleProfileVisibility(msp, mode);
+					couplesVisib.add(couple);
+				}
+			} catch (ManagedCategoryNotLoadedException e) {
+				String errorMsg = "Impossible to update customCategory " + getProfileId()
+				+ " because of managedCategory not loaded.";
+				LOG.error(errorMsg);
 			}
 		}
 		

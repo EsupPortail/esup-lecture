@@ -101,8 +101,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**	
 	 * Return access of the source, taking care of inheritance regulars.
 	 * @return access
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	public Accessibility getAccess() {
+	public Accessibility getAccess() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - getAccess()");
 		}
@@ -144,9 +145,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * Return visibility of the source, taking care of inheritance regulars.
 	 * @return visibility
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility() 
 	 */
-	public VisibilitySets getVisibility() {
+	public VisibilitySets getVisibility() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - getVisibility()");
 		}
@@ -196,7 +198,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * Computes rights on parameters shared between parent ManagedCategory and managedSourceProfile.
 	 * (timeOut, visibility,access)
 	 */
-	private void computeFeatures()  {
+	private void computeFeatures() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - computeFeatures()");
 		}
@@ -210,10 +212,19 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				if (access == null) {
 					access = category.getAccess();
 				}
+				VisibilitySets v = null;
+				try {
+					v = category.getVisibility();
+				} catch (ManagedCategoryNotLoadedException e) {
+					LOG.error("Impossible situation : ManagedCategoryNotLoadedException "
+							+ "in a ManagedSourceProfile - please contact developer");
+					v = null;
+				}
+				
 				if (visibility == null) {
-					visibility = category.getVisibility();
+					visibility = v;
 				} else if (visibility.isEmpty()) {
-					visibility = category.getVisibility();
+					visibility = v;
 				}
 				if (timeOut == 0) {
 					timeOut = category.getTimeOut();
@@ -312,8 +323,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * or not to customCategory.
 	 * @param customManagedCategory the customManagedCategory to update
 	 * @return true if the source is visible by the userProfile
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected VisibilityMode updateCustomCategory(final CustomManagedCategory customManagedCategory) {
+	protected VisibilityMode updateCustomCategory(final CustomManagedCategory customManagedCategory) 
+	throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustomCategory("
 					+ customManagedCategory.getElementId() + ")");
@@ -324,10 +337,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * Load the source referenced by this ManagedSourceProfile.
 	 * @throws SourceNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource()
 	 */
 	@Override
-	protected void loadSource() throws SourceNotLoadedException {
+	protected void loadSource() throws SourceNotLoadedException, ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - loadSource()");
 		}
@@ -364,9 +378,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * add or remove customManagedSources associated with this ManagedSourceProfile
 	 * @param customManagedCategory customManagedCategory to set up
 	 * @return true if sourceProfile is visible by user (in Obliged or in autoSubscribed, or in Allowed)
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
 	
-	private VisibilityMode setUpCustomCategoryVisibility(final CustomManagedCategory customManagedCategory) {
+	private VisibilityMode setUpCustomCategoryVisibility(final CustomManagedCategory customManagedCategory) 
+	throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - setUpCustomCategoryVisibility(" 
 					+ customManagedCategory.getElementId() + ")");

@@ -32,8 +32,9 @@ interface ManagedElementProfile extends ElementProfile {
 	/**
 	 * Returns access mode of the ManagedElementProfile.
 	 * @return access  
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	Accessibility getAccess(); 
+	Accessibility getAccess() throws ManagedCategoryNotLoadedException; 
 	
 	/**
 	 * Sets access mode of the ManagedElementProfile.
@@ -44,8 +45,9 @@ interface ManagedElementProfile extends ElementProfile {
 	/**
 	 * Return timeOut of the element.
 	 * @return timeOut
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	int getTimeOut();
+	int getTimeOut() throws ManagedCategoryNotLoadedException;
 	
 	/**
 	 * Sets timeOut of the element.
