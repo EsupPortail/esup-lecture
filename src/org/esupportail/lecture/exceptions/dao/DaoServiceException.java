@@ -3,6 +3,9 @@ package org.esupportail.lecture.exceptions.dao;
 import org.esupportail.lecture.exceptions.LectureException;
 
 public class DaoServiceException extends LectureException {
+	public DaoServiceException() {
+		super();
+	}
 	public DaoServiceException(String message) {
 		super(message);
 	}

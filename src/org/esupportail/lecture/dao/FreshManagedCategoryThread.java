@@ -84,8 +84,7 @@ public class FreshManagedCategoryThread extends Thread {
 	 */
 	@SuppressWarnings("unchecked")
 	private synchronized ManagedCategory getFreshManagedCategory(final ManagedCategoryProfile profile,
-			final String ptCas) 
-			throws XMLParseException {
+			final String ptCas) throws XMLParseException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshManagedCategory");
 		}

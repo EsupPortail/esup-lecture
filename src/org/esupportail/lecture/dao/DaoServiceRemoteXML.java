@@ -13,9 +13,15 @@ import org.esupportail.lecture.domain.model.GlobalSource;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.Source;
+import org.esupportail.lecture.domain.model.SourceDummy;
 import org.esupportail.lecture.domain.model.SourceProfile;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
+import org.esupportail.lecture.exceptions.dao.InternalDaoException;
+import org.esupportail.lecture.exceptions.dao.SourceInterruptedException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
+import org.esupportail.lecture.exceptions.dao.XMLParseException;
+// TODO (VR/GB) plutot une exception global ?
+import org.esupportail.lecture.exceptions.domain.FatalException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StringUtils;
@@ -74,11 +80,11 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @param ptCas CAS proxy ticket 
 	 * @return the Category
 	 * @throws TimeoutException 
+	 * @throws TimeoutException 
 	 * @throws InfoDaoException 
 	 */
 	public synchronized ManagedCategory getManagedCategory(final ManagedCategoryProfile profile, 
-			final String ptCas) 
-	throws InfoDaoException {
+			final String ptCas) throws TimeoutException {
 
 		/* *************************************
 		 * Cache logic :
@@ -144,10 +150,10 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	/**
 	 * @param profile 
 	 * @return a managedCategory
-	 * @throws InfoDaoException 
+	 * @throws TimeoutException 
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(ManagedCategoryProfile)
 	 */
-	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InfoDaoException {
+	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws TimeoutException {
 		return getManagedCategory(profile, null);
 	}
 	
@@ -159,7 +165,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @throws TimeoutException 
 	 */
 	private ManagedCategory getFreshManagedCategory(final ManagedCategoryProfile profile,
-			final String ptCas) throws TimeoutException {
+			final String ptCas) throws TimeoutException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshManagedCategory");
 		}
@@ -197,10 +203,9 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @param sourceProfile source profile of source to get
 	 * @param ptCas CAS proxy ticket 
 	 * @return the source
-	 * @throws InfoDaoException 
+	 * @throws InternalDaoException 
 	 */
-	public synchronized Source getSource(final SourceProfile sourceProfile, final String ptCas) 
-			throws InfoDaoException {
+	public synchronized Source getSource(final SourceProfile sourceProfile, final String ptCas) throws InternalDaoException {
 		// TODO (RB <-- GB) Pourquoi ne déclare-tu pas un type Source alors que tu fais un new GlobalSource ?
 		// Je comprends que tu n'as pas le droit de faire un new Source car abstract, 
 		// mais en ne déclarant pas un GlobalSource, tu limites la potentialité du ret. 
@@ -220,7 +225,13 @@ public class DaoServiceRemoteXML implements InitializingBean {
 				Element element = cache.get(urlSource);
 				if (element == null) { 
 					// not in cache !
-					ret = getFreshSource(sourceProfile, ptCas);
+					try {
+						ret = getFreshSource(sourceProfile, ptCas);
+					} catch (InfoDaoException e) {
+						// TODO creation sourceDummy
+						ret = new SourceDummy(sourceProfile, e);
+						e.printStackTrace();
+					}
 					cache.put(new Element(urlSource, ret));
 					sourceLastAccess.put(urlSource, currentTimeMillis);
 					if (LOG.isWarnEnabled()) {
@@ -231,12 +242,24 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					ret = (Source) element.getObjectValue();
 				}
 			} else {
-				ret = getFreshSource(sourceProfile, ptCas);
+				try {
+					ret = getFreshSource(sourceProfile, ptCas);
+				} catch (InfoDaoException e) {
+					// TODO creation sourceDummy
+					ret = new SourceDummy(sourceProfile, e);
+					e.printStackTrace();
+				}
 				cache.put(new Element(urlSource, ret));
 				sourceLastAccess.put(urlSource, currentTimeMillis);
 			}
 		} else {
-			ret = getFreshSource(sourceProfile, ptCas);
+			try {
+				ret = getFreshSource(sourceProfile, ptCas);
+			} catch (InfoDaoException e) {
+				// TODO creation sourceDummy
+				ret = new SourceDummy(sourceProfile, e);
+				e.printStackTrace();
+			}
 			cache.put(new Element(urlSource, ret));
 			sourceLastAccess.put(urlSource, currentTimeMillis);
 		}
@@ -246,10 +269,10 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	/**
 	 * get a source form cache.
 	 * @param sourceProfile source profile of source to get
-	 * @return the source
-	 * @throws InfoDaoException 
+	 * @return the source 
+	 * @throws InternalDaoException 
 	 */
-	public Source getSource(final SourceProfile sourceProfile) throws InfoDaoException {
+	public Source getSource(final SourceProfile sourceProfile) throws InternalDaoException {
 		return getSource(sourceProfile, null);
 	}
 
@@ -258,36 +281,48 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @param sourceProfile source profile of source to get
 	 * @param ptCas - user and password. null for anonymous access
 	 * @return the source
-	 * @throws InfoDaoException 
+	 * @throws SourceInterruptedException 
+	 * @throws TimeoutException 
+	 * @throws InternalDaoException 
 	 */
 	private Source getFreshSource(final SourceProfile sourceProfile,
-			final String ptCas) throws InfoDaoException {
+			final String ptCas) throws SourceInterruptedException, TimeoutException, InternalDaoException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshSource");
 		}
 		Source ret = new GlobalSource(sourceProfile);
 		//start a Thread to get FreshSource
 		FreshSourceThread thread = new FreshSourceThread(sourceProfile, ptCas);
-		thread.start();
-		int timeOut = defaultTimeout;
-		timeOut = sourceProfile.getTimeOut();
+		int timeout = 0;
 		try {
-			thread.join(timeOut);
-			Exception e = thread.getException();
-			if (e != null) {
-				String msg = "Error during execution of Thread getting Source";
-				LOG.error(msg);
-				throw new InfoDaoException(msg, e);
-			}			
+			thread.start();
+			timeout = defaultTimeout;
+			timeout = sourceProfile.getTimeOut();
+			thread.join(timeout);
+//			Exception e = thread.getException();
+//			if (e != null) {
+//				String msg = "Error during execution of Thread getting Source";
+//				LOG.error(msg);
+//				throw new InfoDaoException(msg, e);
+//			}			
 			ret = thread.getSource();
+/*		} catch (XMLParseException e) {
+			String msg = "XMLParseException during execution of Thread getting Source";
+			LOG.warn(msg);
+			throw new XMLParseException(msg, e);
+*/
 		} catch (InterruptedException e) {
 			String msg = "Thread getting Source interrupted";
 			LOG.warn(msg);
-			throw new RuntimeException(msg, e);
+			throw new SourceInterruptedException(msg, e);
+		} catch (IllegalThreadStateException e) {
+			String msg = "Thread getting Source interrupted";
+			LOG.warn(msg);
+			throw new InternalDaoException(e);
 		}
         if (thread.isAlive()) {
     		thread.interrupt();
-			String msg = "Category not loaded in " + timeOut + " milliseconds";
+			String msg = "Category not loaded in " + timeout + " milliseconds";
 			LOG.warn(msg);
 			throw new TimeoutException(msg);
         }	
@@ -304,7 +339,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	/**
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() throws FatalException {
 		if (!StringUtils.hasText(cacheName)) {
 			setDefaultCacheName();
 			LOG.warn(getClass() + ": no cacheName attribute set, '" 

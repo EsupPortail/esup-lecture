@@ -18,7 +18,11 @@ import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
+import org.esupportail.lecture.exceptions.dao.InternalDaoException;
+import org.esupportail.lecture.exceptions.dao.NoUserIdException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
+// TODO (VR/GB) Passer fatalException en global ?
+import org.esupportail.lecture.exceptions.domain.FatalException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
@@ -45,18 +49,18 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	private AuthenticationService authenticationService;
 
 	/**
-	 * @throws TimeoutException 
+	 * @throws InfoDaoException 
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(
 	 *  org.esupportail.lecture.domain.model.ManagedCategoryProfile)
 	 */
-	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InfoDaoException {
+	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InfoDaoException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getManagedCategory");
 		}
 		return remoteXMLService.getManagedCategory(profile);
 	}
 
-	/**
+	/** 
 	 * @throws InfoDaoException 
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(
 	 *  org.esupportail.lecture.domain.model.ManagedCategoryProfile, java.lang.String)
@@ -68,29 +72,29 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	}
 
 	/**
-	 * @throws TimeoutException 
-	 * @throws TimeoutException 
+	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.dao.DaoService#getSource(
 	 *  org.esupportail.lecture.domain.model.ManagedSourceProfile)
 	 */
-	public Source getSource(final ManagedSourceProfile profile) throws InfoDaoException {
+	public Source getSource(final ManagedSourceProfile profile) throws InternalDaoException {
 		return remoteXMLService.getSource(profile);
 	}
 
 	/**
-	 * @throws InfoDaoException 
+	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.dao.DaoService#getSource(
 	 *  org.esupportail.lecture.domain.model.ManagedSourceProfile, java.lang.String)
 	 */
 	public Source getSource(final ManagedSourceProfile profile,
-			final String ptCas) throws InfoDaoException {
+			final String ptCas) throws InternalDaoException  {
 		return remoteXMLService.getSource(profile, ptCas);
 	}
 
 	/**
+	 * @throws NoUserIdException 
 	 * @see org.esupportail.lecture.dao.DaoService#getUserProfile(java.lang.String)
 	 */
-	public UserProfile getUserProfile(final String userId) {
+	public UserProfile getUserProfile(final String userId) throws NoUserIdException {
 		return hibernateService.getUserProfile(userId);
 	}
 
@@ -222,7 +226,7 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	/**
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() throws FatalException {
 		Assert.notNull(authenticationService, "property authenticationService of class "
 				+ this.getClass().getName() + " can not be null");
 		Assert.notNull(hibernateService, "property hibernateService of class "

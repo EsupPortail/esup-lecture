@@ -11,9 +11,12 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.utils.DummyInterface;
 import org.esupportail.lecture.exceptions.LectureException;
+import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
+import org.esupportail.lecture.exceptions.domain.UnknownException;
 
 /**
  * SourceDummy element : a source that cannot be created well.
@@ -32,16 +35,18 @@ public class SourceDummy extends Source implements DummyInterface {
 	/**
 	 * Cause of the Dummy Bean.
 	 */
-	private LectureException cause;
+	private InfoDaoException cause;
 
 	/*
 	 *************************** INIT ************************************** */
 	/**
 	 * Constructor.
 	 * @param sp sourceProfile associated to this source
+	 * @param e 
 	 */
-	protected SourceDummy(final SourceProfile sp) {
+	public SourceDummy(final SourceProfile sp, InfoDaoException e) {
 		super(sp);
+		cause = e;
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("SourceDummy(" + sp.getId() + ")");
     	}

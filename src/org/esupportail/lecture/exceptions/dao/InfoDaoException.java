@@ -3,6 +3,10 @@ package org.esupportail.lecture.exceptions.dao;
 
 public class InfoDaoException extends DaoServiceException {
 
+	public InfoDaoException() {
+		super();
+	}
+	
 	public InfoDaoException(Exception cause) {
 		super(cause);
 	}

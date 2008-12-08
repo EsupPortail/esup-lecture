@@ -17,6 +17,7 @@ import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
+import org.esupportail.lecture.exceptions.dao.InternalDaoException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 /**
  * Stub Service to Data Access Object : use to test upper layers, instead of using. 
@@ -85,7 +86,7 @@ public class DaoServiceStub  implements DaoService {
 	 * @see org.esupportail.lecture.dao.DaoService#getSource(
 	 *  org.esupportail.lecture.domain.model.ManagedSourceProfile)
 	 */
-	public Source getSource(final ManagedSourceProfile profile) throws InfoDaoException {
+	public Source getSource(final ManagedSourceProfile profile) throws InternalDaoException {
 		return this.remoteXMLService.getSource(profile);
 	}
 
