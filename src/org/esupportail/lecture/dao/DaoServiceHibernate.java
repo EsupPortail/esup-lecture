@@ -47,7 +47,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	 * @see org.esupportail.lecture.dao.DaoService#getUserProfile(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
-	public UserProfile getUserProfile(final String userId) throws NoUserIdException {
+	public UserProfile getUserProfile(final String userId) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getUserProfile(" + userId + ")");			
 		}
@@ -61,7 +61,7 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 		} else {
 			String msg = "userId is null: can't find it in database";
 			LOG.error(msg);
-			throw new NoUserIdException(msg);
+			throw new RuntimeException(msg);
 		}
 		return ret;
 	}

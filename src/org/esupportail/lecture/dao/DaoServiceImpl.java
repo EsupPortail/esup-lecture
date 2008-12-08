@@ -94,7 +94,7 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	 * @throws NoUserIdException 
 	 * @see org.esupportail.lecture.dao.DaoService#getUserProfile(java.lang.String)
 	 */
-	public UserProfile getUserProfile(final String userId) throws NoUserIdException {
+	public UserProfile getUserProfile(final String userId) {
 		return hibernateService.getUserProfile(userId);
 	}
 

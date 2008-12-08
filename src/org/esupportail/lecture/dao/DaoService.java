@@ -73,7 +73,7 @@ public interface DaoService {
 	 * @return user profile 
 	 * @throws NoUserIdException 
 	 */
-	UserProfile getUserProfile(String userId) throws NoUserIdException;
+	UserProfile getUserProfile(String userId);
 
 	/**
 	 * Return a "fresh" userProfile from data base. 
