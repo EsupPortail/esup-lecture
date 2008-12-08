@@ -12,8 +12,6 @@ import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.InternalDaoException;
-import org.esupportail.lecture.exceptions.dao.NoUserIdException;
-import org.esupportail.lecture.exceptions.dao.TimeoutException;
 
 /**
  * Interface Service to Data Access Object.
@@ -29,10 +27,8 @@ public interface DaoService {
 	 * @param profile of the category to get
 	 * @return the managedCategory
 	 * @throws InfoDaoException 
-	 * @throws TimeoutException 
-	 * @throws InfoDaoException 
 	 */
-	ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws InfoDaoException ;
+	ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws InfoDaoException;
 
 	/**
 	 * Get a managed category from a remote place.
@@ -40,17 +36,14 @@ public interface DaoService {
 	 * @param ptCas proxy ticket CAS used in case of CAS protected source
 	 * @return the managedCategory
 	 * @throws InfoDaoException 
-	 * @throws InfoDaoException 
 	 */
-	ManagedCategory getManagedCategory(ManagedCategoryProfile profile, String ptCas) throws InfoDaoException ;
+	ManagedCategory getManagedCategory(ManagedCategoryProfile profile, String ptCas) throws InfoDaoException;
 
 	/**
 	 * get a source from a remote place.
 	 * @param profile of the source to get
 	 * @return the source
 	 * @throws InternalDaoException 
-	 * @throws InfoDaoException 
-	 * @throws InfoDaoException 
 	 */
 	Source getSource(ManagedSourceProfile profile) throws InternalDaoException;
 	
@@ -60,9 +53,8 @@ public interface DaoService {
 	 * @param ptCas proxy ticket CAS used in case of CAS protected source
 	 * @return the source
 	 * @throws InternalDaoException 
-	 * @throws InfoDaoException 
 	 */
-	Source getSource(ManagedSourceProfile profile, String ptCas) throws InternalDaoException ;
+	Source getSource(ManagedSourceProfile profile, String ptCas) throws InternalDaoException;
 
 	/* User Profile */
 	
@@ -71,7 +63,6 @@ public interface DaoService {
 	 * and null if no user profile exists with this userId.
 	 * @param userId : user identifient provided by portlet request
 	 * @return user profile 
-	 * @throws NoUserIdException 
 	 */
 	UserProfile getUserProfile(String userId);
 

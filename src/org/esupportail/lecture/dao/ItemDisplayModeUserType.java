@@ -11,7 +11,7 @@ import org.esupportail.lecture.domain.model.ItemDisplayMode;
 public class ItemDisplayModeUserType extends EnumUserType<ItemDisplayMode> { 
 
     /**
-     * Constructor
+     * Constructor.
      */
     public ItemDisplayModeUserType() { 
         super(ItemDisplayMode.class); 

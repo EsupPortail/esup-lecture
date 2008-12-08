@@ -12,7 +12,6 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
-import org.esupportail.lecture.exceptions.dao.NoUserIdException;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -43,7 +42,6 @@ public class DaoServiceHibernate extends HibernateDaoSupport {
 	/**
 	 * @param userId 
 	 * @return UserProfile
-	 * @throws NoUserIdException 
 	 * @see org.esupportail.lecture.dao.DaoService#getUserProfile(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")

@@ -19,10 +19,6 @@ import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.InternalDaoException;
-import org.esupportail.lecture.exceptions.dao.NoUserIdException;
-import org.esupportail.lecture.exceptions.dao.TimeoutException;
-// TODO (VR/GB) Passer fatalException en global ?
-import org.esupportail.lecture.exceptions.domain.FatalException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
@@ -91,7 +87,6 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	}
 
 	/**
-	 * @throws NoUserIdException 
 	 * @see org.esupportail.lecture.dao.DaoService#getUserProfile(java.lang.String)
 	 */
 	public UserProfile getUserProfile(final String userId) {
@@ -226,7 +221,7 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	/**
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
-	public void afterPropertiesSet() throws FatalException {
+	public void afterPropertiesSet() {
 		Assert.notNull(authenticationService, "property authenticationService of class "
 				+ this.getClass().getName() + " can not be null");
 		Assert.notNull(hibernateService, "property hibernateService of class "

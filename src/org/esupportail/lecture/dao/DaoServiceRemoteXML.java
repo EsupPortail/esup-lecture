@@ -19,10 +19,6 @@ import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.InternalDaoException;
 import org.esupportail.lecture.exceptions.dao.SourceInterruptedException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
-import org.esupportail.lecture.exceptions.dao.XMLParseException;
-// TODO (VR/GB) plutot une exception global ?
-import org.esupportail.lecture.exceptions.domain.FatalException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StringUtils;
 
@@ -80,8 +76,6 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @param ptCas CAS proxy ticket 
 	 * @return the Category
 	 * @throws TimeoutException 
-	 * @throws TimeoutException 
-	 * @throws InfoDaoException 
 	 */
 	public synchronized ManagedCategory getManagedCategory(final ManagedCategoryProfile profile, 
 			final String ptCas) throws TimeoutException {
@@ -205,7 +199,8 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @return the source
 	 * @throws InternalDaoException 
 	 */
-	public synchronized Source getSource(final SourceProfile sourceProfile, final String ptCas) throws InternalDaoException {
+	public synchronized Source getSource(final SourceProfile sourceProfile, final String ptCas) 
+	throws InternalDaoException {
 		// TODO (RB <-- GB) Pourquoi ne déclare-tu pas un type Source alors que tu fais un new GlobalSource ?
 		// Je comprends que tu n'as pas le droit de faire un new Source car abstract, 
 		// mais en ne déclarant pas un GlobalSource, tu limites la potentialité du ret. 
@@ -339,7 +334,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	/**
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
-	public void afterPropertiesSet() throws FatalException {
+	public void afterPropertiesSet() {
 		if (!StringUtils.hasText(cacheName)) {
 			setDefaultCacheName();
 			LOG.warn(getClass() + ": no cacheName attribute set, '" 

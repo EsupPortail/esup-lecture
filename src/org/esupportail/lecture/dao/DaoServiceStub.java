@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.dao.DaoService;
-import org.esupportail.lecture.dao.DaoServiceRemoteXML;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
@@ -18,7 +16,6 @@ import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.InternalDaoException;
-import org.esupportail.lecture.exceptions.dao.TimeoutException;
 /**
  * Stub Service to Data Access Object : use to test upper layers, instead of using. 
  * a database for example
@@ -82,7 +79,6 @@ public class DaoServiceStub  implements DaoService {
 	}
 	
 	/**
-	 * @throws TimeoutException 
 	 * @see org.esupportail.lecture.dao.DaoService#getSource(
 	 *  org.esupportail.lecture.domain.model.ManagedSourceProfile)
 	 */

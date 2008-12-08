@@ -172,7 +172,7 @@ public class DomainTest {
 	private static void testGetConnectedUser() throws InternalExternalException {
 		printIntro("getConnectedUser");
 		//String userIdLocal = facadeService.getConnectedUserId();
-		String userIdLocal = "foo"; //TODO
+		String userIdLocal = "foo"; //TODO (RB <-- GB) C'est quoi ?
 		UserBean user = facadeService.getConnectedUser(userIdLocal);
 		System.out.println(user.toString());
 	}
