@@ -106,10 +106,39 @@ public class Channel implements InitializingBean {
 	 */
 	private boolean mappingsLoaded;
 	
+	/* for constant initializing */
+	//private String gestUser
+	
 	/**
-	 * ttl for dummy elements.
+	 * contextString
+	 */
+	private String contextString;
+	
+	/**
+	 * dummyTtl
 	 */
 	private int dummyTtl;
+	
+	/**
+	 * defaultTtl
+	 */
+	private int defaultTtl;
+	
+	/**
+	 * defaultTimeOut
+	 */
+	private int defaultTimeOut;
+	
+	/**
+	 * maxTreeSize
+	 */
+	private int maxTreeSize;
+	
+	/**
+	 * defaultTreeSize
+	 */
+	private int defaultTreeSize;
+
 	
 	/* Some services */
 	
@@ -147,7 +176,13 @@ public class Channel implements InitializingBean {
 		Assert.notNull(externalService, "property externalService can not be null");
 		Assert.notNull(configFilePath, "property configFilePath cannot be null");
 		Assert.notNull(mappingFilePath, "property mappingFilePath cannot be null");
+		//Assert.notNull(gestUser, "property gestUser cannot be null");
+		Assert.notNull(contextString, "property context cannot be null");
 		Assert.notNull(dummyTtl, "property dummyTlt cannot be null");
+		Assert.notNull(defaultTtl, "property defaultTtl cannot be null");
+		Assert.notNull(defaultTimeOut, "property defaultTimeOut cannot be null");
+		Assert.notNull(maxTreeSize, "property maxTreeSize cannot be null");
+		Assert.notNull(defaultTreeSize, "property defaultTreeSize cannot be null");
 		try {
 			startup();
 		} catch (PrivateException e) {
@@ -157,8 +192,14 @@ public class Channel implements InitializingBean {
 		} 
 		DomainTools.setChannel(this);
 		DomainTools.setDaoService(daoService);
-		DomainTools.setExternalService(externalService);
+		DomainTools.setExternalService(externalService);		
+		DomainTools.setContext(contextString);
 		DomainTools.setDummyTtl(dummyTtl);
+		DomainTools.setDefaultTtl(defaultTtl);
+		DomainTools.setDefaultTimeOut(defaultTimeOut);
+		DomainTools.setMaxTreeSize(maxTreeSize);
+		DomainTools.setDefaultTreeSize(defaultTreeSize);
+		
 		
 	}
 	
@@ -691,18 +732,49 @@ public class Channel implements InitializingBean {
 	}
 
 	/**
-	 * @return the ttl of dummy elements
+	 * @param contextString
 	 */
-	public int getDummyTtl() {
-		return dummyTtl;
+	public void setContextString(String contextString) {
+		this.contextString = contextString;
 	}
+
 	/**
-	 * set ttl for dummy elements.
 	 * @param dummyTtl
 	 */
-	public void setDummyTtl(final int dummyTtl) {
+	public void setDummyTtl(int dummyTtl) {
 		this.dummyTtl = dummyTtl;
 	}
-	
 
+	/**
+	 * @param defaultTtl
+	 */
+	public void setDefaultTtl(int defaultTtl) {
+		this.defaultTtl = defaultTtl;
+	}
+
+	/**
+	 * @param defaultTimeOut
+	 */
+	public void setDefaultTimeOut(int defaultTimeOut) {
+		this.defaultTimeOut = defaultTimeOut;
+	}
+
+	/**
+	 * @param maxTreeSize
+	 */
+	public void setMaxTreeSize(int maxTreeSize) {
+		this.maxTreeSize = maxTreeSize;
+	}
+
+	/**
+	 * @param defaultTreeSize
+	 */
+	public void setDefaultTreeSize(int defaultTreeSize) {
+		this.defaultTreeSize = defaultTreeSize;
+	}
+
+
+
+
+	
 }

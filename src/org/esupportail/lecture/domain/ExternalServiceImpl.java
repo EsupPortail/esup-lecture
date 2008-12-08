@@ -108,7 +108,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 * @see org.esupportail.lecture.domain.ExternalService#getCurrentContextId()
 	 */
 	public String getCurrentContextId() throws NoExternalValueException, InternalExternalException {
-		return getPreferences(DomainTools.CONTEXT);
+		return getPreferences(DomainTools.getContext());
 	}
 
 	/**

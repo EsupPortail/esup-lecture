@@ -35,16 +35,6 @@ public class CustomContext implements CustomElement {
 	 ************************** PROPERTIES *********************************/	
 	
 	/**
-	 * Max tree size.
-	 */
-	private static final int MAXTREESIZE = 100;
-
-	/**
-	 * Default tree size.
-	 */
-	private static final int DEFAULTTREESIZE = 20;
-
-	/**
 	 * ID string for log.
 	 */
 	private static final String ID = "id=";
@@ -104,7 +94,7 @@ public class CustomContext implements CustomElement {
 		}
 		this.elementId = contextId;
 		this.userProfile = user;
-		treeSize = DEFAULTTREESIZE;
+		treeSize = DomainTools.getDefaultTreeSize();
 	}
 	
 	/**
@@ -481,8 +471,9 @@ public class CustomContext implements CustomElement {
 		/* old name was setTreesize but it has been changed to prevent 
 		 * loop by calling dao
 		 */
+		int maxTreeSize = DomainTools.getMaxTreeSize();
 		// TODO (GB later) externaliser les bornes
-		if ((size >= 0) && (size <= MAXTREESIZE)) {
+		if ((size >= 0) && (size <= maxTreeSize)) {
 			treeSize = size;
 //			DomainTools.getDaoService().updateCustomContext(this);
 		} else {

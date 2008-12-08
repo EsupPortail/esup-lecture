@@ -46,14 +46,14 @@ public class ExternalServiceStub implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getCurrentContextId()
 	 */
 	public String getCurrentContextId() {
-		return getPreferences(DomainTools.CONTEXT);
+		return getPreferences(DomainTools.getContext());
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getPreferences(java.lang.String)
 	 */
 	public String getPreferences(final String name) {
-		if (name.equalsIgnoreCase(DomainTools.CONTEXT)) {
+		if (name.equalsIgnoreCase(DomainTools.getContext())) {
 			return "c1";
 		}
 		return null;

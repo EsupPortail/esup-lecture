@@ -66,7 +66,7 @@ public class ServletService implements ModeService, InitializingBean {
 	 */
 	public String getPreference(final String name) {
 		String ret = name;
-		if (name.equals(DomainTools.CONTEXT)) {
+		if (name.equals(DomainTools.getContext())) {
 			ret = "default";
 		}
 		return ret;

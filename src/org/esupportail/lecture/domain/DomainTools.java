@@ -11,7 +11,6 @@ import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
-
 /**
  * Provide various tools :
  * - constants defintion for user attributes provided by externalService. 
@@ -23,11 +22,6 @@ public class DomainTools {
 	/*
 	 ************************** PROPERTIES *********************************/	
 
-	/**
-	 * Name of the portlet preference that set a context to an instance of the channel.
-	 */
-	public static final String CONTEXT = "context";
-	// TODO (GB later) externaliser cette chaine ?
 
 	/**
 	 * Log instance.
@@ -60,11 +54,32 @@ public class DomainTools {
 	 * It is defined in the channel config
 	 */
 	private static String guestUser;
-	
+	/**
+	 * Name of the portlet preference that set a context to an instance of the channel.
+	 */
+	private static String context;
 	/**
 	 * ttl for dummy elements.
 	 */
 	private static int dummyTtl; 
+	/**
+	 * default TTL.
+	 */
+	private static int defaultTtl;
+	/**
+	 * default TIME OUT.
+	 */
+	private static int defaultTimeOut;
+	/**
+	 * Max tree size in context.
+	 */
+	private static int maxTreeSize;
+	/**
+	 * Default tree size in context.
+	 */
+	private static int defaultTreeSize;
+	
+
 	
 	
 	/*
@@ -76,6 +91,8 @@ public class DomainTools {
 	private DomainTools() {
 		super();
 	}
+	
+
 	
 	
 	/*
@@ -139,7 +156,7 @@ public class DomainTools {
 	 * @return current DomainService
 	 */
 	public static DaoService getDaoService() {
-		return DomainTools.daoService;
+		return daoService;
 	}
 
 	/**
@@ -209,6 +226,86 @@ public class DomainTools {
 	 */
 	public static void setDummyTtl(final int dummyTtl) {
 		DomainTools.dummyTtl = dummyTtl;
+	}
+
+
+	/**
+	 * @return context
+	 */
+	public static String getContext() {
+		return context;
+	}
+
+
+	/**
+	 * @param context
+	 */
+	public static void setContext(final String context) {
+		DomainTools.context = context;
+	}
+
+
+	/**
+	 * @return defaultTtl
+	 */
+	public static int getDefaultTtl() {
+		return defaultTtl;
+	}
+
+
+	/**
+	 * @param defaultTtl
+	 */
+	public static void setDefaultTtl(int defaultTtl) {
+		DomainTools.defaultTtl = defaultTtl;
+	}
+
+
+	/**
+	 * @return defaultTimeOut
+	 */
+	public static int getDefaultTimeOut() {
+		return defaultTimeOut;
+	}
+
+
+	/**
+	 * @param defaultTimeOut
+	 */
+	public static void setDefaultTimeOut(int defaultTimeOut) {
+		DomainTools.defaultTimeOut = defaultTimeOut;
+	}
+
+
+	/**
+	 * @return maxTreeSize
+	 */
+	public static int getMaxTreeSize() {
+		return maxTreeSize;
+	}
+
+
+	/**
+	 * @param maxTreeSize
+	 */
+	public static void setMaxTreeSize(int maxTreeSize) {
+		DomainTools.maxTreeSize = maxTreeSize;
+	}
+
+
+	/**
+	 * @return defaultTreeSize
+	 */
+	public static int getDefaultTreeSize() {
+		return defaultTreeSize;
+	}
+
+
+	/**
+	 * @param defaultTreeSize
+	 */
+	public static void setDefaultTreeSize(int defaultTreeSize) {
+		DomainTools.defaultTreeSize = defaultTreeSize;
 	}
 
 }

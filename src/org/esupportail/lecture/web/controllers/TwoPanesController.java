@@ -252,7 +252,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 					throw new WebException("No context with ID \"" + ctxId
 						+ "\" found in lecture-config.xml file. " 
 						+ "See this file or portlet preference with name \""
-						+ DomainTools.CONTEXT + "\".");
+						+ DomainTools.getContext() + "\".");
 				}
 				context.setName(contextBean.getName());
 				context.setId(contextBean.getId());

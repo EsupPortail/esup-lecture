@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
@@ -30,15 +31,7 @@ public abstract class SourceProfile implements ElementProfile {
 	 * Log instance. 
 	 */
 	protected static final Log LOG = LogFactory.getLog(SourceProfile.class);
-	/**
-	 * Default TTL.
-	 */
-	private static final int DEFAULTTTL = 3600;
-	/**
-	 * Default Time Out.
-	 */
-	private static final int DEFAULTTIMEOUT = 3000;
-	
+		
 	/**
 	 * Id of the source profile. 
 	 * A source profile id is like :
@@ -91,8 +84,8 @@ public abstract class SourceProfile implements ElementProfile {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("SourceProfile()");
 		}
-		ttl = DEFAULTTTL;
-		timeOut = DEFAULTTIMEOUT;
+		ttl = DomainTools.getDefaultTtl();
+		timeOut = DomainTools.getDefaultTimeOut();
 		xPathNameSpaces = new HashMap<String, String>();
 	}
 
