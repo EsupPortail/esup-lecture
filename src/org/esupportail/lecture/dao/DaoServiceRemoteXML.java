@@ -3,6 +3,7 @@ package org.esupportail.lecture.dao;
 import java.util.Hashtable;
 
 import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheException;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
@@ -11,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.lecture.domain.model.GlobalSource;
 import org.esupportail.lecture.domain.model.ManagedCategory;
+import org.esupportail.lecture.domain.model.ManagedCategoryDummy;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.SourceDummy;
@@ -75,10 +77,10 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @param profile - Category profile of category to get
 	 * @param ptCas CAS proxy ticket 
 	 * @return the Category
-	 * @throws TimeoutException 
+	 * @throws InternalDaoException 
 	 */
 	public synchronized ManagedCategory getManagedCategory(final ManagedCategoryProfile profile, 
-			final String ptCas) throws TimeoutException {
+			final String ptCas) throws InternalDaoException {
 
 		/* *************************************
 		 * Cache logic :
@@ -106,37 +108,31 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getManagedCategory");
 		}
+
 		ManagedCategory ret = new ManagedCategory(profile);
-		String url = profile.getCategoryURL();
-		String cacheKey = "CAT:" + profile.getId() + url;
-		System.currentTimeMillis();
-		Long lastcatAccess = managedCategoryLastAccess.get(cacheKey);
-		Long currentTimeMillis = System.currentTimeMillis();
-		if (lastcatAccess != null) {
-			if (lastcatAccess + (profile.getTtl() * MILLIS_PER_SECOND) > currentTimeMillis) {
-				Element element = cache.get(cacheKey);
-				if (element == null) { 
-					// not in cache !
-					// creds parameter at null because it not specified to use CAS for Category
+		String urlCategory = profile.getCategoryURL();
+		String cacheKey = "CAT:" + profile.getId() + urlCategory;
+		try {
+			Element element = cache.get(cacheKey);
+			if (element == null) { 
+				try {
 					ret = getFreshManagedCategory(profile, ptCas);
-					cache.put(new Element(cacheKey, ret));
-					managedCategoryLastAccess.put(cacheKey, currentTimeMillis);
-					if (LOG.isWarnEnabled()) {
-						LOG.warn("ManagedCategory from url " + url 
-							+ " can't be found in cahe --> change cache size ?");
-					}
-				} else {
-					ret = (ManagedCategory) element.getObjectValue();
+				} catch (InfoDaoException e) {
+					ret = new ManagedCategoryDummy(profile, e);
+					e.printStackTrace();
 				}
-			} else {
-				ret = getFreshManagedCategory(profile, ptCas);
 				cache.put(new Element(cacheKey, ret));
-				managedCategoryLastAccess.put(cacheKey, currentTimeMillis);
+				cache.get(cacheKey).setTimeToLive(profile.getTtl());
+			} else {
+				ret = (ManagedCategory) element.getObjectValue();
+				if (ret instanceof ManagedCategoryDummy) {
+					ret = (ManagedCategoryDummy) element.getObjectValue();
+				}
 			}
-		} else {
-			ret = getFreshManagedCategory(profile, ptCas);
-			cache.put(new Element(cacheKey, ret));
-			managedCategoryLastAccess.put(cacheKey, currentTimeMillis);
+		} catch (IllegalStateException e) {
+			throw new InternalDaoException(e);
+		} catch (CacheException e) {
+			throw new InternalDaoException(e);
 		}
 		return ret;
 	}
@@ -144,10 +140,10 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	/**
 	 * @param profile 
 	 * @return a managedCategory
-	 * @throws TimeoutException 
+	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(ManagedCategoryProfile)
 	 */
-	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws TimeoutException {
+	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InternalDaoException {
 		return getManagedCategory(profile, null);
 	}
 	
@@ -157,34 +153,37 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @param ptCas - user and password. null for anonymous access
 	 * @return Managed category
 	 * @throws TimeoutException 
+	 * @throws SourceInterruptedException 
+	 * @throws InternalDaoException 
 	 */
 	private ManagedCategory getFreshManagedCategory(final ManagedCategoryProfile profile,
-			final String ptCas) throws TimeoutException  {
+			final String ptCas) throws TimeoutException, SourceInterruptedException, InternalDaoException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshManagedCategory");
 		}
 		ManagedCategory ret = new ManagedCategory(profile);
 		//start a Thread to get FreshManagedCategory
 		FreshManagedCategoryThread thread = new FreshManagedCategoryThread(profile, ptCas);
-		thread.start();
-		int timeOut = profile.getTimeOut();
+		
+		int timeout = 0;
 		try {
-			thread.join(timeOut);
-			Exception e = thread.getException();
-			if (e != null) {
-				String msg = "Error during execution of Thread getting Category";
-				LOG.error(msg);
-				throw new RuntimeException(msg, e);
-			}
+			thread.start();
+			timeout = defaultTimeout;
+			timeout = profile.getTimeOut();
+			thread.join(timeout);
 			ret = thread.getManagedCategory();
 		} catch (InterruptedException e) {
-			String msg = "Thread getting Category interrupted";
-			LOG.error(msg);
-			throw new RuntimeException(msg, e);
+			String msg = "Thread getting Source interrupted";
+			LOG.warn(msg);
+			throw new SourceInterruptedException(msg, e);
+		} catch (IllegalThreadStateException e) {
+			String msg = "Thread getting Source interrupted";
+			LOG.warn(msg);
+			throw new InternalDaoException(e);
 		}
         if (thread.isAlive()) {
     		thread.interrupt();
-			String msg = "Category not loaded in " + timeOut + " milliseconds";
+			String msg = "Category not loaded in " + timeout + " milliseconds";
 			LOG.warn(msg);
 			throw new TimeoutException(msg);
         }	
@@ -206,63 +205,35 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		// mais en ne déclarant pas un GlobalSource, tu limites la potentialité du ret. 
 		// Ne crois tu pas ? Tu viens m'en parler ?
 		Source ret = new GlobalSource(sourceProfile);
-//		not yet implemented
-//		if (sourceProfile.isSpecificUserContent()) { 
-//		ret = getFreshSource(sourceProfile);
-//		}
-//		else {
-		System.currentTimeMillis();
 		String urlSource = sourceProfile.getSourceURL();
-		Long lastSrcAccess = sourceLastAccess.get(urlSource);
-		Long currentTimeMillis = System.currentTimeMillis();
-		if (lastSrcAccess != null) {
-			if (lastSrcAccess + (sourceProfile.getTtl() * MILLIS_PER_SECOND) > currentTimeMillis) {
-				Element element = cache.get(urlSource);
-				if (element == null) { 
-					// not in cache !
-					try {
-						ret = getFreshSource(sourceProfile, ptCas);
-					} catch (InfoDaoException e) {
-						// TODO creation sourceDummy
-						ret = new SourceDummy(sourceProfile, e);
-						e.printStackTrace();
-					}
-					cache.put(new Element(urlSource, ret));
-					sourceLastAccess.put(urlSource, currentTimeMillis);
-					if (LOG.isWarnEnabled()) {
-						LOG.warn("Source from url " + urlSource 
-							+ " can't be found in cahe --> change cache size ?");
-					}
-				} else {
-					ret = (Source) element.getObjectValue();
-				}
-			} else {
+		try {
+			Element element = cache.get(urlSource);
+			if (element == null) { 
 				try {
 					ret = getFreshSource(sourceProfile, ptCas);
 				} catch (InfoDaoException e) {
-					// TODO creation sourceDummy
 					ret = new SourceDummy(sourceProfile, e);
 					e.printStackTrace();
 				}
 				cache.put(new Element(urlSource, ret));
-				sourceLastAccess.put(urlSource, currentTimeMillis);
+				cache.get(urlSource).setTimeToLive(sourceProfile.getTtl());
+			} else {
+				ret = (Source) element.getObjectValue();
+				if (ret instanceof SourceDummy) {
+					ret = (SourceDummy) element.getObjectValue();
+				}
 			}
-		} else {
-			try {
-				ret = getFreshSource(sourceProfile, ptCas);
-			} catch (InfoDaoException e) {
-				// TODO creation sourceDummy
-				ret = new SourceDummy(sourceProfile, e);
-				e.printStackTrace();
-			}
-			cache.put(new Element(urlSource, ret));
-			sourceLastAccess.put(urlSource, currentTimeMillis);
+		} catch (IllegalStateException e) {
+			throw new InternalDaoException(e);
+		} catch (CacheException e) {
+			throw new InternalDaoException(e);
 		}
 		return ret;
+
 	}
 
 	/**
-	 * get a source form cache.
+	 * get a source from cache.
 	 * @param sourceProfile source profile of source to get
 	 * @return the source 
 	 * @throws InternalDaoException 
@@ -294,18 +265,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			timeout = defaultTimeout;
 			timeout = sourceProfile.getTimeOut();
 			thread.join(timeout);
-//			Exception e = thread.getException();
-//			if (e != null) {
-//				String msg = "Error during execution of Thread getting Source";
-//				LOG.error(msg);
-//				throw new InfoDaoException(msg, e);
-//			}			
 			ret = thread.getSource();
-/*		} catch (XMLParseException e) {
-			String msg = "XMLParseException during execution of Thread getting Source";
-			LOG.warn(msg);
-			throw new XMLParseException(msg, e);
-*/
 		} catch (InterruptedException e) {
 			String msg = "Thread getting Source interrupted";
 			LOG.warn(msg);
