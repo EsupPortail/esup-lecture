@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.myfaces.portlet.PortletUtil;
+import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.beans.User;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.authentication.AuthenticationService;
@@ -71,7 +72,8 @@ public class SessionController extends AbstractDomainAwareBean {
 		if (ContextUtils.getRequestAttribute(CURRENT_USER_ATTRIBUTE) == null) {
 			String currentUserId = authenticationService.getCurrentUserId();
 			if (currentUserId == null) {
-				return null;
+				currentUserId = DomainTools.getGuestUser();
+				//return null;
 			}
 			User user = new User();
 			user.setDisplayName(currentUserId);

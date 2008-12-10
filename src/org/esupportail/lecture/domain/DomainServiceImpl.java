@@ -790,6 +790,9 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	public boolean isGuestMode() {
 		boolean ret;
 		String connectedUser = authenticationService.getCurrentUserId();
+		if (connectedUser == null) {
+			return true;
+		}
 		if (connectedUser.equals(DomainTools.getGuestUser())) {
 			ret = true;
 		} else {
