@@ -51,7 +51,7 @@
 		<description>
 			This bean is the main domain model class, used by the domainService.
 		</description>
-		<property name="daoService" ref="daoServiceStub"/>
+		<property name="daoService" ref="daoService"/>
 		<property name="externalService" ref="externalService"/>
 		<property name="configFilePath" value="/properties/esup-lecture.xml"/>
 		<property name="mappingFilePath" value="/properties/mappings.xml"/>	
