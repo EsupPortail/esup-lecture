@@ -148,8 +148,9 @@ public class FreshSourceThread extends Thread {
 
 	/**
 	 * @return Source genereted during run
+	 * @throws XMLParseException 
 	 */
-	public Source getSource() {
+	public Source getSource() throws XMLParseException {
 		return source;
 	}
 

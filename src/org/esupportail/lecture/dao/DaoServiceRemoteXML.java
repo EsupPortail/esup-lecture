@@ -21,6 +21,7 @@ import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.InternalDaoException;
 import org.esupportail.lecture.exceptions.dao.SourceInterruptedException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
+import org.esupportail.lecture.exceptions.dao.XMLParseException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StringUtils;
 
@@ -119,7 +120,8 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					ret = getFreshManagedCategory(profile, ptCas);
 				} catch (InfoDaoException e) {
 					ret = new ManagedCategoryDummy(profile, e);
-					e.printStackTrace();
+					String msg = "Create dummy category : "+ cacheKey;
+					LOG.warn(msg);
 				}
 				cache.put(new Element(cacheKey, ret));
 				cache.get(cacheKey).setTimeToLive(profile.getTtl());
@@ -155,9 +157,10 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @throws TimeoutException 
 	 * @throws SourceInterruptedException 
 	 * @throws InternalDaoException 
+	 * @throws XMLParseException 
 	 */
 	private ManagedCategory getFreshManagedCategory(final ManagedCategoryProfile profile,
-			final String ptCas) throws TimeoutException, SourceInterruptedException, InternalDaoException  {
+			final String ptCas) throws TimeoutException, SourceInterruptedException, InternalDaoException, XMLParseException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshManagedCategory");
 		}
@@ -173,13 +176,17 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			thread.join(timeout);
 			ret = thread.getManagedCategory();
 		} catch (InterruptedException e) {
-			String msg = "Thread getting Source interrupted";
+			String msg = "Thread getting ManagedCategory interrupted";
 			LOG.warn(msg);
 			throw new SourceInterruptedException(msg, e);
 		} catch (IllegalThreadStateException e) {
-			String msg = "Thread getting Source interrupted";
+			String msg = "Thread getting ManagedCategory interrupted";
 			LOG.warn(msg);
 			throw new InternalDaoException(e);
+		} catch (XMLParseException e) {
+			String msg = "Thread getting Source launches XMLParseException";
+			LOG.warn(msg);
+			throw new XMLParseException(msg, e);
 		}
         if (thread.isAlive()) {
     		thread.interrupt();
@@ -213,7 +220,8 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					ret = getFreshSource(sourceProfile, ptCas);
 				} catch (InfoDaoException e) {
 					ret = new SourceDummy(sourceProfile, e);
-					e.printStackTrace();
+					String msg = "Create dummy source : "+ urlSource;
+					LOG.warn(msg);
 				}
 				cache.put(new Element(urlSource, ret));
 				cache.get(urlSource).setTimeToLive(sourceProfile.getTtl());
@@ -250,9 +258,10 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @throws SourceInterruptedException 
 	 * @throws TimeoutException 
 	 * @throws InternalDaoException 
+	 * @throws XMLParseException 
 	 */
 	private Source getFreshSource(final SourceProfile sourceProfile,
-			final String ptCas) throws SourceInterruptedException, TimeoutException, InternalDaoException {
+			final String ptCas) throws SourceInterruptedException, TimeoutException, InternalDaoException, XMLParseException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshSource");
 		}
@@ -266,13 +275,17 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			timeout = sourceProfile.getTimeOut();
 			thread.join(timeout);
 			ret = thread.getSource();
+		} catch (XMLParseException e) {
+			String msg = "Thread getting Source launches XMLParseException";
+			LOG.warn(msg);
+			throw new XMLParseException(msg, e);
 		} catch (InterruptedException e) {
 			String msg = "Thread getting Source interrupted";
 			LOG.warn(msg);
 			throw new SourceInterruptedException(msg, e);
 		} catch (IllegalThreadStateException e) {
-			String msg = "Thread getting Source interrupted";
-			LOG.warn(msg);
+			String msg = "IllegalThreadStateException";
+			LOG.error(e.getMessage());
 			throw new InternalDaoException(e);
 		}
         if (thread.isAlive()) {

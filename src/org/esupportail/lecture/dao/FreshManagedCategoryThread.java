@@ -201,8 +201,9 @@ public class FreshManagedCategoryThread extends Thread {
 
 	/**
 	 * @return managedCategory
+	 * @throws XMLParseException 
 	 */
-	public ManagedCategory getManagedCategory() {
+	public ManagedCategory getManagedCategory() throws XMLParseException {
 		return managedCategory;
 	}
 
