@@ -45,11 +45,11 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	private AuthenticationService authenticationService;
 
 	/**
-	 * @throws InfoDaoException 
+	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(
 	 *  org.esupportail.lecture.domain.model.ManagedCategoryProfile)
 	 */
-	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InfoDaoException  {
+	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InternalDaoException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getManagedCategory");
 		}
@@ -57,13 +57,13 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	}
 
 	/** 
-	 * @throws InfoDaoException 
+	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(
 	 *  org.esupportail.lecture.domain.model.ManagedCategoryProfile, java.lang.String)
 	 */
 	public ManagedCategory getManagedCategory(
 			final ManagedCategoryProfile profile,
-			final String ptCas) throws InfoDaoException {
+			final String ptCas) throws InternalDaoException {
 		return remoteXMLService.getManagedCategory(profile, ptCas);
 	}
 

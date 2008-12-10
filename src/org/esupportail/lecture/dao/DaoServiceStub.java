@@ -59,11 +59,11 @@ public class DaoServiceStub  implements DaoService {
 	/* Remote Data */
 	
 	/**
-	 * @throws InfoDaoException 
+	 * @throws InternalDaoException 
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(
 	 *  org.esupportail.lecture.domain.model.ManagedCategoryProfile)
 	 */
-	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InfoDaoException {
+	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InternalDaoException {
 		LOG.debug("getManagedCategory(" + profile.getId() + ")");
 		return remoteXMLService.getManagedCategory(profile);
 	}

@@ -26,18 +26,18 @@ public interface DaoService {
 	 * Get a managed category from a remote place.
 	 * @param profile of the category to get
 	 * @return the managedCategory
-	 * @throws InfoDaoException 
+	 * @throws InternalDaoException 
 	 */
-	ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws InfoDaoException;
+	ManagedCategory getManagedCategory(ManagedCategoryProfile profile) throws InternalDaoException;
 
 	/**
 	 * Get a managed category from a remote place.
 	 * @param profile of the category to get
 	 * @param ptCas proxy ticket CAS used in case of CAS protected source
 	 * @return the managedCategory
-	 * @throws InfoDaoException 
+	 * @throws InternalDaoException 
 	 */
-	ManagedCategory getManagedCategory(ManagedCategoryProfile profile, String ptCas) throws InfoDaoException;
+	ManagedCategory getManagedCategory(ManagedCategoryProfile profile, String ptCas) throws InternalDaoException;
 
 	/**
 	 * get a source from a remote place.
