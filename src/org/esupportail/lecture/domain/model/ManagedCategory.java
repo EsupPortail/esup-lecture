@@ -106,7 +106,7 @@ public class ManagedCategory extends Category {
 	/**
 	 * @return ttl
 	 */
-	protected int getTtl() {
+	public int getTtl() {
 		return getProfile().getTtl();
 	}
 	

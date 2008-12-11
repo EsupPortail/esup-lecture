@@ -124,7 +124,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					LOG.warn(msg);
 				}
 				cache.put(new Element(cacheKey, ret));
-				cache.get(cacheKey).setTimeToLive(profile.getTtl());
+				cache.get(cacheKey).setTimeToLive(ret.getTtl());
 			} else {
 				ret = (ManagedCategory) element.getObjectValue();
 				if (ret instanceof ManagedCategoryDummy) {
@@ -233,11 +233,13 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					LOG.warn(msg);
 				}
 				cache.put(new Element(urlSource, ret));
-				cache.get(urlSource).setTimeToLive(sourceProfile.getTtl());
+				cache.get(urlSource).setTimeToLive(ret.getTtl());
 				if (LOG.isDebugEnabled()) {
 					LOG.debug("Put source in cache : "+urlSource+ " Ttl: "+String.valueOf(sourceProfile.getTtl()));
 				}
 			} else {
+				LOG.debug("Already in cache : "+urlSource+ " Ttl: "+ String.valueOf(element.getTimeToLive()));
+				LOG.debug("Already in cache : "+urlSource+ " Creation time : "+ String.valueOf(element.getCreationTime()));
 				ret = (Source) element.getObjectValue();
 				if (ret instanceof SourceDummy) {
 					ret = (SourceDummy) element.getObjectValue();
