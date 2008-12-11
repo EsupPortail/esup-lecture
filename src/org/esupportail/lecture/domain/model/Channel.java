@@ -199,8 +199,6 @@ public class Channel implements InitializingBean {
 		DomainTools.setDefaultTimeOut(defaultTimeOut);
 		DomainTools.setMaxTreeSize(maxTreeSize);
 		DomainTools.setDefaultTreeSize(defaultTreeSize);
-		
-		
 	}
 	
 	/**

@@ -112,7 +112,7 @@ public abstract class SourceProfile implements ElementProfile {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id = " + this.id + " - getItems()");
     	}
-		loadSource();
+		// GB : ligne à supprimer loadSource();
 		Source s = getElement();
 		return s.getItems();
 	}
@@ -142,9 +142,10 @@ public abstract class SourceProfile implements ElementProfile {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.id + " - getElement()");
     	}
-		if (source == null) {
+		// GB : pour pouvoir rafraichir, je commente
+	   	//if (source == null) {
 			loadSource();
-		}
+		//}
 		return source;
 		
 	}

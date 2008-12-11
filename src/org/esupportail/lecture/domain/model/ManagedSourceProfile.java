@@ -345,19 +345,25 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - loadSource()");
 		}
+		Source source = null;
 		try {
 			Accessibility accessibility = getAccess();
 			if (Accessibility.PUBLIC.equals(accessibility)) {
-				Source source;
 				source = DomainTools.getDaoService().getSource(this);
 				setElement(source);
 			} else if (Accessibility.CAS.equals(accessibility)) {
 				ExternalService ex = DomainTools.getExternalService();
 				String sourceUrl = getSourceURL();
 				String ptCas = ex.getUserProxyTicketCAS(sourceUrl);
-				Source source = DomainTools.getDaoService().getSource(this, ptCas);
+				source = DomainTools.getDaoService().getSource(this, ptCas);
 				setElement(source);
 			} 
+			if (source==null) {
+				String errorMsg = "The source " + this.getId() 
+				+ " is not loaded : DAO return null.";
+			LOG.error(errorMsg);
+			throw new SourceNotLoadedException(errorMsg);
+			}
 		} catch (InternalDaoException e) {
 			String errorMsg = "The source " + this.getId() 
 				+ " is impossible to be loaded because of DaoException.";

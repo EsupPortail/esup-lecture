@@ -175,6 +175,12 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			timeout = profile.getTimeOut();
 			thread.join(timeout);
 			ret = thread.getManagedCategory();
+			Exception e = thread.getException();
+			if (e != null) {
+				String msg = "Thread getting Source launches XMLParseException";
+				LOG.error(msg);
+				throw new XMLParseException(msg, e);
+			}
 		} catch (InterruptedException e) {
 			String msg = "Thread getting ManagedCategory interrupted";
 			LOG.warn(msg);
@@ -275,6 +281,12 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			timeout = sourceProfile.getTimeOut();
 			thread.join(timeout);
 			ret = thread.getSource();
+			Exception e = thread.getException();
+			if (e != null) {
+				String msg = "Thread getting Source launches XMLParseException";
+				LOG.error(msg);
+				throw new XMLParseException(msg, e);
+			}
 		} catch (XMLParseException e) {
 			String msg = "Thread getting Source launches XMLParseException";
 			LOG.warn(msg);
