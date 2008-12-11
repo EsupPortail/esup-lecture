@@ -219,6 +219,9 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		// Ne crois tu pas ? Tu viens m'en parler ?
 		Source ret = new GlobalSource(sourceProfile);
 		String urlSource = sourceProfile.getSourceURL();
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("in getSource");
+		}
 		try {
 			Element element = cache.get(urlSource);
 			if (element == null) { 
@@ -231,6 +234,9 @@ public class DaoServiceRemoteXML implements InitializingBean {
 				}
 				cache.put(new Element(urlSource, ret));
 				cache.get(urlSource).setTimeToLive(sourceProfile.getTtl());
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("Put source in cache : "+urlSource+ " Ttl: "+String.valueOf(sourceProfile.getTtl()));
+				}
 			} else {
 				ret = (Source) element.getObjectValue();
 				if (ret instanceof SourceDummy) {
