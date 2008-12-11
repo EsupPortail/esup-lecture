@@ -41,15 +41,15 @@ public class TestDAORemoteXML {
 		//test.init();
 		test.setTtl(100);
 		test.setId("test");
-		ManagedCategory cat = dao.getManagedCategory(test);
-		System.out.println("name --> "+cat.getName());
-		Hashtable<String,SourceProfile> hash = cat.getSourceProfilesHash();
-		Enumeration<String> keys = hash.keys();
-		while (keys.hasMoreElements()) {
-			String element = (String) keys.nextElement();
-			ManagedSourceProfile msp = (ManagedSourceProfile)hash.get(element);
-			System.out.println("sp name --> "+msp.getName());
-			//System.out.println("sp access --> "+msp.getAccess().name());
-		}
+//		ManagedCategory cat = dao.getManagedCategory(test);
+//		System.out.println("name --> "+cat.getName());
+//		Hashtable<String,SourceProfile> hash = cat.getSourceProfilesHash();
+//		Enumeration<String> keys = hash.keys();
+//		while (keys.hasMoreElements()) {
+//			String element = (String) keys.nextElement();
+//			ManagedSourceProfile msp = (ManagedSourceProfile)hash.get(element);
+//			System.out.println("sp name --> "+msp.getName());
+//			//System.out.println("sp access --> "+msp.getAccess().name());
+//		}
 	}
 }
