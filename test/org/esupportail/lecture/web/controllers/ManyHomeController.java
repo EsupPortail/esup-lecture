@@ -49,8 +49,8 @@ public class ManyHomeController {
 			String[] attrs = {"uid"};
 			searchControls.setReturningAttributes(attrs);
 			// Search for objects that have those matching attributes
-			NamingEnumeration entries = ctx.search("ou=People", "(departmentnumber=957)", searchControls);
-//			NamingEnumeration entries = ctx.search("ou=People", "(|(uid=bourges)(uid=germes))", searchControls);
+//			NamingEnumeration entries = ctx.search("ou=People", "(departmentnumber=957)", searchControls);
+			NamingEnumeration entries = ctx.search("ou=People", "(|(uid=bourges)(uid=germes))", searchControls);
 			while  (entries.hasMore()) {
 				SearchResult res = (SearchResult) entries.next();
 				String user = (String) res.getAttributes().get("uid").get();

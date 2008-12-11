@@ -16,6 +16,7 @@ import javax.faces.event.ActionEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.web.controllers.Resettable;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.FacadeService;
 import org.esupportail.lecture.domain.beans.CategoryBean;
@@ -41,7 +42,7 @@ import org.springframework.util.Assert;
 /**
  * @author : Raymond 
  */
-public abstract class TwoPanesController extends AbstractContextAwareController {
+public abstract class TwoPanesController extends AbstractContextAwareController implements Resettable {
 	/**
 	 * Log instance.
 	 */

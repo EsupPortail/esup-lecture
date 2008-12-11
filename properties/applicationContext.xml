@@ -15,8 +15,12 @@
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location"
-			value="classpath:/properties/config.properties" />
+        <property name="locations">
+          <list>
+            <value>classpath:/properties/defaults.properties</value>
+            <value>classpath:/properties/config.properties</value>
+          </list>
+      </property>
 	</bean>
 	<bean
 		id="viewResolver"

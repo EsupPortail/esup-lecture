@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.dao.AbstractJdbcJndiHibernateDaoService;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
@@ -14,12 +15,12 @@ import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.beans.factory.InitializingBean;
 
 /**
  * @author bourges
  */
-public class DaoServiceHibernate extends HibernateDaoSupport {
+public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService implements InitializingBean {
 
 	/**
 	 * Log instance. 

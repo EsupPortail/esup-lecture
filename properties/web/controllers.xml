@@ -60,18 +60,6 @@
 		class="org.esupportail.commons.web.controllers.ExceptionController"
     	>
 		<description>A bean to manage exception reports.</description>
-		<property name="resettableNames">
-			<description>
-				The names of the beans that will be reset when the user
-				restarts the application after an exception has been
-				thrown. All the corresponding beans must implement
-				interface Resettable.
-			</description>
-			<list>
-				<value>homeController</value>
-				<value>editController</value>
-			</list>
-		</property>
 	</bean>
 
 </beans>
