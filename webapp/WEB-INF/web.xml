@@ -145,7 +145,7 @@
 		<display-name>Faces Servlet</display-name>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>
-			org.esupportail.lecture.servlet.FacesServlet
+			org.esupportail.commons.web.servlet.FacesServlet
 		</servlet-class>
 		<init-param>
 			<param-name>default-view</param-name>

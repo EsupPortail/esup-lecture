@@ -75,6 +75,7 @@
 
 /* Articles Style */
 .esup-lecture div.toggleButton {
+	clear: both;
 	float: left;
 	margin: 2px 0px 30px 5px;
 	padding: 10px;
@@ -226,7 +227,7 @@
 	font-weight: bold;
 }
 
-.esup-lecture a:focus,a:hover {
+.esup-lecture a:focus,.esup-lecture a:hover {
 	color: #a71817 ! important;
 	text-decoration: underline ! important;
 	font-size: 1em ! important;

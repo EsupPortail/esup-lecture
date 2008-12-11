@@ -427,9 +427,7 @@
 			<required>false</required>
 			<rtexprvalue>false</rtexprvalue>
 			<type>java.lang.Locale</type>
-			<description>
-				The selected menu item, optional.
-			</description>
+			<description>The selected menu item, optional.</description>
 		</attribute>
 		<attribute>
 			<name>locale</name>
@@ -455,7 +453,8 @@
 			<rtexprvalue>false</rtexprvalue>
 			<type>java.lang.String</type>
 			<description>
-				The name of the variable in which strings will be loaded.
+				The name of the variable in which strings will be
+				loaded.
 			</description>
 		</attribute>
 		<attribute>
@@ -464,7 +463,8 @@
 			<rtexprvalue>false</rtexprvalue>
 			<type>java.lang.String</type>
 			<description>
-				The string to display at the end of the page, optional (see TagsConfigurator).
+				The string to display at the end of the page, optional
+				(see TagsConfigurator).
 			</description>
 		</attribute>
 		<attribute>
@@ -476,6 +476,15 @@
 				If set to false, a message is printed to tell the user
 				that he is not allowed to view the page. Defaults to
 				true.
+			</description>
+		</attribute>
+		<attribute>
+			<name>downloadId</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				If set to not null, the ID of the download to redirect to.
 			</description>
 		</attribute>
 	</tag>
@@ -1382,313 +1391,395 @@
 		</attribute>
 	</tag>
 	<tag>
-      <name>inputFileUpload</name>
-      <tag-class>org.esupportail.commons.web.tags.InputFileUploadTag</tag-class>
-      <body-content>JSP</body-content>
-      <description>
-            You must enable the MultiPart Filter to make this component
-            work (see web.xml). Also, don't forget to set the form's attribute
-            "enctype" to "multipart/form-data".
-            See "examples/web/fileupload.jsp" for an example!
+		<name>inputFileUpload</name>
+		<tag-class>
+			org.esupportail.commons.web.tags.InputFileUploadTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<description>
+			You must enable the MultiPart Filter to make this component
+			work (see web.xml). Also, don't forget to set the form's
+			attribute "enctype" to "multipart/form-data". See
+			"examples/web/fileupload.jsp" for an example!
 
-        Unless otherwise specified, all attributes accept static values or EL expressions.
-        </description>
-      <!-- UIInput attributes -->
-      <!-- UIOutput attributes -->
-      <!-- UIComponent attributes -->
-      <attribute>
-         <name>id</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        The developer-assigned ID of this component.  The ID must be unique
-        within the scope of the tag's enclosing naming container (e.g. 
-        h:form or f:subview).  This value must be a static value.
-    </description>
-      </attribute>
-      <attribute>
-         <name>binding</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        Identifies a backing bean property (of type UIComponent or appropriate
-        subclass) to bind to this component instance.  This value must be an
-        EL expression.
-    </description>
-      </attribute>
-      <attribute>
-         <name>rendered</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        A boolean value that indicates whether this component should be rendered.
-        Default value: true.
-    </description>
-      </attribute>
-      <attribute>
-         <name>value</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>The initial value of this component.</description>
-      </attribute>
-      <attribute>
-         <name>converter</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        An expression that specifies the Converter for this component.  
-        If the value binding expression is a String, the String is used
-        as an ID to look up a Converter. If the value binding expression
-        is a Converter, uses that instance as the converter.
-            
-        The value can either be a static value (ID case only) or an EL expression.
-    </description>
-      </attribute>
-      <attribute>
-         <name>immediate</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        A boolean value that identifies the phase during which value change
-        events should fire. During normal event processing, value change
-        events are fired during the "invoke application" phase of request
-        processing. If this attribute is set to "true", these methods are
-        fired instead at the end of the "apply request values" phase.
-    </description>
-      </attribute>
-      <attribute>
-         <name>required</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        A boolean value that indicates whether an input value is required.
-        If this value is true, and no input value is provided, the error
-        message javax.faces.component.UIInput.REQUIRED is posted.
-    </description>
-      </attribute>
-      <attribute>
-         <name>validator</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        A method binding EL expression, accepting FacesContext, UIComponent,
-        and Object parameters, and returning void, that validates the
-        component's local value.
-    </description>
-      </attribute>
-      <attribute>
-         <name>valueChangeListener</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        A method binding EL expression, accepting a ValueChangeEvent parameter
-        and returning void. The specified method is invoked if this component
-        is modified. The phase that this handler is fired in can be controlled
-        via the immediate attribute.
-    </description>
-      </attribute>
-      <!-- HTML 4.0 universal attributes -->
-      <attribute>
-         <name>dir</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: The direction of text display, either 'ltr' (left-to-right) or 'rtl' (right-to-left).</description>
-      </attribute>
-      <attribute>
-         <name>lang</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: The base language of this document.</description>
-      </attribute>
-      <attribute>
-         <name>style</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: CSS styling instructions.</description>
-      </attribute>
-      <attribute>
-         <name>title</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: An advisory title for this element.  Often used by the user agent as a tooltip.</description>
-      </attribute>
-      <attribute>
-         <name>styleClass</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>The CSS class for this element.  Corresponds to the HTML 'class' attribute.</description>
-      </attribute>
-      <!-- HTML 4.0 event-handler attributes -->
-      <attribute>
-         <name>onclick</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the element is clicked.</description>
-      </attribute>
-      <attribute>
-         <name>ondblclick</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the element is double-clicked.</description>
-      </attribute>
-      <attribute>
-         <name>onmousedown</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the pointing device is pressed over this element.</description>
-      </attribute>
-      <attribute>
-         <name>onmouseup</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the pointing device is released over this element.</description>
-      </attribute>
-      <attribute>
-         <name>onmouseover</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the pointing device is moved into this element.</description>
-      </attribute>
-      <attribute>
-         <name>onmousemove</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the pointing device is moved while it is in this element.</description>
-      </attribute>
-      <attribute>
-         <name>onmouseout</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the pointing device is moves out of this element.</description>
-      </attribute>
-      <attribute>
-         <name>onkeypress</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when a key is pressed over this element.</description>
-      </attribute>
-      <attribute>
-         <name>onkeydown</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when a key is pressed down over this element.</description>
-      </attribute>
-      <attribute>
-         <name>onkeyup</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when a key is released over this element.</description>
-      </attribute>
-      <!-- HTML 4.0 input attributes -->
-      <attribute>
-         <name>accesskey</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Sets the access key for this element.</description>
-      </attribute>
-      <attribute>
-         <name>align</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Specifies the horizontal alignment of this element.  Deprecated in HTML 4.01.</description>
-      </attribute>
-      <attribute>
-         <name>alt</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Specifies alternative text that can be used by a browser that can't show this element.</description>
-      </attribute>
-      <attribute>
-         <name>disabled</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: When true, this element cannot receive focus.</description>
-      </attribute>
-      <attribute>
-         <name>onblur</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Specifies a script to be invoked when the element loses focus.</description>
-      </attribute>
-      <attribute>
-         <name>onfocus</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Specifies a script to be invoked when the element receives focus.</description>
-      </attribute>
-      <attribute>
-         <name>onchange</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Specifies a script to be invoked when the element is modified.</description>
-      </attribute>
-      <attribute>
-         <name>onselect</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Specifies a script to be invoked when the element is selected.</description>
-      </attribute>
-      <attribute>
-         <name>readonly</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        HTML: When true, indicates that this component cannot be modified by the user.
-        The element may receive focus unless it has also been disabled.
-    </description>
-      </attribute>
-      <attribute>
-         <name>tabindex</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Specifies the position of this element within the tab order of the document.</description>
-      </attribute>
-      <attribute>
-         <name>maxlength</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: The maximum number of characters allowed to be entered.</description>
-      </attribute>
-      <attribute>
-         <name>size</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: The initial width of this control, in characters.</description>
-      </attribute>
-      <!-- HTML 4.0 input type="file" attributes -->
-      <attribute>
-         <name>accept</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-      </attribute>
-      <attribute>
-         <name>storage</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-      </attribute>
-   </tag>
-   <tag>
-      <name>inputTextarea</name>
+			Unless otherwise specified, all attributes accept static
+			values or EL expressions.
+		</description>
+		<!-- UIInput attributes -->
+		<!-- UIOutput attributes -->
+		<!-- UIComponent attributes -->
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				The developer-assigned ID of this component. The ID must
+				be unique within the scope of the tag's enclosing naming
+				container (e.g. h:form or f:subview). This value must be
+				a static value.
+			</description>
+		</attribute>
+		<attribute>
+			<name>binding</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				Identifies a backing bean property (of type UIComponent
+				or appropriate subclass) to bind to this component
+				instance. This value must be an EL expression.
+			</description>
+		</attribute>
+		<attribute>
+			<name>rendered</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				A boolean value that indicates whether this component
+				should be rendered. Default value: true.
+			</description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				The initial value of this component.
+			</description>
+		</attribute>
+		<attribute>
+			<name>converter</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				An expression that specifies the Converter for this
+				component. If the value binding expression is a String,
+				the String is used as an ID to look up a Converter. If
+				the value binding expression is a Converter, uses that
+				instance as the converter.
+
+				The value can either be a static value (ID case only) or
+				an EL expression.
+			</description>
+		</attribute>
+		<attribute>
+			<name>immediate</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				A boolean value that identifies the phase during which
+				value change events should fire. During normal event
+				processing, value change events are fired during the
+				"invoke application" phase of request processing. If
+				this attribute is set to "true", these methods are fired
+				instead at the end of the "apply request values" phase.
+			</description>
+		</attribute>
+		<attribute>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				A boolean value that indicates whether an input value is
+				required. If this value is true, and no input value is
+				provided, the error message
+				javax.faces.component.UIInput.REQUIRED is posted.
+			</description>
+		</attribute>
+		<attribute>
+			<name>validator</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				A method binding EL expression, accepting FacesContext,
+				UIComponent, and Object parameters, and returning void,
+				that validates the component's local value.
+			</description>
+		</attribute>
+		<attribute>
+			<name>valueChangeListener</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				A method binding EL expression, accepting a
+				ValueChangeEvent parameter and returning void. The
+				specified method is invoked if this component is
+				modified. The phase that this handler is fired in can be
+				controlled via the immediate attribute.
+			</description>
+		</attribute>
+		<!-- HTML 4.0 universal attributes -->
+		<attribute>
+			<name>dir</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: The direction of text display, either 'ltr'
+				(left-to-right) or 'rtl' (right-to-left).
+			</description>
+		</attribute>
+		<attribute>
+			<name>lang</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: The base language of this document.
+			</description>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>HTML: CSS styling instructions.</description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: An advisory title for this element. Often used by
+				the user agent as a tooltip.
+			</description>
+		</attribute>
+		<attribute>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				The CSS class for this element. Corresponds to the HTML
+				'class' attribute.
+			</description>
+		</attribute>
+		<!-- HTML 4.0 event-handler attributes -->
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the element is clicked.
+			</description>
+		</attribute>
+		<attribute>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the element is
+				double-clicked.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the pointing device is
+				pressed over this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the pointing device is
+				released over this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the pointing device is
+				moved into this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the pointing device is
+				moved while it is in this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the pointing device is
+				moves out of this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when a key is pressed over
+				this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when a key is pressed down
+				over this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when a key is released over
+				this element.
+			</description>
+		</attribute>
+		<!-- HTML 4.0 input attributes -->
+		<attribute>
+			<name>accesskey</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Sets the access key for this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>align</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Specifies the horizontal alignment of this
+				element. Deprecated in HTML 4.01.
+			</description>
+		</attribute>
+		<attribute>
+			<name>alt</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Specifies alternative text that can be used by a
+				browser that can't show this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: When true, this element cannot receive focus.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Specifies a script to be invoked when the element
+				loses focus.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Specifies a script to be invoked when the element
+				receives focus.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Specifies a script to be invoked when the element
+				is modified.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onselect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Specifies a script to be invoked when the element
+				is selected.
+			</description>
+		</attribute>
+		<attribute>
+			<name>readonly</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: When true, indicates that this component cannot be
+				modified by the user. The element may receive focus
+				unless it has also been disabled.
+			</description>
+		</attribute>
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Specifies the position of this element within the
+				tab order of the document.
+			</description>
+		</attribute>
+		<attribute>
+			<name>maxlength</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: The maximum number of characters allowed to be
+				entered.
+			</description>
+		</attribute>
+		<attribute>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: The initial width of this control, in characters.
+			</description>
+		</attribute>
+		<!-- HTML 4.0 input type="file" attributes -->
+		<attribute>
+			<name>accept</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>storage</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>inputTextarea</name>
 		<tag-class>
 			org.esupportail.commons.web.tags.InputTextareaTag
 		</tag-class>
@@ -1697,314 +1788,314 @@
 			Same as inputTextarea except that the CSS class is set by
 			default (see TagsConfigurator).
 		</description>
-      <attribute>
-         <name>id</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>binding</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>binding</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>rendered</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>rendered</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>value</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>converter</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>converter</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>immediate</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>immediate</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>required</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>required</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>validator</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>validator</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>valueChangeListener</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>valueChangeListener</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <!-- HTML 4.0 textarea attributes -->
-      <attribute>
-         <name>datafld</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<!-- HTML 4.0 textarea attributes -->
+		<attribute>
+			<name>datafld</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>datasrc</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>datasrc</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>dataformatas</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>dataformatas</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>accesskey</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>accesskey</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>disabled</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>onblur</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>onfocus</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>onchange</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>onselect</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>onselect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>tabindex</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>readonly</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>readonly</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>cols</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>cols</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>rows</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>rows</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <!-- HTML 4.0 universal attributes -->
-      <attribute>
-         <name>dir</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<!-- HTML 4.0 universal attributes -->
+		<attribute>
+			<name>dir</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>lang</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>lang</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>style</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>title</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>styleClass</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <!-- HTML 4.0 event-handler attributes -->
-      <attribute>
-         <name>onclick</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<!-- HTML 4.0 event-handler attributes -->
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>ondblclick</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>onmousedown</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>onmouseup</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>onmouseover</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>onmousemove</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>onmouseout</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>onkeypress</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>onkeydown</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>onkeyup</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <!-- MyFaces extension: user role attributes -->
-      <attribute>
-         <name>enabledOnUserRole</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<!-- MyFaces extension: user role attributes -->
+		<attribute>
+			<name>enabledOnUserRole</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>visibleOnUserRole</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>visibleOnUserRole</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <!--
-        This attribute indicates that the component should be forced to use the specified id instead of
-        using the one that faces generates.  Components contained within a "list" will include a '[n]'
-        suffix where 'n' is the row index (unless the forceIdIndex attribute is set to false).
-        -->
-      <attribute>
-         <name>forceId</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<!--
+			This attribute indicates that the component should be forced to use the specified id instead of
+			using the one that faces generates.  Components contained within a "list" will include a '[n]'
+			suffix where 'n' is the row index (unless the forceIdIndex attribute is set to false).
+		-->
+		<attribute>
+			<name>forceId</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <!--
-        If the component is contained within an "list" (such as dataTable), this attribute indicates whether or not a
-        '[n]' suffix should be added where 'n' is the row index.  Default is true.  The attribute is ignored if forceId
-        is false (or not specified)
-        -->
-      <attribute>
-         <name>forceIdIndex</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<!--
+			If the component is contained within an "list" (such as dataTable), this attribute indicates whether or not a
+			'[n]' suffix should be added where 'n' is the row index.  Default is true.  The attribute is ignored if forceId
+			is false (or not specified)
+		-->
+		<attribute>
+			<name>forceIdIndex</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>wrap</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
+		</attribute>
+		<attribute>
+			<name>wrap</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <!-- MyFaces extension: user role attributes -->
-      <attribute>
-         <name>displayValueOnly</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<!-- MyFaces extension: user role attributes -->
+		<attribute>
+			<name>displayValueOnly</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>displayValueOnlyStyle</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>displayValueOnlyStyle</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-      <attribute>
-         <name>displayValueOnlyStyleClass</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>displayValueOnlyStyleClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
 			<description>Same as t:inputTextarea.</description>
-      </attribute>
-   </tag>
+		</attribute>
+	</tag>
 	<!-- selectOneMenu -->
 	<tag>
 		<name>selectOneMenu</name>
@@ -5895,278 +5986,360 @@
 			org.esupportail.commons.web.tags.MenuItemTag
 		</tag-class>
 		<body-content>JSP</body-content>
-      <description>
-            This tag renders as an HTML input element.
+		<description>
+			This tag renders as an HTML input element.
 
-            Unless otherwise specified, all attributes accept static values
-            or EL expressions.
-        </description>
-      <!-- all standard attributes of the commandButton tag -->
-      <!-- UICommand attributes -->
-      <!-- UIComponent attributes -->
-      <attribute>
-         <name>id</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        The developer-assigned ID of this component.  The ID must be unique
-        within the scope of the tag's enclosing naming container (e.g. 
-        h:form or f:subview).  This value must be a static value.
-    </description>
-      </attribute>
-      <attribute>
-         <name>binding</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        Identifies a backing bean property (of type UIComponent or appropriate
-        subclass) to bind to this component instance.  This value must be an
-        EL expression.
-    </description>
-      </attribute>
-      <attribute>
-         <name>rendered</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        A boolean value that indicates whether this component should be rendered.
-        Default value: true.
-    </description>
-      </attribute>
-      <attribute>
-         <name>action</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-    	Specifies the action to take when this command is invoked.
-    	
-        If the value is an expression, it is expected to be a method 
-        binding EL expression that identifies an action method. An action method
-        accepts no parameters and has a String return value, called the action
-        outcome, that identifies the next view displayed. The phase that this
-        event is fired in can be controlled via the immediate attribute.
+			Unless otherwise specified, all attributes accept static
+			values or EL expressions.
+		</description>
+		<!-- all standard attributes of the commandButton tag -->
+		<!-- UICommand attributes -->
+		<!-- UIComponent attributes -->
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				The developer-assigned ID of this component. The ID must
+				be unique within the scope of the tag's enclosing naming
+				container (e.g. h:form or f:subview). This value must be
+				a static value.
+			</description>
+		</attribute>
+		<attribute>
+			<name>binding</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				Identifies a backing bean property (of type UIComponent
+				or appropriate subclass) to bind to this component
+				instance. This value must be an EL expression.
+			</description>
+		</attribute>
+		<attribute>
+			<name>rendered</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				A boolean value that indicates whether this component
+				should be rendered. Default value: true.
+			</description>
+		</attribute>
+		<attribute>
+			<name>action</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				Specifies the action to take when this command is
+				invoked.
 
-    	If the value is a string literal, it is treated as a navigation outcome
-    	for the current view.  This is functionally equivalent to a reference to
-    	an action method that returns the string literal.
-    </description>
-      </attribute>
-      <attribute>
-         <name>actionListener</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        A method binding EL expression that identifies an action listener method
-        to be invoked if this component is activated by the user. An action
-        listener method accepts a parameter of type javax.faces.event.ActionEvent
-        and returns void. The phase that this event is fired in can be controlled
-        via the immediate attribute.
-    </description>
-      </attribute>
-      <attribute>
-         <name>immediate</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>
-        A boolean value that identifies the phase during which action events
-        should fire. During normal event processing, action methods and
-        action listener methods are fired during the "invoke application"
-        phase of request processing. If this attribute is set to "true",
-        these methods are fired instead at the end of the "apply request
-        values" phase.
-    </description>
-      </attribute>
-      <attribute>
-         <name>value</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>The initial value of this component.</description>
-      </attribute>
-      <!-- HTML 4.0 universal attributes -->
-      <attribute>
-         <name>dir</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: The direction of text display, either 'ltr' (left-to-right) or 'rtl' (right-to-left).</description>
-      </attribute>
-      <attribute>
-         <name>lang</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: The base language of this document.</description>
-      </attribute>
-      <attribute>
-         <name>style</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: CSS styling instructions.</description>
-      </attribute>
-      <attribute>
-         <name>title</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: An advisory title for this element.  Often used by the user agent as a tooltip.</description>
-      </attribute>
-      <attribute>
-         <name>styleClass</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>The CSS class for this element.  Corresponds to the HTML 'class' attribute.</description>
-      </attribute>
-      <!-- HTML 4.0 event-handler attributes -->
-      <attribute>
-         <name>onclick</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the element is clicked.</description>
-      </attribute>
-      <attribute>
-         <name>ondblclick</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the element is double-clicked.</description>
-      </attribute>
-      <attribute>
-         <name>onmousedown</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the pointing device is pressed over this element.</description>
-      </attribute>
-      <attribute>
-         <name>onmouseup</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the pointing device is released over this element.</description>
-      </attribute>
-      <attribute>
-         <name>onmouseover</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the pointing device is moved into this element.</description>
-      </attribute>
-      <attribute>
-         <name>onmousemove</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the pointing device is moved while it is in this element.</description>
-      </attribute>
-      <attribute>
-         <name>onmouseout</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when the pointing device is moves out of this element.</description>
-      </attribute>
-      <attribute>
-         <name>onkeypress</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when a key is pressed over this element.</description>
-      </attribute>
-      <attribute>
-         <name>onkeydown</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when a key is pressed down over this element.</description>
-      </attribute>
-      <attribute>
-         <name>onkeyup</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: Script to be invoked when a key is released over this element.</description>
-      </attribute>
-      <!-- HTML 4.0 button attributes -->
-      <attribute>
-         <name>accesskey</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Sets the access key for this element.</description>
-      </attribute>
-      <attribute>
-         <name>alt</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Specifies alternative text that can be used by a browser that can't show this element.</description>
-      </attribute>
-      <attribute>
-         <name>disabled</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: When true, this element cannot receive focus.</description>
-      </attribute>
-      <attribute>
-         <name>onblur</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Specifies a script to be invoked when the element loses focus.</description>
-      </attribute>
-      <attribute>
-         <name>onfocus</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Specifies a script to be invoked when the element receives focus.</description>
-      </attribute>
-      <attribute>
-         <name>onselect</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Specifies a script to be invoked when the element is selected.</description>
-      </attribute>
-      <attribute>
-         <name>onchange</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Specifies a script to be invoked when the element is modified.</description>
-      </attribute>
-      <attribute>
-         <name>tabindex</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: Specifies the position of this element within the tab order of the document.</description>
-      </attribute>
-      <attribute>
-         <name>type</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>HTML: A hint to the user agent about the content type of the linked resource.</description>
-      </attribute>
-      <attribute>
-         <name>size</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <type>java.lang.String</type>
-         <description>The initial width of this control.</description>
-      </attribute>
-      <!-- HtmlCommandButton attributes -->
-      <attribute>
-         <name>image</name>
-         <required>false</required>
-         <rtexprvalue>false</rtexprvalue>
-         <description>HTML: The URL of an image that renders in place of the button.</description>
-      </attribute>
-   </tag>
+				If the value is an expression, it is expected to be a
+				method binding EL expression that identifies an action
+				method. An action method accepts no parameters and has a
+				String return value, called the action outcome, that
+				identifies the next view displayed. The phase that this
+				event is fired in can be controlled via the immediate
+				attribute.
+
+				If the value is a string literal, it is treated as a
+				navigation outcome for the current view. This is
+				functionally equivalent to a reference to an action
+				method that returns the string literal.
+			</description>
+		</attribute>
+		<attribute>
+			<name>actionListener</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				A method binding EL expression that identifies an action
+				listener method to be invoked if this component is
+				activated by the user. An action listener method accepts
+				a parameter of type javax.faces.event.ActionEvent and
+				returns void. The phase that this event is fired in can
+				be controlled via the immediate attribute.
+			</description>
+		</attribute>
+		<attribute>
+			<name>immediate</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				A boolean value that identifies the phase during which
+				action events should fire. During normal event
+				processing, action methods and action listener methods
+				are fired during the "invoke application" phase of
+				request processing. If this attribute is set to "true",
+				these methods are fired instead at the end of the "apply
+				request values" phase.
+			</description>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				The initial value of this component.
+			</description>
+		</attribute>
+		<!-- HTML 4.0 universal attributes -->
+		<attribute>
+			<name>dir</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: The direction of text display, either 'ltr'
+				(left-to-right) or 'rtl' (right-to-left).
+			</description>
+		</attribute>
+		<attribute>
+			<name>lang</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: The base language of this document.
+			</description>
+		</attribute>
+		<attribute>
+			<name>style</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>HTML: CSS styling instructions.</description>
+		</attribute>
+		<attribute>
+			<name>title</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: An advisory title for this element. Often used by
+				the user agent as a tooltip.
+			</description>
+		</attribute>
+		<attribute>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				The CSS class for this element. Corresponds to the HTML
+				'class' attribute.
+			</description>
+		</attribute>
+		<!-- HTML 4.0 event-handler attributes -->
+		<attribute>
+			<name>onclick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the element is clicked.
+			</description>
+		</attribute>
+		<attribute>
+			<name>ondblclick</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the element is
+				double-clicked.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onmousedown</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the pointing device is
+				pressed over this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onmouseup</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the pointing device is
+				released over this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onmouseover</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the pointing device is
+				moved into this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onmousemove</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the pointing device is
+				moved while it is in this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onmouseout</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when the pointing device is
+				moves out of this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onkeypress</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when a key is pressed over
+				this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onkeydown</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when a key is pressed down
+				over this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onkeyup</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: Script to be invoked when a key is released over
+				this element.
+			</description>
+		</attribute>
+		<!-- HTML 4.0 button attributes -->
+		<attribute>
+			<name>accesskey</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Sets the access key for this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>alt</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Specifies alternative text that can be used by a
+				browser that can't show this element.
+			</description>
+		</attribute>
+		<attribute>
+			<name>disabled</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: When true, this element cannot receive focus.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onblur</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Specifies a script to be invoked when the element
+				loses focus.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onfocus</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Specifies a script to be invoked when the element
+				receives focus.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onselect</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Specifies a script to be invoked when the element
+				is selected.
+			</description>
+		</attribute>
+		<attribute>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Specifies a script to be invoked when the element
+				is modified.
+			</description>
+		</attribute>
+		<attribute>
+			<name>tabindex</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: Specifies the position of this element within the
+				tab order of the document.
+			</description>
+		</attribute>
+		<attribute>
+			<name>type</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				HTML: A hint to the user agent about the content type of
+				the linked resource.
+			</description>
+		</attribute>
+		<attribute>
+			<name>size</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				The initial width of this control.
+			</description>
+		</attribute>
+		<!-- HtmlCommandButton attributes -->
+		<attribute>
+			<name>image</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				HTML: The URL of an image that renders in place of the
+				button.
+			</description>
+		</attribute>
+	</tag>
 	<!-- selectOneRadio -->
 	<tag>
 		<name>selectOneRadio</name>
-		<tag-class>org.esupportail.commons.web.tags.SelectOneRadioTag</tag-class>
+		<tag-class>
+			org.esupportail.commons.web.tags.SelectOneRadioTag
+		</tag-class>
 		<body-content>JSP</body-content>
 		<description>
-			Same as h:selectOneRadio, except that the CSS class is set by default (see TagsConfiurator).
+			Same as h:selectOneRadio, except that the CSS class is set
+			by default (see TagsConfiurator).
 		</description>
 		<attribute>
 			<name>id</name>
@@ -6395,5 +6568,58 @@
 			<description>Same as h:selectOneRadio.</description>
 		</attribute>
 	</tag>
-	
+	<tag>
+		<name>paginator</name>
+		<tag-class>
+			org.esupportail.commons.web.tags.PaginatorTag
+		</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<name>id</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>Same as h:div.</description>
+		</attribute>
+		<attribute>
+			<name>paginator</name>
+			<required>true</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>org.esupportail.commons.web.beans.Paginator</type>
+			<description>The paginator</description>
+		</attribute>
+		<attribute>
+			<name>itemsName</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<type>java.lang.String</type>
+			<description>
+				name of items to display ex.: admin
+			</description>
+		</attribute>
+		<attribute>
+			<name>visibleBlocks</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>
+				3 possible values: itemsNumbers, navigation,
+				itemsPerPage. Indicates visible blocks (separated by
+				a comma and without space). Default value --> display
+				the 3 blocks. Important, the order of blocks plays on
+				the order of creation of blocks.
+			</description>
+		</attribute>
+		<attribute>
+			<name>styleClass</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>Same as h:div.</description>
+		</attribute>
+		<attribute>
+			<name>onchange</name>
+			<required>false</required>
+			<rtexprvalue>false</rtexprvalue>
+			<description>Same as h:selectOneMenu. Use in itemsPerPage block to update the pageSize.</description>
+		</attribute>
+	</tag>
 </taglib>
