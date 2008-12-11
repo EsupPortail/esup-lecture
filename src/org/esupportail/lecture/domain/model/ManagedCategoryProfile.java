@@ -116,10 +116,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			LOG.debug(IDEGAL + getId() + " - getElement()");
 		}
 		ManagedCategory element = (ManagedCategory) super.getElement(); 
-		if (element == null) {
+//	GB : incorrect
+//		if (element == null) {
 			loadCategory();
 			element = (ManagedCategory) super.getElement(); 
-		}
+//		}
 		return element;
 	}
 	
