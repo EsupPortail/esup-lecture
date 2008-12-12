@@ -17,6 +17,8 @@
 		properties/**/*example*
 		properties/dao/dao.xml
 		properties/dao/hibernate/hibernate.cfg.xml
+		properties/dao/hibernate/hibernate-jdbc.cfg.xml
+		properties/dao/hibernate/hibernate-jndi.cfg.xml
 		properties/dao/hibernate/mapping/*
 		properties/i18n/bundles/*.properties
 		properties/misc/abstractBeans.xml
@@ -46,6 +48,7 @@
 		properties/*.dtd
 		properties/mappings.xml
 		properties/esup-lecture.xml
+		properties/default.properties
 	" />            
 	<property name="app.zip-files.include" value="
 		${app.zip-files.shared.include}
