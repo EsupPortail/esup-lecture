@@ -105,17 +105,29 @@ public class ManagedCategory extends Category {
 
 	/**
 	 * @return ttl
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
 	public int getTtl() {
-		return getProfile().getTtl();
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + getProfileId() + " - getTtl()");
+		}
+		int t;
+		try {
+			t = getProfile().getTtl();
+			// Visibility is computed in ManagedCategoryProfile
+		} catch (ManagedCategoryNotLoadedException e) {
+			LOG.error("Impossible situation : ManagedCategoryNotLoadedException "
+					+ "in a ManagedCategory - please contact developer");
+			t = 0;
+		}
+		return t;
 	}
 	
 	/**
 	 * Return visibility of the category, taking care of inheritance regulars.
 	 * @return visibility 
-	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected VisibilitySets getVisibility() throws ManagedCategoryNotLoadedException {
+	protected VisibilitySets getVisibility() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getProfileId() + " - getVisibility()");
 		}
@@ -145,9 +157,8 @@ public class ManagedCategory extends Category {
 	/**	
 	 * Return editability of the category, taking care of inheritance regulars.
 	 * @return edit
-	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected Editability getEdit() throws ManagedCategoryNotLoadedException {
+	protected Editability getEdit() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + getProfileId() + " - getEdit()");
 		}
@@ -195,6 +206,11 @@ public class ManagedCategory extends Category {
 		private VisibilitySets visibility;
 		
 		/**
+		 * default ttl for the source
+		 */
+		private int ttl;
+		
+		/**
 		 * Constructor. 
 		 */
 		protected InnerFeatures() {
@@ -224,6 +240,18 @@ public class ManagedCategory extends Category {
 		 */
 		protected void setVisibility(final VisibilitySets visibility) {
 			this.visibility = visibility;
+		}
+		/**
+		 * @return ttl
+		 */
+		protected int getTtl() {
+			return ttl;
+		}
+		/**
+		 * @param ttl
+		 */
+		protected void setTtl(final int ttl) {
+			this.ttl = ttl;
 		}
 	
 	}

@@ -77,7 +77,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * timeOut to get the Source.
 	 */	
 	private int timeOut;
-
+	/**
+	 * ttl of the Source.
+	 */	
+	private int ttl;
 	/*
 	 ************************** INIT ******************************** */	
 	
@@ -133,13 +136,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		super.setId(super.makeId("m", categoryProfile.getId(), fileId));
 	}
 	
-	/**
-	 * @see org.esupportail.lecture.domain.model.SourceProfile#getTtl()
-	 */
-	@Override
-	public int getTtl() {
-		return getParent().getTtl();
-	}
+
 	
 	
 	/**
@@ -181,11 +178,32 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		computeFeatures();
 		return timeOut;
 	}
-
+	
 	/**
-	 * @see org.esupportail.lecture.domain.model.SourceProfile#setTimeOut(int)
+	 * Return ttl of the source, taking care of inheritance regulars.
+	 * @return ttl
 	 */
 	@Override
+	public int getTtl() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - getTtl()");
+		}
+		computeFeatures();
+		return ttl;
+	}
+// GB : changement de spécifs	
+//	/**
+//	 * @see org.esupportail.lecture.domain.model.SourceProfile#getTtl()
+//	 */
+//	@Override
+//	public int getTtl() {
+//		return getParent().getTtl();
+//	}
+
+	/**
+	 * @param timeOut 
+	 * 
+	 */
 	public void setTimeOut(final int timeOut) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - setTimeOut(" + timeOut + ")");
@@ -194,6 +212,18 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		featuresComputed = false;
 	}
 
+	/**
+	 * @param ttl 
+	 * 
+	 */
+	public void setTtl(final int ttl) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.getId() + " - setTtl(" + ttl + ")");
+		}
+		inner.setTtl(ttl);
+		featuresComputed = false;
+	}
+	
 	/**
 	 * Computes rights on parameters shared between parent ManagedCategory and managedSourceProfile.
 	 * (timeOut, visibility,access)
@@ -208,18 +238,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				access = inner.getAccess();
 				visibility = inner.getVisibility();
 				timeOut = inner.getTimeOut();
+				ttl = inner.getTtl();
 					
 				if (access == null) {
 					access = category.getAccess();
 				}
 				VisibilitySets v = null;
-				try {
-					v = category.getVisibility();
-				} catch (ManagedCategoryNotLoadedException e) {
-					LOG.error("Impossible situation : ManagedCategoryNotLoadedException "
-							+ "in a ManagedSourceProfile - please contact developer");
-					v = null;
-				}
+				v = category.getVisibility();
 				
 				if (visibility == null) {
 					visibility = v;
@@ -229,9 +254,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				if (timeOut == 0) {
 					timeOut = category.getTimeOut();
 				}
+				if (ttl == 0) {
+					ttl = category.getTtl();
+				}
 			} else {
 				// No trust => features of categoryProfile 
-				access = categoryProfile.getAccess();
+				// GB access = categoryProfile.getAccess();
+				access = category.getAccess();
 				try {
 					visibility = categoryProfile.getVisibility();
 				} catch (ManagedCategoryNotLoadedException e) {
@@ -240,7 +269,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 						+ "please contact developper)";
 				LOG.warn(errorMsg);
 			}
-				timeOut = categoryProfile.getTimeOut();
+				timeOut = category.getTimeOut();
+				ttl = category.getTtl();
 			}
 			featuresComputed = true;
 		}
@@ -250,7 +280,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 *************************** INNER CLASS ******************************** */	
 	
 	/**
-	 * Inner Features (accessibility, visibility, timeOut) declared in xml file. 
+	 * Inner Features (accessibility, visibility, timeOut,ttl) declared in xml file. 
 	 * These values are used according to inheritance regulars
 	 * @author gbouteil
 	 */
@@ -268,6 +298,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		 * timeOut to get the remote source.
 		 */
 		private int timeOut;
+		
+		/**
+		 * ttl to get the remote source.
+		 */
+		private int ttl;
 		
 		/**
 		 * Constructor. 
@@ -311,6 +346,18 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		 */
 		protected void setTimeOut(final int timeOut) {
 			this.timeOut = timeOut;
+		}
+		/**
+		 * @return ttl
+		 */
+		protected int getTtl() {
+			return ttl;
+		}
+		/**
+		 * @param ttl
+		 */
+		protected void setTtl(final int ttl) {
+			this.ttl = ttl;
 		}
 				
 	}

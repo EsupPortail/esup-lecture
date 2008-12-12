@@ -224,6 +224,22 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 
 	/**
+	 * @return ttl
+	 * @throws ManagedCategoryNotLoadedException 
+	 */
+	public int getTtl() throws ManagedCategoryNotLoadedException {
+		computeFeatures();
+		return ttl;
+	}
+	
+	/**
+	 * @param ttl 
+	 */
+	public void setTtl(final int ttl) {
+		inner.setTtl(ttl);
+		featuresComputed = false;
+	}
+	/**
 	 * Return visibility of the category (or categoryProfile), taking care of inheritance regulars.
 	 * @return visibility
 	 * @throws ManagedCategoryNotLoadedException 
@@ -277,8 +293,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 				ManagedCategory cat = getElement();
 				visibility = cat.inner.getVisibility();
 				edit = cat.inner.getEdit();
+				ttl = cat.inner.getTtl();
 					
-				// Inutile : edit obligatoire le XML d'une category				
+				// Inutile : edit est obligatoire dans le XML d'une category				
 				if (edit == null) {
 					edit = inner.getEdit();
 				}
@@ -287,10 +304,15 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 				} else if (visibility.isEmpty()) {
 					visibility = inner.getVisibility();
 				}
+				if (ttl == 0) {
+					ttl = inner.getTtl();
+				}
+				
 			} else {
 				// No trust => features of categoryProfile 
 				edit = inner.getEdit();
 				visibility = inner.getVisibility();
+				ttl = inner.getTtl();
 			}
 			featuresComputed = true;
 		}
@@ -315,6 +337,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		 * Visibility rights for groups on the remote source.
 		 */
 		private VisibilitySets visibility;
+		
+		/**
+		 * ttl for the category
+		 */
+		private int ttl;
 	
 		/**
 		 * Constructor. 
@@ -347,6 +374,19 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		protected void setVisibility(final VisibilitySets visibility) {
 			this.visibility = visibility;
 		}
+		/**
+		 * @return ttl
+		 */
+		protected int getTtl() {
+			return ttl;
+		}
+		/**
+		 * @param ttl
+		 */
+		protected void setTtl(final int ttl) {
+			this.ttl = ttl;
+		}
+		
 	}
 
 	/* UPDATING */
@@ -567,19 +607,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	protected void setFeaturesComputed(final boolean featuresComputed) {
 			this.featuresComputed = featuresComputed;
 		}
-	/**
-	 * @return ttl
-	 */
-	public int getTtl() {
-		return ttl;
-	}
+
 	
-	/**
-	 * @param ttl 
-	 */
-	public void setTtl(final int ttl) {
-		this.ttl = ttl;
-	}
+
 	/**
 	 * @return timeOut
 	 */

@@ -58,8 +58,9 @@ interface ManagedElementProfile extends ElementProfile {
 	/**
 	 * Returns ttl of the ManagedElementProfile.
 	 * @return ttl 
+	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	int getTtl();
+	int getTtl() throws ManagedCategoryNotLoadedException;
 
 
 }

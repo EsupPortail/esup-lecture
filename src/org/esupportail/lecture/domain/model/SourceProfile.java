@@ -262,6 +262,8 @@ public abstract class SourceProfile implements ElementProfile {
 		return ttl;
 	}
 
+
+	
 	/**
 	 * @return timeOut
 	 */
@@ -269,11 +271,6 @@ public abstract class SourceProfile implements ElementProfile {
 		return timeOut;
 	}
 
-	/**
-	 * @param timeOut 
-	 */
-	public void setTimeOut(final int timeOut) {
-		this.timeOut = timeOut;
-	}
+
 
 }
