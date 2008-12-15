@@ -67,51 +67,7 @@ public class ManagedCategoryDummy extends ManagedCategory implements DummyInterf
 		return DomainTools.getDummyTtl();
 	}
 	
-	/**
-	 * Return visibility of the category, only in case "not trusted".
-	 * @return visibility 
-	 * @throws ManagedCategoryNotLoadedException 
-	 */
-	@Override
-	protected VisibilitySets getVisibility()  {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + getProfileId() + " - getVisibility()");
-		}
-		VisibilitySets v;
-		try {
-			v = getProfile().getVisibility();
-			// Visibility is computed in ManagedCategoryProfile
-		} catch (ManagedCategoryNotLoadedException e) {
-			LOG.error("Impossible situation : ManagedCategoryNotLoadedException "
-					+ "in a ManagedCategory - please contact developer");
-			v = null;
-		}
-		// Visibility is computed in ManagedCategoryProfile
-		return v;
-	}
 	
-	/**	
-	 * Return editability of the category, only in case "not trusted".
-	 * @return edit
-	 * @throws ManagedCategoryNotLoadedException 
-	 */
-	@Override
-	protected Editability getEdit() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id = " + getProfileId() + " - getEdit()");
-		}
-		Editability e;
-		try {
-			e = getProfile().getEdit();
-			// Editability is computed in ManagedCategoryProfile
-			
-		} catch (ManagedCategoryNotLoadedException ex) {
-			LOG.error("Impossible situation : ManagedCategoryNotLoadedException"
-					+ " in a ManagedCategory, please contact developer");
-			e = null;
-		}
-		return e;
-	}
 	
 	
 	/* 

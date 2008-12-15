@@ -105,7 +105,6 @@ public class ManagedCategory extends Category {
 
 	/**
 	 * @return ttl
-	 * @throws ManagedCategoryNotLoadedException 
 	 */
 	public int getTtl() {
 		if (LOG.isDebugEnabled()) {

@@ -261,14 +261,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				// No trust => features of categoryProfile 
 				// GB access = categoryProfile.getAccess();
 				access = category.getAccess();
-				try {
-					visibility = categoryProfile.getVisibility();
-				} catch (ManagedCategoryNotLoadedException e) {
-					String errorMsg = "A ManagedCategoryNotLoadedException is thrown whereas code "
-						+ "is in a managedSourceProfile (defined in managedCategory file,"
-						+ "please contact developper)";
-				LOG.warn(errorMsg);
-			}
+				visibility = category.getVisibility();
 				timeOut = category.getTimeOut();
 				ttl = category.getTtl();
 			}
