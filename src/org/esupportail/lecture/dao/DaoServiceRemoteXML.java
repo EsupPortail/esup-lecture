@@ -121,7 +121,9 @@ public class DaoServiceRemoteXML implements InitializingBean {
 				} catch (InfoDaoException e) {
 					ret = new ManagedCategoryDummy(profile, e);
 					String msg = "Create dummy category : "+ cacheKey;
+					LOG.warn("=========");
 					LOG.warn(msg);
+					LOG.warn("=========");
 				}
 				cache.put(new Element(cacheKey, ret));
 				cache.get(cacheKey).setTimeToLive(ret.getTtl());
@@ -130,7 +132,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 				}
 			} else {
 				LOG.debug("Already in cache : "+cacheKey+ " Ttl: "+ String.valueOf(element.getTimeToLive()));
-				LOG.debug("Already in cache : "+cacheKey+ " Creation time : "+ String.valueOf(element.getCreationTime()));
+				//LOG.debug("Already in cache : "+cacheKey+ " Creation time : "+ String.valueOf(element.getCreationTime()));
 				ret = (ManagedCategory) element.getObjectValue();
 				if (ret instanceof ManagedCategoryDummy) {
 					ret = (ManagedCategoryDummy) element.getObjectValue();
@@ -183,7 +185,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			Exception e = thread.getException();
 			if (e != null) {
 				String msg = "Thread getting Source launches XMLParseException";
-				LOG.error(msg);
+				LOG.warn(msg);
 				throw new XMLParseException(msg, e);
 			}
 		} catch (InterruptedException e) {
@@ -235,7 +237,9 @@ public class DaoServiceRemoteXML implements InitializingBean {
 				} catch (InfoDaoException e) {
 					ret = new SourceDummy(sourceProfile, e);
 					String msg = "Create dummy source : "+ urlSource;
+					LOG.warn("=========");
 					LOG.warn(msg);
+					LOG.warn("=========");
 				}
 				cache.put(new Element(urlSource, ret));
 				cache.get(urlSource).setTimeToLive(ret.getTtl());
@@ -244,7 +248,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 				}
 			} else {
 				LOG.debug("Already in cache : "+urlSource+ " Ttl: "+ String.valueOf(element.getTimeToLive()));
-				LOG.debug("Already in cache : "+urlSource+ " Creation time : "+ String.valueOf(element.getCreationTime()));
+				//LOG.debug("Already in cache : "+urlSource+ " Creation time : "+ String.valueOf(element.getCreationTime()));
 				ret = (Source) element.getObjectValue();
 				if (ret instanceof SourceDummy) {
 					ret = (SourceDummy) element.getObjectValue();
@@ -297,7 +301,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			Exception e = thread.getException();
 			if (e != null) {
 				String msg = "Thread getting Source launches XMLParseException";
-				LOG.error(msg);
+				LOG.warn(msg);
 				throw new XMLParseException(msg, e);
 			}
 		} catch (XMLParseException e) {

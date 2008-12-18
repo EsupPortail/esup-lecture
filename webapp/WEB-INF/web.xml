@@ -22,7 +22,7 @@
 			The location of log4j config file. 
 		</description>
 		<param-name>log4jConfigLocation</param-name>
-		<param-value>classpath:/properties/logging/log4j.properties</param-value>
+		<param-value>classpath:log4j.properties</param-value>
 	</context-param>
 
 	<context-param>

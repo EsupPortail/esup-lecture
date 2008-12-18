@@ -362,32 +362,14 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		List<SourceBean> tempListSourceBean = null;
 		List<SourceBean> ret = new ArrayList<SourceBean>();
 		String catId;
-		// TODO (RB/VR <- GB) : Il n'y a plus de ElementDummyBeanException => a revoir
-		//try {
-			catId = categoryBean.getId();
-			tempListSourceBean = getFacadeService().getDisplayedSources(getUID(), catId);
-			//Temporary: remove dummy form the list
-			for (Iterator<SourceBean> iter = tempListSourceBean.iterator(); iter.hasNext();) {
-				SourceBean element = iter.next();
-				if (!(element instanceof SourceDummyBean)) {
-					ret.add(element);				
-				}
+		catId = categoryBean.getId();
+		tempListSourceBean = getFacadeService().getDisplayedSources(getUID(), catId);
+		for (Iterator<SourceBean> iter = tempListSourceBean.iterator(); iter.hasNext();) {
+			SourceBean element = iter.next();
+			if (!(element instanceof SourceDummyBean)) {
+				ret.add(element);				
 			}
-		// TODO (RB/VR <- GB) : Il n'y a plus de ElementDummyBeanException => a revoir
-		//} catch (ElementDummyBeanException e) {
-			if (LOG.isWarnEnabled()) {
-				//TODO (RB) : see again dummy management
-				if (categoryBean instanceof CategoryDummyBean) {
-					CategoryDummyBean categoryDummyBean = (CategoryDummyBean) categoryBean;
-					LOG.warn("Try to get sources on a CategoryDummyBean. DummyBean cause: " 
-						+ categoryDummyBean.getCause());
-				} else {
-					LOG.error("Unable to cast as a CategoryDummyBean current object.");
-				}
-			}
-
-		// TODO (RB/VR <- GB) : Il n'y a plus de ElementDummyBeanException => a revoir
-		//}		
+		}
 		return ret;
 	}
 
