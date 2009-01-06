@@ -120,18 +120,21 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					ret = getFreshManagedCategory(profile, ptCas);
 				} catch (InfoDaoException e) {
 					ret = new ManagedCategoryDummy(profile, e);
-					String msg = "Create dummy category : "+ cacheKey;
+					String msg = "Create dummy category : " + cacheKey;
 					LOG.warn("=========");
 					LOG.warn(msg);
 					LOG.warn("=========");
 				}
-				cache.put(new Element(cacheKey, ret));
-				cache.get(cacheKey).setTimeToLive(ret.getTtl());
+				Element cacheElement = new Element(cacheKey, ret);
+				cacheElement.setTimeToLive(ret.getTtl());
+				cache.put(cacheElement);
 				if (LOG.isDebugEnabled()) {
-					LOG.debug("Put category in cache : "+cacheKey+ " Ttl: "+String.valueOf(ret.getTtl()));
+					LOG.debug("Put category in cache : " + cacheKey 
+						+ " Ttl: " + String.valueOf(ret.getTtl()));
 				}
 			} else {
-				LOG.debug("Already in cache : "+cacheKey+ " Ttl: "+ String.valueOf(element.getTimeToLive()));
+				LOG.debug("Already in cache : " + cacheKey 
+					+ " Ttl: " + String.valueOf(element.getTimeToLive()));
 				//LOG.debug("Already in cache : "+cacheKey+ " Creation time : "+ String.valueOf(element.getCreationTime()));
 				ret = (ManagedCategory) element.getObjectValue();
 				if (ret instanceof ManagedCategoryDummy) {
@@ -236,18 +239,21 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					ret = getFreshSource(sourceProfile, ptCas);
 				} catch (InfoDaoException e) {
 					ret = new SourceDummy(sourceProfile, e);
-					String msg = "Create dummy source : "+ urlSource;
+					String msg = "Create dummy source : " + urlSource;
 					LOG.warn("=========");
 					LOG.warn(msg);
 					LOG.warn("=========");
 				}
-				cache.put(new Element(urlSource, ret));
-				cache.get(urlSource).setTimeToLive(ret.getTtl());
+				Element cacheElement = new Element(urlSource, ret);
+				cacheElement.setTimeToLive(ret.getTtl());
+				cache.put(cacheElement);
 				if (LOG.isDebugEnabled()) {
-					LOG.debug("Put source in cache : "+urlSource+ " Ttl: "+String.valueOf(ret.getTtl()));
+					LOG.debug("Put source in cache : " + urlSource
+						+ " Ttl: " + String.valueOf(ret.getTtl()));
 				}
 			} else {
-				LOG.debug("Already in cache : "+urlSource+ " Ttl: "+ String.valueOf(element.getTimeToLive()));
+				LOG.debug("Already in cache : " + urlSource 
+					+ " Ttl: " + String.valueOf(element.getTimeToLive()));
 				//LOG.debug("Already in cache : "+urlSource+ " Creation time : "+ String.valueOf(element.getCreationTime()));
 				ret = (Source) element.getObjectValue();
 				if (ret instanceof SourceDummy) {
