@@ -14,7 +14,6 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.utils.DummyInterface;
 import org.esupportail.lecture.exceptions.LectureException;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 
 /**
  * CategoryDummy element : a category that cannot be created well.
@@ -34,11 +33,7 @@ public class ManagedCategoryDummy extends ManagedCategory implements DummyInterf
 	 * Cause of the Dummy Bean.
 	 */
 	private InfoDaoException cause;
-	/**
-	 * Inner features declared in XML file in normal way.
-	 * Here it is to simulate.
-	 */
-	protected InnerFeatures inner;
+	
 
 	/*
 	 *************************** INIT ************************************** */
@@ -49,7 +44,6 @@ public class ManagedCategoryDummy extends ManagedCategory implements DummyInterf
 	 */
 	public ManagedCategoryDummy(final ManagedCategoryProfile cp, final InfoDaoException e) {
 		super(cp);
-		inner = new InnerFeatures();
 		cause = e;
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("ManagedCategoryDummy(" + cp.getId() + ")");
@@ -73,38 +67,6 @@ public class ManagedCategoryDummy extends ManagedCategory implements DummyInterf
 	/* 
 	 *************************** INNER CLASS ******************************** */	
 	
-	/**
-	 * Inner Features (editability, visibility) normally declared in xml file but not present here.
-	 * => requesting these values throws exception 
-	 * @author gbouteil
-	 */
-	protected class InnerFeatures {
-				
-		/**
-		 * Constructor. 
-		 */
-		protected InnerFeatures() {
-			// Nothing to do
-		}
-
-		/**
-		 * @return edit
-		 * @throws ManagedCategoryNotLoadedException 
-		 */
-		protected Editability getEdit() throws ManagedCategoryNotLoadedException  {
-			throw new ManagedCategoryNotLoadedException("No edit parameter in ManagedCtageoryDummy object");
-		}
-		
-		/**
-		 * @return edit
-		 * @throws ManagedCategoryNotLoadedException 
-		 */
-		protected VisibilitySets getVisibility()throws ManagedCategoryNotLoadedException {
-			throw new ManagedCategoryNotLoadedException("No edit parameter in ManagedCtageoryDummy object");
-		}
-			
-	}
-
 	
 	
 	/* UPDATING */
