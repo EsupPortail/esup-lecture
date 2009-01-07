@@ -125,9 +125,11 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					LOG.warn(msg);
 					LOG.warn("=========");
 				}
-				Element cacheElement = new Element(cacheKey, ret);
-				cacheElement.setTimeToLive(ret.getTtl());
-				cache.put(cacheElement);
+				cache.put(new Element(cacheKey, ret));
+				Element e = cache.get(cacheKey);
+				int ttl = ret.getTtl();
+				e.setTimeToLive(ttl);
+
 				if (LOG.isDebugEnabled()) {
 					LOG.debug("Put category in cache : " + cacheKey 
 						+ " Ttl: " + String.valueOf(ret.getTtl()));
