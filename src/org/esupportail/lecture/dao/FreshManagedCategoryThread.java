@@ -120,7 +120,10 @@ public class FreshManagedCategoryThread extends Thread {
 				sp.setFileId(srcProfileID);
 				sp.setName(srcProfile.valueOf("@name"));
 				sp.setSourceURL(srcProfile.valueOf("@url"));
-				sp.setTtl(Integer.parseInt(srcProfile.valueOf("@ttl")));
+				String srcTtl = srcProfile.valueOf("@ttl");
+				if (!(srcTtl.equals(""))) {
+					sp.setTtl(Integer.parseInt(srcTtl));
+				}
 				//use of caculated sp.getId() as key for orderedSourceIDs
 				orderedSourceIDs.put(sp.getId(), xmlOrder);
 				xmlOrder += 1;
