@@ -251,3 +251,16 @@
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 }
+
+.esup-lecture .conteneurLogoGuest {
+	background-image: url(lecture-guest.jpg);
+	background-repeat: no-repeat;
+	width: 100%;
+	height: 125px;
+	text-align: center;
+	margin-right: auto;
+	margin-bottom: auto;
+	margin-left: auto;
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+}

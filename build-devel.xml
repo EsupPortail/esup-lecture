@@ -48,7 +48,7 @@
 		properties/*.dtd
 		properties/mappings.xml
 		properties/esup-lecture.xml
-		properties/default.properties
+		properties/defaults.properties
 	" />            
 	<property name="app.zip-files.include" value="
 		${app.zip-files.shared.include}

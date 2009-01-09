@@ -27,7 +27,7 @@ toggleButton: read/unread toggle button
 		<h:form id="home">
 			<!-- ********* Rendering ********* -->
 			<h:outputText id="homeLeft" escape="false"
-				rendered="#{homeController.treeVisible}">
+				rendered="#{homeController.treeVisible and !homeController.guestMode}">
 				<t:htmlTag value="table" styleClass="portlet-table-body"
 					style="width: 100%">
 					<t:htmlTag value="tr">
@@ -43,7 +43,7 @@ toggleButton: read/unread toggle button
 				</t:htmlTag>
 			</h:outputText>
 			<h:outputText id="homeRight" escape="false"
-				rendered="#{!homeController.treeVisible}">
+				rendered="#{!homeController.treeVisible or homeController.guestMode}">
 				<jsp:include page="homeRight.jsp" />
 			</h:outputText>
 		</h:form>

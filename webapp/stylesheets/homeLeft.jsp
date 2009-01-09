@@ -12,7 +12,7 @@
  -->
 	<!-- TREE -->
 	<t:htmlTag value="div" id="left" forceId="true">
-		<t:div styleClass="conteneurLogo">
+		<t:div styleClass="#{homeController.guestMode ? 'conteneurLogoGuest' : 'conteneurLogo' }">
 		</t:div>
 		<!-- Title -->
 		<t:htmlTag value="span" styleClass="portlet-section-header">
