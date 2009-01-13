@@ -32,6 +32,14 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	 */
 	private String name;
 	/**
+	 * number of Items in the source
+	 */
+	private int itemsNumber;
+	/**
+	 * number of unread Items in the source
+	 */
+	private int unreadItemsNumber;
+	/**
 	 * type of source.
 	 * "subscribed" --> The source is alloweb and subscribed by the user
 	 * "notSubscribed" --> The source is alloweb and not yet subscribed by the user (used in edit mode)
@@ -233,28 +241,45 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	}
 	
 	/**
-	 * @return number of Unread Items in the source
+	 * @return the unreadItemsNumber
 	 */
-	private int getUnreadItemsNumbers() {
+	public int getUnreadItemsNumber() {
+		return unreadItemsNumber;
+	}
+	/**
+	 */
+	public void setUnreadItemsNumber() {
 		int ret = 0;
 		for (ItemWebBean item : getItems()) {
 			if (!item.isRead()) {
 				ret += 1;
 			}
 		}
-		return ret;
+		this.unreadItemsNumber = ret;
 	}
 	
+	/**
+	 * @param unreadItemsNumber the unreadItemsNumber to set
+	 */
+	public void setUnreadItemsNumber(int unreadItemsNumber) {
+		this.unreadItemsNumber = unreadItemsNumber;
+	}
+	/**
+	 * @param itemsNumber the itemsNumber to set
+	 */
+	public void setItemsNumber() {
+		this.itemsNumber = getItems().size();
+	}
 	/**
 	 * @return if source contains Items to display or not
 	 */
 	public boolean isWithDisplayedItems() {
 		if (itemDisplayMode == ItemDisplayMode.UNREAD) {
-			if (getUnreadItemsNumbers() > 0) {
+			if (unreadItemsNumber > 0) {
 				return true;
 			}
 		} else {
-			if (getItemsNumber() > 0) {
+			if (itemsNumber > 0) {
 				return true;
 			}
 		}

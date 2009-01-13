@@ -69,7 +69,15 @@ public class HomeController extends TwoPanesController {
 		} catch (Exception e) {
 			throw new WebException("Error in toggleItemReadState", e);
 		}
+		if (ualItem.isRead()) {
+			selectedSource.setUnreadItemsNumber(selectedSource.getUnreadItemsNumber()+1);
+		} else {
+			if (selectedSource.getUnreadItemsNumber() > 0) {
+				selectedSource.setUnreadItemsNumber(selectedSource.getUnreadItemsNumber()-1);
+			}
+		}
 		ualItem.setRead(!ualItem.isRead());
+		
 		return "OK";
 	}
 

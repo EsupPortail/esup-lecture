@@ -316,6 +316,8 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			sourceWebBean.setName(cause);
 			sourceWebBean.setType(AvailabilityMode.OBLIGED);
 			sourceWebBean.setItemDisplayMode(ItemDisplayMode.ALL);
+			sourceWebBean.setItemsNumber();
+			sourceWebBean.setUnreadItemsNumber(0);
 		} else {
 			//get Item for the source
 			List<ItemBean> itemsBeans = getItems(sourceBean);
@@ -324,6 +326,8 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			sourceWebBean.setName(sourceBean.getName());
 			sourceWebBean.setType(sourceBean.getType());		
 			sourceWebBean.setItemDisplayMode(sourceBean.getItemDisplayMode());
+			sourceWebBean.setItemsNumber();
+			sourceWebBean.setUnreadItemsNumber();
 		}
 		return sourceWebBean;
 	}
