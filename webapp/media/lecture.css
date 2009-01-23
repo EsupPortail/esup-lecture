@@ -1,6 +1,51 @@
 @CHARSET "ISO-8859-1";
 
 /* main divs style */
+
+.esup-lecture #twoPanels {
+
+position:relative;
+display: inline;
+}
+
+.esup-lecture #panelLeft {
+float: left;
+border-right: 1px solid black;
+padding-left: 2px;
+}
+.esup-lecture #panelRight {
+float: right;
+
+}
+
+.esup-lecture .portlet-menu {
+clear: both;
+}
+
+.esup-lecture li.currentSource,
+.esup-lecture li.expanded ul li.currentSource .buttonStyle
+ {
+font-weight: bold;
+}
+
+.esup-lecture li.otherSource
+ {
+font-weight: normal;
+}
+
+.esup-lecture .currentCategory {
+font-weight: bold;
+}
+
+.esup-lecture .otherCategory {
+font-weight: bold;
+}
+
+.esup-lecture .unreadItemsNumber {
+margin-left:-5px;
+font-size: 0.9em;
+}
+
 .esup-lecture #left {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	letter-spacing: .5px;

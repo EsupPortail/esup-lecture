@@ -23,7 +23,7 @@
 			<t:dataList value="#{homeController.context.categories}" var="cat"
 				layout="simple">
 				<t:htmlTag value="li"
-					styleClass="#{cat.folded ? 'collapsed' : 'expanded' }">
+					styleClass="#{cat.folded ? 'collapsed' : 'expanded'}">
 					<h:commandButton action="#{homeController.toggleFoldedState}"
 						image="/media/moins.gif" alt="#{msgs['colapseCategory']}"
 						title="#{msgs['colapseCategory']}" rendered="#{!cat.folded}">
@@ -38,7 +38,7 @@
 					</h:commandButton>
 					<h:commandButton action="#{homeController.selectElement}"
 						alt="#{cat.name}" title="#{cat.name}" value="#{cat.name}"
-						styleClass="buttonStyle">
+						styleClass="#{cat.id == homeController.ualCategory.id ? 'buttonStyle currentCategory' : 'buttonStyle otherCategory'}">
 						<t:updateActionListener property="#{homeController.ualCategory}"
 							value="#{cat}" />
 						<t:updateActionListener property="#{homeController.ualSource}"
@@ -47,7 +47,8 @@
 					<t:htmlTag value="ul" rendered="#{!cat.folded}">
 						<!-- Sources -->
 						<t:dataList value="#{cat.sources}" var="src" layout="simple">
-							<t:htmlTag value="li">
+							<t:htmlTag value="li"
+								styleClass=" #{src.id == homeController.ualSource.id ? 'currentSource' : 'otherSource'}">
 								<h:commandButton action="#{homeController.selectElement}"
 									image="/media/puce.gif" alt="#{msgs['selectSource']}"
 									title="#{msgs['selectSource']}">
@@ -64,7 +65,8 @@
 									<t:updateActionListener property="#{homeController.ualSource}"
 										value="#{src}" />
 								</h:commandButton>
-								<h:outputText value="#{src.unreadItemsNumber}" />
+								<h:outputText value="(#{src.unreadItemsNumber})" styleClass="unreadItemsNumber"
+									rendered="#{src.unreadItemsNumber > 0}"/>
 							</t:htmlTag>
 						</t:dataList>
 					</t:htmlTag>

@@ -25,27 +25,24 @@ toggleButton: read/unread toggle button
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
 	<e:page stringsVar="msgs" menuItem="welcome" locale="#{homeController.locale}">
 		<h:form id="home">
+
 			<!-- ********* Rendering ********* -->
-			<h:outputText id="homeLeft" escape="false"
+			<t:div id="twoPanels" forceId="true" 
 				rendered="#{homeController.treeVisible and !homeController.guestMode}">
-				<t:htmlTag value="table" styleClass="portlet-table-body"
-					style="width: 100%">
-					<t:htmlTag value="tr">
-						<t:htmlTag value="td" id="TDLeft" forceId="true"
-							style="width: #{homeController.treeSize}%">
-							<jsp:include page="homeLeft.jsp" />
-						</t:htmlTag>
-						<t:htmlTag value="td" id="TDRight" forceId="true"
-							style="width: #{100 - homeController.treeSize}%">
-							<jsp:include page="homeRight.jsp" />
-						</t:htmlTag>
-					</t:htmlTag>
-				</t:htmlTag>
-			</h:outputText>
-			<h:outputText id="homeRight" escape="false"
+				<t:div id="panelLeft" forceId="true" style="width: #{homeController.treeSize}%">
+					<jsp:include page="homeLeft.jsp" />
+				</t:div>
+				<t:div id="panelRight" forceId="true"  style="width: #{99-homeController.treeSize}%">
+					<jsp:include page="homeRight.jsp" />
+				</t:div>
+			</t:div>
+			<t:div id="onePanel" forceId="true" 
 				rendered="#{!homeController.treeVisible or homeController.guestMode}">
-				<jsp:include page="homeRight.jsp" />
-			</h:outputText>
+				<t:div id="panelRight" forceId="true" >
+					<jsp:include page="homeRight.jsp" />
+				</t:div>
+			</t:div>
+
 		</h:form>
 		<script type="text/javascript">
 		document.getElementById("home:itemDisplayModeButton").style.display = "none";
