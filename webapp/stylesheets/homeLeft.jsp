@@ -65,7 +65,7 @@
 									<t:updateActionListener property="#{homeController.ualSource}"
 										value="#{src}" />
 								</h:commandButton>
-								<h:outputText value="(#{src.unreadItemsNumber})" styleClass="unreadItemsNumber"
+								<h:outputText value=" (#{src.unreadItemsNumber})" styleClass="unreadItemsNumber"
 									rendered="#{src.unreadItemsNumber > 0}"/>
 							</t:htmlTag>
 						</t:dataList>

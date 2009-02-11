@@ -75,6 +75,9 @@
     			<value>functions.js</value>
     			<value>js/jquery-latest.pack.js</value>
     			<value>js/thickbox.js</value>
+    			<value>js/jquery.ui.all.js</value>
+    			<value>js/jquery.layout.js</value>
+    			<value>js/init-js-layout.js</value>
     		</list>
     	</property>
     	<property name="stylesheets" >

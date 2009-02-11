@@ -24,6 +24,33 @@ toggleButton: read/unread toggle button
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
 	<e:page stringsVar="msgs" menuItem="welcome" locale="#{homeController.locale}">
+		<t:stylesheet path="/media/thickbox.css" media="screen"/>
+		<t:stylesheet path="/media/js-layout.css" media="screen"/>
+
+<script type="text/javascript"><!--
+
+/*
+JHomeController.getContextKey(
+		function(data) { 
+			alert(data);
+		}
+);
+
+JHomeController.getDummyText(
+		function(data) { 
+			alert(data);
+		}
+);
+
+JHomeController.isTreeVisible(
+		function(data) { 
+			alert(data);
+		}
+
+);
+*/
+
+--></script>
 		<h:form id="home">
 
 			<!-- ********* Rendering ********* -->
