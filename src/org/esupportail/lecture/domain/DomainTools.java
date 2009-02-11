@@ -5,19 +5,38 @@
 */
 package org.esupportail.lecture.domain;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamSource;
+
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.utils.Assert;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.StringUtils;
 /**
  * Provide various tools :
  * - constants defintion for user attributes provided by externalService. 
  * - single access to DaoService, externalService, channel for domain layer
  * @author gbouteil
  */
-public class DomainTools {
+public class DomainTools implements InitializingBean {
 	
 	/*
 	 ************************** PROPERTIES *********************************/	
@@ -28,6 +47,25 @@ public class DomainTools {
 	 */
 	private static final Log LOG = LogFactory.getLog(DomainTools.class);
 
+	/**
+	 * The default name for the cache.
+	 */
+	private static final String DEFAULT_CACHE_NAME = DomainTools.class.getName();
+	/**
+	 * the name of the cache.
+	 */
+	
+	private String cacheName;
+	/**
+	 * the cacheManager.
+	 */
+	
+	private CacheManager cacheManager;
+	/**
+	 * the cache.
+	 */
+	
+	private static Cache cache;
 	/* 
 	 * Single Access to layers or principal classes */
 	
@@ -88,6 +126,7 @@ public class DomainTools {
 	/**
 	 * Dfault constructor.
 	 */
+
 	private DomainTools() {
 		super();
 	}
@@ -304,8 +343,103 @@ public class DomainTools {
 	/**
 	 * @param defaultTreeSize
 	 */
-	public static void setDefaultTreeSize(int defaultTreeSize) {
+	public static void setDefaultTreeSize(final int defaultTreeSize) {
 		DomainTools.defaultTreeSize = defaultTreeSize;
 	}
+
+	/**
+	 * @param xsltFileURL
+	 * @return cached xsltFile as a streamSource
+	 * @throws MalformedURLException
+	 * @throws IOException
+	 * @throws TransformerConfigurationException 
+	 */
+	public static String getXsltFile(final String xsltFileURL)
+			throws IOException, TransformerConfigurationException {
+
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getXsltFile(" + xsltFileURL + ")");
+		}
+		String inputXslt;
+		StreamSource streamSource;
+		String cacheKey = "XSLT:" + xsltFileURL;
+		Element element = cache.get(cacheKey);
+		if (element == null) { 
+			URL url2 = new URL(xsltFileURL);
+//			streamSource = new StreamSource(url2.openStream());
+			InputStream is =  url2.openStream();
+			
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(is));
+
+			//inputXslt = in.toString();
+		    String line;
+		    inputXslt = "";
+		    while ((line = in.readLine()) != null)
+		    {
+		    	inputXslt += line;
+		    }
+		    in.close();
+			
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("Put xslt in cache : " + cacheKey);
+				LOG.debug("inputXslt : " + inputXslt);
+			}
+			Element cacheElement = new Element(cacheKey, inputXslt);
+			cache.put(cacheElement);
+
+		}
+		else {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("xslt already in cache : " + cacheKey);
+			}
+			inputXslt = (String) element.getObjectValue();
+			LOG.debug("inputXslt : " + inputXslt);
+		}
+		return inputXslt;
+	}
+
+
+	/**
+	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
+	 */
+	public void afterPropertiesSet() {
+		if (!StringUtils.hasText(cacheName)) {
+			setDefaultCacheName();
+			LOG.warn(getClass() + ": no cacheName attribute set, '" 
+					+ cacheName + "' will be used");
+		}
+		Assert.notNull(cacheManager, 
+				"property cacheManager of class " + getClass().getName() 
+				+ " can not be null");
+		if (!cacheManager.cacheExists(cacheName)) {
+			cacheManager.addCache(cacheName);
+		}
+		LOG.debug("DaoServiceRemoteXML cache : " + cacheName);
+		cache = cacheManager.getCache(cacheName);
+	}
+	
+	/**
+	 * set the default cacheName.
+	 */
+	protected void setDefaultCacheName() {
+		this.cacheName = DEFAULT_CACHE_NAME;
+	}
+
+	/**
+	 * @param cacheName the cacheName to set
+	 */
+	public void setCacheName(final String cacheName) {
+		this.cacheName = cacheName;
+	}
+
+	/**
+	 * @param cacheManager the cacheManager to set
+	 */
+	public void setCacheManager(final CacheManager cacheManager) {
+		this.cacheManager = cacheManager;
+	}
+
+
 
 }

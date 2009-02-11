@@ -73,6 +73,8 @@
     		</description>
     		<list>
     			<value>functions.js</value>
+    			<value>js/jquery-latest.pack.js</value>
+    			<value>js/thickbox.js</value>
     		</list>
     	</property>
     	<property name="stylesheets" >

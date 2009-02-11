@@ -9,6 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -32,6 +33,8 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Node;
 import org.dom4j.XPath;
 import org.dom4j.XPathException;
+import org.esupportail.lecture.domain.DomainService;
+import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
@@ -283,7 +286,7 @@ public abstract class Source implements Element, Serializable {
 	 * @throws ComputeItemsException 
 	 */
 	@SuppressWarnings("unchecked")
-	private void computeItems() throws ComputeItemsException {
+	synchronized private void computeItems() throws ComputeItemsException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.profileId + " - computeItems()");
     	}
@@ -371,9 +374,12 @@ public abstract class Source implements Element, Serializable {
 			//		2. Use the TransformerFactory to process the stylesheet Source and
 			//		generate a Transformer.
 			Transformer transformer;
-			URL url2 = new URL(xsltFileURL);
-			StreamSource streamSource = new StreamSource(url2.openStream());
-			transformer = tFactory.newTransformer(streamSource);
+//			StreamSource streamSource = DomainTools.getXsltFile(xsltFileURL);
+			String xsltFileContent = DomainTools.getXsltFile(xsltFileURL);
+			LOG.debug("voici le xsltFileContent : " + xsltFileContent);
+			ByteArrayInputStream inputXsltFile = new ByteArrayInputStream(xsltFileContent.getBytes(encoding));
+			StreamSource sourceXsltFile = new StreamSource(inputXsltFile);
+			transformer = tFactory.newTransformer(sourceXsltFile);
 			//		3. Use the Transformer to transform an XML Source and send the
 			//		output to a Result object.
 			ByteArrayInputStream inputStream = new ByteArrayInputStream(xml.getBytes(encoding));
@@ -397,8 +403,6 @@ public abstract class Source implements Element, Serializable {
 		}
 		return ret;
 	}
-	
-
 
 	/**
 	 * get Items list of this source.

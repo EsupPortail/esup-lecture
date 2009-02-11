@@ -16,6 +16,10 @@
 		maxElementsInMemory="300" eternal="false" timeToIdleSeconds="500"
 		timeToLiveSeconds="86400" overflowToDisk="true" />
 
+	<cache name="org.esupportail.lecture.domain.DomainTools"
+		maxElementsInMemory="300" eternal="false" timeToIdleSeconds="500"
+		timeToLiveSeconds="86400" overflowToDisk="true" />
+
  <!--    <cache 
     	name="org.esupportail.lecture.domain.beans.User"
     	maxElementsInMemory="1000" 

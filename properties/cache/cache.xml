@@ -23,4 +23,54 @@
 		<property name="configLocation" value="classpath:/properties/cache/ehcache.xml" />
 	</bean>
 
+
+   <bean id="cacheProvider"
+       scope="singleton"
+       class="org.springmodules.cache.provider.ehcache.EhCacheFacade">
+       <property name="cacheManager">
+           <ref local="cacheManager" />
+       </property>
+   </bean>
+
+<!-- 
+   <bean id="cachingAttributeSource"
+       class="org.springmodules.cache.annotations.AnnotationCachingAttributeSource">
+   </bean>
+
+   <bean id="cachingInterceptor"
+       class="org.springmodules.cache.interceptor.caching.MetadataCachingInterceptor">
+       <property name="cacheProviderFacade" ref="cacheProvider" />
+       <property name="cachingAttributeSource" ref="cachingAttributeSource" />
+
+       <property name="cachingModels" >
+           <props>
+               <prop key="xsltFile">
+                   cacheName=org.esupportail.lecture.domain.model.xsltFile
+               </prop>
+           </props>
+       </property>
+   </bean>
+     <bean id="cachingAttributeSourceAdvisor"
+       class="org.springmodules.cache.interceptor.caching.CachingAttributeSourceAdvisor">
+       <constructor-arg ref="cachingInterceptor" />
+   </bean>
+
+	<bean id="autoproxy"
+  		class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" />
+-->
+<!--   
+   <bean id="autoproxy"
+       class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+       <property name="beanNames">
+           <list>
+               <idref bean="domainService" />
+           </list>
+       </property>
+       <property name="interceptorNames">
+           <list>
+               <value>cachingInterceptor</value>
+           </list>
+       </property>
+   </bean>
+-->
 </beans>
