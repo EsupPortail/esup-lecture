@@ -6622,4 +6622,195 @@
 			<description>Same as h:selectOneMenu. Use in itemsPerPage block to update the pageSize.</description>
 		</attribute>
 	</tag>
+   <!-- form -->
+   <tag>
+      <name>form</name>
+      <tag-class>org.esupportail.commons.web.tags.FormTag</tag-class>
+      <body-content>JSP</body-content>
+      <description>
+            Same as h:form with 'please wait' popup.
+        </description>
+      <!-- UIForm attributes -->
+      <!-- UIComponent attributes -->
+      <attribute>
+         <name>id</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <type>java.lang.String</type>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>binding</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <type>java.lang.String</type>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>rendered</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <type>java.lang.String</type>
+         <description>Same as h:form</description>
+      </attribute>
+      <!-- HTML 4.0 universal attributes -->
+      <attribute>
+         <name>dir</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>lang</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>style</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>title</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>styleClass</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <!-- HTML 4.0 event-handler attributes -->
+      <attribute>
+         <name>onclick</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>ondblclick</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>onmousedown</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>onmouseup</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>onmouseover</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>onmousemove</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>onmouseout</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>onkeypress</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>onkeydown</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>onkeyup</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <!-- HTML 4.0 form attributes -->
+      <attribute>
+         <name>target</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>accept</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>acceptcharset</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>enctype</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>onreset</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>onsubmit</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>Same as h:form</description>
+      </attribute>
+      <attribute>
+         <name>submitPopupText</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>The text of the popup shown on submit</description>
+      </attribute>
+      <attribute>
+         <name>submitPopupImage</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>The image of the popup shown on submit</description>
+      </attribute>
+      <attribute>
+         <name>showSubmitPopupText</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>True to show the submit popup text</description>
+      </attribute>
+      <attribute>
+         <name>showSubmitPopupImage</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>True to show the submit popup image</description>
+      </attribute>
+      <attribute>
+         <name>freezeScreenOnSubmit</name>
+         <required>false</required>
+         <rtexprvalue>false</rtexprvalue>
+         <description>True to freeze the screen on submit</description>
+      </attribute>
+   </tag>
 </taglib>
