@@ -29,37 +29,26 @@ toggleButton: read/unread toggle button
 
 <script type="text/javascript"><!--
 
-/*
-JHomeController.getContextKey(
-		function(data) { 
-			alert(data);
-		}
-);
-
-JHomeController.getDummyText(
-		function(data) { 
-			alert(data);
-		}
-);
-
-JHomeController.isTreeVisible(
-		function(data) { 
-			alert(data);
-		}
-
-);
-*/
-
 --></script>
 		<h:form id="home">
 
 			<!-- ********* Rendering ********* -->
-			<t:div id="twoPanels" forceId="true" 
+			<t:div id="panels-layout" forceId="true" 
 				rendered="#{homeController.treeVisible and !homeController.guestMode}">
+<!-- 
 				<t:div id="panelLeft" forceId="true" style="width: #{homeController.treeSize}%">
 					<jsp:include page="homeLeft.jsp" />
 				</t:div>
 				<t:div id="panelRight" forceId="true"  style="width: #{99-homeController.treeSize}%">
+					<jsp:include page="homeRight.jsp" />
+				</t:div>
+-->
+				<t:div id="panelLeft-ui" styleClass="ui-layout-west" forceId="true" 
+				 	style="width: #{homeController.treeSize}%">
+					<jsp:include page="homeLeft.jsp" />
+				</t:div>
+				<t:div id="panelRight-ui" styleClass="ui-layout-center"  forceId="true" 
+					style="width: #{99-homeController.treeSize}%">
 					<jsp:include page="homeRight.jsp" />
 				</t:div>
 			</t:div>
@@ -72,7 +61,9 @@ JHomeController.isTreeVisible(
 
 		</h:form>
 		<script type="text/javascript">
-		document.getElementById("home:itemDisplayModeButton").style.display = "none";
+			if (document.getElementById("home:itemDisplayModeButton")) {
+				document.getElementById("home:itemDisplayModeButton").style.display = "none";
+			}
         </script>
 	</e:page>
 </jsp:root>

@@ -48,7 +48,7 @@
 						<!-- Sources -->
 						<t:dataList value="#{cat.sources}" var="src" layout="simple">
 							<t:htmlTag value="li"
-								styleClass=" #{src.id == homeController.ualSource.id ? 'currentSource' : 'otherSource'}">
+								styleClass="#{src.id == homeController.ualSource.id ? 'currentSource' : 'otherSource'} #{src.unreadItemsNumber > 0 ? 'sourceUnreadItems' : 'sourceNoUnreadItems'}">
 								<h:commandButton action="#{homeController.selectElement}"
 									image="/media/puce.gif" alt="#{msgs['selectSource']}"
 									title="#{msgs['selectSource']}">

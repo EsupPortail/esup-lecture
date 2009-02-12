@@ -1,21 +1,5 @@
 /* Styles added in version 1.2.7 (see home.jsp and homeLeft.jsp) */
 
-.esup-lecture #twoPanels {
-
-position:relative;
-display: inline;
-}
-
-.esup-lecture #panelLeft {
-float: left;
-border-right: 1px solid black;
-padding-left: 2px;
-}
-.esup-lecture #panelRight {
-float: right;
-
-}
-
 .esup-lecture .portlet-menu {
 clear: both;
 }
@@ -23,24 +7,38 @@ clear: both;
 .esup-lecture li.currentSource,
 .esup-lecture li.expanded ul li.currentSource .buttonStyle
  {
+background-color: #dddddd;
+}
+
+.esup-lecture li.otherSource,
+.esup-lecture li.expanded ul li.otherSource .buttonStyle
+ {
+background-color: #ffffff;
+}
+
+.esup-lecture li.sourceUnreadItems,
+.esup-lecture li.expanded ul li.sourceUnreadItems .buttonStyle
+ {
 font-weight: bold;
 }
 
-.esup-lecture li.otherSource
+.esup-lecture li.sourceNoUnreadItems,
+.esup-lecture li.expanded ul li.sourceNoUnreadItems .buttonStyle
  {
 font-weight: normal;
 }
 
 .esup-lecture .currentCategory {
-font-weight: bold;
+	background-color: #ffffff;
+	font-weight: bold;
 }
 
 .esup-lecture .otherCategory {
-font-weight: bold;
+	background-color: #ffffff;
+	font-weight: bold;
 }
 
 .esup-lecture .unreadItemsNumber {
 margin-left:-5px;
 font-size: 0.9em;
 }
-

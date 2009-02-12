@@ -166,11 +166,11 @@ public class FacesPortlet extends MyFacesGenericPortlet implements Serializable 
 		if (!ExceptionUtils.exceptionAlreadyCaught()) {
 			boolean error = false;
 			try {
-	    		VersionningUtils.checkVersion(true, false);
 				logger.debug("FacesPortlet : facesRender opendb");
 				DatabaseUtils.open();
 				logger.debug("FacesPortlet : facesRender begindb");
 				DatabaseUtils.begin();
+	    		VersionningUtils.checkVersion(true, false);
 	            setContentType(request, response);
 	            String viewId = request.getParameter(VIEW_ID);
 	            if ((viewId == null) || sessionInvalidated(request))
