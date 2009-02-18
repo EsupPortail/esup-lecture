@@ -509,7 +509,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * @return specificUserContent
 	 * @see ManagedSourceProfile#specificUserContent
 	 */
-	protected boolean isSpecificUserContent() {
+	public boolean isSpecificUserContent() {
 		return specificUserContent;
 	}
 

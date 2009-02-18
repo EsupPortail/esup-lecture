@@ -10,10 +10,14 @@ import net.sf.ehcache.Element;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.utils.Assert;
+import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.GlobalSource;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryDummy;
 import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
+import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.SourceDummy;
 import org.esupportail.lecture.domain.model.SourceProfile;
@@ -22,6 +26,8 @@ import org.esupportail.lecture.exceptions.dao.InternalDaoException;
 import org.esupportail.lecture.exceptions.dao.SourceInterruptedException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StringUtils;
 
@@ -222,8 +228,10 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @param ptCas CAS proxy ticket 
 	 * @return the source
 	 * @throws InternalDaoException 
+	 * @throws InternalExternalException 
+	 * @throws NoExternalValueException 
 	 */
-	public synchronized Source getSource(final SourceProfile sourceProfile, final String ptCas) 
+	public synchronized Source getSource(final ManagedSourceProfile sourceProfile, final String ptCas) 
 	throws InternalDaoException {
 		// TODO (RB <-- GB) Pourquoi ne déclare-tu pas un type Source alors que tu fais un new GlobalSource ?
 		// Je comprends que tu n'as pas le droit de faire un new Source car abstract, 
@@ -236,7 +244,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		}
 		try {
 			Element element = cache.get(urlSource);
-			if (element == null) { 
+			if ((element == null)) { 
 				try {
 					ret = getFreshSource(sourceProfile, ptCas);
 				} catch (InfoDaoException e) {
@@ -246,12 +254,19 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					LOG.warn(msg);
 					LOG.warn("=========");
 				}
-				Element cacheElement = new Element(urlSource, ret);
-				cacheElement.setTimeToLive(ret.getTtl());
-				cache.put(cacheElement);
-				if (LOG.isDebugEnabled()) {
-					LOG.debug("Put source in cache : " + urlSource
-						+ " Ttl: " + String.valueOf(ret.getTtl()));
+				if (!sourceProfile.isSpecificUserContent()) {
+					Element cacheElement = new Element(urlSource, ret);
+					cacheElement.setTimeToLive(ret.getTtl());
+					cache.put(cacheElement);
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("Put source in cache : " + urlSource
+							+ " Ttl: " + String.valueOf(ret.getTtl()));
+					}
+				} else {
+					// don't put SpecificUserContent in cache
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("Source SpecificUserContent (not in cache) : " + urlSource);
+					}
 				}
 			} else {
 				LOG.debug("Already in cache : " + urlSource 
@@ -277,7 +292,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @return the source 
 	 * @throws InternalDaoException 
 	 */
-	public Source getSource(final SourceProfile sourceProfile) throws InternalDaoException {
+	public Source getSource(final ManagedSourceProfile sourceProfile) throws InternalDaoException {
 		return getSource(sourceProfile, null);
 	}
 
