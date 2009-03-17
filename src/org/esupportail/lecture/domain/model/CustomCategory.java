@@ -251,7 +251,7 @@ public abstract class CustomCategory implements CustomElement {
 	 * @param userProfile
 	 */
 	@SuppressWarnings("unused")
-	private void setUserProfile(final UserProfile userProfile) {
+	protected void setUserProfile(final UserProfile userProfile) {
 		this.userProfile = userProfile;
 		//Needed by Hibernate
 	}

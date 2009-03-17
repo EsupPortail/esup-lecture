@@ -105,32 +105,34 @@
 				<!-- Items display -->
 				<t:dataList value="#{source.sortedItems}" var="item" layout="simple">
 					<!-- Read/Unread Button -->
-					<t:htmlTag value="div" styleClass="toggleButton">
-						<h:commandButton action="#{homeController.toggleItemReadState}"
-							image="/media/unread.png" alt="#{msgs['markAsRead']}"
-							title="#{msgs['markAsRead']}"
-							rendered="#{!item.read and !homeController.guestMode and !item.dummy}">
-							<t:updateActionListener property="#{homeController.ualSource}"
-								value="#{source}" />
-							<t:updateActionListener property="#{homeController.ualItem}"
-								value="#{item}" />
-						</h:commandButton>
-						<h:commandButton action="#{homeController.toggleItemReadState}"
-							image="/media/read.png" alt="#{msgs['markAsUnread']}"
-							title="#{msgs['markAsUnread']}"
-							rendered="#{item.read and !homeController.guestMode and !item.dummy}">
-							<t:updateActionListener property="#{homeController.ualSource}"
-								value="#{source}" />
-							<t:updateActionListener property="#{homeController.ualItem}"
-								value="#{item}" />
-						</h:commandButton>
-					</t:htmlTag>
-					<!-- Item Display -->
-					<t:htmlTag value="div"
-						styleClass="#{item.read ? 'readArticle' : 'unreadArticle'}">
-						<f:verbatim>
-							<h:outputText value="#{item.htmlContent}" escape="false" />
-						</f:verbatim>
+					<t:htmlTag value="div" styleClass="article">
+						<t:htmlTag value="div" styleClass="toggleButton">
+							<h:commandButton action="#{homeController.toggleItemReadState}"
+								image="/media/unread.png" alt="#{msgs['markAsRead']}"
+								title="#{msgs['markAsRead']}"
+								rendered="#{!item.read and !homeController.guestMode and !item.dummy}">
+								<t:updateActionListener property="#{homeController.ualSource}"
+									value="#{source}" />
+								<t:updateActionListener property="#{homeController.ualItem}"
+									value="#{item}" />
+							</h:commandButton>
+							<h:commandButton action="#{homeController.toggleItemReadState}"
+								image="/media/read.png" alt="#{msgs['markAsUnread']}"
+								title="#{msgs['markAsUnread']}"
+								rendered="#{item.read and !homeController.guestMode and !item.dummy}">
+								<t:updateActionListener property="#{homeController.ualSource}"
+									value="#{source}" />
+								<t:updateActionListener property="#{homeController.ualItem}"
+									value="#{item}" />
+							</h:commandButton>
+						</t:htmlTag>
+						<!-- Item Display -->
+						<t:htmlTag value="div"
+							styleClass="#{item.read ? 'readArticle' : 'unreadArticle'}">
+							<f:verbatim>
+								<h:outputText value="#{item.htmlContent}" escape="false" />
+							</f:verbatim>
+						</t:htmlTag>
 					</t:htmlTag>
 				</t:dataList>
 			</t:div>

@@ -170,7 +170,7 @@ public class FacesPortlet extends MyFacesGenericPortlet implements Serializable 
 				DatabaseUtils.open();
 				logger.debug("FacesPortlet : facesRender begindb");
 				DatabaseUtils.begin();
-	    		VersionningUtils.checkVersion(true, false);
+//	    		VersionningUtils.checkVersion(true, false);
 	            setContentType(request, response);
 	            String viewId = request.getParameter(VIEW_ID);
 	            if ((viewId == null) || sessionInvalidated(request))

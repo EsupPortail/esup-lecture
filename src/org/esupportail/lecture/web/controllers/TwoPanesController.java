@@ -16,6 +16,7 @@ import javax.faces.event.ActionEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.services.database.DatabaseUtils;
 import org.esupportail.commons.web.controllers.Resettable;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.FacadeService;
@@ -399,7 +400,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	/**
 	 * @return the connected user UID
 	 */
-	protected String getUID() {
+	public String getUID() {
 		if (uid == null) {
 			//init the user
 			String userId;
@@ -602,6 +603,29 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 				//probably not already subscribed to source)
 				return getFacadeService().getItems(getUID(), sourceBean.getId());
 			}
+
+	/**
+	 * change Tree Size with mouse
+	 * @param treeSize
+	 */
+	public void changeTreeSize(final int treeSize) {
+		try {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("changeTreeSize : UID : " + getUID());
+			}
+			//for current session:
+			getContext().setTreeSize(treeSize);
+			//store in database:
+			getFacadeService().setTreeSize(getUID(), getContextId(), treeSize);
+			
+		} catch (DomainServiceException e) {
+			DatabaseUtils.rollback();
+			throw new WebException("Error in changeTreeSize", e);
+		} catch (InternalExternalException e) {
+			throw new WebException("Error in changeTreeSize", e);
+		} finally {
+		}
+	}
 
 
 }

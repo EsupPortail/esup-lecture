@@ -248,7 +248,13 @@ public class UserProfile {
     		LOG.debug(ID + userId + " - addCustomContext(" + customContext.getElementId() + ")");
     	}
 		customContexts.put(customContext.getElementId(), customContext);
-		DomainTools.getDaoService().updateUserProfile(this);
+
+		// VR 17/03/09 : On force la maj bdd
+		customContext.setUserProfile(this);
+		// TODO userprofile is already set in getCustomContext, but should be here for better lisibility
+		DomainTools.getDaoService().updateCustomContext(customContext);
+
+//		DomainTools.getDaoService().updateUserProfile(this);
 	}
 	
 	/**
@@ -261,7 +267,12 @@ public class UserProfile {
     	}
 		String id = customCategory.getElementId();
 		customCategories.put(id, customCategory);
-		DomainTools.getDaoService().updateUserProfile(this);
+
+		// VR 17/03/09 : On force la maj bdd
+		customCategory.setUserProfile(this);
+		DomainTools.getDaoService().updateCustomCategory(customCategory);
+
+//		DomainTools.getDaoService().updateUserProfile(this);
 	}
 	
 	/**
@@ -273,7 +284,12 @@ public class UserProfile {
     		LOG.debug(ID + userId + " - addCustomSource(" + customSource.getElementId() + ")");
     	}
 		customSources.put(customSource.getElementId(), customSource);
-		DomainTools.getDaoService().updateUserProfile(this);
+
+		// VR 17/03/09 : On force la maj bdd
+		customSource.setUserProfile(this);
+		DomainTools.getDaoService().updateCustomSource(customSource);
+
+		//		DomainTools.getDaoService().updateUserProfile(this);
 	}
 	
 	/* REMOVE/CLEAN CUSTOM ELEMENTS FROM PROFILE */
