@@ -293,7 +293,6 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @param userProfile
 	 */
-	@SuppressWarnings("unused")
 	protected void setUserProfile(final UserProfile userProfile) {
 		this.userProfile = userProfile;
 		//Needed by Hibernate

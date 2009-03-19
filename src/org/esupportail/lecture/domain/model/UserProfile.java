@@ -249,12 +249,8 @@ public class UserProfile {
     	}
 		customContexts.put(customContext.getElementId(), customContext);
 
-		// VR 17/03/09 : On force la maj bdd
 		customContext.setUserProfile(this);
-		// TODO userprofile is already set in getCustomContext, but should be here for better lisibility
-		DomainTools.getDaoService().updateCustomContext(customContext);
-
-//		DomainTools.getDaoService().updateUserProfile(this);
+		// RB VR 19/03/09 : DB automatic update made by parent (see cascade on hibernate mappings)
 	}
 	
 	/**
@@ -268,11 +264,9 @@ public class UserProfile {
 		String id = customCategory.getElementId();
 		customCategories.put(id, customCategory);
 
-		// VR 17/03/09 : On force la maj bdd
 		customCategory.setUserProfile(this);
-		DomainTools.getDaoService().updateCustomCategory(customCategory);
-
-//		DomainTools.getDaoService().updateUserProfile(this);
+		
+// RB VR 19/03/09 : DB automatic update made by parent (see cascade on hibernate mappings)
 	}
 	
 	/**
@@ -285,11 +279,8 @@ public class UserProfile {
     	}
 		customSources.put(customSource.getElementId(), customSource);
 
-		// VR 17/03/09 : On force la maj bdd
 		customSource.setUserProfile(this);
-		DomainTools.getDaoService().updateCustomSource(customSource);
-
-		//		DomainTools.getDaoService().updateUserProfile(this);
+		// RB VR 19/03/09 : DB automatic update made by parent (see cascade on hibernate mappings)
 	}
 	
 	/* REMOVE/CLEAN CUSTOM ELEMENTS FROM PROFILE */
@@ -479,7 +470,7 @@ public class UserProfile {
 	 * Remove a customCategory from this userProfile only.
 	 * @param categoryId
 	 */
-	private void removeCustomCategory(final String categoryId) {
+	protected void removeCustomCategory(final String categoryId) {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug(ID + userId + " - removeCustomCategory(" + categoryId + ")");
     	}
@@ -497,7 +488,7 @@ public class UserProfile {
 	 * Remove a customCategory from this userProfile only.
 	 * @param sourceId
 	 */
-	private void removeCustomSource(final String sourceId) {
+	protected void removeCustomSource(final String sourceId) {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug(ID + userId + " - removeCustomSource(" + sourceId + ")");
     	}
@@ -667,7 +658,6 @@ public class UserProfile {
 			return false;
 		}
 		final UserProfile other = (UserProfile) obj;
-//		if (userId != other.userId) {
 		if (!userId.equals(other.userId)) {
 			return false;
 		}

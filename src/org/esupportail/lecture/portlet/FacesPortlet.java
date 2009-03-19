@@ -134,9 +134,12 @@ public class FacesPortlet extends MyFacesGenericPortlet implements Serializable 
         if (viewToRender == null) {
         	// the call to selectDefaultView was moved here to be sure 
         	// that the faces context has been initialized before
-        	DatabaseUtils.begin();
+        	// Esup-lecture : suppress DatabaseUtils.begin() as it is already set in facesRender
+        	// DatabaseUtils.begin();
         	viewToRender = selectDefaultView(request, response);
-        	DatabaseUtils.commit();
+
+			// Esup-lecture : suppress DatabaseUtils.commit() as it is already set in facesRender
+			// DatabaseUtils.commit();
         }
         UIViewRoot viewRoot = viewHandler.createView(facesContext, viewToRender);
         viewRoot.setViewId(viewToRender);
@@ -166,11 +169,15 @@ public class FacesPortlet extends MyFacesGenericPortlet implements Serializable 
 		if (!ExceptionUtils.exceptionAlreadyCaught()) {
 			boolean error = false;
 			try {
-				logger.debug("FacesPortlet : facesRender opendb");
+				if (logger.isDebugEnabled()) {
+					logger.debug("FacesPortlet : facesRender opendb");
+				}
 				DatabaseUtils.open();
-				logger.debug("FacesPortlet : facesRender begindb");
+				if (logger.isDebugEnabled()) {
+					logger.debug("FacesPortlet : facesRender begindb");
+				}
 				DatabaseUtils.begin();
-//	    		VersionningUtils.checkVersion(true, false);
+	    		VersionningUtils.checkVersion(true, false);
 	            setContentType(request, response);
 	            String viewId = request.getParameter(VIEW_ID);
 	            if ((viewId == null) || sessionInvalidated(request))
@@ -202,7 +209,9 @@ public class FacesPortlet extends MyFacesGenericPortlet implements Serializable 
 		                lifecycle.render(facesContext);
 	                }
 	            }
-				logger.debug("FacesPortlet : facesRender commitdb");
+				if (logger.isDebugEnabled()) {
+					logger.debug("FacesPortlet : facesRender commitdb");
+				}
 				DatabaseUtils.commit();
 				if (logger.isDebugEnabled()) {
 					logger.debug("==== END facesRender ====");
@@ -210,8 +219,14 @@ public class FacesPortlet extends MyFacesGenericPortlet implements Serializable 
 				return;
 			} catch (Throwable t) {
 				error = true;
+				if (logger.isDebugEnabled()) {
+					logger.debug("FacesPortlet : error" + t);
+				}
 				catchException(t);
 			} finally {
+				if (logger.isDebugEnabled()) {
+					logger.debug("FacesPortlet : facesRender closedb");
+				}
 				DatabaseUtils.close();
 				if (!error) {
 					// Call ContextUtils.unbindRequest if no error only because 
@@ -254,7 +269,13 @@ public class FacesPortlet extends MyFacesGenericPortlet implements Serializable 
         ServletFacesContextImpl facesContext = null;
         try {
     		previousRequestAttributes = ContextUtils.bindRequestAndContext(request, getPortletContext());
+			if (logger.isDebugEnabled()) {
+				logger.debug("FacesPortlet : processAction opendb");
+			}
     		DatabaseUtils.open();
+			if (logger.isDebugEnabled()) {
+				logger.debug("FacesPortlet : processAction begindb");
+			}
     		DatabaseUtils.begin();
     		VersionningUtils.checkVersion(true, false);
             facesContext = new SerializableServletFacesContextImpl(portletContext, request, response);
@@ -265,13 +286,19 @@ public class FacesPortlet extends MyFacesGenericPortlet implements Serializable 
             if (!facesContext.getResponseComplete()) {
                 response.setRenderParameter(VIEW_ID, facesContext.getViewRoot().getViewId());
             }
-            DatabaseUtils.commit();
+			if (logger.isDebugEnabled()) {
+				logger.debug("FacesPortlet : processAction commitdb");
+			}
+             DatabaseUtils.commit();
         } catch (Throwable t) {
 			ExceptionService exceptionService = catchException(t);
 			response.setRenderParameter(VIEW_ID, exceptionService.getExceptionView());
         } finally {
             try {
-				DatabaseUtils.close();
+    			if (logger.isDebugEnabled()) {
+    				logger.debug("FacesPortlet : processAction closedb");
+    			}
+     				DatabaseUtils.close();
 			} catch (DatabaseException e) {
 				ExceptionUtils.catchException(e);
 			}

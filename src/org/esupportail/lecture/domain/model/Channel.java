@@ -12,7 +12,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
@@ -353,26 +352,44 @@ public class Channel implements InitializingBean {
 
 	/**
 	 * return the user profile identified by "userId". 
-	 * It takes it from the dao if exists, else, it create a user profile
+	 * It takes it from the ThreadLocal if exists, else, it call getFreshUserProfile
 	 * @param userId : identifient of the user profile
 	 * @return the user profile
 	 */
-	public UserProfile getUserProfile(final String userId) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("getUserProfile(" + userId + ")");
-		}
+//	public UserProfile getUserProfile(final String userId) {
+//		if (LOG.isDebugEnabled()) {
+//			LOG.debug("getUserProfile(" + userId + ")");
+//		}
+//		if (userId == null) {
+//			// TODO (RB <-- GB) Pourras tu noter dans le msg, le lieu où se configure le userId ? Merci
+//			String mes = "userId not found. Check configuration.";
+//			LOG.error(mes);
+//			throw new ConfigException(mes);
+//		}
+//		UserProfile userProfile = UserProfileThreadLocal.get();
+//		if (userProfile == null) {
+//			userProfile = getFreshUserProfile(userId);
+//		} 
+//		return userProfile;
+//	}
 	
-		if (userId == null) {
-			// TODO (RB <-- GB) Pourras tu noter dans le msg, le lieu où se configure le userId ? Merci
-			String mes = "userId not found. Check configuration.";
-			LOG.error(mes);
-			throw new ConfigException(mes);
+	/**
+	 * return the user profile identified by "userId". 
+	 * It takes it from the dao if exists, else, it create a user profile
+	 * @param userId : identifient of the user profile
+	 * @return the user profile
+	 */ 
+	public synchronized UserProfile getUserProfile(final String userId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getFreshUserProfile(" + userId + ")");
 		}
 		UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
 		if (userProfile == null) {
 			userProfile = new UserProfile(userId);
 			DomainTools.getDaoService().saveUserProfile(userProfile);
+//			userProfile = DomainTools.getDaoService().refreshUserProfile(userProfile); 
 		}
+//		UserProfileThreadLocal.set(userProfile);
 		return userProfile;
 	}
 	

@@ -13,6 +13,7 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
+import org.hibernate.LockMode;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.InitializingBean;
@@ -78,8 +79,8 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 				+ userProfile.getUserId() + ")");			
 		}
 		UserProfile ret = userProfile;
-		//getHibernateTemplate().lock(userProfile, LockMode.NONE);
-		ret = (UserProfile) getHibernateTemplate().merge(userProfile);
+		getHibernateTemplate().lock(userProfile, LockMode.NONE);
+		//ret = (UserProfile) getHibernateTemplate().merge(userProfile);
 		// update object in the hibernate session
 		//getHibernateTemplate().update(userProfile); 
 		return ret;
@@ -94,7 +95,7 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("saveUserProfile(" + userProfile.getUserId() + ")");			
 		}
-		//Object merged = getHibernateTemplate().merge(userProfile);
+//		Object merged = getHibernateTemplate().merge(userProfile);
 		getHibernateTemplate().saveOrUpdate(userProfile);
 		if (USEFLUSH) {
 			getHibernateTemplate().flush();
