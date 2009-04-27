@@ -7,6 +7,7 @@
 <!ATTLIST context
     name CDATA #REQUIRED
 	id ID #REQUIRED
+    treeVisible (yes|no) "yes"
     edit (all|personal|managed|no) "no">
 
 <!ELEMENT description (#PCDATA)>
@@ -23,6 +24,7 @@
     trustCategory (yes|no) "no"
     edit (all|personal|managed|no) "no"
     access (public|cas) "public"
+    userCanMarkRead (yes|no) "yes"
     ttl CDATA #REQUIRED
     timeout CDATA #REQUIRED>	
     

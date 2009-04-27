@@ -247,6 +247,9 @@ public class ChannelConfig  {
 			mcp.setCategoryURL(xmlFile.getString(pathCategoryProfile + "[@urlCategory]"));
 			//TODO (GB later) c.setEdit(...) param edit
 			mcp.setTrustCategory(xmlFile.getBoolean(pathCategoryProfile + "[@trustCategory]"));
+			//
+			mcp.setUserCanMarkRead(xmlFile.getBoolean(pathCategoryProfile + "[@userCanMarkRead]", true));
+
 			mcp.setTtl(xmlFile.getInt(pathCategoryProfile + "[@ttl]"));
 			mcp.setTimeOut(xmlFile.getInt(pathCategoryProfile + "[@timeout]"));
 			
@@ -336,6 +339,10 @@ public class ChannelConfig  {
 			Context c = new Context();
 			c.setId(xmlFile.getString(pathContext + "[@id]"));
 			c.setName(xmlFile.getString(pathContext + "[@name]"));
+			c.setTreeVisible(xmlFile.getBoolean(pathContext + "[@treeVisible]", true));
+	    	if (LOG.isDebugEnabled()) {
+	    		LOG.debug("loadContexts() : treeVisible " + c.getTreeVisible());
+	    	}
 			c.setDescription(xmlFile.getString(pathContext + ".description"));
 			//TODO (GB later) c.setEdit(...) param edit 
 			List<String> refIdList = xmlFile.getList(pathContext + ".refCategoryProfile[@refId]");

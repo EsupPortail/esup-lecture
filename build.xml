@@ -48,6 +48,14 @@
 	    </java>
 	</target>
 
+	<target name="set-download-properties" depends="read-commons-properties" >
+		<property file="${app.config}" />
+		<property name="app.repository.libs" value="
+		" />
+		<property name="app.repository.path-prefix" value="http://sourcesup.cru.fr/cgi/viewvc.cgi/tags/${app.version}/${app.name}" />
+		<property name="app.repository.path-suffix" value="?root=${app.name}&amp;view=co" />
+	</target>
+	
 	<target name="prepare" depends="commons-prepare" />
 
 	<target name="compile-shared" depends="check-shared-config,prepare,commons-compile-shared" />

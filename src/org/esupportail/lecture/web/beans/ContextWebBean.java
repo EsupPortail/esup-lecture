@@ -34,6 +34,11 @@ public class ContextWebBean {
 	private int treeSize;
 	
 	/**
+	* visibility of the tree panel
+	*/
+	private boolean treeVisible;
+
+	/**
 	 * get the id of the context.
 	 * @return id of context
 	 */
@@ -140,4 +145,19 @@ public class ContextWebBean {
 		} 
 		return ret;
 	}
+
+	/**
+	 * @return treeVisible
+	 */
+	public boolean isTreeVisible() {
+		return treeVisible;
+	}
+
+	/**
+	 * @param treeVisible the treeVisible to set
+	 */
+	public void setTreeVisible(boolean treeVisible) {
+		this.treeVisible = treeVisible;
+	}
+	
 }

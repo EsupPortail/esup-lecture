@@ -260,6 +260,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 				context.setId(contextBean.getId());
 				context.setDescription(contextBean.getDescription());
 				context.setTreeSize(contextBean.getTreeSize());
+				context.setTreeVisible(contextBean.isTreeVisible());
 				//find categories in this context
 				List<CategoryBean> categories = getCategories(ctxId);
 				List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
@@ -336,7 +337,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	/**
 	 * populate a CategoryWebBean from a CategoryBean.
 	 * @param categoryBean
-	 * @return pupulated CategoryWebBean
+	 * @return populated CategoryWebBean
 	 * @throws DomainServiceException
 	 */
 	protected CategoryWebBean populateCategoryWebBean(final CategoryBean categoryBean) 
@@ -352,7 +353,8 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			categoryWebBean.setId(categoryBean.getId());
 			categoryWebBean.setName(categoryBean.getName());
 			categoryWebBean.setAvailabilityMode(categoryBean.getType());
-			categoryWebBean.setDescription(categoryBean.getDescription());			
+			categoryWebBean.setDescription(categoryBean.getDescription());
+			categoryWebBean.setUserCanMarkRead(categoryBean.isUserCanMarkRead());
 		}
 		return categoryWebBean;
 	}
@@ -487,7 +489,10 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 				"property facadeService of class " + this.getClass().getName() + " can not be null");
 		try {
 			virtualSession = new VirtualSession(facadeService.getCurrentContextId());
+			setTreeVisible(facadeService.getContext(getUID(), getContextId()).isTreeVisible());
 		} catch (InternalExternalException e) {
+			throw new WebException("Error in afterPropertiesSet", e);
+		} catch (InternalDomainException e) {
 			throw new WebException("Error in afterPropertiesSet", e);
 		}
 	}

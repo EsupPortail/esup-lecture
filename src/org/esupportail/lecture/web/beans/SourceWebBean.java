@@ -236,7 +236,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	/**
 	 * @return number of Items in the source
 	 */
-	private int getItemsNumber() {
+	public int getItemsNumber() {
 		return getItems().size();
 	}
 	

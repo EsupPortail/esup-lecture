@@ -24,17 +24,6 @@ xlstFiles given here are only samples and must be copied and modified on your ow
 		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/rss-thickbox.xsl"
 		itemXPath="/rss/channel/item">
 	</mapping>
-	
-	<mapping 
-		sourceURL="http://ent.univ.fr/newsPortlet/"
-		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/rss-newsPortlet-date-french-short-format.xsl"
-		itemXPath="/rss/channel/item">
-	</mapping>
-	<mapping 
-		sourceURL="http://ent.univ.fr/newsPortlet/"
-		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/rss-newsPortlet-date-french-long-format.xsl"
-		itemXPath="/rss/channel/item">
-	</mapping>
 	<mapping 
 		rootElement="flash"
 		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/flash.xsl"

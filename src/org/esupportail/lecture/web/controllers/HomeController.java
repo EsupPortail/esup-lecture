@@ -5,6 +5,7 @@
  */
 package org.esupportail.lecture.web.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -101,17 +102,69 @@ public class HomeController extends TwoPanesController {
 	 */
 	public String changeItemDisplayMode() {
 		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
-		if (selectedCategory != null) {
-			SourceWebBean selectedSource = selectedCategory.getSelectedSource();
-			if (selectedSource != null) {
-				try {
-					getFacadeService().marckItemDisplayMode(getUID(),
-						selectedSource.getId(), itemDisplayMode);
-					selectedSource.setItemDisplayMode(itemDisplayMode);
-				} catch (Exception e) {
-					throw new WebException("Error in changeItemDisplayMode", e);
+		try {
+			if (selectedCategory != null) {
+				List<SourceWebBean> sources = selectedCategory.getSelectedOrAllSources();
+				if (sources != null) {
+					for (SourceWebBean sourceWeb : sources) {
+						getFacadeService().marckItemDisplayMode(getUID(),
+								sourceWeb.getId(), itemDisplayMode);
+						sourceWeb.setItemDisplayMode(itemDisplayMode);
+					}
 				}
 			}
+		} catch (Exception e) {
+			throw new WebException("Error in changeItemDisplayMode", e);
+		}
+		return "OK";
+	}	
+
+	/**
+	 * JSF action : mark all displayed items as read.
+	 * @return JSF from-outcome
+	 */
+	public String markAllItemsAsRead() {
+		return toogleAllItemsReadState(true);
+	}	
+
+	/**
+	 * JSF action : mark all displayed items as not read.
+	 * @return JSF from-outcome
+	 */
+	public String markAllItemsAsNotRead() {
+		return toogleAllItemsReadState(false);
+	}	
+
+	/**
+	 * JSF action : toogle all displayed items read state.
+	 * @param read 
+	 * @return JSF from-outcome
+	 */
+	public String toogleAllItemsReadState(boolean read) {
+		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
+		try {
+			if (selectedCategory != null) {
+				List<SourceWebBean> sources = selectedCategory.getSelectedOrAllSources();
+				if (sources != null) {
+					for (SourceWebBean sourceWeb : sources) {
+						List<ItemWebBean> items = sourceWeb.getItems();
+						if (items != null) {
+							for (ItemWebBean itemWeb : items) {
+								getFacadeService().marckItemReadMode(getUID(), 
+										sourceWeb.getId(), itemWeb.getId(), read);
+								itemWeb.setRead(read);
+							}
+						}
+						if (read) {
+							sourceWeb.setUnreadItemsNumber(0);
+						} else {
+							sourceWeb.setUnreadItemsNumber(sourceWeb.getItemsNumber());
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			throw new WebException("Error in toogleAllItemsReadState", e);
 		}
 		return "OK";
 	}	
@@ -146,9 +199,18 @@ public class HomeController extends TwoPanesController {
 		ContextWebBean currentContext = getContext();
 		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
 		if (selectedCategory != null) {
-			SourceWebBean selectedSource = selectedCategory.getSelectedSource();
-			if (selectedSource != null) {
-				ret = selectedSource.getItemDisplayMode();
+			List<SourceWebBean> sources = selectedCategory.getSelectedOrAllSources();
+			if (sources != null) {
+				SourceWebBean source = null;
+				if (sources.size() > 0) {
+					source  = sources.get(0);
+				}
+				if (source != null) {
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("getItemDisplayMode() source selected = " + source.getName());
+					}
+					ret = source.getItemDisplayMode();
+				}
 			}
 		}
 		return ret;

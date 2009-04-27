@@ -4,7 +4,7 @@
 		webapp/index.jsp
 		webapp/stylesheets/exception.jsp
 	" />
-	<property name="app.zip-files.shared.include" value="
+	<property name="app.zip-files.include" value="
     	build.xml 
 		version.properties
 		src/**/*.java src/**/*.html 
@@ -49,17 +49,11 @@
 		properties/mappings.xml
 		properties/esup-lecture.xml
 		properties/defaults.properties
-	" />            
-	<property name="app.zip-files.include" value="
-		${app.zip-files.shared.include}
 		build-example.properties
 		webapp/WEB-INF/web.xml
 		webapp/WEB-INF/portlet.xml
-	" />
-	<property name="app.zip-files.quick-start.include" value="
-		${app.zip-files.shared.include}
 		build-quick-start-example.properties
-	" />
+	" />            
 	<property name="app.zip-files.exclude" value="
 		build/**/* 
 		deploy/**/* 
@@ -69,7 +63,7 @@
 		properties/i18n/bundles/Custom_*.properties
 	" />
 
-	<property name="commons.basedir" value="${basedir}/../esup-commons-0.20.6"/>
+	<property name="commons.basedir" value="${basedir}/../esup-commons-1.0.2"/>
 	
 	<property file="${basedir}/build-devel.properties"/>
 	

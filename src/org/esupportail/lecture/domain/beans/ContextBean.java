@@ -40,6 +40,11 @@ public class ContextBean {
 	private int treeSize;
 
 	/**
+	* visibility of the tree panel
+	*/
+	private boolean treeVisible = true;
+
+	/**
 	 * orderedSourceIDs store SourceID and ordering order in the CategoryProfile definition.
 	 */
 	private Map<String, Integer> orderedCategoryIDs = Collections.synchronizedMap(new HashMap<String, Integer>());	
@@ -59,6 +64,7 @@ public class ContextBean {
 		setDescription(context.getDescription());
 		setId(context.getId());
 		setOrderedCategoryIDs(context.getOrderedCategoryIDs());
+		setTreeVisible(context.getTreeVisible());
 	}
 	
 	/*
@@ -163,7 +169,23 @@ public class ContextBean {
 		string += " Name = " + name.toString() + "\n";
 		string += " Desc = " + description.toString() + "\n";
 		string += " TreeSize = " + treeSize +  "\n";
+		string += " TreeVisible = " + treeVisible +  "\n";
 		return string;
+	}
+	
+	
+	/**
+	 * @return the treeVisible
+	 */
+	public boolean isTreeVisible() {
+		return treeVisible;
+	}
+
+	/**
+	 * @param treeVisible the treeVisible to set
+	 */
+	public void setTreeVisible(boolean treeVisible) {
+		this.treeVisible = treeVisible;
 	}
 	
 }

@@ -184,5 +184,10 @@ public abstract class CategoryProfile implements ElementProfile {
 		this.element = category;
 	}
 
+	public boolean isUserCanMarkRead() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	
 }

@@ -37,6 +37,10 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 */
 	private boolean folded;
 	/**
+	 * Can a user mark items of this managed category as read / not read ?
+	 */
+	private boolean userCanMarkRead;
+	/**
 	 * selected source of category.
 	 */
 	private SourceWebBean selectedSource;
@@ -224,6 +228,19 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 			ret = true;
 		} 
 		return ret;
+	}
+	/**
+	 * @return the userCanMarkRead
+	 */
+	public boolean isUserCanMarkRead() {
+		return userCanMarkRead;
+	}
+
+	/**
+	 * @param userCanMarkRead the userCanMarkRead to set
+	 */
+	public void setUserCanMarkRead(final boolean userCanMarkRead) {
+		this.userCanMarkRead = userCanMarkRead;
 	}
 
 }

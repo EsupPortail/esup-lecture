@@ -38,6 +38,10 @@ public class CategoryBean {
 	 */
 	private String description;
 	/**
+	 * Can a user mark items of this managed category as read / not read ?
+	 */
+	private boolean userCanMarkRead;
+	/**
 	 * store if category is folded or not.
 	 */
 	private boolean folded = true;	
@@ -79,6 +83,7 @@ public class CategoryBean {
 		this.id = profile.getId();
 		this.folded = customContext.isCategoryFolded(id);
 		this.orderedSourceIDs = profile.getOrderedSourceIDs();
+		this.userCanMarkRead = profile.isUserCanMarkRead();
 	}
 	
 	/**
@@ -175,6 +180,20 @@ public class CategoryBean {
 		return ret;
 	}
 	
+	/**
+	 * @return the userCanMarkRead
+	 */
+	public boolean isUserCanMarkRead() {
+		return userCanMarkRead;
+	}
+
+	/**
+	 * @param userCanMarkRead the userCanMarkRead to set
+	 */
+	public void setUserCanMarkRead(final boolean userCanMarkRead) {
+		this.userCanMarkRead = userCanMarkRead;
+	}
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */

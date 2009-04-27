@@ -53,6 +53,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	private Accessibility access;
 	/**
+	 * Can a user mark items of this managed category as read / not read ?
+	 */
+	private boolean userCanMarkRead;
+	/**
 	 * Ttl of remote reloading.
 	 */
 	private int ttl;
@@ -621,6 +625,20 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	public void setTimeOut(final int timeOut) {
 		this.timeOut = timeOut;
+	}
+
+	/**
+	 * @param userCanMarkRead
+	 */
+	public void setUserCanMarkRead(final boolean userCanMarkRead) {
+		this.userCanMarkRead = userCanMarkRead;
+	}
+
+	/**
+	 * @return UserCanMarkRead
+	 */
+	public boolean isUserCanMarkRead() {
+		return userCanMarkRead;
 	}
 	
 }

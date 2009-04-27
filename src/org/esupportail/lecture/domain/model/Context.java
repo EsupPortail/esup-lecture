@@ -57,6 +57,11 @@ public class Context {
 //	private Editability edit;
 
 	/**
+	* visibility of the tree panel
+	*/
+	private boolean treeVisible = true;
+
+	/**
 	 * Managed category profiles available in this Context.
 	 */
 	private Set<ManagedCategoryProfile> managedCategoryProfilesSet = new HashSet<ManagedCategoryProfile>();
@@ -348,6 +353,20 @@ public class Context {
 	 */
 	public void setOrderedCategoryIDs(final Map<String, Integer> orderedCategoryIDs) {
 		this.orderedCategoryIDs = orderedCategoryIDs;
+	}
+
+	/**
+	 * @return treeVisible
+	 */
+	public boolean getTreeVisible() {
+		return treeVisible;
+	}
+
+	/**
+	 * @param treeVisible the treeVisible to set
+	 */
+	public void setTreeVisible(boolean treeVisible) {
+		this.treeVisible = treeVisible;
 	}
 	
 }
