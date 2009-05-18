@@ -9,20 +9,21 @@
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
 	<e:page stringsVar="msgs" menuItem="welcome"
 		locale="#{editController.locale}">
+		<t:stylesheet path="/media/thickbox.css" media="screen"/>
+		<t:stylesheet path="/media/js-layout.css" media="screen"/>
 		<h:form id="edit">
-			<t:htmlTag value="table" styleClass="portlet-table-body"
-				style="width: 100%">
-				<t:htmlTag value="tr">
-					<t:htmlTag value="td" id="TDLeft" forceId="true"
-						style="width: #{editController.treeSize}%">
-						<jsp:include page="editLeft.jsp" />
-					</t:htmlTag>
-					<t:htmlTag value="td" id="TDRight" forceId="true"
-						style="width: #{100 - editController.treeSize}%">
-						<jsp:include page="editRight.jsp" />
-					</t:htmlTag>
-				</t:htmlTag>
-			</t:htmlTag>
+
+			<t:div id="panels-layout" forceId="true">
+				<t:div id="panelLeft-ui" styleClass="ui-layout-west" forceId="true" 
+				 	style="width: #{editController.treeSize}%">
+					<jsp:include page="editLeft.jsp" />
+				</t:div>
+				<t:div id="panelRight-ui" styleClass="ui-layout-center"  forceId="true" 
+					style="width: #{99-editController.treeSize}%">
+					<jsp:include page="editRight.jsp" />
+				</t:div>
+			</t:div>
+
 		</h:form>
 	</e:page>
 </jsp:root>

@@ -24,8 +24,7 @@
 		<t:htmlTag value="div" styleClass="menuButton"
 			rendered="#{!homeController.guestMode}">
 			<t:htmlTag value="ul">
-				<t:htmlTag value="li"
-					rendered="#{homeController.selectedCategory.withSelectedSource}">
+				<t:htmlTag value="li">
 					<h:outputText value="#{msgs['selectorLabel']}" />
 					<h:selectOneMenu value="#{homeController.itemDisplayMode}"
 						converter="#{itemDisplayModeConverter}"
@@ -87,6 +86,16 @@
 						image="/media/XMLWithoutMenu.gif" alt="#{msgs['hideTree']}"
 						title="#{msgs['hideTree']}" styleClass="valign" />
 				</t:htmlTag>
+				<t:htmlTag id="markAllItemsAsReadButton" value="li">
+					<h:commandButton action="#{homeController.markAllItemsAsRead}"
+						image="/media/unread.png" alt="#{msgs['markAllAsRead']}"
+						title="#{msgs['markAllAsRead']}" styleClass="valign" />
+				</t:htmlTag>
+				<t:htmlTag id="markAllItemsAsNotReadButton" value="li">
+					<h:commandButton action="#{homeController.markAllItemsAsNotRead}"
+						image="/media/read.png" alt="#{msgs['markAllAsNotRead']}"
+						title="#{msgs['markAllAsNotRead']}" styleClass="valign" />
+				</t:htmlTag>
 			</t:htmlTag>
 		</t:htmlTag>
 	</t:htmlTag>
@@ -110,7 +119,7 @@
 							<h:commandButton action="#{homeController.toggleItemReadState}"
 								image="/media/unread.png" alt="#{msgs['markAsRead']}"
 								title="#{msgs['markAsRead']}"
-								rendered="#{!item.read and !homeController.guestMode and !item.dummy}">
+								rendered="#{!item.read and !homeController.guestMode and !item.dummy and homeController.selectedCategory.userCanMarkRead}">
 								<t:updateActionListener property="#{homeController.ualSource}"
 									value="#{source}" />
 								<t:updateActionListener property="#{homeController.ualItem}"
@@ -119,7 +128,7 @@
 							<h:commandButton action="#{homeController.toggleItemReadState}"
 								image="/media/read.png" alt="#{msgs['markAsUnread']}"
 								title="#{msgs['markAsUnread']}"
-								rendered="#{item.read and !homeController.guestMode and !item.dummy}">
+								rendered="#{item.read and !homeController.guestMode and !item.dummy and homeController.selectedCategory.userCanMarkRead}">
 								<t:updateActionListener property="#{homeController.ualSource}"
 									value="#{source}" />
 								<t:updateActionListener property="#{homeController.ualItem}"

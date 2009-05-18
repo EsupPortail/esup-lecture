@@ -6,12 +6,13 @@
 	xmlns:t="http://myfaces.apache.org/tomahawk">
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
-	<f:subview id="rightSubview">
-		<!-- MENU with Source name -->
+	<t:htmlTag value="div" id="menuRight" forceId="true">
 		<t:htmlTag value="span" styleClass="portlet-section-header">
 			<h:outputText value="#{editController.selectionTitle}"/>
 		</t:htmlTag>
-		<t:htmlTag value="hr"/>
+	</t:htmlTag>
+	<!-- Source(s) and Items display -->
+	<t:htmlTag value="div" id="right">
 		<!-- Sources display -->
 		<t:htmlTag value="ul" rendered="#{editController.context.withSelectedCategory}">
 			<t:dataList value="#{editController.visibleSources}" var="src" layout="simple">
@@ -36,5 +37,5 @@
 				</t:htmlTag>
 			</t:dataList>
 		</t:htmlTag>
-	</f:subview>
+	</t:htmlTag>
 </jsp:root>

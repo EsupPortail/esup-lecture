@@ -12,7 +12,7 @@
 		<t:htmlTag value="div" id="left" forceId="true">
 			<!-- Title -->
 			<t:htmlTag value="span" styleClass="portlet-section-header">
-				<h:outputText value="#{editController.context.name} (EDIT)" />
+				<h:outputText value="#{editController.context.name}" />
 			</t:htmlTag>
 			<!-- Categories -->
 			<t:htmlTag value="ul">

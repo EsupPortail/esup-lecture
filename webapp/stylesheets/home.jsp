@@ -35,14 +35,6 @@ toggleButton: read/unread toggle button
 			<!-- ********* Rendering ********* -->
 			<t:div id="panels-layout" forceId="true" 
 				rendered="#{homeController.treeVisible and !homeController.guestMode}">
-<!-- 
-				<t:div id="panelLeft" forceId="true" style="width: #{homeController.treeSize}%">
-					<jsp:include page="homeLeft.jsp" />
-				</t:div>
-				<t:div id="panelRight" forceId="true"  style="width: #{99-homeController.treeSize}%">
-					<jsp:include page="homeRight.jsp" />
-				</t:div>
--->
 				<t:div id="panelLeft-ui" styleClass="ui-layout-west" forceId="true" 
 				 	style="width: #{homeController.treeSize}%">
 					<jsp:include page="homeLeft.jsp" />
