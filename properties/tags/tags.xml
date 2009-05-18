@@ -73,14 +73,16 @@
     		</description>
     		<list>
     			<value>functions.js</value>
-     			<value>js/jquery.js</value>
+     			<value>js/jquery-1.2.6.min.js</value>
     			<value>js/thickbox.js</value>
     			<value>js/jquery.ui.all.js</value>
-    			<value>js/jquery.layout.js</value>
+    			<value>js/jquery.layout.min.js</value>
     			<value>js/init-js-layout.js</value>
 
+<!-- 
     			<value>/esup-lecture/dwr/interface/JHomeController.js</value>
     			<value>/esup-lecture/dwr/engine.js</value>
+-->
     		</list>
     	</property>
     	<property name="stylesheets" >

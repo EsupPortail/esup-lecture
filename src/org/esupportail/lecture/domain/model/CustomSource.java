@@ -12,7 +12,9 @@ import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
+import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.ElementNotFoundException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
@@ -111,6 +113,10 @@ public abstract class CustomSource implements CustomElement {
 			String errorMsg = "Unable to get items because of an element is not found";
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e1);
+		} catch (DomainServiceException e1) {
+			String errorMsg = "Unable to get items because of an element is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e1);
 		}
 		List<Item> listItems = null;
 		try {
@@ -141,6 +147,10 @@ public abstract class CustomSource implements CustomElement {
 		try {
 			sp = getProfile();
 		} catch (ElementNotFoundException e) {
+			String errorMsg = "Unable to get name because of an element is not found";
+			LOG.error(errorMsg);
+			throw new InternalDomainException(errorMsg, e);
+		} catch (DomainServiceException e) {
 			String errorMsg = "Unable to get name because of an element is not found";
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
@@ -252,10 +262,11 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws SourceProfileNotFoundException 
 	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws DomainServiceException 
 	 */
 	public abstract SourceProfile getProfile() 
 	throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException, 
-	ManagedCategoryProfileNotFoundException;
+	ManagedCategoryProfileNotFoundException, DomainServiceException;
 	
 
 

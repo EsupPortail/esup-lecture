@@ -28,6 +28,7 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.domain.model.ManagedCategoryDummy;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
@@ -38,12 +39,14 @@ import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
+import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -191,11 +194,15 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 
 		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
 		List<CustomCategory> customCategories = customContext.getSortedCustomCategories();
-
 		for (CustomCategory customCategory : customCategories) {
 			CategoryBean category;
 			try {
 				category = new CategoryBean(customCategory, customContext);
+				if (category instanceof CategoryDummyBean) {
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("CategoryDummyBean created : "+category.getId());
+					}
+				}
 				listCategoryBean.add(category);
 			} catch (CategoryProfileNotFoundException e) {
 				LOG.warn("Warning on service 'getDisplayedeCategories(user " 
@@ -208,8 +215,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				category = new CategoryDummyBean(e);
 				listCategoryBean.add(category);
 			} 
+
 		}
-	
 		return listCategoryBean;
 	}
 	
@@ -244,6 +251,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				SourceBean source;
 				try {
 					source = new SourceBean(customSource);
+					if (source instanceof SourceDummyBean) {
+						if (LOG.isDebugEnabled()) {
+							LOG.debug("SourceDummyBean created : "+source.getId());
+						}
+					}
 					listSourceBean.add(source);
 // GB : No needed because of improve of exception management					
 //				} catch (SourceProfileNotFoundException e) {
@@ -251,6 +263,12 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 //						+ uid + ", category " + categoryId + ") : clean custom source ");
 //					userProfile.removeCustomSourceFromProfile(customSource.getElementId());
 				} catch (InfoDomainException e) {
+					LOG.error("Error on service 'getDisplayedSources(user "
+						+ uid + ", category " + categoryId + ") : " 
+						+ "creation of a SourceDummyBean");
+					source = new SourceDummyBean(e);
+					listSourceBean.add(source);
+				} catch (DomainServiceException e) {
 					LOG.error("Error on service 'getDisplayedSources(user "
 						+ uid + ", category " + categoryId + ") : " 
 						+ "creation of a SourceDummyBean");

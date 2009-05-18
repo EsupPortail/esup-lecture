@@ -7,7 +7,9 @@
 	<class name="UserProfile" table="LECT_USERPROFILE">
 		<id name="userProfilePK" type="long">
 			<column name="USERPROFILEPK"/>
-			<generator class="native" />
+			<generator class="native">
+				<param name="sequence">userProfile_id</param>
+			</generator>
 		</id>
 		<natural-id>
 	        <property name="userId" type="string">

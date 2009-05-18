@@ -14,9 +14,12 @@ import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.ElementProfile;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.SourceProfile;
+import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.ElementNotFoundException;
+import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
  * used to store source informations.
@@ -65,14 +68,16 @@ public class SourceBean {
 	/**
 	 * constructor initializing object with a customSource.
 	 * @param customSource
-	 * @throws InternalDomainException 
-	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws DomainServiceException 
 	 */
 	public SourceBean(final CustomSource customSource) 
-	throws InternalDomainException, ManagedCategoryNotLoadedException {
+	throws DomainServiceException {
 		SourceProfile profile;
 		try {
 			profile = customSource.getProfile();
+		} catch (SourceProfileNotFoundException e) {
+			LOG.error("Error on service 'getProfile()' : ");
+			throw new DomainServiceException(e);
 		} catch (ElementNotFoundException e) {
 			String errorMsg = "Unable to create SourceBean"
    			+ ") because of an element not found";

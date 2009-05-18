@@ -7,7 +7,9 @@
 	<class name="CustomContext" table="LECT_CUSTOMCONTEXT">
 		<id name="customContextPK" type="long">
 			<column name="CUSTOMCONTEXTPK"/>
-			<generator class="native" />
+			<generator class="native">
+				<param name="sequence">customContext_id</param>
+			</generator>
 		</id>
         <natural-id>
             <property name="elementId" type="string">

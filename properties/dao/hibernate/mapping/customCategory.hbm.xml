@@ -6,7 +6,9 @@
 	<class name="CustomCategory" table="LECT_CUSTOMCATEGORY">
 		<id name="customCategoryPK" type="long">
 			<column name="CUSTOMCATEGORYPK" />
-			<generator class="native" />
+			<generator class="native">
+				<param name="sequence">customCategory_id</param>
+			</generator>
 		</id>
         <discriminator type="string">
             <column name="NATURE" not-null="true" length="1" />
