@@ -87,7 +87,7 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 		}
 		if (applicationVersion.isSameMajorAndMinor(databaseVersion)) {
 			log.info("Database version is " + databaseVersion + ", upgrading...");
-			upgradeDatabase();
+			upgradeDatabase(); //TODO use upgradeDatabaseIfNeeded instead to avoid lock wait timeout (with mySQL)
 			if (printLatestVersion) {
 				printLastVersion();
 			}
@@ -134,7 +134,7 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 			log.info("The database is up to date, no need to upgrade.");
 			return false;
 		}
-		DatabaseUtils.update();
+		DatabaseUtils.update(); 
 		upgradeDatabaseIfNeeded("0.1.0");
 		if (!getDatabaseVersion().equals(getApplicationService().getVersion())) {
 			setDatabaseVersion(getApplicationService().getVersion().toString(), false);
