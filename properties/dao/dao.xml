@@ -77,6 +77,15 @@
 				<value>
 					classpath:/properties/dao/hibernate/mapping/VersionManager.hbm.xml
 				</value>
+				<value>
+					classpath:/properties/dao/hibernate/mapping/readItemFlag.hbm.xml
+				</value>
+				<value>
+					classpath:/properties/dao/hibernate/mapping/unsubscribeAutoSubscribedCategoryFlag.hbm.xml
+				</value>
+				<value>
+					classpath:/properties/dao/hibernate/mapping/unsubscribeAutoSubscribedSourceFlag.hbm.xml
+				</value>
 				<!-- 
 				<value>
 					classpath:/properties/dao/hibernate/mapping/test.hbm.xml

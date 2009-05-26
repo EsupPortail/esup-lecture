@@ -11,7 +11,7 @@
 		locale="#{editController.locale}">
 		<t:stylesheet path="/media/thickbox.css" media="screen"/>
 		<t:stylesheet path="/media/js-layout.css" media="screen"/>
-		<h:form id="edit">
+		<e:form id="edit" showSubmitPopupText="false" showSubmitPopupImage="false">
 
 			<t:div id="panels-layout" forceId="true">
 				<t:div id="panelLeft-ui" styleClass="ui-layout-west" forceId="true" 
@@ -24,7 +24,7 @@
 				</t:div>
 			</t:div>
 
-		</h:form>
+		</e:form>
 	</e:page>
 </jsp:root>
 

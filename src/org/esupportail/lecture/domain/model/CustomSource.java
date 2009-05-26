@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -50,7 +51,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * Set of read item by User.
 	 */
-	private Set<String> readItems = new HashSet<String>();
+	private Set<ReadItemFlag> readItems = new HashSet<ReadItemFlag>();
 	
 	/**
 	 * item display mode of this customSource. 
@@ -169,10 +170,14 @@ public abstract class CustomSource implements CustomElement {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(IDEGAL + elementId + " - setItemReadMode(" + itemId + "," + isRead + ")");
 		}
+		ReadItemFlag itemChanged = new ReadItemFlag();
+		itemChanged.setId(itemId);
+		Date datejour = new Date();
+		itemChanged.setDate(datejour);
 		if (isRead) {
-			readItems.add(itemId);	
+			readItems.add(itemChanged);	
 		} else {
-			readItems.remove(itemId);
+			readItems.remove(itemChanged);
 		}
 //		DomainTools.getDaoService().updateCustomSource(this);
 	}
@@ -185,7 +190,9 @@ public abstract class CustomSource implements CustomElement {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(IDEGAL + elementId + " - isItemRead(" + itemId + ")");
 		}
-		return readItems.contains(itemId);
+		ReadItemFlag itemTested = new ReadItemFlag();
+		itemTested.setId(itemId);
+		return readItems.contains(itemTested);
 	}
 
 	/**
@@ -312,7 +319,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @return a set of read items ID
 	 */
-	protected Set<String> getReadItems() {
+	protected Set<ReadItemFlag> getReadItems() {
 		return readItems;
 	}
 
@@ -320,7 +327,7 @@ public abstract class CustomSource implements CustomElement {
 	 * @param readItems
 	 */
 	@SuppressWarnings("unused")
-	private void setReadItems(final Set<String> readItems) {
+	private void setReadItems(final Set<ReadItemFlag> readItems) {
 		this.readItems = readItems;
 		//Needed by Hibernate
 	}

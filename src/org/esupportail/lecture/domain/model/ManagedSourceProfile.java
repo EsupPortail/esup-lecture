@@ -461,7 +461,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		
 		if (mode == VisibilityMode.OBLIGED) {
 			if (LOG.isTraceEnabled()) {
-				LOG.trace("IsInObliged : " + mode);
+				LOG.trace("IsInObliged : " + this.getId());
 			}
 			customManagedCategory.addSubscription(this);
 			return mode;
@@ -469,7 +469,11 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		
 		if (mode == VisibilityMode.AUTOSUBSCRIBED) {
 			if (LOG.isTraceEnabled()) {
-				LOG.trace("IsInAutoSubscribed : " + mode);
+				LOG.trace("IsInAutoSubscribed : " + this.getId());
+			}
+			// Enregistrer uniquement si pas désabonné
+			if (!customManagedCategory.isUnsubscribedAutoSubscribedSource(this.getId())) {
+				customManagedCategory.addSubscription(this);
 			}
 			// TODO (GB later) l'ajouter dans le custom category si c'est la premiere fois
 			//customManagedCategory.addSubscription(this);
@@ -478,7 +482,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		
 		if (mode == VisibilityMode.ALLOWED) {
 			if (LOG.isTraceEnabled()) {
-				LOG.trace("IsInAllowed : " + mode);
+				LOG.trace("IsInAllowed : " + this.getId());
 			}
 			// Nothing to do
 			return mode;

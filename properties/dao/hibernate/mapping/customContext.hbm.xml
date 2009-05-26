@@ -38,5 +38,11 @@
 				<column name="CATEGORYID" not-null="true"/>
 			</element>
 		</set>
+		<set name="unsubscribedAutoSubscribedCategories" table="LECT_UNSUBSCRIBEDCATEGORY" cascade="save-update,lock,merge,delete-orphan">
+			<key foreign-key="FK_UNSUBSCRIBECATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK" not-null="true">
+				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK"/>
+			</key>
+			<one-to-many class="UnsubscribeAutoSubscribedCategoryFlag" />
+		</set>
 	</class>
 </hibernate-mapping>

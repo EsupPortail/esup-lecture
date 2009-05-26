@@ -30,6 +30,12 @@
 				<map-key type="string" formula="ELEMENTID"/>
 				<one-to-many class="CustomManagedSource" />
 			</map>
+			<set name="unsubscribedAutoSubscribedSources" table="LECT_UNSUBSCRIBEDSOURCE" cascade="save-update,lock,merge,delete-orphan">
+				<key foreign-key="FK_UNSUBSCRIBESOURCE_CUSTOMCATEGORY_CUSTOMCATEGORYPK" not-null="true">
+					<column name="CUSTOMCATEGORY_CUSTOMCATEGORYPK"/>
+				</key>
+				<one-to-many class="UnsubscribeAutoSubscribedSourceFlag" />
+			</set>
 		</subclass>
 	</class>
 </hibernate-mapping>

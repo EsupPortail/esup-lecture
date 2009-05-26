@@ -26,10 +26,17 @@
 			<key foreign-key="FK_READITEM_CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true">
 				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true" />
 			</key>
-			<element type="string" length="50">
-				<column name="ITEMID" not-null="true" />
-			</element>
+			<one-to-many class="ReadItemFlag" />
 		</set>
+		<!--
+		<set name="readItems" cascade="save-update,lock,merge">
+			<key foreign-key="FK_READITEM_CUSTOMSOURCE_CUSTOMSOURCEPK">
+				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK"/>
+			</key>
+			<map-key type="string" formula="ITEMID"/>
+			<one-to-many class="readItemsFlag" />
+		</set>
+		-->
 		<property name="itemDisplayMode"
 			type="org.esupportail.lecture.dao.ItemDisplayModeUserType">
 			<column name="ITEMDISPLAYMODE" not-null="true" length="32" />

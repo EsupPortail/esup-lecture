@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
@@ -73,6 +74,11 @@ public class CustomContext implements CustomElement {
 	 * Set of id corresponding to unfolded categories.
 	 */
 	private Set<String> unfoldedCategories = new HashSet<String>();
+
+	/**
+	 * Set of unsubscribed AutoSubscribed Categories.
+	 */
+	private Set<UnsubscribeAutoSubscribedCategoryFlag> unsubscribedAutoSubscribedCategories = new HashSet<UnsubscribeAutoSubscribedCategoryFlag>();
 
 	/**
 	 * Database Primary Key.
@@ -235,7 +241,7 @@ public class CustomContext implements CustomElement {
 			throw new InternalDomainException(errorMsg, e);
 		} 
 		
-		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
+		if (mode == VisibilityMode.ALLOWED) {
 			if (subscriptions.containsKey(categoryId)) {
 				LOG.warn("Nothing is done for subscribeToCategory requested on category " + categoryId
 					+ " in context " + this.getElementId() + "\nfor user " 
@@ -244,6 +250,17 @@ public class CustomContext implements CustomElement {
 			} else {
 				addSubscription(catProfile);
 				LOG.debug("addSubscription to category " + categoryId);
+			}
+		} else if (mode == VisibilityMode.AUTOSUBSCRIBED) {
+			if (subscriptions.containsKey(categoryId)) {
+				LOG.warn("Nothing is done for subscribeToCategory requested on category " + categoryId
+					+ " in context " + this.getElementId() + "\nfor user " 
+					+ getUserProfile().getUserId() 
+					+ " because this category is already in subscriptions");
+			} else {
+				addSubscription(catProfile);
+				subscribeToAutoSubscribedCategory(categoryId);
+				LOG.debug("addAutoSubscription to category " + categoryId);
 			}
 			
 		} else if (mode == VisibilityMode.OBLIGED) {
@@ -313,7 +330,7 @@ public class CustomContext implements CustomElement {
 			throw new InternalDomainException(errorMsg, e);
 		} 
 		
-		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
+		if (mode == VisibilityMode.ALLOWED) {
 			if (!subscriptions.containsKey(categoryId)) {
 				LOG.warn("Nothing is done for unsubscribeToCategory requested on category " + categoryId
 					+ " in context " + this.getElementId() + "\nfor user " 
@@ -321,8 +338,20 @@ public class CustomContext implements CustomElement {
 					+ " because this category is not in subscriptions");
 			} else {
 				removeCustomManagedCategoryFromProfile(categoryId);
-				LOG.trace("removeCustomManagedSource to source " + categoryId);
+				LOG.trace("removeCustomManagedCategoryFromProfile : " + categoryId);
 			}
+		} else if (mode == VisibilityMode.AUTOSUBSCRIBED) {
+			if (!subscriptions.containsKey(categoryId)) {
+				LOG.warn("Nothing is done for unsubscribeToCategory requested on category " + categoryId
+					+ " in context " + this.getElementId() + "\nfor user " 
+					+ getUserProfile().getUserId() 
+					+ " because this category is not in subscriptions");
+			} else {
+				LOG.trace("removeCustomManagedCategoryFromProfile (autoSubscribed) : " + categoryId);
+				removeCustomManagedCategoryFromProfile(categoryId);
+				unsubscribeToAutoSubscribedCategory(categoryId);
+			}
+			
 			
 		} else if (mode == VisibilityMode.OBLIGED) {
 			String errorMsg = "UnsubscribeToCategory(" + categoryId
@@ -483,22 +512,6 @@ public class CustomContext implements CustomElement {
 		}
 	}
 
-	/**
-	 * mark a customCategory contained in this CustomContext as folded.
-	 * @param catId id of the profile category associated to the customCategory
-	 */
-	public void foldCategory(final String catId) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug(ID + elementId + " - foldCategory(catId" + catId + ")");
-		}
-		if (!unfoldedCategories.remove(catId)) {
-			LOG.warn("foldCategory(" + catId + ") is called in customContext " + elementId 
-					+ " but this category is yet folded");
-//		} else {
-//			DomainTools.getDaoService().updateCustomContext(this);
-		}
-	}
-	
 	/**
 	 * mark a customCategory contained in this CustomContext as unfolded.
 	 * @param catId id of the profile category associated to the customCategory
@@ -716,6 +729,88 @@ public class CustomContext implements CustomElement {
 		//Needed by Hibernate
 	}
 
+	/**
+	 * @return the unsubscribedAutoSubscribedCategories
+	 */
+	public Set<UnsubscribeAutoSubscribedCategoryFlag> getUnsubscribedAutoSubscribedCategories() {
+		return unsubscribedAutoSubscribedCategories;
+	}
+
+	/**
+	 * @param unsubscribedAutoSubscribedCategories the unsubscribedAutoSubscribedCategories to set
+	 */
+	public void setUnsubscribedAutoSubscribedCategories(
+			Set<UnsubscribeAutoSubscribedCategoryFlag> unsubscribedAutoSubscribedCategories) {
+		this.unsubscribedAutoSubscribedCategories = unsubscribedAutoSubscribedCategories;
+	}
+
+	/**
+		 * mark a customCategory contained in this CustomContext as folded.
+		 * @param catId id of the profile category associated to the customCategory
+		 */
+		public void foldCategory(final String catId) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(ID + elementId + " - foldCategory(catId" + catId + ")");
+			}
+			if (!unfoldedCategories.remove(catId)) {
+				LOG.warn("foldCategory(" + catId + ") is called in customContext " + elementId 
+						+ " but this category is yet folded");
+	//		} else {
+	//			DomainTools.getDaoService().updateCustomContext(this);
+			}
+		}
+
+	/* ADD ELEMENTS */
+	
+		/**
+		 * Return true if the customCategory is unsubscribed in this customContext.
+		 * @param profile
+		 * @return if category is unsubscribed or not
+		 */
+		protected boolean isUnsubscribedAutoSubscribedCategory(final String categoryId) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(ID + elementId + " - isUnsubscribedAutoSubscribedCategory(" + categoryId + ")");
+			}
+			UnsubscribeAutoSubscribedCategoryFlag cat = new UnsubscribeAutoSubscribedCategoryFlag();
+			cat.setId(categoryId);
+			return unsubscribedAutoSubscribedCategories.contains(cat);
+		}
+
+		/**
+		 * remove a autoSubscribed customCategory contained in this CustomContext from unsubscribedAutoSubscribedCategories.
+		 * @param catId id of the profile category associated to the customCategory
+		 */
+		public void subscribeToAutoSubscribedCategory(final String catId) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(ID + elementId + " - subscribeToAutoSubscribedCategory(catId" + catId + ")");
+			}
+			UnsubscribeAutoSubscribedCategoryFlag cat = new UnsubscribeAutoSubscribedCategoryFlag();
+			cat.setId(catId);
+			if (!unsubscribedAutoSubscribedCategories.remove(cat)) {
+				LOG.warn("subscribeToAutoSubscribedCategory(" + catId + ") is called in customContext " + elementId 
+						+ " but this category is not in ");
+			}
+		}
+		
+		/**
+		 * mark a autoSubscribed customCategory contained in this CustomContext as unsubscribed.
+		 * @param catId id of the profile category associated to the customCategory
+		 */
+		public void unsubscribeToAutoSubscribedCategory(final String catId) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(ID + elementId + " - unsubscribeToAutoSubscribedCategory(catId" + catId + ")");
+			}
+			// On ajoute au set  
+			UnsubscribeAutoSubscribedCategoryFlag cat = new UnsubscribeAutoSubscribedCategoryFlag();
+			cat.setId(catId);
+			Date datejour = new Date();
+			cat.setDate(datejour);
+			if (!unsubscribedAutoSubscribedCategories.add(cat)) {
+				LOG.warn("unsubscribeToAutoSubscribedCategory(" + catId + ") is called in customContext " + elementId 
+						+ " but this category is not in ");
+			}
+		}
+		
 	
 
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="org.esupportail.lecture.domain.model">
+	<class name="ReadItemFlag" table="LECT_READITEM">
+		<id name="id" type="string" >
+			<column name="ITEMID" length="50" not-null="true" />
+		</id>
+		<property name="date" type="date">
+			<column name="DATE"/>
+		</property>
+	</class>
+</hibernate-mapping>

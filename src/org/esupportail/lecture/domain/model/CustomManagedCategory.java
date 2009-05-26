@@ -6,9 +6,12 @@
 package org.esupportail.lecture.domain.model;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
@@ -52,6 +55,11 @@ public class CustomManagedCategory extends CustomCategory {
 	 */
 	private Map<String, CustomManagedSource> subscriptions = new Hashtable<String, CustomManagedSource>();
 	
+	/**
+	 * Set of unsubscribed AutoSubscribed Sources.
+	 */
+	private Set<UnsubscribeAutoSubscribedSourceFlag> unsubscribedAutoSubscribedSources = new HashSet<UnsubscribeAutoSubscribedSourceFlag>();
+
 	/**
 	 * CategoryProfile associated to this customManagedCategory.
 	 */
@@ -264,7 +272,7 @@ public class CustomManagedCategory extends CustomCategory {
 			throw new InternalDomainException(errorMsg, e);
 		}
 		
-		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
+		if (mode == VisibilityMode.ALLOWED) {
 			if (subscriptions.containsKey(sourceId)) {
 				LOG.warn("Nothing is done for SubscribeToSource requested on source " + sourceId
 					+ " in category " + this.getElementId() + "\nfor user " 
@@ -275,6 +283,17 @@ public class CustomManagedCategory extends CustomCategory {
 				LOG.debug("addSubscription to source " + sourceId);
 			}
 			
+		} else if (mode == VisibilityMode.AUTOSUBSCRIBED) {
+			if (subscriptions.containsKey(sourceId)) {
+				LOG.warn("Nothing is done for SubscribeToSource requested on source " + sourceId
+						+ " in category " + this.getElementId() + "\nfor user " 
+						+ getUserProfile().getUserId() 
+						+ " because this source is already in subscriptions");
+			} else {
+				addSubscription(soProfile);
+				subscribeToAutoSubscribedSource(sourceId);
+				LOG.debug("addAutoSubscription to source " + sourceId);
+			}
 		} else if (mode == VisibilityMode.OBLIGED) {
 			LOG.warn("Nothing is done for SubscribeToSource requested on source " + sourceId 
 					+ " in category " + this.getElementId() + "\nfor user "
@@ -348,7 +367,7 @@ public class CustomManagedCategory extends CustomCategory {
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
 		}			
-		if (mode == VisibilityMode.ALLOWED || mode == VisibilityMode.AUTOSUBSCRIBED) {
+		if (mode == VisibilityMode.ALLOWED) {
 			if (!subscriptions.containsKey(sourceId)) {
 				LOG.warn("Nothing is done for UnsubscribeToSource requested on source " 
 					+ sourceId + " in category " + this.getElementId() + "\nfor user "
@@ -357,6 +376,18 @@ public class CustomManagedCategory extends CustomCategory {
 			} else {
 				removeCustomManagedSourceFromProfile(sourceId);
 				LOG.trace("removeCustomManagedSource to source " + sourceId);
+			}
+
+		} else if (mode == VisibilityMode.AUTOSUBSCRIBED) {
+			if (!subscriptions.containsKey(sourceId)) {
+				LOG.warn("Nothing is done for UnsubscribeToSource requested on source " 
+					+ sourceId + " in category " + this.getElementId() + "\nfor user "
+					+ getUserProfile().getUserId() 
+					+ " because this source is not in subscriptions");
+			} else {
+				LOG.trace("removeCustomManagedSource (autoSubscribed) to source " + sourceId);
+				removeCustomManagedSourceFromProfile(sourceId);
+				unsubscribeToAutoSubscribedSource(sourceId);
 			}
 				
 		} else if (mode == VisibilityMode.OBLIGED) {
@@ -551,6 +582,68 @@ public class CustomManagedCategory extends CustomCategory {
 		//Needed by Hibernate 
 	}
 
+	/**
+	 * @return the unsubscribedAutoSubscribedSources
+	 */
+	public Set<UnsubscribeAutoSubscribedSourceFlag> getUnsubscribedAutoSubscribedSources() {
+		return unsubscribedAutoSubscribedSources;
+	}
 
+	/**
+	 * @param unsubscribedAutoSubscribedSources the unsubscribedAutoSubscribedSources to set
+	 */
+	public void setUnsubscribedAutoSubscribedSources(
+			Set<UnsubscribeAutoSubscribedSourceFlag> unsubscribedAutoSubscribedSources) {
+		this.unsubscribedAutoSubscribedSources = unsubscribedAutoSubscribedSources;
+	}
+
+	/**
+	 * Return true if the customCategory is unsubscribed in this customContext.
+	 * @param profile
+	 * @return if category is unsubscribed or not
+	 */
+	protected boolean isUnsubscribedAutoSubscribedSource(final String sourceId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + getElementId() + " - isUnsubscribedAutoSubscribedSource(" + sourceId + ")");
+		}
+		UnsubscribeAutoSubscribedSourceFlag source = new UnsubscribeAutoSubscribedSourceFlag();
+		source.setId(sourceId);
+		return unsubscribedAutoSubscribedSources.contains(source);
+	}
+
+	/**
+	 * remove a autoSubscribed customCategory contained in this CustomContext from unsubscribedAutoSubscribedCategories.
+	 * @param catId id of the profile category associated to the customCategory
+	 */
+	public void subscribeToAutoSubscribedSource(final String sourceId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + getElementId() + " - subscribeToAutoSubscribedSource(" + sourceId + ")");
+		}
+		UnsubscribeAutoSubscribedSourceFlag source = new UnsubscribeAutoSubscribedSourceFlag();
+		source.setId(sourceId);
+		if (!unsubscribedAutoSubscribedSources.remove(source)) {
+			LOG.warn("subscribeToAutoSubscribedSource(" + sourceId + ") is called for category " + getElementId() 
+					+ " but this source is not in ");
+		}
+	}
+	
+	/**
+	 * mark a autoSubscribed customCategory contained in this CustomContext as unsubscribed.
+	 * @param catId id of the profile category associated to the customCategory
+	 */
+	public void unsubscribeToAutoSubscribedSource(final String sourceId) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug(ID + getElementId() + " - unsubscribeToAutoSubscribedSource(" + sourceId + ")");
+		}
+		// On ajoute au set  
+		UnsubscribeAutoSubscribedSourceFlag source = new UnsubscribeAutoSubscribedSourceFlag();
+		source.setId(sourceId);
+		Date datejour = new Date();
+		source.setDate(datejour);
+		if (!unsubscribedAutoSubscribedSources.add(source)) {
+			LOG.warn("unsubscribeToAutoSubscribedCategory(" + sourceId + ") is called for category " + getElementId() 
+					+ " but this source is not in ");
+		}
+	}
 	
 }

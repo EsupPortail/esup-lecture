@@ -30,7 +30,7 @@ toggleButton: read/unread toggle button
 <script type="text/javascript"><!--
 
 --></script>
-		<h:form id="home">
+		<e:form id="home" showSubmitPopupText="false" showSubmitPopupImage="false">
 
 			<!-- ********* Rendering ********* -->
 			<t:div id="panels-layout" forceId="true" 
@@ -51,7 +51,7 @@ toggleButton: read/unread toggle button
 				</t:div>
 			</t:div>
 
-		</h:form>
+		</e:form>
 		<script type="text/javascript">
 			if (document.getElementById("home:itemDisplayModeButton")) {
 				document.getElementById("home:itemDisplayModeButton").style.display = "none";
