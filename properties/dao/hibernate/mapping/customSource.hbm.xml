@@ -22,21 +22,15 @@
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
 			</many-to-one>
 		</natural-id>
-		<set name="readItems" table="LECT_READITEM" cascade="save-update,lock,merge,delete-orphan">
+		<map name="readItems" table="LECT_READITEMFLAG" cascade="all, delete-orphan" inverse="true">
 			<key foreign-key="FK_READITEM_CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true">
 				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true" />
 			</key>
+			<map-key type="string" >
+                <column name="ELEMENTID"/>
+			</map-key>
 			<one-to-many class="ReadItemFlag" />
-		</set>
-		<!--
-		<set name="readItems" cascade="save-update,lock,merge">
-			<key foreign-key="FK_READITEM_CUSTOMSOURCE_CUSTOMSOURCEPK">
-				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK"/>
-			</key>
-			<map-key type="string" formula="ITEMID"/>
-			<one-to-many class="readItemsFlag" />
-		</set>
-		-->
+		</map>
 		<property name="itemDisplayMode"
 			type="org.esupportail.lecture.dao.ItemDisplayModeUserType">
 			<column name="ITEMDISPLAYMODE" not-null="true" length="32" />

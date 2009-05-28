@@ -58,7 +58,7 @@ public class CustomManagedCategory extends CustomCategory {
 	/**
 	 * Set of unsubscribed AutoSubscribed Sources.
 	 */
-	private Set<UnsubscribeAutoSubscribedSourceFlag> unsubscribedAutoSubscribedSources = new HashSet<UnsubscribeAutoSubscribedSourceFlag>();
+	private Map<String, UnsubscribeAutoSubscribedSourceFlag> unsubscribedAutoSubscribedSources = new Hashtable<String, UnsubscribeAutoSubscribedSourceFlag>();
 
 	/**
 	 * CategoryProfile associated to this customManagedCategory.
@@ -585,7 +585,7 @@ public class CustomManagedCategory extends CustomCategory {
 	/**
 	 * @return the unsubscribedAutoSubscribedSources
 	 */
-	public Set<UnsubscribeAutoSubscribedSourceFlag> getUnsubscribedAutoSubscribedSources() {
+	public Map<String, UnsubscribeAutoSubscribedSourceFlag> getUnsubscribedAutoSubscribedSources() {
 		return unsubscribedAutoSubscribedSources;
 	}
 
@@ -593,7 +593,7 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @param unsubscribedAutoSubscribedSources the unsubscribedAutoSubscribedSources to set
 	 */
 	public void setUnsubscribedAutoSubscribedSources(
-			Set<UnsubscribeAutoSubscribedSourceFlag> unsubscribedAutoSubscribedSources) {
+			Map<String, UnsubscribeAutoSubscribedSourceFlag> unsubscribedAutoSubscribedSources) {
 		this.unsubscribedAutoSubscribedSources = unsubscribedAutoSubscribedSources;
 	}
 
@@ -606,9 +606,7 @@ public class CustomManagedCategory extends CustomCategory {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + getElementId() + " - isUnsubscribedAutoSubscribedSource(" + sourceId + ")");
 		}
-		UnsubscribeAutoSubscribedSourceFlag source = new UnsubscribeAutoSubscribedSourceFlag();
-		source.setId(sourceId);
-		return unsubscribedAutoSubscribedSources.contains(source);
+		return unsubscribedAutoSubscribedSources.containsKey(sourceId);
 	}
 
 	/**
@@ -619,9 +617,10 @@ public class CustomManagedCategory extends CustomCategory {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + getElementId() + " - subscribeToAutoSubscribedSource(" + sourceId + ")");
 		}
-		UnsubscribeAutoSubscribedSourceFlag source = new UnsubscribeAutoSubscribedSourceFlag();
-		source.setId(sourceId);
-		if (!unsubscribedAutoSubscribedSources.remove(source)) {
+		UnsubscribeAutoSubscribedSourceFlag cat =  unsubscribedAutoSubscribedSources.get(sourceId);
+		if (cat != null) {
+			unsubscribedAutoSubscribedSources.remove(sourceId);
+		} else {
 			LOG.warn("subscribeToAutoSubscribedSource(" + sourceId + ") is called for category " + getElementId() 
 					+ " but this source is not in ");
 		}
@@ -635,12 +634,12 @@ public class CustomManagedCategory extends CustomCategory {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + getElementId() + " - unsubscribeToAutoSubscribedSource(" + sourceId + ")");
 		}
-		// On ajoute au set  
-		UnsubscribeAutoSubscribedSourceFlag source = new UnsubscribeAutoSubscribedSourceFlag();
-		source.setId(sourceId);
-		Date datejour = new Date();
-		source.setDate(datejour);
-		if (!unsubscribedAutoSubscribedSources.add(source)) {
+		if (!unsubscribedAutoSubscribedSources.containsKey(sourceId)) {
+			UnsubscribeAutoSubscribedSourceFlag cat = new UnsubscribeAutoSubscribedSourceFlag(this, sourceId);
+			Date datejour = new Date();
+			cat.setDate(datejour);
+			unsubscribedAutoSubscribedSources.put(sourceId, cat);
+		} else {
 			LOG.warn("unsubscribeToAutoSubscribedCategory(" + sourceId + ") is called for category " + getElementId() 
 					+ " but this source is not in ");
 		}

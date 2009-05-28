@@ -78,7 +78,7 @@ public class CustomContext implements CustomElement {
 	/**
 	 * Set of unsubscribed AutoSubscribed Categories.
 	 */
-	private Set<UnsubscribeAutoSubscribedCategoryFlag> unsubscribedAutoSubscribedCategories = new HashSet<UnsubscribeAutoSubscribedCategoryFlag>();
+	private Map<String, UnsubscribeAutoSubscribedCategoryFlag> unsubscribedAutoSubscribedCategories = new Hashtable<String, UnsubscribeAutoSubscribedCategoryFlag>();
 
 	/**
 	 * Database Primary Key.
@@ -732,7 +732,7 @@ public class CustomContext implements CustomElement {
 	/**
 	 * @return the unsubscribedAutoSubscribedCategories
 	 */
-	public Set<UnsubscribeAutoSubscribedCategoryFlag> getUnsubscribedAutoSubscribedCategories() {
+	public Map<String, UnsubscribeAutoSubscribedCategoryFlag> getUnsubscribedAutoSubscribedCategories() {
 		return unsubscribedAutoSubscribedCategories;
 	}
 
@@ -740,7 +740,7 @@ public class CustomContext implements CustomElement {
 	 * @param unsubscribedAutoSubscribedCategories the unsubscribedAutoSubscribedCategories to set
 	 */
 	public void setUnsubscribedAutoSubscribedCategories(
-			Set<UnsubscribeAutoSubscribedCategoryFlag> unsubscribedAutoSubscribedCategories) {
+			Map<String, UnsubscribeAutoSubscribedCategoryFlag> unsubscribedAutoSubscribedCategories) {
 		this.unsubscribedAutoSubscribedCategories = unsubscribedAutoSubscribedCategories;
 	}
 
@@ -771,23 +771,23 @@ public class CustomContext implements CustomElement {
 			if (LOG.isDebugEnabled()) {
 				LOG.debug(ID + elementId + " - isUnsubscribedAutoSubscribedCategory(" + categoryId + ")");
 			}
-			UnsubscribeAutoSubscribedCategoryFlag cat = new UnsubscribeAutoSubscribedCategoryFlag();
-			cat.setId(categoryId);
-			return unsubscribedAutoSubscribedCategories.contains(cat);
+			//UnsubscribeAutoSubscribedCategoryFlag cat = new UnsubscribeAutoSubscribedCategoryFlag(this, categoryId);
+			return unsubscribedAutoSubscribedCategories.containsKey(categoryId);
 		}
 
 		/**
 		 * remove a autoSubscribed customCategory contained in this CustomContext from unsubscribedAutoSubscribedCategories.
 		 * @param catId id of the profile category associated to the customCategory
 		 */
-		public void subscribeToAutoSubscribedCategory(final String catId) {
+		public void subscribeToAutoSubscribedCategory(final String categoryId) {
 			if (LOG.isDebugEnabled()) {
-				LOG.debug(ID + elementId + " - subscribeToAutoSubscribedCategory(catId" + catId + ")");
+				LOG.debug(ID + elementId + " - subscribeToAutoSubscribedCategory(catId" + categoryId + ")");
 			}
-			UnsubscribeAutoSubscribedCategoryFlag cat = new UnsubscribeAutoSubscribedCategoryFlag();
-			cat.setId(catId);
-			if (!unsubscribedAutoSubscribedCategories.remove(cat)) {
-				LOG.warn("subscribeToAutoSubscribedCategory(" + catId + ") is called in customContext " + elementId 
+			UnsubscribeAutoSubscribedCategoryFlag cat =  unsubscribedAutoSubscribedCategories.get(categoryId);
+			if (cat != null) {
+				unsubscribedAutoSubscribedCategories.remove(categoryId);
+			} else {
+				LOG.warn("subscribeToAutoSubscribedCategory(" + categoryId + ") is called in customContext " + elementId 
 						+ " but this category is not in ");
 			}
 		}
@@ -796,17 +796,17 @@ public class CustomContext implements CustomElement {
 		 * mark a autoSubscribed customCategory contained in this CustomContext as unsubscribed.
 		 * @param catId id of the profile category associated to the customCategory
 		 */
-		public void unsubscribeToAutoSubscribedCategory(final String catId) {
+		public void unsubscribeToAutoSubscribedCategory(final String categoryId) {
 			if (LOG.isDebugEnabled()) {
-				LOG.debug(ID + elementId + " - unsubscribeToAutoSubscribedCategory(catId" + catId + ")");
+				LOG.debug(ID + elementId + " - unsubscribeToAutoSubscribedCategory(catId" + categoryId + ")");
 			}
-			// On ajoute au set  
-			UnsubscribeAutoSubscribedCategoryFlag cat = new UnsubscribeAutoSubscribedCategoryFlag();
-			cat.setId(catId);
-			Date datejour = new Date();
-			cat.setDate(datejour);
-			if (!unsubscribedAutoSubscribedCategories.add(cat)) {
-				LOG.warn("unsubscribeToAutoSubscribedCategory(" + catId + ") is called in customContext " + elementId 
+			if (!unsubscribedAutoSubscribedCategories.containsKey(categoryId)) {
+				UnsubscribeAutoSubscribedCategoryFlag cat = new UnsubscribeAutoSubscribedCategoryFlag(this, categoryId);
+				Date datejour = new Date();
+				cat.setDate(datejour);
+				unsubscribedAutoSubscribedCategories.put(categoryId, cat);
+			} else {
+				LOG.warn("unsubscribeToAutoSubscribedCategory(" + categoryId + ") is called in customContext " + elementId 
 						+ " but this category is not in ");
 			}
 		}

@@ -7,7 +7,9 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.logging.Log;
@@ -51,7 +53,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * Set of read item by User.
 	 */
-	private Set<ReadItemFlag> readItems = new HashSet<ReadItemFlag>();
+	private Map<String, ReadItemFlag> readItems = new Hashtable<String, ReadItemFlag>();
 	
 	/**
 	 * item display mode of this customSource. 
@@ -170,16 +172,20 @@ public abstract class CustomSource implements CustomElement {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(IDEGAL + elementId + " - setItemReadMode(" + itemId + "," + isRead + ")");
 		}
-		ReadItemFlag itemChanged = new ReadItemFlag();
-		itemChanged.setId(itemId);
+		ReadItemFlag itemChanged = new ReadItemFlag(this, itemId);
 		Date datejour = new Date();
 		itemChanged.setDate(datejour);
 		if (isRead) {
-			readItems.add(itemChanged);	
+			if (!readItems.containsKey(itemId)) {
+				readItems.put(itemId, itemChanged);	
+			} else {
+				LOG.warn(IDEGAL + elementId + "setItemReadMode("+ isRead + itemId + ") is called in customSource " + elementId 
+						+ " but this item allready in readItems");
+			}
 		} else {
-			readItems.remove(itemChanged);
+			LOG.debug(IDEGAL + elementId + " - setItemReadMode(" + itemId + "," + isRead + ") : remove");
+			readItems.remove(itemId);
 		}
-//		DomainTools.getDaoService().updateCustomSource(this);
 	}
 	
 	/**
@@ -190,9 +196,8 @@ public abstract class CustomSource implements CustomElement {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(IDEGAL + elementId + " - isItemRead(" + itemId + ")");
 		}
-		ReadItemFlag itemTested = new ReadItemFlag();
-		itemTested.setId(itemId);
-		return readItems.contains(itemTested);
+		ReadItemFlag itemTested = new ReadItemFlag(this, itemId);
+		return readItems.containsKey(itemId);
 	}
 
 	/**
@@ -319,7 +324,7 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * @return a set of read items ID
 	 */
-	protected Set<ReadItemFlag> getReadItems() {
+	protected Map<String, ReadItemFlag> getReadItems() {
 		return readItems;
 	}
 
@@ -327,7 +332,7 @@ public abstract class CustomSource implements CustomElement {
 	 * @param readItems
 	 */
 	@SuppressWarnings("unused")
-	private void setReadItems(final Set<ReadItemFlag> readItems) {
+	private void setReadItems(final Map<String, ReadItemFlag> readItems) {
 		this.readItems = readItems;
 		//Needed by Hibernate
 	}

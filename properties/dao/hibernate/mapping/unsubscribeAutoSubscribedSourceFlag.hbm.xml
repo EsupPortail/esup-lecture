@@ -3,10 +3,21 @@
 	"-//Hibernate/Hibernate Mapping DTD//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
-	<class name="UnsubscribeAutoSubscribedSourceFlag" table="LECT_UNSUBSCRIBEDSOURCE">
-		<id name="id" type="string" >
-			<column name="ELEMENTID" length="250" not-null="true" />
+	<class name="UnsubscribeAutoSubscribedSourceFlag" table="LECT_UNSUBSCRIBEDSOURCEFLAG">
+		<id name="unsubscribedSourcePK" type="long">
+			<column name="UNSUBSCRIBEDSOURCEPK" />
+			<generator class="native">
+				<param name="sequence">unsubscribedSourcePK</param>
+			</generator>
 		</id>
+		<natural-id>
+            <property name="elementId" type="string">
+                <column name="ELEMENTID" length="250" not-null="true" />
+            </property>
+			<many-to-one name="CustomManagedCategory" class="CustomManagedCategory">
+				<column name="CUSTOMCATEGORY_CUSTOMCATEGORYPK" not-null="true" />
+			</many-to-one>
+		</natural-id>
 		<property name="date" type="date">
 			<column name="DATE"/>
 		</property>

@@ -127,8 +127,8 @@ public class CustomManagedSource extends CustomSource {
 				+ "],");
 		// readItems
 		string.append("\n readItems=[");
-		for (ReadItemFlag it : getReadItems()) {
-			string.append(it.toString()).append(", ");
+		for (String it : getReadItems().keySet()) {
+			string.append(it).append(", ");
 		}
 		string.append("]\n]");
 		return string.toString();
