@@ -185,7 +185,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	}
 
 	/**
-	 * @return
+	 * @return false
 	 */
 	public boolean isUserCanMarkRead() {
 		// TODO Auto-generated method stub

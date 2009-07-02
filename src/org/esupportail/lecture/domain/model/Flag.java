@@ -33,7 +33,7 @@ public abstract class Flag {
 	/**
 	 *  Flag name.
 	 */
-	private Date date = null;
+	private Date date;
 	
 	
 	/*

@@ -96,8 +96,8 @@ public class CustomManagedSource extends CustomSource {
 	
 	/**
 	 * Returns the Id of the Parent (a managedCategory) of sourceProfile referred by this CustomManagedSource.
-	 * It gets it from the SourceProfile id (m:<parentId>:<interneId>)
-	 * @return "<parentId>"  It is ID of the ManagedCategoryProfile
+	 * It gets it from the SourceProfile id (m:parentId:interneId)
+	 * @return "parentId"  It is ID of the ManagedCategoryProfile
 	 */
 	public String getManagedSourceProfileParentId() {
 		if (LOG.isDebugEnabled()) {

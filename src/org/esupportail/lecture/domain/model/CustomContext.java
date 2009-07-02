@@ -764,7 +764,7 @@ public class CustomContext implements CustomElement {
 	
 		/**
 		 * Return true if the customCategory is unsubscribed in this customContext.
-		 * @param profile
+		 * @param categoryId id of the profile category associated to the customCategory
 		 * @return if category is unsubscribed or not
 		 */
 		protected boolean isUnsubscribedAutoSubscribedCategory(final String categoryId) {
@@ -777,7 +777,7 @@ public class CustomContext implements CustomElement {
 
 		/**
 		 * remove a autoSubscribed customCategory contained in this CustomContext from unsubscribedAutoSubscribedCategories.
-		 * @param catId id of the profile category associated to the customCategory
+		 * @param categoryId id of the profile category associated to the customCategory
 		 */
 		public void subscribeToAutoSubscribedCategory(final String categoryId) {
 			if (LOG.isDebugEnabled()) {
@@ -794,7 +794,7 @@ public class CustomContext implements CustomElement {
 		
 		/**
 		 * mark a autoSubscribed customCategory contained in this CustomContext as unsubscribed.
-		 * @param catId id of the profile category associated to the customCategory
+		 * @param categoryId id of the profile category associated to the customCategory
 		 */
 		public void unsubscribeToAutoSubscribedCategory(final String categoryId) {
 			if (LOG.isDebugEnabled()) {

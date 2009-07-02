@@ -599,7 +599,7 @@ public class CustomManagedCategory extends CustomCategory {
 
 	/**
 	 * Return true if the customCategory is unsubscribed in this customContext.
-	 * @param profile
+	 * @param sourceId
 	 * @return if category is unsubscribed or not
 	 */
 	protected boolean isUnsubscribedAutoSubscribedSource(final String sourceId) {
@@ -611,7 +611,7 @@ public class CustomManagedCategory extends CustomCategory {
 
 	/**
 	 * remove a autoSubscribed customCategory contained in this CustomContext from unsubscribedAutoSubscribedCategories.
-	 * @param catId id of the profile category associated to the customCategory
+	 * @param sourceId
 	 */
 	public void subscribeToAutoSubscribedSource(final String sourceId) {
 		if (LOG.isDebugEnabled()) {
@@ -628,7 +628,7 @@ public class CustomManagedCategory extends CustomCategory {
 	
 	/**
 	 * mark a autoSubscribed customCategory contained in this CustomContext as unsubscribed.
-	 * @param catId id of the profile category associated to the customCategory
+	 * @param sourceId
 	 */
 	public void unsubscribeToAutoSubscribedSource(final String sourceId) {
 		if (LOG.isDebugEnabled()) {

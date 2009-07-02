@@ -179,7 +179,7 @@ public abstract class CustomSource implements CustomElement {
 			if (!readItems.containsKey(itemId)) {
 				readItems.put(itemId, itemChanged);	
 			} else {
-				LOG.warn(IDEGAL + elementId + "setItemReadMode("+ isRead + itemId + ") is called in customSource " + elementId 
+				LOG.warn(IDEGAL + elementId + "setItemReadMode(" + isRead + itemId + ") is called in customSource " + elementId 
 						+ " but this item allready in readItems");
 			}
 		} else {
