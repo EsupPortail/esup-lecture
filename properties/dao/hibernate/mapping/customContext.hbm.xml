@@ -31,7 +31,7 @@
 			<one-to-many class="CustomCategory"/>
 		</map>
 		<set name="unfoldedCategories" table="LECT_UNFOLDEDCATEGORY">
-			<key foreign-key="FK_UNFOLDEDCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK" not-null="true">
+			<key foreign-key="FK_UNFOLDEDCATEGORYFLAG_CUSTOMCONTEXT_CUSTOMCONTEXTPK" not-null="true">
 				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK"/>
 			</key>
 			<element type="string" length="250">

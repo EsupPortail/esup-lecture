@@ -23,7 +23,7 @@
 			</many-to-one>
 		</natural-id>
 		<map name="readItems" table="LECT_READITEMFLAG" cascade="all, delete-orphan" inverse="true">
-			<key foreign-key="FK_READITEM_CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true">
+			<key foreign-key="FK_READITEMFLAG_CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true">
 				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true" />
 			</key>
 			<map-key type="string" >

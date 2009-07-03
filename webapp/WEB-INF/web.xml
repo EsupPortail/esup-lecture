@@ -169,7 +169,7 @@
 		<init-param>
 			<param-name>portlet-class</param-name>
 			<param-value>
-				org.esupportail.lecture.portlet.FacesPortlet
+				org.esupportail.commons.web.portlet.FacesPortlet
 			</param-value>
 		</init-param>
 		<init-param>

@@ -151,5 +151,6 @@ public interface DaoService {
 	 * @param versionManager
 	 */
 	void updateVersionManager(VersionManager versionManager);
+
 		
 }

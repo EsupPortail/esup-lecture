@@ -229,5 +229,5 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 		Assert.notNull(remoteXMLService, "property remoteXMLService of class "
 				+ this.getClass().getName() + " can not be null");
 	}
-	
+
 }

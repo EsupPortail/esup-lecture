@@ -389,7 +389,6 @@ public class Channel implements InitializingBean {
 			DomainTools.getDaoService().saveUserProfile(userProfile);
 //			userProfile = DomainTools.getDaoService().refreshUserProfile(userProfile); 
 		}
-//		UserProfileThreadLocal.set(userProfile);
 		return userProfile;
 	}
 	

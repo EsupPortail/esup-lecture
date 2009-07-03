@@ -264,5 +264,4 @@ public class DaoServiceStub  implements DaoService {
 		
 	}
 
-
 }
