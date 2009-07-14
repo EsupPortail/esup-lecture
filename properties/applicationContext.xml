@@ -3,7 +3,8 @@
 <beans 
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
 	>
 
 	<!-- 
@@ -33,6 +34,12 @@
 		<property name="suffix" value=".jsp" />
 	</bean>
 
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<bean id="requestCacheBean"
+		class="org.esupportail.commons.aop.cache.RequestCachingMethodInterceptor" />
+	<bean id="sessionCacheBean"
+		class="org.esupportail.commons.aop.cache.SessionCachingMethodInterceptor" />
+		
 	<import resource="auth/auth.xml" />
 	<import resource="cache/cache.xml" />
 	<import resource="dao/dao.xml" />

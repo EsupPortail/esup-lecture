@@ -807,7 +807,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 */
 	public boolean isGuestMode() {
 		boolean ret;
-		String connectedUser = authenticationService.getCurrentUserId();
+		String connectedUser = authenticationService.getAuthInfo().getId();
 		if (connectedUser == null) {
 			return true;
 		}

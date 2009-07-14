@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.aop.cache.RequestCache;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
@@ -379,6 +380,7 @@ public class Channel implements InitializingBean {
 	 * @param userId : identifient of the user profile
 	 * @return the user profile
 	 */ 
+	@RequestCache
 	public synchronized UserProfile getUserProfile(final String userId) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getFreshUserProfile(" + userId + ")");
@@ -386,7 +388,7 @@ public class Channel implements InitializingBean {
 		UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
 		if (userProfile == null) {
 			userProfile = new UserProfile(userId);
-			DomainTools.getDaoService().saveUserProfile(userProfile);
+//			DomainTools.getDaoService().saveUserProfile(userProfile);
 //			userProfile = DomainTools.getDaoService().refreshUserProfile(userProfile); 
 		}
 		return userProfile;

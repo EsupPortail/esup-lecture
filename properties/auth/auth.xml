@@ -17,7 +17,7 @@
 
 	<bean 
 		id="authenticationService"
-		class="org.esupportail.commons.services.authentication.PortalOrCasFilterAuthenticator"
+		class="org.esupportail.commons.services.authentication.PortalOrCasFilterAuthenticationService"
 		>
 		<description>
 			The name of the Portal attribute that holds the uid of users, as set in portlet.xml.
