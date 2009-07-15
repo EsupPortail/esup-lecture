@@ -23,7 +23,7 @@
 		<property name="treeSize" type="int">
 			<column name="TREEWINWIDTH" not-null="true"/>
 		</property>
-		<map name="subscriptions" cascade="save-update,lock,merge">
+		<map name="subscriptions" cascade="all, delete-orphan">
 			<key foreign-key="FK_CUSTOMCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED">
 				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED"/>
 			</key>

@@ -15,7 +15,10 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 
 /**
  * @author bourges
@@ -72,8 +75,8 @@ public class DomainServiceStub implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getConnectedUser(java.lang.String)
 	 */
-	public UserBean getConnectedUser(final String userId) {
-		UserBean user = new UserBean(userId);
+	public UserBean getConnectedUser(final UserProfile userProfile) {
+		UserBean user = new UserBean(userProfile.getUserId());
 		return user;
 	}
 	
@@ -81,7 +84,7 @@ public class DomainServiceStub implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String)
 	 */
-	public ContextBean getContext(@SuppressWarnings("unused") final String uid, final String contextId) {
+	public ContextBean getContext(@SuppressWarnings("unused") final UserProfile userProfile, final String contextId) {
 		ContextBean ret = null;
 		if (context.getId().equals(contextId)) {
 			ret = context;
@@ -93,16 +96,16 @@ public class DomainServiceStub implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedCategories(
 	 *   java.lang.String, java.lang.String)
 	 */
-	public List<CategoryBean> getDisplayedCategories(final String uid, final String contextId) {
-		return getDisplayedCategories(contextId, uid);
+	public List<CategoryBean> getDisplayedCategories(final UserProfile userProfile, final String contextId) {
+		return null;
 	}
 	
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(
 	 * java.lang.String, java.lang.String)
 	 */
-	public List<SourceBean> getDisplayedSources(final String uid, final String categoryId) {
-		return getDisplayedSources(categoryId, uid);
+	public List<SourceBean> getDisplayedSources(final UserProfile userProfile, final String categoryId) {
+		return null;
 	}
 	
 	
@@ -111,7 +114,7 @@ public class DomainServiceStub implements DomainService {
 	 *   java.lang.String, java.lang.String)
 	 */
 	public List<ItemBean> getItems(@SuppressWarnings("unused") final String sourceId, 
-			@SuppressWarnings("unused") final String uid) {
+			@SuppressWarnings("unused") final UserProfile userProfile) {
 		return items;
 	}
 
@@ -121,7 +124,7 @@ public class DomainServiceStub implements DomainService {
 	 */
 	@SuppressWarnings("unused")
 	public void marckItemReadMode(
-			final String uid, final String itemId, final String sourceId, final boolean isRead) {
+			final UserProfile userProfile, final String itemId, final String sourceId, final boolean isRead) {
 		// nothing
 
 	}
@@ -132,7 +135,7 @@ public class DomainServiceStub implements DomainService {
 	 */
 	@SuppressWarnings("unused")
 	public List<CategoryBean> getVisibleCategories(
-			final String uid, final String contextId) {
+			final UserProfile userProfile, final String contextId) {
 		List<CategoryBean> ret = null;
 		ret = categories;
 		return ret;
@@ -146,7 +149,7 @@ public class DomainServiceStub implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(
 	 *   java.lang.String, java.lang.String)
 	 */
-	public List<SourceBean> getVisibleSources(final String uid, final String categoryId) {
+	public List<SourceBean> getVisibleSources(final UserProfile userProfile, final String categoryId) {
 		List<SourceBean> ret = null;
 		ret = sources;
 		return ret;
@@ -156,7 +159,7 @@ public class DomainServiceStub implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(java.lang.String, java.lang.String, int)
 	 */
 	@SuppressWarnings("unused")
-	public void setTreeSize(final String uid, final String contextId, final int size) {
+	public void setTreeSize(final UserProfile userProfile, final String contextId, final int size) {
 		// nothing	
 	}
 
@@ -165,7 +168,7 @@ public class DomainServiceStub implements DomainService {
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void foldCategory(final String uid, final String cxtId, final String catId) {
+	public void foldCategory(final UserProfile userProfile, final String cxtId, final String catId) {
 		// nothing
 	}
 
@@ -174,7 +177,7 @@ public class DomainServiceStub implements DomainService {
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void unfoldCategory(final String uid, final String cxtId, final String catId) {
+	public void unfoldCategory(final UserProfile userProfile, final String cxtId, final String catId) {
 		// nothing
 	}
 
@@ -185,7 +188,7 @@ public class DomainServiceStub implements DomainService {
 	 */
 	@SuppressWarnings("unused")
 	public void subscribeToSource(
-		final String uid, final String categorieId, final String sourceId) {
+		final UserProfile userProfile, final String categorieId, final String sourceId) {
 		// nothing
 	}
 	
@@ -194,7 +197,7 @@ public class DomainServiceStub implements DomainService {
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void subscribeToCategory(final String uid, final String contextId, 
+	public void subscribeToCategory(final UserProfile userProfile, final String contextId, 
 			final String categoryId) {
 		// nothing
 	}
@@ -204,7 +207,7 @@ public class DomainServiceStub implements DomainService {
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	public void unsubscribeToCategory(
-			@SuppressWarnings("unused") final String uid, 
+			@SuppressWarnings("unused") final UserProfile userProfile, 
 			@SuppressWarnings("unused") final String contextId, 
 			@SuppressWarnings("unused") final String categoryId) {
 //		 nothing
@@ -215,7 +218,7 @@ public class DomainServiceStub implements DomainService {
 	 */
 	@SuppressWarnings("unused")
 	public void unsubscribeToSource(
-			final String uid, final String categorieId, final String sourceId) {
+			final UserProfile userProfile, final String categorieId, final String sourceId) {
 		// nothing
 	}
 
@@ -224,7 +227,7 @@ public class DomainServiceStub implements DomainService {
 	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.model.ItemDisplayMode)
 	 */
 	@SuppressWarnings("unused")
-	public void markItemDisplayMode(final String uid, final String sourceId, final ItemDisplayMode mode) 
+	public void markItemDisplayMode(final UserProfile userProfile, final String sourceId, final ItemDisplayMode mode) 
 	throws InternalDomainException {
 		// nothing
 	}
@@ -251,6 +254,20 @@ public class DomainServiceStub implements DomainService {
 	 */
 	public boolean isGuestMode() {
 		return false;
+	}
+
+	@Override
+	public List<ItemBean> getItems(UserProfile userProfile, String sourceId)
+			throws SourceNotLoadedException, InternalDomainException,
+			ManagedCategoryNotLoadedException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public UserProfile getUserProfile(String userId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

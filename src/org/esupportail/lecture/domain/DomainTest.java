@@ -173,8 +173,8 @@ public class DomainTest {
 		printIntro("getConnectedUser");
 		//String userIdLocal = facadeService.getConnectedUserId();
 		String userIdLocal = "foo"; //TODO (RB <-- GB) C'est quoi ?
-		UserBean user = facadeService.getConnectedUser(userIdLocal);
-		System.out.println(user.toString());
+//		UserBean user = facadeService.getConnectedUser(userIdLocal);
+//		System.out.println(user.toString());
 	}
 	
 	/**
@@ -186,8 +186,8 @@ public class DomainTest {
 	throws InternalExternalException, InternalDomainException {
 		printIntro("getContext");
 		contextId = facadeService.getCurrentContextId();
-		ContextBean context = facadeService.getContext(userId, contextId);
-		System.out.println(context.toString());
+//		ContextBean context = facadeService.getContext(userId, contextId);
+//		System.out.println(context.toString());
 	}
 	/**
 	 * @param cid
@@ -197,8 +197,8 @@ public class DomainTest {
 	private static void testGetContextBis(final String cid) 
 	throws InternalDomainException  {
 		printIntro("getContext");
-		ContextBean context = facadeService.getContext(userId, cid);
-		System.out.println(context.toString());
+//		ContextBean context = facadeService.getContext(userId, cid);
+//		System.out.println(context.toString());
 	}
 
 	/**
@@ -208,13 +208,13 @@ public class DomainTest {
 	private static void testGetDisplayedCategories() 
 	throws DomainServiceException {
 		printIntro("getDisplayedCategories");
-		List<CategoryBean> categories = facadeService.getDisplayedCategories(userId, contextId);
-		categoryIds = new ArrayList<String>();
-		for (CategoryBean cat : categories) {
-			categoryIds.add(cat.getId());
-			System.out.println(" **** categorie ****");
-			System.out.println(cat.toString());
-		}
+//		List<CategoryBean> categories = facadeService.getDisplayedCategories(userId, contextId);
+//		categoryIds = new ArrayList<String>();
+//		for (CategoryBean cat : categories) {
+//			categoryIds.add(cat.getId());
+//			System.out.println(" **** categorie ****");
+//			System.out.println(cat.toString());
+//		}
 		
 	}
 	
@@ -226,12 +226,12 @@ public class DomainTest {
 		printIntro("getDisplayedSources");
 		for (String catId : categoryIds) {
 			System.out.println(" **** cat " + catId + " **********");
-			List<SourceBean> sources = facadeService.getDisplayedSources(userId, catId);
-			for (SourceBean so : sources) {
-				System.out.println("  **** source ****");
-				System.out.println(so.toString());
-				sourceId = so.getId();
-			}
+//			List<SourceBean> sources = facadeService.getDisplayedSources(userId, catId);
+//			for (SourceBean so : sources) {
+//				System.out.println("  **** source ****");
+//				System.out.println(so.toString());
+//				sourceId = so.getId();
+//			}
 		}
 		
 	}
@@ -243,16 +243,16 @@ public class DomainTest {
 	private static void testGetVisibleCategories() throws InternalDomainException  {
 		printIntro("getVisibleCategories");
 		List<CategoryBean> cats;
-		try {
-			cats = facadeService.getVisibleCategories(userId, contextId);
-			for (CategoryBean ca : cats) {
-				System.out.println("  **** category ****");
-				System.out.println(ca.toString());
-			}	
-		} catch (ManagedCategoryNotLoadedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+////			cats = facadeService.getVisibleCategories(userId, contextId);
+////			for (CategoryBean ca : cats) {
+////				System.out.println("  **** category ****");
+////				System.out.println(ca.toString());
+////			}	
+//		} catch (ManagedCategoryNotLoadedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	/**
@@ -270,16 +270,16 @@ public class DomainTest {
 
 		for (String catId : categoryIds) {
 			System.out.println(" **** cat " + catId + " **********");
-			try {
-				List<SourceBean> sources = facadeService.getVisibleSources(userId, catId);
-				for (SourceBean so : sources) {
-					System.out.println("  **** source ****");
-					System.out.println(so.toString());
-					sourceId = so.getId();
-				}
-			} catch (CategoryNotVisibleException e) {
-				System.out.println("CategoryNotVisibleException !!!! sur category " + catId);
-			}
+//			try {
+//				List<SourceBean> sources = facadeService.getVisibleSources(userId, catId);
+//				for (SourceBean so : sources) {
+//					System.out.println("  **** source ****");
+//					System.out.println(so.toString());
+//					sourceId = so.getId();
+//				}
+//			} catch (CategoryNotVisibleException e) {
+//				System.out.println("CategoryNotVisibleException !!!! sur category " + catId);
+//			}
 		}
 	}
 
@@ -291,80 +291,80 @@ public class DomainTest {
 	private static void testSubUnSubscribeToSource() throws DomainServiceException  {
 		printIntro("getSubscribeToSource");
 		
-		try {
-			/* source obliged */
-			System.out.println(" **** category cp5 : subscribe to source 'un' **********");
-			facadeService.subscribeToSource(userId, "cp5", "m:cp5:un");
-			/* source allowed or autosub */
-//			System.out.println(" **** category cp5 : subscribe to source 'deux' **********");
-//			facadeService.subscribeToSource(userId, "cp5", "m:cp5:deux");
-			System.out.println(" **** category cp5 : subscribe to source 'trois' **********");
-			facadeService.subscribeToSource(userId, "cp5", "m:cp5:trois");
-			/* source no visible */
-			System.out.println(" **** category cp5 : subscribe to source 'quatre' **********");
-			facadeService.subscribeToSource(userId, "cp5", "m:cp5:quatre");
-			
-			/* category not subcribed to */
-			System.out.println(" **** category cp3 : subscribe to source 'trois' **********");
-			facadeService.subscribeToSource(userId, "cp3", "m:cp5:trois");
-		} catch (DomainServiceException e) {
-			System.out.println("DomainServiceException !!!! ");
-			e.printStackTrace();
-		}
-		
-		testGetVisibleSources();
-		try {
-			/* source obliged */
-			System.out.println(" **** category cp5 : UNsubscribe to source 'un' **********");
-			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:un");
-		} catch (DomainServiceException e) {
-			System.out.println("DomainServiceException !!!! ");
-			e.printStackTrace();
-		}
-		try {
-			/* source allowed or autosubscribed */
-			System.out.println(" **** category cp5 : UNsubscribe to source 'deux' **********");
-			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:deux");			
-		} catch (DomainServiceException e) {
-			System.out.println("DomainServiceException !!!! ");
-			e.printStackTrace();
-		}
-		
-		try {
-			System.out.println(" **** category cp5 : UNsubscribe to source 'trois' **********");
-			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:trois");
-		} catch (DomainServiceException e) {
-			System.out.println("DomainServiceException !!!! ");
-			e.printStackTrace();
-		}
-		try {
-			System.out.println(" **** category cp5 AGAIN : UNsubscribe to source 'trois' **********");
-			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:trois");
-		} catch (DomainServiceException e) {
-			System.out.println("DomainServiceException !!!! ");
-			e.printStackTrace();
-		}
-		
-		try {
-			/* source no visible */
-			System.out.println(" **** category cp5 : UNsubscribe to source 'quatre' **********");
-			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:quatre");
-		} catch (DomainServiceException e) {
-			System.out.println("DomainServiceException !!!! ");
-			e.printStackTrace();
-		}
-		try {
-			/* category not subcribed to */
-			System.out.println(" **** category cp3 : UNsubscribe to source 'trois' **********");
-			facadeService.unsubscribeToSource(userId, "cp3", "m:cp5:trois");
-		} catch (DomainServiceException e) {
-			System.out.println("DomainServiceException !!!! ");
-			e.printStackTrace();
-		}
-		
-		categoryIds = new ArrayList<String>();
-		categoryIds.add("cp5");
-		testGetDisplayedSources();
+//		try {
+//			/* source obliged */
+//			System.out.println(" **** category cp5 : subscribe to source 'un' **********");
+////			facadeService.subscribeToSource(userId, "cp5", "m:cp5:un");
+////			/* source allowed or autosub */
+//////			System.out.println(" **** category cp5 : subscribe to source 'deux' **********");
+//////			facadeService.subscribeToSource(userId, "cp5", "m:cp5:deux");
+////			System.out.println(" **** category cp5 : subscribe to source 'trois' **********");
+////			facadeService.subscribeToSource(userId, "cp5", "m:cp5:trois");
+////			/* source no visible */
+////			System.out.println(" **** category cp5 : subscribe to source 'quatre' **********");
+////			facadeService.subscribeToSource(userId, "cp5", "m:cp5:quatre");
+////			
+////			/* category not subcribed to */
+////			System.out.println(" **** category cp3 : subscribe to source 'trois' **********");
+////			facadeService.subscribeToSource(userId, "cp3", "m:cp5:trois");
+//		} catch (DomainServiceException e) {
+//			System.out.println("DomainServiceException !!!! ");
+//			e.printStackTrace();
+//		}
+//		
+//		testGetVisibleSources();
+//		try {
+//			/* source obliged */
+//			System.out.println(" **** category cp5 : UNsubscribe to source 'un' **********");
+////			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:un");
+//		} catch (DomainServiceException e) {
+//			System.out.println("DomainServiceException !!!! ");
+//			e.printStackTrace();
+//		}
+//		try {
+//			/* source allowed or autosubscribed */
+//			System.out.println(" **** category cp5 : UNsubscribe to source 'deux' **********");
+////			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:deux");			
+//		} catch (DomainServiceException e) {
+//			System.out.println("DomainServiceException !!!! ");
+//			e.printStackTrace();
+//		}
+//		
+//		try {
+//			System.out.println(" **** category cp5 : UNsubscribe to source 'trois' **********");
+////			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:trois");
+//		} catch (DomainServiceException e) {
+//			System.out.println("DomainServiceException !!!! ");
+//			e.printStackTrace();
+//		}
+//		try {
+//			System.out.println(" **** category cp5 AGAIN : UNsubscribe to source 'trois' **********");
+////			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:trois");
+//		} catch (DomainServiceException e) {
+//			System.out.println("DomainServiceException !!!! ");
+//			e.printStackTrace();
+//		}
+//		
+//		try {
+//			/* source no visible */
+//			System.out.println(" **** category cp5 : UNsubscribe to source 'quatre' **********");
+////			facadeService.unsubscribeToSource(userId, "cp5", "m:cp5:quatre");
+//		} catch (DomainServiceException e) {
+//			System.out.println("DomainServiceException !!!! ");
+//			e.printStackTrace();
+//		}
+//		try {
+//			/* category not subcribed to */
+//			System.out.println(" **** category cp3 : UNsubscribe to source 'trois' **********");
+////			facadeService.unsubscribeToSource(userId, "cp3", "m:cp5:trois");
+//		} catch (DomainServiceException e) {
+//			System.out.println("DomainServiceException !!!! ");
+//			e.printStackTrace();
+//		}
+//		
+//		categoryIds = new ArrayList<String>();
+//		categoryIds.add("cp5");
+//		testGetDisplayedSources();
 	}
 	
 	/**
@@ -373,84 +373,85 @@ public class DomainTest {
 	 */
 	private static void testSubUnSubscribeToCategory() throws InternalDomainException {
 		printIntro("getSubscribeToCategory");
-		
-		try {
-			/* category obliged */
-			System.out.println(" **** subscribe to category 'cp2' **********");
-			facadeService.subscribeToCategory(userId, contextId, "cp2");
-		} catch (DomainServiceException e) {
-			System.out.println("DomainServiceException !!!! ");
-			System.out.println("Exception : " + e.getMessage()); 
-		}
-		try {
-			/* category allowed*/
-			System.out.println(" **** subscribe to category 'cp4' **********");
-			facadeService.subscribeToCategory(userId, contextId, "cp4");
-			System.out.println(" **** subscribe to category 'cp4' **********");
-			facadeService.subscribeToCategory(userId, contextId, "cp4");
-		} catch (DomainServiceException e) {
-			System.out.println("DomainServiceException !!!! ");
-			System.out.println("Exception : " + e.getMessage()); 
-		}
-		try {
-			/* category autosubscribed*/
-			System.out.println(" **** subscribe to category 'cp1' **********");
-			facadeService.subscribeToCategory(userId, contextId, "cp1");
-			System.out.println(" **** subscribe to category 'cp1' **********");
-			facadeService.subscribeToCategory(userId, contextId, "cp1");
-		} catch (DomainServiceException e) {
-			System.out.println("DomainServiceException !!!! ");
-			System.out.println("Exception : " + e.getMessage()); 
-		}
-		try {
-			/* category no visible */
-			System.out.println(" **** subscribe to category 'cp3' **********");
-			facadeService.subscribeToCategory(userId, contextId, "cp3");
-		} catch (DomainServiceException e) {
-			System.out.println("DomainServiceException !!!! ");
-			System.out.println("Exception : " + e.getMessage()); 
-		}
-	
-			testGetVisibleCategories();
-		
-			try {
-				/* category obliged */
-				System.out.println(" **** unsubscribe to category 'cp2' **********");
-				facadeService.unsubscribeToCategory(userId, contextId, "cp2");
-			} catch (DomainServiceException e) {
-				System.out.println("DomainServiceException !!!! ");
-				System.out.println("Exception : " + e.getMessage()); 
-			}
-			try {
-				/* category allowed*/
-				System.out.println(" **** unsubscribe to category 'cp4' **********");
-				facadeService.unsubscribeToCategory(userId, contextId, "cp4");
-
-				System.out.println(" **** unsubscribe to category 'cp4' **********");
-				facadeService.unsubscribeToCategory(userId, contextId, "cp4");
-			} catch (DomainServiceException e) {
-				System.out.println("DomainServiceException !!!! ");
-				System.out.println("Exception : " + e.getMessage()); 
-			}
-			try {
-				/* category autosubscribed*/
-				System.out.println(" **** unsubscribe to category 'cp1' **********");
-				facadeService.unsubscribeToCategory(userId, contextId, "cp1");
-				System.out.println(" **** unsubscribe to category 'cp1' **********");
-				facadeService.unsubscribeToCategory(userId, contextId, "cp1");
-			} catch (DomainServiceException e) {
-				System.out.println("DomainServiceException !!!! ");
-				System.out.println("Exception : " + e.getMessage()); 
-			}
-			try {
-				/* category no visible */
-				System.out.println(" **** unsubscribe to category 'cp3' **********");
-				facadeService.unsubscribeToCategory(userId, contextId, "cp3");
-			} catch (DomainServiceException e) {
-				System.out.println("DomainServiceException !!!! ");
-				System.out.println("Exception : " + e.getMessage()); 
-			}
-			testGetVisibleCategories();
+//		
+//		try {
+//			/* category obliged */
+//			System.out.println(" **** subscribe to category 'cp2' **********");
+////			facadeService.subscribeToCategory(userId, contextId, "cp2");
+////		} catch (DomainServiceException e) {
+////			System.out.println("DomainServiceException !!!! ");
+////			System.out.println("Exception : " + e.getMessage()); 
+////		}
+//		try {
+//			/* category allowed*/
+//			System.out.println(" **** subscribe to category 'cp4' **********");
+////			facadeService.subscribeToCategory(userId, contextId, "cp4");
+//			System.out.println(" **** subscribe to category 'cp4' **********");
+////			facadeService.subscribeToCategory(userId, contextId, "cp4");
+//		} catch (DomainServiceException e) {
+//			System.out.println("DomainServiceException !!!! ");
+//			System.out.println("Exception : " + e.getMessage()); 
+//		}
+//		try {
+//			/* category autosubscribed*/
+//			System.out.println(" **** subscribe to category 'cp1' **********");
+////			facadeService.subscribeToCategory(userId, contextId, "cp1");
+//			System.out.println(" **** subscribe to category 'cp1' **********");
+////			facadeService.subscribeToCategory(userId, contextId, "cp1");
+//		} catch (DomainServiceException e) {
+//			System.out.println("DomainServiceException !!!! ");
+//			System.out.println("Exception : " + e.getMessage()); 
+//		}
+//		try {
+//			/* category no visible */
+//			System.out.println(" **** subscribe to category 'cp3' **********");
+////			facadeService.subscribeToCategory(userId, contextId, "cp3");
+//		} catch (DomainServiceException e) {
+//			System.out.println("DomainServiceException !!!! ");
+//			System.out.println("Exception : " + e.getMessage()); 
+//		}
+//	
+//			testGetVisibleCategories();
+//		
+//			try {
+//				/* category obliged */
+//				System.out.println(" **** unsubscribe to category 'cp2' **********");
+////				facadeService.unsubscribeToCategory(userId, contextId, "cp2");
+//			} catch (DomainServiceException e) {
+//				System.out.println("DomainServiceException !!!! ");
+//				System.out.println("Exception : " + e.getMessage()); 
+//			}
+//			try {
+//				/* category allowed*/
+//				System.out.println(" **** unsubscribe to category 'cp4' **********");
+////				facadeService.unsubscribeToCategory(userId, contextId, "cp4");
+//
+//				System.out.println(" **** unsubscribe to category 'cp4' **********");
+////				facadeService.unsubscribeToCategory(userId, contextId, "cp4");
+//			} catch (DomainServiceException e) {
+//				System.out.println("DomainServiceException !!!! ");
+//				System.out.println("Exception : " + e.getMessage()); 
+//			}
+//			try {
+//				/* category autosubscribed*/
+//				System.out.println(" **** unsubscribe to category 'cp1' **********");
+////				facadeService.unsubscribeToCategory(userId, contextId, "cp1");
+//				System.out.println(" **** unsubscribe to category 'cp1' **********");
+////				facadeService.unsubscribeToCategory(userId, contextId, "cp1");
+//			} catch (DomainServiceException e) {
+//				System.out.println("DomainServiceException !!!! ");
+//				System.out.println("Exception : " + e.getMessage()); 
+//			}
+//			try {
+//				/* category no visible */
+//				System.out.println(" **** unsubscribe to category 'cp3' **********");
+////				facadeService.unsubscribeToCategory(userId, contextId, "cp3");
+//			} catch (DomainServiceException e) {
+//				System.out.println("DomainServiceException !!!! ");
+//				System.out.println("Exception : " + e.getMessage()); 
+//			}
+//
+////			testGetVisibleCategories();
 		
 	}
 	
@@ -471,12 +472,12 @@ public class DomainTest {
 		categoryIds.add("cp2");
 		for (String catId : categoryIds) {
 			System.out.println(" **** cat " + catId + " **********");
-			List<SourceBean> sources = facadeService.getDisplayedSources(userId, catId);
-			for (SourceBean so : sources) {
-				System.out.println("  **** source ****");
-				System.out.println(so.toString());
-				sourceId = so.getId();
-			}
+//			List<SourceBean> sources = facadeService.getDisplayedSources(userId, catId);
+//			for (SourceBean so : sources) {
+//				System.out.println("  **** source ****");
+//				System.out.println(so.toString());
+//				sourceId = so.getId();
+//			}
 		}
 	}
 
@@ -493,15 +494,15 @@ public class DomainTest {
 		printIntro("testTimeOutValues");
 		System.out.println(" ** category CP1 ( no trust category) **********");
 		System.out.println(" ***** source un (timeout present) **********");
-		facadeService.getItems(userId, "m:cp1:un");
+//		facadeService.getItems(userId, "m:cp1:un");
 		System.out.println(" ***** source deux (timeout abscent) ********");
-		facadeService.getItems(userId, "m:cp1:deux");
+//		facadeService.getItems(userId, "m:cp1:deux");
 		System.out.println("\n");
 		System.out.println(" ** category CP5 ( trust category) **********");
 		System.out.println(" ***** source un (timeout present) **********");
-		facadeService.getItems(userId, "m:cp5:un");
+//		facadeService.getItems(userId, "m:cp5:un");
 		System.out.println(" ***** source deux (timeout abscent) ********");
-		facadeService.getItems(userId, "m:cp5:deux");
+//		facadeService.getItems(userId, "m:cp5:deux");
 		
 		
 	}
@@ -521,10 +522,10 @@ public class DomainTest {
 	ManagedCategoryNotLoadedException, SourceProfileNotFoundException, SourceTimeOutException {
 		printIntro("markItemReadMode");
 		System.out.println("Marquage de l'item " + itemId + " comme lu");
-		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId, true);
+//		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId, true);
 		testGetItems();
 		System.out.println("Marquage de l'item " + itemId + " comme non lu");
-		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId, false);
+//		facadeService.marckItemReadMode(userId, "m:cp1:quatre", itemId, false);
 		testGetItems();
 		
 		
@@ -537,7 +538,7 @@ public class DomainTest {
 	private static void testSetItemDisplayMode() throws DomainServiceException {
 		printIntro("markItemDisplayMode");
 		System.out.println("Marquage de la source 'm:cp5:un' comme UNREADFIRST");
-		facadeService.marckItemDisplayMode(userId, "m:cp5:un", ItemDisplayMode.UNREADFIRST);
+//		facadeService.marckItemDisplayMode(userId, "m:cp5:un", ItemDisplayMode.UNREADFIRST);
 		testGetDisplayedSources();
 	}
 	
@@ -553,7 +554,7 @@ public class DomainTest {
 		printIntro("setTreeSize");
 		int newTreeSize = 10;
 		System.out.println("Set tree size to " + newTreeSize);
-		facadeService.setTreeSize(userId, contextId, newTreeSize);
+//		facadeService.setTreeSize(userId, contextId, newTreeSize);
 		testGetContext();	
 	}
 	
@@ -566,12 +567,12 @@ public class DomainTest {
 	private static void testFoldCategory() throws DomainServiceException {
 		printIntro("foldCategory");
 		System.out.println("Pliage de la categorie cp1 (deja pli�e) => WARN");
-		facadeService.foldCategory(userId, contextId, "cp1");
+//		facadeService.foldCategory(userId, contextId, "cp1");
 		System.out.println("Depliage de la categorie cp1 \n");
-		facadeService.unfoldCategory(userId, contextId, "cp1");
+//		facadeService.unfoldCategory(userId, contextId, "cp1");
 		testGetDisplayedCategories();
 		System.out.println("Pliage de la categorie cp1 \n");
-		facadeService.foldCategory(userId, contextId, "cp1");
+//		facadeService.foldCategory(userId, contextId, "cp1");
 		testGetDisplayedCategories();
 		
 		
@@ -587,12 +588,12 @@ public class DomainTest {
 	throws SourceNotLoadedException, ManagedCategoryNotLoadedException, InternalDomainException {
 		printIntro("getItems");
 		System.out.println(" **** source " + sourceId + " **********");
-		List<ItemBean> items = facadeService.getItems(userId, sourceId);
-		for (ItemBean it : items) {
-			System.out.println("  **** item ****");
-			System.out.println(it.toString());
-			itemId = it.getId();
-		}
+//		List<ItemBean> items = facadeService.getItems(userId, sourceId);
+//		for (ItemBean it : items) {
+//			System.out.println("  **** item ****");
+//			System.out.println(it.toString());
+//			itemId = it.getId();
+//		}
 		
 	}
 	

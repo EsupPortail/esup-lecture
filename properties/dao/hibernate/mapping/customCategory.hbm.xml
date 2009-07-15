@@ -23,7 +23,7 @@
 			</many-to-one>
 		</natural-id>
 		<subclass name="CustomManagedCategory" discriminator-value="M">
-			<map name="subscriptions" cascade="save-update,lock,merge">
+			<map name="subscriptions" cascade="all, delete-orphan">
 				<key foreign-key="FK_CUSTOMSOURCE_CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED">
 					<column name="CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED"/>
 				</key>

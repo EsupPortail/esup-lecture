@@ -15,6 +15,7 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
@@ -32,12 +33,20 @@ import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 public interface DomainService {
 
 	/**
+	 * return the user profile identified by "userId". 
+	 * It takes it from the dao if exists, else, it create a user profile
+	 * @param userId : identifient of the user profile
+	 * @return the user profile
+	 */ 
+	UserProfile getUserProfile(final String userId);
+
+	/**
 	 * @param uid
 	 * @return UserBean
 	 * @see FacadeService#getConnectedUser(String)
-	 */
+	 */	
+	UserBean getConnectedUser(UserProfile userProfile);
 	
-	UserBean getConnectedUser(String uid);
 	/**
 	 * @param uid
 	 * @param contextId
@@ -45,7 +54,7 @@ public interface DomainService {
 	 * @throws InternalDomainException 
 	 * @see FacadeService#getContext(String,String)
 	 */
-	ContextBean getContext(String uid, String contextId) throws InternalDomainException;
+	ContextBean getContext(UserProfile userProfile, String contextId) throws InternalDomainException;
 
 	/**
 	 * @param uid
@@ -54,7 +63,7 @@ public interface DomainService {
 	 * @throws InternalDomainException 
 	 * @see FacadeService#getDisplayedCategories(String, String)
 	 */
-	List<CategoryBean> getDisplayedCategories(String uid, String contextId) throws InternalDomainException;
+	List<CategoryBean> getDisplayedCategories(UserProfile userProfile, String contextId) throws InternalDomainException;
 
 	/**
 	 * @param categoryId 
@@ -65,7 +74,7 @@ public interface DomainService {
 	 * @throws CategoryTimeOutException 
 	 * @see FacadeService#getDisplayedSources(String, String)
 	 */
-	List<SourceBean> getDisplayedSources(String uid, String categoryId)  
+	List<SourceBean> getDisplayedSources(UserProfile userProfile, String categoryId)  
 	throws CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException;
 
 	/**
@@ -77,7 +86,7 @@ public interface DomainService {
 	 * @throws ManagedCategoryNotLoadedException 
 	 * @see FacadeService#getItems(String, String)
 	 */
-	List<ItemBean> getItems(String uid, String sourceId)  
+	List<ItemBean> getItems(UserProfile userProfile, String sourceId)  
 	throws SourceNotLoadedException, InternalDomainException, ManagedCategoryNotLoadedException;
 
 	/**
@@ -88,7 +97,7 @@ public interface DomainService {
 	 * @throws InternalDomainException 
 	 * @see FacadeService#marckItemReadMode(String, String, String, boolean)
 	 */
-	void marckItemReadMode(String uid, String sourceId, String itemId, boolean isRead)  
+	void marckItemReadMode(UserProfile userProfile, String sourceId, String itemId, boolean isRead)  
 	throws InternalDomainException;
 
 	/**
@@ -98,7 +107,7 @@ public interface DomainService {
 	 * @throws InternalDomainException 
 	 * @see FacadeService#marckItemDisplayMode(String,String,ItemDisplayMode)
 	 */
-	void markItemDisplayMode(String uid, String sourceId, ItemDisplayMode mode) throws InternalDomainException;
+	void markItemDisplayMode(UserProfile userProfile, String sourceId, ItemDisplayMode mode) throws InternalDomainException;
 	
 	
 	/**
@@ -109,7 +118,7 @@ public interface DomainService {
 	 * @throws ManagedCategoryNotLoadedException 
 	 * @see FacadeService#getVisibleCategories(String, String)
 	 */
-	List<CategoryBean> getVisibleCategories(final String uid, final String contextId) 
+	List<CategoryBean> getVisibleCategories(final UserProfile userProfile, final String contextId) 
 	throws InternalDomainException, ManagedCategoryNotLoadedException;
 	
 	/**
@@ -121,7 +130,7 @@ public interface DomainService {
 	 * @throws CategoryTimeOutException 
 	 * @see FacadeService#getVisibleSources(String, String)
 	 */
-	List<SourceBean> getVisibleSources(String uid, String categoryId) 
+	List<SourceBean> getVisibleSources(UserProfile userProfile, String categoryId) 
 	throws CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException;
 	
 	/**
@@ -132,7 +141,7 @@ public interface DomainService {
 	 * @throws TreeSizeErrorException 
 	 * @see FacadeService#setTreeSize(String, String, int)
 	 */
-	void setTreeSize(String uid, String contextId, int size) throws InternalDomainException, TreeSizeErrorException;
+	void setTreeSize(UserProfile userProfile, String contextId, int size) throws InternalDomainException, TreeSizeErrorException;
 	
 	/**
 	 * @param uid
@@ -141,7 +150,7 @@ public interface DomainService {
 	 * @throws InternalDomainException 
 	 * @see FacadeService#foldCategory(String, String, String)
 	 */
-	void foldCategory(String uid, String cxtId, String catId) throws InternalDomainException;
+	void foldCategory(UserProfile userProfile, String cxtId, String catId) throws InternalDomainException;
 	
 	/**
 	 * @param uid
@@ -150,7 +159,7 @@ public interface DomainService {
 	 * @throws InternalDomainException 
 	 * @see FacadeService#unfoldCategory(String, String, String)
 	 */
-	void unfoldCategory(String uid, String cxtId, String catId) throws InternalDomainException;
+	void unfoldCategory(UserProfile userProfile, String cxtId, String catId) throws InternalDomainException;
 	
 
 	/**
@@ -161,7 +170,7 @@ public interface DomainService {
 	 * @throws CategoryNotVisibleException 
 	 * @see FacadeService#subscribeToCategory(String, String, String)
 	 */
-	void subscribeToCategory(String uid, String contextId, String categoryId) 
+	void subscribeToCategory(UserProfile userProfile, String contextId, String categoryId) 
 	throws InternalDomainException, CategoryNotVisibleException;
 
 	/**
@@ -173,7 +182,7 @@ public interface DomainService {
 	 * @throws CategoryObligedException 
 	 * @see FacadeService#unsubscribeToCategory(String, String, String)
 	 */
-	void unsubscribeToCategory(String uid, String contextId, String categoryId)
+	void unsubscribeToCategory(UserProfile userProfile, String contextId, String categoryId)
 	throws InternalDomainException, CategoryNotVisibleException, CategoryObligedException;
 	/**
 	 * @param uid 
@@ -185,7 +194,7 @@ public interface DomainService {
 	 * @throws SourceNotVisibleException 
 	 * @see FacadeService#subscribeToSource(String, String, String)
 	 */
-	void subscribeToSource(String uid, String categorieId, String sourceId) 
+	void subscribeToSource(UserProfile userProfile, String categorieId, String sourceId) 
 	throws CategoryNotVisibleException, InternalDomainException, 
 	CategoryTimeOutException, SourceNotVisibleException;
 	
@@ -199,7 +208,7 @@ public interface DomainService {
 	 * @throws SourceObligedException 
 	 * @see FacadeService#unsubscribeToSource(String, String, String)
 	 */	
-	void unsubscribeToSource(String uid, String categorieId, String sourceId) 
+	void unsubscribeToSource(UserProfile userProfile, String categorieId, String sourceId) 
 	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException, SourceObligedException;
 
 	/**
