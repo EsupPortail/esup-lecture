@@ -642,7 +642,7 @@ public class UserProfile {
 	 */
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		return userId.hashCode();
 	}
 
 	/**

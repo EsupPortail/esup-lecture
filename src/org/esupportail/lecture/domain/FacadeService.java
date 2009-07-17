@@ -82,6 +82,15 @@ public class FacadeService implements InitializingBean {
 	/* 
 	 ************************** SERVICES **********************************/
 
+	/**
+	 * return the user profile identified by "userId". 
+	 * @param userId : identifient of the user profile
+	 * @return the user profile
+	 */ 
+	public UserProfile getUserProfile(final String userId) {
+		return domainService.getUserProfile(userId);
+	}
+
 	/**	
 	 * Return the userBean identified by uid.
 	 * @param uid id of connected user
@@ -178,12 +187,13 @@ public class FacadeService implements InitializingBean {
 	 * @param sourceId source if
 	 * @param isRead boolean : true = item is read | false = item is not read
 	 * marck a Item form a source for a user as read
+	 * @return hb modified UserProfile
 	 * @throws InternalDomainException 
 	 */
-	public void marckItemReadMode(final UserProfile userProfile, final String sourceId, 
+	public UserProfile marckItemReadMode(final UserProfile userProfile, final String sourceId, 
 			final String itemId, final boolean isRead)
 	throws InternalDomainException {
-		domainService.marckItemReadMode(userProfile, sourceId, itemId, isRead);
+		return domainService.marckItemReadMode(userProfile, sourceId, itemId, isRead);
 	}
 
 	/**

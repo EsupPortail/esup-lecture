@@ -57,12 +57,12 @@ public class EditController extends TwoPanesController {
 		try {
 			if (selectedSource.isNotSubscribed()) {
 				getFacadeService().subscribeToSource(
-						getUID(), selectedCategory.getId(), selectedSource.getId());
+						getUserProfile(), selectedCategory.getId(), selectedSource.getId());
 				type = AvailabilityMode.SUBSCRIBED;
 			}
 			if (selectedSource.isSubscribed()) {
 				getFacadeService().unsubscribeToSource(
-						getUID(), selectedCategory.getId(), selectedSource.getId());
+						getUserProfile(), selectedCategory.getId(), selectedSource.getId());
 				type = AvailabilityMode.NOTSUBSCRIBED;
 			}
 		} catch (DomainServiceException e) {
@@ -88,11 +88,11 @@ public class EditController extends TwoPanesController {
 		AvailabilityMode availabilityMode = currentCategory.getAvailabilityMode();
 		try {
 			if (availabilityMode == AvailabilityMode.NOTSUBSCRIBED) {
-				getFacadeService().subscribeToCategory(getUID(), 
+				getFacadeService().subscribeToCategory(getUserProfile(), 
 					getContext().getId(), currentCategory.getId());
 			}
 			if (availabilityMode ==  AvailabilityMode.SUBSCRIBED) {
-				getFacadeService().unsubscribeToCategory(getUID(), 
+				getFacadeService().unsubscribeToCategory(getUserProfile(), 
 						getContext().getId(), currentCategory.getId());
 			}
 		} catch (DomainServiceException e) {
@@ -129,7 +129,7 @@ public class EditController extends TwoPanesController {
 	@Override
 	protected List<SourceBean> getSources(final CategoryBean categoryBean)
 			throws DomainServiceException {
-		List<SourceBean> sources = getFacadeService().getVisibleSources(getUID(), categoryBean.getId());
+		List<SourceBean> sources = getFacadeService().getVisibleSources(getUserProfile(), categoryBean.getId());
 		return sources;
 
 	}
@@ -152,7 +152,7 @@ public class EditController extends TwoPanesController {
 	throws InternalDomainException {
 		List<CategoryBean> categories;
 		try {
-			categories = getFacadeService().getVisibleCategories(getUID(), ctxtId);
+			categories = getFacadeService().getVisibleCategories(getUserProfile(), ctxtId);
 		} catch (ManagedCategoryNotLoadedException e) {
 			throw new WebException("Error in getCategories", e);
 		}

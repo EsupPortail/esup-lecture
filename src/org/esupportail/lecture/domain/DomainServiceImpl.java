@@ -119,6 +119,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
 		if (userProfile == null) {
 			userProfile = new UserProfile(userId);
+			//don't call DAO to attach the object because we want a detached object
 //			DomainTools.getDaoService().saveUserProfile(userProfile);
 //			userProfile = DomainTools.getDaoService().refreshUserProfile(userProfile); 
 		}
@@ -373,11 +374,12 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param sourceId sourceId of the item
 	 * @param itemId item Id
 	 * @param isRead the read Mode (true=item read | false=item not read)
+	 * @return hb modified UserProfile
 	 * @throws InternalDomainException 
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(
 	 *   java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
-	public void marckItemReadMode(final UserProfile userProfile, final String sourceId, 
+	public UserProfile marckItemReadMode(UserProfile userProfile, final String sourceId, 
 		final String itemId, final boolean isRead) 
 	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
@@ -388,7 +390,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			CustomSource customSource;
 			customSource = userProfile.getCustomSource(sourceId);
 			customSource.setItemReadMode(itemId, isRead);
-			DomainTools.getDaoService().saveUserProfile(userProfile);
+			return DomainTools.getDaoService().mergeUserProfile(userProfile);
 		} catch (CustomSourceNotFoundException e) {
 			String errorMsg = "CustomSourceNotFoundException for service 'marckItemReadMode(user "
 				+ userProfile.getUserId() + ", source " + sourceId + ", item " + itemId + ", isRead " + isRead + ")";

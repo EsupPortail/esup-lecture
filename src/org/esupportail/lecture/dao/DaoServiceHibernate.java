@@ -91,16 +91,31 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 	 * @see org.esupportail.lecture.dao.DaoService#saveUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void saveUserProfile(final UserProfile userProfile) {
-		//TODO (RB/GB) Pourquoi n'existe-t-il pas de saveCustomContrxt, saveCustomCategory, saveCustomSource ? 
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("saveUserProfile(" + userProfile.getUserId() + ")");			
 		}
-		//merge is important to avoid hibernate immutable exception 
+		//merge is important to avoid hibernate immutable exception -bug hb? cf. http://opensource.atlassian.com/projects/hibernate/browse/HHH-1574
 		Object merged = getHibernateTemplate().merge(userProfile);
 //		getHibernateTemplate().saveOrUpdate(userProfile);
 		if (USEFLUSH) {
 			getHibernateTemplate().flush();
 		} 
+	}
+
+	/**
+	 * @param userProfile 
+	 * @see org.esupportail.lecture.dao.DaoService#mergeUserProfile(UserProfile)
+	 */
+	public UserProfile mergeUserProfile(UserProfile userProfile) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("mergeUserProfile(" + userProfile.getUserId() + ")");			
+		}
+		//merge is important to avoid hibernate immutable exception -bug hb? cf. http://opensource.atlassian.com/projects/hibernate/browse/HHH-1574
+		UserProfile merged = (UserProfile) getHibernateTemplate().merge(userProfile);
+		if (USEFLUSH) {
+			getHibernateTemplate().flush();
+		} 
+		return merged;
 	}
 
 	/**
@@ -260,6 +275,5 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 		}
 		getHibernateTemplate().save(versionManager);
 	}
-
 	
 }

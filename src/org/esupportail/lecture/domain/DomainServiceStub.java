@@ -123,10 +123,10 @@ public class DomainServiceStub implements DomainService {
 	 *   java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
 	@SuppressWarnings("unused")
-	public void marckItemReadMode(
+	public UserProfile marckItemReadMode(
 			final UserProfile userProfile, final String itemId, final String sourceId, final boolean isRead) {
 		// nothing
-
+		return null;
 	}
 
 	/**

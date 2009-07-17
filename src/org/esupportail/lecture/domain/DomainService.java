@@ -34,7 +34,6 @@ public interface DomainService {
 
 	/**
 	 * return the user profile identified by "userId". 
-	 * It takes it from the dao if exists, else, it create a user profile
 	 * @param userId : identifient of the user profile
 	 * @return the user profile
 	 */ 
@@ -94,10 +93,11 @@ public interface DomainService {
 	 * @param itemId 
 	 * @param sourceId 
 	 * @param isRead
+	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
 	 * @see FacadeService#marckItemReadMode(String, String, String, boolean)
 	 */
-	void marckItemReadMode(UserProfile userProfile, String sourceId, String itemId, boolean isRead)  
+	UserProfile marckItemReadMode(UserProfile userProfile, String sourceId, String itemId, boolean isRead)  
 	throws InternalDomainException;
 
 	/**

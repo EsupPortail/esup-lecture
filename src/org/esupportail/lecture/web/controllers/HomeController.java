@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
@@ -64,17 +65,18 @@ public class HomeController extends TwoPanesController {
 		}
 		SourceWebBean selectedSource = getUalSource();
 		try {
-			getFacadeService().marckItemReadMode(getUID(), 
+			UserProfile userProfile = getUserProfile();
+			userProfile = getFacadeService().marckItemReadMode(userProfile, 
 					selectedSource.getId(), ualItem.getId(), !ualItem.isRead());
-			
+			setUserProfile(userProfile);
 		} catch (Exception e) {
 			throw new WebException("Error in toggleItemReadState", e);
 		}
 		if (ualItem.isRead()) {
-			selectedSource.setUnreadItemsNumber(selectedSource.getUnreadItemsNumber()+1);
+			selectedSource.setUnreadItemsNumber(selectedSource.getUnreadItemsNumber() + 1);
 		} else {
 			if (selectedSource.getUnreadItemsNumber() > 0) {
-				selectedSource.setUnreadItemsNumber(selectedSource.getUnreadItemsNumber()-1);
+				selectedSource.setUnreadItemsNumber(selectedSource.getUnreadItemsNumber() - 1);
 			}
 		}
 		ualItem.setRead(!ualItem.isRead());
@@ -107,7 +109,7 @@ public class HomeController extends TwoPanesController {
 				List<SourceWebBean> sources = selectedCategory.getSelectedOrAllSources();
 				if (sources != null) {
 					for (SourceWebBean sourceWeb : sources) {
-						getFacadeService().marckItemDisplayMode(getUID(),
+						getFacadeService().marckItemDisplayMode(getUserProfile(),
 								sourceWeb.getId(), itemDisplayMode);
 						sourceWeb.setItemDisplayMode(itemDisplayMode);
 					}
@@ -149,11 +151,13 @@ public class HomeController extends TwoPanesController {
 					for (SourceWebBean sourceWeb : sources) {
 						List<ItemWebBean> items = sourceWeb.getItems();
 						if (items != null) {
+							UserProfile userProfile = getUserProfile();
 							for (ItemWebBean itemWeb : items) {
-								getFacadeService().marckItemReadMode(getUID(), 
+								userProfile = getFacadeService().marckItemReadMode(userProfile, 
 										sourceWeb.getId(), itemWeb.getId(), read);
 								itemWeb.setRead(read);
 							}
+							setUserProfile(userProfile);
 						}
 						if (read) {
 							sourceWeb.setUnreadItemsNumber(0);

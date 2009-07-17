@@ -13,7 +13,7 @@
         <discriminator type="string">
             <column name="NATURE" not-null="true" length="1" />
         </discriminator>
-		<natural-id mutable="false">
+		<natural-id>
             <property name="elementId" type="string">
                 <column name="ELEMENTID" length="250" not-null="true" />
             </property>
