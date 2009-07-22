@@ -94,9 +94,7 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("saveUserProfile(" + userProfile.getUserId() + ")");			
 		}
-		//merge is important to avoid hibernate immutable exception -bug hb? cf. http://opensource.atlassian.com/projects/hibernate/browse/HHH-1574
-		Object merged = getHibernateTemplate().merge(userProfile);
-//		getHibernateTemplate().saveOrUpdate(userProfile);
+		getHibernateTemplate().saveOrUpdate(userProfile);
 		if (USEFLUSH) {
 			getHibernateTemplate().flush();
 		} 

@@ -112,6 +112,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 */
 	protected void flushContextFormVirtualSession() {
 		virtualSession.remove(getContextKey());
+		virtualSession.remove(USERPROFILE);
 	}
 
 	/**
@@ -149,7 +150,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			//for current session:
 			getContext().setTreeSize(treeSize);
 			//store in database:
-			getFacadeService().setTreeSize(getUserProfile(), getContextId(), treeSize);
+			UserProfile userProfile = getUserProfile();
+			userProfile = getFacadeService().setTreeSize(userProfile, getContextId(), treeSize);
+			setUserProfile(userProfile);
 		} catch (DomainServiceException e) {
 			throw new WebException("Error in adjustTreeSize", e);
 		} catch (InternalExternalException e) {
@@ -654,8 +657,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			//for current session:
 			getContext().setTreeSize(treeSize);
 			//store in database:
-			getFacadeService().setTreeSize(getUserProfile(), getContextId(), treeSize);
-			
+			UserProfile userProfile = getUserProfile();
+			userProfile = getFacadeService().setTreeSize(userProfile, getContextId(), treeSize);
+			setUserProfile(userProfile);			
 		} catch (DomainServiceException e) {
 			DatabaseUtils.rollback();
 			throw new WebException("Error in changeTreeSize", e);

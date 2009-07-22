@@ -108,11 +108,13 @@ public class HomeController extends TwoPanesController {
 			if (selectedCategory != null) {
 				List<SourceWebBean> sources = selectedCategory.getSelectedOrAllSources();
 				if (sources != null) {
+					UserProfile userProfile = getUserProfile();
 					for (SourceWebBean sourceWeb : sources) {
-						getFacadeService().marckItemDisplayMode(getUserProfile(),
+						userProfile = getFacadeService().marckItemDisplayMode(userProfile,
 								sourceWeb.getId(), itemDisplayMode);
 						sourceWeb.setItemDisplayMode(itemDisplayMode);
 					}
+					setUserProfile(userProfile);
 				}
 			}
 		} catch (Exception e) {

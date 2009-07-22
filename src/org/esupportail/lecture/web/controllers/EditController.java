@@ -13,6 +13,7 @@ import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
+import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
@@ -55,16 +56,18 @@ public class EditController extends TwoPanesController {
 		SourceWebBean selectedSource = getUalSource();
 		AvailabilityMode type = null;
 		try {
+			UserProfile userProfile = getUserProfile(); 
 			if (selectedSource.isNotSubscribed()) {
-				getFacadeService().subscribeToSource(
-						getUserProfile(), selectedCategory.getId(), selectedSource.getId());
+				userProfile = getFacadeService().subscribeToSource(
+						userProfile, selectedCategory.getId(), selectedSource.getId());
 				type = AvailabilityMode.SUBSCRIBED;
 			}
 			if (selectedSource.isSubscribed()) {
-				getFacadeService().unsubscribeToSource(
-						getUserProfile(), selectedCategory.getId(), selectedSource.getId());
+				userProfile = getFacadeService().unsubscribeToSource(
+						userProfile, selectedCategory.getId(), selectedSource.getId());
 				type = AvailabilityMode.NOTSUBSCRIBED;
 			}
+			setUserProfile(userProfile);
 		} catch (DomainServiceException e) {
 			throw new WebException("Error in toogleSourceSubcribtion", e);
 		}
@@ -87,14 +90,16 @@ public class EditController extends TwoPanesController {
 		CategoryWebBean currentCategory = getUalCategory();
 		AvailabilityMode availabilityMode = currentCategory.getAvailabilityMode();
 		try {
+			UserProfile userProfile = getUserProfile();
 			if (availabilityMode == AvailabilityMode.NOTSUBSCRIBED) {
-				getFacadeService().subscribeToCategory(getUserProfile(), 
+				userProfile = getFacadeService().subscribeToCategory(userProfile, 
 					getContext().getId(), currentCategory.getId());
 			}
 			if (availabilityMode ==  AvailabilityMode.SUBSCRIBED) {
-				getFacadeService().unsubscribeToCategory(getUserProfile(), 
+				userProfile = getFacadeService().unsubscribeToCategory(userProfile, 
 						getContext().getId(), currentCategory.getId());
 			}
+			setUserProfile(userProfile);
 		} catch (DomainServiceException e) {
 			throw new WebException("Error in toogleCategorySubcribtion", e);
 		}

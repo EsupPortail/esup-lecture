@@ -201,11 +201,12 @@ public class FacadeService implements InitializingBean {
 	 * @param uid user ID
 	 * @param sourceId sourceID
 	 * @param mode the item display mode to set
+	 * @return 
 	 * @throws InternalDomainException 
 	 */
-	public void marckItemDisplayMode(final UserProfile userProfile, final String sourceId, final ItemDisplayMode mode) 
+	public UserProfile marckItemDisplayMode(final UserProfile userProfile, final String sourceId, final ItemDisplayMode mode) 
 			throws InternalDomainException {
-		domainService.markItemDisplayMode(userProfile, sourceId, mode);
+		return domainService.markItemDisplayMode(userProfile, sourceId, mode);
 	}
 	
 	/**
@@ -213,12 +214,13 @@ public class FacadeService implements InitializingBean {
 	 * @param uid user ID
 	 * @param contextId context ID 
 	 * @param size size of the tree 
+	 * @return 
 	 * @throws InternalDomainException 
 	 * @throws TreeSizeErrorException 
 	 */
-	public void setTreeSize(final UserProfile userProfile, final String contextId, final int size) 
+	public UserProfile setTreeSize(final UserProfile userProfile, final String contextId, final int size) 
 	throws InternalDomainException, TreeSizeErrorException {
-		domainService.setTreeSize(userProfile, contextId, size);
+		return domainService.setTreeSize(userProfile, contextId, size);
 	}
 
 	/**
@@ -230,9 +232,9 @@ public class FacadeService implements InitializingBean {
 	 * set category catId folded in customContext cxtId
 	 * @throws InternalDomainException 
 	 */
-	public void foldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
+	public UserProfile foldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
 	throws InternalDomainException {
-		domainService.foldCategory(userProfile, cxtId, catId);
+		return domainService.foldCategory(userProfile, cxtId, catId);
 	}
 	
 	/**
@@ -244,9 +246,9 @@ public class FacadeService implements InitializingBean {
 	 * set category catId unfolded in customContext cxtId
 	 * @throws InternalDomainException 
 	 */
-	public void unfoldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
+	public UserProfile unfoldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
 	throws InternalDomainException {
-		domainService.unfoldCategory(userProfile, cxtId, catId);
+		return domainService.unfoldCategory(userProfile, cxtId, catId);
 	}
 
 
@@ -289,9 +291,9 @@ public class FacadeService implements InitializingBean {
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 */
-	public void subscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
+	public UserProfile subscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
 	throws CategoryNotVisibleException, InternalDomainException {
-		domainService.subscribeToCategory(userProfile, contextId, categoryId);
+		return domainService.subscribeToCategory(userProfile, contextId, categoryId);
 	}
 	
 	
@@ -305,10 +307,10 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
 	 */
-	public void subscribeToSource(final UserProfile userProfile, final String categorieId, final String sourceId) 
+	public UserProfile subscribeToSource(final UserProfile userProfile, final String categorieId, final String sourceId) 
 	throws CategoryNotVisibleException, CategoryTimeOutException, 
 	SourceNotVisibleException, InternalDomainException {
-		domainService.subscribeToSource(userProfile, categorieId, sourceId);
+		return domainService.subscribeToSource(userProfile, categorieId, sourceId);
 	}
 	
 	/** 
@@ -320,9 +322,9 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryObligedException 
 	 * @throws CategoryNotVisibleException 
 	 */
-	public void unsubscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
+	public UserProfile unsubscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
 	throws CategoryNotVisibleException, CategoryObligedException, InternalDomainException {
-		domainService.unsubscribeToCategory(userProfile, contextId, categoryId);
+		return domainService.unsubscribeToCategory(userProfile, contextId, categoryId);
 	}
 
 	/**
@@ -335,9 +337,9 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
 	 */
-	public void unsubscribeToSource(final UserProfile userProfile, final String categorieId, final String sourceId) 
+	public UserProfile unsubscribeToSource(final UserProfile userProfile, final String categorieId, final String sourceId) 
 	throws CategoryNotVisibleException, CategoryTimeOutException, SourceObligedException, InternalDomainException {
-		domainService.unsubscribeToSource(userProfile, categorieId, sourceId);
+		return domainService.unsubscribeToSource(userProfile, categorieId, sourceId);
 	}
 	
 	/**

@@ -104,10 +104,11 @@ public interface DomainService {
 	 * @param uid
 	 * @param sourceId
 	 * @param mode
+	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
 	 * @see FacadeService#marckItemDisplayMode(String,String,ItemDisplayMode)
 	 */
-	void markItemDisplayMode(UserProfile userProfile, String sourceId, ItemDisplayMode mode) throws InternalDomainException;
+	UserProfile markItemDisplayMode(UserProfile userProfile, String sourceId, ItemDisplayMode mode) throws InternalDomainException;
 	
 	
 	/**
@@ -137,64 +138,70 @@ public interface DomainService {
 	 * @param uid
 	 * @param contextId
 	 * @param size
+	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
 	 * @throws TreeSizeErrorException 
 	 * @see FacadeService#setTreeSize(String, String, int)
 	 */
-	void setTreeSize(UserProfile userProfile, String contextId, int size) throws InternalDomainException, TreeSizeErrorException;
+	UserProfile setTreeSize(UserProfile userProfile, String contextId, int size) throws InternalDomainException, TreeSizeErrorException;
 	
 	/**
 	 * @param uid
 	 * @param cxtId
 	 * @param catId
+	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
 	 * @see FacadeService#foldCategory(String, String, String)
 	 */
-	void foldCategory(UserProfile userProfile, String cxtId, String catId) throws InternalDomainException;
+	UserProfile foldCategory(UserProfile userProfile, String cxtId, String catId) throws InternalDomainException;
 	
 	/**
 	 * @param uid
 	 * @param cxtId
 	 * @param catId
+	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
 	 * @see FacadeService#unfoldCategory(String, String, String)
 	 */
-	void unfoldCategory(UserProfile userProfile, String cxtId, String catId) throws InternalDomainException;
+	UserProfile unfoldCategory(UserProfile userProfile, String cxtId, String catId) throws InternalDomainException;
 	
 
 	/**
 	 * @param uid
 	 * @param contextId
 	 * @param categoryId
+	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 * @see FacadeService#subscribeToCategory(String, String, String)
 	 */
-	void subscribeToCategory(UserProfile userProfile, String contextId, String categoryId) 
+	UserProfile subscribeToCategory(UserProfile userProfile, String contextId, String categoryId) 
 	throws InternalDomainException, CategoryNotVisibleException;
 
 	/**
 	 * @param uid
 	 * @param contextId
 	 * @param categoryId
+	 * @return hibernate modified UserProfile
 	 * @throws CategoryNotVisibleException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryObligedException 
 	 * @see FacadeService#unsubscribeToCategory(String, String, String)
 	 */
-	void unsubscribeToCategory(UserProfile userProfile, String contextId, String categoryId)
+	UserProfile unsubscribeToCategory(UserProfile userProfile, String contextId, String categoryId)
 	throws InternalDomainException, CategoryNotVisibleException, CategoryObligedException;
 	/**
 	 * @param uid 
 	 * @param categorieId 
 	 * @param sourceId 
+	 * @return hibernate modified UserProfile
 	 * @throws CategoryNotVisibleException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @throws SourceNotVisibleException 
 	 * @see FacadeService#subscribeToSource(String, String, String)
 	 */
-	void subscribeToSource(UserProfile userProfile, String categorieId, String sourceId) 
+	UserProfile subscribeToSource(UserProfile userProfile, String categorieId, String sourceId) 
 	throws CategoryNotVisibleException, InternalDomainException, 
 	CategoryTimeOutException, SourceNotVisibleException;
 	
@@ -202,13 +209,14 @@ public interface DomainService {
 	 * @param uid 
 	 * @param categorieId 
 	 * @param sourceId 
+	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryTimeOutException 
 	 * @throws SourceObligedException 
 	 * @see FacadeService#unsubscribeToSource(String, String, String)
 	 */	
-	void unsubscribeToSource(UserProfile userProfile, String categorieId, String sourceId) 
+	UserProfile unsubscribeToSource(UserProfile userProfile, String categorieId, String sourceId) 
 	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException, SourceObligedException;
 
 	/**

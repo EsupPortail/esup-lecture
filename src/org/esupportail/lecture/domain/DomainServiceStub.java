@@ -159,8 +159,8 @@ public class DomainServiceStub implements DomainService {
 	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(java.lang.String, java.lang.String, int)
 	 */
 	@SuppressWarnings("unused")
-	public void setTreeSize(final UserProfile userProfile, final String contextId, final int size) {
-		// nothing	
+	public UserProfile setTreeSize(final UserProfile userProfile, final String contextId, final int size) {
+		return null;	
 	}
 
 	/**
@@ -168,8 +168,8 @@ public class DomainServiceStub implements DomainService {
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void foldCategory(final UserProfile userProfile, final String cxtId, final String catId) {
-		// nothing
+	public UserProfile foldCategory(final UserProfile userProfile, final String cxtId, final String catId) {
+		return null;	
 	}
 
 	/**
@@ -177,8 +177,8 @@ public class DomainServiceStub implements DomainService {
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void unfoldCategory(final UserProfile userProfile, final String cxtId, final String catId) {
-		// nothing
+	public UserProfile unfoldCategory(final UserProfile userProfile, final String cxtId, final String catId) {
+		return null;
 	}
 
 	
@@ -187,9 +187,9 @@ public class DomainServiceStub implements DomainService {
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void subscribeToSource(
+	public UserProfile subscribeToSource(
 		final UserProfile userProfile, final String categorieId, final String sourceId) {
-		// nothing
+		return null;
 	}
 	
 	/**
@@ -197,29 +197,29 @@ public class DomainServiceStub implements DomainService {
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void subscribeToCategory(final UserProfile userProfile, final String contextId, 
+	public UserProfile subscribeToCategory(final UserProfile userProfile, final String contextId, 
 			final String categoryId) {
-		// nothing
+		return null;
 	}
 		
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToCategory(
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void unsubscribeToCategory(
+	public UserProfile unsubscribeToCategory(
 			@SuppressWarnings("unused") final UserProfile userProfile, 
 			@SuppressWarnings("unused") final String contextId, 
 			@SuppressWarnings("unused") final String categoryId) {
-//		 nothing
+		return null;
 	}
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToSource(
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void unsubscribeToSource(
+	public UserProfile unsubscribeToSource(
 			final UserProfile userProfile, final String categorieId, final String sourceId) {
-		// nothing
+		return null;
 	}
 
 	/**
@@ -227,9 +227,9 @@ public class DomainServiceStub implements DomainService {
 	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.model.ItemDisplayMode)
 	 */
 	@SuppressWarnings("unused")
-	public void markItemDisplayMode(final UserProfile userProfile, final String sourceId, final ItemDisplayMode mode) 
+	public UserProfile markItemDisplayMode(final UserProfile userProfile, final String sourceId, final ItemDisplayMode mode) 
 	throws InternalDomainException {
-		// nothing
+		return null;
 	}
 
 	/**

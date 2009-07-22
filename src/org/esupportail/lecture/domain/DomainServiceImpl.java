@@ -156,12 +156,10 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getContext(" + userProfile.getUserId() + "," + contextId + ")");
 		}
-		
 		ContextBean contextBean;
 		/* Get customContext */
 		try {
-			CustomContext customContext = userProfile.getCustomContext(contextId);
-			
+			CustomContext customContext = userProfile.getCustomContext(contextId);	
 			/* Make the contextUserBean to display */
 			contextBean = new ContextBean(customContext);
 		} catch (ContextNotFoundException e) {
@@ -169,7 +167,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
 		}
-		
 		return contextBean;		
 	}
 
@@ -379,18 +376,21 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(
 	 *   java.lang.String, java.lang.String, java.lang.String, boolean)
 	 */
-	public UserProfile marckItemReadMode(UserProfile userProfile, final String sourceId, 
+	public UserProfile marckItemReadMode(final UserProfile userProfile, final String sourceId, 
 		final String itemId, final boolean isRead) 
 	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("marckItemReadMode(" + userProfile.getUserId() + "," + sourceId + "," + itemId + "," + isRead + ")");
 		}
 		try {
+			//merge to attache again userProfile  
+			UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
 			/* Get customCoategory */
 			CustomSource customSource;
-			customSource = userProfile.getCustomSource(sourceId);
+			customSource = ret.getCustomSource(sourceId);
 			customSource.setItemReadMode(itemId, isRead);
-			return DomainTools.getDaoService().mergeUserProfile(userProfile);
+			//No need to call DomainTools.getDaoService().saveUserProfile(userProfile) because of hibernate tracking
+			return ret;
 		} catch (CustomSourceNotFoundException e) {
 			String errorMsg = "CustomSourceNotFoundException for service 'marckItemReadMode(user "
 				+ userProfile.getUserId() + ", source " + sourceId + ", item " + itemId + ", isRead " + isRead + ")";
@@ -410,17 +410,19 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @throws InternalDomainException 
 	 * @see DomainService#markItemDisplayMode(String, String, ItemDisplayMode)
 	 */
-	public void markItemDisplayMode(final UserProfile userProfile, final String sourceId, 
+	public UserProfile markItemDisplayMode(final UserProfile userProfile, final String sourceId, 
 			final ItemDisplayMode mode) throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("markItemDisplayMode(" + userProfile.getUserId() + "," + sourceId + "," + mode + ")");
 		}
-		
 		try {
+			//merge to attache again userProfile  
+			UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
 			/* Get customCategory */
 			CustomSource customSource;
-			customSource = userProfile.getCustomSource(sourceId);
+			customSource = ret.getCustomSource(sourceId);
 			customSource.modifyItemDisplayMode(mode);
+			return ret;
 		} catch (CustomSourceNotFoundException e) {
 			String errorMsg = "CustomSourceNotFoundException for service 'markItemDisplayMode(user "
 				+ userProfile.getUserId() + ", source " + sourceId + ", mode " + mode + ")";
@@ -437,25 +439,29 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user Id for user uid
 	 * @param contextId context Id
 	 * @param size size to set
+	 * @return 
 	 * @throws InternalDomainException 
 	 * @throws TreeSizeErrorException 
 	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(java.lang.String, java.lang.String, int)
 	 */
-	public void setTreeSize(final UserProfile userProfile, final String contextId, final int size) 
+	public UserProfile setTreeSize(final UserProfile userProfile, final String contextId, final int size) 
 	throws InternalDomainException, TreeSizeErrorException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("setTreeSize(" + userProfile.getUserId() + "," + contextId + "," + size + ")");
 		}
+		//merge to attache again userProfile  
+		UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
 		/* Get customContext */
 		CustomContext customContext;
 		try {
-			customContext = userProfile.getCustomContext(contextId);
+			customContext = ret.getCustomContext(contextId);
 		} catch (ContextNotFoundException e) {
 			String errorMsg = "Unable to setTreeSize because context is not found";
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
 		}
 		customContext.modifyTreeSize(size);
+		return ret;
 	}
 
 	/**
@@ -464,26 +470,29 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user Id
 	 * @param cxtId context Id 
 	 * @param catId category Id
+	 * @return 
 	 * @throws InternalDomainException 
 	 * @see org.esupportail.lecture.domain.DomainService#foldCategory(
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void foldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
+	public UserProfile foldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
 	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("foldCategory(" + userProfile.getUserId() + "," + cxtId + "," + catId + ")");
 		}
-		
+		//merge to attache again userProfile  
+		UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
 		/* Get customContext */
 		CustomContext customContext;
 		try {
-			customContext = userProfile.getCustomContext(cxtId);
+			customContext = ret.getCustomContext(cxtId);
 		} catch (ContextNotFoundException e) {
 			String errorMsg = "Unable to foldCategory because context is not found";
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
 		}
 		customContext.foldCategory(catId);
+		return ret;
 	}
 	
 	/**
@@ -492,26 +501,29 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user Id
 	 * @param cxtId context Id 
 	 * @param catId category Id
+	 * @return 
 	 * @throws InternalDomainException 
 	 * @see org.esupportail.lecture.domain.DomainService#unfoldCategory(
 	 *   java.lang.String, java.lang.String, java.lang.String)
 	 */
-	public void unfoldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
+	public UserProfile unfoldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
 	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("unfoldCategory(" + userProfile.getUserId() + "," + cxtId + "," + catId + ")");
 		}
-		
+		//merge to attache again userProfile  
+		UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
 		/* Get customContext */
 		CustomContext customContext;
 		try {
-			customContext = userProfile.getCustomContext(cxtId);
+			customContext = ret.getCustomContext(cxtId);
 		} catch (ContextNotFoundException e) {
 			String errorMsg = "Unable to unfoldCategory because context is not found";
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
 		}
 		customContext.unfoldCategory(catId);
+		return ret;
 	}
 	
 	/*
@@ -602,25 +614,29 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user ID
 	 * @param contextId context ID
 	 * @param categoryId category ID
+	 * @return 
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 * 
 	 */
-	public void subscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
+	public UserProfile subscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
 	throws InternalDomainException, CategoryNotVisibleException  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToCategory(" + userProfile.getUserId() + "," + contextId 
 				+ "," + categoryId + ")");
 		}
+		//merge to attache again userProfile  
+		UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
 		CustomContext customContext;
 		try {
-			customContext = userProfile.getCustomContext(contextId);
+			customContext = ret.getCustomContext(contextId);
 		} catch (ContextNotFoundException e) {
 			String errorMsg = "Unable to subscribeToCategory because context is not found";
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
 		}
 		customContext.subscribeToCategory(categoryId);
+		return ret;
 	}
 
 	
@@ -630,12 +646,14 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user ID
 	 * @param categoryId category ID
 	 * @param sourceId source ID
+	 * @return 
+	 * @return 
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws SourceNotVisibleException 
 	 * @throws CategoryTimeOutException 
 	 */
-	public void subscribeToSource(final UserProfile userProfile, final String categoryId, final String sourceId) 
+	public UserProfile subscribeToSource(final UserProfile userProfile, final String categoryId, final String sourceId) 
 	throws CategoryNotVisibleException, InternalDomainException, 
 	CategoryTimeOutException, SourceNotVisibleException {
 		if (LOG.isDebugEnabled()) {
@@ -643,8 +661,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				+ "," + sourceId + ")");
 		}
 		try {
-			CustomCategory customCategory = userProfile.getCustomCategory(categoryId);
+			//merge to attache again userProfile  
+			UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
+			CustomCategory customCategory = ret.getCustomCategory(categoryId);
 			customCategory.subscribeToSource(sourceId);
+			return ret;
 // GB : No needed because of improve of exception management	
 //			} catch	(CategoryProfileNotFoundException e) {
 //			String errorMsg = "CategoryProfileNotFoundException for service 'subscribeToSource(user "
@@ -668,25 +689,29 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user ID
 	 * @param contextId context ID
 	 * @param categoryId category ID
+	 * @return 
 	 * @throws InternalDomainException 
 	 * @throws CategoryObligedException 
 	 * @throws CategoryNotVisibleException 
 	 * 
 	 */
-	public void unsubscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
+	public UserProfile unsubscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
 	throws InternalDomainException, CategoryNotVisibleException, CategoryObligedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("unsubscribeToCategory(" + userProfile.getUserId() + "," + contextId + "," + categoryId + ")");
 		}
+		//merge to attache again userProfile  
+		UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
 		CustomContext customContext;
 		try {
-			customContext = userProfile.getCustomContext(contextId);
+			customContext = ret.getCustomContext(contextId);
 		} catch (ContextNotFoundException e) {
 			String errorMsg = "Unable to unsubscribeToCategory because context is not found";
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
 		}
 		customContext.unsubscribeToCategory(categoryId);
+		return ret;
 	}
 
 	/**
@@ -694,20 +719,24 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param uid user ID
 	 * @param categoryId category ID
 	 * @param sourceId source ID
+	 * @return 
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws SourceObligedException 
 	 * @throws CategoryTimeOutException 
 	 */
-	public void unsubscribeToSource(final UserProfile userProfile, final String categoryId, final String sourceId) 
+	public UserProfile unsubscribeToSource(final UserProfile userProfile, final String categoryId, final String sourceId) 
 	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException, SourceObligedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + userProfile.getUserId() + "," + categoryId + "," 
 				+ sourceId + ")");
 		}
 		try {
-			CustomCategory customCategory = userProfile.getCustomCategory(categoryId);
+			//merge to attache again userProfile  
+			UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
+			CustomCategory customCategory = ret.getCustomCategory(categoryId);
 			customCategory.unsubscribeToSource(sourceId);
+			return ret;
 // GB : No needed because of improve of exception management	
 //		} catch	(CategoryProfileNotFoundException e) {
 //			String errorMsg = "CategoryProfileNotFoundException for service 'unsubscribeToSource(user "
