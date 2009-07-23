@@ -23,14 +23,14 @@
 			</many-to-one>
 		</natural-id>
 		<subclass name="CustomManagedCategory" discriminator-value="M">
-			<map name="subscriptions" cascade="all, delete-orphan">
+			<map name="subscriptions" cascade="all, delete-orphan" lazy="false">
 				<key foreign-key="FK_CUSTOMSOURCE_CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED">
 					<column name="CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED"/>
 				</key>
 				<map-key type="string" formula="ELEMENTID"/>
 				<one-to-many class="CustomManagedSource" />
 			</map>
-			<map name="unsubscribedAutoSubscribedSources" table="LECT_UNSUBSCRIBEDSOURCEFLAG" cascade="all, delete-orphan" inverse="true">
+			<map name="unsubscribedAutoSubscribedSources" table="LECT_UNSUBSCRIBEDSOURCEFLAG" cascade="all, delete-orphan" inverse="true" lazy="false">
 				<key foreign-key="FK_UNSUBSCRIBESOURCEFLAG_CUSTOMCATEGORY_CUSTOMCATEGORYPK" not-null="true">
 					<column name="CUSTOMCATEGORY_CUSTOMCATEGORYPK"/>
 				</key>

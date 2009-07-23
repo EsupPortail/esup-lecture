@@ -57,6 +57,7 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 		    List<UserProfile> list = getHibernateTemplate().find(query, userId);
 		    if (list.size() > 0) {
 			    ret = list.get(0);				
+			    getHibernateTemplate().evict(ret);
 			}
 		} else {
 			String msg = "userId is null: can't find it in database";
