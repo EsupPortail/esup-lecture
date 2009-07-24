@@ -54,16 +54,13 @@ public final class ReadItemFlag extends Flag {
 
 	/**
 	 * @return hash
-	 * @see Flag#hash
-	 * @see ElementProfile#getId()
 	 */
 	public String getElementId() {
 		return elementId;
 	}
 
 	/**
-	 * @param id
-	 * @see Flag#hash
+	 * @param elementId
 	 */
 	public void setElementId(final String elementId) {
 		this.elementId = elementId;

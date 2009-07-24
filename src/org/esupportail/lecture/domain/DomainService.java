@@ -40,158 +40,158 @@ public interface DomainService {
 	UserProfile getUserProfile(final String userId);
 
 	/**
-	 * @param uid
+	 * @param userProfile
 	 * @return UserBean
-	 * @see FacadeService#getConnectedUser(String)
+	 * @see FacadeService#getConnectedUser(UserProfile)
 	 */	
 	UserBean getConnectedUser(UserProfile userProfile);
 	
 	/**
-	 * @param uid
+	 * @param userProfile
 	 * @param contextId
 	 * @return ContextBean
 	 * @throws InternalDomainException 
-	 * @see FacadeService#getContext(String,String)
+	 * @see FacadeService#getContext(UserProfile, String)
 	 */
 	ContextBean getContext(UserProfile userProfile, String contextId) throws InternalDomainException;
 
 	/**
-	 * @param uid
+	 * @param userProfile
 	 * @param contextId
 	 * @return List(CategoryBean) 
 	 * @throws InternalDomainException 
-	 * @see FacadeService#getDisplayedCategories(String, String)
+	 * @see FacadeService#getDisplayedCategories(UserProfile, String)
 	 */
 	List<CategoryBean> getDisplayedCategories(UserProfile userProfile, String contextId) throws InternalDomainException;
 
 	/**
 	 * @param categoryId 
-	 * @param uid 
+	 * @param userProfile 
 	 * @return List(SourceBean)
 	 * @throws CategoryNotVisibleException  
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
-	 * @see FacadeService#getDisplayedSources(String, String)
+	 * @see FacadeService#getDisplayedSources(UserProfile, String)
 	 */
 	List<SourceBean> getDisplayedSources(UserProfile userProfile, String categoryId)  
 	throws CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException;
 
 	/**
 	 * @param sourceId 
-	 * @param uid 
+	 * @param userProfile 
 	 * @return List(ItemBean)
 	 * @throws SourceNotLoadedException 
 	 * @throws InternalDomainException 
 	 * @throws ManagedCategoryNotLoadedException 
-	 * @see FacadeService#getItems(String, String)
+	 * @see FacadeService#getItems(UserProfile, String)
 	 */
 	List<ItemBean> getItems(UserProfile userProfile, String sourceId)  
 	throws SourceNotLoadedException, InternalDomainException, ManagedCategoryNotLoadedException;
 
 	/**
-	 * @param uid 
+	 * @param userProfile 
 	 * @param itemId 
 	 * @param sourceId 
 	 * @param isRead
 	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
-	 * @see FacadeService#marckItemReadMode(String, String, String, boolean)
+	 * @see FacadeService#marckItemReadMode(UserProfile, String, String, boolean)
 	 */
 	UserProfile marckItemReadMode(UserProfile userProfile, String sourceId, String itemId, boolean isRead)  
 	throws InternalDomainException;
 
 	/**
-	 * @param uid
+	 * @param userProfile
 	 * @param sourceId
 	 * @param mode
 	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
-	 * @see FacadeService#marckItemDisplayMode(String,String,ItemDisplayMode)
+	 * @see FacadeService#marckItemDisplayMode(UserProfile, String, ItemDisplayMode)
 	 */
 	UserProfile markItemDisplayMode(UserProfile userProfile, String sourceId, ItemDisplayMode mode) throws InternalDomainException;
 	
 	
 	/**
-	 * @param uid
+	 * @param userProfile
 	 * @param contextId
 	 * @return List(CategoryBean)
 	 * @throws InternalDomainException 
 	 * @throws ManagedCategoryNotLoadedException 
-	 * @see FacadeService#getVisibleCategories(String, String)
+	 * @see FacadeService#getVisibleCategories(UserProfile, String)
 	 */
 	List<CategoryBean> getVisibleCategories(final UserProfile userProfile, final String contextId) 
 	throws InternalDomainException, ManagedCategoryNotLoadedException;
 	
 	/**
 	 * @param categoryId 
-	 * @param uid 
+	 * @param userProfile 
 	 * @return List(SourceBean)
 	 * @throws CategoryNotVisibleException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
-	 * @see FacadeService#getVisibleSources(String, String)
+	 * @see FacadeService#getVisibleSources(UserProfile, String)
 	 */
 	List<SourceBean> getVisibleSources(UserProfile userProfile, String categoryId) 
 	throws CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException;
 	
 	/**
-	 * @param uid
+	 * @param userProfile
 	 * @param contextId
 	 * @param size
 	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
 	 * @throws TreeSizeErrorException 
-	 * @see FacadeService#setTreeSize(String, String, int)
+	 * @see FacadeService#setTreeSize(UserProfile, String, int)
 	 */
 	UserProfile setTreeSize(UserProfile userProfile, String contextId, int size) throws InternalDomainException, TreeSizeErrorException;
 	
 	/**
-	 * @param uid
+	 * @param userProfile
 	 * @param cxtId
 	 * @param catId
 	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
-	 * @see FacadeService#foldCategory(String, String, String)
+	 * @see FacadeService#foldCategory(UserProfile, String, String)
 	 */
 	UserProfile foldCategory(UserProfile userProfile, String cxtId, String catId) throws InternalDomainException;
 	
 	/**
-	 * @param uid
+	 * @param userProfile
 	 * @param cxtId
 	 * @param catId
 	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
-	 * @see FacadeService#unfoldCategory(String, String, String)
+	 * @see FacadeService#unfoldCategory(UserProfile, String, String)
 	 */
 	UserProfile unfoldCategory(UserProfile userProfile, String cxtId, String catId) throws InternalDomainException;
 	
 
 	/**
-	 * @param uid
+	 * @param userProfile
 	 * @param contextId
 	 * @param categoryId
 	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
-	 * @see FacadeService#subscribeToCategory(String, String, String)
+	 * @see FacadeService#subscribeToCategory(UserProfile, String, String)
 	 */
 	UserProfile subscribeToCategory(UserProfile userProfile, String contextId, String categoryId) 
 	throws InternalDomainException, CategoryNotVisibleException;
 
 	/**
-	 * @param uid
+	 * @param userProfile
 	 * @param contextId
 	 * @param categoryId
 	 * @return hibernate modified UserProfile
 	 * @throws CategoryNotVisibleException 
 	 * @throws InternalDomainException 
 	 * @throws CategoryObligedException 
-	 * @see FacadeService#unsubscribeToCategory(String, String, String)
+	 * @see FacadeService#unsubscribeToCategory(UserProfile, String, String)
 	 */
 	UserProfile unsubscribeToCategory(UserProfile userProfile, String contextId, String categoryId)
 	throws InternalDomainException, CategoryNotVisibleException, CategoryObligedException;
 	/**
-	 * @param uid 
+	 * @param userProfile 
 	 * @param categorieId 
 	 * @param sourceId 
 	 * @return hibernate modified UserProfile
@@ -199,14 +199,14 @@ public interface DomainService {
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
 	 * @throws SourceNotVisibleException 
-	 * @see FacadeService#subscribeToSource(String, String, String)
+	 * @see FacadeService#subscribeToSource(UserProfile, String, String)
 	 */
 	UserProfile subscribeToSource(UserProfile userProfile, String categorieId, String sourceId) 
 	throws CategoryNotVisibleException, InternalDomainException, 
 	CategoryTimeOutException, SourceNotVisibleException;
 	
 	/**
-	 * @param uid 
+	 * @param userProfile 
 	 * @param categorieId 
 	 * @param sourceId 
 	 * @return hibernate modified UserProfile
@@ -214,7 +214,7 @@ public interface DomainService {
 	 * @throws CategoryNotVisibleException 
 	 * @throws CategoryTimeOutException 
 	 * @throws SourceObligedException 
-	 * @see FacadeService#unsubscribeToSource(String, String, String)
+	 * @see FacadeService#unsubscribeToSource(UserProfile, String, String)
 	 */	
 	UserProfile unsubscribeToSource(UserProfile userProfile, String categorieId, String sourceId) 
 	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException, SourceObligedException;

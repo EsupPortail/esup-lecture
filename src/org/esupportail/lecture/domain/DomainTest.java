@@ -157,7 +157,7 @@ public class DomainTest {
 
 
 	/*
-	 ************************** M�thodes de Test ******************************** */	
+	 ************************** Methodes de Test ******************************** */	
 
 	
 
@@ -566,7 +566,7 @@ public class DomainTest {
 	@SuppressWarnings("unused")
 	private static void testFoldCategory() throws DomainServiceException {
 		printIntro("foldCategory");
-		System.out.println("Pliage de la categorie cp1 (deja pli�e) => WARN");
+		System.out.println("Pliage de la categorie cp1 (deja pliee) => WARN");
 //		facadeService.foldCategory(userId, contextId, "cp1");
 		System.out.println("Depliage de la categorie cp1 \n");
 //		facadeService.unfoldCategory(userId, contextId, "cp1");
@@ -601,8 +601,8 @@ public class DomainTest {
 	
 	
 	/**
-	 * Affichage du service � tester.
-	 * @param nomService nom du service � tester
+	 * Affichage du service a tester.
+	 * @param nomService nom du service a tester
 	 */
 	private static void printIntro(final String nomService) {
 		System.out.println("******************************************************");

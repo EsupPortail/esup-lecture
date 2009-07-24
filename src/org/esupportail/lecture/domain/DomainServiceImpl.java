@@ -10,7 +10,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.commons.aop.cache.SessionCache;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.application.Version;
 import org.esupportail.commons.services.authentication.AuthenticationService;
@@ -128,9 +127,9 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	
 	/**
 	 * Return the user identified by userId.
-	 * @param userId user Id
+	 * @param userProfile
 	 * @return userBean
-	 * @see org.esupportail.lecture.domain.DomainService#getConnectedUser(java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getConnectedUser(UserProfile)
 	 */
 	public UserBean getConnectedUser(final UserProfile userProfile) {
 		if (LOG.isDebugEnabled()) {
@@ -145,11 +144,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 
 	/**
 	 * Returns the contextBean corresponding to the context identified by contextId for user userId.
-	 * @param userId id of the current user
+	 * @param userProfile current userProfile
 	 * @param contextId id of the context to get
 	 * @return contextBean
 	 * @throws InternalDomainException 
-	 * @see org.esupportail.lecture.domain.DomainService#getContext(String,String)
+	 * @see org.esupportail.lecture.domain.DomainService#getContext(UserProfile, String)
 	 */
 	public ContextBean getContext(final UserProfile userProfile, final String contextId) 
 		throws InternalDomainException {
@@ -176,11 +175,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * Displayed categories are one that user : 
 	 * - is subscribed to (obliged or allowed or autoSubscribe)
 	 * - has created (personal categories)
-	 * @param userId id of the current user
+	 * @param userProfile current userProfile
 	 * @param contextId  id of the current context 
 	 * @return a list of CategoryBean
 	 * @throws InternalDomainException
-	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedCategories(String,String)
+	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedCategories(UserProfile, String)
 	 */
 	public List<CategoryBean> getDisplayedCategories(final UserProfile userProfile, final String contextId) 
 	throws InternalDomainException {
@@ -234,14 +233,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * Available sources are one that user : 
 	 * - is subscribed to (obliged or allowed or autoSubscribe)
 	 * - has created (personal sources)
-	 * @param uid Id of the user
-	 * @param categoryId id of the category to display sources
-	 * @return a list of sourceBean
-	 * @throws InternalDomainException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryTimeOutException 
-	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(
-	 *   java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(UserProfile, String)
 	 */
 	public List<SourceBean> getDisplayedSources(final UserProfile userProfile, final String categoryId) 
 	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException {
@@ -307,14 +299,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * Returns a list of itemBean.
 	 * Corresponding to items containing in source sourceId,
 	 * in order to be displayed on user interface for user uid
-	 * @param uid user Id
-	 * @param sourceId source Id to display items
-	 * @return a list of itemBean
-	 * @throws InternalDomainException 
-	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws SourceNotLoadedException 
-	 * @see org.esupportail.lecture.domain.DomainService#getItems(
-	 *   java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getItems(UserProfile, String)
 	 */
 	public List<ItemBean> getItems(final UserProfile userProfile, final String sourceId) 
 	throws InternalDomainException, SourceNotLoadedException, ManagedCategoryNotLoadedException {
@@ -367,14 +352,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 
 	/**
 	 * Mark item as read for user uid.
-	 * @param uid user Id
-	 * @param sourceId sourceId of the item
-	 * @param itemId item Id
-	 * @param isRead the read Mode (true=item read | false=item not read)
-	 * @return hb modified UserProfile
-	 * @throws InternalDomainException 
-	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(
-	 *   java.lang.String, java.lang.String, java.lang.String, boolean)
+	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(UserProfile, String, String, boolean)
 	 */
 	public UserProfile marckItemReadMode(final UserProfile userProfile, final String sourceId, 
 		final String itemId, final boolean isRead) 
@@ -403,12 +381,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	
 	
 	/**
-	 * Mark item display mode on source for a user.
-	 * @param uid user ID
-	 * @param sourceId source ID
-	 * @param mode item display mode to set
-	 * @throws InternalDomainException 
-	 * @see DomainService#markItemDisplayMode(String, String, ItemDisplayMode)
+	 * @see DomainService#markItemDisplayMode(UserProfile, String, ItemDisplayMode)
 	 */
 	public UserProfile markItemDisplayMode(final UserProfile userProfile, final String sourceId, 
 			final ItemDisplayMode mode) throws InternalDomainException {
@@ -435,14 +408,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	
 	
 	/**
-	 * Set the tree size of the customContext.
-	 * @param uid user Id for user uid
-	 * @param contextId context Id
-	 * @param size size to set
-	 * @return 
-	 * @throws InternalDomainException 
-	 * @throws TreeSizeErrorException 
-	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(java.lang.String, java.lang.String, int)
+	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(UserProfile, String, int)
 	 */
 	public UserProfile setTreeSize(final UserProfile userProfile, final String contextId, final int size) 
 	throws InternalDomainException, TreeSizeErrorException {
@@ -465,15 +431,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	}
 
 	/**
-	 * Set category identified by catId as fold in the customContext ctxId.
-	 * for user uid
-	 * @param uid user Id
-	 * @param cxtId context Id 
-	 * @param catId category Id
-	 * @return 
-	 * @throws InternalDomainException 
-	 * @see org.esupportail.lecture.domain.DomainService#foldCategory(
-	 *   java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#foldCategory(UserProfile, String, String)
 	 */
 	public UserProfile foldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
 	throws InternalDomainException {
@@ -496,15 +454,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	}
 	
 	/**
-	 * Set category identified by catId as unfold in the customContext ctxId.
-	 * for user uid
-	 * @param uid user Id
-	 * @param cxtId context Id 
-	 * @param catId category Id
-	 * @return 
-	 * @throws InternalDomainException 
-	 * @see org.esupportail.lecture.domain.DomainService#unfoldCategory(
-	 *   java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#unfoldCategory(UserProfile, String, String)
 	 */
 	public UserProfile unfoldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
 	throws InternalDomainException {
@@ -530,10 +480,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 ************************** Methodes - services - mode EDIT ************************************/
 	
 	/**
-	 * @throws InternalDomainException 
-	 * @throws ManagedCategoryNotLoadedException 
-	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(
-	 *   java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(UserProfile, String)
 	 */
 	public List<CategoryBean> getVisibleCategories(final UserProfile userProfile, final String contextId) 
 	throws InternalDomainException, ManagedCategoryNotLoadedException {
@@ -560,11 +507,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	}
 
 	/**
-	 * @throws InternalDomainException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws CategoryTimeOutException 
-	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(
-	 *   java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(UserProfile, String)
 	 */
 	public List<SourceBean> getVisibleSources(final UserProfile userProfile, final String categoryId) 
 	throws CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException {
@@ -610,14 +553,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	}
 	
 	/**
-	 * subscribe user uid to category categoryId in context contextId.
-	 * @param uid user ID
-	 * @param contextId context ID
-	 * @param categoryId category ID
-	 * @return 
-	 * @throws InternalDomainException 
-	 * @throws CategoryNotVisibleException 
-	 * 
+	 * @see DomainService#subscribeToCategory(UserProfile, String, String)
 	 */
 	public UserProfile subscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
 	throws InternalDomainException, CategoryNotVisibleException  {
@@ -642,16 +578,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	
 
 	/**
-	 * subscribe user uid to source sourceId in categoryId, if user is already subscriber of categoryId.
-	 * @param uid user ID
-	 * @param categoryId category ID
-	 * @param sourceId source ID
-	 * @return 
-	 * @return 
-	 * @throws InternalDomainException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws SourceNotVisibleException 
-	 * @throws CategoryTimeOutException 
+	 * @see DomainService#subscribeToSource(UserProfile, String, String)
 	 */
 	public UserProfile subscribeToSource(final UserProfile userProfile, final String categoryId, final String sourceId) 
 	throws CategoryNotVisibleException, InternalDomainException, 
@@ -685,15 +612,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	}
 	
 	/**
-	 * unsubscribe user uid to category categoryId in context contextId.
-	 * @param uid user ID
-	 * @param contextId context ID
-	 * @param categoryId category ID
-	 * @return 
-	 * @throws InternalDomainException 
-	 * @throws CategoryObligedException 
-	 * @throws CategoryNotVisibleException 
-	 * 
+	 * @see DomainService#unsubscribeToCategory(UserProfile, String, String)
 	 */
 	public UserProfile unsubscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
 	throws InternalDomainException, CategoryNotVisibleException, CategoryObligedException {
@@ -715,15 +634,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	}
 
 	/**
-	 * unsubscribe user uid to source sourceId in categoryId, if user is already subscriber of categoryId.
-	 * @param uid user ID
-	 * @param categoryId category ID
-	 * @param sourceId source ID
-	 * @return 
-	 * @throws InternalDomainException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws SourceObligedException 
-	 * @throws CategoryTimeOutException 
+	 * @see DomainService#unsubscribeToSource(UserProfile, String, String)
 	 */
 	public UserProfile unsubscribeToSource(final UserProfile userProfile, final String categoryId, final String sourceId) 
 	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException, SourceObligedException {

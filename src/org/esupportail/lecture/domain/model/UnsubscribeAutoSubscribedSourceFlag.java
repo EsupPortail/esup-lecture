@@ -25,7 +25,7 @@ public final class UnsubscribeAutoSubscribedSourceFlag extends Flag {
 	}
 
 	/**
-	 * @param customCategory
+	 * @param customManagedCategory
 	 * @param elementId
 	 */
 	protected UnsubscribeAutoSubscribedSourceFlag(
@@ -55,16 +55,13 @@ public final class UnsubscribeAutoSubscribedSourceFlag extends Flag {
 
 	/**
 	 * @return id
-	 * @see Flag#id
-	 * @see ElementProfile#getId()
 	 */
 	public String getElementId() {
 		return elementId;
 	}
 
 	/**
-	 * @param id
-	 * @see Flag#id
+	 * @param elementId
 	 */
 	public void setElementId(final String elementId) {
 		this.elementId = elementId;
@@ -92,7 +89,7 @@ public final class UnsubscribeAutoSubscribedSourceFlag extends Flag {
 	}
 
 	/**
-	 * @param customCategory the customCategory to set
+	 * @param customManagedCategory the customCategory to set
 	 */
 	public void setCustomManagedCategory(CustomManagedCategory customManagedCategory) {
 		this.customManagedCategory = customManagedCategory;

@@ -71,9 +71,9 @@ public class DefinitionSets {
 //		iteratorString = groups.iterator();
 //		for(String group = null; iteratorString.hasNext();){
 //			group = iteratorString.next();
-//			 TODO (GB later) v�rification de l'existence du groupe dans le portail
+//			 TODO (GB later) verification de l'existence du groupe dans le portail
 			// si PB : log.warn();
-			// PAs sure que c'est par l� qu'on le fasse 
+			// PAs sure que c'est par le qu'on le fasse 
 //		}
 		
 		for (RegularOfSet reg : regulars) {

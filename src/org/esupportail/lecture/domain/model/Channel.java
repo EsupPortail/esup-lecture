@@ -236,8 +236,8 @@ public class Channel implements InitializingBean {
 			//ChannelConfig config = 
 			ChannelConfig.getInstance(configFilePath);
 			// TODO (GB later)
-			// - utiliser l'objet config pour appeler les m�thodes apr�s (reset ...)
-			// 		et faire une classe FileToLoad avec ces m�thodes en non static
+			// - utiliser l'objet config pour appeler les methodes apres (reset ...)
+			// 		et faire une classe FileToLoad avec ces methodes en non static
 			// - charger la config via un DAO ?
 			
 		} catch (ChannelConfigException e) {

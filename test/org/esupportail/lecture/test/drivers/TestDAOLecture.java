@@ -212,7 +212,7 @@ public class TestDAOLecture {
 ////				cmc.addSubscription((ManagedSourceProfile)cs2.getProfile());
 ////			}
 ////		}
-////ne manipule plus l'object ratach� � userprofile.... Cf. mail gwena�lle
+////ne manipule plus l'object ratache a userprofile.... Cf. mail gwenaelle
 ////		ccat2.addSubscription((ManagedSourceProfile)cs1.getProfile());
 ////		ccat3.addSubscription((ManagedSourceProfile)cs2.getProfile());
 //		

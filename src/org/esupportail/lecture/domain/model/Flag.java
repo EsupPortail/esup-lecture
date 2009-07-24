@@ -67,7 +67,7 @@ public abstract class Flag {
 	
 	/**
 	 * Sets the name to the category profile.
-	 * @param name
+	 * @param date
 	 */
 	public void setDate(final Date date) {
 		this.date = date;

@@ -92,8 +92,8 @@ public class FacadeService implements InitializingBean {
 	}
 
 	/**	
-	 * Return the userBean identified by uid.
-	 * @param uid id of connected user
+	 * Return the userBean identified by userProfile.
+	 * @param userProfile id of connected user
 	 * @return a UserBean 
 	 */
 	public UserBean getConnectedUser(final UserProfile userProfile) {
@@ -117,8 +117,8 @@ public class FacadeService implements InitializingBean {
 	
 
 	/** 
-	 * Returns the contextBean corresponding to the context identified by contextId for user uid.
-	 * @param uid id of the connected user
+	 * Returns the contextBean corresponding to the context identified by contextId for user userProfile.
+	 * @param userProfile id of the connected user
 	 * @param contextId id of the current context
 	 * @return a ContextBean of the current context of the connected user
 	 * @throws InternalDomainException 
@@ -134,7 +134,7 @@ public class FacadeService implements InitializingBean {
 	 * - is subscribed to (obliged or allowed or autoSubscribe)
 	 * - has created (personal categories)
 	 * @param contextId id of context
-	 * @param uid user ID
+	 * @param userProfile user ID
 	 * @return List of CategoryBean
 	 * @throws InternalDomainException
 	 */
@@ -150,7 +150,7 @@ public class FacadeService implements InitializingBean {
 	 * - is subscribed to (obliged or allowed or autoSubscribe)
 	 * - has created (personal sources)
 	 * @param categoryId id of category
-	 * @param uid user ID
+	 * @param userProfile user ID
 	 * @return List of SourceBean
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
@@ -166,8 +166,8 @@ public class FacadeService implements InitializingBean {
 	/**
 	 * Returns a list of itemBean.
 	 * Corresponding to items containing in source sourceId,
-	 * in order to be displayed on user interface for user uid
-	 * @param uid user ID
+	 * in order to be displayed on user interface for user userProfile
+	 * @param userProfile user ID
 	 * @param sourceId id of source
 	 * @return List of ItemBean in a source
 	 * @throws InternalDomainException 
@@ -181,8 +181,8 @@ public class FacadeService implements InitializingBean {
 
 	
 	/**
-	 * Mark item as read for user uid.
-	 * @param uid user ID
+	 * Mark item as read for user userProfile.
+	 * @param userProfile user ID
 	 * @param itemId item id
 	 * @param sourceId source if
 	 * @param isRead boolean : true = item is read | false = item is not read
@@ -198,10 +198,10 @@ public class FacadeService implements InitializingBean {
 
 	/**
 	 * Mark the item display mode for source sourceId.
-	 * @param uid user ID
+	 * @param userProfile user ID
 	 * @param sourceId sourceID
 	 * @param mode the item display mode to set
-	 * @return 
+	 * @return userProfile
 	 * @throws InternalDomainException 
 	 */
 	public UserProfile marckItemDisplayMode(final UserProfile userProfile, final String sourceId, final ItemDisplayMode mode) 
@@ -211,10 +211,10 @@ public class FacadeService implements InitializingBean {
 	
 	/**
 	 * Set the tree size of the customContext.
-	 * @param uid user ID
+	 * @param userProfile user ID
 	 * @param contextId context ID 
 	 * @param size size of the tree 
-	 * @return 
+	 * @return userProfile
 	 * @throws InternalDomainException 
 	 * @throws TreeSizeErrorException 
 	 */
@@ -225,11 +225,11 @@ public class FacadeService implements InitializingBean {
 
 	/**
 	 * Set category identified by catId as fold in the customContext ctxId.
-	 * for user uid
-	 * @param uid  user ID
+	 * for user userProfile
+	 * @param userProfile  user ID
 	 * @param cxtId context ID 
-	 * @param catId catId
-	 * set category catId folded in customContext cxtId
+	 * @param catId catId set category catId folded in customContext cxtId
+	 * @return userProfile
 	 * @throws InternalDomainException 
 	 */
 	public UserProfile foldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
@@ -239,8 +239,8 @@ public class FacadeService implements InitializingBean {
 	
 	/**
 	 * Set category identified by catId as unfold in the customContext ctxId.
-	 * for user uid
-	 * @param uid  user ID
+	 * for user userProfile
+	 * @param userProfile  user ID
 	 * @param cxtId context ID 
 	 * @param catId catId
 	 * set category catId unfolded in customContext cxtId
@@ -256,8 +256,8 @@ public class FacadeService implements InitializingBean {
 	/** 
 	 * Return visible categories.
 	 * Obliged, subscribed, obliged for managed category or personal category.
-	 * This for a contextId for user uid (for EDIT mode)
-	 * @param uid
+	 * This for a contextId for user userProfile (for EDIT mode)
+	 * @param userProfile
 	 * @param contextId
 	 * @return List of CategoryBean	 
 	 * @throws InternalDomainException 
@@ -270,9 +270,9 @@ public class FacadeService implements InitializingBean {
 	/**
 	 * Return visible sources.
 	 * Obliged, subscribed, obliged for managed source or personal source.
-	 * This for a categoryId for user uid (for EDIT mode)
+	 * This for a categoryId for user userProfile (for EDIT mode)
 	 * @param categoryId id of category
-	 * @param uid user ID
+	 * @param userProfile user ID
 	 * @return List of SourceBean
 	 * @throws InternalDomainException 
 	 * @throws CategoryTimeOutException 
@@ -284,8 +284,8 @@ public class FacadeService implements InitializingBean {
 	}
 	
 	/** 
-	 * Subscribes category categoryId in Context contextId to user uid.
-	 * @param uid
+	 * Subscribes category categoryId in Context contextId to user userProfile.
+	 * @param userProfile
 	 * @param contextId id of the context containing category
 	 * @param categoryId id of the categoy
 	 * @throws InternalDomainException 
@@ -298,8 +298,8 @@ public class FacadeService implements InitializingBean {
 	
 	
 	/**
-	 * Subscribes user uid to source sourceId in Category categoryId.
-	 * @param uid - user ID
+	 * Subscribes user userProfile to source sourceId in Category categoryId.
+	 * @param userProfile - user ID
 	 * @param categorieId - categorie ID
 	 * @param sourceId - Source ID
 	 * @throws InternalDomainException 
@@ -314,8 +314,8 @@ public class FacadeService implements InitializingBean {
 	}
 	
 	/** 
-	 * Unsubscribes category categoryId in Context contextId to user uid.
-	 * @param uid
+	 * Unsubscribes category categoryId in Context contextId to user userProfile.
+	 * @param userProfile
 	 * @param contextId id of the context containing category
 	 * @param categoryId id of the categoy
 	 * @throws InternalDomainException 
@@ -328,8 +328,8 @@ public class FacadeService implements InitializingBean {
 	}
 
 	/**
-	 * Unsubscribes source sourceId in Category categoryId to user uid.
-	 * @param uid - user ID
+	 * Unsubscribes source sourceId in Category categoryId to user userProfile.
+	 * @param userProfile - user ID
 	 * @param categorieId - categorie ID
 	 * @param sourceId - Source ID
 	 * @throws InternalDomainException 
