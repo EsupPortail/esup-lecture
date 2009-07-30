@@ -99,7 +99,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
 	 */
 	public String getConnectedUserId() throws NoExternalValueException, InternalExternalException {
-		return authenticationService.getAuthInfo().getId();
+		return DomainTools.getCurrentUserId(authenticationService);
 	}
 	/**
 	 * Return ID of the current context (from channel instantiation : portlet preference with name "context")).

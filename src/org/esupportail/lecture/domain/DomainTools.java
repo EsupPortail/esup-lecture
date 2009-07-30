@@ -23,6 +23,8 @@ import net.sf.ehcache.Element;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.services.authentication.AuthenticationService;
+import org.esupportail.commons.services.authentication.info.AuthInfo;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.model.Channel;
@@ -438,6 +440,26 @@ public class DomainTools implements InitializingBean {
 	 */
 	public void setCacheManager(final CacheManager cacheManager) {
 		this.cacheManager = cacheManager;
+	}
+
+
+
+
+	/**
+	 * @param authenticationService
+	 * @return Current User Id
+	 */
+	public static String getCurrentUserId(
+			AuthenticationService authenticationService) {
+		String ret;
+		AuthInfo authInfo = authenticationService.getAuthInfo();
+		if (authInfo == null) {
+			ret = getGuestUser();
+		}
+		else {
+			ret = authenticationService.getAuthInfo().getId();
+		}
+		return ret;
 	}
 
 
