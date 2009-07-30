@@ -89,12 +89,14 @@
 				<t:htmlTag id="markAllItemsAsReadButton" value="li">
 					<h:commandButton action="#{homeController.markAllItemsAsRead}"
 						image="/media/unread.png" alt="#{msgs['markAllAsRead']}"
-						title="#{msgs['markAllAsRead']}" styleClass="valign" />
+						title="#{msgs['markAllAsRead']}" styleClass="valign" 
+						rendered="#{homeController.selectedCategory.userCanMarkRead}"/>
 				</t:htmlTag>
 				<t:htmlTag id="markAllItemsAsNotReadButton" value="li">
 					<h:commandButton action="#{homeController.markAllItemsAsNotRead}"
 						image="/media/read.png" alt="#{msgs['markAllAsNotRead']}"
-						title="#{msgs['markAllAsNotRead']}" styleClass="valign" />
+						title="#{msgs['markAllAsNotRead']}" styleClass="valign" 
+						rendered="#{homeController.selectedCategory.userCanMarkRead}"/>
 				</t:htmlTag>
 			</t:htmlTag>
 		</t:htmlTag>
