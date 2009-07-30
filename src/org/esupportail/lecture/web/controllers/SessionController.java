@@ -15,6 +15,7 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.beans.User;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.authentication.AuthenticationService;
+import org.esupportail.commons.services.authentication.info.AuthInfo;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.commons.utils.ContextUtils;
 import org.esupportail.commons.utils.strings.StringUtils;
@@ -69,10 +70,13 @@ public class SessionController extends AbstractDomainAwareBean {
 	@Override
 	public User getCurrentUser() {
 		if (ContextUtils.getRequestAttribute(CURRENT_USER_ATTRIBUTE) == null) {
-			String currentUserId = authenticationService.getAuthInfo().getId();
-			if (currentUserId == null) {
+			AuthInfo authInfo = authenticationService.getAuthInfo();
+			String currentUserId;
+			if (authInfo == null) {
 				currentUserId = DomainTools.getGuestUser();
-				//return null;
+			}
+			else {
+				currentUserId = authenticationService.getAuthInfo().getId();
 			}
 			User user = new User();
 			user.setDisplayName(currentUserId);
