@@ -30,8 +30,8 @@
 				The 'from' address to use when sending emails.
 			</description>
 		</property>
-		<property name="interceptAll" value="false" />
-		<property name="interceptAddress" ref="${smtp.interceptAddress.beanName}" >
+		<property name="interceptAll" value="${smtp.interceptAll}" />
+		<property name="interceptAddress" ref="smtpInterceptAddress" >
 			<description>
 				The address to which _all_ the emails should be sent. This tag is particularly
 				useful when setting up the application to prevent from spam effects. When no tag 
