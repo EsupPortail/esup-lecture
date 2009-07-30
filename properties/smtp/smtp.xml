@@ -30,6 +30,7 @@
 				The 'from' address to use when sending emails.
 			</description>
 		</property>
+		<property name="interceptAll" value="false" />
 		<property name="interceptAddress" ref="${smtp.interceptAddress.beanName}" >
 			<description>
 				The address to which _all_ the emails should be sent. This tag is particularly
@@ -64,13 +65,6 @@
     	</description>
         <property name="address" value="${smtp.interceptAddress.address}" />
         <property name="personal" value="${smtp.interceptAddress.personal}" />
-    </bean>
-    
-    <bean 
-    	id="noSmtpInterceptAddress" 
-    	class="org.esupportail.lecture.utils.NullFactory"
-    	factory-method="createNull"
-    	>
     </bean>
     
     <bean 

@@ -55,16 +55,13 @@ public final class UnsubscribeAutoSubscribedCategoryFlag extends Flag {
 
 	/**
 	 * @return id
-	 * @see Flag#id
-	 * @see ElementProfile#getId()
-	 */
+	**/
 	public String getElementId() {
 		return elementId;
 	}
 
 	/**
-	 * @param id
-	 * @see Flag#id
+	 * @param elementId
 	 */
 	public void setElementId(final String elementId) {
 		this.elementId = elementId;
@@ -92,7 +89,7 @@ public final class UnsubscribeAutoSubscribedCategoryFlag extends Flag {
 	}
 
 	/**
-	 * @param customSource the customSource to set
+	 * @param customContext the customContext to set
 	 */
 	public void setCustomContext(CustomContext customContext) {
 		this.customContext = customContext;

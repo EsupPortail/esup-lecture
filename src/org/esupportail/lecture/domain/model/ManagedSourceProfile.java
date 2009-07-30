@@ -191,7 +191,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		computeFeatures();
 		return ttl;
 	}
-// GB : changement de spécifs	
+// GB : changement de specifs	
 //	/**
 //	 * @see org.esupportail.lecture.domain.model.SourceProfile#getTtl()
 //	 */
@@ -471,7 +471,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			if (LOG.isTraceEnabled()) {
 				LOG.trace("IsInAutoSubscribed : " + this.getId());
 			}
-			// Enregistrer uniquement si pas désabonné
+			// Enregistrer uniquement si pas desabonne
 			if (!customManagedCategory.isUnsubscribedAutoSubscribedSource(this.getId())) {
 				customManagedCategory.addSubscription(this);
 			}

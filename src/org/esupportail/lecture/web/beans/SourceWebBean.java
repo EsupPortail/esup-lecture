@@ -264,9 +264,6 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	public void setUnreadItemsNumber(int unreadItemsNumber) {
 		this.unreadItemsNumber = unreadItemsNumber;
 	}
-	/**
-	 * @param itemsNumber the itemsNumber to set
-	 */
 	public void setItemsNumber() {
 		this.itemsNumber = getItems().size();
 	}

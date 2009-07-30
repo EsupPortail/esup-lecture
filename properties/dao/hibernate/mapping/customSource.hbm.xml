@@ -22,7 +22,7 @@
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
 			</many-to-one>
 		</natural-id>
-		<map name="readItems" table="LECT_READITEMFLAG" cascade="all, delete-orphan" inverse="true">
+		<map name="readItems" table="LECT_READITEMFLAG" cascade="all, delete-orphan" inverse="true" lazy="false">
 			<key foreign-key="FK_READITEMFLAG_CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true">
 				<column name="CUSTOMSOURCE_CUSTOMSOURCEPK" not-null="true" />
 			</key>

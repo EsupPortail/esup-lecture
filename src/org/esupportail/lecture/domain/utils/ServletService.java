@@ -77,7 +77,7 @@ public class ServletService implements ModeService, InitializingBean {
 	 */
 	public String getUserAttribute(final String attribute) throws NoExternalValueException {
 		String ret = null;
-		String userId = authenticationService.getCurrentUserId();
+		String userId = authenticationService.getAuthInfo().getId();
 		List<String> attributeList = portalService.getUserAttributeValues(userId, attribute);
 		if (attributeList != null && attributeList.size() >= 1) {
 			ret = attributeList.get(0);
@@ -99,7 +99,7 @@ public class ServletService implements ModeService, InitializingBean {
 	 * @see org.esupportail.lecture.domain.utils.ModeService#isUserInGroup(java.lang.String)
 	 */
 	public boolean isUserInGroup(final String group) {
-		String userId = authenticationService.getCurrentUserId();
+		String userId = authenticationService.getAuthInfo().getId();
 		boolean ret = false;
 		try {
 			ret = portalService.isUserMemberOfGroup(userId, group);			

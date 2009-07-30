@@ -15,7 +15,10 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 
 /**
  * @author bourges
@@ -70,18 +73,18 @@ public class DomainServiceStub implements DomainService {
 	 *************************** METHODS ******************************** */	
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getConnectedUser(java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getConnectedUser(org.esupportail.lecture.domain.model.UserProfile)
 	 */
-	public UserBean getConnectedUser(final String userId) {
-		UserBean user = new UserBean(userId);
+	public UserBean getConnectedUser(final UserProfile userProfile) {
+		UserBean user = new UserBean(userProfile.getUserId());
 		return user;
 	}
 	
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getContext(org.esupportail.lecture.domain.model.UserProfile, java.lang.String)
 	 */
-	public ContextBean getContext(@SuppressWarnings("unused") final String uid, final String contextId) {
+	public ContextBean getContext(@SuppressWarnings("unused") final UserProfile userProfile, final String contextId) {
 		ContextBean ret = null;
 		if (context.getId().equals(contextId)) {
 			ret = context;
@@ -90,49 +93,43 @@ public class DomainServiceStub implements DomainService {
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedCategories(
-	 *   java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedCategories(org.esupportail.lecture.domain.model.UserProfile, java.lang.String)
 	 */
-	public List<CategoryBean> getDisplayedCategories(final String uid, final String contextId) {
-		return getDisplayedCategories(contextId, uid);
+	public List<CategoryBean> getDisplayedCategories(final UserProfile userProfile, final String contextId) {
+		return null;
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(
-	 * java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(org.esupportail.lecture.domain.model.UserProfile, java.lang.String)
 	 */
-	public List<SourceBean> getDisplayedSources(final String uid, final String categoryId) {
-		return getDisplayedSources(categoryId, uid);
+	public List<SourceBean> getDisplayedSources(final UserProfile userProfile, final String categoryId) {
+		return null;
 	}
 	
-	
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getItems(
-	 *   java.lang.String, java.lang.String)
+	 * @see DomainService#getItems(UserProfile, String)
 	 */
 	public List<ItemBean> getItems(@SuppressWarnings("unused") final String sourceId, 
-			@SuppressWarnings("unused") final String uid) {
+			@SuppressWarnings("unused") final UserProfile userProfile) {
 		return items;
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(
-	 *   java.lang.String, java.lang.String, java.lang.String, boolean)
+	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(org.esupportail.lecture.domain.model.UserProfile, java.lang.String, java.lang.String, boolean)
 	 */
 	@SuppressWarnings("unused")
-	public void marckItemReadMode(
-			final String uid, final String itemId, final String sourceId, final boolean isRead) {
+	public UserProfile marckItemReadMode(
+			final UserProfile userProfile, final String itemId, final String sourceId, final boolean isRead) {
 		// nothing
-
+		return null;
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(
-	 *   java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(org.esupportail.lecture.domain.model.UserProfile, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
 	public List<CategoryBean> getVisibleCategories(
-			final String uid, final String contextId) {
+			final UserProfile userProfile, final String contextId) {
 		List<CategoryBean> ret = null;
 		ret = categories;
 		return ret;
@@ -140,93 +137,82 @@ public class DomainServiceStub implements DomainService {
 	
 	
 	/**
-	 * @param uid 
-	 * @param categoryId 
-	 * @return sources
-	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(
-	 *   java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(org.esupportail.lecture.domain.model.UserProfile, java.lang.String)
 	 */
-	public List<SourceBean> getVisibleSources(final String uid, final String categoryId) {
+	public List<SourceBean> getVisibleSources(final UserProfile userProfile, final String categoryId) {
 		List<SourceBean> ret = null;
 		ret = sources;
 		return ret;
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(java.lang.String, java.lang.String, int)
+	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(org.esupportail.lecture.domain.model.UserProfile, java.lang.String, int)
 	 */
 	@SuppressWarnings("unused")
-	public void setTreeSize(final String uid, final String contextId, final int size) {
-		// nothing	
+	public UserProfile setTreeSize(final UserProfile userProfile, final String contextId, final int size) {
+		return null;	
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#foldCategory(
-	 *   java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#foldCategory(org.esupportail.lecture.domain.model.UserProfile, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void foldCategory(final String uid, final String cxtId, final String catId) {
-		// nothing
+	public UserProfile foldCategory(final UserProfile userProfile, final String cxtId, final String catId) {
+		return null;	
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#unfoldCategory(
-	 *   java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#unfoldCategory(org.esupportail.lecture.domain.model.UserProfile, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void unfoldCategory(final String uid, final String cxtId, final String catId) {
-		// nothing
+	public UserProfile unfoldCategory(final UserProfile userProfile, final String cxtId, final String catId) {
+		return null;
 	}
 
 	
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#subscribeToSource(
-	 *   java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#subscribeToSource(org.esupportail.lecture.domain.model.UserProfile, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void subscribeToSource(
-		final String uid, final String categorieId, final String sourceId) {
-		// nothing
+	public UserProfile subscribeToSource(
+		final UserProfile userProfile, final String categorieId, final String sourceId) {
+		return null;
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#subscribeToCategory(
-	 *   java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#subscribeToCategory(org.esupportail.lecture.domain.model.UserProfile, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void subscribeToCategory(final String uid, final String contextId, 
+	public UserProfile subscribeToCategory(final UserProfile userProfile, final String contextId, 
 			final String categoryId) {
-		// nothing
+		return null;
 	}
 		
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToCategory(
-	 *   java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToCategory(org.esupportail.lecture.domain.model.UserProfile, java.lang.String, java.lang.String)
 	 */
-	public void unsubscribeToCategory(
-			@SuppressWarnings("unused") final String uid, 
+	public UserProfile unsubscribeToCategory(
+			@SuppressWarnings("unused") final UserProfile userProfile, 
 			@SuppressWarnings("unused") final String contextId, 
 			@SuppressWarnings("unused") final String categoryId) {
-//		 nothing
+		return null;
 	}
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToSource(
-	 *   java.lang.String, java.lang.String, java.lang.String)
+	 * @see org.esupportail.lecture.domain.DomainService#unsubscribeToSource(org.esupportail.lecture.domain.model.UserProfile, java.lang.String, java.lang.String)
 	 */
 	@SuppressWarnings("unused")
-	public void unsubscribeToSource(
-			final String uid, final String categorieId, final String sourceId) {
-		// nothing
+	public UserProfile unsubscribeToSource(
+			final UserProfile userProfile, final String categorieId, final String sourceId) {
+		return null;
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#markItemDisplayMode(
-	 *   java.lang.String, java.lang.String, org.esupportail.lecture.domain.model.ItemDisplayMode)
+	 * @see org.esupportail.lecture.domain.DomainService#markItemDisplayMode(org.esupportail.lecture.domain.model.UserProfile, java.lang.String, org.esupportail.lecture.domain.model.ItemDisplayMode)
 	 */
 	@SuppressWarnings("unused")
-	public void markItemDisplayMode(final String uid, final String sourceId, final ItemDisplayMode mode) 
+	public UserProfile markItemDisplayMode(final UserProfile userProfile, final String sourceId, final ItemDisplayMode mode) 
 	throws InternalDomainException {
-		// nothing
+		return null;
 	}
 
 	/**
@@ -251,6 +237,26 @@ public class DomainServiceStub implements DomainService {
 	 */
 	public boolean isGuestMode() {
 		return false;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getItems(org.esupportail.lecture.domain.model.UserProfile, java.lang.String)
+	 */
+	@Override
+	public List<ItemBean> getItems(UserProfile userProfile, String sourceId)
+			throws SourceNotLoadedException, InternalDomainException,
+			ManagedCategoryNotLoadedException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getUserProfile(java.lang.String)
+	 */
+	@Override
+	public UserProfile getUserProfile(String userId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

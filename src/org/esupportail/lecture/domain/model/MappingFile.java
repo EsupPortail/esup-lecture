@@ -188,7 +188,7 @@ public class MappingFile {
 					&& xmlns == null 
 					&& xmlType == null 
 					&& rootElement == null) {
-				String errorMsg = "In mappingFile, mapping n�" + i 
+				String errorMsg = "In mappingFile, mapping nunber " + i 
 					+ "is empty, you must declare sourceURL or dtd or " 
 					+ "xmlns or xmltype or rootElement in a mapping.";
 				LOG.error(errorMsg);

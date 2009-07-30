@@ -183,12 +183,12 @@ public class ChannelConfig  {
 		}
 	
 		// TODO (GB later) groupes visibility :
-		// - v�rifier l'existances des noms d'attributs (et de groupes) 
+		// - verifier l'existances des noms d'attributs (et de groupes) 
 		// 	 dans le portletContext (portlet.xml) : WARNING
-		// - v�rifier qu'il y ait au moins un groupe de visibilit� pour 
+		// - verifier qu'il y ait au moins un groupe de visibilite pour 
 		//   chq cat (au moins un des trois et non vide) : WARNING	
-		//  (v�rifier que les attributs portail r�f�renc�s dans la config
-	   	//      ont bien �t� d�clar�s dans le portlet.xml)
+		//  (verifier que les attributs portail references dans la config
+	   	//      ont bien ete declares dans le portlet.xml)
 		if (false) {
 			String errorMsg = "...";
 			LOG.error(errorMsg);

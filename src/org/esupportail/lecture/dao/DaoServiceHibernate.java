@@ -8,8 +8,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.dao.AbstractJdbcJndiHibernateDaoService;
-import org.esupportail.commons.services.database.DatabaseUtils;
-import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
@@ -59,6 +57,7 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 		    List<UserProfile> list = getHibernateTemplate().find(query, userId);
 		    if (list.size() > 0) {
 			    ret = list.get(0);				
+			    getHibernateTemplate().evict(ret);
 			}
 		} else {
 			String msg = "userId is null: can't find it in database";
@@ -93,17 +92,29 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 	 * @see org.esupportail.lecture.dao.DaoService#saveUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
 	public void saveUserProfile(final UserProfile userProfile) {
-		//TODO (RB/GB) Pourquoi n'existe-t-il pas de saveCustomContrxt, saveCustomCategory, saveCustomSource ? 
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("saveUserProfile(" + userProfile.getUserId() + ")");			
 		}
-//		Object merged = getHibernateTemplate().merge(userProfile);
-		DatabaseUtils.begin();
 		getHibernateTemplate().saveOrUpdate(userProfile);
-		DatabaseUtils.commit();
 		if (USEFLUSH) {
 			getHibernateTemplate().flush();
 		} 
+	}
+
+	/**
+	 * @param userProfile 
+	 * @see org.esupportail.lecture.dao.DaoService#mergeUserProfile(UserProfile)
+	 */
+	public UserProfile mergeUserProfile(UserProfile userProfile) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("mergeUserProfile(" + userProfile.getUserId() + ")");			
+		}
+		//merge is important to avoid hibernate immutable exception -bug hb? cf. http://opensource.atlassian.com/projects/hibernate/browse/HHH-1574
+		UserProfile merged = (UserProfile) getHibernateTemplate().merge(userProfile);
+		if (USEFLUSH) {
+			getHibernateTemplate().flush();
+		} 
+		return merged;
 	}
 
 	/**
@@ -147,9 +158,7 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 			LOG.debug("updateCustomContext PK=" + customContext.getCustomContextPK());			
 		}
 		//Object merged = getHibernateTemplate().merge(customContext);
-		DatabaseUtils.begin();
 		getHibernateTemplate().saveOrUpdate(customContext);
-		DatabaseUtils.commit();
 	}
 
 	/**
@@ -161,9 +170,7 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("deleteCustomContext PK=" + cco.getCustomContextPK());			
 		}
-		DatabaseUtils.begin();
 		getHibernateTemplate().delete(cco);
-		DatabaseUtils.commit();
 		if (USEFLUSH) {
 			getHibernateTemplate().flush();
 		} 
@@ -178,9 +185,7 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("deleteCustomCategory PK=" + cca.getCustomCategoryPK());			
 		}
-		DatabaseUtils.begin();
 		getHibernateTemplate().delete(cca);
-		DatabaseUtils.commit();
 		if (USEFLUSH) {
 			getHibernateTemplate().flush();
 		} 
@@ -196,9 +201,7 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 			LOG.debug("updateCustomCategory PK=" + cca.getCustomCategoryPK());			
 		}
 		//Object merged = getHibernateTemplate().merge(cca);
-		DatabaseUtils.begin();
 		getHibernateTemplate().saveOrUpdate(cca);
-		DatabaseUtils.commit();
 		if (USEFLUSH) {
 			getHibernateTemplate().flush();
 		} 
@@ -213,9 +216,7 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("deleteCustomSource PK=" + cs.getCustomSourcePK());			
 		}
-		DatabaseUtils.begin();
 		getHibernateTemplate().delete(cs);
-		DatabaseUtils.commit();
 		if (USEFLUSH) {
 			getHibernateTemplate().flush();
 		} 
@@ -231,9 +232,7 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 			LOG.debug("updateCustomSource PK=" + source.getElementId());			
 		}
 		//Object merged = getHibernateTemplate().merge(source);
-		DatabaseUtils.begin();
 		getHibernateTemplate().saveOrUpdate(source);
-		DatabaseUtils.commit();
 		if (USEFLUSH) {
 			getHibernateTemplate().flush();
 		} 
@@ -275,6 +274,5 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 		}
 		getHibernateTemplate().save(versionManager);
 	}
-
 	
 }

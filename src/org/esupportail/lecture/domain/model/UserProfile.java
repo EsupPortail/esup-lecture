@@ -250,7 +250,7 @@ public class UserProfile {
 		customContexts.put(customContext.getElementId(), customContext);
 
 		customContext.setUserProfile(this);
-		DomainTools.getDaoService().updateCustomContext(customContext);
+		//DomainTools.getDaoService().updateCustomContext(customContext);
 		// RB VR 19/03/09 : DB automatic update made by parent (see cascade on hibernate mappings)
 	}
 	
@@ -266,9 +266,8 @@ public class UserProfile {
 		customCategories.put(id, customCategory);
 
 		customCategory.setUserProfile(this);
-		DomainTools.getDaoService().updateCustomCategory(customCategory);
-		
-// RB VR 19/03/09 : DB automatic update made by parent (see cascade on hibernate mappings)
+		//DomainTools.getDaoService().updateCustomCategory(customCategory);
+		// RB VR 19/03/09 : DB automatic update made by parent (see cascade on hibernate mappings)
 	}
 	
 	/**
@@ -282,7 +281,7 @@ public class UserProfile {
 		customSources.put(customSource.getElementId(), customSource);
 
 		customSource.setUserProfile(this);
-		DomainTools.getDaoService().updateCustomSource(customSource);
+		//DomainTools.getDaoService().updateCustomSource(customSource);
 		// RB VR 19/03/09 : DB automatic update made by parent (see cascade on hibernate mappings)
 	}
 	
@@ -482,7 +481,7 @@ public class UserProfile {
 	   	if (custom != null) {
 	   		custom.removeSubscriptions();
 	   		customCategories.remove(categoryId);
-	   		DomainTools.getDaoService().deleteCustomCategory(custom);
+//	   		DomainTools.getDaoService().deleteCustomCategory(custom);
 //			DomainTools.getDaoService().updateUserProfile(this);
 	   	}
 	}
@@ -501,7 +500,7 @@ public class UserProfile {
 	   	boolean foo = customSources.containsKey(sourceId);
 		CustomSource cs = customSources.remove(sourceId);
 		if (cs != null) {
-			DomainTools.getDaoService().deleteCustomSource(cs);
+//			DomainTools.getDaoService().deleteCustomSource(cs);
 //			DomainTools.getDaoService().updateUserProfile(this);
 		}
 	}
@@ -643,7 +642,7 @@ public class UserProfile {
 	 */
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		return userId.hashCode();
 	}
 
 	/**

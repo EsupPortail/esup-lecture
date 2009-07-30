@@ -144,7 +144,7 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 
 	/**
 	 * update the database content without altering objects
-	 * @return 
+	 * @return if database need to be updated
 	 * @see org.esupportail.commons.services.application.VersionningService#upgradeDatabase()
 	 */
 	public boolean updateDatabase() {

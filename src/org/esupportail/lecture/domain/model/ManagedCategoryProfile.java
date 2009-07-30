@@ -466,7 +466,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		 * Algo pour gerer les customCategories :
 		 * ------------------------------------
 		 * user app. obliged => enregistrer la cat dans le user profile + sortir
-		 * user app. autoSub => enregistrer la cat dans le user profile si pas désabonné + sortir
+		 * user app. autoSub => enregistrer la cat dans le user profile si pas desabonne + sortir
 		 * user app.allowed => rien Ã  faire + sortir
 		 * user n'app. rien => effacer la cat.
 		 */
@@ -485,7 +485,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			if (LOG.isTraceEnabled()) {
 				LOG.trace("IsInAutoSubscribed : " + mode);
 			}
-			// Enregistrer uniquement si pas désabonné
+			// Enregistrer uniquement si pas desabonne
 			if (!customContext.isUnsubscribedAutoSubscribedCategory(this.getId())) {
 				customContext.addSubscription(this);
 			}

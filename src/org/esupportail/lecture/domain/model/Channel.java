@@ -236,8 +236,8 @@ public class Channel implements InitializingBean {
 			//ChannelConfig config = 
 			ChannelConfig.getInstance(configFilePath);
 			// TODO (GB later)
-			// - utiliser l'objet config pour appeler les m�thodes apr�s (reset ...)
-			// 		et faire une classe FileToLoad avec ces m�thodes en non static
+			// - utiliser l'objet config pour appeler les methodes apres (reset ...)
+			// 		et faire une classe FileToLoad avec ces methodes en non static
 			// - charger la config via un DAO ?
 			
 		} catch (ChannelConfigException e) {
@@ -372,25 +372,6 @@ public class Channel implements InitializingBean {
 //		} 
 //		return userProfile;
 //	}
-	
-	/**
-	 * return the user profile identified by "userId". 
-	 * It takes it from the dao if exists, else, it create a user profile
-	 * @param userId : identifient of the user profile
-	 * @return the user profile
-	 */ 
-	public synchronized UserProfile getUserProfile(final String userId) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("getFreshUserProfile(" + userId + ")");
-		}
-		UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
-		if (userProfile == null) {
-			userProfile = new UserProfile(userId);
-			DomainTools.getDaoService().saveUserProfile(userProfile);
-//			userProfile = DomainTools.getDaoService().refreshUserProfile(userProfile); 
-		}
-		return userProfile;
-	}
 	
 	/**
 	 * return the context identified by "contextId".

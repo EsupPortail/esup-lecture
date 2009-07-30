@@ -112,7 +112,7 @@ public abstract class SourceProfile implements ElementProfile {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id = " + this.id + " - getItems()");
     	}
-		// GB : ligne à supprimer loadSource();
+		// GB : ligne a supprimer loadSource();
 		Source s = getElement();
 		return s.getItems();
 	}

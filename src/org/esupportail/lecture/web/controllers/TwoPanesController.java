@@ -29,6 +29,7 @@ import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
@@ -60,6 +61,10 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * increment value when changing tree size.
 	 */
 	private static final int TREE_SIZE_STEP = 5;
+	/**
+	 * userProfile Key
+	 */
+	private static final String USERPROFILE = "userProfile";
 	/**
 	 * is tree is visible or not.
 	 */
@@ -107,6 +112,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 */
 	protected void flushContextFormVirtualSession() {
 		virtualSession.remove(getContextKey());
+		virtualSession.remove(USERPROFILE);
 	}
 
 	/**
@@ -144,7 +150,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			//for current session:
 			getContext().setTreeSize(treeSize);
 			//store in database:
-			getFacadeService().setTreeSize(getUID(), getContextId(), treeSize);
+			UserProfile userProfile = getUserProfile();
+			userProfile = getFacadeService().setTreeSize(userProfile, getContextId(), treeSize);
+			setUserProfile(userProfile);
 		} catch (DomainServiceException e) {
 			throw new WebException("Error in adjustTreeSize", e);
 		} catch (InternalExternalException e) {
@@ -249,7 +257,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 				//We evaluate the context and we put it in the virtual session
 				context = new ContextWebBean();
 				String ctxId = getContextId();
-				ContextBean contextBean = getFacadeService().getContext(getUID(), ctxId);
+				ContextBean contextBean = getFacadeService().getContext(getUserProfile(), ctxId);
 				if (contextBean == null) {
 					throw new WebException("No context with ID \"" + ctxId
 						+ "\" found in lecture-config.xml file. " 
@@ -294,6 +302,36 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			} 
 		}
 		return context;
+	}
+
+	/**
+	 * To display information about the custom Context of the connected user.
+	 * @return Returns the userProfile.
+	 */
+	protected UserProfile getUserProfile() {
+		//get userProfile from session
+		UserProfile userProfile = (UserProfile) virtualSession.get(USERPROFILE);
+		//if not present cache it
+		if (userProfile == null) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("getUserProfile() :  userProfile not yet loaded: loading...");			
+			}
+			try {
+				userProfile = getFacadeService().getUserProfile(getUID());
+				//We evaluate the context and we put it in the virtual session
+				setUserProfile(userProfile);
+			} catch (Exception e) {
+				throw new WebException("Error in getUserProfile", e);
+			} 
+		}
+		return userProfile;
+	}
+
+	/**
+	 * @param userProfile
+	 */
+	protected void setUserProfile(UserProfile userProfile) {
+		virtualSession.put(USERPROFILE, userProfile);
 	}
 
 	/**
@@ -370,7 +408,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		List<SourceBean> ret = new ArrayList<SourceBean>();
 		String catId;
 		catId = categoryBean.getId();
-		tempListSourceBean = getFacadeService().getDisplayedSources(getUID(), catId);
+		tempListSourceBean = getFacadeService().getDisplayedSources(getUserProfile(), catId);
 		for (Iterator<SourceBean> iter = tempListSourceBean.iterator(); iter.hasNext();) {
 			SourceBean element = iter.next();
 			if (!(element instanceof SourceDummyBean)) {
@@ -388,7 +426,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	protected List<CategoryBean> getCategories(final String ctxtId) throws InternalDomainException {
 		//Note: this method need to be overwrite in edit controller
 		List<CategoryBean> ret = new ArrayList<CategoryBean>();
-		List<CategoryBean> categories = getFacadeService().getDisplayedCategories(getUID(), ctxtId);
+		List<CategoryBean> categories = getFacadeService().getDisplayedCategories(getUserProfile(), ctxtId);
 		//Temporary: remove dummy form the list
 		for (Iterator<CategoryBean> iter = categories.iterator(); iter.hasNext();) {
 			CategoryBean element = iter.next();
@@ -405,14 +443,11 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	public String getUID() {
 		if (uid == null) {
 			//init the user
-			String userId;
 			try {
-				userId = getSessionController().getCurrentUser().getId(); 
+				uid = getSessionController().getCurrentUser().getId(); 
 			} catch (Exception e) {
 				throw new WebException("Error in getUID", e);
 			}
-			UserBean userBean = getFacadeService().getConnectedUser(userId);
-			uid = userBean.getUid();
 		}
 		return uid;
 	}
@@ -489,7 +524,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 				"property facadeService of class " + this.getClass().getName() + " can not be null");
 		try {
 			virtualSession = new VirtualSession(facadeService.getCurrentContextId());
-			setTreeVisible(facadeService.getContext(getUID(), getContextId()).isTreeVisible());
+			setTreeVisible(facadeService.getContext(getUserProfile(), getContextId()).isTreeVisible());
 		} catch (InternalExternalException e) {
 			throw new WebException("Error in afterPropertiesSet", e);
 		} catch (InternalDomainException e) {
@@ -505,10 +540,11 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("reset the controller");
 		}
-		//reset context from session
+		//reset context and userPrfile from session
 		if (virtualSession != null) {
 			String contextName = getContextName();
 			virtualSession.remove(contextName);
+			virtualSession.remove(USERPROFILE);
 		}
 	}
 
@@ -606,7 +642,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 				//must be overwritten in edit mode 
 				//(return null and not items because user isn't 
 				//probably not already subscribed to source)
-				return getFacadeService().getItems(getUID(), sourceBean.getId());
+				return getFacadeService().getItems(getUserProfile(), sourceBean.getId());
 			}
 
 	/**
@@ -621,8 +657,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			//for current session:
 			getContext().setTreeSize(treeSize);
 			//store in database:
-			getFacadeService().setTreeSize(getUID(), getContextId(), treeSize);
-			
+			UserProfile userProfile = getUserProfile();
+			userProfile = getFacadeService().setTreeSize(userProfile, getContextId(), treeSize);
+			setUserProfile(userProfile);			
 		} catch (DomainServiceException e) {
 			DatabaseUtils.rollback();
 			throw new WebException("Error in changeTreeSize", e);

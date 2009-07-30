@@ -80,6 +80,12 @@ public interface DaoService {
 	void saveUserProfile(UserProfile userProfile);
 
 	/**
+	 * Add a user profile to persistent data.
+	 * @param userProfile : user to add
+	 */
+	UserProfile mergeUserProfile(UserProfile userProfile);
+
+	/**
 	 * Delete userProfile that is identified with "userId". 
 	 * @param userProfile : userProfile to delete
 	 */
