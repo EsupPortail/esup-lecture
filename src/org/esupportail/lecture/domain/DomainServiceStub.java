@@ -242,7 +242,6 @@ public class DomainServiceStub implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(org.esupportail.lecture.domain.model.UserProfile, java.lang.String)
 	 */
-	@Override
 	public List<ItemBean> getItems(UserProfile userProfile, String sourceId)
 			throws SourceNotLoadedException, InternalDomainException,
 			ManagedCategoryNotLoadedException {
@@ -253,7 +252,6 @@ public class DomainServiceStub implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getUserProfile(java.lang.String)
 	 */
-	@Override
 	public UserProfile getUserProfile(String userId) {
 		// TODO Auto-generated method stub
 		return null;

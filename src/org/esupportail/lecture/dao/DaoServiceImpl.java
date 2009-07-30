@@ -230,7 +230,9 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 				+ this.getClass().getName() + " can not be null");
 	}
 
-	@Override
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#mergeUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 */
 	public UserProfile mergeUserProfile(UserProfile userProfile) {
 		return hibernateService.mergeUserProfile(userProfile);
 	}

@@ -264,7 +264,9 @@ public class DaoServiceStub  implements DaoService {
 		
 	}
 
-	@Override
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#mergeUserProfile(org.esupportail.lecture.domain.model.UserProfile)
+	 */
 	public UserProfile mergeUserProfile(UserProfile userProfile) {
 		// TODO Auto-generated method stub
 		return null;

@@ -189,14 +189,19 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 		return true;
 	}
 
-	@Override
+	
+	/**
+	 * @see org.esupportail.portal.ws.client.PortalService#getContainingGroupsById(java.lang.String)
+	 */
 	public List<PortalGroup> getContainingGroupsById(String arg0)
 			throws PortalErrorException, PortalGroupNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	/**
+	 * @see org.esupportail.portal.ws.client.PortalService#getContainingGroupsByName(java.lang.String)
+	 */
 	public List<PortalGroup> getContainingGroupsByName(String arg0)
 			throws PortalErrorException, PortalGroupNotFoundException {
 		// TODO Auto-generated method stub
