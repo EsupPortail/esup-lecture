@@ -11,7 +11,14 @@ var tb_pathToImage = "esup-lecture/media/loadingAnimation.gif";
 
 //on page load call tb_init
 $(document).ready(function(){   
-	tb_init('a.thickbox, area.thickbox, input.thickbox');//pass where to apply thickbox
+
+// Ajout VR 310809
+	$('.thickbox').each(function(i) {
+        $(this).unbind('click');
+    });
+// Fin ajout VR
+	
+    tb_init('a.thickbox, area.thickbox, input.thickbox');//pass where to apply thickbox
 	imgLoader = new Image();// preload image
 	imgLoader.src = tb_pathToImage;
 });
