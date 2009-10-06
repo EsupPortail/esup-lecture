@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" [
+<!ENTITY repConf "file:///data/webapps/ent.univ-rennes1.fr/application/uPortal/html/esup-lecture/"
+>
+]
+>
+<!-- <!ENTITY repConf "http://localhost:8854/html/esup-lecture/" > -->
+
+<channelConfig>
+	<guestUser>guest</guestUser>
+	
+	<context 
+	  name = "Actualités"
+	  id = "default">
+	  <description>Actualités Rennes 1</description> 
+	  <refCategoryProfile refId="annonces"/>         <!-- portlet news : categorie Annonces Rennes 1 -->
+	  <refCategoryProfile refId="annonces-ufr"/>     <!-- portlet news : categorie Annonces publiques UFR  -->
+	  <refCategoryProfile refId="rss-rennes1"/>      <!-- fils rss Rennes 1 -->
+	  <refCategoryProfile refId="rss-accueil-ent"/>      <!-- fils rss accueil ENT -->
+      <refCategoryProfile refId="rss-ville-rennes"/> <!-- fils rss ville de Rennes -->
+	  <refCategoryProfile refId="presse"/>           <!-- fils rss presse -->
+	  <categoryProfilesUrl 
+	  	url="" 
+	  	ttl=""
+	  	timeout=""
+	  	idPrefix=""
+	  />
+	  <!-- url vers newsPortlet : renvoie un ensemble de categoryProfile -->
+
+	</context>
+
+	<context 
+	  name = "Actualités"
+	  id = "IEP">
+	  <description>Annonces</description> 
+	  <refCategoryProfile refId="annonces-iep"/>     <!-- portlet news : categorie Annonces IEP -->
+	</context>
+
+	<context 
+	  name = "Actualités"
+	  id = "ENSCR">
+	  <description>Annonces</description> 
+	  <refCategoryProfile refId="annonces-enscr"/>   <!-- portlet news : categorie Annonces IEP -->
+	</context>
+
+ 	<categoryProfile 
+		name="categorie fils RSS Rennes 1"
+		id="rss-rennes1"
+		urlCategory="&repConf;rss-rennes1.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.101"/> <!-- Etablissement -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+ 	<categoryProfile 
+		name="categorie fils RSS accueil ENT"
+		id="rss-accueil-ent"
+		urlCategory="&repConf;rss-accueil-ent.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.15"/> <!-- Anonymes -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+ 	<categoryProfile 
+		name="categorie fils RSS ville de Rennes"
+		id="rss-ville-rennes"
+		urlCategory="&repConf;rss-ville-rennes.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.101"/> <!-- Etablissement -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+ 	<categoryProfile 
+		name="categorie annonces Rennes 1"
+		id="annonces"
+		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=3"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.101"/> <!-- Etablissement -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+ 	<categoryProfile 
+		name="annonces publiques UFR"
+		id="annonces-ufr"
+		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=24"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.101"/> <!-- Etablissement -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+
+ 	<categoryProfile 
+		name="categorie annonces IEP"
+		id="annonces-iep"
+		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=4"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.205"/> <!-- Etablissement IEP -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+
+ 	<categoryProfile 
+		name="categorie annonces ENSCR"
+		id="annonces-enscr"
+		urlCategory="http://localhost:8854/newsPortlet/feeds/pub/rss?t=3&#38;cID=5"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.128"/> <!-- Etablissement ENSCR -->
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+ 	<categoryProfile 
+		name="categorie presse"
+		id="presse"
+		urlCategory="&repConf;presse.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 	<!-- allowed and autoSubscribed not yet supported -->
+	 		<allowed>
+				<group name="local.101"/> <!-- Etablissement -->
+			</allowed>
+			<autoSubscribed/>
+			<obliged/>	
+		</visibility>
+	</categoryProfile>
+
+</channelConfig>
