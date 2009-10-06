@@ -8,7 +8,9 @@ package org.esupportail.lecture.domain.model;
 
 
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -266,13 +268,37 @@ public class Channel implements InitializingBean {
 			ChannelConfig.loadContexts(this);
 		
 			/* Initialize Contexts and ManagedCategoryProfiles links */
-			ChannelConfig.initContextManagedCategoryProfilesLinks(this);
+			initContextManagedCategoryProfilesLinks(this);
 		}
 		if (!configLoaded) {
 			configLoaded = true;
 		}
 		LOG.info("The channel config is loaded (file " + ChannelConfig.getfilePath() + ") in channel");
 	}
+	
+    /**
+     * Initializes associations between contexts and managed category profiles.
+     * defined in the channel config in channel
+     * @param channel of the initialization
+     * @throws ContextNotFoundException 
+     * @throws ContextNotFoundException 
+     * @throws ManagedCategoryProfileNotFoundException 
+     * @throws ManagedCategoryProfileNotFoundException 
+     */
+	private synchronized void initContextManagedCategoryProfilesLinks(final Channel channel) 
+		throws ContextNotFoundException, ManagedCategoryProfileNotFoundException {
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("initContextManagedCategoryProfilesLinks()");
+    	}
+    	
+    	Set<String> set = contextsHash.keySet();
+    	Iterator<String> iterator = set.iterator();
+    	while (iterator.hasNext()) {
+    		String id = iterator.next();
+    		Context c = channel.getContext(id);
+    		c.initManagedCategoryProfiles(channel);
+    	}
+	}	
 	
 	/**
 	 * Initialize every channel properties that are set up by loading channel configuration file.
@@ -384,6 +410,8 @@ public class Channel implements InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getContext(" + contextId + ")");
 		}
+		loadConfigIfNeeded();
+		
 		Context context = contextsHash.get(contextId);
 		if (context == null) {
 			String errorMsg = "Context " + contextId + " is not defined in channel";
@@ -393,6 +421,25 @@ public class Channel implements InitializingBean {
 		return context;
 	}
 	
+	private void loadConfigIfNeeded() {
+		// TODO Auto-generated method stub
+		if ("ttl depasse".equals("true")) {
+			//TODO save config
+			try {
+				loadConfig();
+			} catch (ManagedCategoryProfileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ChannelConfigException e) {
+				LOG.error("");
+				//TODO restaure config
+			} catch (ContextNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
 	/**
 	 * @param contextId id of the context
 	 * @return true if the context is defined in this Channel
@@ -426,6 +473,7 @@ public class Channel implements InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getManagedCategoryProfile(" + id + ")");
 		}
+		loadConfigIfNeeded();
 		ManagedCategoryProfile mcp = managedCategoryProfilesHash.get(id);
 		if (mcp == null) {
 			String errorMsg = 
@@ -654,16 +702,6 @@ public class Channel implements InitializingBean {
 	/* 
 	 *************************** ACCESSORS ********************************* */
 	
-	/**
-	 * Returns the hashtable of contexts, indexed by their ids.
-	 * @return contextsHash
-	 * @see Channel#contextsHash
-	 */
-	protected Hashtable<String, Context> getContextsHash() {
-		return contextsHash;
-	}
-  
-
 	/**
 	 * Returns the list of mappings defined in this Channel.
 	 * @return mappingList

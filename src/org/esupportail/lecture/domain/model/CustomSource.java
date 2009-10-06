@@ -79,6 +79,8 @@ public abstract class CustomSource implements CustomElement {
 		}
 		userProfile = user;
 		elementId = profile.getId();
+		//elementId = setFileId(profile.getId(), context);
+
 	}
 
 	/**

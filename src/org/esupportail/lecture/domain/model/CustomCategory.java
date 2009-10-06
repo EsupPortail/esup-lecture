@@ -54,6 +54,8 @@ public abstract class CustomCategory implements CustomElement {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("CustomCategory(" + profileId + "," + user.getUserId() + ")");
 		}
+		//this.elementId = "m" + ctx + profileId; 
+		// ctx = ExternalService.getContext()
 		this.elementId = profileId;
 		this.userProfile = user;
 	}

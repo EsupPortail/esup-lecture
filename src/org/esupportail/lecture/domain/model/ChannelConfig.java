@@ -358,30 +358,7 @@ public class ChannelConfig  {
 			channel.addContext(c);
 		}
     }    
-    
-    /**
-     * Initializes associations between contexts and managed category profiles.
-     * defined in the channel config in channel
-     * @param channel of the initialization
-     * @throws ContextNotFoundException 
-     * @throws ContextNotFoundException 
-     * @throws ManagedCategoryProfileNotFoundException 
-     * @throws ManagedCategoryProfileNotFoundException 
-     */
-	protected static synchronized void initContextManagedCategoryProfilesLinks(final Channel channel) 
-		throws ContextNotFoundException, ManagedCategoryProfileNotFoundException {
-    	if (LOG.isDebugEnabled()) {
-    		LOG.debug("initContextManagedCategoryProfilesLinks()");
-    	}
-    	
-    	Set<String> set = channel.getContextsHash().keySet();
-    	Iterator<String> iterator = set.iterator();
-    	while (iterator.hasNext()) {
-    		String id = iterator.next();
-    		Context c = channel.getContext(id);
-    		c.initManagedCategoryProfiles(channel);
-    	}
-	}
+   
 	
 	/*
 	 *********************** ACCESSORS *****************************************/
