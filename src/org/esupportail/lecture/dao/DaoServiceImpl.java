@@ -212,6 +212,22 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	}
 
 	/**
+	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(
+	 *  org.esupportail.lecture.domain.model.VersionManager)
+	 */
+	public void updateHSQL(final String query) {
+		hibernateService.getQuery(query).executeUpdate();
+		
+	}
+
+	/**
+	 * @see org.esupportail.lecture.dao.DaoService#getQuery(java.lang.String)
+	 */
+	public List getQuery(final String query) {
+		return hibernateService.getQuery(query).list();
+	}
+
+	/**
 	 * @param authenticationService the authenticationService to set
 	 */
 	public void setAuthenticationService(final AuthenticationService authenticationService) {

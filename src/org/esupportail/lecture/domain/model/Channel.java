@@ -261,11 +261,13 @@ public class Channel implements InitializingBean {
 			/* Loading guest user name */
 			ChannelConfig.loadGuestUser();
 			
+			ChannelConfig.loadContextsAndCategoryprofiles(this);
+			
 			/* Loading managed category profiles */
-			ChannelConfig.loadManagedCategoryProfiles(this);
+			//ChannelConfig.loadManagedCategoryProfiles(this);
 				
 			/* Loading Contexts */
-			ChannelConfig.loadContexts(this);
+			//ChannelConfig.loadContexts(this);
 		
 			/* Initialize Contexts and ManagedCategoryProfiles links */
 			initContextManagedCategoryProfilesLinks(this);

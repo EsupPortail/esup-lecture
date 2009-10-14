@@ -8,10 +8,14 @@ package org.esupportail.lecture.domain.model;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 
@@ -54,8 +58,6 @@ public abstract class CustomCategory implements CustomElement {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("CustomCategory(" + profileId + "," + user.getUserId() + ")");
 		}
-		//this.elementId = "m" + ctx + profileId; 
-		// ctx = ExternalService.getContext()
 		this.elementId = profileId;
 		this.userProfile = user;
 	}
@@ -285,9 +287,6 @@ public abstract class CustomCategory implements CustomElement {
 	public void setElementId(final String elementId) {
 		this.elementId = elementId;
 	}
-
-	
-
 
 
 	

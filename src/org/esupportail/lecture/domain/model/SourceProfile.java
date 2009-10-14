@@ -118,7 +118,7 @@ public abstract class SourceProfile implements ElementProfile {
 	}
 
 	/**
-	 * Make the (long)id of this sourceProfile (<type>:<parentId>:<interneId>).
+	 * Make the (long)id of this sourceProfile (<parentId>:<interneId>).
 	 * @param type = p | m  (personal or managed)
 	 * @param parentId = 0 for a personal (no parent owner) | CategoryProfileId for a managed
 	 * @param simpleId = interneId for a personal | fileId for a managed	  
@@ -128,7 +128,9 @@ public abstract class SourceProfile implements ElementProfile {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.id + " - makeId(" + type + "," + parentId + "," + simpleId + ")");
     	}
-		id = type + ":" + parentId + ":" + simpleId;
+		// id = type + ":" + parentId + ":" + simpleId;
+	   	// type is no longer used (it is included in parentId now)
+		id = parentId + ":" + simpleId;
 		return id;
 	}
 	

@@ -704,6 +704,20 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		}
 	}
 
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#setDatabaseVersion(java.lang.String)
+	 */
+	public void updateHSQL(final String query) {
+			DomainTools.getDaoService().updateHSQL(query);
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#setDatabaseVersion(java.lang.String)
+	 */
+	private List getQuery(final String query) {
+			return DomainTools.getDaoService().getQuery(query);
+	}
+
 
 	/**
 	 * @return the first (and only) VersionManager instance of the database.

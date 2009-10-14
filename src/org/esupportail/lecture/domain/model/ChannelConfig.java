@@ -242,7 +242,11 @@ public class ChannelConfig  {
 		for (int i = 0; i < nbProfiles; i++ ) {
 			String pathCategoryProfile = "categoryProfile(" + i + ")";
 			ManagedCategoryProfile mcp = new ManagedCategoryProfile();
-			mcp.setId(xmlFile.getString(pathCategoryProfile + "[@id]"));
+			// Id = long Id
+			String mcpProfileID = xmlFile.getString(pathCategoryProfile + "[@id]");
+
+//			mcp.setId(xmlFile.getString(pathCategoryProfile + "[@id]"));
+
 			mcp.setName(xmlFile.getString(pathCategoryProfile + "[@name]"));
 			mcp.setCategoryURL(xmlFile.getString(pathCategoryProfile + "[@urlCategory]"));
 			//TODO (GB later) c.setEdit(...) param edit
@@ -350,6 +354,7 @@ public class ChannelConfig  {
 				Collections.synchronizedMap(new HashMap<String, Integer>());
 			int xmlOrder = 1;
 			for (String refId : refIdList) {
+				// Ajout mcp
 				c.addRefIdManagedCategoryProfile(refId);
 				orderedCategoryIDs.put(refId, xmlOrder);
 				xmlOrder += 1;				
@@ -388,5 +393,100 @@ public class ChannelConfig  {
 	protected static boolean isModified() {
 		return modified;
 	}
+
+	public static void loadContextsAndCategoryprofiles(final Channel channel) {
+    	if (LOG.isDebugEnabled()) {
+    		LOG.debug("loadContextsAndCategoryprofiles()");
+    	}
+		nbContexts = xmlFile.getMaxIndex("context") + 1;
+		String pathCategoryProfile = "categoryProfile(" + 0 + ")";
+		String categoryProfileId = "";
+		for (int i = 0; i < nbContexts; i++ ) {
+			String pathContext = "context(" + i + ")";
+			Context c = new Context();
+			c.setId(xmlFile.getString(pathContext + "[@id]"));
+			c.setName(xmlFile.getString(pathContext + "[@name]"));
+			c.setTreeVisible(xmlFile.getBoolean(pathContext + "[@treeVisible]", true));
+	    	if (LOG.isDebugEnabled()) {
+	    		LOG.debug("loadContextsAndCategoryprofiles() : contextId " + c.getId());
+	    	}
+			c.setDescription(xmlFile.getString(pathContext + ".description"));
+			//TODO (GB later) c.setEdit(...) param edit 
+			List<String> refCategoryProfileList = xmlFile.getList(pathContext + ".refCategoryProfile");
+
+			// Lire les refCategoryProfilesUrl puis :
+			// - les transformer en refCategoryProfile ds le context
+			// - ajouter les categoryProfile
+			// A faire dans checkXmlFile ?
+			
+			List<String> refIdList = xmlFile.getList(pathContext + ".refCategoryProfile[@refId]");
+			//List<String> categoryProfileList = xmlFile.getList("categoryProfile");
+			nbProfiles = xmlFile.getMaxIndex("categoryProfile") + 1;
+			Map<String, Integer> orderedCategoryIDs = 
+				Collections.synchronizedMap(new HashMap<String, Integer>());
+			int xmlOrder = 1;
+			for (String refId : refIdList) {
+				// Ajout mcp
+		    	if (LOG.isDebugEnabled()) {
+		    		LOG.debug("loadContextsAndCategoryprofiles() : refCategoryProfileId " + refId );
+		    	}
+				boolean profileFound = false;
+				for (int j = 0; j < nbProfiles; j++ ) {
+					pathCategoryProfile = "categoryProfile(" + j + ")";
+					categoryProfileId = xmlFile.getString(pathCategoryProfile + "[@id]");
+			    	if (LOG.isDebugEnabled()) {
+			    		LOG.debug("loadContextsAndCategoryprofiles() : is categoryProfileId " + categoryProfileId + " matching ?");
+			    	}
+					if (categoryProfileId.compareTo(refId) == 0) {
+						profileFound = true;
+				    	if (LOG.isDebugEnabled()) {
+				    		LOG.debug("loadContextsAndCategoryprofiles() : categoryProfileId " + refId + " matches... create mcp");
+				    	}
+						break;
+					}
+				}
+				if (profileFound) {
+					// Add mcp in Context
+					ManagedCategoryProfile mcp = new ManagedCategoryProfile();
+					// Id = long Id
+					String mcpProfileID = xmlFile.getString(pathCategoryProfile + "[@id]");
+					mcp.setFileId(c.getId(), mcpProfileID);
+			    	if (LOG.isDebugEnabled()) {
+			    		LOG.debug("loadContextsAndCategoryprofiles() : categoryProfileId " + mcp.getId() + " matches... create mcp");
+			    	}
+	
+					mcp.setName(xmlFile.getString(pathCategoryProfile + "[@name]"));
+					mcp.setCategoryURL(xmlFile.getString(pathCategoryProfile + "[@urlCategory]"));
+					//TODO (GB later) c.setEdit(...) param edit
+					mcp.setTrustCategory(xmlFile.getBoolean(pathCategoryProfile + "[@trustCategory]"));
+					mcp.setUserCanMarkRead(xmlFile.getBoolean(pathCategoryProfile + "[@userCanMarkRead]", true));
+					mcp.setTtl(xmlFile.getInt(pathCategoryProfile + "[@ttl]"));
+					mcp.setTimeOut(xmlFile.getInt(pathCategoryProfile + "[@timeout]"));
+				    // Accessibility
+				    String access = xmlFile.getString(pathCategoryProfile + "[@access]");
+				    if (access.equalsIgnoreCase("public")) {
+						mcp.setAccess(Accessibility.PUBLIC);
+					} else if (access.equalsIgnoreCase("cas")) {
+						mcp.setAccess(Accessibility.CAS);
+					}
+				    // Visibility
+				    VisibilitySets visibilitySets = new VisibilitySets();  
+				    // foreach (allowed / autoSubscribed / Obliged
+				    visibilitySets.setAllowed(loadDefAndContentSets("allowed", i));
+				    visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed", i));
+				   	visibilitySets.setObliged(loadDefAndContentSets("obliged", i));
+				    mcp.setVisibility(visibilitySets);
+				    
+				    channel.addManagedCategoryProfile(mcp);    
+					c.addRefIdManagedCategoryProfile(mcp.getId());
+					orderedCategoryIDs.put(mcp.getId(), xmlOrder);
+				}
+				xmlOrder += 1;				
+			}
+			c.setOrderedCategoryIDs(orderedCategoryIDs);
+			channel.addContext(c);
+		}
+    }    
+ 		
 
 }

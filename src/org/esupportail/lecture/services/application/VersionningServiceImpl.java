@@ -15,6 +15,7 @@ import org.esupportail.commons.services.application.Version;
 import org.esupportail.commons.services.application.VersionException;
 import org.esupportail.commons.services.application.VersionningService;
 import org.esupportail.commons.services.database.DatabaseUtils;
+import org.springframework.orm.jpa.vendor.Database;
 
 /**
  * A bean for versionning management.
@@ -168,6 +169,18 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	}
 
 	/**
+	 * Upgrade the database to version 1.4.0.
+	 */
+	public void upgrade1d4d0() {
+		// update 
+		String query = "update customCategory ca, customContext co set ca.elementId=CONCAT(co.elementId,':',ca.elementId) " +
+			"where ca.elementId";
+		query = "update UserProfile set ca.elementId=CONCAT(co.elementId,':',ca.elementId) " +
+		"where ca.elementId";
+		getDomainService().updateHSQL(query);
+	}
+
+	/**
 	 * Upgrade the database to a given version, if needed.
 	 * @param version 
 	 */
@@ -229,4 +242,5 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	private Version getDatabaseVersion() {
 		return getDomainService().getDatabaseVersion();
 	}
+
 }

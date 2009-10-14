@@ -192,5 +192,20 @@ public abstract class CategoryProfile implements ElementProfile {
 		return false;
 	}
 
-	
+	/**
+	 * Make the (long)id of this categoryProfile (<context>:<type>:<interneId>).
+	 * @param type = p | m  (personal or managed)
+	 * @param contextId = parent context
+	 * @param simpleId = interneId for a personal | fileId for a managed	  
+	 * @return ID made from the three parameters
+	 */
+	protected String makeId(final String parentId, final String type, final String simpleId) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.id + " - makeId(" + type + "," + parentId + "," + simpleId + ")");
+    	}
+		// id = type + ":" + parentId + ":" + simpleId;
+		id = parentId + ":" + type + ":" + simpleId;
+		return id;
+	}
+		
 }

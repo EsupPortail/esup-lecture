@@ -17,7 +17,9 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.dao.InternalDaoException;
 import org.esupportail.lecture.exceptions.domain.InfoExternalException;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
@@ -64,6 +66,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * TimeOut of remote reloading.
 	 */
 	private int timeOut;
+	
+	/**
+	 * category profile Id.
+	 * Defined in the xml file : interne Id of the category Profile
+	 */
+	private String fileId;
 	
 	/* FEATURES */
 	
@@ -641,6 +649,21 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	public boolean isUserCanMarkRead() {
 		return userCanMarkRead;
+	}
+
+	/**
+	 * @return the fileId
+	 */
+	public final String getFileId() {
+		return fileId;
+	}
+
+	/**
+	 * @param fileId the fileId to set
+	 */
+	public final void setFileId(String contextId, String fileId) {
+		this.fileId = fileId;
+		super.setId(super.makeId(contextId, "m", fileId));
 	}
 	
 }

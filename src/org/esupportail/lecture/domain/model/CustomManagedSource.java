@@ -103,14 +103,15 @@ public class CustomManagedSource extends CustomSource {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getManagedSourceProfileParentId()");
 		}
+		// TODO (VR) : elementId has changed (contextId:m:profileId:sourceId)
 		Pattern p = Pattern.compile(":");
 		String[ ] items = p.split(this.getElementId());
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(
-					"" + "getManagedSourceProfileParentId() - decomposed ID : typeId=" + items[0] 
-					+ " parentId=" + items[1] + " interneId=" + items[2]);
+					"" + "getManagedSourceProfileParentId() - decomposed ID : contextId=" + items[0] + " typeId=" + items[1] 
+					+ " profileId=" + items[2] + " interneId=" + items[3]);
 		}
-		String parentId = items[1];
+		String parentId = items[2];
 		return parentId;
 	}
 

@@ -235,5 +235,7 @@ public interface DomainService {
 	 * @return if application is used in guest mode
 	 */
 	boolean isGuestMode();
+
+	void updateHSQL(String query);
 	
 }

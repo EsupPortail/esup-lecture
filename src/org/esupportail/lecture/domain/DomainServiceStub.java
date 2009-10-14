@@ -257,6 +257,14 @@ public class DomainServiceStub implements DomainService {
 		return null;
 	}
 
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#updateHSQL(java.lang.String)
+	 */
+	public void updateHSQL(String query) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 

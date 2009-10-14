@@ -14,13 +14,17 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.ElementNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
@@ -64,7 +68,6 @@ public abstract class CustomSource implements CustomElement {
 	 */
 	private long customSourcePK;
 	
-	
 	/* 
 	 ************************** INIT **********************************/
 	
@@ -79,7 +82,6 @@ public abstract class CustomSource implements CustomElement {
 		}
 		userProfile = user;
 		elementId = profile.getId();
-		//elementId = setFileId(profile.getId(), context);
 
 	}
 
@@ -352,5 +354,6 @@ public abstract class CustomSource implements CustomElement {
 	public void setItemDisplayMode(final ItemDisplayMode mode) {
 		this.itemDisplayMode = mode;
 	}
-	
+
+
 }
