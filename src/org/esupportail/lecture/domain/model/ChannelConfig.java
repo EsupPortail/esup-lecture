@@ -268,9 +268,9 @@ public class ChannelConfig  {
 		    // Visibility
 		    VisibilitySets visibilitySets = new VisibilitySets();  
 		    // foreach (allowed / autoSubscribed / Obliged
-		    visibilitySets.setAllowed(loadDefAndContentSets("allowed", i));
-		    visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed", i));
-		   	visibilitySets.setObliged(loadDefAndContentSets("obliged", i));
+		    visibilitySets.setAllowed(loadDefAndContentSets("allowed", pathCategoryProfile));
+		    visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed", pathCategoryProfile));
+		   	visibilitySets.setObliged(loadDefAndContentSets("obliged", pathCategoryProfile));
 		    mcp.setVisibility(visibilitySets);
 		    
 		    channel.addManagedCategoryProfile(mcp);    
@@ -301,15 +301,15 @@ public class ChannelConfig  {
 	/**
 	 * Load a DefinitionSets that is used to define visibility groups of a managed category profile.
 	 * @param fatherName name of the father XML element refered to (which visibility group)
-	 * @param index index of the XML element category profile
+	 * @param pathCategoryProfile index of the XML element category profile
 	 * @return the initialized DefinitionSets
 	 */
-	private static synchronized DefinitionSets loadDefAndContentSets(final String fatherName, final int index) {
+	private static synchronized DefinitionSets loadDefAndContentSets(final String fatherName, final String pathCategoryProfile) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("loadDefAndContentSets(" + fatherName + "," + index + ")");
+			LOG.debug("loadDefAndContentSets(" + fatherName + "," + pathCategoryProfile + ")");
 		}
 		DefinitionSets defAndContentSets = new DefinitionSets();
-		String fatherPath = "categoryProfile(" + index + ").visibility." + fatherName;
+		String fatherPath = pathCategoryProfile + ".visibility." + fatherName;
 		
 		// Definition by group enumeration
 		int nbGroups = xmlFile.getMaxIndex(fatherPath + ".group") + 1;
@@ -472,9 +472,9 @@ public class ChannelConfig  {
 				    // Visibility
 				    VisibilitySets visibilitySets = new VisibilitySets();  
 				    // foreach (allowed / autoSubscribed / Obliged
-				    visibilitySets.setAllowed(loadDefAndContentSets("allowed", i));
-				    visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed", i));
-				   	visibilitySets.setObliged(loadDefAndContentSets("obliged", i));
+				    visibilitySets.setAllowed(loadDefAndContentSets("allowed", pathCategoryProfile));
+				    visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed", pathCategoryProfile));
+				   	visibilitySets.setObliged(loadDefAndContentSets("obliged", pathCategoryProfile));
 				    mcp.setVisibility(visibilitySets);
 				    
 				    channel.addManagedCategoryProfile(mcp);    
