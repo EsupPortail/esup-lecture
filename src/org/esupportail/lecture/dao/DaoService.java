@@ -158,13 +158,8 @@ public interface DaoService {
 	 */
 	void updateVersionManager(VersionManager versionManager);
 
-	/**
-	 * execute a HSQL query.
-	 * @param query
-	 */
-	void updateHSQL(String query);
+	void updateSQL(String query);
 
-	List getQuery(String query);
 
 		
 }

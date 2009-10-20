@@ -236,6 +236,6 @@ public interface DomainService {
 	 */
 	boolean isGuestMode();
 
-	void updateHSQL(String query);
+	void updateSQL(String query);
 	
 }

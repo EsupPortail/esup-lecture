@@ -276,10 +276,16 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 		getHibernateTemplate().save(versionManager);
 	}
 
+	public void updateSQL(final String query) {
+		// TODO Auto-generated method stub
+		getSqlQuery(query).executeUpdate();
+		
+	}
+
 	@Override
 	public Query getQuery(String hqlQuery) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

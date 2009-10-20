@@ -136,7 +136,7 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 			return false;
 		}
 		DatabaseUtils.update();
-		upgradeDatabaseIfNeeded("0.1.0");
+		upgradeDatabaseIfNeeded("1.4.0");
 		if (!getDatabaseVersion().equals(getApplicationService().getVersion())) {
 			setDatabaseVersion(getApplicationService().getVersion().toString(), false);
 		}
@@ -154,7 +154,7 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 			log.info("The database is up to date, no need to upgrade.");
 			return false;
 		}
-		upgradeDatabaseIfNeeded("0.1.0");
+		upgradeDatabaseIfNeeded("1.4.0");
 		if (!getDatabaseVersion().equals(getApplicationService().getVersion())) {
 			setDatabaseVersion(getApplicationService().getVersion().toString(), false);
 		}
@@ -173,11 +173,41 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	 */
 	public void upgrade1d4d0() {
 		// update 
-		String query = "update customCategory ca, customContext co set ca.elementId=CONCAT(co.elementId,':',ca.elementId) " +
-			"where ca.elementId";
-		query = "update UserProfile set ca.elementId=CONCAT(co.elementId,':',ca.elementId) " +
-		"where ca.elementId";
-		getDomainService().updateHSQL(query);
+		log.info("upgrade1d4d0 !");
+		String query = "";
+		query = "update LECT_CUSTOMCATEGORY ca set ca.ELEMENTID= " +
+		"(select CONCAT(co.ELEMENTID,':m:',ca.ELEMENTID) from LECT_CUSTOMCONTEXT co " +
+		"where ca.CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED = co.CUSTOMCONTEXTPK) " +
+		"where ca.CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED in " +
+		"(select CUSTOMCONTEXTPK from LECT_CUSTOMCONTEXT) ";
+		getDomainService().updateSQL(query);
+
+		query = "update LECT_CUSTOMSOURCE so set so.ELEMENTID= " +
+		"(select CONCAT(co.ELEMENTID,':',so.ELEMENTID) from LECT_CUSTOMCONTEXT co, LECT_CUSTOMCATEGORY ca " +
+		"where ca.CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED = co.CUSTOMCONTEXTPK and " +
+		"so.CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED = ca.CUSTOMCATEGORYPK) " +
+		"where so.CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED in " +
+		"(select CUSTOMCATEGORYPK from LECT_CUSTOMCATEGORY) ";
+		getDomainService().updateSQL(query);
+
+		query = "delete from LECT_UNSUBSCRIBEDCATEGORYFLAG " +
+		"where UNSUBSCRIBEDCATEGORYPK not in (select CUSTOMCATEGORYPK from LECT_CUSTOMCATEGORY) ";
+		getDomainService().updateSQL(query);
+
+		query = "update LECT_UNSUBSCRIBEDCATEGORYFLAG uc set uc.ELEMENTID = " +
+		"(select ca.ELEMENTID from LECT_CUSTOMCATEGORY ca " +
+		"where ca.CUSTOMCATEGORYPK = uc.UNSUBSCRIBEDCATEGORYPK) ";
+		getDomainService().updateSQL(query);
+
+		query = "delete from LECT_UNSUBSCRIBEDSOURCEFLAG " +
+		"where UNSUBSCRIBEDSOURCEPK not in (select CUSTOMSOURCEPK from LECT_CUSTOMSOURCE) ";
+		getDomainService().updateSQL(query);
+
+		query = "update LECT_UNSUBSCRIBEDSOURCEFLAG us set us.ELEMENTID = " +
+		"(select so.ELEMENTID from LECT_CUSTOMSOURCE so " +
+		"where so.CUSTOMSOURCEPK = us.UNSUBSCRIBEDSOURCEPK) ";
+		getDomainService().updateSQL(query);
+
 	}
 
 	/**

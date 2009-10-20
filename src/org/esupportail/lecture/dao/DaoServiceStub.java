@@ -275,15 +275,9 @@ public class DaoServiceStub  implements DaoService {
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#updateHSQL(java.lang.String)
 	 */
-	public void updateHSQL(String query) {
+	public void updateSQL(String query) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public List getQuery(String query) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
