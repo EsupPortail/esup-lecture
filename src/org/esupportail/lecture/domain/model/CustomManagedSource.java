@@ -111,7 +111,7 @@ public class CustomManagedSource extends CustomSource {
 					"" + "getManagedSourceProfileParentId() - decomposed ID : contextId=" + items[0] + " typeId=" + items[1] 
 					+ " profileId=" + items[2] + " interneId=" + items[3]);
 		}
-		String parentId = items[2];
+		String parentId = items[0] + ":" + items[1] + ":" + items[2];
 		return parentId;
 	}
 
