@@ -236,6 +236,9 @@ public interface DomainService {
 	 */
 	boolean isGuestMode();
 
+	/**
+	 * @param query
+	 */
 	void updateSQL(String query);
 	
 }

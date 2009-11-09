@@ -758,7 +758,9 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	}
 
 
-	@Override
+	/* (non-Javadoc)
+	 * @see org.esupportail.lecture.domain.DomainService#updateSQL(java.lang.String)
+	 */
 	public void updateSQL(String query) {
 		DomainTools.getDaoService().updateSQL(query);
 		
