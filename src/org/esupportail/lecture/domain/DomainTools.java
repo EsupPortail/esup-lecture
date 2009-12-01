@@ -118,6 +118,10 @@ public class DomainTools implements InitializingBean {
 	 * Default tree size in context.
 	 */
 	private static int defaultTreeSize;
+	/**
+	 * default TTL of config file
+	 */
+	private static int configTtl;
 	
 
 	
@@ -461,6 +465,24 @@ public class DomainTools implements InitializingBean {
 		}
 		return ret;
 	}
+
+
+
+	/**
+	 * @return defaultTtl
+	 */
+	public static int getConfigTtl() {
+		return configTtl;
+	}
+
+
+	/**
+	 * @param defaultTtl
+	 */
+	public static void setConfigTtl(int configTtl) {
+		DomainTools.configTtl = configTtl;
+	}
+
 
 
 

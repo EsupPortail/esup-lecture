@@ -12,11 +12,22 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
 import org.esupportail.lecture.dao.DaoService;
+import org.esupportail.lecture.dao.FreshXmlFileThread;
+import org.esupportail.lecture.dao.FreshManagedCategoryThread;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.dao.InternalDaoException;
+import org.esupportail.lecture.exceptions.dao.SourceInterruptedException;
+import org.esupportail.lecture.exceptions.dao.TimeoutException;
+import org.esupportail.lecture.exceptions.dao.XMLParseException;
 import org.esupportail.lecture.exceptions.domain.ChannelConfigException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.FatalException;
@@ -25,6 +36,7 @@ import org.esupportail.lecture.exceptions.domain.MappingFileException;
 import org.esupportail.lecture.exceptions.domain.PrivateException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
+import org.springframework.util.StringUtils;
 
 /**
  * The "lecture" channel : main domain model class
@@ -41,6 +53,10 @@ public class Channel implements InitializingBean {
 	 */
 	protected static final Log LOG = LogFactory.getLog(Channel.class); 
 
+	/**
+	 * The default name for the cache.
+	 */
+	private static final String DEFAULT_CACHE_NAME = Channel.class.getName();
 	/* channel's elements */
 	
 	/**
@@ -98,6 +114,16 @@ public class Channel implements InitializingBean {
 	private boolean configLoaded;
 	
 	/**
+	 * configFile loaded and used to populate objects
+	 */
+	private Document configFile;
+	
+	/**
+	 * configFileLoaded : the document being loaded : null if the loading thread is not terminated : see loadConfigIfNeeded
+	 */
+	private Document configFileLoaded;
+	
+	/**
 	 * relative file path of the mapping file.
 	 */
 	private String mappingFilePath;
@@ -109,6 +135,16 @@ public class Channel implements InitializingBean {
 	
 	/* for constant initializing */
 	//private String gestUser
+	
+	/**
+	 * mappingFile loaded and used to populate objects
+	 */
+	private Document mappingFile;
+	
+	/**
+	 * mappingFileLoaded : the document being loaded : null if the loading thread is not terminated : see loadConfigIfNeeded
+	 */
+	private Document mappingFileLoaded;
 	
 	/**
 	 * contextString
@@ -140,6 +176,11 @@ public class Channel implements InitializingBean {
 	 */
 	private int defaultTreeSize;
 
+	/**
+	 * configTtl
+	 */
+	private int configTtl;
+	
 	
 	/* Some services */
 	
@@ -153,6 +194,18 @@ public class Channel implements InitializingBean {
 	 */
 	private ExternalService externalService;
 
+	/**
+	 * the name of the cache.
+	 */
+	private String cacheName;
+	/**
+	 * the cacheManager.
+	 */
+	private CacheManager cacheManager;
+	/**
+	 * the cache.
+	 */
+	private Cache cache;
 	
 	/*
 	 ************************** INIT *********************************/	
@@ -173,6 +226,19 @@ public class Channel implements InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("afterPropertiesSet()");
 		}
+		if (!StringUtils.hasText(cacheName)) {
+			setDefaultCacheName();
+			LOG.warn(getClass() + ": no cacheName attribute set, '" 
+					+ cacheName + "' will be used");
+		}
+		Assert.notNull(cacheManager, 
+				"property cacheManager of class " + getClass().getName() 
+				+ " can not be null");
+		if (!cacheManager.cacheExists(cacheName)) {
+			cacheManager.addCache(cacheName);
+		}
+		cache = cacheManager.getCache(cacheName);
+
 		Assert.notNull(daoService, "property daoService can not be null");
 		Assert.notNull(externalService, "property externalService can not be null");
 		Assert.notNull(configFilePath, "property configFilePath cannot be null");
@@ -184,6 +250,8 @@ public class Channel implements InitializingBean {
 		Assert.notNull(defaultTimeOut, "property defaultTimeOut cannot be null");
 		Assert.notNull(maxTreeSize, "property maxTreeSize cannot be null");
 		Assert.notNull(defaultTreeSize, "property defaultTreeSize cannot be null");
+		Assert.notNull(configTtl, "property configTtl cannot be null");
+		DomainTools.setConfigTtl(configTtl);
 		try {
 			startup();
 		} catch (PrivateException e) {
@@ -216,66 +284,71 @@ public class Channel implements InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("startup()");
 		}
+		String cacheKey = "CHANNEL_CONGIG:" + configFilePath;
+		Element element = cache.get(cacheKey);
+		if (element != null) { 
+			cache.remove(cacheKey);
+		}
 		loadConfig();
 		loadMappingFile();
+		cache.put(new Element(cacheKey, cacheKey));
+		Element e = cache.get(cacheKey);
+		int ttl = DomainTools.getConfigTtl();
+		e.setTimeToLive(ttl);
 	}
 	
 	/**
-	 * Load config file if is modified since last loading (using ChannelConfig), 
+	 * Load config file, 
 	 * It gets contexts and managed category profiles definition and
 	 * Initialize these elements.
 	 * @throws ChannelConfigException 
 	 * @throws ContextNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
+	 * @throws ContextNotFoundException 
+	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	private synchronized void loadConfig() throws ChannelConfigException,
-			ManagedCategoryProfileNotFoundException, ContextNotFoundException {
+	private synchronized void loadConfig() throws ChannelConfigException, ManagedCategoryProfileNotFoundException, ContextNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("loadConfig()");
 		}
-		
 		try {
-			//ChannelConfig config = 
-			ChannelConfig.getInstance(configFilePath);
+			ChannelConfig.getInstance(configFilePath, defaultTimeOut);
+			ChannelConfig.getConfigFile();
 			// TODO (GB later)
 			// - utiliser l'objet config pour appeler les methodes apres (reset ...)
 			// 		et faire une classe FileToLoad avec ces methodes en non static
 			// - charger la config via un DAO ?
 			
-		} catch (ChannelConfigException e) {
-			// TODO (GB later)
-//			if (configLoaded) {
-//				log.error("Unable to load new config : "+e.getMessage());
-//			} else {
-				String errorMsg = 
-					"Unable to load config and start initialization : " + e.getMessage(); 
-				LOG.error(errorMsg);
-				throw new ChannelConfigException(errorMsg, e);
-//			}
-		}
-		
-		if (ChannelConfig.isModified()) {
 			/* Reset channel properties loaded from config */
 			resetChannelConfigProperties();
 			
 			/* Loading guest user name */
 			ChannelConfig.loadGuestUser();
 			
+			/* Loading configTtl */
+			ChannelConfig.loadConfigTtl();
 			ChannelConfig.loadContextsAndCategoryprofiles(this);
 			
-			/* Loading managed category profiles */
-			//ChannelConfig.loadManagedCategoryProfiles(this);
-				
-			/* Loading Contexts */
-			//ChannelConfig.loadContexts(this);
-		
 			/* Initialize Contexts and ManagedCategoryProfiles links */
 			initContextManagedCategoryProfilesLinks(this);
+			if (!configLoaded) {
+				configLoaded = true;
+			}
+			LOG.info("The channel config is loaded (file " + ChannelConfig.getfilePath() + ") in channel");
+
+		} catch (ChannelConfigException e) {
+			/*
+			if (configLoaded) {
+				LOG.error("Unable to load new config : "+e.getMessage());
+			} else {
+			*/
+				String errorMsg = 
+					"Unable to load config and start initialization : " + e.getMessage(); 
+				LOG.error(errorMsg);
+				throw new ChannelConfigException(errorMsg, e);
+			/*}*/
+
 		}
-		if (!configLoaded) {
-			configLoaded = true;
-		}
-		LOG.info("The channel config is loaded (file " + ChannelConfig.getfilePath() + ") in channel");
 	}
 	
     /**
@@ -286,9 +359,10 @@ public class Channel implements InitializingBean {
      * @throws ContextNotFoundException 
      * @throws ManagedCategoryProfileNotFoundException 
      * @throws ManagedCategoryProfileNotFoundException 
+     * @throws ChannelConfigException 
      */
 	private synchronized void initContextManagedCategoryProfilesLinks(final Channel channel) 
-		throws ContextNotFoundException, ManagedCategoryProfileNotFoundException {
+		throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, ChannelConfigException {
     	if (LOG.isDebugEnabled()) {
     		LOG.debug("initContextManagedCategoryProfilesLinks()");
     	}
@@ -331,28 +405,24 @@ public class Channel implements InitializingBean {
 			MappingFile.getInstance(mappingFilePath);
 			
 		} catch (MappingFileException e) {
-			// TODO (GB later)
-//			if (mappingsLoaded) {
-//				log.error("unable to load new mappings : "+e.getMessage());
-//			} else {
+			if (mappingsLoaded) {
+				LOG.error("unable to load new mappings : "+e.getMessage());
+			} else {
 				String errorMsg = "Unable to load mappings and start initialization : "
 					+ e.getMessage(); 
 				LOG.error(errorMsg);
 				throw new MappingFileException(errorMsg);
-//			}
+			}
 		}
-		
-		if (MappingFile.isModified()) {
-			/* Reset channel properties loaded from config */
-			resetMappingFileProperties();
-				
-			/* Loading Mappings */
-			MappingFile.loadMappings(this);
+		/* Reset channel properties loaded from config */
+		resetMappingFileProperties();
 			
-			/* Initialize hashs mapping if channel */
-			MappingFile.initChannelHashMappings(this);
+		/* Loading Mappings */
+		MappingFile.loadMappings(this);
+		
+		/* Initialize hashs mapping if channel */
+		MappingFile.initChannelHashMappings(this);
 
-		}
 		if (!mappingsLoaded) {
 			mappingsLoaded = true;
 		}
@@ -404,6 +474,7 @@ public class Channel implements InitializingBean {
 	/**
 	 * return the context identified by "contextId".
 	 * if it is defined in channel
+	 * reload the config if needed (ttl expired)
 	 * @param contextId
 	 * @return  the context identified by "contextId"
 	 * @throws ContextNotFoundException 
@@ -412,8 +483,26 @@ public class Channel implements InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getContext(" + contextId + ")");
 		}
-		loadConfigIfNeeded();
-		
+		String cacheKey = "CHANNEL_CONGIG:" + configFilePath;
+		Element element = cache.get(cacheKey);
+		if (element == null) { 
+	
+			try {
+				loadConfigIfNeeded();
+			} catch (ChannelConfigException e) {
+				String errorMsg = "Context " + contextId + " is not defined in channel because channel is not loaded";
+				LOG.error(errorMsg);
+				throw new ContextNotFoundException(errorMsg);
+			} catch (MappingFileException e) {
+				String errorMsg = "Context " + contextId + " is not defined in channel because channel is not loaded";
+				LOG.error(errorMsg);
+				throw new ContextNotFoundException(errorMsg);
+			} catch (ManagedCategoryProfileNotFoundException e) {
+				String errorMsg = "Context " + contextId + " is not defined in channel because channel is not loaded";
+				LOG.error(errorMsg);
+				throw new ContextNotFoundException(errorMsg);
+			}
+		}
 		Context context = contextsHash.get(contextId);
 		if (context == null) {
 			String errorMsg = "Context " + contextId + " is not defined in channel";
@@ -423,22 +512,66 @@ public class Channel implements InitializingBean {
 		return context;
 	}
 	
-	private void loadConfigIfNeeded() {
+	private void loadConfigIfNeeded() throws ManagedCategoryProfileNotFoundException, 
+		ChannelConfigException, ContextNotFoundException, MappingFileException {
+		String cacheKey = "CHANNEL_CONGIG:" + configFilePath;
+		Element element = cache.get(cacheKey);
+		if (element == null) { 
+			// channel config is not in cache : read and put in cache
+			loadConfig();
+			loadMappingFile();
+			cache.put(new Element(cacheKey, cacheKey));
+			Element e = cache.get(cacheKey);
+			int ttl = DomainTools.getConfigTtl();
+			e.setTimeToLive(ttl);
+		} else {
+			LOG.debug("The channel config is already in cache : "
+					+ " Ttl: " + String.valueOf(element.getTimeToLive()));
+		}
+	}
+
+	/**
+	 * @return the mapping File
+	 */
+	protected synchronized Document getFreshMappingFile() {
 		// TODO Auto-generated method stub
-		if ("ttl depasse".equals("true")) {
-			//TODO save config
-			try {
-				loadConfig();
-			} catch (ManagedCategoryProfileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ChannelConfigException e) {
-				LOG.error("");
-				//TODO restaure config
-			} catch (ContextNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		// Assign null to mappingFileLoaded during the loading
+		mappingFileLoaded = null;
+		Document ret = null;
+		// Launch thread
+		FreshXmlFileThread thread = new FreshXmlFileThread(mappingFilePath);
+		
+		int timeout = 0;
+		try {
+			thread.start();
+			timeout = defaultTimeOut;
+			thread.join(timeout);
+			Exception e = thread.getException();
+			if (e != null) {
+				String msg = "Thread getting Source launches XMLParseException";
+				LOG.warn(msg);
+				throw new XMLParseException(msg, e);
 			}
+	        if (thread.isAlive()) {
+	    		thread.interrupt();
+				String msg = "mappingFile not loaded in " + timeout + " milliseconds";
+				LOG.warn(msg);
+	        }	
+			ret = thread.getXmlFile();
+		} catch (InterruptedException e) {
+			String msg = "Thread getting mappingFile interrupted";
+			LOG.warn(msg);
+			ret = null;
+		} catch (IllegalThreadStateException e) {
+			String msg = "Thread getting mappingFile launches IllegalThreadStateException";
+			LOG.warn(msg);
+			ret = null;
+		} catch (XMLParseException e) {
+			String msg = "Thread getting mappingFile launches XMLParseException";
+			LOG.warn(msg);
+			ret = null;
+		} finally {
+			return ret;
 		}
 	}
 
@@ -475,7 +608,6 @@ public class Channel implements InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getManagedCategoryProfile(" + id + ")");
 		}
-		loadConfigIfNeeded();
 		ManagedCategoryProfile mcp = managedCategoryProfilesHash.get(id);
 		if (mcp == null) {
 			String errorMsg = 
@@ -808,8 +940,32 @@ public class Channel implements InitializingBean {
 		this.defaultTreeSize = defaultTreeSize;
 	}
 
+	/**
+	 * @param configTtl
+	 */
+	public void setConfigTtl(int configTtl) {
+		this.configTtl = configTtl;
+	}
 
+	/**
+	 * set the default cacheName.
+	 */
+	protected void setDefaultCacheName() {
+		this.cacheName = DEFAULT_CACHE_NAME;
+	}
 
+	/**
+	 * @param cacheName the cacheName to set
+	 */
+	public void setCacheName(final String cacheName) {
+		this.cacheName = cacheName;
+	}
 
+	/**
+	 * @param cacheManager the cacheManager to set
+	 */
+	public void setCacheManager(final CacheManager cacheManager) {
+		this.cacheManager = cacheManager;
+	}
 	
 }

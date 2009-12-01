@@ -50,6 +50,7 @@
 		<description>
 			This bean is the main domain model class, used by the domainService.
 		</description>
+		<property name="cacheManager" ref="cacheManager" />
 		<property name="daoService" ref="daoService"/>
 		<property name="externalService" ref="externalService"/>
 		<property name="configFilePath" value="/properties/esup-lecture.xml"/>
@@ -65,6 +66,7 @@
 		<property name="defaultTimeOut" value="3000"/>
 		<property name="maxTreeSize" value="100"/>
 		<property name="defaultTreeSize" value="20"/>
+		<property name="configTtl" value="120"/>
 		
 	</bean>
 	
