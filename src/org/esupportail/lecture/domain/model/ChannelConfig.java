@@ -122,6 +122,9 @@ public class ChannelConfig  {
 		return singleton;
 	}
 	
+	/**
+	 * @throws ChannelConfigException
+	 */
 	protected static synchronized void getConfigFile() throws ChannelConfigException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getConfigFile()");
@@ -145,9 +148,11 @@ public class ChannelConfig  {
 		
 		xmlFileLoading = getFreshConfigFile(fileBasePath);
 		
-		xmlFileLoading = checkConfigFile(xmlFileLoading);
+		if (xmlFileLoading != null) {
+			xmlFileLoading = checkConfigFile(xmlFileLoading);
+		}
 		if (xmlFileLoading == null) {
-			String errorMsg = "Impossible to load XML Channel config (esup-lecture.xml)";
+			String errorMsg = "Impossible to load XML Channel config (" + fileBasePath + ")";
 			LOG.error(errorMsg);
 			throw new ChannelConfigException(errorMsg);
 		} else {
@@ -163,26 +168,25 @@ public class ChannelConfig  {
 			LOG.debug("checkXmlFile()");
 		}
 		// Merge categoryProfilesUrl and check number of contexts + categories
-		Document xmlFileLoading = getFreshConfigFile(fileBasePath);
-		Element root = xmlFileLoading.getRootElement();
-		Element channelConfig = root.element("channelConfig");
-		List<Node> contexts = channelConfig.selectNodes("/context");
+		Document xmlFileLoading = xmlFileChecked;
+		Element channelConfig = xmlFileLoading.getRootElement();
+		List<Element> contexts = channelConfig.selectNodes("context");
 		nbContexts = contexts.size();
 		if (nbContexts == 0) {
 			LOG.warn("No context declared in channel config (esup-lecture.xml)");
 		}
 		
 		// 1. merge categoryProfilesUrls
-		for (Node context : contexts) {
-			List<Node> categoryProfilesUrls = context.selectNodes("/categoryProfilesUrl");
+		for (Element context : contexts) {
+			List<Node> categoryProfilesUrls = context.selectNodes("categoryProfilesUrl");
 			for (Node categoryProfilesUrl : categoryProfilesUrls) {
-				URL url = ChannelConfig.class.getResource(categoryProfilesUrl.getStringValue());
-				if (url == null) {
-					String errorMsg = "URL of : categoryProfilesUrl " + filePath + " not found.";
+				String categoryProfilesUrlPath = categoryProfilesUrl.valueOf("@url");
+				//URL url = ChannelConfig.class.getResource(categoryProfilesUrlPath);
+				String idPrefix = categoryProfilesUrl.valueOf("@idPrefix");
+				if ((categoryProfilesUrlPath == null) || (categoryProfilesUrlPath == "")) {
+					String errorMsg = "URL of : categoryProfilesUrl with prefix " + idPrefix + " is null or empty.";
 					LOG.warn(errorMsg);
 				} else {
-					File file = new File(url.getFile());
-					String categoryProfilesUrlPath = file.getAbsolutePath();
 					Document categoryProfilesFile = getFreshConfigFile(categoryProfilesUrlPath);
 					if (categoryProfilesFile == null) {
 						String errorMsg = "Impossible to load categoryProfilesUrl " + categoryProfilesUrlPath;
@@ -191,24 +195,38 @@ public class ChannelConfig  {
 						// merge one categoryProfilesUrl
 						// add categoryProfile
 						Element rootCategoryProfilesFile = categoryProfilesFile.getRootElement();
-						channelConfig.add(rootCategoryProfilesFile);
+						// replace ids with IdPrefix + "-" + id
+						//List<Node> categoryProfiles = rootCategoryProfilesFile.selectNodes("categoryProfile");
+						List<Element> categoryProfiles = rootCategoryProfilesFile.elements();
+						for (Element categoryProfile : categoryProfiles) {
+							String categoryProfileId = idPrefix + "-" + categoryProfile.valueOf("@id");
+							//String categoryProfileName = categoryProfile.valueOf("@name");
+							categoryProfile.addAttribute("id", categoryProfileId);
+							Element categoryProfileAdded = categoryProfile.createCopy();
+							channelConfig.add(categoryProfileAdded);
+							// delete node categoryProfilesUrl ?
+							// add refCategoryProfile
+							context.addElement("refCategoryProfile").addAttribute("refId", categoryProfileId);
+						}
 					}
 				}
 				
 			}
 		}
+/*
 		for (Node context : contexts) {
-			List<Node> categoryProfilesUrls = context.selectNodes("/categoryProfilesUrl");
+			List<Node> categoryProfilesUrls = context.selectNodes("categoryProfilesUrl");
 			for (Node categoryProfilesUrl : categoryProfilesUrls) {
 				// delete node categoryProfilesUrl
 			}
 		}
-		List<Node> categoryProfiles = root.selectNodes("/categoryProfile");
+*/
+		List<Node> categoryProfiles = channelConfig.selectNodes("categoryProfile");
 		nbProfiles = categoryProfiles.size();
 		if (nbProfiles == 0) {
 			LOG.warn("checkXmlConfig :: No managed category profile declared in channel config");
 		}
-		return xmlFileChecked;
+		return xmlFileLoading;
 		
 	}
 
@@ -264,7 +282,7 @@ public class ChannelConfig  {
 			LOG.debug("loadGuestUser()");
 		}
 		Element root = xmlFile.getRootElement();
-		String guestUser = root.valueOf("/channelConfig/guestUser");
+		String guestUser = root.valueOf("channelConfig/guestUser");
 		if (guestUser == null || guestUser.equals("")) {
 			guestUser = "guest";
 		}
@@ -280,7 +298,10 @@ public class ChannelConfig  {
 		}
 		//int configTtl = xmlFile.getInt("ttl", DomainTools.getConfigTtl());
 		Element root = xmlFile.getRootElement();
-		String configTtl = root.valueOf("/channelConfig/ttl");
+		String configTtl = root.valueOf("channelConfig/ttl");
+		if (configTtl == null || configTtl.equals("")) {
+			configTtl = "0";
+		}
 		DomainTools.setConfigTtl(Integer.parseInt(configTtl));
 	}
 
@@ -295,7 +316,7 @@ public class ChannelConfig  {
 		// pathCategoryProfile = "categoryProfile(" + j + ")";
 		// String fatherPath = pathCategoryProfile + ".visibility." + fatherName;
 
-		String fatherPath = "/visibility/" + fatherName + "/group";
+		String fatherPath = "visibility/" + fatherName + "/group";
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("loadDefAndContentSets(" + fatherName + "," + categoryProfile.valueOf("@id") + ")");
 		}
@@ -308,8 +329,8 @@ public class ChannelConfig  {
 		List<Node> regulars = categoryProfile.selectNodes(fatherPath);
 		for (Node regular : regulars) {
    			RegularOfSet regularOfSet = new RegularOfSet();
-   			regularOfSet.setAttribute(regular.valueOf("@attribute]"));
-   			regularOfSet.setAttribute(regular.valueOf("@value]"));
+   			regularOfSet.setAttribute(regular.valueOf("@attribute"));
+   			regularOfSet.setAttribute(regular.valueOf("@value"));
    			defAndContentSets.addRegular(regularOfSet);
 		}
 
@@ -370,9 +391,8 @@ public class ChannelConfig  {
 		//nbContexts = xmlFile.getMaxIndex("context") + 1;
 		String pathCategoryProfile = "categoryProfile(" + 0 + ")";
 		String categoryProfileId = "";
-		Element root = xmlFile.getRootElement();
-		Node channelConfig = root.selectSingleNode("/channelConfig");
-		List<Node> contexts = channelConfig.selectNodes("/context");
+		Node channelConfig = xmlFile.getRootElement();
+		List<Node> contexts = channelConfig.selectNodes("context");
 		for (Node context : contexts) {
 			Context c = new Context();
 			c.setId(context.valueOf("@id"));
@@ -382,9 +402,9 @@ public class ChannelConfig  {
 	    	if (LOG.isDebugEnabled()) {
 	    		LOG.debug("loadContextsAndCategoryprofiles() : contextId " + c.getId());
 	    	}
-	    	Node description = context.selectSingleNode("/description");
+	    	Node description = context.selectSingleNode("description");
 			c.setDescription(description.getStringValue());
-			List<Node> refCategoryProfiles = context.selectNodes("/refCategoryProfile");
+			List<Node> refCategoryProfiles = context.selectNodes("refCategoryProfile");
 			
 			// Lire les refCategoryProfilesUrl puis :
 			// - les transformer en refCategoryProfile ds le context
@@ -404,10 +424,9 @@ public class ChannelConfig  {
 		    	if (LOG.isDebugEnabled()) {
 		    		LOG.debug("loadContextsAndCategoryprofiles() : refCategoryProfileId " + refId );
 		    	}
-				List<Node> categoryProfiles = channelConfig.selectNodes("/categoryProfile");
+				List<Node> categoryProfiles = channelConfig.selectNodes("categoryProfile");
 				// On parcours les categoryProfile de root
 				for (Node categoryProfile : categoryProfiles) {
-//					pathCategoryProfile = "categoryProfile(" + j + ")";
 					categoryProfileId = categoryProfile.valueOf("@id");
 			    	if (LOG.isDebugEnabled()) {
 			    		LOG.debug("loadContextsAndCategoryprofiles() : is categoryProfileId " + categoryProfileId + " matching ?");

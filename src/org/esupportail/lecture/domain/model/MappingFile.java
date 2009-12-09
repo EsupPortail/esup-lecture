@@ -14,6 +14,13 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.Node;
+import org.esupportail.lecture.dao.FreshXmlFileThread;
+import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.exceptions.dao.XMLParseException;
+import org.esupportail.lecture.exceptions.domain.ChannelConfigException;
 import org.esupportail.lecture.exceptions.domain.MappingFileException;
 
 
@@ -41,7 +48,7 @@ public class MappingFile {
 	/**
 	 * XML file loaded.
 	 */
-	private static XMLConfiguration xmlFile;
+	private static Document xmlFile;
 	
 	/**
 	 *  relative classpath of the file to load.
@@ -67,6 +74,10 @@ public class MappingFile {
 	 * List of loaded mappings for file to be set in channel.
 	 */
 	private static List<Mapping> mappingList;
+
+	private static int xmlFileTimeOut;
+
+	private static int nbMappings;
 	
 	/*
 	 ************************** INIT *********************************/	
@@ -79,21 +90,6 @@ public class MappingFile {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("MappingFile()");
 		}
-		modified = false;
-		
-		try {
-			xmlFile = new XMLConfiguration();
-			xmlFile.setFileName(fileBasePath);
-			xmlFile.setValidating(true);
-			xmlFile.load();
-			checkXmlFile();
-			modified = true;
-
-		} catch (ConfigurationException e) {
-			String errorMsg = "Impossible to load XML Mapping file (mappings.xml)";
-			LOG.error(errorMsg);
-			throw new MappingFileException(errorMsg, e);	
-		} 
 	}	
 
 	
@@ -108,9 +104,9 @@ public class MappingFile {
 	 * @throws MappingFileException 
 	 * @see MappingFile#singleton
 	 */
-	protected static synchronized MappingFile getInstance(final String mappingFilePath) 
-			throws MappingFileException {
-		filePath = mappingFilePath;
+	protected static MappingFile getInstance(final String configFilePath, final int defaultTimeOut) throws MappingFileException {
+		filePath = configFilePath;
+		xmlFileTimeOut = defaultTimeOut;
 		return getInstance();
 		
 	}
@@ -126,123 +122,12 @@ public class MappingFile {
 			LOG.debug("getInstance()");
 		}
 		
-		if (filePath == null) {
-			String errorMsg = "Mapping file path not defined, see in domain.xml file.";
-			LOG.error(errorMsg);
-			throw new MappingFileException(errorMsg);
-		}
 		if (singleton == null) {
-			URL url = MappingFile.class.getResource(filePath);
-			if (url == null) {
-				String errorMsg = "Mapping config file: " + filePath + " not found.";
-				LOG.error(errorMsg);
-				throw new MappingFileException(errorMsg);
-			}
-			File mappingFile = new File(url.getFile());
-			fileBasePath = mappingFile.getAbsolutePath();
-			fileLastModified = mappingFile.lastModified();		
 			singleton = new MappingFile();
-		} else {
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("getInstance :: " + "singleton not null ");
-			}
-			
-			File mappingFile = new File(fileBasePath);
-			long newDate = mappingFile.lastModified();
-			if (fileLastModified < newDate) {
-				if (LOG.isDebugEnabled()) {
-					LOG.debug("getInstance :: " + "Mappings reloading");
-				}
-				fileLastModified = newDate;
-				singleton = new MappingFile();
-			} else {
-				LOG.debug("getInstance :: mappings not reloaded");
-			}
 		}
 		return singleton;
 	}
 
-	/**
-	 * Check syntax file that cannot be checked by DTD.
-	 * @throws MappingFileException 
-	 */
-	private static synchronized void checkXmlFile() throws MappingFileException {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("checkXmlFile()");
-		}
-	
-		int nbMappings = xmlFile.getMaxIndex("mapping") + 1;
-		mappingList = new ArrayList<Mapping>();
-		
-		for (int i = 0; i < nbMappings; i++ ) {
-			String pathMapping = "mapping(" + i + ")";
-			Mapping m = new Mapping();
-			String sourceURL = xmlFile.getString(pathMapping + "[@sourceURL]");
-			String dtd = xmlFile.getString(pathMapping + "[@dtd]");
-			String xmlns = xmlFile.getString(pathMapping + "[@xmlns]");
-			String xmlType = xmlFile.getString(pathMapping + "[@xmlType]");
-			String rootElement = xmlFile.getString(pathMapping + "[@rootElement]");
-			
-			if (sourceURL == null 
-					&& dtd == null 
-					&& xmlns == null 
-					&& xmlType == null 
-					&& rootElement == null) {
-				String errorMsg = "In mappingFile, mapping nunber " + i 
-					+ "is empty, you must declare sourceURL or dtd or " 
-					+ "xmlns or xmltype or rootElement in a mapping.";
-				LOG.error(errorMsg);
-				throw new MappingFileException(errorMsg);
-			}
-			
-			if (sourceURL == null) {
-				m.setSourceURL("");
-			} else {
-				m.setSourceURL(sourceURL);
-			}
-			
-			if (dtd == null) {
-				m.setDtd("");
-			} else {
-				m.setDtd(dtd);
-			}
-			
-			if (xmlns == null) {
-				m.setXmlns("");
-			} else {
-				m.setXmlns(xmlns);
-			}
-			
-			if (xmlType == null) {
-				m.setXmlType("");
-			} else {
-				m.setXmlType(xmlType);
-			}	
-				
-			if (rootElement == null) {
-				m.setRootElement("");
-			} else {
-				m.setRootElement(rootElement);
-			}
-			
-			m.setXsltUrl(xmlFile.getString(pathMapping + "[@xsltFile]"));
-			m.setItemXPath(xmlFile.getString(pathMapping + "[@itemXPath]"));
-			
-			//loop on XPathNameSpace
-			int nbXPathNameSpaces = xmlFile.getMaxIndex(pathMapping + ".XPathNameSpace") + 1;
-			HashMap<String, String> xPathNameSpaces = new HashMap<String, String>();
-			for (int j = 0; j < nbXPathNameSpaces; j++) {
-				String pathXPathNameSpace = pathMapping + ".XPathNameSpace(" + j + ")";
-				String prefix = xmlFile.getString(pathXPathNameSpace + "[@prefix]");
-				String uri = xmlFile.getString(pathXPathNameSpace + "[@uri]");
-				xPathNameSpaces.put(prefix, uri);
-			}
-			m.setXPathNameSpaces(xPathNameSpaces);
-
-			mappingList.add(m);
-		}
-	}
-	
 	/**
 	 * Load mappings in the channel.
 	 * @param channel of the loading
@@ -332,5 +217,170 @@ public class MappingFile {
 	protected static boolean isModified() {
 		return modified;
 	}
+
+
+	/**
+	 * @throws ChannelConfigException
+	 */
+	protected static synchronized void getMappingFile() throws MappingFileException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getMappingFile()");
+		}
+	
+		if (filePath == null) {
+			String errorMsg = "Mapping file path not defined, see in domain.xml file.";
+			LOG.error(errorMsg);
+			throw new MappingFileException(errorMsg);
+		}
+		
+		URL url = ChannelConfig.class.getResource(filePath);
+		if (url == null) {
+			String errorMsg = "Mapping file: " + filePath + " not found.";
+			LOG.error(errorMsg);
+			throw new MappingFileException(errorMsg);
+		}
+		File file = new File(url.getFile());
+		fileBasePath = file.getAbsolutePath();
+		Document xmlFileLoading = null;
+		
+		xmlFileLoading = getFreshMappingFile(fileBasePath);
+		
+		if (xmlFileLoading != null) {
+			xmlFileLoading = checkMappingFile(xmlFileLoading);
+		}
+		if (xmlFileLoading == null) {
+			String errorMsg = "Impossible to load XML Channel config (" + fileBasePath + ")";
+			LOG.error(errorMsg);
+			throw new MappingFileException(errorMsg);
+		} else {
+			xmlFile = xmlFileLoading;
+		}
+	}
+
+
+	/**
+	 * @param configFilePath 
+	 * @return
+	 */
+	protected synchronized static Document getFreshMappingFile(String configFilePath) {
+		// Assign null to configFileLoaded during the loading
+		Document ret = null;
+		// Launch thread
+		FreshXmlFileThread thread = new FreshXmlFileThread(configFilePath);
+		
+		int timeout = 0;
+		try {
+			thread.start();
+			timeout = xmlFileTimeOut;
+			thread.join(timeout);
+			Exception e = thread.getException();
+			if (e != null) {
+				String msg = "Thread getting Mapping launches XMLParseException";
+				LOG.warn(msg);
+				throw new XMLParseException(msg, e);
+			}
+	        if (thread.isAlive()) {
+	    		thread.interrupt();
+				String msg = "MappingFile not loaded in " + timeout + " milliseconds";
+				LOG.warn(msg);
+	        }	
+			ret = thread.getXmlFile();
+		} catch (InterruptedException e) {
+			String msg = "Thread getting MappingFile interrupted";
+			LOG.warn(msg);
+			ret = null;
+		} catch (IllegalThreadStateException e) {
+			String msg = "Thread getting MappingFile launches IllegalThreadStateException";
+			LOG.warn(msg);
+			ret = null;
+		} catch (XMLParseException e) {
+			String msg = "Thread getting MappingFile launches XMLParseException";
+			LOG.warn(msg);
+			ret = null;
+		} finally {
+			return ret;
+		}
+	}
+
+
+		/**
+		 * Check syntax file that cannot be checked by DTD.
+		 * @throws MappingFileException 
+		 * @throws ChannelConfigException 
+		 */
+		private synchronized static Document checkMappingFile(Document xmlFileChecked) throws MappingFileException {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("checkXmlFile()");
+			}
+			// Merge categoryProfilesUrl and check number of contexts + categories
+			Document xmlFileLoading = xmlFileChecked;
+			Element mappingFile = xmlFileLoading.getRootElement();
+			List<Element> mappings = mappingFile.selectNodes("mapping");
+			nbMappings = mappings.size();
+			if (nbMappings == 0) {
+				LOG.warn("No mapping declared in mapping file (mappings.xml)");
+			}
+			
+			mappingList = new ArrayList<Mapping>();
+			for (Element mapping : mappings) {
+				Mapping m = new Mapping();
+				String sourceURL = mapping.valueOf("@sourceURL");
+				String dtd = mapping.valueOf("@dtd");
+				String xmlns = mapping.valueOf("@xmlns");
+				String xmlType = mapping.valueOf("@xmlType");
+				String rootElement = mapping.valueOf("@rootElement");
+				
+				if (sourceURL == null) {
+					sourceURL = "";
+				}
+				if (dtd == null) {
+					dtd = "";
+				}
+				if (xmlns == null) {
+					xmlns = "";
+				}
+				if (xmlType == null) {
+					xmlType = "";
+				}
+				if (rootElement == null) {
+					rootElement = "";
+				}
+				if (sourceURL + dtd + xmlns + xmlType + rootElement == "") {
+					String errorMsg = "In mappingFile, a mapping element " 
+					+ "is empty, you must declare sourceURL or dtd or " 
+					+ "xmlns or xmltype or rootElement in a mapping.";
+					LOG.error(errorMsg);
+					throw new MappingFileException(errorMsg);
+				}
+
+				m.setSourceURL(sourceURL);
+				m.setDtd(dtd);
+				m.setXmlns(xmlns);
+				m.setXmlType(xmlType);
+				m.setRootElement(rootElement);
+				m.setXsltUrl(mapping.valueOf("@xsltFile"));
+				m.setItemXPath(mapping.valueOf("@itemXPath"));
+				//loop on XPathNameSpace
+				
+				List<Node> xPathNameSpaces = mapping.selectNodes("XPathNameSpace");
+				HashMap<String, String> xPathNameSpacesHash = new HashMap<String, String>();
+				
+				for (Node xPathNameSpace : xPathNameSpaces) {
+					String prefix = xPathNameSpace.valueOf("@prefix");
+					String uri = xPathNameSpace.valueOf("@uri");
+					xPathNameSpacesHash.put(prefix, uri);
+				}
+				m.setXPathNameSpaces(xPathNameSpacesHash);
+
+				mappingList.add(m);
+
+			}
+			return xmlFileLoading;
+			
+		}
+	
+	
+	
+	
 
 }

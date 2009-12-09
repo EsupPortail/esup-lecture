@@ -284,7 +284,7 @@ public class Channel implements InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("startup()");
 		}
-		String cacheKey = "CHANNEL_CONGIG:" + configFilePath;
+		String cacheKey = "CHANNEL_CONFIG:" + configFilePath;
 		Element element = cache.get(cacheKey);
 		if (element != null) { 
 			cache.remove(cacheKey);
@@ -371,7 +371,7 @@ public class Channel implements InitializingBean {
     	Iterator<String> iterator = set.iterator();
     	while (iterator.hasNext()) {
     		String id = iterator.next();
-    		Context c = channel.getContext(id);
+    		Context c = contextsHash.get(id);
     		c.initManagedCategoryProfiles(channel);
     	}
 	}	
@@ -402,7 +402,21 @@ public class Channel implements InitializingBean {
 		
 		try {
 			//MappingFile mappingFile = 
-			MappingFile.getInstance(mappingFilePath);
+			MappingFile.getInstance(mappingFilePath, defaultTimeOut);
+			MappingFile.getMappingFile();
+			/* Reset channel properties loaded from config */
+			resetMappingFileProperties();
+				
+			/* Loading Mappings */
+			MappingFile.loadMappings(this);
+			
+			/* Initialize hashs mapping if channel */
+			MappingFile.initChannelHashMappings(this);
+
+			if (!mappingsLoaded) {
+				mappingsLoaded = true;
+			}
+			LOG.info("The mapping is loaded (file " + MappingFile.getMappingFilePath() + ") in channel");
 			
 		} catch (MappingFileException e) {
 			if (mappingsLoaded) {
@@ -414,19 +428,6 @@ public class Channel implements InitializingBean {
 				throw new MappingFileException(errorMsg);
 			}
 		}
-		/* Reset channel properties loaded from config */
-		resetMappingFileProperties();
-			
-		/* Loading Mappings */
-		MappingFile.loadMappings(this);
-		
-		/* Initialize hashs mapping if channel */
-		MappingFile.initChannelHashMappings(this);
-
-		if (!mappingsLoaded) {
-			mappingsLoaded = true;
-		}
-		LOG.info("The mapping is loaded (file " + MappingFile.getMappingFilePath() + ") in channel");
 	}
 
 	/**
@@ -483,7 +484,7 @@ public class Channel implements InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getContext(" + contextId + ")");
 		}
-		String cacheKey = "CHANNEL_CONGIG:" + configFilePath;
+		String cacheKey = "CHANNEL_CONFIG:" + configFilePath;
 		Element element = cache.get(cacheKey);
 		if (element == null) { 
 	
@@ -512,9 +513,9 @@ public class Channel implements InitializingBean {
 		return context;
 	}
 	
-	private void loadConfigIfNeeded() throws ManagedCategoryProfileNotFoundException, 
+	private synchronized void loadConfigIfNeeded() throws ManagedCategoryProfileNotFoundException, 
 		ChannelConfigException, ContextNotFoundException, MappingFileException {
-		String cacheKey = "CHANNEL_CONGIG:" + configFilePath;
+		String cacheKey = "CHANNEL_CONFIG:" + configFilePath;
 		Element element = cache.get(cacheKey);
 		if (element == null) { 
 			// channel config is not in cache : read and put in cache
