@@ -151,27 +151,6 @@ public class MappingFile {
 		for (Mapping m : channel.getMappingList()) {
 			channel.addMapping(m);
 			
-//			String sourceURL = m.getSourceURL();
-//			String dtd = m.getDtd();
-//			String xmlns = m.getXmlns();
-//			String xmlType = m.getXmlType();
-//			String rootElement = m.getRootElement();
-//			
-//			if (!sourceURL.equals("")) {
-//				channel.addMappingBySourceURL(m);
-//			}
-//			if (!dtd.equals("")) {
-//				channel.addMappingByDtd(m);
-//			}
-//			if (!xmlns.equals("")) {
-//				channel.addMappingByXmlns(m);
-//			}
-//			if (!xmlType.equals("")) {
-//				channel.addMappingByXmlType(m);
-//			}
-//			if (!rootElement.equals("")) {
-//				channel.addMappingByRootElement(m);
-//			}
 		}
 	}
 	
