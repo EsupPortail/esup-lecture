@@ -12,6 +12,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class VisibilityNotFoundException extends PrivateException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param string
 	 */
 	public VisibilityNotFoundException(String string) {

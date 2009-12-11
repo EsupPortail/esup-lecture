@@ -5,8 +5,6 @@
 */
 package org.esupportail.lecture.exceptions.domain;
 
-import org.esupportail.lecture.exceptions.dao.TimeoutException;
-
 /**
  * @author gbouteil
  * Remote server providing source is in Time Out.
@@ -14,6 +12,15 @@ import org.esupportail.lecture.exceptions.dao.TimeoutException;
  */
 public class SourceTimeOutException extends InfoDomainException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @param errorMsg
+	 * @param e
+	 */
 	public SourceTimeOutException(String errorMsg, Exception e) {
 		super(errorMsg,e);
 	}

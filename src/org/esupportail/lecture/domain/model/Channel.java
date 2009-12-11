@@ -18,16 +18,9 @@ import net.sf.ehcache.Element;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.dom4j.Document;
 import org.esupportail.lecture.dao.DaoService;
-import org.esupportail.lecture.dao.FreshXmlFileThread;
-import org.esupportail.lecture.dao.FreshManagedCategoryThread;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.exceptions.dao.InternalDaoException;
-import org.esupportail.lecture.exceptions.dao.SourceInterruptedException;
-import org.esupportail.lecture.exceptions.dao.TimeoutException;
-import org.esupportail.lecture.exceptions.dao.XMLParseException;
 import org.esupportail.lecture.exceptions.domain.ChannelConfigException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.FatalException;
@@ -114,16 +107,6 @@ public class Channel implements InitializingBean {
 	private boolean configLoaded;
 	
 	/**
-	 * configFile loaded and used to populate objects
-	 */
-	private Document configFile;
-	
-	/**
-	 * configFileLoaded : the document being loaded : null if the loading thread is not terminated : see loadConfigIfNeeded
-	 */
-	private Document configFileLoaded;
-	
-	/**
 	 * relative file path of the mapping file.
 	 */
 	private String mappingFilePath;
@@ -135,16 +118,6 @@ public class Channel implements InitializingBean {
 	
 	/* for constant initializing */
 	//private String gestUser
-	
-	/**
-	 * mappingFile loaded and used to populate objects
-	 */
-	private Document mappingFile;
-	
-	/**
-	 * mappingFileLoaded : the document being loaded : null if the loading thread is not terminated : see loadConfigIfNeeded
-	 */
-	private Document mappingFileLoaded;
 	
 	/**
 	 * contextString
@@ -274,13 +247,11 @@ public class Channel implements InitializingBean {
 	 * Methods called to start channel (load the config and mapping file.
 	 * if needed when files are modified from last loading)
 	 * @throws ChannelConfigException 
-	 * @throws ContextNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 * @throws MappingFileException 
 	 */
 	private synchronized void startup() 
-		throws ManagedCategoryProfileNotFoundException, ContextNotFoundException,
-		ChannelConfigException, MappingFileException {
+		throws ManagedCategoryProfileNotFoundException, ChannelConfigException, MappingFileException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("startup()");
 		}
@@ -302,12 +273,10 @@ public class Channel implements InitializingBean {
 	 * It gets contexts and managed category profiles definition and
 	 * Initialize these elements.
 	 * @throws ChannelConfigException 
-	 * @throws ContextNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
-	 * @throws ContextNotFoundException 
 	 * @throws ManagedCategoryProfileNotFoundException 
 	 */
-	private synchronized void loadConfig() throws ChannelConfigException, ManagedCategoryProfileNotFoundException, ContextNotFoundException {
+	private synchronized void loadConfig() throws ChannelConfigException, ManagedCategoryProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("loadConfig()");
 		}
@@ -355,14 +324,11 @@ public class Channel implements InitializingBean {
      * Initializes associations between contexts and managed category profiles.
      * defined in the channel config in channel
      * @param channel of the initialization
-     * @throws ContextNotFoundException 
-     * @throws ContextNotFoundException 
      * @throws ManagedCategoryProfileNotFoundException 
      * @throws ManagedCategoryProfileNotFoundException 
-     * @throws ChannelConfigException 
      */
 	private synchronized void initContextManagedCategoryProfilesLinks(final Channel channel) 
-		throws ContextNotFoundException, ManagedCategoryProfileNotFoundException, ChannelConfigException {
+		throws ManagedCategoryProfileNotFoundException {
     	if (LOG.isDebugEnabled()) {
     		LOG.debug("initContextManagedCategoryProfilesLinks()");
     	}
@@ -513,8 +479,13 @@ public class Channel implements InitializingBean {
 		return context;
 	}
 	
+	/**
+	 * @throws ManagedCategoryProfileNotFoundException
+	 * @throws ChannelConfigException
+	 * @throws MappingFileException
+	 */
 	private synchronized void loadConfigIfNeeded() throws ManagedCategoryProfileNotFoundException, 
-		ChannelConfigException, ContextNotFoundException, MappingFileException {
+		ChannelConfigException, MappingFileException {
 		String cacheKey = "CHANNEL_CONFIG:" + configFilePath;
 		Element element = cache.get(cacheKey);
 		if (element == null) { 
@@ -528,51 +499,6 @@ public class Channel implements InitializingBean {
 		} else {
 			LOG.debug("The channel config is already in cache : "
 					+ " Ttl: " + String.valueOf(element.getTimeToLive()));
-		}
-	}
-
-	/**
-	 * @return the mapping File
-	 */
-	protected synchronized Document getFreshMappingFile() {
-		// TODO Auto-generated method stub
-		// Assign null to mappingFileLoaded during the loading
-		mappingFileLoaded = null;
-		Document ret = null;
-		// Launch thread
-		FreshXmlFileThread thread = new FreshXmlFileThread(mappingFilePath);
-		
-		int timeout = 0;
-		try {
-			thread.start();
-			timeout = defaultTimeOut;
-			thread.join(timeout);
-			Exception e = thread.getException();
-			if (e != null) {
-				String msg = "Thread getting Source launches XMLParseException";
-				LOG.warn(msg);
-				throw new XMLParseException(msg, e);
-			}
-	        if (thread.isAlive()) {
-	    		thread.interrupt();
-				String msg = "mappingFile not loaded in " + timeout + " milliseconds";
-				LOG.warn(msg);
-	        }	
-			ret = thread.getXmlFile();
-		} catch (InterruptedException e) {
-			String msg = "Thread getting mappingFile interrupted";
-			LOG.warn(msg);
-			ret = null;
-		} catch (IllegalThreadStateException e) {
-			String msg = "Thread getting mappingFile launches IllegalThreadStateException";
-			LOG.warn(msg);
-			ret = null;
-		} catch (XMLParseException e) {
-			String msg = "Thread getting mappingFile launches XMLParseException";
-			LOG.warn(msg);
-			ret = null;
-		} finally {
-			return ret;
 		}
 	}
 

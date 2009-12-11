@@ -26,7 +26,6 @@ import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.SourceDummyBean;
-import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.UserProfile;
@@ -376,10 +375,8 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * populate a CategoryWebBean from a CategoryBean.
 	 * @param categoryBean
 	 * @return populated CategoryWebBean
-	 * @throws DomainServiceException
 	 */
-	protected CategoryWebBean populateCategoryWebBean(final CategoryBean categoryBean) 
-			throws DomainServiceException {
+	protected CategoryWebBean populateCategoryWebBean(final CategoryBean categoryBean) {
 		CategoryWebBean categoryWebBean =  new CategoryWebBean();
 		if (categoryBean instanceof CategoryDummyBean) {
 			String cause = ((CategoryDummyBean) categoryBean).getCause().getMessage();
@@ -666,6 +663,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		} catch (InternalExternalException e) {
 			throw new WebException("Error in changeTreeSize", e);
 		} finally {
+			// Nothing here ?
 		}
 	}
 

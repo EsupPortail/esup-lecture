@@ -12,6 +12,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class ComputeFeaturesException extends PrivateException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param e
 	 */
 	public ComputeFeaturesException(ManagedCategoryNotLoadedException e) {

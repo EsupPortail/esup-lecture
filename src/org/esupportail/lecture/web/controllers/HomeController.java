@@ -5,18 +5,12 @@
  */
 package org.esupportail.lecture.web.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.beans.ItemBean;
-import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.exceptions.domain.InternalDomainException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
@@ -27,6 +21,10 @@ import org.esupportail.lecture.web.beans.SourceWebBean;
  * @author : Raymond 
  */
 public class HomeController extends TwoPanesController {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Key used to store the context in virtual session.
 	 */
@@ -197,6 +195,7 @@ public class HomeController extends TwoPanesController {
 	/**
 	 * @return Display mode form items
 	 */
+	@SuppressWarnings("static-access")
 	public ItemDisplayMode getItemDisplayMode() {
 		ItemDisplayMode ret = itemDisplayMode.ALL;
 		if (LOG.isDebugEnabled()) {

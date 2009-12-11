@@ -14,6 +14,10 @@ package org.esupportail.lecture.exceptions.domain;
 public class TreeSizeErrorException extends InfoDomainException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * @param cause
 	 */
 	public TreeSizeErrorException(Exception cause) {

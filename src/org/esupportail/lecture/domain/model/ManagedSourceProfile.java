@@ -12,7 +12,6 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.dao.InternalDaoException;
 import org.esupportail.lecture.exceptions.domain.InfoExternalException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 
 
@@ -104,9 +103,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**	
 	 * Return access of the source, taking care of inheritance regulars.
 	 * @return access
-	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	public Accessibility getAccess() throws ManagedCategoryNotLoadedException {
+	public Accessibility getAccess() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - getAccess()");
 		}
@@ -142,10 +140,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * Return visibility of the source, taking care of inheritance regulars.
 	 * @return visibility
-	 * @throws ManagedCategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility() 
 	 */
-	public VisibilitySets getVisibility() throws ManagedCategoryNotLoadedException {
+	public VisibilitySets getVisibility() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.getId() + " - getVisibility()");
 		}
@@ -363,10 +360,8 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * or not to customCategory.
 	 * @param customManagedCategory the customManagedCategory to update
 	 * @return true if the source is visible by the userProfile
-	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected VisibilityMode updateCustomCategory(final CustomManagedCategory customManagedCategory) 
-	throws ManagedCategoryNotLoadedException {
+	protected VisibilityMode updateCustomCategory(final CustomManagedCategory customManagedCategory) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - updateCustomCategory("
 					+ customManagedCategory.getElementId() + ")");
@@ -377,11 +372,10 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	/**
 	 * Load the source referenced by this ManagedSourceProfile.
 	 * @throws SourceNotLoadedException 
-	 * @throws ManagedCategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.SourceProfile#loadSource()
 	 */
 	@Override
-	protected void loadSource() throws SourceNotLoadedException, ManagedCategoryNotLoadedException {
+	protected void loadSource() throws SourceNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - loadSource()");
 		}
@@ -424,11 +418,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 * add or remove customManagedSources associated with this ManagedSourceProfile
 	 * @param customManagedCategory customManagedCategory to set up
 	 * @return true if sourceProfile is visible by user (in Obliged or in autoSubscribed, or in Allowed)
-	 * @throws ManagedCategoryNotLoadedException 
 	 */
 	
-	private VisibilityMode setUpCustomCategoryVisibility(final CustomManagedCategory customManagedCategory) 
-	throws ManagedCategoryNotLoadedException {
+	private VisibilityMode setUpCustomCategoryVisibility(final CustomManagedCategory customManagedCategory) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - setUpCustomCategoryVisibility(" 
 					+ customManagedCategory.getElementId() + ")");

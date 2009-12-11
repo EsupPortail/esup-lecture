@@ -6,25 +6,18 @@
 package org.esupportail.lecture.domain.model;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.ElementNotFoundException;
-import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
-import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
@@ -143,10 +136,9 @@ public abstract class CustomSource implements CustomElement {
 	/**
 	 * The name of the source profile associated to this CustomSource.
 	 * @throws InternalDomainException 
-	 * @throws ManagedCategoryNotLoadedException 
 	 * @see org.esupportail.lecture.domain.model.CustomElement#getName()
 	 */
-	public String getName() throws InternalDomainException, ManagedCategoryNotLoadedException {
+	public String getName() throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(IDEGAL + elementId + " - getName()");
 		}
@@ -200,7 +192,7 @@ public abstract class CustomSource implements CustomElement {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(IDEGAL + elementId + " - isItemRead(" + itemId + ")");
 		}
-		ReadItemFlag itemTested = new ReadItemFlag(this, itemId);
+		//ReadItemFlag itemTested = new ReadItemFlag(this, itemId);
 		return readItems.containsKey(itemId);
 	}
 

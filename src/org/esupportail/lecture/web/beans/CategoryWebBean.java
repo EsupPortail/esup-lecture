@@ -212,6 +212,8 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	}
 
 	/**
+	 * @param o 
+	 * @return int
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(final CategoryWebBean o) {

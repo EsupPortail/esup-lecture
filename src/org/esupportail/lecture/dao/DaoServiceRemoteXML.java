@@ -1,7 +1,5 @@
 package org.esupportail.lecture.dao;
 
-import java.util.Hashtable;
-
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheException;
 import net.sf.ehcache.CacheManager;
@@ -10,9 +8,6 @@ import net.sf.ehcache.Element;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.utils.Assert;
-import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.domain.ExternalService;
-import org.esupportail.lecture.domain.model.Channel;
 import org.esupportail.lecture.domain.model.GlobalSource;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryDummy;
@@ -26,8 +21,6 @@ import org.esupportail.lecture.exceptions.dao.InternalDaoException;
 import org.esupportail.lecture.exceptions.dao.SourceInterruptedException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
-import org.esupportail.lecture.exceptions.domain.InternalExternalException;
-import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StringUtils;
 
@@ -37,10 +30,6 @@ import org.springframework.util.StringUtils;
  */
 public class DaoServiceRemoteXML implements InitializingBean {
 	
-	/**
-	 * number of milliseconds per second.
-	 */
-	private static final int MILLIS_PER_SECOND = 1000;
 	/**
 	 * Default timeout value.
 	 */
@@ -53,14 +42,6 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * The default name for the cache.
 	 */
 	private static final String DEFAULT_CACHE_NAME = DaoServiceRemoteXML.class.getName();
-	/**
-	 * hash of last last Access in milliseconds by url of managedCategory.
-	 */
-	private Hashtable<String, Long> managedCategoryLastAccess = new Hashtable<String, Long>();
-	/**
-	 * hash of last last Access in milliseconds by url of Source.
-	 */
-	private Hashtable<String, Long> sourceLastAccess = new Hashtable<String, Long>();
 	/**
 	 * Default timeout used for http connection (normally, it should be not used).
 	 */
@@ -228,8 +209,6 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @param ptCas CAS proxy ticket 
 	 * @return the source
 	 * @throws InternalDaoException 
-	 * @throws InternalExternalException 
-	 * @throws NoExternalValueException 
 	 */
 	public synchronized Source getSource(final ManagedSourceProfile sourceProfile, final String ptCas) 
 	throws InternalDaoException {
@@ -335,7 +314,6 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			LOG.warn(msg);
 			throw new SourceInterruptedException(msg, e);
 		} catch (IllegalThreadStateException e) {
-			String msg = "IllegalThreadStateException";
 			LOG.error(e.getMessage());
 			throw new InternalDaoException(e);
 		}

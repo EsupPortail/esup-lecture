@@ -10,7 +10,6 @@ import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
-import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.InternalDaoException;
 
 /**
@@ -82,6 +81,7 @@ public interface DaoService {
 	/**
 	 * Add a user profile to persistent data.
 	 * @param userProfile : user to add
+	 * @return userProfile
 	 */
 	UserProfile mergeUserProfile(UserProfile userProfile);
 
@@ -158,6 +158,9 @@ public interface DaoService {
 	 */
 	void updateVersionManager(VersionManager versionManager);
 
+	/**
+	 * @param query
+	 */
 	void updateSQL(String query);
 
 

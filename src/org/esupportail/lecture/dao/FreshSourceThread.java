@@ -70,13 +70,13 @@ public class FreshSourceThread extends Thread {
 	/**
 	 * get a source form the Web (without cache).
 	 * @param sourceProfile source profile of source to get
-	 * @param ptCas 
+	 * @param ptCasGet 
 	 * @return the source
 	 * @throws XMLParseException 
 	 */
 	@SuppressWarnings("unchecked")
 	private Source getFreshSource(final SourceProfile sourceProfile, 
-			final String ptCas) throws XMLParseException {
+			final String ptCasGet) throws XMLParseException {
 		Source ret = new GlobalSource(sourceProfile);
 		try {
 			String dtd = null;
@@ -87,11 +87,11 @@ public class FreshSourceThread extends Thread {
 
 			//get the XML
 			String sourceURL = sourceProfile.getSourceURL();
-			if (ptCas != null) {
+			if (ptCasGet != null) {
 				if (sourceURL.contains("?")) { 
-					sourceURL = sourceURL + "&ticket=" + ptCas;
+					sourceURL = sourceURL + "&ticket=" + ptCasGet;
 				} else {
-					sourceURL = sourceURL + "?ticket=" + ptCas;
+					sourceURL = sourceURL + "?ticket=" + ptCasGet;
 				}
 			}
 			SAXReader reader = new SAXReader();
@@ -148,9 +148,8 @@ public class FreshSourceThread extends Thread {
 
 	/**
 	 * @return Source genereted during run
-	 * @throws XMLParseException 
 	 */
-	public Source getSource() throws XMLParseException {
+	public Source getSource() {
 		return source;
 	}
 

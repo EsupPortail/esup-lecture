@@ -28,7 +28,7 @@ public class ServletService implements ModeService, InitializingBean {
 	/**
 	 * Log instance. 
 	 */
-	protected static final Log LOG = LogFactory.getLog(ServletService.class);
+	private static final Log LOG = LogFactory.getLog(ServletService.class);
 	/**
 	 * Portal service.
 	 */

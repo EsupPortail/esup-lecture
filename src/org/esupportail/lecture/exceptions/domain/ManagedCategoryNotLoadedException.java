@@ -12,6 +12,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class ManagedCategoryNotLoadedException extends ElementNotLoadedException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param string
 	 */
 	public ManagedCategoryNotLoadedException(String string) {
@@ -20,6 +25,7 @@ public class ManagedCategoryNotLoadedException extends ElementNotLoadedException
 
 	/**
 	 * @param string
+	 * @param cause 
 	 */
 	public ManagedCategoryNotLoadedException(String string, Exception cause) {
 		super(string,cause);

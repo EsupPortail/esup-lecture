@@ -244,6 +244,7 @@ public class FacadeService implements InitializingBean {
 	 * @param cxtId context ID 
 	 * @param catId catId
 	 * set category catId unfolded in customContext cxtId
+	 * @return userProfile
 	 * @throws InternalDomainException 
 	 */
 	public UserProfile unfoldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
@@ -288,6 +289,7 @@ public class FacadeService implements InitializingBean {
 	 * @param userProfile
 	 * @param contextId id of the context containing category
 	 * @param categoryId id of the categoy
+	 * @return userProfile
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 */
@@ -302,6 +304,7 @@ public class FacadeService implements InitializingBean {
 	 * @param userProfile - user ID
 	 * @param categorieId - categorie ID
 	 * @param sourceId - Source ID
+	 * @return userProfile
 	 * @throws InternalDomainException 
 	 * @throws SourceNotVisibleException 
 	 * @throws CategoryTimeOutException 
@@ -318,6 +321,7 @@ public class FacadeService implements InitializingBean {
 	 * @param userProfile
 	 * @param contextId id of the context containing category
 	 * @param categoryId id of the categoy
+	 * @return userProfile
 	 * @throws InternalDomainException 
 	 * @throws CategoryObligedException 
 	 * @throws CategoryNotVisibleException 
@@ -332,6 +336,7 @@ public class FacadeService implements InitializingBean {
 	 * @param userProfile - user ID
 	 * @param categorieId - categorie ID
 	 * @param sourceId - Source ID
+	 * @return userProfile
 	 * @throws InternalDomainException 
 	 * @throws SourceObligedException 
 	 * @throws CategoryTimeOutException 

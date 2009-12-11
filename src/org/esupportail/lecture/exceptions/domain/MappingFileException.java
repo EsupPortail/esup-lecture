@@ -13,6 +13,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class MappingFileException extends XMLFileException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param string
 	 */
 	public MappingFileException(String string) {

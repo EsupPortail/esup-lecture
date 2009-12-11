@@ -17,7 +17,6 @@ import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
-import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.InternalDaoException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
@@ -212,6 +211,7 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	}
 
 	/**
+	 * @param query 
 	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(
 	 *  org.esupportail.lecture.domain.model.VersionManager)
 	 */
@@ -242,7 +242,7 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#mergeUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
-	public UserProfile mergeUserProfile(UserProfile userProfile) {
+	public UserProfile mergeUserProfile(final UserProfile userProfile) {
 		return hibernateService.mergeUserProfile(userProfile);
 	}
 

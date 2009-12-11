@@ -1,6 +1,15 @@
 package org.esupportail.lecture.exceptions.web;
 
+/**
+ * @author vrepain
+ *
+ */
 public class WebException  extends RuntimeException {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructor.

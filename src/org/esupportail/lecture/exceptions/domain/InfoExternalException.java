@@ -14,6 +14,11 @@ package org.esupportail.lecture.exceptions.domain;
  */
 public class InfoExternalException extends ExternalServiceException {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param e
 	 */
 	public InfoExternalException(Exception e) {

@@ -12,6 +12,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class CategoryProfileNotFoundException extends ElementNotFoundException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param string
 	 */
 	public CategoryProfileNotFoundException(String string) {

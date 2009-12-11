@@ -94,11 +94,9 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 *************************** METHODS *********************************** */	
 
 	/**
-	 * @throws InternalExternalException 
-	 * @throws NoExternalValueException 
 	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
 	 */
-	public String getConnectedUserId() throws NoExternalValueException, InternalExternalException {
+	public String getConnectedUserId() {
 		return DomainTools.getCurrentUserId(authenticationService);
 	}
 	/**

@@ -11,6 +11,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class CategoryObligedException extends InfoDomainException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param errorMsg
 	 */
 	public CategoryObligedException(String errorMsg) {

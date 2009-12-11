@@ -83,8 +83,8 @@ public class Batch {
 			ApplicationService applicationService = ApplicationUtils.createApplicationService();
 			LOG.info(applicationService.getName() + " v" + applicationService.getVersion());
 			dispatch(args);
-		} catch (Exception e) {
-			ExceptionUtils.catchException(e);
+		} catch (Throwable t) {
+			ExceptionUtils.catchException(t);
 		}
 	}
 

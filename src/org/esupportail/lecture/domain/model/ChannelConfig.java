@@ -12,8 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -72,6 +70,9 @@ public class ChannelConfig  {
 	 */
 	private static int nbContexts;
 
+	/**
+	 * timeout of the configFile
+	 */
 	private static int xmlFileTimeOut;
 	
 	/*
@@ -79,9 +80,8 @@ public class ChannelConfig  {
 
 	/**
 	 * Private Constructor .
-	 * @throws ChannelConfigException 
 	 */
-	private ChannelConfig() throws ChannelConfigException {
+	private ChannelConfig() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("ChannelConfig()");
 		}
@@ -93,12 +93,11 @@ public class ChannelConfig  {
 	/**
 	 * Return a singleton of this class used to load ChannelConfig file.
 	 * @param configFilePath file path of the channel config
-	 * @param defaultTtl 
+	 * @param defaultTimeOut 
 	 * @return an instance of the file to load (singleton)
-	 * @throws ChannelConfigException 
 	 * @see ChannelConfig#singleton
 	 */
-	protected static ChannelConfig getInstance(final String configFilePath, final int defaultTimeOut) throws ChannelConfigException {
+	protected static ChannelConfig getInstance(final String configFilePath, final int defaultTimeOut) {
 		filePath = configFilePath;
 		xmlFileTimeOut = defaultTimeOut;
 		return getInstance();
@@ -108,10 +107,9 @@ public class ChannelConfig  {
 	/**
 	 * Return a singleton of this class used to load ChannelConfig file.
 	 * @return an instance of the file to load (singleton)
-	 * @throws ChannelConfigException 
 	 * @see ChannelConfig#singleton
 	 */
-	protected static synchronized ChannelConfig getInstance() throws ChannelConfigException {
+	protected static synchronized ChannelConfig getInstance() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getInstance()");
 		}
@@ -155,14 +153,15 @@ public class ChannelConfig  {
 			String errorMsg = "Impossible to load XML Channel config (" + fileBasePath + ")";
 			LOG.error(errorMsg);
 			throw new ChannelConfigException(errorMsg);
-		} else {
-			xmlFile = xmlFileLoading;
 		}
+		xmlFile = xmlFileLoading;
 	}
 	/**
 	 * Check syntax file that cannot be checked by DTD.
-	 * @throws ChannelConfigException 
+	 * @param xmlFileChecked 
+	 * @return xmlFileLoading
 	 */
+	@SuppressWarnings("unchecked")
 	private synchronized static Document checkConfigFile(Document xmlFileChecked) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("checkXmlFile()");
@@ -196,7 +195,6 @@ public class ChannelConfig  {
 						// add categoryProfile
 						Element rootCategoryProfilesFile = categoryProfilesFile.getRootElement();
 						// replace ids with IdPrefix + "-" + id
-						//List<Node> categoryProfiles = rootCategoryProfilesFile.selectNodes("categoryProfile");
 						List<Element> categoryProfiles = rootCategoryProfilesFile.elements();
 						for (Element categoryProfile : categoryProfiles) {
 							String categoryProfileId = idPrefix + "-" + categoryProfile.valueOf("@id");
@@ -213,14 +211,6 @@ public class ChannelConfig  {
 				
 			}
 		}
-/*
-		for (Node context : contexts) {
-			List<Node> categoryProfilesUrls = context.selectNodes("categoryProfilesUrl");
-			for (Node categoryProfilesUrl : categoryProfilesUrls) {
-				// delete node categoryProfilesUrl
-			}
-		}
-*/
 		List<Node> categoryProfiles = channelConfig.selectNodes("categoryProfile");
 		nbProfiles = categoryProfiles.size();
 		if (nbProfiles == 0) {
@@ -232,9 +222,9 @@ public class ChannelConfig  {
 
 	/**
 	 * @param configFilePath 
-	 * @return
+	 * @return ret
 	 */
-	protected synchronized static Document getFreshConfigFile(String configFilePath) {
+	protected synchronized static Document getFreshConfigFile(final String configFilePath) {
 		// Assign null to configFileLoaded during the loading
 		Document ret = null;
 		// Launch thread
@@ -260,18 +250,17 @@ public class ChannelConfig  {
 		} catch (InterruptedException e) {
 			String msg = "Thread getting ConfigFile interrupted";
 			LOG.warn(msg);
-			ret = null;
+			return null;
 		} catch (IllegalThreadStateException e) {
 			String msg = "Thread getting ConfigFile launches IllegalThreadStateException";
 			LOG.warn(msg);
-			ret = null;
+			return null;
 		} catch (XMLParseException e) {
 			String msg = "Thread getting Source launches XMLParseException";
 			LOG.warn(msg);
-			ret = null;
-		} finally {
-			return ret;
-		}
+			return null;
+		} 
+		return ret;
 	}
 
 	/**
@@ -308,9 +297,10 @@ public class ChannelConfig  {
 	/**
 	 * Load a DefinitionSets that is used to define visibility groups of a managed category profile.
 	 * @param fatherName name of the father XML element refered to (which visibility group)
-	 * @param pathCategoryProfile index of the XML element category profile
+	 * @param categoryProfile 
 	 * @return the initialized DefinitionSets
 	 */
+	@SuppressWarnings("unchecked")
 	private static synchronized DefinitionSets loadDefAndContentSets(final String fatherName, final Node categoryProfile) {
 		DefinitionSets defAndContentSets = new DefinitionSets();
 		// pathCategoryProfile = "categoryProfile(" + j + ")";
@@ -333,20 +323,6 @@ public class ChannelConfig  {
    			regularOfSet.setAttribute(regular.valueOf("@value"));
    			defAndContentSets.addRegular(regularOfSet);
 		}
-
-/*		int nbGroups = xmlFile.getMaxIndex(fatherPath + ".group") + 1;
-		for (int i = 0; i < nbGroups; i++) {
-			defAndContentSets.addGroup(xmlFile.getString(fatherPath + ".group(" + i + ")[@name]"));
-		}
-   		// Definition by regular 
-   		int nbRegulars = xmlFile.getMaxIndex(fatherPath + ".regular") + 1;   	
-   		for (int i = 0; i < nbRegulars; i++) {
-   			//RegularOfSet regular = new RegularOfSet();
-   			regular.setAttribute(xmlFile.getString(fatherPath + ".regular(" + i + ")[@attribute]"));
-   			regular.setValue(xmlFile.getString(fatherPath + ".regular(" + i + ")[@value]"));	
-   			defAndContentSets.addRegular(regular);
-   		}
-*/
    		return defAndContentSets;
 	}
 	
@@ -384,12 +360,11 @@ public class ChannelConfig  {
 	/**
 	 * @param channel
 	 */
+	@SuppressWarnings("unchecked")
 	public static void loadContextsAndCategoryprofiles(final Channel channel) {
     	if (LOG.isDebugEnabled()) {
     		LOG.debug("loadContextsAndCategoryprofiles()");
     	}
-		//nbContexts = xmlFile.getMaxIndex("context") + 1;
-		String pathCategoryProfile = "categoryProfile(" + 0 + ")";
 		String categoryProfileId = "";
 		Node channelConfig = xmlFile.getRootElement();
 		List<Node> contexts = channelConfig.selectNodes("context");
@@ -419,7 +394,6 @@ public class ChannelConfig  {
 			for (Node refCategoryProfile : refCategoryProfiles) {
 				String refId;
 				// Ajout mcp
-				boolean profileFound = false;
 				refId = refCategoryProfile.valueOf("@refId");
 		    	if (LOG.isDebugEnabled()) {
 		    		LOG.debug("loadContextsAndCategoryprofiles() : refCategoryProfileId " + refId );
@@ -432,7 +406,6 @@ public class ChannelConfig  {
 			    		LOG.debug("loadContextsAndCategoryprofiles() : is categoryProfileId " + categoryProfileId + " matching ?");
 			    	}
 					if (categoryProfileId.compareTo(refId) == 0) {
-						profileFound = true;
 				    	if (LOG.isDebugEnabled()) {
 				    		LOG.debug("loadContextsAndCategoryprofiles() : categoryProfileId " + refId + " matches... create mcp");
 				    	}
@@ -487,7 +460,7 @@ public class ChannelConfig  {
 	/**
 	 * @param valueOf
 	 * @param b
-	 * @return
+	 * @return boolean
 	 */
 	private static boolean getBoolean(String valueOf, boolean b) {
 		if (valueOf != null) {

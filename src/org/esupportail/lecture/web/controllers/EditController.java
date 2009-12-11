@@ -28,6 +28,10 @@ import org.springframework.util.Assert;
  */
 public class EditController extends TwoPanesController {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * Key used to store the context in virtual session.
 	 */
 	static final String CONTEXT = "contextInEditMode";

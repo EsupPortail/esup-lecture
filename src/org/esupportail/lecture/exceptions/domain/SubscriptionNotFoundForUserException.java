@@ -13,6 +13,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class SubscriptionNotFoundForUserException extends InfoDomainException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param errorMsg
 	 * @param e
 	 */

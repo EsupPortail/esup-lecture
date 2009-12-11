@@ -12,11 +12,6 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamSource;
-
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
@@ -358,27 +353,23 @@ public class DomainTools implements InitializingBean {
 	 * @return cached xsltFile as a streamSource
 	 * @throws MalformedURLException
 	 * @throws IOException
-	 * @throws TransformerConfigurationException 
 	 */
 	public static String getXsltFile(final String xsltFileURL)
-			throws IOException, TransformerConfigurationException {
+			throws IOException {
 
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getXsltFile(" + xsltFileURL + ")");
 		}
 		String inputXslt;
-		StreamSource streamSource;
 		String cacheKey = "XSLT:" + xsltFileURL;
 		Element element = cache.get(cacheKey);
 		if (element == null) { 
 			URL url2 = new URL(xsltFileURL);
-//			streamSource = new StreamSource(url2.openStream());
 			InputStream is =  url2.openStream();
 			
 			BufferedReader in = new BufferedReader(
 					new InputStreamReader(is));
 
-			//inputXslt = in.toString();
 		    String line;
 		    inputXslt = "";
 		    while ((line = in.readLine()) != null)
@@ -477,7 +468,7 @@ public class DomainTools implements InitializingBean {
 
 
 	/**
-	 * @param defaultTtl
+	 * @param configTtl 
 	 */
 	public static void setConfigTtl(int configTtl) {
 		DomainTools.configTtl = configTtl;

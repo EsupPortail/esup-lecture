@@ -5,14 +5,21 @@
 */
 package org.esupportail.lecture.exceptions.domain;
 
-import org.esupportail.lecture.exceptions.dao.TimeoutException;
-
 /**
  * @author gbouteil
  * Remote server providing category is in Time Out.
  */
 public class CategoryTimeOutException extends InfoDomainException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @param errorMsg
+	 * @param e
+	 */
 	public CategoryTimeOutException(String errorMsg, Exception e) {
 		super(errorMsg,e);
 	}

@@ -10,13 +10,6 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.beans.CategoryBean;
-import org.esupportail.lecture.domain.beans.ContextBean;
-import org.esupportail.lecture.domain.beans.ItemBean;
-import org.esupportail.lecture.domain.beans.SourceBean;
-import org.esupportail.lecture.domain.beans.UserBean;
-import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InfoDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
@@ -54,10 +47,12 @@ public class DomainTest {
 	/**
 	 * user ID for tests.
 	 */
+	@SuppressWarnings("unused")
 	private static String userId = "bourges";
 	/**
 	 * context ID for tests.
 	 */
+	@SuppressWarnings("unused")
 	private static String contextId;
 	/**
 	 * list of category IDs for tests.
@@ -84,8 +79,10 @@ public class DomainTest {
 
 	/**
 	 * @param args non argumet needed
+	 * @throws InternalDomainException 
 	 */
-	public static void main(final String[] args)  {
+	@SuppressWarnings({ "unused", "hiding" })
+	public static void main(final String[] args) throws InternalDomainException  {
 		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
 //		org.springframework.beans.factory.config.PropertyPlaceholderConfigurer prop = (org.springframework.beans.factory.config.PropertyPlaceholderConfigurer) factory.getBean("propertyConfigurer");
@@ -93,8 +90,6 @@ public class DomainTest {
 		
 		try {
 			/* Test alternative behavior */
-//			testGetContextBis("c1");
-//			testGetDisplayedSourceAlternativeWay(); 
 			
 			/* Test normal behavior */
 			testGetConnectedUser();
@@ -141,10 +136,6 @@ public class DomainTest {
 			System.out.println("\n!!! EXCEPTION !!!");
 			System.out.println("\n!!! Catching InfoDomainException");
 			e.printStackTrace();
-		} catch (InternalDomainException e) {
-			System.out.println("\n!!! EXCEPTION !!!");
-			System.out.println("\n!!! Catching InternalDomainException");
-			e.printStackTrace();
 		} catch (DomainServiceException e) {
 			System.out.println("\n!!! EXCEPTION !!!");
 			System.out.println("\n!!! Catching DomainServiceException");
@@ -167,12 +158,13 @@ public class DomainTest {
 
 	/**
 	 * Test of servide "getConnectedUser".
-	 * @throws InternalExternalException 
 	 */
-	private static void testGetConnectedUser() throws InternalExternalException {
+	private static void testGetConnectedUser() {
 		printIntro("getConnectedUser");
 		//String userIdLocal = facadeService.getConnectedUserId();
-		String userIdLocal = "foo"; //TODO (RB <-- GB) C'est quoi ?
+		@SuppressWarnings("unused")
+		String userIdLocal = "foo"; 
+		//TODO (RB <-- GB) C'est quoi ?
 //		UserBean user = facadeService.getConnectedUser(userIdLocal);
 //		System.out.println(user.toString());
 	}
@@ -180,10 +172,9 @@ public class DomainTest {
 	/**
 	 * Test of service "getContext".
 	 * @throws InternalExternalException 
-	 * @throws InternalDomainException 
 	 */
 	private static void testGetContext() 
-	throws InternalExternalException, InternalDomainException {
+	throws InternalExternalException {
 		printIntro("getContext");
 		contextId = facadeService.getCurrentContextId();
 //		ContextBean context = facadeService.getContext(userId, contextId);
@@ -203,10 +194,8 @@ public class DomainTest {
 
 	/**
 	 * Test of service "getCategories".
-	 * @throws DomainServiceException 
 	 */
-	private static void testGetDisplayedCategories() 
-	throws DomainServiceException {
+	private static void testGetDisplayedCategories() {
 		printIntro("getDisplayedCategories");
 //		List<CategoryBean> categories = facadeService.getDisplayedCategories(userId, contextId);
 //		categoryIds = new ArrayList<String>();
@@ -220,9 +209,8 @@ public class DomainTest {
 	
 	/**
 	 * Test of service "getDisplayedeSources".
-	 * @throws DomainServiceException 
 	 */
-	private static void testGetDisplayedSources() throws DomainServiceException  {
+	private static void testGetDisplayedSources()  {
 		printIntro("getDisplayedSources");
 		for (String catId : categoryIds) {
 			System.out.println(" **** cat " + catId + " **********");
@@ -238,11 +226,9 @@ public class DomainTest {
 	
 	/**
 	 * Test of service "getVisibleCategories".
-	 * @throws InternalDomainException 
 	 */
-	private static void testGetVisibleCategories() throws InternalDomainException  {
+	private static void testGetVisibleCategories()  {
 		printIntro("getVisibleCategories");
-		List<CategoryBean> cats;
 //		try {
 ////			cats = facadeService.getVisibleCategories(userId, contextId);
 ////			for (CategoryBean ca : cats) {
@@ -257,9 +243,8 @@ public class DomainTest {
 	
 	/**
 	 * Test of service "getVisibleSources".
-	 * @throws DomainServiceException 
 	 */
-	private static void testGetVisibleSources() throws DomainServiceException {
+	private static void testGetVisibleSources() {
 		printIntro("getVisibleSources");
 		categoryIds = new ArrayList<String>();
 		categoryIds.add("cp1");
@@ -371,6 +356,7 @@ public class DomainTest {
 	 * Test of service "subscribeToCategory" and "unsubscribeToCategory".
 	 * @throws InternalDomainException 
 	 */
+	@SuppressWarnings("unused")
 	private static void testSubUnSubscribeToCategory() throws InternalDomainException {
 		printIntro("getSubscribeToCategory");
 //		
@@ -580,12 +566,12 @@ public class DomainTest {
 
 	/**
 	 * Test of timeOut Values.
-	 * @throws InternalDomainException 
 	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws SourceNotLoadedException 
 	 */
+	@SuppressWarnings("unused")
 	private static void testGetItems() 
-	throws SourceNotLoadedException, ManagedCategoryNotLoadedException, InternalDomainException {
+	throws SourceNotLoadedException, ManagedCategoryNotLoadedException {
 		printIntro("getItems");
 		System.out.println(" **** source " + sourceId + " **********");
 //		List<ItemBean> items = facadeService.getItems(userId, sourceId);

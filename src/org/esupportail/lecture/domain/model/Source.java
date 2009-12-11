@@ -9,8 +9,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -33,8 +31,6 @@ import org.dom4j.DocumentHelper;
 import org.dom4j.Node;
 import org.dom4j.XPath;
 import org.dom4j.XPathException;
-import org.esupportail.lecture.domain.DomainService;
-import org.esupportail.lecture.domain.DomainServiceImpl;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 import org.esupportail.lecture.exceptions.domain.MappingNotFoundException;
@@ -77,15 +73,15 @@ public abstract class Source implements Element, Serializable {
 	private SourceProfile profile;
 
 	/**
-	 * Opitionnal : DTD of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement).
+	 * Optional : DTD of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement).
 	 */
 	private String dtd;
 	/**
-	 * Optionnal : xmlType of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement).
+	 * Optional : xmlType of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement).
 	 */
 	private String xmlType;
 	/**
-	 * Optionnal : xmlns of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement).
+	 * Optional : xmlns of the source (one of these parameter is required : xmlns, xmlType, dtd,rootElement).
 	 */
 	private String xmlns;
 	/**

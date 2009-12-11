@@ -28,7 +28,7 @@ public class ManagedCategoryDummy extends ManagedCategory implements DummyInterf
 	/**
 	 * log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(Source.class); 
+	private static final Log LOG = LogFactory.getLog(Source.class); 
 	/**
 	 * Cause of the Dummy Bean.
 	 */
@@ -39,14 +39,14 @@ public class ManagedCategoryDummy extends ManagedCategory implements DummyInterf
 	 *************************** INIT ************************************** */
 	/**
 	 * Constructor.
-	 * @param cp sourceProfile associated to this source
-	 * @param e 
+	 * @param profile sourceProfile associated to this source
+	 * @param exception 
 	 */
-	public ManagedCategoryDummy(final ManagedCategoryProfile cp, final InfoDaoException e) {
-		super(cp);
-		cause = e;
+	public ManagedCategoryDummy(final ManagedCategoryProfile profile, final InfoDaoException exception) {
+		super(profile);
+		cause = exception;
 	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("ManagedCategoryDummy(" + cp.getId() + ")");
+    		LOG.debug("ManagedCategoryDummy(" + profile.getId() + ")");
     	}  	
 	}
 	

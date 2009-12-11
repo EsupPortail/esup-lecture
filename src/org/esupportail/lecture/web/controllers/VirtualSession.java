@@ -2,11 +2,6 @@ package org.esupportail.lecture.web.controllers;
 
 import java.util.Hashtable;
 
-import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.domain.FacadeService;
-import org.esupportail.lecture.exceptions.domain.InternalExternalException;
-import org.esupportail.lecture.exceptions.web.WebException;
-
 
 /**
  * Class to store informations of multiples instances of a channel 
@@ -35,6 +30,7 @@ public class VirtualSession {
 	
 	/**
 	 * Constructor
+	 * @param contextId 
 	 */
 	public VirtualSession(String contextId){
 		sessions = new Hashtable<String,Hashtable<String,Object>>();

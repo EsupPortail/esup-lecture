@@ -12,18 +12,32 @@ package org.esupportail.lecture.exceptions;
  */
 public class LectureException extends Exception {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * Default constructor 
 	 */
 	public LectureException() {
 		super();
 	}
 	
+	/**
+	 * @param message
+	 */
 	public LectureException(String message) {
 		super(message);
 	}
+	/**
+	 * @param cause
+	 */
 	public LectureException(Exception cause) {
 		super(cause);
 	}
+	/**
+	 * @param message
+	 * @param cause
+	 */
 	public LectureException(String message,Exception cause) {
 		super(message,cause);
 	}

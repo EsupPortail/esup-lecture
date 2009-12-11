@@ -5,8 +5,20 @@
 */
 package org.esupportail.lecture.exceptions.domain;
 
+/**
+ * @author vrepain
+ *
+ */
 public class SourceNotVisibleException extends InfoDomainException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
+	 * @param errorMsg
+	 */
 	public SourceNotVisibleException(String errorMsg) {
 		super(errorMsg);
 	}

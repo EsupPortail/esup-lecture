@@ -13,6 +13,10 @@ package org.esupportail.lecture.exceptions.domain;
  */
 public class FatalException extends InfoDomainException {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * Default constructor
 	 */
 	public FatalException(){

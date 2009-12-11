@@ -11,6 +11,10 @@ package org.esupportail.lecture.exceptions.domain;
  */
 public class CategoryOutOfReachException extends InfoDomainException {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * @param e
 	 */
 	public CategoryOutOfReachException(Exception e) {

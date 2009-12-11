@@ -17,9 +17,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.dao.InternalDaoException;
 import org.esupportail.lecture.exceptions.domain.InfoExternalException;
-import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
@@ -647,6 +645,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * @return UserCanMarkRead
 	 */
+	@Override
 	public boolean isUserCanMarkRead() {
 		return userCanMarkRead;
 	}
@@ -659,6 +658,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 
 	/**
+	 * @param contextId 
 	 * @param fileId the fileId to set
 	 */
 	public final void setFileId(String contextId, String fileId) {

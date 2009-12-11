@@ -14,7 +14,6 @@ import org.esupportail.lecture.domain.model.ManagedSourceProfile;
 import org.esupportail.lecture.domain.model.Source;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
-import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 import org.esupportail.lecture.exceptions.dao.InternalDaoException;
 /**
  * Stub Service to Data Access Object : use to test upper layers, instead of using. 
@@ -267,15 +266,18 @@ public class DaoServiceStub  implements DaoService {
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#mergeUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
-	public UserProfile mergeUserProfile(UserProfile userProfile) {
+	public UserProfile mergeUserProfile(@SuppressWarnings("unused")
+	UserProfile userProfile) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
-	 * @see org.esupportail.lecture.dao.DaoService#updateHSQL(java.lang.String)
+	 * @param query 
+	 * @see org.esupportail.lecture.dao.DaoService#updateSQL(java.lang.String)
 	 */
-	public void updateSQL(String query) {
+	public void updateSQL(@SuppressWarnings("unused")
+	final String query) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -10,17 +10,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.esupportail.lecture.dao.FreshXmlFileThread;
-import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
-import org.esupportail.lecture.exceptions.domain.ChannelConfigException;
 import org.esupportail.lecture.exceptions.domain.MappingFileException;
 
 
@@ -46,11 +42,6 @@ public class MappingFile {
 	private static MappingFile singleton;
 	
 	/**
-	 * XML file loaded.
-	 */
-	private static Document xmlFile;
-	
-	/**
 	 *  relative classpath of the file to load.
 	 */
 	private static String filePath;
@@ -61,11 +52,6 @@ public class MappingFile {
 	private static String fileBasePath;
 	
 	/**
-	 * Last modified time of the file to load.
-	 */
-	private static long fileLastModified;
-
-	/**
 	 * Indicates if file has been modified since the last getInstance() calling.
 	 */
 	private static boolean modified;
@@ -75,8 +61,14 @@ public class MappingFile {
 	 */
 	private static List<Mapping> mappingList;
 
+	/**
+	 * timeout of mapping file
+	 */
 	private static int xmlFileTimeOut;
 
+	/**
+	 * number of mappings found
+	 */
 	private static int nbMappings;
 	
 	/*
@@ -84,9 +76,8 @@ public class MappingFile {
 	
 	/**
 	 * Private Constructor: load xml mapping file. 
-	 * @throws MappingFileException
 	 */
-	private MappingFile() throws MappingFileException {
+	private MappingFile() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("MappingFile()");
 		}
@@ -99,12 +90,12 @@ public class MappingFile {
 
 	/**
 	 * Return a singleton of this class used to load mappings.
-	 * @param mappingFilePath file path of the mapping file
+	 * @param configFilePath 
+	 * @param defaultTimeOut 
 	 * @return an instance of the file to load (singleton)
-	 * @throws MappingFileException 
 	 * @see MappingFile#singleton
 	 */
-	protected static MappingFile getInstance(final String configFilePath, final int defaultTimeOut) throws MappingFileException {
+	protected static MappingFile getInstance(final String configFilePath, final int defaultTimeOut) {
 		filePath = configFilePath;
 		xmlFileTimeOut = defaultTimeOut;
 		return getInstance();
@@ -114,10 +105,9 @@ public class MappingFile {
 	/**
 	* Returns a singleton of this class used to load mappings.
 	 * @return an instance of the mapping file (singleton) to load
-	 * @throws MappingFileException 
 	 * @see MappingFile#singleton
 	 */
-	protected static synchronized MappingFile getInstance() throws MappingFileException  {
+	protected static synchronized MappingFile getInstance()  {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getInstance()");
 		}
@@ -199,7 +189,7 @@ public class MappingFile {
 
 
 	/**
-	 * @throws ChannelConfigException
+	 * @throws MappingFileException 
 	 */
 	protected static synchronized void getMappingFile() throws MappingFileException {
 		if (LOG.isDebugEnabled()) {
@@ -231,16 +221,15 @@ public class MappingFile {
 			String errorMsg = "Impossible to load XML Channel config (" + fileBasePath + ")";
 			LOG.error(errorMsg);
 			throw new MappingFileException(errorMsg);
-		} else {
-			xmlFile = xmlFileLoading;
 		}
 	}
 
 
 	/**
 	 * @param configFilePath 
-	 * @return
+	 * @return Document
 	 */
+	@SuppressWarnings("finally")
 	protected synchronized static Document getFreshMappingFile(String configFilePath) {
 		// Assign null to configFileLoaded during the loading
 		Document ret = null;
@@ -284,9 +273,11 @@ public class MappingFile {
 
 		/**
 		 * Check syntax file that cannot be checked by DTD.
+		 * @param xmlFileChecked 
+		 * @return Document
 		 * @throws MappingFileException 
-		 * @throws ChannelConfigException 
 		 */
+		@SuppressWarnings("unchecked")
 		private synchronized static Document checkMappingFile(Document xmlFileChecked) throws MappingFileException {
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("checkXmlFile()");

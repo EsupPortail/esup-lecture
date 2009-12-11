@@ -15,13 +15,16 @@ import org.esupportail.commons.services.application.Version;
 import org.esupportail.commons.services.application.VersionException;
 import org.esupportail.commons.services.application.VersionningService;
 import org.esupportail.commons.services.database.DatabaseUtils;
-import org.springframework.orm.jpa.vendor.Database;
 
 /**
  * A bean for versionning management.
  */
 public class VersionningServiceImpl extends AbstractDomainAwareBean implements VersionningService {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	/**
 	 * A logger.
 	 */
@@ -214,6 +217,7 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	 * Upgrade the database to a given version, if needed.
 	 * @param version 
 	 */
+	@SuppressWarnings("unchecked")
 	private void upgradeDatabaseIfNeeded(final String version) {
 		if (!getDatabaseVersion().isOlderThan(version)) {
 			return;

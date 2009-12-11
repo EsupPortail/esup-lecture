@@ -21,7 +21,7 @@ public class VisibilitySets {
 	/**
 	 * Log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(VisibilitySets.class);
+	private static final Log LOG = LogFactory.getLog(VisibilitySets.class);
 	/**
 	 * Group of allowed users to subscribe to element.
 	 */

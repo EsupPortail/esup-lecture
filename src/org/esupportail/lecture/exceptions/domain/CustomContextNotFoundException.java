@@ -13,6 +13,11 @@ public class CustomContextNotFoundException extends
 		CustomElementNotFoundException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param string
 	 */
 	public CustomContextNotFoundException(String string) {

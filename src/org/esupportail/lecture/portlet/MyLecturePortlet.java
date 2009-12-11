@@ -36,7 +36,7 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 	/**
 	 * Log instance 
 	 */
-	protected static final Log log = LogFactory.getLog(MyLecturePortlet.class); 
+	protected static final Log LOG = LogFactory.getLog(MyLecturePortlet.class); 
 	
 	
 	/* ************************** METHODS ******************************** */	
@@ -55,19 +55,19 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 		
 		if (!mode.equals(request.getPortletMode())) {
 			request.setAttribute("isPortletModeChanged", Boolean.TRUE);
-			if (log.isDebugEnabled()) {
-				log.debug("isPortletModeChanged in request set to TRUE");
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("isPortletModeChanged in request set to TRUE");
 			}
 		} else {
 			request.setAttribute("isPortletModeChanged", Boolean.FALSE);
-			if (log.isDebugEnabled()) {
-				log.debug("isPortletModeChanged in request set to FALSE");
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("isPortletModeChanged in request set to FALSE");
 			}
 		}
 		
 		session.setAttribute("CurrentPortletMode", request.getPortletMode());
-		if (log.isDebugEnabled()) {
-			log.debug("CurrentPortletMode in session set to "+ request.getPortletMode());
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("CurrentPortletMode in session set to "+ request.getPortletMode());
 		}
 		super.render(request, response);
 	}	
@@ -78,10 +78,10 @@ public class MyLecturePortlet extends MyFacesGenericPortlet {
 	protected void doEdit(RenderRequest request, RenderResponse response)
 	throws PortletException, IOException {
 		
-		Boolean isPortletModeChanged = (Boolean)request.getAttribute("isPortletModeChanged");
+		final Boolean isPortletModeChanged = (Boolean)request.getAttribute("isPortletModeChanged");
 		if (isPortletModeChanged.booleanValue()) {
-			if (log.isDebugEnabled()) {
-				log.debug("Changing to edit page");
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("Changing to edit page");
 			}
 			setPortletRequestFlag(request);
 			nonFacesRequest(request, response, "/stylesheets/edit.jsp");

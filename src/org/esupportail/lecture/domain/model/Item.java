@@ -16,7 +16,7 @@ public class Item {
 	/**
 	 * Log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(ManagedSourceProfile.class); 
+	private static final Log LOG = LogFactory.getLog(ManagedSourceProfile.class); 
 	/**
 	 * Id of item.
 	 */
@@ -36,13 +36,13 @@ public class Item {
 
 	/**
 	 * Constructor.
-	 * @param p parent of the item
+	 * @param source parent of the item
 	 */
-	public Item(final Source p) {
+	public Item(final Source source) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("Item(" + p.getProfileId() + ")");
+			LOG.debug("Item(" + source.getProfileId() + ")");
 		}
-		parent = p;
+		parent = source;
 	}
 	
 
@@ -53,21 +53,22 @@ public class Item {
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
-			return true;
+	public boolean equals(final Object object) {
+		boolean ret = false;
+		if (this == object) {
+			ret = true;
 		}
-		if (o == null) {
-			return false;
+		if (object == null) {
+			ret = false;
 		}
-		if (!(o instanceof Item)) {
-			return false;
+		if (!(object instanceof Item)) {
+			ret = false;
 		}
-		final Item item = (Item) o;
+		final Item item = (Item) object;
 		if (!item.getId().equals(this.getId())) {
-			return false;
+			ret = false;
 		}
-		return true;
+		return ret;
 	}
 
 	/**

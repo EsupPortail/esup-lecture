@@ -31,7 +31,7 @@ public class ManagedCategory extends Category {
 	/**
 	 * Log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(ManagedCategory.class);
+	private static final Log LOG = LogFactory.getLog(ManagedCategory.class);
 	
 	/**
 	 * Inner features declared in XML file.
@@ -51,12 +51,12 @@ public class ManagedCategory extends Category {
 
 	/**
 	 * Constructor.
-	 * @param cp categoryProfile associated to this managedCategory
+	 * @param profile categoryProfile associated to this managedCategory
 	 */
-	public ManagedCategory(final ManagedCategoryProfile cp) {
-		super(cp);
+	public ManagedCategory(final ManagedCategoryProfile profile) {
+		super(profile);
 	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("ManagedCategory(" + cp.getId() + ")");
+    		LOG.debug("ManagedCategory(" + profile.getId() + ")");
     	}
 	   	inner = new InnerFeatures();
 	}
@@ -110,16 +110,16 @@ public class ManagedCategory extends Category {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getProfileId() + " - getTtl()");
 		}
-		int t;
+		int categoryTtl;
 		try {
-			t = getProfile().getTtl();
+			categoryTtl = getProfile().getTtl();
 			// Visibility is computed in ManagedCategoryProfile
 		} catch (ManagedCategoryNotLoadedException e) {
 			LOG.error("Impossible situation : ManagedCategoryNotLoadedException "
 					+ "in a ManagedCategory - please contact developer");
-			t = 0;
+			categoryTtl = 0;
 		}
-		return t;
+		return categoryTtl;
 	}
 	
 	/**
@@ -130,16 +130,16 @@ public class ManagedCategory extends Category {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + getProfileId() + " - getVisibility()");
 		}
-		VisibilitySets v;
+		VisibilitySets visibility;
 		try {
-			v = getProfile().getVisibility();
+			visibility = getProfile().getVisibility();
 			// Visibility is computed in ManagedCategoryProfile
 		} catch (ManagedCategoryNotLoadedException e) {
 			LOG.error("Impossible situation : ManagedCategoryNotLoadedException "
 					+ "in a ManagedCategory - please contact developer");
-			v = null;
+			visibility = null;
 		}
-		return v;
+		return visibility;
 	}
 	
 	/**
@@ -161,17 +161,17 @@ public class ManagedCategory extends Category {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + getProfileId() + " - getEdit()");
 		}
-		Editability e;
+		Editability editability;
 		try {
-			e = getProfile().getEdit();
+			editability = getProfile().getEdit();
 			// Editability is computed in ManagedCategoryProfile
 			
 		} catch (ManagedCategoryNotLoadedException ex) {
 			LOG.error("Impossible situation : ManagedCategoryNotLoadedException"
 					+ " in a ManagedCategory, please contact developer");
-			e = null;
+			editability = null;
 		}
-		return e;
+		return editability;
 	}
 	
 	/**
@@ -275,13 +275,7 @@ public class ManagedCategory extends Category {
 		// update for managedSources defined in this managedCategory
 		while (iterator.hasNext()) {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
-			try {
-				msp.updateCustomCategory(customManagedCategory);
-			} catch (ManagedCategoryNotLoadedException e) {
-				String errorMsg = "Impossible to update customCategory " + getProfileId()
-				+ " because of managedCategory not loaded.";
-				LOG.error(errorMsg);
-			}
+			msp.updateCustomCategory(customManagedCategory);
 		
 		}
 		
@@ -313,17 +307,11 @@ public class ManagedCategory extends Category {
 			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
 			CoupleProfileVisibility couple;
 			VisibilityMode mode;
-			try {
-				mode = msp.updateCustomCategory(customManagedCategory);
-			
-				if (mode != VisibilityMode.NOVISIBLE) {
-					couple = new CoupleProfileVisibility(msp, mode);
-					couplesVisib.add(couple);
-				}
-			} catch (ManagedCategoryNotLoadedException e) {
-				String errorMsg = "Impossible to update customCategory " + getProfileId()
-				+ " because of managedCategory not loaded.";
-				LOG.error(errorMsg);
+			mode = msp.updateCustomCategory(customManagedCategory);
+
+			if (mode != VisibilityMode.NOVISIBLE) {
+				couple = new CoupleProfileVisibility(msp, mode);
+				couplesVisib.add(couple);
 			}
 		}
 		

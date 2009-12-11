@@ -13,6 +13,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class ComputeItemsException extends PrivateException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param string
 	 */
 	public ComputeItemsException(String string) {

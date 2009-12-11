@@ -12,6 +12,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class SourceProfileNotFoundException extends ElementNotFoundException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param errorMsg
 	 */
 	public SourceProfileNotFoundException(String errorMsg) {

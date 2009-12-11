@@ -30,7 +30,8 @@ public class Mapping {
 	/**
 	 * Log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(Mapping.class);
+	@SuppressWarnings("unused")
+	private static final Log LOG = LogFactory.getLog(Mapping.class);
 	
 	/**
 	 * Source URL.

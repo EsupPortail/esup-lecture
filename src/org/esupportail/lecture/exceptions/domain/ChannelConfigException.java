@@ -13,6 +13,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class ChannelConfigException extends XMLFileException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param errorMsg
 	 */
 	public ChannelConfigException(String errorMsg) {

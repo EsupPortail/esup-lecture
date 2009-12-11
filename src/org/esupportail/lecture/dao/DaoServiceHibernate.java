@@ -14,7 +14,6 @@ import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.hibernate.LockMode;
-import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.InitializingBean;
@@ -104,13 +103,15 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 
 	/**
 	 * @param userProfile 
+	 * @return userProfile
 	 * @see org.esupportail.lecture.dao.DaoService#mergeUserProfile(UserProfile)
 	 */
-	public UserProfile mergeUserProfile(UserProfile userProfile) {
+	public UserProfile mergeUserProfile(final UserProfile userProfile) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("mergeUserProfile(" + userProfile.getUserId() + ")");			
 		}
-		//merge is important to avoid hibernate immutable exception -bug hb? cf. http://opensource.atlassian.com/projects/hibernate/browse/HHH-1574
+		//merge is important to avoid hibernate immutable exception -bug hb? 
+		// cf. http://opensource.atlassian.com/projects/hibernate/browse/HHH-1574
 		UserProfile merged = (UserProfile) getHibernateTemplate().merge(userProfile);
 		if (USEFLUSH) {
 			getHibernateTemplate().flush();
@@ -276,16 +277,14 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 		getHibernateTemplate().save(versionManager);
 	}
 
+	/**
+	 * @param query
+	 */
 	public void updateSQL(final String query) {
 		// TODO Auto-generated method stub
 		getSqlQuery(query).executeUpdate();
 		
 	}
 
-	@Override
-	public Query getQuery(String hqlQuery) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

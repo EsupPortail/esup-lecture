@@ -1,17 +1,13 @@
 package org.esupportail.lecture.web.beans;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.FacadeService;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.exceptions.web.WebException;
-import org.esupportail.lecture.web.controllers.HomeController;
 
 /**
  * @author bourges
@@ -62,6 +58,7 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 
 	/**
 	 * Default constructor.
+	 * @param itemsBeans 
 	 */
 	public SourceWebBean(final List<ItemBean> itemsBeans) {
 		super();
@@ -200,6 +197,8 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	}
 
 	/**
+	 * @param o 
+	 * @return int
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(final SourceWebBean o) {
@@ -264,6 +263,9 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 	public void setUnreadItemsNumber(int unreadItemsNumber) {
 		this.unreadItemsNumber = unreadItemsNumber;
 	}
+	/**
+	 * 
+	 */
 	public void setItemsNumber() {
 		this.itemsNumber = getItems().size();
 	}

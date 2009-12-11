@@ -80,6 +80,9 @@ public final class ReadItemFlag extends Flag {
 		this.readItemPK = readItemPK;
 	}
 
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -119,6 +122,9 @@ public final class ReadItemFlag extends Flag {
 		return string;
 	}
 
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

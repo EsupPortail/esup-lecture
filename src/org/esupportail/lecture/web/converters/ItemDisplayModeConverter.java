@@ -32,7 +32,9 @@ public class ItemDisplayModeConverter implements Converter {
 	/**
 	 * @see javax.faces.convert.Converter#getAsObject(javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.String)
 	 */
-	public Object getAsObject(final FacesContext facesContext, 
+	public Object getAsObject(@SuppressWarnings("unused")
+	final FacesContext facesContext, 
+			@SuppressWarnings("unused")
 			final UIComponent component, final String value) throws ConverterException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getAsObject(" + value + ")");
@@ -50,7 +52,9 @@ public class ItemDisplayModeConverter implements Converter {
 	/**
 	 * @see javax.faces.convert.Converter#getAsString(javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.Object)
 	 */
-	public String getAsString(final FacesContext facesContext, 
+	public String getAsString(@SuppressWarnings("unused")
+	final FacesContext facesContext, 
+			@SuppressWarnings("unused")
 			final UIComponent component, final Object obj) throws ConverterException {
 		String ret = "";
 		if (obj instanceof ItemDisplayMode) {

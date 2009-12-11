@@ -28,7 +28,7 @@ public abstract class Flag {
 	/**
 	 * Log instance. 
 	 */
-	protected static final Log LOG = LogFactory.getLog(Flag.class); 
+	private static final Log LOG = LogFactory.getLog(Flag.class); 
 
 	/**
 	 *  Flag name.

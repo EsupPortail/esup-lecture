@@ -497,7 +497,7 @@ public class UserProfile {
 	   	//TODO (RB --> GB): I add this line to avoid a ClassCastException 
 	   	// due to a hibernate bug when map is not yet loaded!
 	   	//TODO (RB <-- GB): je ne comprends pas ce que tu veux faire
-	   	boolean foo = customSources.containsKey(sourceId);
+	   	//boolean foo = customSources.containsKey(sourceId);
 		CustomSource cs = customSources.remove(sourceId);
 		if (cs != null) {
 //			DomainTools.getDaoService().deleteCustomSource(cs);

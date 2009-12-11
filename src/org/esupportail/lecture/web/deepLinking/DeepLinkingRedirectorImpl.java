@@ -18,6 +18,10 @@ import org.esupportail.lecture.web.controllers.TwoPanesController;
  */
 public class DeepLinkingRedirectorImpl implements DeepLinkingRedirector {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * Log instance.
 	 */
 	private static Log log = LogFactory.getLog(DeepLinkingRedirectorImpl.class);

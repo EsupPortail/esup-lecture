@@ -57,6 +57,9 @@ public class ItemWebBean {
 	public void setRead(final boolean read) {
 		this.read = read;
 	}
+	/**
+	 * @param dummy
+	 */
 	public void setDummy(final boolean dummy) {
 		this.dummy = dummy;
 	}

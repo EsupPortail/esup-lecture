@@ -14,7 +14,6 @@ import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.utils.DummyInterface;
 import org.esupportail.lecture.exceptions.LectureException;
 import org.esupportail.lecture.exceptions.dao.InfoDaoException;
-import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
 
 /**
  * SourceDummy element : a source that cannot be created well.
@@ -64,10 +63,9 @@ public class SourceDummy extends Source implements DummyInterface {
 	/**
 	 * get Items list of this source.
 	 * @return an empty items list
-	 * @throws ComputeItemsException 
 	 */
 	@Override
-	protected List<Item> getItems() throws ComputeItemsException {
+	protected List<Item> getItems() {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + super.getProfileId() + " - getItems()");
     	}

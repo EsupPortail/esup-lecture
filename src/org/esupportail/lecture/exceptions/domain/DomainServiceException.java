@@ -15,6 +15,10 @@ import org.esupportail.lecture.exceptions.LectureException;
 public class DomainServiceException extends LectureException {
 	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * Default constructor 
 	 */
 	public DomainServiceException() {

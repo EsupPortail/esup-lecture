@@ -30,7 +30,7 @@ public class PortletService implements ModeService {
 	/**
 	 * Log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(PortletService.class);
+	private static final Log LOG = LogFactory.getLog(PortletService.class);
 
 	/* 
 	 ************************** INIT ****************************************/
@@ -56,10 +56,10 @@ public class PortletService implements ModeService {
 		}
 		String value;
 		try {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			ExternalContext externalContext = facesContext.getExternalContext();
-			PortletRequest request = (PortletRequest) externalContext.getRequest();
-			PortletPreferences portletPreferences = request.getPreferences();
+			final FacesContext facesContext = FacesContext.getCurrentInstance();
+			final ExternalContext externalContext = facesContext.getExternalContext();
+			final PortletRequest request = (PortletRequest) externalContext.getRequest();
+			final PortletPreferences portletPreferences = request.getPreferences();
 			value = portletPreferences.getValue(name, "default");
 		} catch (Exception e) {
 			throw new InternalExternalException(e);
@@ -85,7 +85,7 @@ public class PortletService implements ModeService {
 		}
 		String value; 
 		try {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
+			final FacesContext facesContext = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = facesContext.getExternalContext();
 			PortletRequest request = (PortletRequest) externalContext.getRequest();
 			Map<String, String> userInfo = 

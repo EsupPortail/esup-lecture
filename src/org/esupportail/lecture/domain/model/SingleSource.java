@@ -26,12 +26,12 @@ public class SingleSource extends Source {
 	 * Constructor.
 	 */
 	/**
-	 * @param sp
+	 * @param profile
 	 */
-	public SingleSource(final SourceProfile sp) {
-		super(sp);
+	public SingleSource(final SourceProfile profile) {
+		super(profile);
 	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("SingleSource(" + sp.getId() + ")");
+    		LOG.debug("SingleSource(" + profile.getId() + ")");
     	}
 	}	
 /*

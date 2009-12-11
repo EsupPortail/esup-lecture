@@ -12,6 +12,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class CustomCategoryNotFoundException extends CustomElementNotFoundException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param string
 	 */
 	public CustomCategoryNotFoundException(String string) {

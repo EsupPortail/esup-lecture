@@ -13,6 +13,10 @@ public class CachingEmailExceptionServiceFactoryImpl
 extends org.esupportail.commons.services.exceptionHandling.CachingEmailExceptionServiceFactoryImpl {
 	
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
 	 * The developer's list for bugs.
 	 */
 	private static final String DEVEL_EMAIL = "lecture-bugs@esup-portail.org";

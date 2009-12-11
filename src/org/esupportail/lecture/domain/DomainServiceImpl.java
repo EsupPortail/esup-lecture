@@ -27,7 +27,6 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.domain.model.ManagedCategoryDummy;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
@@ -45,7 +44,6 @@ import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedExcepti
 import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
-import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -758,10 +756,10 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	}
 
 
-	/* (non-Javadoc)
+	/**
 	 * @see org.esupportail.lecture.domain.DomainService#updateSQL(java.lang.String)
 	 */
-	public void updateSQL(String query) {
+	public void updateSQL(final String query) {
 		DomainTools.getDaoService().updateSQL(query);
 		
 	}

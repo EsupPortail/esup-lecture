@@ -7,11 +7,9 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Vector;
 
 import org.apache.commons.logging.Log;
@@ -19,7 +17,6 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
@@ -97,14 +94,12 @@ public class CustomManagedCategory extends CustomCategory {
 	 * and update it
 	 * @return the list of customSource
 	 * @throws InternalDomainException 
-	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getSortedCustomSources()
 	 */
 	@Override
 	public List<CustomSource> getSortedCustomSources() 
-	throws InternalDomainException, CategoryNotVisibleException, 
-	CategoryTimeOutException {
+	throws InternalDomainException, CategoryNotVisibleException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + super.getElementId() + " - getSortedCustomSources()");
 		}
@@ -153,13 +148,12 @@ public class CustomManagedCategory extends CustomCategory {
 	 * @return list of CoupleProfileAvailability
 	 * @throws InternalDomainException 
 	 * @throws InternalDomainException 
-	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#getVisibleSources()
 	 */
 	@Override
 	public List<CoupleProfileAvailability> getVisibleSources() 
-	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException {
+	throws InternalDomainException, CategoryNotVisibleException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + super.getElementId() + " - getVisibleSources(ex)");
 		}
@@ -220,15 +214,13 @@ public class CustomManagedCategory extends CustomCategory {
 	 * after checking visibility rights, subcribe user to the source sourceId in this CustomMAnagedCategory.
 	 * @param sourceId source ID
 	 * @throws InternalDomainException 
-	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws SourceNotVisibleException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#subscribeToSource(java.lang.String)
 	 */
 	@Override
 	public void subscribeToSource(final String sourceId) 
-	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException, 
-	SourceNotVisibleException {
+	throws InternalDomainException, CategoryNotVisibleException, SourceNotVisibleException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("subscribeToSource(" + sourceId + ")");
 		}
@@ -315,7 +307,6 @@ public class CustomManagedCategory extends CustomCategory {
 	 * after checking visibility rights, unsubcribe user to the source sourceId in this CustomMAnagedCategory.
 	 * @param sourceId source ID
 	 * @throws InternalDomainException 
-	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
 	 * @throws SourceObligedException 
 	 * @see org.esupportail.lecture.domain.model.CustomCategory#unsubscribeToSource(String)
@@ -323,7 +314,7 @@ public class CustomManagedCategory extends CustomCategory {
 	@Override
 	public void unsubscribeToSource(final String sourceId) 
 	throws InternalDomainException, CategoryNotVisibleException, 
-	CategoryTimeOutException, SourceObligedException {
+	SourceObligedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("unsubscribeToSource(" + sourceId + ")");
 		}

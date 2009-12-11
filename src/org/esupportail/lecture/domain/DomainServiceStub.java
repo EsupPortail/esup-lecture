@@ -17,8 +17,6 @@ import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 
 /**
  * @author bourges
@@ -95,6 +93,7 @@ public class DomainServiceStub implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedCategories(org.esupportail.lecture.domain.model.UserProfile, java.lang.String)
 	 */
+	@SuppressWarnings("unused")
 	public List<CategoryBean> getDisplayedCategories(final UserProfile userProfile, final String contextId) {
 		return null;
 	}
@@ -102,15 +101,20 @@ public class DomainServiceStub implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(org.esupportail.lecture.domain.model.UserProfile, java.lang.String)
 	 */
+	@SuppressWarnings("unused")
 	public List<SourceBean> getDisplayedSources(final UserProfile userProfile, final String categoryId) {
 		return null;
 	}
 	
 	/**
+	 * @param sourceId 
+	 * @param userProfile 
+	 * @return items
 	 * @see DomainService#getItems(UserProfile, String)
 	 */
+	@SuppressWarnings("unused")
 	public List<ItemBean> getItems(@SuppressWarnings("unused") final String sourceId, 
-			@SuppressWarnings("unused") final UserProfile userProfile) {
+			final UserProfile userProfile) {
 		return items;
 	}
 
@@ -139,6 +143,7 @@ public class DomainServiceStub implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(org.esupportail.lecture.domain.model.UserProfile, java.lang.String)
 	 */
+	@SuppressWarnings("unused")
 	public List<SourceBean> getVisibleSources(final UserProfile userProfile, final String categoryId) {
 		List<SourceBean> ret = null;
 		ret = sources;
@@ -242,9 +247,8 @@ public class DomainServiceStub implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(org.esupportail.lecture.domain.model.UserProfile, java.lang.String)
 	 */
-	public List<ItemBean> getItems(UserProfile userProfile, String sourceId)
-			throws SourceNotLoadedException, InternalDomainException,
-			ManagedCategoryNotLoadedException {
+	@SuppressWarnings("unused")
+	public List<ItemBean> getItems(final UserProfile userProfile, final String sourceId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -252,13 +256,15 @@ public class DomainServiceStub implements DomainService {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getUserProfile(java.lang.String)
 	 */
-	public UserProfile getUserProfile(String userId) {
+	@SuppressWarnings("unused")
+	public UserProfile getUserProfile(final String userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	/**
-	 * @see org.esupportail.lecture.domain.DomainService#updateHSQL(java.lang.String)
+	 * @param query 
+	 * @see org.esupportail.lecture.domain.DomainService#updateSQL(java.lang.String)
 	 */
 	public void updateSQL(String query) {
 		// TODO Auto-generated method stub

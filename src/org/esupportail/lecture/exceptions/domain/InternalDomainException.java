@@ -16,6 +16,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class InternalDomainException extends DomainServiceException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param e
 	 */
 	public InternalDomainException(Exception e) {

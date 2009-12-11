@@ -20,7 +20,7 @@ public class ExternalServiceStub implements ExternalService {
 	/**
 	 * Log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(ExternalServiceStub.class); 
+	private static final Log LOG = LogFactory.getLog(ExternalServiceStub.class); 
 
 	/*
 	 *************************** INIT ******************************** */	
@@ -53,24 +53,29 @@ public class ExternalServiceStub implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getPreferences(java.lang.String)
 	 */
 	public String getPreferences(final String name) {
+		String ret = null;
 		if (name.equalsIgnoreCase(DomainTools.getContext())) {
-			return "c1";
+			ret = "c1";
 		}
-		return null;
+		if (LOG.isTraceEnabled()) {
+			LOG.trace("getPreferences(" + name + ") return " );
+		}
+		return ret;
 	}
 
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserAttribute(java.lang.String)
 	 */
 	public String getUserAttribute(final String attribute) {
+		String ret = null;
 		if (attribute.equalsIgnoreCase("uid")) {
-			return "bourges";
+			ret = "bourges";
 		} else if (attribute.equalsIgnoreCase("")) {
-			return "";
+			ret = "";
 		} else if (attribute.equalsIgnoreCase("sn")) {
-			return "User";
+			ret = "User";
 		}
-		return "";
+		return ret;
 	}
 
 	/** 
@@ -85,12 +90,11 @@ public class ExternalServiceStub implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#isUserInGroup(java.lang.String)
 	 */
 	public boolean isUserInGroup(final String group) {
-		if (group.equalsIgnoreCase("")) {
-			return false;
-		} else if (group.equalsIgnoreCase("local.0")) {
-			return true;
+		boolean ret = false;
+		if (group.equalsIgnoreCase("local.0")) {
+			ret = true;
 		}
-		return false;
+		return ret;
 		
 	}
 	

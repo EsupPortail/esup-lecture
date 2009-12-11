@@ -32,12 +32,12 @@ public class GlobalSource extends Source {
 	
 	/**
 	 * Constructor.
-	 * @param sp 
+	 * @param profile 
 	 */
-	public GlobalSource(final SourceProfile sp) {
-		super(sp);
+	public GlobalSource(final SourceProfile profile) {
+		super(profile);
 	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("GlobalSource(" + sp.getId() + ")");
+    		LOG.debug("GlobalSource(" + profile.getId() + ")");
     	}
 	}
 	

@@ -13,6 +13,11 @@ package org.esupportail.lecture.exceptions.domain;
 public class SourceNotLoadedException extends ElementNotLoadedException {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * @param string
 	 */
 	public SourceNotLoadedException(String string) {

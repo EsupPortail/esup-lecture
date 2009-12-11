@@ -37,11 +37,11 @@ public class CoupleProfileVisibility {
 	/**
 	 * Constructor.
 	 * @param elt
-	 * @param m
+	 * @param avmode
 	 */
-	public CoupleProfileVisibility(final ElementProfile elt, final VisibilityMode m) {
+	public CoupleProfileVisibility(final ElementProfile elt, final VisibilityMode avmode) {
 		this.profile = elt;
-		this.mode = m;
+		this.mode = avmode;
 	}
 	/*
 	 *************************** METHODS *********************************** */

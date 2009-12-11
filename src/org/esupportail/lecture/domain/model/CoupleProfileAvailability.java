@@ -29,11 +29,11 @@ public class CoupleProfileAvailability {
 	/**
 	 * Constructor.
 	 * @param elt
-	 * @param m
+	 * @param avmode
 	 */
-	public CoupleProfileAvailability(final ElementProfile elt, final AvailabilityMode m) {
+	public CoupleProfileAvailability(final ElementProfile elt, final AvailabilityMode avmode) {
 		this.profile = elt;
-		this.mode = m;
+		this.mode = avmode;
 	}
 
 	/*

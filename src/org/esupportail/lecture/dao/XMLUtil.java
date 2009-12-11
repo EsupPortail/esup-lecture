@@ -16,7 +16,7 @@ public class XMLUtil {
 	/**
 	 * Log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(XMLUtil.class);
+	private static final Log LOG = LogFactory.getLog(XMLUtil.class);
 	
 	/**
 	 * return DefinitionSets from a dom4j node.

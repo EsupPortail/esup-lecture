@@ -65,7 +65,8 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
     /**
      * @see org.hibernate.usertype.UserType#nullSafeSet(java.sql.PreparedStatement, java.lang.Object, int)
      */
-    public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index)
+    @SuppressWarnings("unchecked")
+	public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index)
     throws HibernateException, SQLException { 
         if (null == value) { 
             preparedStatement.setNull(index, Types.VARCHAR); 

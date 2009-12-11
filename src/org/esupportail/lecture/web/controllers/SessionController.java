@@ -26,6 +26,11 @@ import org.esupportail.commons.web.controllers.ExceptionController;
 public class SessionController extends AbstractDomainAwareBean {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
 	 * The name of the parameter that gives the logout URL.
 	 */
 	private static final String LOGOUT_URL_PARAM = "edu.yale.its.tp.cas.client.logoutUrl";

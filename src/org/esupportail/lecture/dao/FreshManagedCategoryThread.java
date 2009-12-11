@@ -78,13 +78,13 @@ public class FreshManagedCategoryThread extends Thread {
 	/**
 	 * get a managed category from the web without cache.
 	 * @param profile ManagedCategoryProfile of Managed category to get
-	 * @param ptCas - user and password. null for anonymous access
+	 * @param ptCasGet - user and password. null for anonymous access
 	 * @return Managed category
 	 * @throws XMLParseException 
 	 */
 	@SuppressWarnings("unchecked")
 	private ManagedCategory getFreshManagedCategory(final ManagedCategoryProfile profile,
-			final String ptCas) throws XMLParseException {
+			final String ptCasGet) throws XMLParseException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshManagedCategory");
 		}
@@ -93,11 +93,11 @@ public class FreshManagedCategoryThread extends Thread {
 		try {
 			//get the XML
 			String categoryURL = profile.getCategoryURL();
-			if (ptCas != null) {
+			if (ptCasGet != null) {
 				if (categoryURL.contains("?")) { 
-					categoryURL = categoryURL + "&ticket=" + ptCas;
+					categoryURL = categoryURL + "&ticket=" + ptCasGet;
 				} else {
-					categoryURL = categoryURL + "?ticket=" + ptCas;
+					categoryURL = categoryURL + "?ticket=" + ptCasGet;
 				}
 			}
 			SAXReader reader = new SAXReader();
@@ -205,9 +205,8 @@ public class FreshManagedCategoryThread extends Thread {
 
 	/**
 	 * @return managedCategory
-	 * @throws XMLParseException 
 	 */
-	public ManagedCategory getManagedCategory() throws XMLParseException {
+	public ManagedCategory getManagedCategory() {
 		return managedCategory;
 	}
 
