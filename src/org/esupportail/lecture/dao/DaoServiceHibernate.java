@@ -14,6 +14,7 @@ import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
 import org.hibernate.LockMode;
+import org.hibernate.Query;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.InitializingBean;
@@ -284,6 +285,12 @@ public class DaoServiceHibernate extends AbstractJdbcJndiHibernateDaoService imp
 		// TODO Auto-generated method stub
 		getSqlQuery(query).executeUpdate();
 		
+	}
+
+	@Override
+	public Query getQuery(String hqlQuery) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

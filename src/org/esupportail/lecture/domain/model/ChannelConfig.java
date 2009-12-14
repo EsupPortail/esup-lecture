@@ -463,16 +463,15 @@ public class ChannelConfig  {
 	 * @return boolean
 	 */
 	private static boolean getBoolean(String valueOf, boolean b) {
+		boolean ret = b;
 		if (valueOf != null) {
-			if (valueOf.equalsIgnoreCase("true")) {
-				return true;
-			} else if (valueOf.equalsIgnoreCase("false")) {
-				return false;
-			} else {
-				return b;
+			if ((valueOf.equalsIgnoreCase("true")) || (valueOf.equalsIgnoreCase("yes"))) {
+				ret = true;
+			} else if ((valueOf.equalsIgnoreCase("false")) || (valueOf.equalsIgnoreCase("no"))) {
+				ret = false;
 			}
 		}
-		return b;
+		return ret;
 	}    
  		
 
