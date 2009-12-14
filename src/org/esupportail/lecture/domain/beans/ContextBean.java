@@ -40,7 +40,7 @@ public class ContextBean {
 	private int treeSize;
 
 	/**
-	* visibility of the tree panel
+	* visibility of the tree panel.
 	*/
 	private boolean treeVisible = true;
 
@@ -184,7 +184,7 @@ public class ContextBean {
 	/**
 	 * @param treeVisible the treeVisible to set
 	 */
-	public void setTreeVisible(boolean treeVisible) {
+	public void setTreeVisible(final boolean treeVisible) {
 		this.treeVisible = treeVisible;
 	}
 	

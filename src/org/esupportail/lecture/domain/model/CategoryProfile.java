@@ -70,7 +70,6 @@ public abstract class CategoryProfile implements ElementProfile {
 	 * @return Returns the category referenced by this CategoryProfile
 	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	@SuppressWarnings("unused")
 	protected Category getElement() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + id + " - getElement()");
@@ -194,7 +193,7 @@ public abstract class CategoryProfile implements ElementProfile {
 	}
 
 	/**
-	 * Make the (long)id of this categoryProfile (<context>:<type>:<interneId>).
+	 * Make the (long)id of this categoryProfile (context:type:interneId).
 	 * @param parentId 
 	 * @param type = p | m  (personal or managed)
 	 * @param simpleId = interneId for a personal | fileId for a managed	  

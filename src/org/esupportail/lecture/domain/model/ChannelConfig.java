@@ -71,7 +71,7 @@ public class ChannelConfig  {
 	private static int nbContexts;
 
 	/**
-	 * timeout of the configFile
+	 * timeout of the configFile.
 	 */
 	private static int xmlFileTimeOut;
 	
