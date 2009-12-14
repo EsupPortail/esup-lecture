@@ -283,15 +283,18 @@ public class ChannelConfig  {
 	 */
 	protected static synchronized void loadConfigTtl() {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("loadGuestUser()");
+			LOG.debug("loadConfigTtl()");
 		}
 		//int configTtl = xmlFile.getInt("ttl", DomainTools.getConfigTtl());
 		Element root = xmlFile.getRootElement();
 		String configTtl = root.valueOf("channelConfig/ttl");
-		if (configTtl == null || configTtl.equals("")) {
-			configTtl = "0";
+		if (!(configTtl == null || configTtl.equals(""))) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("loadConfigTtl() : overriding defaultConfigTtl (" + DomainTools.getConfigTtl() 
+						+ " with channelConfig/ttl :" + configTtl );
+			}
+			DomainTools.setConfigTtl(Integer.parseInt(configTtl));
 		}
-		DomainTools.setConfigTtl(Integer.parseInt(configTtl));
 	}
 
 	/**
