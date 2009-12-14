@@ -19,13 +19,12 @@
 	  <refCategoryProfile refId="rss-accueil-ent"/>      <!-- fils rss accueil ENT -->
       <refCategoryProfile refId="rss-ville-rennes"/> <!-- fils rss ville de Rennes -->
 	  <refCategoryProfile refId="presse"/>           <!-- fils rss presse -->
-	  <categoryProfilesUrl 
-	  	url="" 
-	  	ttl=""
-	  	timeout=""
-	  	idPrefix=""
-	  />
 	  <!-- url vers newsPortlet : renvoie un ensemble de categoryProfile -->
+		<categoryProfilesUrl 
+			url="http://ent-test.univ-rennes1.fr/html/esup-lecture/categoryProfilesUrl-test1.xml" 
+			timeout=""
+			idPrefix="test1"
+		/>
 
 	</context>
 
