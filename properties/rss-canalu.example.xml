@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE category SYSTEM "category.dtd">
+<category edit="all" name="Canal-U" ttl="60">
+	<description>Flux RSS canal-U</description>
+	
+	<sourceProfiles>
+		<sourceProfile id="un" access="public" name="Podcasts Droit" 
+		 specificUserContent="no" ttl="60" url="http://www.canal-u.tv/layout/set/xml/content/view/podcast-theme/101/%28idTheme%29/60/">
+			<visibility>
+				<allowed>
+					<group name="local.0"/>
+					<group name="local.15"/>
+				</allowed>
+				<autoSubscribed/>
+				<obliged>
+					<group name="local.14"/> <!-- Admins -->
+				</obliged>
+			</visibility>		
+		</sourceProfile>
+		<sourceProfile id="deux" access="public" name="Podcasts Economie et Gestion" 
+		 specificUserContent="no" ttl="60" url="http://www.canal-u.tv/layout/set/xml/content/view/podcast-theme/101/%28idTheme%29/61/">
+			<visibility>
+				<allowed>
+					<group name="local.0"/>
+					<group name="local.15"/>
+				</allowed>
+				<autoSubscribed/>
+				<obliged>
+					<group name="local.14"/> <!-- Admins -->
+				</obliged>
+			</visibility>		
+		</sourceProfile>
+		<sourceProfile id="trois" access="public" name="Podcasts Environnement et développement durable" 
+		 specificUserContent="no" ttl="60" url="http://www.canal-u.tv/layout/set/xml/content/view/podcast-theme/101/%28idTheme%29/62/">
+			<visibility>
+				<allowed>
+					<group name="local.0"/>
+					<group name="local.15"/>
+				</allowed>
+				<autoSubscribed/>
+				<obliged>
+					<group name="local.14"/> <!-- Admins -->
+				</obliged>
+			</visibility>		
+		</sourceProfile>
+		<sourceProfile id="quatre" access="public" name="Podcasts Lettres, Arts, Langues et Civilisations" 
+		 specificUserContent="no" ttl="60" url="http://www.canal-u.tv/layout/set/xml/content/view/podcast-theme/101/%28idTheme%29/63/">
+			<visibility>
+				<allowed>
+					<group name="local.14"/> <!-- Admins -->
+				</allowed>
+				<autoSubscribed/>
+				<obliged>
+				</obliged>
+			</visibility>		
+		</sourceProfile>
+		<sourceProfile id="cinq" access="public" name="Podcasts Sciences de la santé et du sport" 
+		 specificUserContent="no" ttl="60" url="http://www.canal-u.tv/layout/set/xml/content/view/podcast-theme/101/%28idTheme%29/64/">
+			<visibility>
+				<allowed>
+					<group name="local.14"/> <!-- Admins -->
+				</allowed>
+				<autoSubscribed/>
+				<obliged>
+				</obliged>
+			</visibility>		
+		</sourceProfile>
+		<sourceProfile id="six" access="public" name="Podcasts Sciences de l'ingenieur" 
+		 specificUserContent="no" ttl="60" url="http://www.canal-u.tv/layout/set/xml/content/view/podcast-theme/101/%28idTheme%29/68/">
+			<visibility>
+				<allowed>
+					<group name="local.14"/> <!-- Admins -->
+				</allowed>
+				<autoSubscribed/>
+				<obliged>
+				</obliged>
+			</visibility>		
+		</sourceProfile>
+		<sourceProfile id="sept" access="public" name="Podcasts Sciences fondamentales" 
+		 specificUserContent="no" ttl="60" url="http://www.canal-u.tv/layout/set/xml/content/view/podcast-theme/101/%28idTheme%29/67/">
+			<visibility>
+				<allowed>
+					<group name="local.14"/> <!-- Admins -->
+				</allowed>
+				<autoSubscribed/>
+				<obliged>
+				</obliged>
+			</visibility>		
+		</sourceProfile>
+		<sourceProfile id="huit" access="public" name="Podcasts Sciences humaines, sociales, de l'éducation et de l'information" 
+		 specificUserContent="no" ttl="60" url="http://www.canal-u.tv/layout/set/xml/content/view/podcast-theme/101/%28idTheme%29/66/">
+			<visibility>
+				<allowed>
+					<group name="local.14"/> <!-- Admins -->
+				</allowed>
+				<autoSubscribed/>
+				<obliged>
+				</obliged>
+			</visibility>		
+		</sourceProfile>
+		
+	</sourceProfiles>
+</category>

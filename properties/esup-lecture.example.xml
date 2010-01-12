@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" [
+<!ENTITY repConf "file:///data/webapps/ent.univ-rennes1.fr/application/esup-lecture/properties" >
+<!ENTITY httpConf "http://ent.univ-rennes1.fr/"
+>
+]
+>
+
+<channelConfig>
+	<ttl>0</ttl>
+	<guestUser>guest</guestUser>
+	<context 
+		name = "Actualités"
+		id = "default">
+		<description>Actualités</description> 
+		<refCategoryProfile refId="annonces"/>         <!-- portlet news : categorie Annonces Rennes 1 -->
+		<refCategoryProfile refId="rss-rennes1"/>      <!-- fils rss Rennes 1 -->
+		<categoryProfilesUrl 
+			url="&repConf;categories-canalu.example.xml" 
+			timeout=""
+			idPrefix="canalu"
+		/> <!-- fils canalu : categories definies ailleurs -->
+	</context>
+
+	<context 
+	  name = "Presse"
+	  id = "presse">
+	  <description>Annonces de la recherche</description> 
+		<refCategoryProfile refId="presse"/> 	         <!-- fils rss presse -->
+	</context>
+
+	<categoryProfile 
+		name="categorie annonces Rennes 1"
+		id="annonces"
+		urlCategory="&httpConf;newsPortlet/feeds/pub/rss?t=3&#38;cID=3"
+		trustCategory="yes"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 		<allowed/>
+			<autoSubscribed/>
+			<obliged>	
+				<group name="local.101"/> <!-- Etablissement -->
+				<group name="pags.LECTEURS"/>
+				<group name="pags.RETRAITESPERS"/>
+			</obliged>	
+		</visibility>
+	</categoryProfile>
+
+ 	<categoryProfile 
+		name="categorie fils RSS Rennes 1"
+		id="rss-rennes1"
+		urlCategory="&repConf;rss-rennes1.example.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 		<allowed/>
+			<autoSubscribed>	
+				<group name="local.101"/> <!-- Etablissement -->
+				<group name="pags.LECTEURS"/>
+				<group name="pags.RETRAITESPERS"/>
+			</autoSubscribed>	
+			<obliged/>	
+		</visibility>
+	</categoryProfile>
+
+	<categoryProfile 
+		name="categorie presse"
+		id="presse"
+		urlCategory="&repConf;presse.example.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600"
+		timeout = "3000">
+	 	<visibility>
+	 		<allowed>
+				<group name="local.101"/> 
+				<group name="pags.RETRAITESPERS"/>
+			</allowed>
+			<autoSubscribed/>
+			<obliged/>	
+		</visibility>
+	</categoryProfile>
+
+</channelConfig>
