@@ -179,7 +179,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>esup-lecture</servlet-name>
-		<url-pattern>/foo/*</url-pattern>
+		<url-pattern>/PlutoInvoker/esup-lecture</url-pattern>
 	</servlet-mapping>
  IS_PORTLET -->
 
