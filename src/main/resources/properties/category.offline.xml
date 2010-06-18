@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE category SYSTEM "category.dtd">
+<category edit="all" name="Presse" ttl="60">
+	<description>Exemples</description>
+	<sourceProfiles>
+		<sourceProfile id="un" access="public" name="Outils pédagogique de Rennes 1"
+			specificUserContent="no" ttl="86400" url="file:///A_GARDER_UN_PEU/workspace/lecture/src/main/resources/properties/flux.offline.xml">
+			<visibility>
+				<obliged>
+					<group name="local.0" />  <!-- Tous les groupes de personnes -->
+					<group name="local.15" /> <!-- Anonymes -->
+				</obliged>
+			</visibility>
+		</sourceProfile>
+
+<!-- 
+		<sourceProfile id="deux" access="public"
+			name="LeMonde.fr : International" specificUserContent="no" ttl="86400"
+			url="http://www.lemonde.fr/rss/sequence/0,2-3210,1-0,0.xml">
+			<visibility>
+				<obliged>
+					<group name="local.0" />  
+					<group name="local.15" /> 
+				</obliged>
+			</visibility>
+		</sourceProfile>
+
+		<sourceProfile id="trois" access="public"
+			name="L'Equipe.fr : Actu Sport" specificUserContent="no" ttl="86400"
+			url="http://www.lequipe.fr/Xml/actu_rss.xml">
+			<visibility>
+				<obliged>
+					<group name="local.0" />  
+					<group name="local.15" /> 
+				</obliged>
+			</visibility>
+		</sourceProfile>
+ -->
+
+	</sourceProfiles>
+	<visibility>
+		<obliged>
+			<group name="local.0" />
+			<group name="local.15" />
+		</obliged>
+	</visibility>
+</category>

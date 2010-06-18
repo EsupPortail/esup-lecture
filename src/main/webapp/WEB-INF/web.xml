@@ -1,0 +1,148 @@
+<?xml version="1.0"?>
+	<!--
+		/webapp/WEB-INF/web.xml The main configuration file of the application
+		for servlet installations.
+	-->
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>lecture</display-name>
+
+	<context-param>
+    	<param-name>webAppRootKey</param-name>
+		<param-value>esup-lecture</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:/properties/logging/log4j.properties</param-value>
+	</context-param>
+	
+	<context-param>
+		<description> The location of the main configuration file of the
+			Spring framework. </description>
+		<param-name>contextConfigLocation</param-name>
+		<param-value> classpath:/properties/applicationContext.xml 
+		</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>javax.faces.CONFIG_FILES</param-name>
+		<param-value> 
+			/WEB-INF/jsf/application.xml,/WEB-INF/jsf/commons-render-kit.xml  
+		</param-value>
+	</context-param>
+
+	<context-param>
+		<param-name>org.apache.myfaces.PRETTY_HTML</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.apache.myfaces.ALLOW_JAVASCRIPT</param-name>
+		<param-value>true</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.apache.myfaces.DETECT_JAVASCRIPT</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
+		<param-value>false</param-value>
+	</context-param>
+	<context-param>
+		<param-name>org.apache.myfaces.ADD_RESOURCE_CLASS</param-name>
+		<param-value>org.apache.myfaces.renderkit.html.util.DefaultAddResource</param-value>
+	</context-param>
+
+<!--BEGIN-SERVLET-ONLY-->
+	<context-param>
+		<param-name>org.apache.myfaces.CHECK_EXTENSIONS_FILTER</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
+<!--END-SERVLET-ONLY-->
+
+<!-- Plugging the "Blue Sky" skin into the project -->
+	<context-param>
+		<param-name>org.richfaces.SKIN</param-name>
+		<param-value>blueSky</param-value>
+	</context-param>
+
+<!-- Making the RichFaces skin spread to standard HTML controls -->
+	<context-param>
+		<param-name>org.richfaces.CONTROL_SKINNING</param-name>
+		<param-value>enable</param-value>
+	</context-param>
+	<servlet>
+		<description> The main servlet of the application. This class inherits
+			from the MyFaces implementation and handles exceptions thrown for
+			specific exception handling. </description>
+		<display-name>Faces Servlet</display-name>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class> javax.faces.webapp.FacesServlet </servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name> 
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>
+
+	<listener>
+		<listener-class>
+			org.springframework.web.util.Log4jConfigListener
+		</listener-class>
+	</listener>
+
+	<listener>
+		<description>
+			This listener makes the current HTTP request available to the Spring framework.
+		</description>
+		<display-name>RequestContextListener</display-name>
+		<listener-class>
+			org.springframework.web.context.request.RequestContextListener
+		</listener-class>
+	</listener>
+	
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+<!-- Defining and mapping the RichFaces filter -->
+	<filter>
+		<display-name>RichFaces Filter</display-name>
+		<filter-name>richfaces</filter-name>
+		<filter-class>org.ajax4jsf.Filter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>richfaces</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>INCLUDE</dispatcher>
+	</filter-mapping>
+
+<!--END-SERVLET-ONLY-->
+	<filter>
+		<description> This filter is needed to use some Tomahawk extentions. 
+		</description>
+		<display-name>MyFacesExtensionsFilter</display-name>
+		<filter-name>MyFacesExtensionsFilter</filter-name>
+		<filter-class> org.apache.myfaces.webapp.filter.ExtensionsFilter 
+		</filter-class>
+		<init-param>
+			<description> The maximum size of uploaded files. </description>
+			<param-name>maxFileSize</param-name>
+			<param-value>20m</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>MyFacesExtensionsFilter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>MyFacesExtensionsFilter</filter-name>
+		<url-pattern>/faces/myFacesExtensionResource/*</url-pattern>
+	</filter-mapping>
+</web-app>

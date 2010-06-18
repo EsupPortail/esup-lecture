@@ -1,0 +1,31 @@
+<!ELEMENT category (description,sourceProfiles, visibility?)>
+<!ATTLIST category 
+    name CDATA #REQUIRED
+    edit (all|personal|managed|no) "no">
+<!ELEMENT description (#PCDATA)>     
+<!ELEMENT sourceProfiles (sourceProfile+)>
+
+<!ELEMENT sourceProfile (visibility?)>
+<!ATTLIST sourceProfile 
+	id ID #REQUIRED
+    name CDATA #REQUIRED
+    url CDATA #REQUIRED
+    xslt CDATA #IMPLIED
+    xpath CDATA #IMPLIED
+    access (public|cas) #IMPLIED
+    specificUserContent (yes|no) "no"
+    timeout CDATA #IMPLIED>
+
+<!ELEMENT visibility (allowed,autoSubscribed,obliged)>
+
+<!ELEMENT allowed (regular*, group*)>
+<!ELEMENT autoSubscribed (regular*, group*)>
+<!ELEMENT obliged (regular*, group*)>
+
+<!ELEMENT regular EMPTY>
+<!ATTLIST regular 
+    attribute CDATA #REQUIRED
+    value CDATA #REQUIRED>
+
+<!ELEMENT group EMPTY>
+<!ATTLIST group name CDATA #REQUIRED>

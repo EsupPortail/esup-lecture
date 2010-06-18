@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ELEMENT channelConfig (ttl?, userId?, guestUser?, context*, categoryProfile*)>
+
+<!ELEMENT userId (#PCDATA)> <!-- deprecated since 0.8.4 -->
+<!ELEMENT guestUser (#PCDATA)>
+<!ELEMENT ttl (#PCDATA)>
+<!ELEMENT context (description,refCategoryProfile*,categoryProfilesUrl*)>
+<!ATTLIST context
+    name CDATA #REQUIRED
+	id ID #REQUIRED
+    treeVisible (yes|no) "yes"
+    edit (all|personal|managed|no) "no">
+
+<!ELEMENT description (#PCDATA)>
+
+<!ELEMENT refCategoryProfile EMPTY>
+<!ATTLIST refCategoryProfile 
+    refId IDREF #REQUIRED>
+
+<!ELEMENT categoryProfilesUrl EMPTY>
+<!ATTLIST categoryProfilesUrl 
+    url CDATA #REQUIRED
+    timeout CDATA #REQUIRED
+    idPrefix CDATA #IMPLIED>
+
+<!ELEMENT categoryProfile (visibility)>
+<!ATTLIST categoryProfile
+    id ID #REQUIRED
+	name CDATA #REQUIRED
+    urlCategory CDATA #REQUIRED
+    trustCategory (yes|no) "no"
+    edit (all|personal|managed|no) "no"
+    access (public|cas) "public"
+    userCanMarkRead (yes|no) "yes"
+    ttl CDATA #REQUIRED
+    timeout CDATA #REQUIRED>	
+    
+<!ELEMENT visibility (allowed,autoSubscribed,obliged)>
+
+<!ELEMENT allowed (regular*, group*)>
+<!ELEMENT autoSubscribed (regular*, group*)>
+<!ELEMENT obliged (regular*, group*)>
+
+<!ELEMENT regular EMPTY>
+<!ATTLIST regular 
+    attribute CDATA #REQUIRED
+    value CDATA #REQUIRED>
+
+<!ELEMENT group EMPTY>
+<!ATTLIST group 
+    name CDATA #REQUIRED> 
