@@ -505,11 +505,13 @@ public class Channel implements InitializingBean {
 	/**
 	 * @param contextId id of the context
 	 * @return true if the context is defined in this Channel
+	 * @throws ContextNotFoundException 
 	 */
-	protected boolean isThereContext(final String contextId) {
+	protected boolean isThereContext(final String contextId) throws ContextNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getContext(" + contextId + ")");
 		}
+		Context context = getContext(contextId);
 		return contextsHash.containsKey(contextId);		
 	}
 	
