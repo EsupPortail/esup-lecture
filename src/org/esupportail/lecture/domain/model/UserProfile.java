@@ -500,8 +500,8 @@ public class UserProfile {
 	   	//boolean foo = customSources.containsKey(sourceId);
 		CustomSource cs = customSources.remove(sourceId);
 		if (cs != null) {
-//			DomainTools.getDaoService().deleteCustomSource(cs);
-//			DomainTools.getDaoService().updateUserProfile(this);
+			DomainTools.getDaoService().deleteCustomSource(cs);
+			DomainTools.getDaoService().updateUserProfile(this);
 		}
 	}
 	
