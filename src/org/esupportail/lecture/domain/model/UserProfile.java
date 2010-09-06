@@ -481,8 +481,8 @@ public class UserProfile {
 	   	if (custom != null) {
 	   		custom.removeSubscriptions();
 	   		customCategories.remove(categoryId);
-//	   		DomainTools.getDaoService().deleteCustomCategory(custom);
-//			DomainTools.getDaoService().updateUserProfile(this);
+	   		DomainTools.getDaoService().deleteCustomCategory(custom);
+			DomainTools.getDaoService().updateUserProfile(this);
 	   	}
 	}
 	
