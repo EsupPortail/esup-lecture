@@ -182,6 +182,22 @@
 		<url-pattern>/PlutoInvoker/esup-lecture</url-pattern>
 	</servlet-mapping>
  IS_PORTLET -->
+ 
+<!-- Portlet configuration for pluto 1.1 (uP 3.x) 
+	<servlet>
+		<servlet-name>esup-lecture</servlet-name>
+		<servlet-class>org.apache.pluto.core.PortletServlet</servlet-class>
+		<init-param>
+			<param-name>portlet-name</param-name>
+			<param-value>esup-lecture</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>esup-lecture</servlet-name>
+		<url-pattern>/PlutoInvoker/esup-lecture</url-pattern>
+	</servlet-mapping>
+Portlet configuration for pluto 1.1 (uP 3.x)  -->
 
 <!-- 
 	<servlet>

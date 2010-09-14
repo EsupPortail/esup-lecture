@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mappings SYSTEM "mappings.dtd" [
 <!ENTITY repConf "file:///data/webapps/ent.univ-rennes1.fr/application/esup-lecture/properties" >
-<!ENTITY httpConf "http://ent.univ-rennes1.fr/"
+<!ENTITY httpConf "http://ent.univ-rennes1.fr/" >
 ] 
 >
 <!-- examples of mapping for applying xsl transformation to xml sources 
