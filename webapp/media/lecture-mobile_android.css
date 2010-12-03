@@ -14,6 +14,7 @@
 }
 
 .esup-lecture #panelRight {	
+	background: #2F2F2F; 
 	border: 1px solid #BBB; 
 	padding: 5px; 
 } 
@@ -69,7 +70,6 @@
 	overflow: hidden;
 	padding: 0px;
 	background-repeat: none;
-	margin-top: 2px;
 }
 
 .esup-lecture #right {
@@ -190,21 +190,20 @@
 
 .esup-lecture .source-title {
 	text-align: center;
-	background:#999 -webkit-gradient(linear,left top,left bottom,from(#9F9F9F),to(#000)) no-repeat top left;
 	-webkit-border-top-right-radius:10px;
 	-webkit-border-top-left-radius:10px;
 	text-align: left;
 	letter-spacing: 1px;
-	text-shadow: #3F3F3F 0 -1px 0;
-	color: white !important;
+	text-shadow: #8F8F8F 0 2px 2px;
+	color: #3F3F3F !important;
 	text-align: left;
 	text-indent: 5px;
 	font-weight: lighter;
-	padding: 5px 5px 5px 10px;
-	margin-top: 5px;
-	margin-bottom: -4px;
+	padding-left: 10px;
+	margin: 10px 0 2px;
 	padding-top: 5px;
 	font-weight:bold;
+	background:#999 -webkit-gradient(linear,left top,left bottom,from(#CFCFCF),to(#8F8F8F)) no-repeat top left;
 }
 
 /* other */
@@ -271,7 +270,7 @@
 */
 
 .esup-lecture .buttonStyle {
-	background: #D1DFEF;
+	background: #2F2F2F;
 	text-align: left;
 	margin: 0px;
 	border: 0px;
@@ -319,19 +318,16 @@
 .esup-lecture h1 {
 	font-weight: lighter;
 	line-height: 1 ! important;
-	margin-bottom: 4px ! important;
-	color: #B44E6F ; 
+	margin-bottom: 7px ! important;
+	color: #FF8E00 ; 
 	font-weight:bold;
 	text-decoration: none ! important;
 	font-size: 1.1em ! important;
-	background: #fff;
-	margin-left: -0.5px;
-	margin-right: -0.5px;
-	padding: 1px 2px 3px 2px;
+	background: #4F4F4F;
 }
 
 .esup-lecture h1 a {
-        color: #B44E6F ;
+        color: #a71817 ;
 }
 
 /* ENSCR
@@ -355,13 +351,13 @@
 }
 
 .esup-lecture a:focus, .esup-lecture a:hover {
-	/*color: #3F3F3F ! important;*/
+	/*color: #DF4545 ! important;*/
 	text-decoration: underline ! important;
 	font-size: 1em ! important;
 }
 
 .esup-lecture a {
-    color: #3F3F3F ! important;
+    color: #DFDFDF ! important;
 	text-decoration: underline ! important;
 	font-size: 1em ! important;
 }
@@ -374,11 +370,6 @@
 
 .esup-lecture .article {
 clear: both;
-background-color: #fff;
-margin-top: -4px;
-border-right: thin solid #a9adb0;
-border-left: thin solid #a9adb0;
-
 }
 .esup-lecture .article-block {
 clear: both;
@@ -389,7 +380,8 @@ clear: both;
 /* HACK Mobile : !important pour surcharge des styles inseres directement dans le HTML */
 
 .esup-lecture {
-color: #000;
+background: #2F2F2F;
+color: #FFFFFF;
 }
 
 .esup-lecture #panelLeft-ui {
@@ -443,9 +435,10 @@ display: none;
 
 .esup-lecture input.buttonStyle {
 display: inline;
-color: #53595F;
-border:medium outset #B3B9BF;
+color: #fff;
+border:thick outset #3F3F3F;
 font-size: .8em;
+-webkit-border-radius: 5px;
 }
 
 .esup-lecture #menuLeft {
