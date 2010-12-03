@@ -1,0 +1,24 @@
+<profilesXml xmlns="http://maven.apache.org/PROFILES/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/PROFILES/1.0.0
+                      http://maven.apache.org/xsd/profiles-1.0.0.xsd">
+	<profiles>
+		<profile>
+			<id>developpement</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<deploy.type>servlet</deploy.type>
+				<cas.url>https://sso-cas.univ-rennes1.fr</cas.url>
+				<tomcat.host>localhost</tomcat.host>
+				<tomcat.port.string>:8080</tomcat.port.string>
+				<log.level>INFO</log.level>
+				<log.output>stdout</log.output>
+				<log.pattern>%d %p [%c] - %m%n</log.pattern>
+				<log.file>/tmp/lecture.log</log.file>
+				<cache.path>/tmp/lecture</cache.path>
+			</properties>
+		</profile>
+	</profiles>
+</profilesXml>
