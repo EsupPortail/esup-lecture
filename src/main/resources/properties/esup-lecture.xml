@@ -138,7 +138,7 @@ Pour plus d'informations voir le
 	<categoryProfile 
 		name="Categorie de démo 1"
 		id="demo1"
-		urlCategory="file:///A_GARDER_UN_PEU/workspace/lecture/src/main/resources/properties/category.offline.xml"
+		urlCategory="${config.url.prefix}/category.offline.xml"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600" 

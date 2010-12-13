@@ -13,20 +13,19 @@
     version="1.2">
 
 	<application>
-		<el-resolver> 
-			org.springframework.web.jsf.el.SpringBeanFacesELResolver 
-		</el-resolver>
+		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
+		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
 		<locale-config>
 			<default-locale>en</default-locale>
 			<supported-locale>fr</supported-locale>
 		</locale-config>
+		<message-bundle>properties.i18n.bundles.JsfMessages</message-bundle>		
 	</application>
 	
 	<lifecycle>
-      <phase-listener>org.esupportail.commons.jsf.DeepLinkingPhaseListener</phase-listener>
+		<phase-listener>org.esupportail.commons.jsf.DeepLinkingPhaseListener</phase-listener>
+		<phase-listener>org.esupportail.commons.jsf.MessagesPhaseListener</phase-listener>
+		<phase-listener>org.esupportail.commons.jsf.ResourceBundlePhaseListener</phase-listener>
    </lifecycle>
 	
-<!--<variable-resolver>
-			org.springframework.web.jsf.DelegatingVariableResolver
-		</variable-resolver>
---></faces-config>
+</faces-config>

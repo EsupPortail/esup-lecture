@@ -12,11 +12,11 @@
 <faces-config>
 
 	<navigation-rule>
-		<display-name>index.jsp -> welcome.jsp</display-name>
-		<from-view-id>/index.jsp</from-view-id>
+		<display-name>index.jspx -> welcome.jspx</display-name>
+		<from-view-id>/index.jspx</from-view-id>
 		<navigation-case>
 			<from-outcome>welcome</from-outcome>
-			<to-view-id>/stylesheets/home.jsp</to-view-id>
+			<to-view-id>/stylesheets/home.jspx</to-view-id>
 			<redirect />
 		</navigation-case>
 	</navigation-rule>
@@ -34,24 +34,29 @@
 	<navigation-rule>
 		<navigation-case> 
 			<from-outcome>applicationRestarted</from-outcome>
-			<to-view-id>/stylesheets/home.jsp</to-view-id>
+			<to-view-id>/stylesheets/home.jspx</to-view-id>
 			<redirect/>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>navigationHome</from-outcome>
-			<to-view-id>/stylesheets/home.jsp</to-view-id>
+			<to-view-id>/stylesheets/home.jspx</to-view-id>
             <redirect/>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>navigationEdit</from-outcome>
-			<to-view-id>/stylesheets/edit.jsp</to-view-id>
+			<to-view-id>/stylesheets/edit.jspx</to-view-id>
             <redirect/>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>navigationLogin</from-outcome>
-			<to-view-id>/stylesheets/login.jsp</to-view-id>
+			<to-view-id>/stylesheets/login.jspx</to-view-id>
 			<redirect />
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>go_exception</from-outcome>
+			<to-view-id>/stylesheets/exceptions.jspx</to-view-id>
+			<redirect />
+		</navigation-case>		
 	</navigation-rule>
 
 </faces-config>

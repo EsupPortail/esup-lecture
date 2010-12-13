@@ -17,7 +17,7 @@ xlstFiles given here are only samples and must be copied and modified on your ow
  -->
 	<mapping 
 		rootElement="rss"
-		xsltFile="file:///A_GARDER_UN_PEU/workspace/lecture/src/main/resources/properties/stylesheet02.xsl"
+		xsltFile="${config.url.prefix}/stylesheet02.xsl"
 		itemXPath="/rss/channel/item">
 	</mapping>
 <!-- Same format as above, but with thickbox style : comment one of them -->

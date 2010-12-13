@@ -10,27 +10,26 @@
 	xmlns:jdt="http://www.jenia.org/jsf/dataTools">
 	<ui:composition template="/stylesheets/template.jspx">
 		<ui:define name="content">
-			<e:form id="home" showSubmitPopupText="false"
-				showSubmitPopupImage="false">
+			<h:form id="home">
 				<!-- ********* Rendering ********* -->
 				<t:div id="panels-layout" forceId="true"
 					rendered="#{homeController.treeVisible and !homeController.guestMode}">
 					<t:div id="panelLeft-ui" styleClass="ui-layout-west" forceId="true"
 						style="width: #{homeController.treeSize}%">
-						<jsp:include page="homeLeft.jsp" />
+						<ui:include src="homeLeft.jspx" />
 					</t:div>
 					<t:div id="panelRight-ui" styleClass="ui-layout-center"
 						forceId="true" style="width: #{99-homeController.treeSize}%">
-						<jsp:include page="homeRight.jsp" />
+						<ui:include src="homeRight.jspx" />
 					</t:div>
 				</t:div>
 				<t:div id="onePanel" forceId="true"
 					rendered="#{!homeController.treeVisible or homeController.guestMode}">
 					<t:div id="panelRight" forceId="true">
-						<jsp:include page="homeRight.jsp" />
+						<ui:include src="homeRight.jspx" />
 					</t:div>
 				</t:div>
-			</e:form>
+			</h:form>
 			<script type="text/javascript">
 			if (document.getElementById("home:itemDisplayModeButton")) {
 				document.getElementById("home:itemDisplayModeButton").style.display = "none";

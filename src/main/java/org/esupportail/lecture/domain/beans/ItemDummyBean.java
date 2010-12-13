@@ -12,6 +12,7 @@ import org.esupportail.commons.utils.strings.StringUtils;
 import org.esupportail.lecture.domain.utils.DummyInterface;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.UnknownException;
+import org.springframework.web.util.HtmlUtils;
 
 /**
  * A DummyBean for a ItemBean.
@@ -100,7 +101,7 @@ public class ItemDummyBean extends ItemBean implements DummyInterface {
 		StringBuffer result = new StringBuffer();
 		String separator = "";
 		for (String string : strings) {
-			result.append(separator).append(StringUtils.escapeHtml(string));
+			result.append(separator).append(HtmlUtils.htmlEscape(string));
 			separator = "<br/>";
 		}
 		return result.toString();

@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.esupportail.lecture</groupId>
+	<groupId>org.esupportail</groupId>
 	<artifactId>lecture</artifactId>
 	<packaging>war</packaging>
 	<version>2.0-SNAPSHOT</version>
-	<name>esup-blank</name>
+	<name>esup-lecture</name>
 	<url>http://maven.apache.org</url>
 	<repositories>
 		<repository>
@@ -42,6 +42,12 @@
 	</distributionManagement>
 	<build>
 		<defaultGoal>install</defaultGoal>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -84,20 +90,11 @@
 				<version>6.1.21</version>
 				<configuration>
 					<contextPath>/</contextPath>
-					<scanIntervalSeconds>3</scanIntervalSeconds>
-					<scanTargetPatterns>
-						<scanTargetPattern>
-							<directory>src/main/webapp/WEB-INF</directory>
-							<excludes>
-								<exclude>**/*.jsp</exclude>
-								<exclude>**/*.xhtml</exclude>
-							</excludes>
-							<includes>
-								<include>**/*.properties</include>
-								<include>**/*.xml</include>
-							</includes>
-						</scanTargetPattern>
-					</scanTargetPatterns>
+					<!-- <scanIntervalSeconds>3</scanIntervalSeconds> <scanTargetPatterns> 
+						<scanTargetPattern> <directory>src/main/webapp/WEB-INF</directory> <excludes> 
+						<exclude>**/*.jsp</exclude> <exclude>**/*.xhtml</exclude> </excludes> <includes> 
+						<include>**/*.properties</include> <include>**/*.xml</include> </includes> 
+						</scanTargetPattern> </scanTargetPatterns> -->
 				</configuration>
 			</plugin>
 		</plugins>
@@ -105,58 +102,28 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.esupportail</groupId>
-			<artifactId>esup-commons-jsf</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<artifactId>esup-commons2-jsf</artifactId>
+			<version>${esup-commons.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.esupportail</groupId>
-			<artifactId>esup-commons-exceptionHandling</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<artifactId>esup-commons2-exceptionHandling</artifactId>
+			<version>${esup-commons.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.esupportail</groupId>
-			<artifactId>esup-commons-auth</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<artifactId>esup-commons2-jsf-exception</artifactId>
+			<version>${esup-commons.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
-			<version>1.0</version>
+			<groupId>org.esupportail</groupId>
+			<artifactId>esup-commons2-auth</artifactId>
+			<version>${esup-commons.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>3.3.2.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>3.4.0.GA</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>3.0.1.RELEASE</version>
-		</dependency>
-		<dependency>
-			<groupId>org.aspectj</groupId>
-			<artifactId>aspectjweaver</artifactId>
-			<version>1.6.8</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>1.5.8</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId>
-			<version>1.4</version>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.12</version>
+			<groupId>org.esupportail</groupId>
+			<artifactId>esup-commons2-jpa</artifactId>
+			<version>${esup-commons.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>dom4j</groupId>
@@ -173,10 +140,37 @@
 			<artifactId>cglib-nodep</artifactId>
 			<version>2.1_3</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>${javax.servlet.version}</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<properties>
 		<org.springframework.version>3.0.2.RELEASE</org.springframework.version>
 		<javax.portlet.version>1.0</javax.portlet.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
+		<esup-commons.version>0.2.1</esup-commons.version>
 	</properties>
+	<profiles>
+		<profile>
+			<id>developpement</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<deploy.type>servlet</deploy.type>
+				<cas.url>https://sso-cas.univ-rennes1.fr</cas.url>
+				<tomcat.host>localhost</tomcat.host>
+				<tomcat.port.string>:8080</tomcat.port.string>
+				<log.level>INFO</log.level>
+				<log.output>stdout</log.output>
+				<log.pattern>%d %p [%c] - %m%n</log.pattern>
+				<log.file>/tmp/lecture.log</log.file>
+				<cache.path>/tmp/lecture</cache.path>
+				<config.url.prefix>file:///A_GARDER_UN_PEU/workspaces/lecture/lecture/target/classes/properties</config.url.prefix>
+			</properties>
+		</profile>
+	</profiles>
 </project>

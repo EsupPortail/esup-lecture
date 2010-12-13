@@ -21,8 +21,7 @@
 		<property name="recipientEmail" value="${exceptionHandling.email}" />
 		<property name="exceptionViews" >
 			<map>
-				<entry key="java.lang.OutOfMemoryError" value="/stylesheets/outOfMemoryException.jsp" />
-				<entry key="java.lang.Exception" value="/stylesheets/databaseException.jsp" />
+				<entry key="java.lang.Exception" value="go_exception" />
 			</map>
 		</property>
 		<property name="logLevel" value="${exceptionHandling.logLevel}" />

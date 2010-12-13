@@ -10,21 +10,19 @@
 	xmlns:jdt="http://www.jenia.org/jsf/dataTools">
 	<ui:composition template="/stylesheets/template.jspx">
 		<ui:define name="content">
-			<e:form id="edit" showSubmitPopupText="false"
-				showSubmitPopupImage="false">
-
+			<h:form id="edit">
 				<t:div id="panels-layout" forceId="true">
 					<t:div id="panelLeft-ui" styleClass="ui-layout-west" forceId="true"
 						style="width: #{editController.treeSize}%">
-						<jsp:include page="editLeft.jsp" />
+						<ui:include src="editLeft.jspx" />
 					</t:div>
 					<t:div id="panelRight-ui" styleClass="ui-layout-center"
 						forceId="true" style="width: #{99-editController.treeSize}%">
-						<jsp:include page="editRight.jsp" />
+						<ui:include src="editRight.jspx" />
 					</t:div>
 				</t:div>
 
-			</e:form>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </jsp:root>

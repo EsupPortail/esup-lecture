@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:e="http://commons.esup-portail.org">
+	<ui:composition template="/stylesheets/template_basic.jspx">
+		<ui:define name="content">
+			<t:htmlTag value="br" />
+			<t:htmlTag value="br" />
+			<t:div styleClass="sub_sections"
+				style="text-align:center;margin-right:10%;margin-left:10%;">
+				<e:section value="#{msgs['EXCEPTIONS.MESSAGES.DEFAULT.TITLE']}" />
+				<h:outputFormat id="exceptionMessage"
+					value="#{msgs['EXCEPTIONS.MESSAGES.DEFAULT']}"
+					style="font-size:18px;" escape="false">
+					<f:param value="#{welcomeController.urlAssistance}" />
+				</h:outputFormat>
+
+				<t:htmlTag value="br" />
+				<h:form>
+					<h:commandButton value="Retour à l'accueil"
+						action="#{exceptionController.restart}" />
+				</h:form>
+			</t:div>
+		</ui:define>
+	</ui:composition>
+</jsp:root>
