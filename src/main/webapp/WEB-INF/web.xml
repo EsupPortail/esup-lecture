@@ -28,7 +28,7 @@
 	<context-param>
 		<param-name>javax.faces.CONFIG_FILES</param-name>
 		<param-value> 
-			/WEB-INF/jsf/application.xml,/WEB-INF/jsf/commons-render-kit.xml  
+			/WEB-INF/jsf/application.xml,/WEB-INF/jsf/navigation-rules.xml
 		</param-value>
 	</context-param>
 	<context-param>

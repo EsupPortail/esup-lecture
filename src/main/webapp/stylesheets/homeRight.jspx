@@ -105,9 +105,7 @@
 						<!-- Item Display -->
 						<t:htmlTag value="div"
 							styleClass="#{item.read ? 'readArticle' : 'unreadArticle'}">
-							<f:verbatim>
 								<h:outputText value="#{item.htmlContent}" escape="false" />
-							</f:verbatim>
 						</t:htmlTag>
 					</t:htmlTag>
 				</t:dataList>
