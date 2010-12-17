@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+<div 
+    xmlns="http://www.w3c.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:t="http://myfaces.apache.org/tomahawk">
-	<jsp:directive.page language="java"
-		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
 	<!-- 
 	<f:subview id="rightSubview">
  -->
@@ -40,40 +39,6 @@
 						value="#{msgs['changeItemDisplayModeButtonLabel']}"
 						action="#{homeController.changeItemDisplayMode}" />
 				</t:htmlTag>
-				<!-- 
-					<h:commandButton styleClass="buttonNoStyle"
-						action="#{homeController.changeItemDisplayMode}"
-						value="#{msgs['all']}" alt="#{msgs['all']}" title="#{msgs['all']}"
-						rendered="#{homeController.selectedCategory.withSelectedSource}">
-						<t:updateActionListener
-							property="#{homeController.itemDisplayMode}"
-							value="#{homeController.all}" />
-					</h:commandButton>
-					<h:outputText value="|"
-						rendered="#{homeController.selectedCategory.withSelectedSource}" />
-					<h:commandButton styleClass="buttonNoStyle"
-						action="#{homeController.changeItemDisplayMode}"
-						value="#{msgs['notRead']}" alt="#{msgs['notRead']}"
-						title="#{msgs['notRead']}"
-						rendered="#{homeController.selectedCategory.withSelectedSource}">
-						<t:updateActionListener
-							property="#{homeController.itemDisplayMode}"
-							value="#{homeController.unread}" />
-					</h:commandButton>
-					<h:outputText value="|"
-						rendered="#{homeController.selectedCategory.withSelectedSource}" />
-					<h:commandButton styleClass="buttonNoStyle"
-						action="#{homeController.changeItemDisplayMode}"
-						value="#{msgs['unreadFirst']}" alt="#{msgs['unreadFirst']}"
-						title="#{msgs['unreadFirst']}"
-						rendered="#{homeController.selectedCategory.withSelectedSource}">
-						<t:updateActionListener
-							property="#{homeController.itemDisplayMode}"
-							value="#{homeController.unreadfirt}" />
-					</h:commandButton>
-					<h:outputText value="|"
-						rendered="#{homeController.selectedCategory.withSelectedSource}" />
--->
 				<t:htmlTag id="menuAndXML" value="li"
 					rendered="#{!homeController.treeVisible}">
 					<h:commandButton action="#{homeController.toggleTreeVisibility}"
@@ -152,4 +117,4 @@
 	<!-- 
 	</f:subview>
  -->
-</jsp:root>
+</div>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
+<html 
+    xmlns="http://www.w3c.org/1999/xhtml"
+   	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:t="http://myfaces.apache.org/tomahawk"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:e="http://commons.esup-portail.org"
-	xmlns:a4j="http://richfaces.org/a4j"
-	xmlns:rich="http://richfaces.org/rich">
+	xmlns:f="http://java.sun.com/jsf/core" class="portlet-section-body esup-lecture">
 	<f:view locale="#{sessionController.locale}">
+<!-- 
 		<t:htmlTag value="html">
+ -->		
 			<t:htmlTag value="head">
 				<t:htmlTag value="title">
 					<h:outputText value="#{applicationService.name}" />
@@ -24,7 +24,9 @@
 			<t:htmlTag value="body" styleClass="fl-theme-app">
 				<ui:insert name="content" />
 			</t:htmlTag>
+<!-- 
 		</t:htmlTag>
+ -->			
 	</f:view>
-</jsp:root>
+</html>
 
