@@ -54,7 +54,7 @@
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>go_exception</from-outcome>
-			<to-view-id>/stylesheets/exceptions.jspx</to-view-id>
+			<to-view-id>/stylesheets/exception.jspx</to-view-id>
 			<redirect />
 		</navigation-case>		
 	</navigation-rule>

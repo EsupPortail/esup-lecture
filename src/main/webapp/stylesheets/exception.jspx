@@ -1,29 +1,256 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.0"
+<div xmlns="http://www.w3c.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:t="http://myfaces.apache.org/tomahawk"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:e="http://commons.esup-portail.org">
-	<ui:composition template="/stylesheets/template_basic.jspx">
-		<ui:define name="content">
-			<t:htmlTag value="br" />
-			<t:htmlTag value="br" />
-			<t:div styleClass="sub_sections"
-				style="text-align:center;margin-right:10%;margin-left:10%;">
-				<e:section value="#{msgs['EXCEPTIONS.MESSAGES.DEFAULT.TITLE']}" />
-				<h:outputFormat id="exceptionMessage"
-					value="#{msgs['EXCEPTIONS.MESSAGES.DEFAULT']}"
-					style="font-size:18px;" escape="false">
-					<f:param value="#{welcomeController.urlAssistance}" />
-				</h:outputFormat>
+	xmlns:f="http://java.sun.com/jsf/core"><ui:composition
+	template="/stylesheets/template.jspx">
+	<ui:define name="content">
+		<t:htmlTag value="br" />
+		<t:htmlTag value="br" />
+		<t:div styleClass="sub_sections"
+			style="text-align:center;margin-right:10%;margin-left:10%;">
 
-				<t:htmlTag value="br" />
-				<h:form>
-					<h:commandButton value="Retour à l'accueil"
-						action="#{exceptionController.restart}" />
-				</h:form>
-			</t:div>
-		</ui:define>
-	</ui:composition>
-</jsp:root>
+			<t:htmlTag value="h1">
+				<h:outputText value="#{msgs['EXCEPTION.TITLE']}" />
+			</t:htmlTag>			
+
+			<h:panelGrid columns="2" width="100%"
+				cellspacing="0" cellpadding="0" border="1">
+
+				<h:outputLabel for="applicationName"
+					value="#{msgs['EXCEPTION.INFORMATION.APPLICATION']}" />
+				<h:outputText id="applicationName"
+					value="#{exceptionController.applicationName}" />
+
+				<h:outputLabel for="applicationVersion"
+					value="#{msgs['EXCEPTION.INFORMATION.VERSION']}" />
+				<h:outputText id="applicationVersion"
+					value="#{exceptionController.applicationVersion}" />
+
+				<h:outputLabel for="server"
+					value="#{msgs['EXCEPTION.INFORMATION.SERVER']}" />
+				<h:panelGroup id="server">
+					<h:outputText value="#{exceptionController.server}"
+						rendered="#{exceptionController.server != null}" />
+					<h:outputText
+						value="#{msgs['EXCEPTION.INFORMATION.SERVER.UNKNOWN']}"
+						rendered="#{exceptionController.server == null}" />
+				</h:panelGroup>
+
+				<h:outputLabel for="date"
+					value="#{msgs['EXCEPTION.INFORMATION.DATE']}" />
+				<h:outputText id="date" value="#{exceptionController.date}" />
+
+				<h:outputLabel for="userId"
+					value="#{msgs['EXCEPTION.INFORMATION.USER_ID']}" />
+				<h:panelGroup id="userId">
+					<h:outputText value="#{exceptionController.userId}"
+						rendered="#{exceptionController.userId != null}" />
+					<h:outputText
+						value="#{msgs['EXCEPTION.INFORMATION.USER_ID.UNKNOWN']}"
+						rendered="#{exceptionController.userId == null}" />
+				</h:panelGroup>
+
+				<h:outputLabel for="portal"
+					value="#{msgs['EXCEPTION.INFORMATION.PORTAL']}" />
+				<h:panelGroup id="portal">
+					<h:panelGroup rendered="#{exceptionController.portal != null}">
+						<h:outputText value="#{exceptionController.portal}" />
+						<h:outputText
+							value=" #{msgs['EXCEPTION.INFORMATION.PORTAL.QUICK_START']}"
+							rendered="#{exceptionController.quickStart}" />
+					</h:panelGroup>
+					<h:outputText
+						value="#{msgs['EXCEPTION.INFORMATION.PORTAL.UNKNOWN']}"
+						rendered="#{exceptionController.portal == null}" />
+				</h:panelGroup>
+
+				<h:outputLabel for="client"
+					value="#{msgs['EXCEPTION.INFORMATION.CLIENT']}" />
+				<h:panelGroup id="client">
+					<h:outputText value="#{exceptionController.client}"
+						rendered="#{exceptionController.client != null}" />
+					<h:outputText
+						value="#{msgs['EXCEPTION.INFORMATION.CLIENT.UNKNOWN']}"
+						rendered="#{exceptionController.client == null}" />
+				</h:panelGroup>
+
+				<h:outputLabel for="queryString"
+					value="#{msgs['EXCEPTION.INFORMATION.QUERY_STRING']}" />
+				<h:panelGroup id="queryString">
+					<h:outputText value="#{exceptionController.queryString}"
+						rendered="#{exceptionController.queryString != null}" />
+					<h:outputText
+						value="#{msgs['EXCEPTION.INFORMATION.QUERY_STRING.UNKNOWN']}"
+						rendered="#{exceptionController.queryString == null}" />
+				</h:panelGroup>
+
+				<h:outputLabel for="userAgent"
+					value="#{msgs['EXCEPTION.INFORMATION.USER_AGENT']}" />
+				<h:panelGroup id="userAgent">
+					<h:outputText value="#{exceptionController.userAgent}"
+						rendered="#{exceptionController.userAgent != null}" />
+					<h:outputText
+						value="#{msgs['EXCEPTION.INFORMATION.USER_AGENT.UNKNOWN']}"
+						rendered="#{exceptionController.userAgent == null}" />
+				</h:panelGroup>
+			</h:panelGrid>
+
+			<t:htmlTag value="h2">
+				<h:outputText value="#{msgs['EXCEPTION.HEADER.EXCEPTION']}" />
+			</t:htmlTag>
+
+			<h:panelGrid columns="2" width="100%" border="1"
+				cellspacing="0" cellpadding="0">
+
+				<h:outputLabel for="exceptionName"
+					value="#{msgs['EXCEPTION.EXCEPTION.NAME']}" />
+				<h:outputText id="exceptionName"
+					value="#{exceptionController.exceptionName}" />
+
+				<h:outputLabel for="exceptionMessage"
+					value="#{msgs['EXCEPTION.EXCEPTION.MESSAGE']}" />
+				<h:outputText id="exceptionMessage"
+					value="#{exceptionController.exceptionMessage}" />
+
+				<h:outputLabel for="exceptionShortStackTrace"
+					value="#{msgs['EXCEPTION.EXCEPTION.SHORT_STACK_TRACE']}" />
+				<h:dataTable id="exceptionShortStackTrace"
+					value="#{exceptionController.exceptionShortStackTrace}"
+					var="string" border="0" style="width: 100%">
+					<t:column>
+						<h:outputText value="#{string}" />
+					</t:column>
+				</h:dataTable>
+
+				<h:outputLabel for="exceptionStackTrace"
+					value="#{msgs['EXCEPTION.EXCEPTION.STACK_TRACE']}" />
+				<h:dataTable id="exceptionStackTrace"
+					value="#{exceptionController.exceptionStackTrace}" var="string"
+					border="0" style="width: 100%">
+					<t:column>
+						<h:outputText value="#{string}" />
+					</t:column>
+				</h:dataTable>
+
+			</h:panelGrid>
+
+			<t:htmlTag value="h2">
+				<h:outputText value="#{msgs['EXCEPTION.HEADER.REQUEST_ATTRIBUTES']}" />
+			</t:htmlTag>
+
+			<h:dataTable id="requestAttributes"
+				value="#{exceptionController.requestAttributes}" var="string"
+				border="1" style="width: 100%"
+				rendered="#{not empty exceptionController.requestAttributes}">
+				<t:column>
+					<h:outputText value="#{string}" />
+				</t:column>
+			</h:dataTable>
+			<h:outputText value="#{msgs['EXCEPTION.REQUEST_ATTRIBUTES.NONE']}"
+				rendered="#{empty exceptionController.requestAttributes}" />
+
+			<t:htmlTag value="h2">
+				<h:outputText value="#{msgs['EXCEPTION.HEADER.SESSION_ATTRIBUTES']}" />
+			</t:htmlTag>
+
+			<h:dataTable id="sessionAttributes"
+				value="#{exceptionController.sessionAttributes}" var="string"
+				border="1" style="width: 100%"
+				rendered="#{not empty exceptionController.sessionAttributes}">
+				<t:column>
+					<h:outputText value="#{string}" />
+				</t:column>
+			</h:dataTable>
+			<h:outputText value="#{msgs['EXCEPTION.SESSION_ATTRIBUTES.NONE']}"
+				rendered="#{empty exceptionController.sessionAttributes}" />
+
+			<t:htmlTag value="h2">
+				<h:outputText
+					value="#{msgs['EXCEPTION.HEADER.GLOBAL_SESSION_ATTRIBUTES']}" />
+			</t:htmlTag>
+
+			<h:dataTable id="globalSessionAttributes"
+				value="#{exceptionController.globalSessionAttributes}" var="string"
+				border="1" style="width: 100%"
+				rendered="#{not empty exceptionController.globalSessionAttributes}">
+				<t:column>
+					<h:outputText value="#{string}" />
+				</t:column>
+			</h:dataTable>
+			<h:outputText
+				value="#{msgs['EXCEPTION.GLOBAL_SESSION_ATTRIBUTES.NONE']}"
+				rendered="#{empty exceptionController.globalSessionAttributes}" />
+
+			<t:htmlTag value="h2">
+				<h:outputText value="#{msgs['EXCEPTION.HEADER.REQUEST_HEADERS']}" />
+			</t:htmlTag>
+
+			<h:dataTable id="requestHeaders"
+				value="#{exceptionController.requestHeaders}" var="string"
+				border="1" style="width: 100%"
+				rendered="#{not empty exceptionController.requestHeaders}">
+				<t:column>
+					<h:outputText value="#{string}" />
+				</t:column>
+			</h:dataTable>
+			<h:outputText value="#{msgs['EXCEPTION.REQUEST_HEADERS.NONE']}"
+				rendered="#{empty exceptionController.requestHeaders}" />
+
+			<t:htmlTag value="h2">
+				<h:outputText value="#{msgs['EXCEPTION.HEADER.REQUEST_PARAMETERS']}" />
+			</t:htmlTag>
+
+			<h:dataTable id="requestParameters"
+				value="#{exceptionController.requestParameters}" var="string"
+				border="1" style="width: 100%"
+				rendered="#{not empty exceptionController.requestParameters}">
+				<t:column>
+					<h:outputText value="#{string}" />
+				</t:column>
+			</h:dataTable>
+			<h:outputText value="#{msgs['EXCEPTION.REQUEST_PARAMETERS.NONE']}"
+				rendered="#{empty exceptionController.requestParameters}" />
+
+			<t:htmlTag value="h2">
+				<h:outputText value="#{msgs['EXCEPTION.HEADER.COOKIES']}" />
+			</t:htmlTag>
+
+			<h:dataTable id="cookies" value="#{exceptionController.cookies}"
+				var="string" border="1" style="width: 100%"
+				rendered="#{not empty exceptionController.cookies}">
+				<t:column>
+					<h:outputText value="#{string}" />
+				</t:column>
+			</h:dataTable>
+			<h:outputText value="#{msgs['EXCEPTION.COOKIES.NONE']}"
+				rendered="#{empty exceptionController.cookies}" />
+
+			<t:htmlTag value="h2">
+				<h:outputText value="#{msgs['EXCEPTION.HEADER.SYSTEM_PROPERTIES']}" />
+			</t:htmlTag>
+
+			<h:dataTable id="systemProperties"
+				value="#{exceptionController.systemProperties}" var="string"
+				border="1" style="width: 100%" 
+				rendered="#{not empty exceptionController.systemProperties}" >
+				<t:column>
+					<h:outputText value="#{string}" />
+				</t:column>
+			</h:dataTable>
+			<h:outputText value="#{msgs['EXCEPTION.SYSTEM_PROPERTIES.NONE']}"
+				rendered="#{empty exceptionController.systemProperties}" />
+
+			<h:outputFormat rendered="#{exceptionController.recipientEmail != null}"
+				value="#{msgs['EXCEPTION.TEXT.BOTTOM']}">
+				<f:param value="#{exceptionController.recipientEmail}" />
+			</h:outputFormat>
+
+			<h:form>
+				<h:commandButton value="Retour à l'accueil"
+					action="#{exceptionController.restart}" />
+			</h:form>
+		</t:div>
+	</ui:define>
+</ui:composition></div>
