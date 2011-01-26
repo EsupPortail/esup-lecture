@@ -365,7 +365,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			CustomSource customSource;
 			customSource = ret.getCustomSource(sourceId);
 			customSource.setItemReadMode(itemId, isRead);
-ret = DomainTools.getDaoService().mergeUserProfile(ret);			
 			//No need to call DomainTools.getDaoService().saveUserProfile(userProfile) because of hibernate tracking
 			return ret;
 		} catch (CustomSourceNotFoundException e) {
@@ -426,7 +425,6 @@ ret = DomainTools.getDaoService().mergeUserProfile(ret);
 			throw new InternalDomainException(errorMsg, e);
 		}
 		customContext.modifyTreeSize(size);
-ret = DomainTools.getDaoService().mergeUserProfile(ret); 
 		return ret;
 	}
 

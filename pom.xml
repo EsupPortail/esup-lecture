@@ -147,7 +147,7 @@
 	<properties>
 		<javax.portlet.version>1.0</javax.portlet.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
-		<esupcommons.version>0.2.2</esupcommons.version>
+		<esupcommons.version>0.2.3-SNAPSHOT</esupcommons.version>
 	</properties>
 	<profiles>
 		<profile>
@@ -186,11 +186,6 @@
 					<groupId>org.esupportail</groupId>
 					<artifactId>esup-commons2-jsf-portlet</artifactId>
 					<version>${esupcommons.version}</version>
-				</dependency>
-				<dependency>
-					<groupId>org.apache.myfaces.portlet-bridge</groupId>
-					<artifactId>portlet-bridge-impl</artifactId>
-					<version>1.0.0</version>
 				</dependency>
 			</dependencies>
 			<properties>

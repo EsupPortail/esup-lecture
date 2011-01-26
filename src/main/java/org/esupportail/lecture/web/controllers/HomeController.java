@@ -170,7 +170,7 @@ public class HomeController extends TwoPanesController {
 		} catch (Exception e) {
 			throw new WebException("Error in toogleAllItemsReadState", e);
 		}
-		return "OK";
+		return "navigationHome";
 	}	
 
 	/*

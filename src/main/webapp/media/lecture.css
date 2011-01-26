@@ -1,5 +1,9 @@
 @CHARSET "ISO-8859-1";
 
+.esup-lecture * {
+	-moz-box-shadow:;
+}
+
 /* main divs style */
 
 .esup-lecture #twoPanels {
@@ -24,25 +28,29 @@
 }
 
 .esup-lecture li.currentSource,
-.esup-lecture li.expanded ul li.currentSource .buttonStyle
+.esup-lecture li.expanded ul li.currentSource input.buttonStyle[type="submit"]
  {
 	background-color: #dddddd;
 }
 
 .esup-lecture li.otherSource,
-.esup-lecture li.expanded ul li.otherSource .buttonStyle
+.esup-lecture li.expanded ul li.otherSource input.buttonStyle[type="submit"]
  {
 	background-color: #ffffff;
 }
 
-.esup-lecture li.sourceUnreadItems,
-.esup-lecture li.expanded ul li.sourceUnreadItems .buttonStyle
+.esup-lecture ul li.sourceUnreadItems input.buttonStyle[type="submit"]
+ {
+	font-weight: bold;
+}
+		
+.esup-lecture li.expanded ul li.sourceUnreadItems input.buttonStyle[type="submit"]
  {
 	font-weight: bold;
 }
 
 .esup-lecture li.sourceNoUnreadItems,
-.esup-lecture li.expanded ul li.sourceNoUnreadItems .buttonStyle
+.esup-lecture li.expanded ul li.sourceNoUnreadItems input.buttonStyle[type="submit"]
  {
 	font-weight: normal;
 }
@@ -269,7 +277,8 @@
 }
 */
 
-.esup-lecture .buttonStyle {
+.esup-lecture input[type="image"],
+.esup-lecture input.buttonStyle[type="submit"] {
 	background: #fff;
 	text-align: left;
 	margin: 0px;
@@ -280,9 +289,16 @@
 	padding: 0px;
 	width: auto;
 	overflow: visible;
+	color: black;
+	-moz-box-shadow: none;
+	font-size: 100%;
+	text-shadow: none;
+	text-transform: none;
+	font-weight: normal;
+	background-color: transparent;
 }
 
-.esup-lecture ul li ul li .buttonStyle {
+.esup-lecture ul li ul li button.buttonStyle[type="submit"] {
 	font-size: 1em;
 }	
 	
@@ -341,8 +357,8 @@
 .esup-lecture .portlet-section-header {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
 	font-size: 1.8em ! important;
-/*	color: #A71817 ! important; */
 	font-weight: bold;
+	border: none;
 }
 
 .esup-lecture a:focus, .esup-lecture a:hover {
