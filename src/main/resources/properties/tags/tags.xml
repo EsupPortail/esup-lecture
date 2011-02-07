@@ -96,6 +96,9 @@
     			<value>commons.css</value>
     			<value>portlet.css</value>
                 <value>lecture.css</value>
+                <value>thickbox.css</value>
+                <value>js-layout.css</value>
+                <value>custom.css</value>
     		</list>
     	</property>
     	<property name="documentBodyStyleClass" value="portlet-section-body esup-lecture" >
