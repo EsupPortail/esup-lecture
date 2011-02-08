@@ -319,6 +319,7 @@ public class ChannelConfig  {
 			defAndContentSets.addGroup(group.valueOf("@name"));
 		}
 
+		fatherPath = "visibility/" + fatherName + "/regular";
 		List<Node> regulars = categoryProfile.selectNodes(fatherPath);
 		for (Node regular : regulars) {
    			RegularOfSet regularOfSet = new RegularOfSet();

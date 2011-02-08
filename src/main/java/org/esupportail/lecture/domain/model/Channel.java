@@ -505,6 +505,7 @@ public class Channel implements InitializingBean {
 	/**
 	 * @param contextId id of the context
 	 * @return true if the context is defined in this Channel
+	 * @throws ContextNotFoundException 
 	 */
 	protected boolean isThereContext(final String contextId) {
 		if (LOG.isDebugEnabled()) {
