@@ -1,0 +1,450 @@
+@CHARSET "ISO-8859-1";
+
+/* main divs style */
+
+.esup-lecture #twoPanels {
+	position:relative;
+	display: inline;
+}
+
+.esup-lecture #panelLeft {
+	float: left;
+	border-right: 1px solid black;
+	padding-left: 2px;
+}
+
+.esup-lecture #panelRight {	
+	background: #2F2F2F; 
+	border: 1px solid #BBB; 
+	padding: 5px; 
+} 
+
+.esup-lecture .portlet-menu {
+	clear: both;
+}
+
+.esup-lecture li.currentSource,
+.esup-lecture li.expanded ul li.currentSource .buttonStyle
+ {
+	background-color: #dddddd;
+}
+
+.esup-lecture li.otherSource,
+.esup-lecture li.expanded ul li.otherSource .buttonStyle
+ {
+	background-color: #ffffff;
+}
+
+.esup-lecture li.sourceUnreadItems,
+.esup-lecture li.expanded ul li.sourceUnreadItems .buttonStyle
+ {
+	font-weight: bold;
+}
+
+.esup-lecture li.sourceNoUnreadItems,
+.esup-lecture li.expanded ul li.sourceNoUnreadItems .buttonStyle
+ {
+	font-weight: normal;
+}
+
+.esup-lecture .currentCategory {
+	background-color: #ffffff;
+	font-weight: bold;
+}
+
+.esup-lecture .otherCategory {
+	background-color: #ffffff;
+	font-weight: bold;
+}
+
+.esup-lecture .unreadItemsNumber {
+	margin-left:0px;
+	font-size: 0.9em;
+	font-weight: bold;
+}
+
+.esup-lecture #left {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	letter-spacing: normal;
+	padding: 0px 10px;
+	overflow: hidden;
+	padding: 0px;
+	background-repeat: none;
+}
+
+.esup-lecture #right {
+	padding: 0px;
+	margin: 0px;
+	clear: both;
+}
+
+.esup-lecture #menuRight {
+	margin: 0px;
+	padding-top: 15px;
+}
+
+/* menu style */
+.esup-lecture .menuTitle {
+	float: left;
+	padding-left: 10px;
+	/*	margin-left: 5px; */ /*	vertical-align: middle; */
+}
+
+.esup-lecture .menuButton {
+	text-align: right;
+	padding-right: 5px;
+	vertical-align: bottom;
+}
+
+.esup-lecture .menuButton ul {
+	list-style-type: none;
+	display: block;
+	text-align: right;
+}
+
+.esup-lecture .menuButton li {
+	display: inline;
+	margin: 0 0 0 3px;
+	padding: 0px;
+}
+
+/* Tree Style */
+.esup-lecture #left ul {
+	list-style: none outside none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.esup-lecture #left ul {
+	list-style: none outside none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.esup-lecture #left ul li {
+	letter-spacing: 0px;
+	margin: 0px;
+	padding: 0px;
+	font-weight:bold;
+	margin-left: 10px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.esup-lecture #left ul li ul li {
+	font-weight:normal;
+	font-size: 0.9em;
+	padding-top: 0px;
+	padding-bottom: 2px;
+}
+
+
+
+.esup-lecture li.edit {
+	list-style: none;
+	margin-left: -18px;
+}
+
+
+.esup-lecture .elementButton {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	text-align: left;
+	padding-top: 5px;
+}
+
+/* Articles Style */
+.esup-lecture div.toggleButton {
+	float: left;
+	margin: 2px 0px 18px 5px;
+	padding: 0px 10px 10px 10px;
+	width: 16px;
+	height: 16px;
+}
+
+.esup-lecture div.unreadArticle {
+	margin: 2px 0px 0px 35px;
+	padding: 2px;
+	background-color: transparent;
+	line-height: 17px;
+	margin-bottom: 10px;
+	border-bottom: dotted thin;
+	font-size: 90%;
+	padding-bottom: 15px;
+	letter-spacing: .4px;
+}
+
+.esup-lecture div.readArticle {
+	min-height : 1px; /*for IE 7 and opacity ! IE 6 don't work !*/
+	margin: 2px 0px 0px 35px;
+	padding: 2px;
+	filter: alpha(opacity=30);
+	-moz-opacity: 0.30;
+	opacity: 0.30;
+	margin-bottom: 15px;
+	border-bottom: dotted thin;
+	font-size: 70%;
+	padding-bottom: 15px;
+}
+
+.esup-lecture .source-title {
+	text-align: center;
+	-webkit-border-top-right-radius:10px;
+	-webkit-border-top-left-radius:10px;
+	text-align: left;
+	letter-spacing: 1px;
+	text-shadow: #8F8F8F 0 2px 2px;
+	color: #3F3F3F !important;
+	text-align: left;
+	text-indent: 5px;
+	font-weight: lighter;
+	padding-left: 10px;
+	margin: 10px 0 2px;
+	padding-top: 5px;
+	font-weight:bold;
+	background:#999 -webkit-gradient(linear,left top,left bottom,from(#CFCFCF),to(#8F8F8F)) no-repeat top left;
+}
+
+/* other */
+.esup-lecture #TDLeft {
+	vertical-align: top;
+	border-right-style: solid;
+	border-right-color: black;
+	border-right-width: 1px;
+}
+
+.esup-lecture #TDRight {
+	vertical-align: top;
+}
+
+.esup-lecture a img {
+	border: none;
+}
+
+.esup-lecture img {
+	border: none;
+ 	float: left;
+	margin: 0 0.5em 0 0;
+	padding: 0;
+}
+
+.esup-lecture .valign {
+	vertical-align: middle;
+}
+
+.esup-lecture p {
+	margin: 0;
+}
+
+.esup-lecture p+br {
+	display: none;
+}
+
+.esup-lecture h1+br {
+	display: block;
+}
+
+.esup-lecture .buttonNoStyle {
+	background: #2F2F2F;
+	color: #a71817;
+	text-decoration: underline;
+	margin: 0px;
+	border: 0px;
+	letter-spacing: normal;
+	cursor: pointer;
+	padding-left: 1px;
+	padding-right: 1px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+/* ENSCR
+.esup-lecture .buttonNoStyle {
+	color: #002f6f;
+}
+*/	
+/* IEP
+.esup-lecture .buttonNoStyle {
+	color: #6b6bb1;
+}
+*/
+
+.esup-lecture .buttonStyle {
+	background: #2F2F2F;
+	text-align: left;
+	margin: 0px;
+	border: 0px;
+	cursor: pointer;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	margin: 0px;
+	padding: 0px;
+	width: auto;
+	overflow: visible;
+}
+
+.esup-lecture ul li ul li .buttonStyle {
+	font-size: 1em;
+}	
+	
+.esup-lecture .menuBas {
+	width: 100%;
+	height: 150px;
+	text-align: right;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: solid;
+}
+
+.esup-lecture .menuNonLu {
+	font-size: .8em;
+	color: #a71817;
+}
+
+/* ENSCR
+.esup-lecture .menuNonLu {
+	color: #002f6f;
+}
+*/
+
+/* IEP
+.esup-lecture .menuNonLu {
+	color: #6b6bb1;
+}
+*/
+
+/* ------------ ! important ------------------- */
+.esup-lecture h1 {
+	font-weight: lighter;
+	line-height: 1 ! important;
+	margin-bottom: 7px ! important;
+	color: #FF8E00 ; 
+	font-weight:bold;
+	text-decoration: none ! important;
+	font-size: 1.1em ! important;
+	background: #4F4F4F;
+}
+
+.esup-lecture h1 a {
+        color: #a71817 ;
+}
+
+/* ENSCR
+ .esup-lecture h1 {
+	color: #002f6f;
+}
+*/
+
+/* IEP
+ .esup-lecture h1 {
+	color: #6b6bb1;
+}
+*/
+
+/*##  Section 10.6.4 Sections ##*/
+.esup-lecture .portlet-section-header {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 1.8em ! important;
+/*	color: #A71817 ! important; */
+	font-weight: bold;
+}
+
+.esup-lecture a:focus, .esup-lecture a:hover {
+	/*color: #DF4545 ! important;*/
+	text-decoration: underline ! important;
+	font-size: 1em ! important;
+}
+
+.esup-lecture a {
+    color: #DFDFDF ! important;
+	text-decoration: underline ! important;
+	font-size: 1em ! important;
+}
+
+.esup-lecture .conteneurLogo {
+}
+
+.esup-lecture .conteneurLogoGuest {
+}
+
+.esup-lecture .article {
+clear: both;
+}
+.esup-lecture .article-block {
+clear: both;
+}
+
+
+
+/* HACK Mobile : !important pour surcharge des styles inseres directement dans le HTML */
+
+.esup-lecture {
+background: #2F2F2F;
+color: #FFFFFF;
+}
+
+.esup-lecture #panelLeft-ui {
+position: relative !important;
+width: 100% !important;
+height: 100% !important;
+display: inline !important;
+visibility: auto !important;
+z-index: auto !important;
+}
+
+.esup-lecture #panelLeft-ui .portlet-section-header,
+.esup-lecture #panelRight-ui .portlet-section-header,
+.esup-lecture #panelLeft-ui ul li .otherSource {
+display: none;
+}
+
+.esup-lecture #panelLeft-ui ul,
+.esup-lecture #panelLeft-ui ul li {
+display: inline;
+}
+
+.esup-lecture #panelRight-ui {
+position: relative !important;
+width: 100% !important;
+left: 0px !important;
+height: 100% !important;
+display: inline !important;
+}
+
+.esup-lecture #panels-layout {
+position: relative !important;
+width: 100% !important;
+height: 100% !important;
+overflow: visible !important;
+}
+
+.esup-lecture div.readArticle,
+.esup-lecture div.unreadArticle {
+margin : 0px;
+padding: 0px;
+}
+
+.esup-lecture .toggleButton {
+display: none !important;
+}
+
+.esup-lecture input {
+display: none;
+}
+
+.esup-lecture input.buttonStyle {
+display: inline;
+color: #fff;
+border:thick outset #3F3F3F;
+font-size: .8em;
+-webkit-border-radius: 5px;
+}
+
+.esup-lecture #menuLeft {
+display: none;
+}
+
+.esup-lecture #menuRight {
+display: none;
+}

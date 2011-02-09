@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mappings SYSTEM "mappings.dtd" >
+
+<!-- examples of mapping for applying xsl transformation to xml sources 
+See projet documentation for complete syntax reference
+xlstFiles given here are only samples and must be copied and modified on your own domain
+-->
+<mappings>
+<!-- 
+	<mapping 
+		sourceURL="http://info.cri.univ-rennes1.fr/rss/rss.php"
+		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/stylesheet01.xsl"
+		itemXPath="/rdf:RDF/default:item">
+		<XPathNameSpace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+		<XPathNameSpace prefix="default" uri="http://purl.org/rss/1.0/" />
+	</mapping>
+ -->
+	<mapping 
+		rootElement="rss"
+		xsltFile="${config.url.prefix}/stylesheet02.xsl"
+		itemXPath="/rss/channel/item">
+	</mapping>
+<!-- Same format as above, but with thickbox style : comment one of them -->
+<!--
+	<mapping 
+		rootElement="rss"
+		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/rss-thickbox.xsl"
+		itemXPath="/rss/channel/item">
+	</mapping>
+	<mapping 
+		rootElement="flash"
+		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/flash.xsl"
+		itemXPath="/flash/object">
+	</mapping>
+	<mapping 
+		rootElement="java"
+		xsltFile="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/java.xsl"
+		itemXPath="/java/applet">
+	</mapping>
+-->
+</mappings>

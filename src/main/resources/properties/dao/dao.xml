@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+	<!--
+		/properties/dao/dao.xml The configuration file for Data Access Object.
+		This file should not be modified but by the developers. This file is
+		referenced by /properties/applicationContext.xml.
+	-->
+
+	<!--
+		PersistenceAnnotationBeanPostProcessor looks for @PersistenceContext
+		to set entity manager in dao
+	-->
+	<bean
+		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+		<property name="persistenceXmlLocation" value="classpath:/properties/dao/persistence.xml" />
+		<property name="jpaProperties" ref="jpaProperties" />
+	</bean>
+
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="${hibernate.connection.driver_class}" />
+		<property name="maxActive" value="100" />
+		<property name="maxIdle" value="30" />
+		<property name="maxWait" value="100" />
+		<property name="url" value="${hibernate.connection.jdbc.url}" />
+		<property name="username" value="${hibernate.connection.jdbc.username}" />
+		<property name="password" value="${hibernate.connection.jdbc.password}" />
+	</bean>
+
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="showSql" value="true" />
+		<property name="generateDdl" value="true" />
+		<property name="database" value="MYSQL" />
+	</bean>
+
+	<util:properties id="jpaProperties">
+		<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
+		<prop key="hibernate.cache.use_query_cache">false</prop>
+		<prop key="hibernate.cache.use_second_level_cache">false</prop>
+	</util:properties>
+
+<!-- 
+	<bean id="daoService" class="org.esupportail.lecture.dao.JPADaoServiceImpl"
+		lazy-init="true">
+		<description>
+			This bean is the DAO service, the interface used by the
+			domain service to access
+			the database. It must implement interface
+			org.esupportail.lecture.dao.DaoService.
+		</description>
+	</bean>
+ -->
+
+	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceImpl" lazy-init="true">
+		<description>
+			This bean provides the dao service of the application, used by the 
+			domain.model.
+			It must implement interface org.esupportail.lecture.domain.DAOService.
+		</description>
+		<property name="remoteXMLService">
+			<ref bean="daoServiceRemoteXML" />
+		</property>
+		<property name="hibernateService">
+			<ref bean="daoServiceHibernate"/>
+		</property>
+        <property name="authenticationService">
+            <ref bean="authenticationService"/>
+        </property>
+	</bean>
+
+	<bean id="daoServiceRemoteXML" 
+        class="org.esupportail.lecture.dao.DaoServiceRemoteXML">
+		<property name="cacheManager" ref="cacheManager" />
+		<property name="defaultTimeout" value="3000">
+			<description>Timeout used when getting a category or a source from URL in milliseconds</description>
+		</property>
+	</bean>
+
+	<bean id="daoServiceHibernate" 
+        class="org.esupportail.lecture.dao.DaoServiceHibernate"
+		lazy-init="true"
+		>
+		<description>
+			This bean is the DAO service, the interface used by the domain service to access 
+			the database. It must implement interface org.esupportail.example.dao.DaoService.
+		</description>
+	</bean>
+
+
+</beans>

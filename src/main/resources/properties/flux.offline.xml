@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="0.91">
+	<channel>
+		<image />
+		<title>Outils pédagogiques</title>
+		<link />
+		<!--
+			<description>Liens vers des applications liées à la gestion du
+			personnel</description>
+		-->
+		<language>fr</language>
+		<webMaster>webmaster@univ-rennes1.fr</webMaster>
+		<lastBuildDate>20/07/2008</lastBuildDate>
+		<item>
+			<title>Chaine éditoriale</title>
+			<link>http://chainedit.univ-rennes1.fr</link>
+			<description>Outil d'aide à la création de supports de cours
+				multimédia.</description>
+		</item>
+		<item>
+			<title>Serveur de podcasts</title>
+			<link>http://mediaserver.univ-rennes1.fr</link>
+			<description>Serveur permettant de diffuser des contenus vidéos en
+				flux flash (dont les vidéos créées avec Inwicast publisher)
+			</description>
+		</item>
+		<item>
+			<title>Classes virtuelles</title>
+
+			<link>http://svi.univ-rennes1.fr</link>
+			<description>Outil permettant de faire une visio-conférence depuis
+				son
+				poste (nécessite un casque avec un micro et en option une webcam) avec le
+				partage de supports de cours et d'applications...</description>
+		</item>
+	</channel>
+</rss>

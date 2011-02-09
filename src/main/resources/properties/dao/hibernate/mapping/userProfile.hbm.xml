@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.esupportail.lecture.domain.model">
+	<class name="UserProfile" table="LECT_USERPROFILE">
+		<id name="userProfilePK" type="long">
+			<column name="USERPROFILEPK"/>
+			<generator class="native">
+				<param name="sequence">userProfile_id</param>
+			</generator>
+		</id>
+		<natural-id>
+	        <property name="userId" type="string">
+	            <column name="USERID" length="250" not-null="true" unique="true">
+	            </column>       
+	        </property>
+		</natural-id>
+		<!-- userProfile/CustomContext is bidirectional -->
+		<map name="customContexts" cascade="all, delete-orphan" inverse="true" lazy="false"> 
+			<key foreign-key="FK_CUSTOMCONTEXT_USERPROFILE_USERPROFILEPK" not-null="true">
+				<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
+			</key>
+			<map-key type="string" >
+                <column name="ELEMENTID"/>
+			</map-key>
+			<one-to-many class="CustomContext" />
+		</map>
+        <!-- userProfile/CustomCategory is bidirectional -->
+		<map name="customCategories" cascade="all, delete-orphan" inverse="true" lazy="false">
+			<key foreign-key="FK_CUSTOMCATEGORY_USERPROFILE_USERPROFILEPK" not-null="true">
+				<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
+			</key>
+			<map-key type="string" >
+                <column name="ELEMENTID" />
+			</map-key>
+			<one-to-many class="CustomCategory" />
+		</map>
+        <!-- userProfile/CustomSource is bidirectional -->
+		<map name="customSources" cascade="all, delete-orphan" inverse="true" lazy="false">
+			<key foreign-key="FK_CUSTOMSOURCE_USERPROFILE_USERPROFILEPK" not-null="true">
+				<column name="USERPROFILE_USERPROFILEPK" not-null="true"/>
+			</key>
+			<map-key type="string" >
+                <column name="ELEMENTID" />
+			</map-key>
+			<one-to-many class="CustomSource" />
+		</map>
+	</class>
+</hibernate-mapping>
