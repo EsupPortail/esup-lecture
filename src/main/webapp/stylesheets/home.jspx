@@ -9,25 +9,17 @@
 		<ui:define name="content">
 			<h:form id="home">
 				<!-- ********* Rendering ********* -->
-				<t:div id="panels-layout" forceId="true"
-					rendered="#{homeController.treeVisible and !homeController.guestMode}">
+				<t:div id="panels-layout" forceId="true">
 					<t:div id="panelLeft-ui" styleClass="ui-layout-west" forceId="true"
-						style="width: #{homeController.treeSize}%">
+						style="width: #{homeController.treeSize}%"
+						rendered="#{homeController.treeVisible and !homeController.guestMode}">
 						<ui:include src="homeLeft.jspx" />
 					</t:div>
 					<t:div id="panelRight-ui" styleClass="ui-layout-center"
-						forceId="true" style="width: #{99-homeController.treeSize}%">
+						forceId="true" style="width: #{homeController.treeSize}%">
 						<ui:include src="homeRight.jspx" />
 					</t:div>
 				</t:div>
-				<!-- TODO  
-				<t:div id="onePanel" forceId="true"
-					rendered="#{!homeController.treeVisible or homeController.guestMode}">
-					<t:div id="panelRight" forceId="true">
-						<ui:include src="homeRight.jspx" />
-					</t:div>
-				</t:div>
-				 -->
 			</h:form>
 			<script type="text/javascript">
 			if (document.getElementById("home:itemDisplayModeButton")) {

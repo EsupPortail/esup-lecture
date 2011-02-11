@@ -171,7 +171,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		} else {
 			setTreeVisible(true);
 		}
-		return "OK";
+		return "navigationHome";
 	}
 	
 	/**
