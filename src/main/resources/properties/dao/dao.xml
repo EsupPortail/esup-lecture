@@ -3,8 +3,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+
+    <import resource="datasource.xml" />
 
 	<!--
 		/properties/dao/dao.xml The configuration file for Data Access Object.
@@ -31,22 +35,11 @@
 		<property name="jpaProperties" ref="jpaProperties" />
 	</bean>
 
-	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<property name="driverClassName" value="${hibernate.connection.driver_class}" />
-		<property name="maxActive" value="100" />
-		<property name="maxIdle" value="30" />
-		<property name="maxWait" value="100" />
-		<property name="url" value="${hibernate.connection.jdbc.url}" />
-		<property name="username" value="${hibernate.connection.jdbc.username}" />
-		<property name="password" value="${hibernate.connection.jdbc.password}" />
-	</bean>
-
 	<bean id="jpaVendorAdapter"
 		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 		<property name="showSql" value="true" />
 		<property name="generateDdl" value="true" />
-		<property name="database" value="MYSQL" />
+		<property name="database" value="${jpa.database.type}" />
 	</bean>
 
 	<util:properties id="jpaProperties">
