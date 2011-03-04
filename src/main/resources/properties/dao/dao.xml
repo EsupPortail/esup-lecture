@@ -8,8 +8,6 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
 
-    <import resource="datasource.xml" />
-
 	<!--
 		/properties/dao/dao.xml The configuration file for Data Access Object.
 		This file should not be modified but by the developers. This file is
@@ -29,11 +27,25 @@
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="${datasource.bean}" />
 		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
 		<property name="persistenceXmlLocation" value="classpath:/properties/dao/persistence.xml" />
 		<property name="jpaProperties" ref="jpaProperties" />
 	</bean>
+
+	<bean id="JDBCDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close"
+		lazy-init="true">
+		<property name="driverClassName" value="${jdbc.connection.driver_class}" />
+		<property name="maxActive" value="100" />
+		<property name="maxIdle" value="30" />
+		<property name="maxWait" value="100" />
+		<property name="url" value="${jdbc.connection.url}" />
+		<property name="username" value="${jdbc.connection.username}" />
+		<property name="password" value="${jdbc.connection.password}" />
+	</bean>
+	
+	<jee:jndi-lookup id="JNDIDataSource" jndi-name="${jndi.datasource}" lookup-on-startup="false" expected-type="javax.sql.DataSource"/>
 
 	<bean id="jpaVendorAdapter"
 		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">

@@ -6,10 +6,22 @@ auth.bean=authenticationService
 
 # esup-lecture configuration file for techinal environment
 
-##### database (via hibernate) #####
+##### database #####
 # --> connection properties
-jpa.jndi.datasource=jdbc/lectureDB
+
+jdbc.connection.driver_class=org.hsqldb.jdbcDriver
+jdbc.connection.url=jdbc:hsqldb:file:lectureDB
+jdbc.connection.username=sa
+jdbc.connection.password=
+
+jndi.datasource=jdbc/lectureDB
+
 jpa.database.type=HSQL
+
+# JNDI/JDBC
+# for JDBC datasource.bean=JDBCDataSource
+# for JNDI datasource.bean=JNDIDataSource
+datasource.bean=JNDIDataSource
 
 ##### smtp #####
 # --> SMTP server
