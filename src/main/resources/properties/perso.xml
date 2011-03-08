@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE category SYSTEM "category.dtd">
+<category edit="all" name="perso" ttl="60">
+	<description>Flux RSS personnel</description>
+</category>

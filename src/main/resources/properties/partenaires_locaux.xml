@@ -1,0 +1,35 @@
+<category edit="all" name="Partenaires locaux" ttl="3600">
+	<description>partenaires locaux</description>
+	<sourceProfiles>
+		<sourceProfile id="local1" access="public"
+			name="UEB" specificUserContent="no" ttl="86400"
+			url="http://www.ueb.eu/zBasDePageV2/actualites-ueb/">
+			<visibility>
+				<autoSubscribed>
+				<group name="local.0"/>  <!-- Tous les groupes de personnes -->				
+				</autoSubscribed>
+			</visibility>
+		</sourceProfile>
+		
+		<sourceProfile id="local2" access="public"
+			name="Rennes Atalante (evenements)" specificUserContent="no" ttl="86400"
+			url="http://www.rennes-atalante.fr/fr/5-actus/5-e-rss/rss/rss.asp?actus=tous-evenements">
+			<visibility>
+				<autoSubscribed>
+                                <group name="local.0"/>  <!-- Tous les groupes de personnes -->
+                                </autoSubscribed>
+			
+			</visibility>
+		</sourceProfile>
+
+		<sourceProfile id="local3" access="public"
+                        name="Rennes Atalante (ens-recherche)" specificUserContent="no" ttl="86400"
+                        url="http://www.rennes-atalante.fr/fr/5-actus/5-e-rss/rss/rss.asp?actus=enseignement-recherche">
+                        <visibility>
+                                <obliged>
+                                <group name="local.0"/>  <!-- Tous les groupes de personnes -->
+                                </obliged>
+                        </visibility>
+		</sourceProfile>
+	</sourceProfiles>
+</category>
