@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<div xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"><ui:composition
+	template="/stylesheets/template.jspx">
+	<ui:define name="content">
+		<h:form id="home">
+			<div class="portlet-section fl-container-flex"><t:div
+				styleClass="fl-col fl-force-left"
+				style="width: #{homeController.treeSize}%">
+				<ui:include src="homeLeft.jspx" />
+			</t:div>
+			<div class="fl-col fl-force-right"
+				style="width: #{98-homeController.treeSize}%"><ui:include
+				src="homeRight.jspx" /></div>
+			</div>
+
+		</h:form>
+		<script type="text/javascript">
+		  lecture.jQuery('input[id$="home:itemDisplayModeButton"]').hide();
+        </script>
+	</ui:define>
+</ui:composition></div>
+

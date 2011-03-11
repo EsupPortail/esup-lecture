@@ -1,32 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<html 
-    xmlns="http://www.w3c.org/1999/xhtml"
-   	xmlns:ui="http://java.sun.com/jsf/facelets"
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:t="http://myfaces.apache.org/tomahawk"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core" class="portlet-section-body esup-lecture">
-	<f:view locale="#{sessionController.locale}">
-<!-- 
+	xmlns:f="http://java.sun.com/jsf/core"
+	class="portlet-section-body esup-lecture">
+<f:view locale="#{sessionController.locale}">
+	<!-- 
 		<t:htmlTag value="html">
- -->		
-			<t:htmlTag value="head">
-				<t:htmlTag value="title">
-					<h:outputText value="#{applicationService.name}" />
-				</t:htmlTag>
-				<ui:repeat value="#{tagsConfigurator.stylesheets}" var="path">
-					<t:stylesheet path="#{path}" />
-				</ui:repeat>
-				<ui:repeat value="#{tagsConfigurator.scripts}" var="path">
-					<script type="text/javascript" src="#{path}" />
-				</ui:repeat>
-
-			</t:htmlTag>
-			<t:htmlTag value="body" styleClass="fl-theme-app">
-				<ui:insert name="content" />
-			</t:htmlTag>
-<!-- 
+ -->
+	<t:htmlTag value="head">
+		<t:htmlTag value="title">
+			<h:outputText value="#{applicationService.name}" />
 		</t:htmlTag>
- -->			
-	</f:view>
+		<ui:repeat value="#{tagsConfigurator.stylesheets}" var="path">
+			<t:stylesheet path="#{path}" />
+		</ui:repeat>
+		<ui:repeat value="#{tagsConfigurator.scripts}" var="path">
+			<script type="text/javascript" src="#{path}" />
+		</ui:repeat>
+		<script type="text/javascript">
+		  var lecture = lecture || {}; 
+		  lecture.jQuery = jQuery.noConflict();
+        </script>
+	</t:htmlTag>
+	<t:htmlTag value="body" styleClass="fl-theme-app">
+		<ui:insert name="content" />
+	</t:htmlTag>
+	<!-- 
+		</t:htmlTag>
+ -->
+</f:view>
 </html>
 

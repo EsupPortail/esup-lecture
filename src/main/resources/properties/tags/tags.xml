@@ -73,7 +73,6 @@
     			URLs are prefixed by property portletMediaPath or servletMediaPath.
     		</description>
     		<list>
-    			<value>functions.js</value>
      			<value>js/jquery-1.3.2.min.js</value><!-- jquery -->
      			<value>js/jquery.ui.custom.min.js</value><!-- jquery ui (only components needed by jquery layout) based on jquery -->
     			<value>js/jquery.layout.min.js</value><!-- jquery layout based on jquery ui -->
@@ -93,6 +92,9 @@
     			Warning: this tag is ignored for portlet installations.
     		</description>
     		<list>
+    			<value>fss/fss-reset.css</value>    		
+    			<value>fss/fss-layout.css</value>    		
+    			<value>fss-text.css</value>    		
     			<value>commons.css</value>
     			<value>portlet.css</value>
                 <value>lecture.css</value>

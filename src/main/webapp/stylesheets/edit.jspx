@@ -5,15 +5,15 @@
 	xmlns:t="http://myfaces.apache.org/tomahawk"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
-	<ui:composition template="/stylesheets/template-portlet.jspx">
+	<ui:composition template="/stylesheets/template.jspx">
 		<ui:define name="content">
 			<h:form id="edit">
 				<div class="portlet-section fl-container-flex">
 					<t:div styleClass="fl-col fl-force-left" style="width: #{homeController.treeSize}%">
-						<ui:include src="editLeft-portlet.jspx" />
+						<ui:include src="editLeft.jspx" />
 					</t:div>
 					<div class="fl-col fl-force-right" style="width: #{98-homeController.treeSize}%">
-						<ui:include src="editRight-portlet.jspx" />
+						<ui:include src="editRight.jspx" />
 					</div>
 				</div>
 				
