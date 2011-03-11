@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<div 
+    xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition template="/stylesheets/template.jspx">
+		<ui:define name="content">
+			<h:form id="home">
+				<!-- ********* Rendering ********* -->
+				<t:div id="panels-layout" forceId="true">
+					<t:div id="panelLeft-ui" styleClass="ui-layout-west" forceId="true"
+						style="width: #{homeController.treeSize}%"
+						rendered="#{homeController.treeVisible and !homeController.guestMode}">
+						<ui:include src="homeLeft.jspx" />
+					</t:div>
+					<t:div id="panelRight-ui" styleClass="ui-layout-center"
+						forceId="true" style="width: #{homeController.treeSize}%">
+						<ui:include src="homeRight.jspx" />
+					</t:div>
+				</t:div>
+			</h:form>
+			<script type="text/javascript">
+			if (document.getElementById("home:itemDisplayModeButton")) {
+				document.getElementById("home:itemDisplayModeButton").style.display = "none";
+			}
+        </script>
+		</ui:define>
+	</ui:composition>
+</div>
+
