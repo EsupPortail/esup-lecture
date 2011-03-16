@@ -19,10 +19,6 @@
 		<ui:repeat value="#{tagsConfigurator.scripts}" var="path">
 			<script type="text/javascript" src="#{path}" />
 		</ui:repeat>
-		<script type="text/javascript">
-		  var lecture = lecture || {}; 
-		  lecture.jQuery = jQuery.noConflict();
-        </script>
 	</t:htmlTag>
 	<t:htmlTag value="body" styleClass="fl-theme-app">
 		<ui:insert name="content" />

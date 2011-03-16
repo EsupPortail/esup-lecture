@@ -78,6 +78,7 @@
     			<value>js/jquery.layout.min.js</value><!-- jquery layout based on jquery ui -->
     			<value>js/init-js-layout.js</value><!-- init the layout -->
     			<value>js/thickbox.js</value>
+    			<value>js/esup-lecture.js</value>
 <!-- 
     			<value>/esup-lecture/dwr/interface/JHomeController.js</value>
     			<value>/esup-lecture/dwr/engine.js</value>

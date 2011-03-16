@@ -4,15 +4,9 @@
 	xmlns:t="http://myfaces.apache.org/tomahawk"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	class="portlet-section-body esup-lecture">
-	<f:view	locale="#{sessionController.locale}">
-		<script type="text/javascript">
-		  var lecture = lecture || {}; 
-		  lecture.jQuery = up.jQuery;
-        </script>
-		<div class="portlet-body" role="main">
-			<ui:insert name="content" />
-		</div>
-	</f:view>
-</div>
+	class="portlet-section-body esup-lecture"><f:view
+	locale="#{sessionController.locale}">
+	<div class="portlet-body"><ui:insert name="content" />
+	</div>
+</f:view></div>
 

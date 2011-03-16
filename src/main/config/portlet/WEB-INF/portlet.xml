@@ -33,5 +33,7 @@
 	<user-attribute>
 		<name>uid</name>
 	</user-attribute>
-
+	<user-attribute>
+		<name>casProxyTicket</name>
+	</user-attribute>
 </portlet-app>
