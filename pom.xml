@@ -207,7 +207,8 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<build>
-				<defaultGoal>jetty:run</defaultGoal>
+				<!--
+<defaultGoal>jetty:run</defaultGoal> -->
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
