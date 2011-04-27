@@ -6,7 +6,7 @@
     	from /properties/cache/cache.xml.
     -->
 
-    <diskStore path="${cache.path}"/>
+    <diskStore path="java.io.tmpdir"/>
     
     <!-- 
     	Note: EhCache is disabled by default in hibernate.cfg.xml.

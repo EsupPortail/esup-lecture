@@ -12,8 +12,10 @@
 				<value>classpath:/properties/defaults.properties</value>
 				<value>classpath:/properties/defaults-${deploy.type}.properties</value>
 				<value>classpath:/properties/config.properties</value>
+				<value>file:${application.config.location}/esup-lecture/config.properties</value>
 			</list>
 		</property>
+		<property name = "ignoreResourceNotFound" value="true" />
 	</bean>
 	<import resource="auth/auth.xml" />
 	<import resource="portal/portal.xml" />

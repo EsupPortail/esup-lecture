@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.esupportail</groupId>
-	<artifactId>lecture</artifactId>
+	<artifactId>esup-lecture</artifactId>
 	<packaging>war</packaging>
 	<version>2.0-SNAPSHOT</version>
 	<name>esup-lecture</name>
@@ -191,13 +191,6 @@
 			</dependencies>
 			<properties>
 				<deploy.type>portlet</deploy.type>
-				<cas.url>https://sso-cas.univ-rennes1.fr</cas.url>
-				<tomcat.host>localhost</tomcat.host>
-				<tomcat.port.string>:8080</tomcat.port.string>
-				<log.level>INFO</log.level>
-				<log.output>stdout</log.output>
-				<log.file>/tmp/lecture.log</log.file>
-				<cache.path>/tmp/lecture</cache.path>
 				<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
 			</properties>
 		</profile>
@@ -207,8 +200,6 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<build>
-				<!--
-<defaultGoal>jetty:run</defaultGoal> -->
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
@@ -221,14 +212,6 @@
 			</build>
 			<properties>
 				<deploy.type>servlet</deploy.type>
-				<cas.url>https://sso-cas.univ-rennes1.fr</cas.url>
-				<tomcat.host>localhost</tomcat.host>
-				<tomcat.port.string>:8080</tomcat.port.string>
-				<log.level>INFO</log.level>
-				<log.output>stdout</log.output>
-				<log.pattern>%d %p [%c] - %m%n</log.pattern>
-				<log.file>/tmp/lecture.log</log.file>
-				<cache.path>/tmp/lecture</cache.path>
 				<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
 			</properties>
 		</profile>
