@@ -86,15 +86,6 @@
 					<wtpversion>1.5</wtpversion>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>maven-jetty-plugin</artifactId>
-				<version>6.1.26</version>
-				<configuration>
-					<contextPath>/</contextPath>
-					<jettyEnvXml>${basedir}/src/main/config/jetty-env.xml</jettyEnvXml>
-				</configuration>
-			</plugin>
 		</plugins>
 	</build>
 	<dependencies>
@@ -148,7 +139,7 @@
 	<properties>
 		<javax.portlet.version>1.0</javax.portlet.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
-		<esupcommons.version>0.2.3</esupcommons.version>
+		<esupcommons.version>0.2.4-SNAPSHOT</esupcommons.version>
 	</properties>
 	<profiles>
 		<profile>
@@ -200,12 +191,41 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<build>
+				<resources>
+					<resource>
+						<directory>src/main/webapp/WEB-INF</directory>
+						<includes>
+							<include>web.xml</include>
+						</includes>
+						<filtering>true</filtering>
+						<targetPath>${project.build.directory}</targetPath>
+					</resource>
+				</resources>
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
 						<version>2.1</version>
 						<configuration>
+							<webResources>
+								<resource>
+									<filtering>true</filtering>
+									<directory>src/main/webapp</directory>
+									<includes>
+										<include>WEB-INF/web.xml</include>
+									</includes>
+								</resource>
+							</webResources>
 							<warName>${project.artifactId}-servlet-${project.version}</warName>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>org.mortbay.jetty</groupId>
+						<artifactId>maven-jetty-plugin</artifactId>
+						<version>6.1.26</version>
+						<configuration>
+							<contextPath>/</contextPath>
+							<jettyEnvXml>${basedir}/src/main/config/jetty-env.xml</jettyEnvXml>
+							<webXml>${project.build.directory}/web.xml</webXml>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -213,6 +233,8 @@
 			<properties>
 				<deploy.type>servlet</deploy.type>
 				<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
+				<casServerUrlPrefix>https://sso-cas.univ-rennes1.fr</casServerUrlPrefix>
+				<serverName>http://uportal.univ-rennes1.fr</serverName>
 			</properties>
 		</profile>
 	</profiles>
