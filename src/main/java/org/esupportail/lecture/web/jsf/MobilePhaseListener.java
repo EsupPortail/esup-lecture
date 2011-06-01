@@ -45,9 +45,8 @@ public class MobilePhaseListener implements PhaseListener {
 		if (isWirelessDevice) {
 			String view = facesContext.getViewRoot().getViewId();
 			if (!view.startsWith("/stylesheets/mobile")) {
-				view = "/stylesheets/mobile/home.jspx"; //TODO avoir une gestion plus fine
-				String viewURL = facesContext.getApplication().getViewHandler()
-				.getActionURL(facesContext, view);
+				view = "/stylesheets/mobile/" + view.substring(13);
+				String viewURL = facesContext.getApplication().getViewHandler().getActionURL(facesContext, view);
 				try {
 					event.getFacesContext().getExternalContext().redirect(viewURL);
 				} catch (IOException e) {
