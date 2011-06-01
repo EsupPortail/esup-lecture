@@ -4,7 +4,7 @@
 	<groupId>org.esupportail</groupId>
 	<artifactId>esup-lecture</artifactId>
 	<packaging>war</packaging>
-	<version>2.0-SNAPSHOT</version>
+	<version>2.0-RC1</version>
 	<name>esup-lecture</name>
 	<url><![CDATA[http://www.esup-portail.org/display/PROJESUPLECTURE/Portlet+Lecture]]></url>
 	<repositories>
@@ -135,6 +135,13 @@
 			<version>${javax.servlet.version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.sourceforge.wurfl</groupId>
+			<artifactId>wurfl</artifactId>
+			<version>1.2.2</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 	<properties>
 		<javax.portlet.version>1.0</javax.portlet.version>
@@ -234,7 +241,7 @@
 				<deploy.type>servlet</deploy.type>
 				<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
 				<casServerUrlPrefix>https://sso-cas.univ-rennes1.fr</casServerUrlPrefix>
-				<serverName>http://uportal.univ-rennes1.fr</serverName>
+				<serverName>http://localhost:8080</serverName>
 			</properties>
 		</profile>
 	</profiles>

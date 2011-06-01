@@ -33,6 +33,7 @@
 	<import resource="misc/application.xml" />
 	<import resource="tags/tags.xml" />
 	<import resource="web/controllers.xml" />
+	<import resource="wurfl/wurfl-conf.xml"/>
 
 	<bean id="app_context"
 		class="org.esupportail.commons.context.ApplicationContextHolder" />

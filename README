@@ -10,3 +10,4 @@ casService.bean en mode portlet -->
 - org.esupportail.lecture.domain.utils.PortletService n'est plus ! 
 - voir la gestion de auth.bean dans la config
 portalService --> le conserver ? --> au minimum ne pas le montrer dans le config.properties
+remettre le portletService

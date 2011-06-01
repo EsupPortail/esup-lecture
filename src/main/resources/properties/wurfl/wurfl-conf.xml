@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="wurflModel" class="net.sourceforge.wurfl.core.resource.DefaultWURFLModel" >
+		<constructor-arg index="0">
+			<bean class="net.sourceforge.wurfl.core.resource.SpringXMLResource">
+				<constructor-arg index="0" value="classpath:properties/wurfl/wurfl.xml" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+
+	<!-- Handlers, Filters and Matchers -->
+	<bean id="matcherManager" class="net.sourceforge.wurfl.core.handlers.matchers.MatcherManager">
+		<constructor-arg ref="wurflModel" />
+	</bean>
+
+
+	<!-- Requests -->
+	<bean id="requestFactory" class="net.sourceforge.wurfl.core.request.DefaultWURFLRequestFactory" />
+	
+	<!-- Device -->
+	<bean id="deviceProvider" class="net.sourceforge.wurfl.core.DefaultDeviceProvider">
+		<constructor-arg ref="wurflModel" />
+	</bean>
+
+	<!-- Service -->
+	<bean id="wurflService"	class="net.sourceforge.wurfl.core.DefaultWURFLService">
+		<constructor-arg ref="matcherManager" />
+		<constructor-arg ref="deviceProvider" />
+	</bean>
+	 
+	<!-- WURFL Manager -->
+	<bean id="wurflManager"	class="net.sourceforge.wurfl.core.DefaultWURFLManager">
+		<constructor-arg ref="wurflService" />
+		<constructor-arg ref="requestFactory" />
+	</bean>
+
+	<!-- WURFL Utils -->
+	<bean id="wurflUtils" class="net.sourceforge.wurfl.core.WURFLUtils">
+		<constructor-arg ref="wurflModel" />
+	</bean>
+
+	<!-- WURFL Holder -->
+	<bean id="wurflHolder" class="net.sourceforge.wurfl.core.DefaultWURFLHolder">
+		<constructor-arg ref="wurflManager" />
+		<constructor-arg ref="wurflUtils" />
+	</bean>
+
+	<!-- Put WURFL Holder in ServletContext -->
+	<bean class="org.springframework.web.context.support.ServletContextAttributeExporter">
+		<property name="attributes">
+			<map>
+				<entry key="net.sourceforge.wurfl.core.WURFLHolder" value-ref="wurflHolder" />
+			</map>
+		</property>
+	</bean>
+
+</beans>
