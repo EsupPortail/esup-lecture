@@ -110,7 +110,7 @@
 		<!-- tmp V2
 		<property name="portletService" ref="portletService" />
 		 -->
-		<property name="portletService" ref="servletService" />
+		<property name="portletService" ref="portletService" />
 		<property name="servletService" ref="servletService" />
 		<property name="casService" ref="${casService.bean}" />
 	</bean>
@@ -121,11 +121,9 @@
 		<property name="authenticationService" ref="${auth.bean}" />
 	</bean>
 
-<!-- 
 	<bean id="portletService" class="org.esupportail.lecture.domain.utils.PortletService">
 		<description>external service in portlet mode</description>
 	</bean>
- -->
 
 	<!-- 
 	***************************************************

@@ -1,5 +1,5 @@
 #
-# the configuration file of the application.
+# the technical configuration file of the application.
 #
 
 auth.bean=authenticationService
@@ -7,7 +7,12 @@ auth.bean=authenticationService
 # esup-lecture configuration file for techinal environment
 
 ##### database #####
-# --> connection properties
+# JNDI|JDBC
+# for JDBC datasource.bean=JDBCDataSource
+# for JNDI datasource.bean=JNDIDataSource
+datasource.bean=JDBCDataSource
+
+jpa.database.type=HSQL
 
 jdbc.connection.driver_class=org.hsqldb.jdbcDriver
 jdbc.connection.url=jdbc:hsqldb:file:lectureDB
@@ -15,13 +20,6 @@ jdbc.connection.username=sa
 jdbc.connection.password=
 
 jndi.datasource=jdbc/lectureDB
-
-jpa.database.type=HSQL
-
-# JNDI/JDBC
-# for JDBC datasource.bean=JDBCDataSource
-# for JNDI datasource.bean=JNDIDataSource
-datasource.bean=JNDIDataSource
 
 ##### smtp #####
 # --> SMTP server
@@ -57,32 +55,10 @@ smtp.interceptAddress.personal=My Name
 #The email address the exception reports will be sent to. This property is
 # optional; if the tag is ommited or empty, then no mail is sent.
 exceptionHandling.recipientEmail=my.name@domain.edu
-#If you do not want the exceptions to be sent to esup-portail external developers list, you can 
-# set property doNotSendExceptionReportsToDevelopers to true.
-exceptionHandling.doNotSendExceptionReportsToDevelopers=true
 
 ##### casService #####
 # the casServiceBean servletCasService in servlet mode OR portletCasService in portlet mode
 casService.bean=servletCasService
-# The service that retrieves PTs from the CAS server. This property
-# must be the same as the one set in parameter casTargetService of CCasProxyPortletAdapter in channel definition
-# used when publishing the portlet (portlet mode)
-casService.service=http://uportal.univ.fr/esup-lecture
-# The URL used on the CAS server (servlet and portlet mode)
-casService.url=https://sso-cas.univ-rennes1.fr
-# The callback URL used by the CAS server to pass the PGT to
-# the application (servlet and portlet mode)
-casService.proxyCallbackUrl=https://uportal.univ.fr/esup-lecture/CasProxyServlet
-
-##### portal service (used in servlet mode) #####
-#The URL that responds to the portal web service.
-portalService.url=http://ent.univ-rennes1.fr/services/UportalService
-#A test user id, used by the ant target test-portal.
-portalService.testUserId=admin
-#A test group id, used by the ant target test-portal.
-portalService.testGroupId=local.0
-#A test group name, used by the ant target test-portal.
-portalService.testGroupName=Everyone
 
 ##### misc ####
 #The path to the media files (in servlet mode), used for scripts and stylesheets.

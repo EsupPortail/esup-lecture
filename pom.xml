@@ -142,11 +142,17 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>javax.portlet</groupId>
+			<artifactId>portlet-api</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	<properties>
 		<javax.portlet.version>1.0</javax.portlet.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
-		<esupcommons.version>0.2.4-SNAPSHOT</esupcommons.version>
+		<esupcommons.version>0.2.6-SNAPSHOT</esupcommons.version>
 	</properties>
 	<profiles>
 		<profile>

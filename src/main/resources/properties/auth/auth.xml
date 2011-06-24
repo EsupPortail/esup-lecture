@@ -44,30 +44,7 @@
     <bean 
         id="portletCasService"
         class="org.esupportail.commons.services.cas.PortletCasServiceImpl"
-        scope="session"
         >
-        <property name="service" value="${casService.service}" >
-            <description>
-                The service that retrieves PTs from the CAS server. This property
-                must be the same as the one set in parameter casTargetService
-                used when publishing the portlet.
-            </description>
-        </property>
-        <property name="casValidateUrl" value="${casService.url}/proxyValidate" >
-            <description>
-                The URL used on the CAS server to validate the ticket passed by 
-                the portal to the portlet.
-            </description>
-        </property>
-        <property name="proxyCallbackUrl" value="${casService.proxyCallbackUrl}" >
-            <description>
-                The callback URL used by the CAS server to pass the PGT to
-                the portlet.
-            </description>
-        </property>
-        <!-- tmp V2 
-        <aop:scoped-proxy/>
-        -->
     </bean>
 
 </beans>

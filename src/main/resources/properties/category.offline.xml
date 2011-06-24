@@ -15,16 +15,36 @@
 				</obliged>
 			</visibility>
 		</sourceProfile>
-
-		<!-- <sourceProfile id="deux" access="public" name="LeMonde.fr : International" 
-			specificUserContent="no" ttl="86400" url="http://www.lemonde.fr/rss/sequence/0,2-3210,1-0,0.xml"> 
-			<visibility> <obliged> <group name="local.0" /> <group name="local.15" /> 
-			</obliged> </visibility> </sourceProfile> <sourceProfile id="trois" access="public" 
-			name="L'Equipe.fr : Actu Sport" specificUserContent="no" ttl="86400" url="http://www.lequipe.fr/Xml/actu_rss.xml"> 
-			<visibility> <obliged> <group name="local.0" /> <group name="local.15" /> 
-			</obliged> </visibility> </sourceProfile> -->
-
+<!-- test RSS UR1
+		<sourceProfile id="deux" access="public"
+			name="Actus de Rennes 1" specificUserContent="no"
+			url="http://www.univ-rennes1.fr/bas-de-page/RSS/actualites/">
+			<visibility>
+				<allowed></allowed>
+				<autoSubscribed></autoSubscribed>
+				<obliged>
+					<group name="local.0" />
+					<group name="local.15" />
+				</obliged>
+			</visibility>
+		</sourceProfile>
+ -->		
+<!--  test CAS
+		<sourceProfile id="trois" access="cas"
+			name="Actus de Rennes 1 (en CAS)" specificUserContent="no"
+			url="http://uportal.univ-rennes1.fr/media/Actualites.xml">
+			<visibility>
+				<allowed></allowed>
+				<autoSubscribed></autoSubscribed>
+				<obliged>
+					<group name="local.0" />  
+					<group name="local.15" />  
+				</obliged>
+			</visibility>
+		</sourceProfile>
+ -->		
 	</sourceProfiles>
+
 	<visibility>
 		<allowed></allowed>
 		<autoSubscribed></autoSubscribed>
