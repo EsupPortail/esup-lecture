@@ -5,7 +5,9 @@
 */
 package org.esupportail.lecture.domain;
 
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -58,11 +60,6 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 */
 	private AuthenticationService authenticationService;
 
-	/**
-	 * The CAS Service.
-	 */
-	private CasService casService;
-	
 	/*
 	 *************************** INIT ************************************** */	
 	/**
@@ -82,8 +79,6 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 		Assert.notNull(servletService, "property servletService of class " 
 				+ this.getClass().getName() + " can not be null");
 		Assert.notNull(portletService, "property portletService of class " 
-				+ this.getClass().getName() + " can not be null");
-		Assert.notNull(casService, "property casService of class " 
 				+ this.getClass().getName() + " can not be null");
 		if (defaultService == null) {
 			defaultService = servletService;
@@ -141,17 +136,16 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 
 	/**
 	 * @throws InfoExternalException
+	 * @throws  
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserProxyTicketCAS(String)
 	 */
 	public String getUserProxyTicketCAS(final String casTargetService) throws InfoExternalException {
+		String ret = getModeService().getUserProxyTicketCAS(casTargetService);
+		
 	    if (LOG.isDebugEnabled()) {
 			LOG.debug("getUserProxyTicketCAS(" + casTargetService + ")");
 		}
-	    try {
-			return casService.getProxyTicket(casTargetService);
-		} catch (CasException e) {
-			throw new InfoExternalException("Error getting CAS Proxy Ticket", e); 
-		}
+	    return ret;
 		
 	}
 
@@ -182,7 +176,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 		// Dynamic instantiation for portlet/servlet context
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		if (facesContext != null) {
-			if (PortletUtil.isPortletRequest(facesContext)) {
+			if (PortletUtil.isPortletRequest(facesContext)) { //TODO: Ne marche plus car l'on n'utilise plus MyFacesGenericPortlet Cf. http://wiki.apache.org/myfaces/UsingPortletUtil --> trouver un autre moyen
 				ret = portletService;
 			} else {
 				// TODO (RB/GB) make better
@@ -223,13 +217,6 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 */
 	public void setDefaultService(final ModeService defaultService) {
 		this.defaultService = defaultService;
-	}
-
-	/**
-	 * @param casService the casService to set
-	 */
-	public void setCasService(final CasService casService) {
-		this.casService = casService;
 	}
 
 }

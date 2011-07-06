@@ -123,6 +123,16 @@ public class PortletService implements ModeService {
 		return value;
 	}
 
+	@Override
+	public String getUserProxyTicketCAS(String casTargetService) {
+		final FacesContext facesContext = FacesContext.getCurrentInstance();
+		final ExternalContext externalContext = facesContext.getExternalContext();
+		final PortletRequest request = (PortletRequest) externalContext.getRequest();
+		Map<String,String> userinfo = (Map<String,String>) request.getAttribute(PortletRequest.USER_INFO);
+		String ticket = (String) userinfo.get("casProxyTicket");
+		return ticket;
+	}
+
 	/*
 	 ************************** Accessors ************************************/
 

@@ -11,10 +11,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.utils.Assert;
+import org.esupportail.commons.utils.ContextUtils;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.esupportail.portal.ws.client.PortalService;
 import org.esupportail.portal.ws.client.exceptions.PortalGroupNotFoundException;
+import org.jasig.cas.client.util.AbstractCasFilter;
+import org.jasig.cas.client.validation.Assertion;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
@@ -124,6 +127,13 @@ public class ServletService implements ModeService, InitializingBean {
 	 */
 	public void setAuthenticationService(final AuthenticationService authenticationService) {
 		this.authenticationService = authenticationService;
+	}
+
+	@Override
+	public String getUserProxyTicketCAS(String casTargetService) {
+		Assertion assertion = (Assertion) ContextUtils.getGlobalSessionAttribute(AbstractCasFilter.CONST_CAS_ASSERTION);
+		String ret = assertion.getPrincipal().getProxyTicketFor(casTargetService);
+		return ret;
 	}
 
 

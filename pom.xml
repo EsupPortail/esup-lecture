@@ -247,7 +247,7 @@
 				<deploy.type>servlet</deploy.type>
 				<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
 				<casServerUrlPrefix>https://sso-cas.univ-rennes1.fr</casServerUrlPrefix>
-				<serverName>http://localhost:8080</serverName>
+				<serverName>http://uportal.univ-rennes1.fr</serverName>
 			</properties>
 		</profile>
 	</profiles>

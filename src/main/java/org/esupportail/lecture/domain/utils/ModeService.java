@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.utils;
 
+import org.esupportail.commons.services.cas.CasException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
@@ -37,5 +38,12 @@ public interface ModeService {
 	 * @throws InternalExternalException 
 	 */
 	boolean isUserInGroup(String group) throws InternalExternalException;
+
+	/**
+	 * @param targetService The service the PT should be sent to.
+	 * @return a PT.
+	 * @throws CasException 
+	 */	
+	public String getUserProxyTicketCAS(final String casTargetService);
 
 }

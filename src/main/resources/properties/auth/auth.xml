@@ -35,16 +35,4 @@
 	</bean>
  -->
 
-    <bean 
-        id="servletCasService"
-        class="org.esupportail.commons.services.cas.ServletCasServiceImpl"
-        >
-    </bean>
-
-    <bean 
-        id="portletCasService"
-        class="org.esupportail.commons.services.cas.PortletCasServiceImpl"
-        >
-    </bean>
-
 </beans>
