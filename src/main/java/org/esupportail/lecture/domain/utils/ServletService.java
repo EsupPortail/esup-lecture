@@ -132,6 +132,9 @@ public class ServletService implements ModeService, InitializingBean {
 	@Override
 	public String getUserProxyTicketCAS(String casTargetService) {
 		Assertion assertion = (Assertion) ContextUtils.getGlobalSessionAttribute(AbstractCasFilter.CONST_CAS_ASSERTION);
+		if (assertion == null) {
+			throw new RuntimeException("null assertion in getUserProxyTicketCAS. Check ticketValidationFilter and ticketValidator beans configuration");
+		}
 		String ret = assertion.getPrincipal().getProxyTicketFor(casTargetService);
 		return ret;
 	}

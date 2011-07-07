@@ -127,25 +127,6 @@
 		<property name="service" value="${casService.service}" />
 	</bean>
 	
-	<!-- Ticket validation filter --> <!-- TODO parametrage de p:serverName contexte dans p:proxyReceptorUrl-->
-	<bean id="ticketValidationFilter" 
-		class="org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter"
-		p:serverName="http://uportal.univ-rennes1.fr" p:redirectAfterValidation="false"
-		p:proxyReceptorUrl="/proxy/receptor" p:ticketValidator-ref="ticketValidator"
-		p:proxyGrantingTicketStorage-ref="proxyGrantingTicketStorage"/>
-	
-	<!-- CAS proxy ticket validator -->
-	<bean id="ticketValidator" 
-		class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator"
-		p:proxyCallbackUrl="${casService.proxyCallbackUrl}" 
-		p:proxyGrantingTicketStorage-ref="proxyGrantingTicketStorage"
-		p:acceptAnyProxy="true">
-		<constructor-arg index="0" value="${casService.url}" />
-	</bean>
-
-	<bean id="proxyGrantingTicketStorage" 
-		class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl"/>
-
 	<!-- 
 	***************************************************
 				DOMAIN TEST 

@@ -57,8 +57,20 @@ smtp.interceptAddress.personal=My Name
 exceptionHandling.recipientEmail=my.name@domain.edu
 
 ##### casService #####
-# the casServiceBean servletCasService in servlet mode OR portletCasService in portlet mode
-casService.bean=servletCasService
+# the server name of the server this application is hosted on. 
+# Service URL will be dynamically constructed using this, i.e. https://localhost:8443 
+# (you must include the protocol, but port is optional if it's a standard port).
+serverName=http://localhost:8080
+# sso CAS start URL
+casServerUrlPrefix=https://sso-cas.univ-rennes1.fr
+# The service that retrieves PTs from the CAS server
+casService.service=http://uportal.univ.fr/esup-lecture
+# The URL used on the CAS server (servlet and portlet mode)
+casService.url=https://sso-cas.univ-rennes1.fr
+# The callback URL used by the CAS server to pass the PGT to
+# the application (servlet and portlet mode)
+casService.proxyCallbackUrl=https://uportal.univ.fr/esup-lecture/proxy/receptor
+
 
 ##### misc ####
 #The path to the media files (in servlet mode), used for scripts and stylesheets.

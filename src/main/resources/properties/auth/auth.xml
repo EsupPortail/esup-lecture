@@ -1,38 +1,50 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<beans 
-	xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd"
-	
-	>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
 
-	<!-- 
-		/properties/auth/auth.xml
-		The configuration file for authentication.
-		This file should not be modified but by the developers.
-		This file is referenced by /properties/applicationContext.xml.
-	-->
+	<!-- /properties/auth/auth.xml The configuration file for authentication. 
+		This file should not be modified but by the developers. This file is referenced 
+		by /properties/applicationContext.xml. -->
 
-	<bean 
-		id="authenticationService"
-		class="org.esupportail.commons.services.authentication.PortalOrCasFilterAuthenticationService"
-		>
+	<bean id="authenticationService"
+		class="org.esupportail.commons.services.authentication.PortalOrCasFilterAuthenticationService">
 		<description>
-			The name of the Portal attribute that holds the uid of users, as set in portlet.xml.
+			The name of the Portal attribute that holds the uid of
+			users, as set in portlet.xml.
 		</description>
 		<property name="uidPortalAttribute" value="uid" />
 	</bean>
 
-<!-- 
-	<bean 
-		id="authenticationService"
-		class="org.esupportail.commons.services.authentication.OfflineFixedUserAuthenticationService"
-		>
-		<property name="authId" value="bourges"></property>
-		<property name="authType" value="web"></property>
+	<!-- <bean id="authenticationService" class="org.esupportail.commons.services.authentication.OfflineFixedUserAuthenticationService" 
+		> <property name="authId" value="bourges"></property> <property name="authType" 
+		value="web"></property> </bean> -->
+
+	<bean id="AuthenticationFilter"
+		class="org.jasig.cas.client.authentication.AuthenticationFilter"
+		p:casServerLoginUrl="${casServerUrlPrefix}/login" p:serverName="${serverName}" />
+
+	<!-- Ticket validation filter --> 
+	<bean id="ticketValidationFilter"
+		class="org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter"
+		p:serverName="${serverName}"
+		p:redirectAfterValidation="false" p:proxyReceptorUrl="/proxy/receptor"
+		p:ticketValidator-ref="ticketValidator"
+		p:proxyGrantingTicketStorage-ref="proxyGrantingTicketStorage" />
+
+	<!-- CAS proxy ticket validator -->
+	<bean id="ticketValidator"
+		class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator"
+		p:proxyCallbackUrl="${casService.proxyCallbackUrl}"
+		p:proxyGrantingTicketStorage-ref="proxyGrantingTicketStorage"
+		p:acceptAnyProxy="true">
+		<constructor-arg index="0" value="${casService.url}" />
 	</bean>
- -->
+
+	<bean id="proxyGrantingTicketStorage"
+		class="org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl" />
 
 </beans>
