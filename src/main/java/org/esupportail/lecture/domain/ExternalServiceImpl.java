@@ -1,13 +1,14 @@
 /**
-* ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
-* For any information please refer to http://esup-helpdesk.sourceforge.net
-* You may obtain a copy of the licence at http://www.esup-portail.org/license/
-*/
+ * ESUP-Portail Lecture - Copyright (c) 2006 ESUP-Portail consortium
+ * For any information please refer to http://esup-helpdesk.sourceforge.net
+ * You may obtain a copy of the licence at http://www.esup-portail.org/license/
+ */
 package org.esupportail.lecture.domain;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.portlet.PortletRequest;
+import javax.portlet.faces.BridgeUtil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -49,7 +50,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 * servlet version of ExternalService.
 	 */
 	private ModeService servletService;
-	
+
 	/**
 	 * default version of ExternalService.
 	 */
@@ -110,13 +111,13 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 * @see org.esupportail.lecture.domain.ExternalService#getPreferences(java.lang.String)
 	 */
 	public String getPreferences(final String name) throws NoExternalValueException, InternalExternalException {
-	     String ret = getModeService().getPreference(name);
-	 
-	     if (LOG.isTraceEnabled()) {
+		String ret = getModeService().getPreference(name);
+
+		if (LOG.isTraceEnabled()) {
 			LOG.trace("getPreferences(" + name + ") return " + ret);
 		}
- 
-        return ret;
+
+		return ret;
 	}
 
 	/**
@@ -125,9 +126,9 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserAttribute(java.lang.String)
 	 */
 	public String getUserAttribute(final String attribute) 
-		throws NoExternalValueException, InternalExternalException {
+			throws NoExternalValueException, InternalExternalException {
 		String ret = getModeService().getUserAttribute(attribute);
-		
+
 		if (LOG.isTraceEnabled()) {
 			LOG.trace("getUserAttribute(" + attribute + ") return " + ret);
 		}
@@ -141,12 +142,12 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 */
 	public String getUserProxyTicketCAS(final String casTargetService) throws InfoExternalException {
 		String ret = getModeService().getUserProxyTicketCAS(casTargetService);
-		
-	    if (LOG.isDebugEnabled()) {
+
+		if (LOG.isDebugEnabled()) {
 			LOG.debug("getUserProxyTicketCAS(" + casTargetService + ")");
 		}
-	    return ret;
-		
+		return ret;
+
 	}
 
 	/**
@@ -154,9 +155,9 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 * @see org.esupportail.lecture.domain.ExternalService#isUserInGroup(java.lang.String)
 	 */
 	public boolean isUserInGroup(final String group) throws InternalExternalException {
-	    boolean ret = getModeService().isUserInGroup(group);
-	   
-        if (LOG.isDebugEnabled()) {
+		boolean ret = getModeService().isUserInGroup(group);
+
+		if (LOG.isDebugEnabled()) {
 			LOG.debug("isUserInRole(" + group + ") return " + ret);
 		}
 		return ret;
@@ -173,18 +174,12 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 */
 	private ModeService getModeService() {
 		ModeService ret = null;
-		// Dynamic instantiation for portlet/servlet context
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		if (facesContext != null) {
-			if (PortletUtil.isPortletRequest(facesContext)) { //TODO: Ne marche plus car l'on n'utilise plus MyFacesGenericPortlet Cf. http://wiki.apache.org/myfaces/UsingPortletUtil --> trouver un autre moyen
-				ret = portletService;
-			} else {
-				// TODO (RB/GB) make better
-				ret = servletService;
-			}			
+		if (BridgeUtil.isPortletRequest()) { 
+			ret = portletService;
 		} else {
-			ret = defaultService;
-		}
+			// TODO (RB/GB) make better
+			ret = servletService;
+		}			
 		return ret;
 	}
 

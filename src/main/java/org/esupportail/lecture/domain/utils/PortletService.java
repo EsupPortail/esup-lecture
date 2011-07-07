@@ -14,15 +14,22 @@ import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.utils.Assert;
+import org.esupportail.lecture.exceptions.domain.InfoExternalException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
+import org.jasig.cas.client.validation.Assertion;
+import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
+import org.jasig.cas.client.validation.TicketValidationException;
+import org.jasig.cas.client.validation.TicketValidator;
+import org.springframework.beans.factory.InitializingBean;
 
 
 /**
  * @author gbouteil
  * Access to external in portlet mode
  */
-public class PortletService implements ModeService {
+public class PortletService implements ModeService, InitializingBean {
 
 
 	/*
@@ -31,6 +38,10 @@ public class PortletService implements ModeService {
 	 * Log instance.
 	 */
 	private static final Log LOG = LogFactory.getLog(PortletService.class);
+	
+	private TicketValidator ticketValidator;
+	
+	private String service; 
 
 	/* 
 	 ************************** INIT ****************************************/
@@ -43,6 +54,20 @@ public class PortletService implements ModeService {
 
 	/* 
 	 ************************** METHODS *************************************/
+
+	/**
+	 * @param ticketValidator the ticketValidator to set
+	 */
+	public void setTicketValidator(TicketValidator ticketValidator) {
+		this.ticketValidator = ticketValidator;
+	}
+
+	/**
+	 * @param service the service to set
+	 */
+	public void setService(String service) {
+		this.service = service;
+	}
 
 	/**
 	 * @throws InternalExternalException 
@@ -125,12 +150,30 @@ public class PortletService implements ModeService {
 
 	@Override
 	public String getUserProxyTicketCAS(String casTargetService) {
+		String ret;
+		//get ProxyTicket for current portlet from uPortal 
 		final FacesContext facesContext = FacesContext.getCurrentInstance();
 		final ExternalContext externalContext = facesContext.getExternalContext();
 		final PortletRequest request = (PortletRequest) externalContext.getRequest();
 		Map<String,String> userinfo = (Map<String,String>) request.getAttribute(PortletRequest.USER_INFO);
 		String ticket = (String) userinfo.get("casProxyTicket");
-		return ticket;
+		//get ProxyTicket for casTargetService
+		try {
+			Assertion assertion = ticketValidator.validate(ticket, service);
+			ret = assertion.getPrincipal().getProxyTicketFor(casTargetService);
+		} catch (TicketValidationException e) {
+			LOG.error("fail to validate a ticket");
+			throw new RuntimeException(e);
+		}
+		return ret;
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception {
+		Assert.notNull(ticketValidator, "property ticketValidator of class " 
+				+ this.getClass().getName() + " can not be null");
+		Assert.notNull(service, "property service of class " 
+				+ this.getClass().getName() + " can not be null");
 	}
 
 	/*
