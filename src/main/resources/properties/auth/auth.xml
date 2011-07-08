@@ -41,7 +41,7 @@
 		p:proxyCallbackUrl="${casService.proxyCallbackUrl}"
 		p:proxyGrantingTicketStorage-ref="proxyGrantingTicketStorage"
 		p:acceptAnyProxy="true">
-		<constructor-arg index="0" value="${casService.url}" />
+		<constructor-arg index="0" value="${casServerUrlPrefix}" />
 	</bean>
 
 	<bean id="proxyGrantingTicketStorage"
