@@ -123,9 +123,16 @@
 
 	<bean id="portletService" class="org.esupportail.lecture.domain.utils.PortletService">
 		<description>external service in portlet mode</description>
+		<property name="assertionHandler" ref="assertionHandler" />
+	</bean>
+
+	<bean id="assertionHandler" class="org.esupportail.lecture.domain.AssertionHandler"
+		scope="globalSession">
+		<description>AssertionHandler is used to keep in user session the TGT</description>
 		<property name="ticketValidator" ref="ticketValidator" />
 		<property name="service" value="${casService.service}" />
-	</bean>
+		<aop:scoped-proxy proxy-target-class="false" />
+	</bean> 	
 	
 	<!-- 
 	***************************************************
