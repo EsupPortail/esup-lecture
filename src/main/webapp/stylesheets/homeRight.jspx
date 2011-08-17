@@ -66,7 +66,6 @@
 	</div>
 	<!-- Source(s) and Items display -->
 	<div class="portlet-section lecture-right" role="region">
-
 		<!-- source(s) display -->
 		<t:dataList
 			value="#{homeController.selectedCategory.selectedOrAllSources}"
@@ -83,7 +82,8 @@
 							<h:commandButton action="#{homeController.toggleItemReadState}"
 								image="/media/unread.png" alt="#{msgs['markAsRead']}"
 								title="#{msgs['markAsRead']}"
-								rendered="#{!item.read and !homeController.guestMode and !item.dummy and homeController.selectedCategory.userCanMarkRead}">
+								rendered="#{!item.read and !homeController.guestMode and !item.dummy and homeController.selectedCategory.userCanMarkRead}"
+								styleClass="lecture-markAsReadButton">
 								<t:updateActionListener property="#{homeController.ualSource}"
 									value="#{source}" />
 								<t:updateActionListener property="#{homeController.ualItem}"
@@ -92,7 +92,8 @@
 							<h:commandButton action="#{homeController.toggleItemReadState}"
 								image="/media/read.png" alt="#{msgs['markAsUnread']}"
 								title="#{msgs['markAsUnread']}"
-								rendered="#{item.read and !homeController.guestMode and !item.dummy and homeController.selectedCategory.userCanMarkRead}">
+								rendered="#{item.read and !homeController.guestMode and !item.dummy and homeController.selectedCategory.userCanMarkRead}"
+								styleClass="lecture-markAsUnreadButton">
 								<t:updateActionListener property="#{homeController.ualSource}"
 									value="#{source}" />
 								<t:updateActionListener property="#{homeController.ualItem}"

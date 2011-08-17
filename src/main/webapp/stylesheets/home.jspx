@@ -37,9 +37,6 @@
 			-->
 
 		</h:form>
-		<script type="text/javascript">
-		  lecture.jQuery('input[id$="home:itemDisplayModeButton"]').hide();
-        </script>
 	</ui:define>
 </ui:composition></div>
 
