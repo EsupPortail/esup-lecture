@@ -4,10 +4,6 @@ Génération des packages :
 mvn -P portletDevelopment package
 mvn -P servletDevelopment package
 
-TODO :
-casService.bean en mode portlet --> 
-- revoir org.esupportail.commons.services.cas.PortletCasServiceImpl pour utiliser le fonctionnement uP 32 ? 
-- org.esupportail.lecture.domain.utils.PortletService n'est plus ! 
-- voir la gestion de auth.bean dans la config
-portalService --> le conserver ? --> au minimum ne pas le montrer dans le config.properties
-remettre le portletService
+Gestion des releases :
+mvn release:prepare -DautoVersionSubmodules
+mvn -P portletDevelopment release:perform -Dgoals=package
