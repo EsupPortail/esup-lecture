@@ -28,6 +28,7 @@
 			</releases>
 		</repository>
 	</repositories>
+<!-- 
 	<distributionManagement>
 		<repository>
 			<id>esup</id>
@@ -40,6 +41,7 @@
 			<url>https://mvn.esup-portail.org/content/repositories/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
+ -->	
 	<scm>
 		<developerConnection>scm:svn:https://subversion.cru.fr/esup-lecture/trunk</developerConnection>
 		<url>https://subversion.cru.fr/esup-lecture</url>
