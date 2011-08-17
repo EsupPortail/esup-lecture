@@ -17,21 +17,17 @@
 		</property>
 		<property name = "ignoreResourceNotFound" value="true" />
 	</bean>
+
 	<import resource="auth/auth.xml" />
 	<import resource="portal/portal.xml" />
 	<import resource="cache/cache.xml" />
 	<import resource="dao/dao.xml" />
 	<import resource="exceptionHandling/exceptionHandling.xml" />	
 	<import resource="smtp/smtp.xml" />
-	<!-- <import resource="ldap/ldap.xml" /> <import resource="init/init.xml" 
-		/> <import resource="web/converters.xml" /> <import resource="dao/dao.xml" 
-		/> <import resource="cache/cache.xml"/> <import resource="deepLinking/deepLinking.xml" 
-		/>  -->
 	<import resource="domain/domain.xml" />
 	<import resource="i18n/i18n.xml" />
 	<import resource="misc/abstractBeans.xml" />
 	<import resource="misc/application.xml" />
-	<import resource="tags/tags.xml" />
 	<import resource="web/controllers.xml" />
 	<import resource="wurfl/wurfl-conf.xml"/>
 
