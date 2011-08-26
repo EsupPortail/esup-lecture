@@ -3,26 +3,34 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:t="http://myfaces.apache.org/tomahawk"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"><ui:composition
-	template="/stylesheets/template.jspx">
-	<ui:define name="content">
-		<h:form id="home">
-			<!-- Structure without js-layout -->
-			<div class="portlet-section fl-container-flex"><t:div
-				styleClass="fl-col fl-force-left"
-				style="width: #{homeController.treeSize}%">
-				<ui:include src="homeLeft.jspx" />
-			</t:div>
-			<div class="fl-col fl-force-right"
-				style="width: #{98-homeController.treeSize}%"><ui:include
-				src="homeRight.jspx" /></div>
-			</div>
-			<!-- End Structure without js-layout -->
-			
-			<!-- Structure with js-layout -->
-			<!-- Comment the struct above and uncomment below to use it, 
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition template="/stylesheets/template.jspx">
+		<ui:define name="content">
+			<h:form id="home">
+				<!-- Structure without js-layout -->
+				<t:div styleClass="portlet-section fl-container-flex"
+					rendered="#{homeController.treeVisible and !homeController.guestMode}">
+					<t:div styleClass="fl-col fl-force-left"
+						style="width: #{homeController.treeSize}%">
+						<ui:include src="homeLeft.jspx" />
+					</t:div>
+					<div class="fl-col fl-force-right"
+						style="width: #{98-homeController.treeSize}%">
+						<ui:include src="homeRight.jspx" />
+					</div>
+				</t:div>
+				<t:div styleClass="portlet-section"
+					rendered="#{!homeController.treeVisible or homeController.guestMode}">
+					<div>
+						<ui:include src="homeRight.jspx" />
+					</div>
+				</t:div>
+				<!-- End Structure without js-layout -->
+
+				<!-- Structure with js-layout -->
+				<!-- Comment the struct above and uncomment below to use it, 
 				and declare media/js/init-js-layout.js in the Head section of the portal (see skin.xml for uPortal 3.2) -->
-			<!-- 
+				<!-- 
 			<t:div id="panels-layout" forceId="true">
 				<t:div id="panelLeft-ui" styleClass="ui-layout-west" forceId="true"
 					style="width: #{homeController.treeSize}%"
@@ -36,7 +44,8 @@
 			</t:div>
 			-->
 
-		</h:form>
-	</ui:define>
-</ui:composition></div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</div>
 

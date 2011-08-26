@@ -33,7 +33,7 @@
 						<f:selectItem itemValue="#{homeController.unreadfirt}"
 							itemLabel="#{msgs['unreadFirst']}" />
 					</h:selectOneMenu>
-					<h:commandButton id="itemDisplayModeButton" styleClass="itemDisplayModeButton"
+					<h:commandButton styleClass="itemDisplayModeButton"
 						value="#{msgs['changeItemDisplayModeButtonLabel']}"
 						action="#{homeController.changeItemDisplayMode}" />
 				</t:htmlTag>
