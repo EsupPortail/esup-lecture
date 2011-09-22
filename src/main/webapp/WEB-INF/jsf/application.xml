@@ -24,8 +24,8 @@
 	
 	<lifecycle>
 	<!-- En cours: utilisation d'une vue mobile en fonction du terminal (utilisation de Wurfl)
-		<phase-listener>org.esupportail.lecture.web.jsf.MobilePhaseListener</phase-listener>
-	 -->
+	-->
+		<phase-listener>org.esupportail.lecture.web.jsf.JasigLikeMobilePhaseListener</phase-listener>
 		<phase-listener>org.esupportail.commons.jsf.MessagesPhaseListener</phase-listener>
 		<phase-listener>org.esupportail.commons.jsf.ResourceBundlePhaseListener</phase-listener>
    </lifecycle>
