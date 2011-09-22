@@ -1,11 +1,10 @@
 package org.esupportail.lecture.web.jsf;
 
+
 import java.io.IOException;
 
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
-import javax.faces.event.PhaseId;
-import javax.faces.event.PhaseListener;
 
 import net.sourceforge.wurfl.core.Device;
 import net.sourceforge.wurfl.core.WURFLManager;
@@ -15,20 +14,17 @@ import org.esupportail.commons.services.logging.Logger;
 import org.esupportail.commons.services.logging.LoggerImpl;
 import org.springframework.context.ApplicationContext;
 
-public class MobilePhaseListener implements PhaseListener {
 
+
+public class WurflMobilePhaseListener extends MobilePhaseListerner {
+
+	private static final long serialVersionUID = -5393736504160028305L;
+	
 	/**
 	 * A logger.
 	 */
 	private final Logger logger = new LoggerImpl(getClass());
 
-	@Override
-	public void afterPhase(PhaseEvent event) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void beforePhase(PhaseEvent event) {
 		FacesContext facesContext = event.getFacesContext();
 		ApplicationContext springContext = ApplicationContextHolder.getContext();
@@ -53,11 +49,6 @@ public class MobilePhaseListener implements PhaseListener {
 					logger.error("EXCEPTION: " + e.getMessage());				}
 			}
 		}
-	}
-
-	@Override
-	public PhaseId getPhaseId() {
-		return PhaseId.RENDER_RESPONSE;
 	}
 
 }
