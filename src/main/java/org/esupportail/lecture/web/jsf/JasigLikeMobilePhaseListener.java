@@ -30,25 +30,14 @@ public class JasigLikeMobilePhaseListener extends MobilePhaseListerner {
 	private final Logger logger = new LoggerImpl(getClass());
 
 	/**
-	 * Regexes of mobile device user agents
-	 */
-	private List<Pattern> mobileDeviceRegexes = null;
-
-	@Resource(name="mobileDeviceRegexes")
-	public void setMobileDeviceRegexes(List<String> patterns) {
-		this.mobileDeviceRegexes = new ArrayList<Pattern>();
-		for (String pattern : patterns) {
-			this.mobileDeviceRegexes.add(Pattern.compile(pattern));
-		}
-	}
-
-	/**
 	 * @param userAgent
 	 * @return true if userAgent in mobileDeviceRegexes
 	 */
 	private boolean isWirelessDevice(String userAgent) {
-		if (this.mobileDeviceRegexes != null && userAgent != null) {
-			for (Pattern regex : this.mobileDeviceRegexes) {
+		DeviceRegexesHolder deviceRegexesHolder = (DeviceRegexesHolder) ApplicationContextHolder.getContext().getBean("deviceRegexesHolder");
+		List<Pattern> mobileDeviceRegexes = deviceRegexesHolder.getMobileDeviceRegexes();
+		if (mobileDeviceRegexes != null && userAgent != null) {
+			for (Pattern regex : mobileDeviceRegexes) {
 				if (regex.matcher(userAgent).matches()) {
 					return true;
 				}
