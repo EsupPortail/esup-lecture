@@ -1,8 +1,9 @@
 projet avec une base esup-commons V2
 
 Génération des packages :
-mvn -P portletDevelopment package
-mvn -P servletDevelopment package
+mvn -P portlet2Development clean package
+mvn -P portletDevelopment clean package
+mvn -P servletDevelopment clean package
 
 Gestion des releases :
 mvn release:prepare -DautoVersionSubmodules

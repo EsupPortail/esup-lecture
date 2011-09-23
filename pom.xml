@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.esupportail</groupId>
 	<artifactId>esup-lecture</artifactId>
@@ -154,16 +155,91 @@
 		<dependency>
 			<groupId>org.apache.myfaces.portlet-bridge</groupId>
 			<artifactId>portlet-bridge-impl</artifactId>
-			<version>1.0.0</version>
+			<version>${portlet.bridge.version}</version>
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
 	<properties>
+		<portlet.bridge.version>1.0.0</portlet.bridge.version>
 		<javax.portlet.version>1.0</javax.portlet.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
 		<esupcommons.version>0.2.6</esupcommons.version>
 	</properties>
 	<profiles>
+		<profile>
+			<id>portlet2Development</id>
+			<activation>
+				<file>
+					<exists>portlet</exists>
+				</file>
+			</activation>
+			<pluginRepositories>
+				<!-- jlehtinen.net repository -->
+				<pluginRepository>
+					<id>jlehtinen.net</id>
+					<url>http://repo.jlehtinen.net/maven2/</url>
+				</pluginRepository>
+			</pluginRepositories>
+			<build>
+				<defaultGoal>package</defaultGoal>
+<!-- 				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>net.jlehtinen.portlet</groupId>
+							<artifactId>portlet-prototyping-maven-plugin</artifactId>
+							<version>0.6</version>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+ -->				<plugins>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.1</version>
+						<configuration>
+							<webResources>
+								<resource>
+									<filtering>true</filtering>
+									<directory>src/main/config/portlet</directory>
+									<includes>
+										<include>WEB-INF/web.xml</include>
+										<include>WEB-INF/portlet.xml</include>
+										<include>stylesheets/template.jspx</include>
+									</includes>
+								</resource>
+								<resource>
+									<filtering>true</filtering>
+									<directory>src/main/config/portlet2</directory>
+									<includes>
+										<include>WEB-INF/jsf/application.xml</include>
+									</includes>
+								</resource>
+							</webResources>
+							<warName>${project.artifactId}-portlet</warName>
+						</configuration>
+					</plugin>
+					<plugin>
+						<groupId>net.jlehtinen.portlet</groupId>
+						<artifactId>portlet-prototyping-maven-plugin</artifactId>
+						<version>0.6</version>
+						<configuration>
+							<portletXml>${basedir}/src/main/config/portlet2/WEB-INF/portlet.xml</portletXml>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+			<dependencies>
+				<dependency>
+					<groupId>org.esupportail</groupId>
+					<artifactId>esup-commons2-jsf-portlet</artifactId>
+					<version>${esupcommons.version}</version>
+				</dependency>
+			</dependencies>
+			<properties>
+				<portlet.bridge.version>2.0.0</portlet.bridge.version>
+				<deploy.type>portlet</deploy.type>
+				<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
+			</properties>
+		</profile>
 		<profile>
 			<id>portletDevelopment</id>
 			<activation>
@@ -203,6 +279,7 @@
 				</dependency>
 			</dependencies>
 			<properties>
+				<portlet.bridge.version>1.0.0</portlet.bridge.version>
 				<deploy.type>portlet</deploy.type>
 				<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
 			</properties>
