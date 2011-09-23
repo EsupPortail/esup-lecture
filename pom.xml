@@ -190,7 +190,7 @@
 									</includes>
 								</resource>
 							</webResources>
-							<warName>${project.artifactId}-portlet-${project.version}</warName>
+							<warName>${project.artifactId}-portlet</warName>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -237,7 +237,7 @@
 									</includes>
 								</resource>
 							</webResources>
-							<warName>${project.artifactId}-servlet-${project.version}</warName>
+							<warName>${project.artifactId}-servlet</warName>
 						</configuration>
 					</plugin>
 					<plugin>
