@@ -3,10 +3,50 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:t="http://myfaces.apache.org/tomahawk"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"><ui:composition
-	template="/stylesheets/template.jspx">
-	<ui:define name="content">
-		<h1>Mobile !!!!</h1>
-	</ui:define>
-</ui:composition></div>
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition template="/stylesheets/mobile/template.jspx">
+		<ui:define name="content">
+			<div data-role="page" id="left">
+				<div data-role="content">
+					<ul data-role="listview">
+						<t:dataList value="#{homeController.context.categories}" var="cat"
+							layout="simple">
+							<li data-role="list-divider"><h:outputText
+									value="#{cat.name}" /></li>
+							<t:dataList value="#{cat.sources}" var="src" layout="simple">
+								<li><a href="##{src.id}"><h:outputText
+											value="#{src.name}" /><span class="ui-li-count"><h:outputText
+												value="#{src.unreadItemsNumber}" /> </span> </a></li>
+							</t:dataList>
+						</t:dataList>
+					</ul>
+				</div>
+			</div>
+			<t:dataList value="#{homeController.context.categories}" var="cat"
+				layout="simple">
+				<t:dataList value="#{cat.sources}" var="src" layout="simple">
+					<div data-role="page" id="#{src.id}">
+						<div data-role="header" data-theme="b">
+							<h1>
+								<h:outputText value="#{src.name}" />
+							</h1>
+							<a href="#left" data-icon="back" data-iconpos="left"
+								data-direction="reverse" class="ui-btn-left jqm-home">Retour</a>
+							<div data-role="content">
+								<ul data-role="listview">
+									<t:dataList value="#{src.items}" var="item" layout="simple">
+										<li><a
+											href="http://ent.univ-rennes1.fr/newsPortlet/feeds/pub/item?c=1&amp;itemID=3019&amp;KeepThis=true&amp;TB_iframe=true&amp;height=555&amp;width=830"
+											target="black"> <h:outputText escape="false"
+													value="#{item.htmlContent}" /> </a></li>
+									</t:dataList>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</t:dataList>
+			</t:dataList>
+		</ui:define>
+	</ui:composition>
+</div>
 
