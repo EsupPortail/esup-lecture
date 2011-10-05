@@ -26,6 +26,10 @@ public class ItemBean {
 	 */
 	private String htmlContent;
 	/**
+	 * html content of item for mobile view.
+	 */
+	private String mobileHtmlContent;
+	/**
 	 * store if item is read or not.
 	 */
 	private boolean read;
@@ -47,6 +51,7 @@ public class ItemBean {
 	public ItemBean(final Item it, final CustomSource customSource) {
 		id = it.getId();
 		htmlContent = it.getHtmlContent();
+		mobileHtmlContent = it.getMobileHtmlContent();
 		read = customSource.isItemRead(id);
 	}
 	
@@ -90,8 +95,20 @@ public class ItemBean {
 		this.read = read;
 	}
 
+	/**
+	 * @return the mobileHtmlContent
+	 */
+	public String getMobileHtmlContent() {
+		return mobileHtmlContent;
+	}
+
+	/**
+	 * @param mobileHtmlContent the mobileHtmlContent to set
+	 */
+	public void setMobileHtmlContent(String mobileHtmlContent) {
+		this.mobileHtmlContent = mobileHtmlContent;
+	}
 	
-	// TODO (RB/VR<-GB) C'est pas très objet ça ;-)
 	/**
 	 * @return false because it is not a dummy Item
 	 */

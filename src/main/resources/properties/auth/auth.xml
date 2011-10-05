@@ -10,6 +10,7 @@
 		This file should not be modified but by the developers. This file is referenced 
 		by /properties/applicationContext.xml. -->
 
+<!-- 
 	<bean id="authenticationService"
 		class="org.esupportail.commons.services.authentication.PortalOrCasFilterAuthenticationService">
 		<description>
@@ -18,10 +19,13 @@
 		</description>
 		<property name="uidPortalAttribute" value="uid" />
 	</bean>
+ -->
 
-	<!-- <bean id="authenticationService" class="org.esupportail.commons.services.authentication.OfflineFixedUserAuthenticationService" 
-		> <property name="authId" value="bourges"></property> <property name="authType" 
-		value="web"></property> </bean> -->
+	<bean id="authenticationService" 
+		class="org.esupportail.commons.services.authentication.OfflineFixedUserAuthenticationService"> 
+			<property name="authId" value="bourges" />
+			<property name="authType" value="web" />
+	</bean>
 
 	<bean id="AuthenticationFilter"
 		class="org.jasig.cas.client.authentication.AuthenticationFilter"

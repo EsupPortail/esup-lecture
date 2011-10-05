@@ -330,11 +330,16 @@ public class MappingFile {
 				m.setRootElement(rootElement);
 				m.setXsltUrl(mapping.valueOf("@xsltFile"));
 				m.setItemXPath(mapping.valueOf("@itemXPath"));
+				String mobileXsltFile = mapping.valueOf("@MobileXsltFile");
+				if (mobileXsltFile == null || mobileXsltFile.equals("")) {
+					m.setMobileXsltUrl(m.getXsltUrl());
+				}
+				else {
+					m.setMobileXsltUrl(mobileXsltFile);
+				}
 				//loop on XPathNameSpace
-				
 				List<Node> xPathNameSpaces = mapping.selectNodes("XPathNameSpace");
 				HashMap<String, String> xPathNameSpacesHash = new HashMap<String, String>();
-				
 				for (Node xPathNameSpace : xPathNameSpaces) {
 					String prefix = xPathNameSpace.valueOf("@prefix");
 					String uri = xPathNameSpace.valueOf("@uri");

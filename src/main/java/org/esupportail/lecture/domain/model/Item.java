@@ -25,7 +25,10 @@ public class Item {
 	 * html content of item.
 	 */
 	private String htmlContent;
-	
+	/**
+	 * html content of item for mobile view.
+	 */
+	private String mobileHtmlContent;	
 	/**
 	 * Source parent of this item.
 	 */
@@ -93,6 +96,18 @@ public class Item {
 	 */
 	protected void setHtmlContent(final String htmlContent) {
 		this.htmlContent = htmlContent;
+	}
+	/**
+	 * @return the mobileHtmlContent
+	 */
+	public String getMobileHtmlContent() {
+		return mobileHtmlContent;
+	}
+	/**
+	 * @param mobileHtmlContent the mobileHtmlContent to set
+	 */
+	public void setMobileHtmlContent(String mobileHtmlContent) {
+		this.mobileHtmlContent = mobileHtmlContent;
 	}
 	/**
 	 * @return id of item
