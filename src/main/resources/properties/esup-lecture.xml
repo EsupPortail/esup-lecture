@@ -41,8 +41,10 @@ Pour plus d'informations voir le
 <a target="_blank" href="http://sourcesup.cru.fr/projects/esup-lecture">site du projet</a>
 	  ]]></description> 
   	  <refCategoryProfile refId="demo1"/>
+<!-- 
   	  <refCategoryProfile refId="demo2"/>
   	  <refCategoryProfile refId="demo3"/>
+ -->  	  
 	</context>
 
 	<categoryProfile 

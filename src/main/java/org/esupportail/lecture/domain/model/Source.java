@@ -150,7 +150,6 @@ public abstract class Source implements Element, Serializable {
 	 * Returns the source URL (defined in the source profile).
 	 * @return sourceURL
 	 */
-	// TODO (VR <-- GB) J'ai laissé en privé : je te laisse le passer en public si tu en as besoin
 	private String getSourceURL() {
 		return getProfile().getSourceURL();
 	}

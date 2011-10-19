@@ -23,7 +23,7 @@
 	</application>
 	
 	<lifecycle>
-	<!-- En cours: utilisation d'une vue mobile en fonction du terminal (utilisation de Wurfl)
+	<!-- En cours: utilisation d'une vue mobile en fonction du terminal
 	-->
 		<phase-listener>org.esupportail.lecture.web.jsf.JasigLikeMobilePhaseListener</phase-listener>
 		<phase-listener>org.esupportail.commons.jsf.MessagesPhaseListener</phase-listener>
