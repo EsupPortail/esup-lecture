@@ -287,13 +287,11 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @param sourceProfile source profile of source to get
 	 * @param ptCas - user and password. null for anonymous access
 	 * @return the source
-	 * @throws SourceInterruptedException 
-	 * @throws TimeoutException 
 	 * @throws InternalDaoException 
-	 * @throws XMLParseException 
+	 * @throws InfoDaoException 
 	 */
 	private Source getFreshSource(final SourceProfile sourceProfile,
-			final String ptCas) throws SourceInterruptedException, TimeoutException, InternalDaoException, XMLParseException {
+			final String ptCas) throws InternalDaoException, InfoDaoException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshSource");
 		}
@@ -311,11 +309,9 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					String attrbuteValue = ex.getUserAttribute(attributeName);
 					sourceURL = sourceURL.replace("{" + attributeName + "}", attrbuteValue);
 				} catch (NoExternalValueException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new InfoDaoException("Error remplacing user attributes in URL:", e);
 				} catch (InternalExternalException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new InfoDaoException("Error remplacing user attributes in URL:", e);
 				}
 			}
 			sourceProfile.setSourceURL(sourceURL);
