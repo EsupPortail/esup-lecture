@@ -330,7 +330,7 @@ public class MappingFile {
 				m.setRootElement(rootElement);
 				m.setXsltUrl(mapping.valueOf("@xsltFile"));
 				m.setItemXPath(mapping.valueOf("@itemXPath"));
-				String mobileXsltFile = mapping.valueOf("@MobileXsltFile");
+				String mobileXsltFile = mapping.valueOf("@mobileXsltFile");
 				if (mobileXsltFile == null || mobileXsltFile.equals("")) {
 					m.setMobileXsltUrl(m.getXsltUrl());
 				}

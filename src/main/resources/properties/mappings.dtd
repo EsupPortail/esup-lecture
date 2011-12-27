@@ -10,7 +10,7 @@
     xmlType CDATA #IMPLIED
     rootElement CDATA #IMPLIED
     xsltFile CDATA #REQUIRED
-    MobileXsltFile CDATA #IMPLIED
+    mobileXsltFile CDATA #IMPLIED
     itemXPath CDATA #REQUIRED>
     
 <!ELEMENT XPathNameSpace EMPTY>
