@@ -45,9 +45,6 @@ import org.esupportail.lecture.exceptions.domain.Xml2HtmlException;
  *
  */
 
-// TODO (GB) Possibilité de passer la classe en protected si n'est pas utilisé dans le DAO 
-// (dans ce cas, le DAO utiliserait un GlobalSource) à étudier ...
-
 public abstract class Source implements Element, Serializable {
 
 	/*
@@ -391,7 +388,6 @@ public abstract class Source implements Element, Serializable {
 			//		2. Use the TransformerFactory to process the stylesheet Source and
 			//		generate a Transformer.
 			Transformer transformer;
-//			StreamSource streamSource = DomainTools.getXsltFile(xsltFileURL);
 			String xsltFileContent = DomainTools.getXsltFile(xsltFileURL);
 			LOG.debug("voici le xsltFileContent : " + xsltFileContent);
 			ByteArrayInputStream inputXsltFile = new ByteArrayInputStream(xsltFileContent.getBytes(encoding));
