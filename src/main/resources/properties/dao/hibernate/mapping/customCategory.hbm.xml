@@ -27,7 +27,7 @@
 				<key foreign-key="FK_CUSTOMSOURCE_CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED">
 					<column name="CUSTOMCATEGORY_CUSTOMCATEGORYPK_SUBSCRIBED"/>
 				</key>
-				<map-key type="string" column="ELEMENTID"/>
+				<map-key type="string" formula="ELEMENTID"/>
 				<one-to-many class="CustomManagedSource" />
 			</map>
 			<map name="unsubscribedAutoSubscribedSources" table="LECT_UNSUBSCRIBEDSOURCEFLAG" cascade="all, delete-orphan" inverse="true" lazy="false">

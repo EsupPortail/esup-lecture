@@ -27,7 +27,7 @@
 			<key foreign-key="FK_CUSTOMCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED">
 				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED"/>
 			</key>
-			<map-key type="string" column="ELEMENTID"/>
+			<map-key type="string" formula="ELEMENTID"/>
 			<one-to-many class="CustomManagedCategory"/>
 		</map>
 		<set name="unfoldedCategories" table="LECT_UNFOLDEDCATEGORY" lazy="false">
