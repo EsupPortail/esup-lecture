@@ -389,8 +389,15 @@ public abstract class Source implements Element, Serializable {
 			//		generate a Transformer.
 			Transformer transformer;
 			String xsltFileContent = DomainTools.getXsltFile(xsltFileURL);
+   			//create dom4j document
+   			Document document = DocumentHelper.parseText(xsltFileContent);
+   			//	get encoding
+   			String xslEncoding = document.getXMLEncoding();
+   			if (xslEncoding == null) {
+   				xslEncoding = "UTF-8";
+			}
 			LOG.debug("voici le xsltFileContent : " + xsltFileContent);
-			ByteArrayInputStream inputXsltFile = new ByteArrayInputStream(xsltFileContent.getBytes(encoding));
+			ByteArrayInputStream inputXsltFile = new ByteArrayInputStream(xsltFileContent.getBytes(xslEncoding));
 			StreamSource sourceXsltFile = new StreamSource(inputXsltFile);
 			transformer = tFactory.newTransformer(sourceXsltFile);
 			//		3. Use the Transformer to transform an XML Source and send the
@@ -411,6 +418,10 @@ public abstract class Source implements Element, Serializable {
 			throw new Xml2HtmlException(errorMsg, e);
 		} catch (IOException e) {
 			String errorMsg = "IO Error in xml2html";
+			LOG.error(errorMsg);
+			throw new Xml2HtmlException(errorMsg, e);
+		} catch (DocumentException e) {
+			String errorMsg = "Error determining XSLT encoding";
 			LOG.error(errorMsg);
 			throw new Xml2HtmlException(errorMsg, e);
 		}
