@@ -614,9 +614,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		}
 		CategoryWebBean selectedCategory = getUalCategory();
 		SourceWebBean selectedSource = getUalSource();
-		if (selectedCategory != null) {
-			//set source focused by user as selected source in the category
-			selectedCategory.setSelectedSource(selectedSource);
+		List<CategoryWebBean> categoryWebBeans = getSelectedOrAllCategories();
+		for (CategoryWebBean categoryWebBean : categoryWebBeans) {
+			categoryWebBean.setSelectedSource(selectedSource);
 		}
 		// set category focused by user as selected category in the context
 		ContextWebBean ctx = getContext();
@@ -661,6 +661,21 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		} finally {
 			// Nothing here ?
 		}
+	}
+
+	/**
+	 * @return the current selected category
+	 */
+	public List<CategoryWebBean> getSelectedOrAllCategories() {
+		List<CategoryWebBean> ret = new ArrayList<CategoryWebBean>();
+		ContextWebBean ctx = getContext();
+		CategoryWebBean selected = ctx.getSelectedCategory();
+		if (selected != null) {
+			ret.add(selected);
+		} else {
+			ret = ctx.getCategories();
+		}
+		return ret;
 	}
 
 

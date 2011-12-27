@@ -5,7 +5,6 @@
  */
 package org.esupportail.lecture.web.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -178,21 +177,6 @@ public class HomeController extends TwoPanesController {
 	 * **************** Getter and Setter ****************
 	 */
 
-
-	/**
-	 * @return the current selected category
-	 */
-	public List<CategoryWebBean> getSelectedOrAllCategories() {
-		List<CategoryWebBean> ret = new ArrayList<CategoryWebBean>();
-		ContextWebBean ctx = getContext();
-		CategoryWebBean selected = ctx.getSelectedCategory();
-		if (selected != null) {
-			ret.add(selected);
-		} else {
-			ret = ctx.getCategories();
-		}
-		return ret;
-	}
 
 	/**
 	 * @return desciption of current selected element (category or source)
