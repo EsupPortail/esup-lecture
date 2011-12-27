@@ -3,6 +3,8 @@ package org.esupportail.lecture.web.beans;
 import java.util.Collections;
 import java.util.List;
 
+import org.esupportail.lecture.domain.model.TreeDisplayMode;
+
 /**
  * @author bourges
  * Top Object of the view
@@ -36,7 +38,7 @@ public class ContextWebBean {
 	/**
 	* visibility of the tree panel
 	*/
-	private boolean treeVisible;
+	private TreeDisplayMode treeVisible;
 
 	/**
 	 * get the id of the context.
@@ -149,14 +151,14 @@ public class ContextWebBean {
 	/**
 	 * @return treeVisible
 	 */
-	public boolean isTreeVisible() {
+	public TreeDisplayMode getTreeVisible() {
 		return treeVisible;
 	}
 
 	/**
 	 * @param treeVisible the treeVisible to set
 	 */
-	public void setTreeVisible(boolean treeVisible) {
+	public void setTreeVisible(TreeDisplayMode treeVisible) {
 		this.treeVisible = treeVisible;
 	}
 	

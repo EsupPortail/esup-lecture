@@ -27,6 +27,7 @@ import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.domain.model.TreeDisplayMode;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
@@ -43,6 +44,7 @@ import org.springframework.util.Assert;
  * @author : Raymond 
  */
 public abstract class TwoPanesController extends AbstractContextAwareController implements Resettable {
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Log instance.
 	 */
@@ -66,7 +68,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	/**
 	 * is tree is visible or not.
 	 */
-	private boolean treeVisible = true;
+	private TreeDisplayMode treeVisible = TreeDisplayMode.VISIBLE;
 	/**
 	 * Access to facade services (init by Spring).
 	 */
@@ -165,9 +167,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			LOG.debug("In toggleTreeVisibility");
 		}
 		if (isTreeVisible()) {
-			setTreeVisible(false);
+			setTreeVisible(TreeDisplayMode.NOTVISBLE);
 		} else {
-			setTreeVisible(true);
+			setTreeVisible(TreeDisplayMode.VISIBLE);
 		}
 		return "navigationHome";
 	}
@@ -176,7 +178,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @return if tree is visible or not
 	 */
 	public boolean isTreeVisible() {
-		return treeVisible;
+		return treeVisible.equals(TreeDisplayMode.VISIBLE);
 	}
 	
 	/**
@@ -194,7 +196,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * set tree visibility to yes or no.
 	 * @param treeVisible boolean value for tree visibility
 	 */
-	public void setTreeVisible(final boolean treeVisible) {
+	public void setTreeVisible(final TreeDisplayMode treeVisible) {
 		this.treeVisible = treeVisible;
 	}
 
@@ -264,7 +266,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 				context.setId(contextBean.getId());
 				context.setDescription(contextBean.getDescription());
 				context.setTreeSize(contextBean.getTreeSize());
-				context.setTreeVisible(contextBean.isTreeVisible());
+				context.setTreeVisible(contextBean.getTreeVisible());
 				//find categories in this context
 				List<CategoryBean> categories = getCategories(ctxId);
 				List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
@@ -518,7 +520,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 				"property facadeService of class " + this.getClass().getName() + " can not be null");
 		try {
 			virtualSession = new VirtualSession(facadeService.getCurrentContextId());
-			setTreeVisible(facadeService.getContext(getUserProfile(), getContextId()).isTreeVisible());
+			setTreeVisible(facadeService.getContext(getUserProfile(), getContextId()).getTreeVisible());
 		} catch (InternalExternalException e) {
 			throw new WebException("Error in afterPropertiesSet", e);
 		} catch (InternalDomainException e) {

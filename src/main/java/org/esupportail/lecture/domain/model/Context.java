@@ -59,7 +59,7 @@ public class Context {
 	/**
 	* visibility of the tree panel
 	*/
-	private boolean treeVisible = true;
+	private TreeDisplayMode treeVisible = TreeDisplayMode.VISIBLE;
 
 	/**
 	 * Managed category profiles available in this Context.
@@ -358,14 +358,14 @@ public class Context {
 	/**
 	 * @return treeVisible
 	 */
-	public boolean getTreeVisible() {
+	public TreeDisplayMode getTreeVisible() {
 		return treeVisible;
 	}
 
 	/**
 	 * @param treeVisible the treeVisible to set
 	 */
-	public void setTreeVisible(boolean treeVisible) {
+	public void setTreeVisible(TreeDisplayMode treeVisible) {
 		this.treeVisible = treeVisible;
 	}
 	

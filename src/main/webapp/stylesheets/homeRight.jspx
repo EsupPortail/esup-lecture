@@ -28,12 +28,12 @@
 						value="#{msgs['changeItemDisplayModeButtonLabel']}"
 						action="#{homeController.changeItemDisplayMode}" />
 				</t:htmlTag>
-				<t:htmlTag value="li" rendered="#{!homeController.treeVisible}">
+				<t:htmlTag value="li" rendered="#{!homeController.treeVisible and !homeController.forcedNoTreeVisible}">
 					<h:commandButton action="#{homeController.toggleTreeVisibility}"
 						image="/media/menuAndXML.gif" alt="#{msgs['showTree']}"
 						title="#{msgs['showTree']}" styleClass="valign" />
 				</t:htmlTag>
-				<t:htmlTag value="li" rendered="#{homeController.treeVisible}">
+				<t:htmlTag value="li" rendered="#{homeController.treeVisible and !homeController.forcedNoTreeVisible}">
 					<h:commandButton action="#{homeController.toggleTreeVisibility}"
 						image="/media/XMLWithoutMenu.gif" alt="#{msgs['hideTree']}"
 						title="#{msgs['hideTree']}" styleClass="valign" />

@@ -385,8 +385,15 @@ public class ChannelConfig  {
 			Context c = new Context();
 			c.setId(context.valueOf("@id"));
 			c.setName(context.valueOf("@name"));
-			c.setTreeVisible(getBoolean(context.valueOf("@treeVisible"), true));
-
+			//treeVisible
+			String treeVisible = context.valueOf("@treeVisible");
+			if (treeVisible.equals("no")) {
+				c.setTreeVisible(TreeDisplayMode.NOTVISBLE);
+			} else if (treeVisible.equals("forceNo")) {
+				c.setTreeVisible(TreeDisplayMode.NEVERVISIBLE);
+			} else {
+				c.setTreeVisible(TreeDisplayMode.VISIBLE);
+			}
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("loadContextsAndCategoryprofiles() : contextId " + c.getId());
 			}

@@ -8,7 +8,7 @@
 <!ATTLIST context
     name CDATA #REQUIRED
 	id ID #REQUIRED
-    treeVisible (yes|no) "yes"
+    treeVisible (yes|no|forceNo) "yes"
     edit (all|personal|managed|no) "no">
 
 <!ELEMENT description (#PCDATA)>

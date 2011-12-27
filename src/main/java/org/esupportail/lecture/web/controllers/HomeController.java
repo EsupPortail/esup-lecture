@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.domain.model.TreeDisplayMode;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
@@ -21,9 +22,6 @@ import org.esupportail.lecture.web.beans.SourceWebBean;
  * @author : Raymond 
  */
 public class HomeController extends TwoPanesController {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	/**
 	 * Key used to store the context in virtual session.
@@ -195,7 +193,6 @@ public class HomeController extends TwoPanesController {
 	/**
 	 * @return Display mode form items
 	 */
-	@SuppressWarnings("static-access")
 	public ItemDisplayMode getItemDisplayMode() {
 		ItemDisplayMode ret = itemDisplayMode;
 		if (LOG.isDebugEnabled()) {
@@ -276,6 +273,11 @@ public class HomeController extends TwoPanesController {
 	@Override
 	String getContextKey() {
 		return CONTEXT;
+	}
+	
+	public boolean isForcedNoTreeVisible() {
+		ContextWebBean currentContext = getContext();
+		return currentContext.getTreeVisible().equals(TreeDisplayMode.NEVERVISIBLE);
 	}
 
 }

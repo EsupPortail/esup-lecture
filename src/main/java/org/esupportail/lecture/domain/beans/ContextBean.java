@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.TreeDisplayMode;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 
 /**
@@ -42,7 +43,7 @@ public class ContextBean {
 	/**
 	* visibility of the tree panel.
 	*/
-	private boolean treeVisible = true;
+	private TreeDisplayMode treeVisible = TreeDisplayMode.VISIBLE;
 
 	/**
 	 * orderedSourceIDs store SourceID and ordering order in the CategoryProfile definition.
@@ -177,14 +178,14 @@ public class ContextBean {
 	/**
 	 * @return the treeVisible
 	 */
-	public boolean isTreeVisible() {
+	public TreeDisplayMode getTreeVisible() {
 		return treeVisible;
 	}
 
 	/**
 	 * @param treeVisible the treeVisible to set
 	 */
-	public void setTreeVisible(final boolean treeVisible) {
+	public void setTreeVisible(final TreeDisplayMode treeVisible) {
 		this.treeVisible = treeVisible;
 	}
 	
