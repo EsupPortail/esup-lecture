@@ -10,7 +10,12 @@
 		<t:div styleClass="#{homeController.guestMode ? 'lecture-logoGuest' : 'lecture-logo' } portlet-section-header" role="heading">
 		</t:div>
 		<h3 class="portlet-section-header" role="heading">
-			<h:outputText value="#{homeController.context.name}" />
+			<h:commandLink value="#{homeController.context.name}" action="#{homeController.selectElement}">
+				<t:updateActionListener property="#{homeController.ualCategory}"
+									value="#{null}" />
+				<t:updateActionListener property="#{homeController.ualSource}"
+									value="#{null}" />									
+			</h:commandLink>
 		</h3>
 		<div class="portlet-section-body">
 			<t:htmlTag value="ul" styleClass="fl-listmenu">

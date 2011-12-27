@@ -5,6 +5,7 @@
  */
 package org.esupportail.lecture.web.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -78,7 +79,7 @@ public class HomeController extends TwoPanesController {
 			}
 		}
 		ualItem.setRead(!ualItem.isRead());
-		
+
 		return "OK";
 	}
 
@@ -101,10 +102,10 @@ public class HomeController extends TwoPanesController {
 	 * @return JSF from-outcome
 	 */
 	public String changeItemDisplayMode() {
-		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
+		List<CategoryWebBean> categoryWebBeans = getSelectedOrAllCategories();
 		try {
-			if (selectedCategory != null) {
-				List<SourceWebBean> sources = selectedCategory.getSelectedOrAllSources();
+			for (CategoryWebBean categoryWebBean : categoryWebBeans) {
+				List<SourceWebBean> sources = categoryWebBean.getSelectedOrAllSources();
 				if (sources != null) {
 					UserProfile userProfile = getUserProfile();
 					for (SourceWebBean sourceWeb : sources) {
@@ -143,10 +144,10 @@ public class HomeController extends TwoPanesController {
 	 * @return JSF from-outcome
 	 */
 	public String toogleAllItemsReadState(boolean read) {
-		CategoryWebBean selectedCategory = getContext().getSelectedCategory();
+		List<CategoryWebBean> categoryWebBeans = getSelectedOrAllCategories();
 		try {
-			if (selectedCategory != null) {
-				List<SourceWebBean> sources = selectedCategory.getSelectedOrAllSources();
+			for (CategoryWebBean categoryWebBean : categoryWebBeans) {
+				List<SourceWebBean> sources = categoryWebBean.getSelectedOrAllSources();
 				if (sources != null) {
 					for (SourceWebBean sourceWeb : sources) {
 						List<ItemWebBean> items = sourceWeb.getItems();
@@ -179,6 +180,21 @@ public class HomeController extends TwoPanesController {
 
 
 	/**
+	 * @return the current selected category
+	 */
+	public List<CategoryWebBean> getSelectedOrAllCategories() {
+		List<CategoryWebBean> ret = new ArrayList<CategoryWebBean>();
+		ContextWebBean ctx = getContext();
+		CategoryWebBean selected = ctx.getSelectedCategory();
+		if (selected != null) {
+			ret.add(selected);
+		} else {
+			ret = ctx.getCategories();
+		}
+		return ret;
+	}
+
+	/**
 	 * @return desciption of current selected element (category or source)
 	 */
 	public String getSelectedElementDescription() {
@@ -197,7 +213,7 @@ public class HomeController extends TwoPanesController {
 	 */
 	@SuppressWarnings("static-access")
 	public ItemDisplayMode getItemDisplayMode() {
-		ItemDisplayMode ret = itemDisplayMode.ALL;
+		ItemDisplayMode ret = itemDisplayMode;
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getItemDisplayMode()=" + itemDisplayMode);
 		}
