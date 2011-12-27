@@ -2,23 +2,15 @@ package org.esupportail.lecture.web.jsf;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import javax.annotation.Resource;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseEvent;
-
-import net.sourceforge.wurfl.core.Device;
-import net.sourceforge.wurfl.core.WURFLManager;
 
 import org.esupportail.commons.context.ApplicationContextHolder;
 import org.esupportail.commons.services.logging.Logger;
 import org.esupportail.commons.services.logging.LoggerImpl;
-import org.springframework.context.ApplicationContext;
-
-
 
 public class JasigLikeMobilePhaseListener extends MobilePhaseListerner {
 
