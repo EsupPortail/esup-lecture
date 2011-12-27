@@ -32,7 +32,7 @@
 
 	<context 
 	  name = "Démonstration Esup-Lecture"
-	  id = "default" treeVisible="forceNo">
+	  id = "default">
 	  <description><![CDATA[
 <h1>Contexte de d&eacute;monstration</h1>
 D&eacute;monstration du canal Lecture.<br>

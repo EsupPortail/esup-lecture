@@ -53,6 +53,9 @@ public class HomeController extends TwoPanesController {
 	 * @return JSF from-outcome
 	 */
 	public String toggleItemReadState() {
+		if (isGuestMode()) {
+			throw new SecurityException("Try to access restricted function is guest mode");
+		}
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("In toggleItemReadState");
 		}
@@ -85,6 +88,9 @@ public class HomeController extends TwoPanesController {
 	 * @return JSF from-outcome
 	 */
 	public String toggleFoldedState() {
+		if (isGuestMode()) {
+			throw new SecurityException("Try to access restricted function is guest mode");
+		}
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in toggleFoldedState");
 		}
@@ -99,6 +105,9 @@ public class HomeController extends TwoPanesController {
 	 * @return JSF from-outcome
 	 */
 	public String changeItemDisplayMode() {
+		if (isGuestMode()) {
+			throw new SecurityException("Try to access restricted function is guest mode");
+		}
 		List<CategoryWebBean> categoryWebBeans = getSelectedOrAllCategories();
 		try {
 			for (CategoryWebBean categoryWebBean : categoryWebBeans) {
@@ -141,6 +150,9 @@ public class HomeController extends TwoPanesController {
 	 * @return JSF from-outcome
 	 */
 	public String toogleAllItemsReadState(boolean read) {
+		if (isGuestMode()) {
+			throw new SecurityException("Try to access restricted function is guest mode");
+		}
 		List<CategoryWebBean> categoryWebBeans = getSelectedOrAllCategories();
 		try {
 			for (CategoryWebBean categoryWebBean : categoryWebBeans) {

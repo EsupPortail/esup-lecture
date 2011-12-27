@@ -55,6 +55,9 @@ public class EditController extends TwoPanesController {
 	 * @return JSF from-outcome
 	 */
 	public String toogleSourceSubcribtion() {
+		if (isGuestMode()) {
+			throw new SecurityException("Try to access restricted function is guest mode");
+		}		
 		ContextWebBean currentContext = getContext();
 		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
 		SourceWebBean selectedSource = getUalSource();
@@ -91,6 +94,9 @@ public class EditController extends TwoPanesController {
 	 * @return JSF from-outcome
 	 */
 	public String toogleCategorySubcribtion() {
+		if (isGuestMode()) {
+			throw new SecurityException("Try to access restricted function is guest mode");
+		}		
 		CategoryWebBean currentCategory = getUalCategory();
 		AvailabilityMode availabilityMode = currentCategory.getAvailabilityMode();
 		try {

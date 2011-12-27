@@ -128,6 +128,9 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @param actionEvent JSF ActionEvent used to know which button is used 
 	 */
 	public void adjustTreeSize(final ActionEvent actionEvent) {
+		if (isGuestMode()) {
+			throw new SecurityException("Try to access restricted function is guest mode");
+		}
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("In adjustTreeSize");
 		}
@@ -174,6 +177,10 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		return "navigationHome";
 	}
 	
+	/*
+	 * **************** Getter and Setter ****************
+	 */
+	
 	/**
 	 * @return if tree is visible or not
 	 */
@@ -200,10 +207,6 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		this.treeVisible = treeVisible;
 	}
 
-	/*
-	 * **************** Getter and Setter ****************
-	 */
-	
 	/**
 	 * For Spring injection of Service Class.
 	 * @param facadeService facade of Spring Service Class
