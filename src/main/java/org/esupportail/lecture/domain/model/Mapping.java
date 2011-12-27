@@ -59,6 +59,11 @@ public class Mapping {
 	private String xsltUrl = "";
 	
 	/**
+	 * Path of the xslt file for mobile.
+	 */
+	private String MobileXsltUrl = "";
+	
+	/**
 	 * Xpath to get an item in the source xml stream.
 	 */
 	private String itemXPath = "";
@@ -148,6 +153,20 @@ public class Mapping {
 	 */
 	protected void setXsltUrl(final String xsltUrl) {
 		this.xsltUrl = xsltUrl;
+	}
+
+	/**
+	 * @return the mobileXsltUrl
+	 */
+	public String getMobileXsltUrl() {
+		return MobileXsltUrl;
+	}
+
+	/**
+	 * @param mobileXsltUrl the mobileXsltUrl to set
+	 */
+	public void setMobileXsltUrl(String mobileXsltUrl) {
+		MobileXsltUrl = mobileXsltUrl;
 	}
 
 	/**

@@ -163,7 +163,7 @@
 		<portlet.bridge.version>1.0.0</portlet.bridge.version>
 		<javax.portlet.version>1.0</javax.portlet.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
-		<esupcommons.version>0.2.6</esupcommons.version>
+		<esupcommons.version>0.2.8</esupcommons.version>
 	</properties>
 	<profiles>
 		<profile>
@@ -182,16 +182,10 @@
 			</pluginRepositories>
 			<build>
 				<defaultGoal>package</defaultGoal>
-<!-- 				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>net.jlehtinen.portlet</groupId>
-							<artifactId>portlet-prototyping-maven-plugin</artifactId>
-							<version>0.6</version>
-						</plugin>
-					</plugins>
-				</pluginManagement>
- -->				<plugins>
+				<!-- <pluginManagement> <plugins> <plugin> <groupId>net.jlehtinen.portlet</groupId> 
+					<artifactId>portlet-prototyping-maven-plugin</artifactId> <version>0.6</version> 
+					</plugin> </plugins> </pluginManagement> -->
+				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
 						<version>2.1</version>

@@ -49,12 +49,14 @@
 
 	<bean id="jpaVendorAdapter"
 		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-		<property name="showSql" value="false" />
+		<property name="showSql" value="true" />
 		<property name="generateDdl" value="true" />
 		<property name="database" value="${jpa.database.type}" />
 	</bean>
 
 	<util:properties id="jpaProperties">
+		<prop key="hibernate.use_sql_comments">true</prop>
+		<prop key="hibernate.format_sql">true</prop>
 		<prop key="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</prop>
 		<prop key="hibernate.cache.use_query_cache">false</prop>
 		<prop key="hibernate.cache.use_second_level_cache">false</prop>

@@ -14,6 +14,10 @@ public class ItemWebBean {
 	 */
 	private String htmlContent;
 	/**
+	 * Mobile html content of item.
+	 */
+	private String mobileHtmlContent;
+	/**
 	 * store if item is read or not.
 	 */
 	private boolean read;
@@ -32,6 +36,18 @@ public class ItemWebBean {
 	 */
 	public void setHtmlContent(String htmlContent) {
 		this.htmlContent = htmlContent;
+	}
+	/**
+	 * @return the mobileHtmlContent
+	 */
+	public String getMobileHtmlContent() {
+		return mobileHtmlContent;
+	}
+	/**
+	 * @param mobileHtmlContent the mobileHtmlContent to set
+	 */
+	public void setMobileHtmlContent(String mobileHtmlContent) {
+		this.mobileHtmlContent = mobileHtmlContent;
 	}
 	/**
 	 * @return id of item

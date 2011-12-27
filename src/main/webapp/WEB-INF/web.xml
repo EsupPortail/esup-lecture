@@ -105,6 +105,7 @@
 
 	<!-- CAS -->
 	<!-- CAS Validation Filter must be defined first. See https://wiki.jasig.org/display/CASC/Configuring+the+JA-SIG+CAS+Client+for+Java+in+the+web.xml -->
+<!--	
     <filter>
         <filter-name>CAS Validation Filter</filter-name>
         <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -130,5 +131,5 @@
 		<filter-name>CAS Authentication Filter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-
+-->
 </web-app>

@@ -35,7 +35,7 @@
 			<map-key type="string" >
                 <column name="ELEMENTID" />
 			</map-key>
-			<one-to-many class="CustomCategory" />
+			<one-to-many class="CustomManagedCategory" />
 		</map>
         <!-- userProfile/CustomSource is bidirectional -->
 		<map name="customSources" cascade="all, delete-orphan" inverse="true" lazy="false">
@@ -45,7 +45,7 @@
 			<map-key type="string" >
                 <column name="ELEMENTID" />
 			</map-key>
-			<one-to-many class="CustomSource" />
+			<one-to-many class="CustomManagedSource" />
 		</map>
 	</class>
 </hibernate-mapping>

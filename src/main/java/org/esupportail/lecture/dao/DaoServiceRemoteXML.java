@@ -1,5 +1,8 @@
 package org.esupportail.lecture.dao;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheException;
 import net.sf.ehcache.CacheManager;
@@ -8,6 +11,8 @@ import net.sf.ehcache.Element;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.utils.Assert;
+import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.domain.model.GlobalSource;
 import org.esupportail.lecture.domain.model.ManagedCategory;
 import org.esupportail.lecture.domain.model.ManagedCategoryDummy;
@@ -21,6 +26,8 @@ import org.esupportail.lecture.exceptions.dao.InternalDaoException;
 import org.esupportail.lecture.exceptions.dao.SourceInterruptedException;
 import org.esupportail.lecture.exceptions.dao.TimeoutException;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StringUtils;
 
@@ -280,17 +287,35 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @param sourceProfile source profile of source to get
 	 * @param ptCas - user and password. null for anonymous access
 	 * @return the source
-	 * @throws SourceInterruptedException 
-	 * @throws TimeoutException 
 	 * @throws InternalDaoException 
-	 * @throws XMLParseException 
+	 * @throws InfoDaoException 
 	 */
 	private Source getFreshSource(final SourceProfile sourceProfile,
-			final String ptCas) throws SourceInterruptedException, TimeoutException, InternalDaoException, XMLParseException {
+			final String ptCas) throws InternalDaoException, InfoDaoException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshSource");
 		}
 		Source ret = new GlobalSource(sourceProfile);
+		//compute url with user attributes
+		String sourceURL = sourceProfile.getSourceURL();
+		Pattern exp = Pattern.compile("\\{([^\\{\\}]*)\\}");
+		Matcher matcher = exp.matcher(sourceURL);
+		if (matcher.find()) {
+			ExternalService ex = DomainTools.getExternalService();
+			matcher.reset();
+			while (matcher.find()) {
+				String attributeName = matcher.group(1);
+				try {
+					String attrbuteValue = ex.getUserAttribute(attributeName);
+					sourceURL = sourceURL.replace("{" + attributeName + "}", attrbuteValue);
+				} catch (NoExternalValueException e) {
+					throw new InfoDaoException("Error remplacing user attributes in URL:", e);
+				} catch (InternalExternalException e) {
+					throw new InfoDaoException("Error remplacing user attributes in URL:", e);
+				}
+			}
+			sourceProfile.setSourceURL(sourceURL);
+		}
 		//start a Thread to get FreshSource
 		FreshSourceThread thread = new FreshSourceThread(sourceProfile, ptCas);
 		int timeout = 0;

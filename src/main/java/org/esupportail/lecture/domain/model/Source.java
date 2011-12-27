@@ -104,6 +104,10 @@ public abstract class Source implements Element, Serializable {
 	 */
 	private String xsltURL;
 	/**
+	 * URL of the xslt file to display xml content on mobile.
+	 */
+	private String mobileXsltURL;
+	/**
 	 * Xpath to access item in the XML source file correspoding to this source profile.
 	 */
 	private String itemXPath;
@@ -146,7 +150,6 @@ public abstract class Source implements Element, Serializable {
 	 * Returns the source URL (defined in the source profile).
 	 * @return sourceURL
 	 */
-	// TODO (VR <-- GB) J'ai laissé en privé : je te laisse le passer en public si tu en as besoin
 	private String getSourceURL() {
 		return getProfile().getSourceURL();
 	}
@@ -191,6 +194,18 @@ public abstract class Source implements Element, Serializable {
 	}
 	
 	/**
+	 * @return Returns the xsltURL.
+	 * @throws MappingNotFoundException 
+	 */
+	private String getMobileXsltURL() throws MappingNotFoundException {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("id=" + this.profileId + " - getMobileXsltURL()");
+    	}
+		computeXslt();
+		return mobileXsltURL;
+	}
+	
+	/**
 	 * @return the hashMap containing xPathNameSpaces
 	 * @throws MappingNotFoundException
 	 */
@@ -222,6 +237,7 @@ public abstract class Source implements Element, Serializable {
 		if (!xsltComputed) {
 			SourceProfile p = getProfile();
 			xsltURL = p.getXsltURL();
+			mobileXsltURL = p.getMobileXsltURL();
 			itemXPath = p.getItemXPath();
 			xPathNameSpaces = p.getXPathNameSpaces();
 		
@@ -265,7 +281,10 @@ public abstract class Source implements Element, Serializable {
 				}
 				if (xsltURL == null || xsltURL.equals("")) {
 					xsltURL = m.getXsltUrl();
-				} 
+				}
+				if (mobileXsltURL == null || mobileXsltURL.equals("")) {
+					mobileXsltURL = m.getMobileXsltUrl();					
+				}
 				if (itemXPath == null || itemXPath.equals("")) {
 					itemXPath = m.getItemXPath();
 				} 
@@ -309,6 +328,8 @@ public abstract class Source implements Element, Serializable {
 					String xmlAsString = xml.toString();
 					String htmlContent = xml2html(xmlAsString, getXsltURL(), encoding);
 					item.setHtmlContent(htmlContent);
+					String MobileHtmlContent = xml2html(xmlAsString, getMobileXsltURL(), encoding);
+					item.setMobileHtmlContent(MobileHtmlContent);
 					//find MD5 of item content for his ID
 					byte[] hash = MessageDigest.getInstance("MD5").digest(xmlAsString.getBytes());
 					StringBuffer hashString = new StringBuffer();

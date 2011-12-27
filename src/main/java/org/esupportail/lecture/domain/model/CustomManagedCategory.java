@@ -410,11 +410,17 @@ public class CustomManagedCategory extends CustomCategory {
 		}
 		String profileId = managedSourceProfile.getId();
 		if (!subscriptions.containsKey(profileId)) {
-			CustomManagedSource customManagedSource = 
-				new CustomManagedSource(managedSourceProfile, getUserProfile());
-			subscriptions.put(profileId, customManagedSource);
-//			DomainTools.getDaoService().updateCustomCategory(this);
-			getUserProfile().addCustomSource(customManagedSource);
+			CustomSource customSource;
+			UserProfile userProfile = getUserProfile();
+			Map<String, CustomSource> userProfileCustomSources = userProfile.getCustomSources();
+			if (userProfileCustomSources.containsKey(profileId)) {
+				customSource = userProfileCustomSources.get(profileId);
+			} else {
+				customSource = 
+						new CustomManagedSource(managedSourceProfile, getUserProfile());
+				userProfile.addCustomSource(customSource);
+			}
+			subscriptions.put(profileId, (CustomManagedSource) customSource);
 		}
 	}
 	

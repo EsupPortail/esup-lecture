@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	class="portlet-section-body esup-lecture">
+<f:view locale="#{sessionController.locale}">
+	<t:htmlTag value="head">
+		<t:htmlTag value="title">
+			<h:outputText value="#{applicationService.name}" />
+		</t:htmlTag>
+		<t:stylesheet path="/media/mobile/jquery.mobile-1.0b3.min.css" />
+		<script type="text/javascript" src="/media/mobile/jquery-1.6.2.min.js" />
+		<script type="text/javascript" src="/media/mobile/jquery.mobile-1.0b3.min.js" />
+	</t:htmlTag>
+	<t:htmlTag value="body" styleClass="fl-theme-app">
+		<ui:insert name="content" />
+	</t:htmlTag>
+</f:view>
+</html>
+

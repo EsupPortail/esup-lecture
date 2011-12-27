@@ -49,12 +49,16 @@ public abstract class SourceProfile implements ElementProfile {
 	/**
 	 * Source associated to this profile.
 	 */
-	private Source source;
-	
+	private Source source;	
 	/**
 	 * URL of the xslt file. 
 	 */
 	private String xsltURL;
+	/**
+	 * URL of the xslt file for mobile. 
+	 */
+	private String mobileXsltURL;
+	
 	/**
 	 * Xpath of an item. 
 	 */
@@ -227,6 +231,20 @@ public abstract class SourceProfile implements ElementProfile {
 	public void setXsltURL(final String string) {
 		xsltURL = string;
 	}
+	
+	/**
+	 * @return the mobileXsltURL
+	 */
+	public String getMobileXsltURL() {
+		return mobileXsltURL;
+	}
+
+	/**
+	 * @param mobileXsltURL the mobileXsltURL to set
+	 */
+	public void setMobileXsltURL(String mobileXsltURL) {
+		this.mobileXsltURL = mobileXsltURL;
+	}
 
 	/**
 	 * @return itemXPath
@@ -249,7 +267,6 @@ public abstract class SourceProfile implements ElementProfile {
 		return xPathNameSpaces;
 	}
 
-
 	/**
 	 * @param pathNameSpaces
 	 */
@@ -263,8 +280,6 @@ public abstract class SourceProfile implements ElementProfile {
 	public int getTtl() {
 		return ttl;
 	}
-
-
 	
 	/**
 	 * @return timeOut
@@ -272,7 +287,5 @@ public abstract class SourceProfile implements ElementProfile {
 	public int getTimeOut() {
 		return timeOut;
 	}
-
-
 
 }

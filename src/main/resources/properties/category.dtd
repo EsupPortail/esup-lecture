@@ -11,6 +11,7 @@
     name CDATA #REQUIRED
     url CDATA #REQUIRED
     xslt CDATA #IMPLIED
+    mobileXslt CDATA #IMPLIED
     xpath CDATA #IMPLIED
     access (public|cas) #IMPLIED
     specificUserContent (yes|no) "no"

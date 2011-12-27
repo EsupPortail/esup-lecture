@@ -4,7 +4,7 @@
 	<description>Exemples</description>
 	<sourceProfiles>
 		<sourceProfile id="un" access="public"
-			name="Outils pédagogique de Rennes 1" specificUserContent="no"
+			name="Outils pédagogique de Rennes 1" specificUserContent="yes"
 			url="${config.url.prefix}/flux.offline.xml">
 			<visibility>
 				<allowed></allowed>
@@ -15,9 +15,7 @@
 				</obliged>
 			</visibility>
 		</sourceProfile>
-<!-- test RSS UR1
- -->		
-		<sourceProfile id="deux" access="public"
+ 		<sourceProfile id="deux" access="public"
 			name="Actus de Rennes 1" specificUserContent="no"
 			url="http://www.univ-rennes1.fr/bas-de-page/RSS/actualites/">
 			<visibility>

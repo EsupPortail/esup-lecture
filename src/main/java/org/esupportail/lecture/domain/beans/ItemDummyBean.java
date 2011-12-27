@@ -20,8 +20,6 @@ import org.springframework.web.util.HtmlUtils;
  *
  */
 public class ItemDummyBean extends ItemBean implements DummyInterface {
-	// TODO (RB/GB) Revoir le traitement des Dummy (autre que par des ifs) 
-	// pour faire du vrai objet
 	/* 
 	 *************************** PROPERTIES ******************************** */	
 	/**
@@ -66,6 +64,14 @@ public class ItemDummyBean extends ItemBean implements DummyInterface {
 		StringBuffer buffer = new StringBuffer(cause.getMessage()).append("<br/><hr/>");
 		buffer.append(html(ExceptionUtils.getShortStackTraceStrings(cause)));
 		return buffer.toString();
+	}
+	
+	/**
+	 * @see org.esupportail.lecture.domain.beans.ItemBean#getMobileHtmlContent()
+	 */
+	@Override
+	public String getMobileHtmlContent() {
+		return super.getHtmlContent();
 	}
 	/**
 	 * @see org.esupportail.lecture.domain.beans.ItemBean#getId()
