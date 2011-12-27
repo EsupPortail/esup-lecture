@@ -16,10 +16,6 @@ import org.esupportail.lecture.domain.model.CustomContext;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.domain.model.VersionManager;
-import org.hibernate.LockMode;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.springframework.beans.factory.InitializingBean;
 
 /**
  * @author bourges
@@ -118,8 +114,6 @@ public class DaoServiceHibernate {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("mergeUserProfile(" + userProfile.getUserId() + ")");			
 		}
-		//merge is important to avoid hibernate immutable exception -bug hb? 
-		// cf. http://opensource.atlassian.com/projects/hibernate/browse/HHH-1574
 		UserProfile merged = (UserProfile) entityManager.merge(userProfile);
 		if (USEFLUSH) {
 			entityManager.flush();

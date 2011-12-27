@@ -263,11 +263,8 @@ public class UserProfile {
     		LOG.debug(ID + userId + " - addCustomCategory(" + customCategory.getElementId() + ")");
     	}
 		String id = customCategory.getElementId();
-		customCategories.put(id, customCategory);
-
+		customCategories.put(id, customCategory);			
 		customCategory.setUserProfile(this);
-		//DomainTools.getDaoService().updateCustomCategory(customCategory);
-		// RB VR 19/03/09 : DB automatic update made by parent (see cascade on hibernate mappings)
 	}
 	
 	/**
@@ -278,11 +275,9 @@ public class UserProfile {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug(ID + userId + " - addCustomSource(" + customSource.getElementId() + ")");
     	}
-		customSources.put(customSource.getElementId(), customSource);
-
+	   	String id = customSource.getElementId();
+		customSources.put(id, customSource);			
 		customSource.setUserProfile(this);
-		//DomainTools.getDaoService().updateCustomSource(customSource);
-		// RB VR 19/03/09 : DB automatic update made by parent (see cascade on hibernate mappings)
 	}
 	
 	/* REMOVE/CLEAN CUSTOM ELEMENTS FROM PROFILE */
@@ -524,7 +519,7 @@ public class UserProfile {
 	@Override
 	public String toString() {
 		StringBuffer string = new StringBuffer(getClass().getSimpleName() + "#" + hashCode() 
-			+ "[userId=[" + userId + "], userProfilePK=[" + userProfilePK + "], ");
+			+ "\n [userId=[" + userId + "], userProfilePK=[" + userProfilePK + "], ");
 		// customContexts
 		string.append("\n customContexts=[");
 		for (String key : customContexts.keySet()) {
@@ -605,9 +600,8 @@ public class UserProfile {
 	 * @return the customCategories
 	 */
 	@SuppressWarnings("unused")
-	private Map<String, CustomCategory> getCustomCategories() {
+	public Map<String, CustomCategory> getCustomCategories() {
 		return customCategories;
-		//Needed by Hibernate
 	}
 
 	/**
@@ -623,9 +617,8 @@ public class UserProfile {
 	 * @return custom sources from this userProfile
 	 */
 	@SuppressWarnings("unused")
-	private Map<String, CustomSource> getCustomSources() {
+	public Map<String, CustomSource> getCustomSources() {
 		return customSources;
-		//Needed by Hibernate
 	}
 
 	/**

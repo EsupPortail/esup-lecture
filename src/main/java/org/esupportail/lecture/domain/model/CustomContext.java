@@ -383,15 +383,18 @@ public class CustomContext implements CustomElement {
 			LOG.debug(ID + elementId + " - addSubscription(" + profile.getId() + ")");
 		}
 		String profileId = profile.getId();
-		
 		if (!subscriptions.containsKey(profileId)) {
-			CustomManagedCategory customManagedCategory = new CustomManagedCategory(profileId, userProfile);
-			subscriptions.put(profileId, customManagedCategory);
-//			DomainTools.getDaoService().updateCustomContext(this);
-			userProfile.addCustomCategory(customManagedCategory);
+			CustomCategory cat;
+			Map<String, CustomCategory> userProfileCustomCategories = userProfile.getCustomCategories();
+			if (userProfileCustomCategories.containsKey(profileId)) {
+				cat = userProfileCustomCategories.get(profileId);
+			} else {
+				cat = new CustomManagedCategory(profileId, userProfile);				
+				userProfile.addCustomCategory(cat);
+			}
+			subscriptions.put(profileId, (CustomManagedCategory) cat);
 		}
 	}
-	// TODO (GB later) addImportation(), addCreation())
 	
 	/* REMOVE ELEMENTS */
 	
@@ -404,10 +407,8 @@ public class CustomContext implements CustomElement {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(ID + elementId + " - removeCustomManagedSourceFromProfile(" + profileId + ")");
 		}
-		getUserProfile().removeCustomManagedCategoryFromProfile(profileId);
-		
+		getUserProfile().removeCustomManagedCategoryFromProfile(profileId);		
 	}
-	// TODO (GB later)  removeCustomPersonalCategory()
 	
 	/**
 	 * Remove the customCategory categoryId in ths customContext only.
@@ -624,7 +625,7 @@ public class CustomContext implements CustomElement {
 		// subscriptions
 		string.append("\n subscriptions=[");
 		for (String key : subscriptions.keySet()) {
-			string.append(key).append(", ");
+			string.append(subscriptions.get(key)).append(", ");
 		}
 		// unfolded categories
 		string.append("\n unfolded categories=[");
