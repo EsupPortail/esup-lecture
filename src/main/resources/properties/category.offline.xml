@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE category SYSTEM "category.dtd">
-<category edit="all" name="Presse">
+<category edit="all" name="Exemples">
 	<description>Exemples</description>
 	<sourceProfiles>
 		<sourceProfile id="un" access="public"
-			name="Outils pédagogique de Rennes 1" specificUserContent="yes"
+			name="Divers liens" specificUserContent="yes"
 			url="${config.url.prefix}/flux.offline.xml">
 			<visibility>
 				<allowed></allowed>

@@ -17,7 +17,7 @@ xlstFiles given here are only samples and must be copied and modified on your ow
  -->
 	<mapping 
 		rootElement="rss"
-		xsltFile="${config.url.prefix}/stylesheet02.xsl"
+		xsltFile="${config.url.prefix}/rss-jquery2.xsl"
 		mobileXsltFile="${config.url.prefix}/stylesheet02mobile.xsl"
 		itemXPath="/rss/channel/item">
 	</mapping>
