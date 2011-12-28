@@ -18,5 +18,10 @@
 			<link>http://localhost:8080/media/examples/actu.html</link>
 			<description>Ceci est une description un peu plus longue que le titre...</description>
 		</item>
+		<item>
+			<title>lien local (port 8080 dans le context /esup-lecture-portlet)</title>
+			<link>http://localhost:8080/esup-lecture-portlet/media/examples/actu.html</link>
+			<description>Ceci est une description un peu plus longue que le titre...</description>
+		</item>
 	</channel>
 </rss>
