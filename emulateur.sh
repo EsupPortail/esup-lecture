@@ -1,1 +1,0 @@
-chromium-browser --user-agent="Mozilla/5.0 (iPhone; U; CPU iPhone OS 3_0 like Mac OS X; en-us) AppleWebKit/528.18" http://localhost:8080/
