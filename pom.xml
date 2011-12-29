@@ -201,6 +201,7 @@
 										<include>WEB-INF/web.xml</include>
 										<include>WEB-INF/portlet.xml</include>
 										<include>stylesheets/template.jspx</include>
+										<include>stylesheets/mobile/*.*</include>
 									</includes>
 								</resource>
 								<resource>
@@ -260,6 +261,7 @@
 										<include>WEB-INF/portlet.xml</include>
 										<include>WEB-INF/jsf/application.xml</include>
 										<include>stylesheets/template.jspx</include>
+										<include>stylesheets/mobile/*.*</include>
 									</includes>
 								</resource>
 							</webResources>

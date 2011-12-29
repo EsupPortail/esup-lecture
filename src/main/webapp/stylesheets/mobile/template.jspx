@@ -10,9 +10,9 @@
 		<t:htmlTag value="title">
 			<h:outputText value="#{applicationService.name}" />
 		</t:htmlTag>
-		<t:stylesheet path="/media/mobile/jquery.mobile-1.0b3.min.css" />
-		<script type="text/javascript" src="/media/mobile/jquery-1.6.2.min.js" />
-		<script type="text/javascript" src="/media/mobile/jquery.mobile-1.0b3.min.js" />
+		<t:stylesheet path="/media/mobile/jquery.mobile-1.0.min.css" />
+		<script type="text/javascript" src="/media/mobile/jquery-1.6.4.min.js" />
+		<script type="text/javascript" src="/media/mobile/jquery.mobile-1.0.min.js" />
 	</t:htmlTag>
 	<t:htmlTag value="body" styleClass="fl-theme-app">
 		<ui:insert name="content" />
