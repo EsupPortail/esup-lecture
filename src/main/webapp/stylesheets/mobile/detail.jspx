@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<div xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:t="http://myfaces.apache.org/tomahawk"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:composition template="/stylesheets/mobile/template.jspx">
+		<ui:define name="content">
+			<h:form id="detail">
+				<div>
+					<div class="fl-col-flex2 portlet-toolbar">
+						<div class="fl-col">
+							<ul>
+								<li><h:commandLink action="navigationMobileHome"
+										value="#{msgs['back']}" /></li>
+							</ul>
+						</div>
+						<div class="fl-col fl-text-align-right">
+							<h1>
+								<h:outputText
+									value="#{mobileHomeController.selectedCategory.selectedSource.name}" />
+							</h1>
+						</div>
+					</div>
+					<div>
+						<ul class="fl-listmenu">
+							<ui:repeat
+								value="#{mobileHomeController.selectedCategory.selectedSource.items}"
+								var="item">
+								<li><h:outputText escape="false"
+										value="#{item.mobileHtmlContent}" /></li>
+							</ui:repeat>
+						</ul>
+					</div>
+				</div>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</div>
+

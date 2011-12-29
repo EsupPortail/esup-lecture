@@ -1,84 +1,80 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <div 
     xmlns="http://www.w3c.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:t="http://myfaces.apache.org/tomahawk">
 	<!-- TREE -->
 	<div class="portlet-section lecture-left" role="region">
-		<t:div styleClass="#{homeController.guestMode ? 'lecture-logoGuest' : 'lecture-logo' } portlet-section-header" role="heading">
-		</t:div>
+		<div class="#{homeController.guestMode ? 'lecture-logoGuest' : 'lecture-logo' } portlet-section-header" role="heading"/>
 		<h3 class="portlet-section-header" role="heading">
 			<h:commandLink value="#{homeController.context.name}" action="#{homeController.selectElement}">
-				<t:updateActionListener property="#{homeController.ualCategory}"
+				<f:setPropertyActionListener target="#{homeController.ualCategory}"
 									value="#{null}" />
-				<t:updateActionListener property="#{homeController.ualSource}"
+				<f:setPropertyActionListener target="#{homeController.ualSource}"
 									value="#{null}" />									
 			</h:commandLink>
 		</h3>
 		<div class="portlet-section-body">
-			<t:htmlTag value="ul" styleClass="fl-listmenu">
-				<t:dataList value="#{homeController.context.categories}" var="cat"
-					layout="simple">
-					<t:htmlTag value="li"
-						styleClass="#{cat.folded ? 'collapsed' : 'expanded'}">
+			<ul class="fl-listmenu">
+				<ui:repeat value="#{homeController.context.categories}" var="cat">
+					<li class="#{cat.folded ? 'collapsed' : 'expanded'}">
 						<div class="fl-force-left">
 							<h:commandButton action="#{homeController.toggleFoldedState}"
 								image="/media/moins.gif" alt="#{msgs['colapseCategory']}"
 								title="#{msgs['colapseCategory']}" rendered="#{!cat.folded}">
-								<t:updateActionListener property="#{homeController.ualCategory}"
+								<f:setPropertyActionListener target="#{homeController.ualCategory}"
 									value="#{cat}"/>
 							</h:commandButton>
 							<h:commandButton action="#{homeController.toggleFoldedState}"
 								image="/media/plus.gif" alt="#{msgs['expandCategory']}"
 								title="#{msgs['expandCategory']}" rendered="#{cat.folded}">
-								<t:updateActionListener property="#{homeController.ualCategory}"
+								<f:setPropertyActionListener target="#{homeController.ualCategory}"
 									value="#{cat}"/>
 							</h:commandButton>
 						</div>
 						<div class="lecture-category">
 							<h:commandLink action="#{homeController.selectElement}"
-								alt="#{cat.name}" title="#{cat.name}" value="#{cat.name}"
+								title="#{cat.name}" value="#{cat.name}"
 								styleClass="#{cat.id == homeController.ualCategory.id ? 'buttonStyle currentCategory' : 'buttonStyle otherCategory'}">
-								<t:updateActionListener property="#{homeController.ualCategory}"
+								<f:setPropertyActionListener target="#{homeController.ualCategory}"
 									value="#{cat}" />
-								<t:updateActionListener property="#{homeController.ualSource}"
+								<f:setPropertyActionListener target="#{homeController.ualSource}"
 									value="#{null}" />
 							</h:commandLink>
 						</div>
 						<t:htmlTag value="ul" styleClass="fl-listmenu" rendered="#{!cat.folded}">
 							<!-- Sources -->
-							<t:dataList value="#{cat.sources}" var="src" layout="simple">
-								<t:htmlTag value="li"
-									styleClass="#{src.id == homeController.ualSource.id ? 'currentSource' : 'otherSource'} #{src.unreadItemsNumber > 0 ? 'sourceUnreadItems' : 'sourceNoUnreadItems'}">
+							<ui:repeat value="#{cat.sources}" var="src">
+								<li class="#{src.id == homeController.ualSource.id ? 'currentSource' : 'otherSource'} #{src.unreadItemsNumber > 0 ? 'sourceUnreadItems' : 'sourceNoUnreadItems'}">
 									<h:commandLink action="#{homeController.selectElement}"
-										alt="#{src.name}" title="#{src.name}" value="#{src.name} (#{src.unreadItemsNumber})"
+										title="#{src.name}" value="#{src.name} (#{src.unreadItemsNumber})"
 										styleClass="buttonStyle"
 										rendered="#{src.unreadItemsNumber > 0}">
-										<t:updateActionListener
-											property="#{homeController.ualCategory}" value="#{cat}" />
-										<t:updateActionListener property="#{homeController.ualSource}"
+										<f:setPropertyActionListener
+											target="#{homeController.ualCategory}" value="#{cat}" />
+										<f:setPropertyActionListener target="#{homeController.ualSource}"
 											value="#{src}" />
 									</h:commandLink>
-								</t:htmlTag>
-								<t:htmlTag value="li"
-									styleClass="#{src.id == homeController.ualSource.id ? 'currentSource' : 'otherSource'} #{src.unreadItemsNumber > 0 ? 'sourceUnreadItems' : 'sourceNoUnreadItems'}">
+								</li>
+								<li class="#{src.id == homeController.ualSource.id ? 'currentSource' : 'otherSource'} #{src.unreadItemsNumber > 0 ? 'sourceUnreadItems' : 'sourceNoUnreadItems'}">
 									<h:commandLink action="#{homeController.selectElement}"
-										alt="#{src.name}" title="#{src.name}" value="#{src.name}"
+										title="#{src.name}" value="#{src.name}"
 										styleClass="buttonStyle"
 										rendered="#{src.unreadItemsNumber == 0}">
-										<t:updateActionListener
-											property="#{homeController.ualCategory}" value="#{cat}" />
-										<t:updateActionListener property="#{homeController.ualSource}"
+										<f:setPropertyActionListener
+											target="#{homeController.ualCategory}" value="#{cat}" />
+										<f:setPropertyActionListener target="#{homeController.ualSource}"
 											value="#{src}" />
 									</h:commandLink>
-								</t:htmlTag>
-							</t:dataList>
+								</li>
+							</ui:repeat>
 						</t:htmlTag>
-					</t:htmlTag>
-				</t:dataList>
-			</t:htmlTag>
+					</li>
+				</ui:repeat>
+			</ul>
 		</div>
 	</div>
 	<!-- Adjust Tree Size buttons 

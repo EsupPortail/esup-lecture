@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<t:div xmlns="http://www.w3c.org/1999/xhtml"
+<div xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:t="http://myfaces.apache.org/tomahawk">
 	<!-- MENU with Source name, sort list and zoom -->
 	<div class="portlet-section lecture-right" role="region">
-		<t:htmlTag value="h3" styleClass="fl-force-left">
+		<h3 class="fl-force-left">
 			<h:outputText value="#{homeController.context.name}" />
-		</t:htmlTag>
+		</h3>
 		<t:htmlTag value="div" styleClass="lecture-menu fl-force-right"
 			rendered="#{!homeController.guestMode}">
-			<t:htmlTag value="ul" styleClass="fl-tabs">
-				<t:htmlTag value="li">
+			<ul class="fl-tabs">
+				<li>
 					<h:outputText value="#{msgs['selectorLabel']}" />
 					<h:selectOneMenu value="#{homeController.itemDisplayMode}"
 						converter="#{itemDisplayModeConverter}"
@@ -27,7 +28,7 @@
 					<h:commandButton styleClass="itemDisplayModeButton"
 						value="#{msgs['changeItemDisplayModeButtonLabel']}"
 						action="#{homeController.changeItemDisplayMode}" />
-				</t:htmlTag>
+				</li>
 				<t:htmlTag value="li" rendered="#{!homeController.treeVisible and !homeController.forcedNoTreeVisible}">
 					<h:commandButton action="#{homeController.toggleTreeVisibility}"
 						image="/media/menuAndXML.gif" alt="#{msgs['showTree']}"
@@ -48,24 +49,22 @@
 						image="/media/read.png" alt="#{msgs['markAllAsNotRead']}"
 						title="#{msgs['markAllAsNotRead']}" styleClass="valign" />
 				</t:htmlTag>
-			</t:htmlTag>
+			</ul>
 		</t:htmlTag>
 	</div>
 	<!-- Source(s) and Items display -->
 	<div class="portlet-section lecture-right" role="region">
 		<!-- categories display -->
-		<t:dataList value="#{homeController.selectedOrAllCategories}"
-			var="cat" layout="simple">
+		<ui:repeat value="#{homeController.selectedOrAllCategories}"
+			var="cat">
 			<!-- sources display -->
-			<t:dataList value="#{cat.selectedOrAllSources}" var="source"
-				layout="simple">
+			<ui:repeat value="#{cat.selectedOrAllSources}" var="source">
 				<t:div rendered="#{source.withDisplayedItems}">
 					<t:htmlTag value="h4" styleClass="portlet-section-header fl-push">
 						<h:outputText value="#{cat.name} &gt; #{source.name}" />
 					</t:htmlTag>
 					<!-- Items display -->
-					<t:dataList value="#{source.sortedItems}" var="item"
-						layout="simple">
+					<ui:repeat value="#{source.sortedItems}" var="item">
 						<!-- Read/Unread Button -->
 						<t:htmlTag value="div" styleClass="lecture-article fl-push">
 							<t:htmlTag value="div"
@@ -75,9 +74,9 @@
 									title="#{msgs['markAsRead']}"
 									rendered="#{!item.read and !homeController.guestMode and !item.dummy and cat.userCanMarkRead}"
 									styleClass="lecture-markAsReadButton">
-									<t:updateActionListener property="#{homeController.ualSource}"
+									<f:setPropertyActionListener target="#{homeController.ualSource}"
 										value="#{source}" />
-									<t:updateActionListener property="#{homeController.ualItem}"
+									<f:setPropertyActionListener target="#{homeController.ualItem}"
 										value="#{item}" />
 								</h:commandButton>
 								<h:commandButton action="#{homeController.toggleItemReadState}"
@@ -85,9 +84,9 @@
 									title="#{msgs['markAsUnread']}"
 									rendered="#{item.read and !homeController.guestMode and !item.dummy and cat.userCanMarkRead}"
 									styleClass="lecture-markAsUnreadButton">
-									<t:updateActionListener property="#{homeController.ualSource}"
+									<f:setPropertyActionListener target="#{homeController.ualSource}"
 										value="#{source}" />
-									<t:updateActionListener property="#{homeController.ualItem}"
+									<f:setPropertyActionListener target="#{homeController.ualItem}"
 										value="#{item}" />
 								</h:commandButton>
 							</t:htmlTag>
@@ -97,9 +96,9 @@
 								<h:outputText value="#{item.htmlContent}" escape="false" />
 							</t:htmlTag>
 						</t:htmlTag>
-					</t:dataList>
+					</ui:repeat>
 				</t:div>
-			</t:dataList>
-		</t:dataList>
+			</ui:repeat>
+		</ui:repeat>
 	</div>
-</t:div>
+</div>

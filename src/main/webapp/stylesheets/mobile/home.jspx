@@ -6,47 +6,26 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	<ui:composition template="/stylesheets/mobile/template.jspx">
 		<ui:define name="content">
-			<div data-role="page" id="left">
-				<div data-role="content">
-					<ul data-role="listview">
-						<t:dataList value="#{homeController.context.categories}" var="cat"
-							layout="simple">
-							<li data-role="list-divider"><h:outputText
-									value="#{cat.name}" />
-							</li>
-							<t:dataList value="#{cat.sources}" var="src" layout="simple">
-								<li><a href="##{src.id}"><h:outputText
-											value="#{src.name}" /><span class="ui-li-count"><h:outputText
-												value="#{src.unreadItemsNumber}" /> </span> </a>
-								</li>
-							</t:dataList>
-						</t:dataList>
-					</ul>
-				</div>
-			</div>
-			<t:dataList value="#{homeController.context.categories}" var="cat"
-				layout="simple">
-				<t:dataList value="#{cat.sources}" var="src" layout="simple">
-					<div data-role="page" id="#{src.id}">
-						<div data-role="header" data-theme="b">
-							<h1>
-								<h:outputText value="#{src.name}" />
-							</h1>
-							<a href="#left" data-icon="back" data-iconpos="left"
-								data-direction="reverse" class="ui-btn-left jqm-home">Retour</a>
-							<div data-role="content">
-								<ul data-role="listview">
-									<t:dataList value="#{src.items}" var="item" layout="simple">
-										<li><h:outputText escape="false"
-												value="#{item.mobileHtmlContent}" />
-										</li>
-									</t:dataList>
-								</ul>
-							</div>
-						</div>
+			<h:form id="home">
+				<ui:repeat value="#{mobileHomeController.context.categories}" var="cat">
+					<div class="fl-container fl-container-autoHeading">
+						<h3>
+							<h:outputText value="#{cat.name}" />
+						</h3>
+						<ul class="fl-list-menu fl-list-brief">
+							<ui:repeat value="#{cat.sources}" var="src">
+								<li><h:commandLink action="#{mobileHomeController.selectElement}"
+										value="#{src.name} (#{src.unreadItemsNumber})">
+										<f:setPropertyActionListener
+											target="#{mobileHomeController.ualCategory}" value="#{cat}" />
+										<f:setPropertyActionListener
+											target="#{mobileHomeController.ualSource}" value="#{src}" />
+									</h:commandLink></li>
+							</ui:repeat>
+						</ul>
 					</div>
-				</t:dataList>
-			</t:dataList>
+				</ui:repeat>
+			</h:form>
 		</ui:define>
 	</ui:composition>
 </div>

@@ -10,9 +10,9 @@
 			<h:form id="edit">
 				<!-- Structure without js-layout -->
 				<div class="portlet-section fl-container-flex">
-					<t:div styleClass="fl-col fl-force-left" style="width: #{homeController.treeSize}%">
+					<div class="fl-col fl-force-left" style="width: #{homeController.treeSize}%">
 						<ui:include src="editLeft.jspx" />
-					</t:div>
+					</div>
 					<div class="fl-col fl-force-right" style="width: #{98-homeController.treeSize}%">
 						<ui:include src="editRight.jspx" />
 					</div>

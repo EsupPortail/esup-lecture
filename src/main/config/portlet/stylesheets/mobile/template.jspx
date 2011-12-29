@@ -6,11 +6,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	class="portlet-section-body esup-lecture">
 	<f:view locale="#{sessionController.locale}">
-		<link href="/esup-lecture-portlet/media/mobile/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css" />
-		<script type="text/javascript" src="/esup-lecture-portlet/media/mobile/jquery-1.6.4.min.js" />
-		<script type="text/javascript"
-			src="/esup-lecture-portlet/media/mobile/jquery.mobile-1.0.min.js" />
-		<div class="portlet-body">
+		<div class="portlet">
 			<ui:insert name="content" />
 		</div>
 	</f:view>

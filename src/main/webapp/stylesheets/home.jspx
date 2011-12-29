@@ -10,10 +10,10 @@
 				<!-- Structure without js-layout -->
 				<t:div styleClass="portlet-section fl-container-flex"
 					rendered="#{homeController.treeVisible and !homeController.guestMode}">
-					<t:div styleClass="fl-col fl-force-left"
+					<div class="fl-col fl-force-left"
 						style="width: #{homeController.treeSize}%">
 						<ui:include src="homeLeft.jspx" />
-					</t:div>
+					</div>
 					<div class="fl-col fl-force-right"
 						style="width: #{98-homeController.treeSize}%">
 						<ui:include src="homeRight.jspx" />

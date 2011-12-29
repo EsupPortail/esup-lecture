@@ -30,6 +30,12 @@
 		<property name="facadeService" ref="facadeService"/>
 	</bean>	
 
+	<bean id="mobileHomeController"
+		class="org.esupportail.lecture.web.controllers.MobileHomeController"
+		parent="homeController" scope="session">
+		<description>A bean to manage the home page in mobile mode.</description>
+	</bean>	
+
 	<bean id="sessionController"
 		class="org.esupportail.lecture.web.controllers.SessionController"
 		parent="abstractDomainAwareBean"

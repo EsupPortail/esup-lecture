@@ -6,26 +6,24 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	class="portlet-section-body esup-lecture">
 <f:view locale="#{sessionController.locale}">
-	<t:htmlTag value="head">
-		<t:htmlTag value="title">
+	<head>
+		<title>
 			<h:outputText value="#{applicationService.name}" />
-		</t:htmlTag>
-		<t:stylesheet path="../media/fss/fss-reset.css" />
-		<t:stylesheet path="../media/fss/fss-layout.css" />
-		<t:stylesheet path="../media/fss/fss-text.css" />
-		<t:stylesheet path="../media/commons.css" />
-		<t:stylesheet path="../media/portlet.css" />
-		<t:stylesheet path="../media/lecture.css" />
-		<t:stylesheet path="../media/thickbox.css" />
-		<t:stylesheet path="../media/js-layout.css" />
-		<t:stylesheet path="../media/custom.css" />
+		</title>
+		<link href="../media/fss/fss-framework-1.2.min.css" rel="stylesheet" type="text/css" />
+		<link href="../media/commons.css" rel="stylesheet" type="text/css" />
+		<link href="../media/portlet.css" rel="stylesheet" type="text/css" />
+		<link href="../media/lecture.css" rel="stylesheet" type="text/css" />
+		<link href="../media/thickbox.css" rel="stylesheet" type="text/css" />
+		<link href="../media/js-layout.css" rel="stylesheet" type="text/css" />
+		<link href="../media/custom.css" rel="stylesheet" type="text/css" />
 		<script type="text/javascript" src="../media/js/jquery-1.3.2.min.js" /><!-- jquery -->
 		<script type="text/javascript" src="../media/js/jquery.ui.custom.min.js" /><!-- jquery ui (only components needed by jquery layout) based on jquery -->
 		<script type="text/javascript" src="../media/js/jquery.layout.min.js" /><!-- jquery layout based on jquery ui -->
 		<script type="text/javascript" src="../media/js/init-js-layout.js" /><!-- init the layout -->
 		<script type="text/javascript" src="../media/js/thickbox.js" />
 		<script type="text/javascript" src="../media/js/esup-lecture.js" />
-	</t:htmlTag>
+	</head>
 	<t:htmlTag value="body" styleClass="fl-theme-app">
 		<ui:insert name="content" />
 	</t:htmlTag>
