@@ -9,6 +9,7 @@
 	<head>
 		<title><h:outputText value="#{applicationService.name}" /></title>
 		<link href="/media/portlet.css" rel="stylesheet" type="text/css" />
+		<link href="/media/mobile/lecture.css" rel="stylesheet" type="text/css" />
 		<link href="/media/fss/fss-framework-1.2.min.css" rel="stylesheet" type="text/css" />
 		<link href="/media/fss/fss-mobile-layout.min.css" rel="stylesheet" type="text/css" />
 		<link href="/media/fss/fss-mobile-theme-iphone.min.css" rel="stylesheet" type="text/css" />

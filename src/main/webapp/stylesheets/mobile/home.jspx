@@ -15,7 +15,7 @@
 						<ul class="fl-list-menu fl-list-brief">
 							<ui:repeat value="#{cat.sources}" var="src">
 								<li><h:commandLink action="#{mobileHomeController.selectElement}"
-										value="#{src.name} (#{src.unreadItemsNumber})">
+										value="#{src.name} (#{src.unreadItemsNumber}/#{src.itemsNumber })">
 										<f:setPropertyActionListener
 											target="#{mobileHomeController.ualCategory}" value="#{cat}" />
 										<f:setPropertyActionListener

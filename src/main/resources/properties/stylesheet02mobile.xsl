@@ -5,7 +5,7 @@
 	<xsl:template match="/">
 		<div class="lecture-clikable lecture-highlightable">
 			<h1>
-				!MOBILE! <xsl:value-of select="/item/title" /> !MOBILE!
+				<xsl:value-of select="/item/title" /> !MOBILE!
 			</h1>
 			<div class="lecture-link">
 				Lien :

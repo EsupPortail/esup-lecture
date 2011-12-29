@@ -66,9 +66,8 @@
 					<!-- Items display -->
 					<ui:repeat value="#{source.sortedItems}" var="item">
 						<!-- Read/Unread Button -->
-						<t:htmlTag value="div" styleClass="lecture-article fl-push">
-							<t:htmlTag value="div"
-								styleClass="lecture-toggleButton fl-force-left">
+						<div class="lecture-article fl-push">
+							<div class="lecture-toggleButton fl-force-left">
 								<h:commandButton action="#{homeController.toggleItemReadState}"
 									image="/media/unread.png" alt="#{msgs['markAsRead']}"
 									title="#{msgs['markAsRead']}"
@@ -89,13 +88,12 @@
 									<f:setPropertyActionListener target="#{homeController.ualItem}"
 										value="#{item}" />
 								</h:commandButton>
-							</t:htmlTag>
+							</div>
 							<!-- Item Display -->
-							<t:htmlTag value="div"
-								styleClass="#{item.read ? 'lecture-readArticle' : 'lecture-unreadArticle'}">
+							<div class="#{item.read ? 'lecture-readArticle' : 'lecture-unreadArticle'}">
 								<h:outputText value="#{item.htmlContent}" escape="false" />
-							</t:htmlTag>
-						</t:htmlTag>
+							</div>
+						</div>
 					</ui:repeat>
 				</t:div>
 			</ui:repeat>

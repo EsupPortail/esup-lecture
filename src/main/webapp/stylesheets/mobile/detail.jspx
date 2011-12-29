@@ -11,8 +11,8 @@
 					<div class="fl-col-flex2 portlet-toolbar">
 						<div class="fl-col">
 							<ul>
-								<li><h:commandLink action="navigationMobileHome"
-										value="#{msgs['back']}" /></li>
+								<li><h:commandButton action="navigationMobileHome"
+										styleClass="portlet-form-button" value="#{msgs['back']}" /></li>
 							</ul>
 						</div>
 						<div class="fl-col fl-text-align-right">
@@ -23,14 +23,31 @@
 						</div>
 					</div>
 					<div>
-						<ul class="fl-listmenu">
-							<ui:repeat
-								value="#{mobileHomeController.selectedCategory.selectedSource.items}"
-								var="item">
-								<li><h:outputText escape="false"
-										value="#{item.mobileHtmlContent}" /></li>
-							</ui:repeat>
-						</ul>
+						<ui:repeat
+							value="#{mobileHomeController.selectedCategory.selectedSource.items}"
+							var="item">
+							<!-- Read/Unread Button -->
+							<div class="lecture-article fl-push">
+								<div class="lecture-toggleButton fl-force-left">
+									<h:commandButton
+										action="#{mobileHomeController.toggleItemReadState}"
+										image="#{item.read ? '/media/read.png' : '/media/unread.png'}" alt="#{msgs['markAsRead']}"
+										title="#{item.read ? msgs['markAsUnread'] : msgs['markAsRead']}"
+										rendered="#{!mobileHomeController.guestMode and !item.dummy}"
+										styleClass="lecture-markAsReadButton">
+										<f:setPropertyActionListener
+											target="#{mobileHomeController.ualSource}" value="#{mobileHomeController.selectedCategory.selectedSource}" />
+										<f:setPropertyActionListener
+											target="#{mobileHomeController.ualItem}" value="#{item}" />
+									</h:commandButton>
+								</div>
+								<!-- Item Display -->
+								<div
+									class="#{item.read ? 'lecture-readArticle' : 'lecture-unreadArticle'}">
+									<h:outputText value="#{item.mobileHtmlContent}" escape="false" />
+								</div>
+							</div>
+						</ui:repeat>
 					</div>
 				</div>
 			</h:form>
