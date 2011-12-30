@@ -3,14 +3,16 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="html" encoding="utf-8" />
 	<xsl:template match="/">
-		<div class="lecture-clickable lecture-highlightable">
+		<div>
 			<h1>
 				<xsl:value-of select="/item/title" />
 			</h1>
-			<div class="lecture-link">
+			<div>
 				Lien :
-				<a target="_blank" href="{item/link}">
-					<xsl:value-of select="item/link" />
+				<a target="_blank" class="thickbox">
+					<xsl:attribute name="href">
+    				    <xsl:value-of select="item/link" />?KeepThis=true&amp;TB_iframe=true&amp;height=555&amp;width=830</xsl:attribute>	
+					En savoir plus ...
 				</a>
 				<br />
 			</div>
