@@ -1,9 +1,15 @@
 (function($){
 	$(document).ready(function() {
-		
+
 		/***************************************
-		* esup-lecture functions
-		* **************************************/
+		 * esup-lecture functions
+		 * **************************************/
+//		myLayout = $('#home:panels-layout').layout({
+//			center__paneSelector: "#center",
+//			west__paneSelector: "#west",
+//			east__size: 300
+//		});
+
 		$(".itemDisplayModeSelector").change(function () {
 			$(".itemDisplayModeButton").click();
 		});
@@ -11,18 +17,18 @@
 		$(".itemDisplayModeButton").hide();
 
 		$('.lecture-readArticle .lecture-link, .lecture-unreadArticle .lecture-link').hide();
-		
+
 		/***************************************
-		* rss-jquery-clickable functions
-		* **************************************/
+		 * rss-jquery-clickable functions
+		 * **************************************/
 		$('.lecture-highlightable').mouseover(function() {
 			$(this).addClass('lecture-highlight');
 		}).mouseout(function(){
 			$(this).removeClass('lecture-highlight');
 		});
-		
+
 		$('.lecture-clickable').css('cursor', 'pointer').attr('title', $(this).find('.lecture-link:first a:first').text());
-		
+
 		$('.lecture-clickable').click(function (event) {
 			var current = $(this);
 			var markAsUnreadButton = current.closest('.lecture-article').find('.lecture-markAsUnreadButton')[0];
@@ -40,78 +46,78 @@
 		});
 
 		/***************************************
-		* rss-jquery-inline functions
-		* **************************************/
-	    //See "En savoir plus.." link in xsl
+		 * rss-jquery-inline functions
+		 * **************************************/
+		//See "En savoir plus.." link in xsl
 		$(".article-block").children("a").click(function(){
-	        openNews($(this).attr("href"),$(this));
-	        return false;
-	    }); 
-	    
-	    //See "Resume..." link in xsl
-	    $(".replierArticle").children("a").click(function(){
-	        closeNews($(this));
-	        return false;
-	    });
-	    
-	    // Functions to open and close news inside portal
-	    function openNews(lien, p) {
-	        var resume = p.parent().parent();
-	        var div=resume.parent();
+			openNews($(this).attr("href"),$(this));
+			return false;
+		}); 
 
-	        resume.hide();
-	        div.children(".contenuArticle:first").each(function(){
-	                if ($(this).hasClass("articleCharge")) {
-	                        $(this).show();
-	                        div.children(".replierArticle:first").show();
-	                        scrollNews($(this));
-	                } else {
-	                        $(this).addClass("wait");
-	                        $(this).show();
-	                        $(this).load(lien.toString()+" #container", function() {
-	                                $(this).removeClass("wait");
-	                                $(this).addClass("articleCharge");
-	                                $(this).find(".meta, .postmeta, #footer, #header").remove();
-	                                $(this).find(".entry").children("h2:first, br:first").remove();
-	                                $(this).find(".entry").children("div").children("div").children("p").removeAttr("style");
-	                                div.children(".replierArticle:first").show();
-	                                scrollNews($(this));
-	                        });     
-	                }               
-	        });                     
-	    }                           
-	                        
-	    function closeNews(p) {   
-	        var div=p.parent().parent();
-	        div.children(".replierArticle:first, .contenuArticle:first").hide();
-	        div.children(".resumeArticle:first").each(function(){
-	                $(this).show();
-	                scrollNews($(this));
-	        });
-	    }   
-	                
-	    function scrollNews(div) {
-	        var x = div.offset().top - 100;
-	        $('html,body').animate({scrollTop: x}, 500);
-	    }
+		//See "Resume..." link in xsl
+		$(".replierArticle").children("a").click(function(){
+			closeNews($(this));
+			return false;
+		});
+
+		// Functions to open and close news inside portal
+		function openNews(lien, p) {
+			var resume = p.parent().parent();
+			var div=resume.parent();
+
+			resume.hide();
+			div.children(".contenuArticle:first").each(function(){
+				if ($(this).hasClass("articleCharge")) {
+					$(this).show();
+					div.children(".replierArticle:first").show();
+					scrollNews($(this));
+				} else {
+					$(this).addClass("wait");
+					$(this).show();
+					$(this).load(lien.toString()+" #container", function() {
+						$(this).removeClass("wait");
+						$(this).addClass("articleCharge");
+						$(this).find(".meta, .postmeta, #footer, #header").remove();
+						$(this).find(".entry").children("h2:first, br:first").remove();
+						$(this).find(".entry").children("div").children("div").children("p").removeAttr("style");
+						div.children(".replierArticle:first").show();
+						scrollNews($(this));
+					});     
+				}               
+			});                     
+		}                           
+
+		function closeNews(p) {   
+			var div=p.parent().parent();
+			div.children(".replierArticle:first, .contenuArticle:first").hide();
+			div.children(".resumeArticle:first").each(function(){
+				$(this).show();
+				scrollNews($(this));
+			});
+		}   
+
+		function scrollNews(div) {
+			var x = div.offset().top - 100;
+			$('html,body').animate({scrollTop: x}, 500);
+		}
 
 		/***************************************
-		* rss-jquery-dialog functions
-		* **************************************/
-	    // Dialogs
-	    $('.dialog').each(function(index) {
-	    	$(this).dialog({
-	    		autoOpen: false,
-	    		width: 850,
-	    		buttons: {
-	    			"Ok": function() { 
-	    				$(this).dialog("close"); 
-	    			}, 
-	    		},
-	    		resizable: false
-	    	});
-	    })
-		
+		 * rss-jquery-dialog functions
+		 * **************************************/
+		// Dialogs
+		$('.dialog').each(function(index) {
+			$(this).dialog({
+				autoOpen: false,
+				width: 850,
+				buttons: {
+					"Ok": function() { 
+						$(this).dialog("close"); 
+					}, 
+				},
+				resizable: false
+			});
+		})
+
 		// Dialog Link
 		$('.dialog_link').click(function(event){
 			event.preventDefault();
@@ -124,12 +130,12 @@
 			div.dialog('open');
 			return false;
 		});
-		
+
 		//hover states on the static widgets
 		$('.dialog_link').hover(
-			function() { $(this).addClass('ui-state-hover'); }, 
-			function() { $(this).removeClass('ui-state-hover'); }
+				function() { $(this).addClass('ui-state-hover'); }, 
+				function() { $(this).removeClass('ui-state-hover'); }
 		);
-	    
+
 	});
 })(jQuery);
