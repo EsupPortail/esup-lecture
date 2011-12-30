@@ -2,7 +2,6 @@
 <div 
     xmlns="http://www.w3c.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:t="http://myfaces.apache.org/tomahawk"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 	<ui:composition template="/stylesheets/template.jspx">
@@ -23,16 +22,16 @@
 				<!-- Comment the struct above and uncomment below to use it, 
 					and declare media/js/init-js-layout.js in the Head section of the portal (see skin.xml for uPortal 3.2) -->
 				<!-- 
-				<t:div id="panels-layout" forceId="true">
-					<t:div id="panelLeft-ui" styleClass="ui-layout-west" forceId="true"
+				<div id="panels-layout" forceId="true">
+					<div id="panelLeft-ui" styleClass="ui-layout-west" forceId="true"
 						style="width: #{editController.treeSize}%">
 						<ui:include src="editLeft.jspx" />
-					</t:div>
-					<t:div id="panelRight-ui" styleClass="ui-layout-center"
+					</div>
+					<div id="panelRight-ui" styleClass="ui-layout-center"
 						forceId="true" style="width: #{99-editController.treeSize}%">
 						<ui:include src="editRight.jspx" />
-					</t:div>
-				</t:div>
+					</div>
+				</div>
 				-->
 				
 			</h:form>

@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <div xmlns="http://www.w3c.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:t="http://myfaces.apache.org/tomahawk"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"><ui:composition
 	template="/stylesheets/template.jspx">
 	<ui:define name="content">
-		<t:htmlTag value="br" />
-		<t:htmlTag value="br" />
-		<t:div styleClass="sub_sections"
+		<br />
+		<br />
+		<div class="sub_sections"
 			style="text-align:center;margin-right:10%;margin-left:10%;">
 
-			<t:htmlTag value="h1">
+			<h1>
 				<h:outputText value="#{msgs['EXCEPTION.TITLE']}" />
-			</t:htmlTag>			
+			</h1>			
 
 			<h:panelGrid columns="2" width="100%"
 				cellspacing="0" cellpadding="0" border="1">
@@ -97,9 +96,9 @@
 				</h:panelGroup>
 			</h:panelGrid>
 
-			<t:htmlTag value="h2">
+			<h2>
 				<h:outputText value="#{msgs['EXCEPTION.HEADER.EXCEPTION']}" />
-			</t:htmlTag>
+			</h2>
 
 			<h:panelGrid columns="2" width="100%" border="1"
 				cellspacing="0" cellpadding="0">
@@ -119,9 +118,9 @@
 				<h:dataTable id="exceptionShortStackTrace"
 					value="#{exceptionController.exceptionShortStackTrace}"
 					var="string" border="0" style="width: 100%">
-					<t:column>
+					<h:column>
 						<h:outputText value="#{string}" />
-					</t:column>
+					</h:column>
 				</h:dataTable>
 
 				<h:outputLabel for="exceptionStackTrace"
@@ -129,115 +128,115 @@
 				<h:dataTable id="exceptionStackTrace"
 					value="#{exceptionController.exceptionStackTrace}" var="string"
 					border="0" style="width: 100%">
-					<t:column>
+					<h:column>
 						<h:outputText value="#{string}" />
-					</t:column>
+					</h:column>
 				</h:dataTable>
 
 			</h:panelGrid>
 
-			<t:htmlTag value="h2">
+			<h2>
 				<h:outputText value="#{msgs['EXCEPTION.HEADER.REQUEST_ATTRIBUTES']}" />
-			</t:htmlTag>
+			</h2>
 
 			<h:dataTable id="requestAttributes"
 				value="#{exceptionController.requestAttributes}" var="string"
 				border="1" style="width: 100%"
 				rendered="#{not empty exceptionController.requestAttributes}">
-				<t:column>
+				<h:column>
 					<h:outputText value="#{string}" />
-				</t:column>
+				</h:column>
 			</h:dataTable>
 			<h:outputText value="#{msgs['EXCEPTION.REQUEST_ATTRIBUTES.NONE']}"
 				rendered="#{empty exceptionController.requestAttributes}" />
 
-			<t:htmlTag value="h2">
+			<h2>
 				<h:outputText value="#{msgs['EXCEPTION.HEADER.SESSION_ATTRIBUTES']}" />
-			</t:htmlTag>
+			</h2>
 
 			<h:dataTable id="sessionAttributes"
 				value="#{exceptionController.sessionAttributes}" var="string"
 				border="1" style="width: 100%"
 				rendered="#{not empty exceptionController.sessionAttributes}">
-				<t:column>
+				<h:column>
 					<h:outputText value="#{string}" />
-				</t:column>
+				</h:column>
 			</h:dataTable>
 			<h:outputText value="#{msgs['EXCEPTION.SESSION_ATTRIBUTES.NONE']}"
 				rendered="#{empty exceptionController.sessionAttributes}" />
 
-			<t:htmlTag value="h2">
+			<h2>
 				<h:outputText
 					value="#{msgs['EXCEPTION.HEADER.GLOBAL_SESSION_ATTRIBUTES']}" />
-			</t:htmlTag>
+			</h2>
 
 			<h:dataTable id="globalSessionAttributes"
 				value="#{exceptionController.globalSessionAttributes}" var="string"
 				border="1" style="width: 100%"
 				rendered="#{not empty exceptionController.globalSessionAttributes}">
-				<t:column>
+				<h:column>
 					<h:outputText value="#{string}" />
-				</t:column>
+				</h:column>
 			</h:dataTable>
 			<h:outputText
 				value="#{msgs['EXCEPTION.GLOBAL_SESSION_ATTRIBUTES.NONE']}"
 				rendered="#{empty exceptionController.globalSessionAttributes}" />
 
-			<t:htmlTag value="h2">
+			<h2>
 				<h:outputText value="#{msgs['EXCEPTION.HEADER.REQUEST_HEADERS']}" />
-			</t:htmlTag>
+			</h2>
 
 			<h:dataTable id="requestHeaders"
 				value="#{exceptionController.requestHeaders}" var="string"
 				border="1" style="width: 100%"
 				rendered="#{not empty exceptionController.requestHeaders}">
-				<t:column>
+				<h:column>
 					<h:outputText value="#{string}" />
-				</t:column>
+				</h:column>
 			</h:dataTable>
 			<h:outputText value="#{msgs['EXCEPTION.REQUEST_HEADERS.NONE']}"
 				rendered="#{empty exceptionController.requestHeaders}" />
 
-			<t:htmlTag value="h2">
+			<h2>
 				<h:outputText value="#{msgs['EXCEPTION.HEADER.REQUEST_PARAMETERS']}" />
-			</t:htmlTag>
+			</h2>
 
 			<h:dataTable id="requestParameters"
 				value="#{exceptionController.requestParameters}" var="string"
 				border="1" style="width: 100%"
 				rendered="#{not empty exceptionController.requestParameters}">
-				<t:column>
+				<h:column>
 					<h:outputText value="#{string}" />
-				</t:column>
+				</h:column>
 			</h:dataTable>
 			<h:outputText value="#{msgs['EXCEPTION.REQUEST_PARAMETERS.NONE']}"
 				rendered="#{empty exceptionController.requestParameters}" />
 
-			<t:htmlTag value="h2">
+			<h2>
 				<h:outputText value="#{msgs['EXCEPTION.HEADER.COOKIES']}" />
-			</t:htmlTag>
+			</h2>
 
 			<h:dataTable id="cookies" value="#{exceptionController.cookies}"
 				var="string" border="1" style="width: 100%"
 				rendered="#{not empty exceptionController.cookies}">
-				<t:column>
+				<h:column>
 					<h:outputText value="#{string}" />
-				</t:column>
+				</h:column>
 			</h:dataTable>
 			<h:outputText value="#{msgs['EXCEPTION.COOKIES.NONE']}"
 				rendered="#{empty exceptionController.cookies}" />
 
-			<t:htmlTag value="h2">
+			<h2>
 				<h:outputText value="#{msgs['EXCEPTION.HEADER.SYSTEM_PROPERTIES']}" />
-			</t:htmlTag>
+			</h2>
 
 			<h:dataTable id="systemProperties"
 				value="#{exceptionController.systemProperties}" var="string"
 				border="1" style="width: 100%" 
 				rendered="#{not empty exceptionController.systemProperties}" >
-				<t:column>
+				<h:column>
 					<h:outputText value="#{string}" />
-				</t:column>
+				</h:column>
 			</h:dataTable>
 			<h:outputText value="#{msgs['EXCEPTION.SYSTEM_PROPERTIES.NONE']}"
 				rendered="#{empty exceptionController.systemProperties}" />
@@ -251,6 +250,6 @@
 				<h:commandButton value="Retour à l'accueil"
 					action="#{exceptionController.restart}" />
 			</h:form>
-		</t:div>
+		</div>
 	</ui:define>
 </ui:composition></div>

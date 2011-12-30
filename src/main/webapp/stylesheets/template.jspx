@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns="http://www.w3c.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:t="http://myfaces.apache.org/tomahawk"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	class="portlet-section-body esup-lecture">
@@ -24,9 +23,9 @@
 		<script type="text/javascript" src="../media/js/thickbox.js" />
 		<script type="text/javascript" src="../media/js/esup-lecture.js" />
 	</head>
-	<t:htmlTag value="body" styleClass="fl-theme-app">
+	<body class="fl-theme-app">
 		<ui:insert name="content" />
-	</t:htmlTag>
+	</body>
 </f:view>
 </html>
 

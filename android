@@ -1,0 +1,2 @@
+echo "On lance chromium-browser --user-agent=...Android..."
+chromium-browser --user-agent="Mozilla/5.0 (Linux; U; Android 1.5; fr-fr; Mozilla/5.0 (Linux; U; Android 1.5; fr-fr; HTC Magic Build/CRB43) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1 Build/CUPCAKE) AppleWebKit/528.5+ (KHTML, like Gecko) Version/3.1.2 Mobile Safari/525.20.1" http://localhost:8888/ > /dev/null &
