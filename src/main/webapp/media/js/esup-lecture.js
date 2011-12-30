@@ -107,7 +107,8 @@
 	    			"Ok": function() { 
 	    				$(this).dialog("close"); 
 	    			}, 
-	    		}
+	    		},
+	    		resizable: false
 	    	});
 	    })
 		
