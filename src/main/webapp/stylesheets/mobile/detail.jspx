@@ -8,19 +8,13 @@
 		<ui:define name="content">
 			<h:form id="detail">
 				<div>
-					<div class="fl-col-flex2 portlet-toolbar">
-						<div class="fl-col">
-							<ul>
-								<li><h:commandButton action="navigationMobileHome"
-										styleClass="portlet-form-button" value="#{msgs['back']}" /></li>
-							</ul>
-						</div>
-						<div class="fl-col fl-text-align-right">
-							<h1>
-								<h:outputText
-									value="#{mobileHomeController.selectedCategory.selectedSource.name}" />
-							</h1>
-						</div>
+					<div class="fl-container fl-container-autoHeading">
+						<h3>#{mobileHomeController.selectedCategory.selectedSource.name}</h3>
+						<ul class="fl-list-menu fl-list-brief">
+							<li><h:commandLink action="navigationMobileHome"
+									value="#{msgs['back']}">
+								</h:commandLink></li>
+						</ul>
 					</div>
 					<div>
 						<ui:repeat
@@ -31,12 +25,14 @@
 								<div class="lecture-toggleButton fl-force-left">
 									<h:commandButton
 										action="#{mobileHomeController.toggleItemReadState}"
-										image="#{item.read ? '/media/read.png' : '/media/unread.png'}" alt="#{msgs['markAsRead']}"
+										image="#{item.read ? '/media/read.png' : '/media/unread.png'}"
+										alt="#{msgs['markAsRead']}"
 										title="#{item.read ? msgs['markAsUnread'] : msgs['markAsRead']}"
 										rendered="#{!mobileHomeController.guestMode and !item.dummy}"
 										styleClass="lecture-markAsReadButton">
 										<f:setPropertyActionListener
-											target="#{mobileHomeController.ualSource}" value="#{mobileHomeController.selectedCategory.selectedSource}" />
+											target="#{mobileHomeController.ualSource}"
+											value="#{mobileHomeController.selectedCategory.selectedSource}" />
 										<f:setPropertyActionListener
 											target="#{mobileHomeController.ualItem}" value="#{item}" />
 									</h:commandButton>
