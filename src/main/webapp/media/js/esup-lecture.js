@@ -115,12 +115,11 @@
 		$('.dialog_link').click(function(event){
 			event.preventDefault();
 			var href = $(this).attr('href');
-			var s1 = 'div[id="';
+			var s1 = 'iframe[src="';
 			var s2 = '"]';
 			var selector = s1.concat(href).concat(s2);
-//			alert(s1.concat(href).concat(s2));
-			//find div with href as id attribute
-			var div = $(selector);
+			//find div (parent of iframe with href as src attribute
+			var div = $(selector).parent();
 			div.dialog('open');
 			return false;
 		});

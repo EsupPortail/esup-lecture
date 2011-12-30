@@ -5,7 +5,7 @@
 	<xsl:template match="/">
 		<div>
 			<!-- ui-dialog -->
-			<div class="dialog" id="{/item/link}">
+			<div class="dialog" >
 				<iframe frameborder="0" hspace="0" style="width:820px;height:600px;">
 					<xsl:attribute name="src">
 						<xsl:value-of select="item/link" />
