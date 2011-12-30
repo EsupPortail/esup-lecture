@@ -28,7 +28,7 @@
 			</visibility>
 		</sourceProfile>
 		<sourceProfile id="trois" access="public"
-			name="Divers liens (rss-thickbox)" specificUserContent="no"
+			name="Divers liens (rss-jquery-dialog)" specificUserContent="no"
 			url="${config.url.prefix}/examples/xml/flux.offline3.xml">
 			<visibility>
 				<allowed></allowed>

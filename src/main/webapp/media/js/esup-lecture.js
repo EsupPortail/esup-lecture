@@ -1,5 +1,9 @@
 (function($){
-	$(document).ready(function() {  
+	$(document).ready(function() {
+		
+		/***************************************
+		* esup-lecture functions
+		* **************************************/
 		$(".itemDisplayModeSelector").change(function () {
 			$(".itemDisplayModeButton").click();
 		});
@@ -8,6 +12,9 @@
 
 		$('.lecture-readArticle .lecture-link, .lecture-unreadArticle .lecture-link').hide();
 		
+		/***************************************
+		* rss-jquery-clickable functions
+		* **************************************/
 		$('.lecture-highlightable').mouseover(function() {
 			$(this).addClass('lecture-highlight');
 		}).mouseout(function(){
@@ -32,7 +39,9 @@
 			}
 		});
 
-
+		/***************************************
+		* rss-jquery-inline functions
+		* **************************************/
 	    //See "En savoir plus.." link in xsl
 		$(".article-block").children("a").click(function(){
 	        openNews($(this).attr("href"),$(this));
@@ -45,9 +54,7 @@
 	        return false;
 	    });
 	    
-	    /** 
-	     * Functions to open and close news inside portal
-	     */
+	    // Functions to open and close news inside portal
 	    function openNews(lien, p) {
 	        var resume = p.parent().parent();
 	        var div=resume.parent();
@@ -87,7 +94,42 @@
 	        var x = div.offset().top - 100;
 	        $('html,body').animate({scrollTop: x}, 500);
 	    }
-				
-	});
 
+		/***************************************
+		* rss-jquery-dialog functions
+		* **************************************/
+	    // Dialogs
+	    $('.dialog').each(function(index) {
+	    	$(this).dialog({
+	    		autoOpen: false,
+	    		width: 850,
+	    		buttons: {
+	    			"Ok": function() { 
+	    				$(this).dialog("close"); 
+	    			}, 
+	    		}
+	    	});
+	    })
+		
+		// Dialog Link
+		$('.dialog_link').click(function(event){
+			event.preventDefault();
+			var href = $(this).attr('href');
+			var s1 = 'div[id="';
+			var s2 = '"]';
+			var selector = s1.concat(href).concat(s2);
+//			alert(s1.concat(href).concat(s2));
+			//find div with href as id attribute
+			var div = $(selector);
+			div.dialog('open');
+			return false;
+		});
+		
+		//hover states on the static widgets
+		$('.dialog_link').hover(
+			function() { $(this).addClass('ui-state-hover'); }, 
+			function() { $(this).removeClass('ui-state-hover'); }
+		);
+	    
+	});
 })(jQuery);

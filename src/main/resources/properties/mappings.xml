@@ -29,7 +29,7 @@ xlstFiles given here are only samples and must be copied and modified on your ow
 	</mapping>
 	<mapping 
 		sourceURL="${config.url.prefix}/examples/xml/flux.offline3.xml"
-		xsltFile="${config.url.prefix}/examples/xsl/rss-thickbox.xsl"
+		xsltFile="${config.url.prefix}/examples/xsl/rss-jquery-dialog.xsl"
 		mobileXsltFile="${config.url.prefix}/examples/xsl/rss-mobile.xsl"
 		itemXPath="/rss/channel/item">
 	</mapping>
