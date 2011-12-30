@@ -14,9 +14,9 @@
 			$(this).removeClass('lecture-highlight');
 		});
 		
-		$('.lecture-clikable').css('cursor', 'pointer').attr('title', $(this).find('.lecture-link:first a:first').text());
+		$('.lecture-clickable').css('cursor', 'pointer').attr('title', $(this).find('.lecture-link:first a:first').text());
 		
-		$('.lecture-clikable').click(function (event) {
+		$('.lecture-clickable').click(function (event) {
 			var current = $(this);
 			var markAsUnreadButton = current.closest('.lecture-article').find('.lecture-markAsUnreadButton')[0];
 			var markAsReadButton = current.closest('.lecture-article').find('.lecture-markAsReadButton')[0];

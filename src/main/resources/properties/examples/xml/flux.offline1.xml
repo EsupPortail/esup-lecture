@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="0.91">
+	<channel>
+		<image />
+		<title>Divers liens (rss-jquery-clickable)</title>
+		<link />
+		<language>fr</language>
+		<webMaster>webmaster@univ-rennes1.fr</webMaster>
+		<lastBuildDate>20/07/2008</lastBuildDate>
+		<item>
+			<title>Chaine éditoriale (lien distant)</title>
+			<link>http://chainedit.univ-rennes1.fr</link>
+			<description>Outil d'aide à la création de supports de cours
+				multimédia.</description>
+		</item>
+		<item>
+			<title>lien local (port 8080 à la racine)</title>
+			<link>http://localhost:8080/media/examples/actu.html</link>
+			<description>Ceci est une description un peu plus longue que le titre...</description>
+		</item>
+		<item>
+			<title>lien local (port 8888 à la racine)</title>
+			<link>http://localhost:8888/media/examples/actu.html</link>
+			<description>Ceci est une description un peu plus longue que le titre...</description>
+		</item>
+		<item>
+			<title>lien local (port 8080 dans le context /esup-lecture-portlet)</title>
+			<link>http://localhost:8080/esup-lecture-portlet/media/examples/actu.html</link>
+			<description>Ceci est une description un peu plus longue que le titre...</description>
+		</item>
+	</channel>
+</rss>

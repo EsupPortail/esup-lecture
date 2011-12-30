@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE category SYSTEM "category.dtd">
+<category edit="all" name="Jeux !">
+	<description>Des jeux (RRS de jeux en Flash | Un Jeu en flash en direct
+		| Un jeu sous forme d'une applet java)</description>
+	<sourceProfiles>
+		<sourceProfile id="trois" access="public" name="RSS Jeux en Flash"
+			specificUserContent="no"
+			url="${config.url.prefix}/examples/xml/jeux-flash.xml">
+			<visibility>
+				<allowed></allowed>
+				<autoSubscribed></autoSubscribed>
+				<obliged>
+					<group name="local.0" />
+				</obliged>
+			</visibility>
+		</sourceProfile>
+		<sourceProfile id="cinq" access="public" name="Un jeu (applet java)"
+			specificUserContent="no"
+			url="${config.url.prefix}/examples/xml/jeu-java-seul.xml">
+			<visibility>
+				<allowed></allowed>
+				<autoSubscribed></autoSubscribed>
+				<obliged>
+					<group name="local.0" />
+				</obliged>
+			</visibility>
+		</sourceProfile>
+	</sourceProfiles>
+	<visibility>
+		<allowed></allowed>
+		<autoSubscribed></autoSubscribed>
+		<obliged>
+			<group name="local.0" />
+		</obliged>
+	</visibility>
+
+</category>		

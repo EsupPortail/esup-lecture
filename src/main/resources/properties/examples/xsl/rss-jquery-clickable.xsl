@@ -3,7 +3,7 @@
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="html" encoding="utf-8" />
 	<xsl:template match="/">
-		<div class="lecture-clikable lecture-highlightable">
+		<div class="lecture-clickable lecture-highlightable">
 			<h1>
 				<xsl:value-of select="/item/title" />
 			</h1>

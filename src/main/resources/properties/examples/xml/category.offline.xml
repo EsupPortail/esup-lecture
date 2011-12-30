@@ -4,8 +4,8 @@
 	<description>Exemples</description>
 	<sourceProfiles>
 		<sourceProfile id="un" access="public"
-			name="Divers liens" specificUserContent="yes"
-			url="${config.url.prefix}/flux.offline.xml">
+			name="Divers liens (rss-jquery-clickable)" specificUserContent="no"
+			url="${config.url.prefix}/examples/xml/flux.offline1.xml">
 			<visibility>
 				<allowed></allowed>
 				<autoSubscribed></autoSubscribed>
@@ -15,7 +15,31 @@
 				</obliged>
 			</visibility>
 		</sourceProfile>
- 		<sourceProfile id="deux" access="public"
+		<sourceProfile id="deux" access="public"
+			name="Divers liens (rss-jquery-inline)" specificUserContent="no"
+			url="${config.url.prefix}/examples/xml/flux.offline2.xml">
+			<visibility>
+				<allowed></allowed>
+				<autoSubscribed></autoSubscribed>
+				<obliged>
+					<group name="local.0" />  <!-- Tous les groupes de personnes -->
+					<group name="local.15" /> <!-- Anonymes -->
+				</obliged>
+			</visibility>
+		</sourceProfile>
+		<sourceProfile id="trois" access="public"
+			name="Divers liens (rss-thickbox)" specificUserContent="no"
+			url="${config.url.prefix}/examples/xml/flux.offline3.xml">
+			<visibility>
+				<allowed></allowed>
+				<autoSubscribed></autoSubscribed>
+				<obliged>
+					<group name="local.0" />  <!-- Tous les groupes de personnes -->
+					<group name="local.15" /> <!-- Anonymes -->
+				</obliged>
+			</visibility>
+		</sourceProfile>
+ 		<sourceProfile id="quatre" access="public"
 			name="Actus de Rennes 1" specificUserContent="no"
 			url="http://www.univ-rennes1.fr/bas-de-page/RSS/actualites/">
 			<visibility>

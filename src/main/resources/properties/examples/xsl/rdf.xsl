@@ -4,7 +4,7 @@
 	xmlns:b="http://purl.org/rss/1.0/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
 	<xsl:output method="html" encoding="utf-8" />
 	<xsl:template match="/">
-		<div class="lecture-clikable lecture-highlightable">
+		<div class="lecture-clickable lecture-highlightable">
 			<h1>
 				<xsl:value-of select="/b:item/b:title" />
 			</h1>

@@ -1,0 +1,6 @@
+<java>
+ <applet code="Mjong" name="MjongApp" archive="mjong.jar" alt="Mahjong solitaire" codebase="http://www.by-art.com/mjong/" height="380" width="640">
+  <param name="game" value=""/>
+  Enable Java to play the game.
+ </applet>
+</java>

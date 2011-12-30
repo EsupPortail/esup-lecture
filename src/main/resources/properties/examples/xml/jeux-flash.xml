@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<rss version="2.0">
+<channel>
+  <category>flash</category> 
+  <title>Jeux flash</title> 
+  <description>Toute l'actualité sur les jeux flash</description> 
+  <link>http://portail.univ-rennes1.fr/</link> 
+  <language>fr</language>  
+  <lastBuildDate>Fri, 1 Dec 2006 10:52:06 +0100</lastBuildDate> 
+ 
+<image>
+<width>170</width>
+<height>114</height>
+  <title>Lefigaro.fr</title> 
+  <url>http://perso.univ-rennes1.fr/charles.coupeau/gameover2.gif</url> 
+  <link>http://www.lefigaro.fr</link> 
+  <description>Toute l'actualité sur lefigaro.fr</description> 
+  </image>
+
+
+<item>
+      <title>Mahjong</title>
+      <link>http://www.todooflash.com/jeux-en-ligne-937.php</link>
+      <description></description>
+</item>
+<item>
+      <title>Foot</title>
+      <link>http://www.t45ol.com/play/2716/flick-n-kick-2.html</link>
+      <description></description>
+</item>
+
+<item>
+      <title>shadow-factory</title>
+      <link>http://www.t45ol.com/play/2715/shadow-factory.html</link>
+      <description></description>
+</item>
+
+</channel>
+</rss>
