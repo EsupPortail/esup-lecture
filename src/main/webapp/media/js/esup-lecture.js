@@ -12,6 +12,8 @@
 		
 //resize 
 		$(".treeButtonsArea").hide();
+		$(".leftArea").css("width", "25%");
+		$(".rightArea").css("width", "72%");
 		$(".rightArea")
 			.css("border-left-style", "solid")
 			.css("border-color", "#CCCCCC");
@@ -26,7 +28,6 @@
 		});
 		
 		$(window).resize(function() {
-			console.log("ici !");
 			$(".leftArea").css("width", "25%");
 			$(".rightArea").css("width", "72%");
 		});
