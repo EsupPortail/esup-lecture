@@ -9,3 +9,8 @@ Gestion des releases :
 mvn release:prepare -DautoVersionSubmodules
 mvn -P portletDevelopment release:perform -Dgoals=package
 
+JQuery UI :
+- jQuery UI
+- UI Dialog
+- UI Resizable
+

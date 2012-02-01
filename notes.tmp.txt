@@ -1,0 +1,8 @@
+tester avec un ttl court sur une source pour voir si on reproduit le bug de RECIA sur une source CAS
+
+Ce que j'imagine c'est que le PT est toujours le même après dépassement du TTL --> erreur CAS au deuxième appel --> dummy
+
+NB : Il est possible que l'implémentation servlet fonctionne et pas celle pour portlet...
+
+AUSSI vérifier que l'on ne requête pas CAS pour un PT même si on n'en a pas besoin...
+

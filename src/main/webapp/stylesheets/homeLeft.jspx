@@ -5,7 +5,7 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	<!-- TREE -->
-	<div class="portlet-section lecture-left" role="region">
+	<div id="left-menu" class="portlet-section lecture-left" role="region">
 		<div
 			class="#{homeController.guestMode ? 'lecture-logoGuest' : 'lecture-logo' } portlet-section-header"
 			role="heading" />
@@ -87,7 +87,7 @@
 
 	<h:panelGroup layout="block" styleClass="portlet-section lecture-left"
 		rendered="#{!homeController.guestMode}">
-		<div class="fl-force-left">
+		<div class="fl-force-left treeButtonsArea">
 			<h:commandButton id="treeSmallerButton"
 				actionListener="#{homeController.adjustTreeSize}"
 				image="/media/retract.gif" alt="#{msgs['treeSmaller']}"

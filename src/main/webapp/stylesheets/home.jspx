@@ -6,14 +6,13 @@
 	<ui:composition template="/stylesheets/template.jspx">
 		<ui:define name="content">
 			<h:form id="home">
-				<!-- Structure without js-layout -->
 				<h:panelGroup layout="block" styleClass="portlet-section fl-container-flex"
 					rendered="#{homeController.treeVisible and !homeController.guestMode}">
-					<div class="fl-col fl-force-left"
+					<div class="fl-col fl-force-left leftArea"
 						style="width: #{homeController.treeSize}%">
 						<ui:include src="homeLeft.jspx" />
 					</div>
-					<div class="fl-col fl-force-right"
+					<div class="fl-col fl-force-right rightArea"
 						style="width: #{98-homeController.treeSize}%">
 						<ui:include src="homeRight.jspx" />
 					</div>
@@ -24,25 +23,6 @@
 						<ui:include src="homeRight.jspx" />
 					</div>
 				</h:panelGroup>
-				<!-- End Structure without js-layout -->
-
-				<!-- Structure with js-layout -->
-				<!-- Comment the struct above and uncomment below to use it, 
-				and declare media/js/init-js-layout.js in the Head section of the portal (see skin.xml for uPortal 3.2) -->
-				<!-- 
-			<div id="panels-layout" >
-				<div id="panelLeft-ui" class="ui-layout-west" forceId="true"
-					style="width: #{homeController.treeSize}%"
-					rendered="#{homeController.treeVisible and !homeController.guestMode}">
-					<ui:include src="homeLeft.jspx" />
-				</div>
-				<div id="panelRight-ui" class="ui-layout-center"
-					style="width: #{homeController.treeSize}%">
-					<ui:include src="homeRight.jspx" />
-				</div>
-			</div>
-			-->
-
 			</h:form>
 		</ui:define>
 	</ui:composition>

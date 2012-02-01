@@ -4,19 +4,32 @@
 		/***************************************
 		 * esup-lecture functions
 		 * **************************************/
-//		myLayout = $('#home:panels-layout').layout({
-//			center__paneSelector: "#center",
-//			west__paneSelector: "#west",
-//			east__size: 300
-//		});
-
+//hide unused button when js activated
 		$(".itemDisplayModeSelector").change(function () {
 			$(".itemDisplayModeButton").click();
 		});
-
 		$(".itemDisplayModeButton").hide();
-
-		$('.lecture-readArticle .lecture-link, .lecture-unreadArticle .lecture-link').hide();
+		
+//resize 
+		$(".treeButtonsArea").hide();
+		$(".rightArea")
+			.css("border-left-style", "solid")
+			.css("border-color", "#CCCCCC");
+		$(".leftArea")
+			.resizable({
+			handles : 'e',
+			helper: 'ui-resizable-helper',
+            stop: function (event, ui) {
+                var offsetWidth = ui.size.width - ui.originalSize.width;
+                $(".rightArea").css("width", $(".rightArea").width() - offsetWidth);
+            }
+		});
+		
+		$(window).resize(function() {
+			console.log("ici !");
+			$(".leftArea").css("width", "25%");
+			$(".rightArea").css("width", "72%");
+		});
 
 		/***************************************
 		 * rss-jquery-clickable functions
