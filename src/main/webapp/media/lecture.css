@@ -3,7 +3,7 @@
 }
 
 .esup-lecture .lecture-logoGuest {
-	background-image: url(../media/lecture2.jpg);
+	background-image: url(../media/images/lectureV2.jpg);
 	background-position:center center;
 	background-repeat: no-repeat;
 	width: 100%;
@@ -12,7 +12,7 @@
 	margin: auto;
 }
 .esup-lecture .lecture-logo {
-	background-image: url(../media/lecture.jpg);
+	background-image: url(../media/images/lectureV2.jpg);
 	background-position:center center;
 	background-repeat: no-repeat;
 	width: 100%;
