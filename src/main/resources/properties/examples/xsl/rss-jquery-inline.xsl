@@ -52,7 +52,7 @@
 		
 		<div class="contenuArticle"/>
 		<div class="replierArticle" style="display:none">
-			<a href="#">Resume...</a>
+			<a href="#">Replier...</a>
 		</div>
 		<div class="resumeArticle">
 			<xsl:value-of select="/item/description" disable-output-escaping="yes"/>

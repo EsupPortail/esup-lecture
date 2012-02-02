@@ -8,7 +8,7 @@
 			<h1>
 				<xsl:value-of select="/b:item/b:title" />
 			</h1>
-			<div class="lecture-link">
+			<div class="lecture-link" style="display:none">
 				Lien :
 				<a href="{/b:item/b:link}">
 					<xsl:value-of select="/b:item/b:link" />

@@ -7,19 +7,19 @@
 			<h1>
 				<xsl:value-of select="/item/title" />
 			</h1>
-			<div class="lecture-link">
+			<div class="lecture-link"  style="display:none">
 				Lien :
 				<a target="_blank" href="{item/link}">
 					<xsl:value-of select="item/link" />
 				</a>
 				<br />
 			</div>
-			Date de publication :
-			<xsl:value-of select="item/pubDate" />
-			<br />
-			Auteur :
-			<xsl:value-of select="item/author" />
-			<br />
+<!-- 			Date de publication : -->
+<!-- 			<xsl:value-of select="item/pubDate" /> -->
+<!-- 			<br /> -->
+<!-- 			Auteur : -->
+<!-- 			<xsl:value-of select="item/author" /> -->
+<!-- 			<br /> -->
 			<xsl:value-of select="/item/description"
 				disable-output-escaping="yes" />
 		</div>
