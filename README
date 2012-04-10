@@ -8,6 +8,7 @@ mvn -P servletDevelopment clean package
 Gestion des releases :
 mvn release:prepare -DautoVersionSubmodules
 mvn -P portletDevelopment release:perform -Dgoals=package
+mvn -P portlet2Development release:perform -Dgoals=package
 
 JQuery UI :
 - jQuery UI
