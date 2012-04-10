@@ -683,5 +683,16 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		return ret;
 	}
 
+	/**
+	 * @return the userCanMarkRead
+	 */
+	public boolean isUserCanMarkRead() {
+		for (CategoryWebBean cat : getSelectedOrAllCategories()) {
+			if (cat.isUserCanMarkRead()) return true;
+		}
+		return false;
+	}
+
+
 
 }

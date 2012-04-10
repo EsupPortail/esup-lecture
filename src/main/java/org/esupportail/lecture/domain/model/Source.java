@@ -344,23 +344,23 @@ public abstract class Source implements Element, Serializable {
 				}
 			} catch (DocumentException e) {
 				String errorMsg = "Error parsing XML content of the source";
-				LOG.error(errorMsg);
+				LOG.error(errorMsg, e);
 				throw new ComputeItemsException(errorMsg, e);
 			} catch (NoSuchAlgorithmException e) {
 				String errorMsg = "MD5 algorithm not supported";
-				LOG.error(errorMsg);
+				LOG.error(errorMsg, e);
 				throw new ComputeItemsException(errorMsg, e);
 			} catch (XPathException e) {
 				String errorMsg = "Xpath with NameSpace not specified in mappings.xml";
-				LOG.error(errorMsg);
+				LOG.error(errorMsg, e);
 				throw new ComputeItemsException(errorMsg, e);
 			} catch (MappingNotFoundException e) {
 				String errorMsg = "Impossible to get itemXPath,XPathNameSpaces and xsltURL";
-				LOG.error(errorMsg);
+				LOG.error(errorMsg, e);
 				throw new ComputeItemsException(errorMsg, e);
 			} catch (Xml2HtmlException e) {
 				String errorMsg = "Impossible to make html content";
-				LOG.error(errorMsg);
+				LOG.error(errorMsg, e);
 				throw new ComputeItemsException(errorMsg, e);
 			}
 		itemComputed = true;

@@ -196,7 +196,7 @@ public class FreshManagedCategoryThread extends Thread {
 				profileId = profile.getId();
 			}
 			String msg = "getFreshManagedCategory(" + profileId + "). Can't read configuration file.";
-			LOG.error(msg);
+			LOG.error(msg, e);
 			throw new XMLParseException(msg , e);
 		}
 		return ret;

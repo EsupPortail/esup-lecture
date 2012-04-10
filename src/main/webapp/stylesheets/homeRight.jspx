@@ -10,7 +10,7 @@
 			<h:outputText value="#{homeController.context.name}" />
 		</h3>
 		<h:panelGroup layout="block" styleClass="lecture-menu fl-force-right"
-			rendered="#{!homeController.guestMode}">
+			rendered="#{!homeController.guestMode &amp;&amp; homeController.userCanMarkRead}">
 			<ul class="fl-tabs">
 				<li>
 					<h:outputText value="#{msgs['selectorLabel']}" />
