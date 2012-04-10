@@ -217,7 +217,7 @@
 									</includes>
 								</resource>
 							</webResources>
-							<warName>${project.artifactId}-portlet</warName>
+							<warName>${project.artifactId}-portlet-uP4</warName>
 						</configuration>
 					</plugin>
 					<plugin>
