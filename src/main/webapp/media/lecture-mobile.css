@@ -228,6 +228,8 @@
  	float: left;
 	margin: 0 0.5em 0 0;
 	padding: 0;
+	max-width: 100%;
+	height: auto; 
 }
 
 .esup-lecture .valign {
