@@ -32,7 +32,7 @@ public class SourceDummy extends Source implements DummyInterface {
 	/**
 	 * Cause of the Dummy Bean.
 	 */
-	private InfoDaoException cause;
+	private Exception cause;
 
 	/*
 	 *************************** INIT ************************************** */
@@ -41,7 +41,7 @@ public class SourceDummy extends Source implements DummyInterface {
 	 * @param sp sourceProfile associated to this source
 	 * @param e 
 	 */
-	public SourceDummy(final SourceProfile sp, final InfoDaoException e) {
+	public SourceDummy(final SourceProfile sp, final Exception e) {
 		super(sp);
 		cause = e;
 	   	if (LOG.isDebugEnabled()) {
@@ -77,7 +77,7 @@ public class SourceDummy extends Source implements DummyInterface {
 	/**
 	 * @see org.esupportail.lecture.domain.utils.DummyInterface#getCause()
 	 */
-	public LectureException getCause() {
+	public Exception getCause() {
 		return cause;
 	}
 

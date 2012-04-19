@@ -32,7 +32,7 @@ public class ManagedCategoryDummy extends ManagedCategory implements DummyInterf
 	/**
 	 * Cause of the Dummy Bean.
 	 */
-	private InfoDaoException cause;
+	private Exception cause;
 	
 
 	/*
@@ -42,7 +42,7 @@ public class ManagedCategoryDummy extends ManagedCategory implements DummyInterf
 	 * @param profile sourceProfile associated to this source
 	 * @param exception 
 	 */
-	public ManagedCategoryDummy(final ManagedCategoryProfile profile, final InfoDaoException exception) {
+	public ManagedCategoryDummy(final ManagedCategoryProfile profile, final Exception exception) {
 		super(profile);
 		cause = exception;
 	   	if (LOG.isDebugEnabled()) {
@@ -116,7 +116,7 @@ public class ManagedCategoryDummy extends ManagedCategory implements DummyInterf
 	/**
 	 * @see org.esupportail.lecture.domain.utils.DummyInterface#getCause()
 	 */
-	public LectureException getCause() {
+	public Exception getCause() {
 		return cause;
 	}
 

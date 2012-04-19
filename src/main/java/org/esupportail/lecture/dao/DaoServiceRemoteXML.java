@@ -70,12 +70,11 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * get a Category form cache.
 	 * Synchronized to avoid multiple source get in case of simultaneous first access
 	 * @param profile - Category profile of category to get
-	 * @param ptCas CAS proxy ticket 
+	 * @param withCAS : is a cas PT needed 
 	 * @return the Category
 	 * @throws InternalDaoException 
 	 */
-	public synchronized ManagedCategory getManagedCategory(final ManagedCategoryProfile profile, 
-			final String ptCas) throws InternalDaoException {
+	public synchronized ManagedCategory getManagedCategory(final ManagedCategoryProfile profile, boolean withCAS) throws InternalDaoException {
 
 		/* *************************************
 		 * Cache logic :
@@ -94,7 +93,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		 *   update lastdate
 		 *  fi
 		 * else
-		 *  get url
+		 *  get urlgetManagedCategory
 		 *  send in cache
 		 *  update lastdate
 		 * fi 
@@ -111,10 +110,15 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			Element element = cache.get(cacheKey);
 			if (element == null) { 
 				try {
+					String ptCas = null;
+					if (withCAS) {
+						String url = profile.getCategoryURL();
+						ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);						
+					}
 					ret = getFreshManagedCategory(profile, ptCas);
-				} catch (InfoDaoException e) {
+				} catch (Exception e) {
 					ret = new ManagedCategoryDummy(profile, e);
-					String msg = "Create dummy category : " + cacheKey;
+					String msg = "Create dummy category : " + cacheKey + "\ncause: " + e.getCause();
 					LOG.warn("=========");
 					LOG.warn(msg);
 					LOG.warn("=========");
@@ -152,7 +156,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(ManagedCategoryProfile)
 	 */
 	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InternalDaoException {
-		return getManagedCategory(profile, null);
+		return getManagedCategory(profile, false);
 	}
 	
 	/**
@@ -213,11 +217,11 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * get a source form cache.
 	 * Synchronized to avoid multiple source get in case of simultaneous first access
 	 * @param sourceProfile source profile of source to get
-	 * @param ptCas CAS proxy ticket 
+	 * @param withCAS 
 	 * @return the source
 	 * @throws InternalDaoException 
 	 */
-	public synchronized Source getSource(final ManagedSourceProfile sourceProfile, final String ptCas) 
+	public synchronized Source getSource(final ManagedSourceProfile sourceProfile, Boolean withCAS) 
 	throws InternalDaoException {
 		// TODO (RB <-- GB) Pourquoi ne déclare-tu pas un type Source alors que tu fais un new GlobalSource ?
 		// Je comprends que tu n'as pas le droit de faire un new Source car abstract, 
@@ -232,10 +236,15 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			Element element = cache.get(urlSource);
 			if ((element == null)) { 
 				try {
+					String ptCas = null;
+					if (withCAS) {
+						String url = sourceProfile.getSourceURL(); 
+						ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);					
+					}
 					ret = getFreshSource(sourceProfile, ptCas);
-				} catch (InfoDaoException e) {
+				} catch (Exception e) {
 					ret = new SourceDummy(sourceProfile, e);
-					String msg = "Create dummy source : " + urlSource;
+					String msg = "Create dummy source : " + urlSource + "\ncause: " + e.getCause();
 					LOG.warn("=========");
 					LOG.warn(msg);
 					LOG.warn("=========");
@@ -279,7 +288,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @throws InternalDaoException 
 	 */
 	public Source getSource(final ManagedSourceProfile sourceProfile) throws InternalDaoException {
-		return getSource(sourceProfile, null);
+		return getSource(sourceProfile, false);
 	}
 
 	/**

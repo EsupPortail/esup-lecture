@@ -435,17 +435,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 				ManagedCategory cat = DomainTools.getDaoService().getManagedCategory(this);
 				setElement(cat);
 			} else if (Accessibility.CAS.equals(accessibility)) {
-				String url = getCategoryURL();
-				String ptCas;
-				ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);
-				setElement(DomainTools.getDaoService().getManagedCategory(this, ptCas));
+				setElement(DomainTools.getDaoService().getManagedCategory(this, true));
 			}
-		} catch (InternalDaoException e) {
-			String errorMsg = "The managedCategory " + this.getId()
-				+ " is impossible to be loaded because od DaoException.";
-			LOG.error(errorMsg);
-			throw new ManagedCategoryNotLoadedException(errorMsg, e);
-		} catch (InfoExternalException e) {
+		} catch (Exception e) {
 			String errorMsg = "The managedCategory " + this.getId()
 			+ " is impossible to be loaded.";
 			LOG.error(errorMsg);

@@ -16,7 +16,7 @@ public interface DummyInterface {
 	/**
 	 * @return the Exception causing DummyBean creation 
 	 */
-	LectureException getCause();
+	Exception getCause();
 	
 	/**
 	 * @return message of the Exception cause

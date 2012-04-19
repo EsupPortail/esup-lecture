@@ -62,9 +62,10 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	 */
 	public ManagedCategory getManagedCategory(
 			final ManagedCategoryProfile profile,
-			final String ptCas) throws InternalDaoException {
-		return remoteXMLService.getManagedCategory(profile, ptCas);
+			final boolean withCAS) throws InternalDaoException {
+		return remoteXMLService.getManagedCategory(profile, withCAS);
 	}
+	@Override
 
 	/**
 	 * @throws InternalDaoException 
@@ -81,8 +82,8 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	 *  org.esupportail.lecture.domain.model.ManagedSourceProfile, java.lang.String)
 	 */
 	public Source getSource(final ManagedSourceProfile profile,
-			final String ptCas) throws InternalDaoException  {
-		return remoteXMLService.getSource(profile, ptCas);
+			final boolean withCAS) throws InternalDaoException  {
+		return remoteXMLService.getSource(profile, withCAS);
 	}
 
 	/**
@@ -245,5 +246,7 @@ public class DaoServiceImpl implements DaoService, InitializingBean {
 	public UserProfile mergeUserProfile(final UserProfile userProfile) {
 		return hibernateService.mergeUserProfile(userProfile);
 	}
+
+
 
 }

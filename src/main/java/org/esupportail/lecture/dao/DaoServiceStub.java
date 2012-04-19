@@ -73,7 +73,7 @@ public class DaoServiceStub  implements DaoService {
 	 */
 	public ManagedCategory getManagedCategory(@SuppressWarnings("unused")
 	final ManagedCategoryProfile profile, @SuppressWarnings("unused")
-	final String ptCas) {
+	final boolean withCAS) {
 		return null;
 	}
 	
@@ -90,7 +90,7 @@ public class DaoServiceStub  implements DaoService {
 	 *  org.esupportail.lecture.domain.model.ManagedSourceProfile, java.lang.String)
 	 */
 	public Source getSource(@SuppressWarnings("unused") final ManagedSourceProfile profile,
-			@SuppressWarnings("unused")	final String ptCas) {
+			@SuppressWarnings("unused")	final boolean withCAS) {
 		return null;
 	}
 	
