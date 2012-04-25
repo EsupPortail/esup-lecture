@@ -239,7 +239,10 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					String ptCas = null;
 					if (withCAS) {
 						String url = sourceProfile.getSourceURL(); 
-						ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);					
+						ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);
+						if (ptCas == null) {
+							LOG.warn("No Proxy Ticket retruned! Have you a ProxyGrantingTicket?");							
+						}
 					}
 					ret = getFreshSource(sourceProfile, ptCas);
 				} catch (Exception e) {
