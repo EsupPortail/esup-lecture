@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE category SYSTEM "category.dtd">
+<!-- Category for proxy cas tests -->
+<category edit="all" name="Jeux !">
+	<description>CAS tests (Un Jeu en flash en direct)</description>
+	<sourceProfiles>
+		<sourceProfile id="un" access="cas" name="RSS Jeux en Flash"
+			specificUserContent="no"
+			url="http://uportal.univ-rennes1.fr/testCAS/jeux-flash.xml">
+			<visibility>
+				<allowed></allowed>
+				<autoSubscribed></autoSubscribed>
+				<obliged>
+					<group name="local.0" />
+				</obliged>
+			</visibility>
+		</sourceProfile>
+	</sourceProfiles>
+	<visibility>
+		<allowed></allowed>
+		<autoSubscribed></autoSubscribed>
+		<obliged>
+			<group name="local.0" />
+		</obliged>
+	</visibility>
+
+</category>		

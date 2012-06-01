@@ -11,6 +11,13 @@
 		by /properties/applicationContext.xml. -->
 
 <!-- 
+	<bean id="authenticationService" 
+		class="org.esupportail.commons.services.authentication.OfflineFixedUserAuthenticationService"> 
+			<property name="authId" value="bourges" />
+			<property name="authType" value="web" />
+	</bean>
+ -->
+
 	<bean id="authenticationService"
 		class="org.esupportail.commons.services.authentication.PortalOrCasFilterAuthenticationService">
 		<description>
@@ -18,13 +25,6 @@
 			users, as set in portlet.xml.
 		</description>
 		<property name="uidPortalAttribute" value="uid" />
-	</bean>
- -->
-
-	<bean id="authenticationService" 
-		class="org.esupportail.commons.services.authentication.OfflineFixedUserAuthenticationService"> 
-			<property name="authId" value="bourges" />
-			<property name="authType" value="web" />
 	</bean>
 
 	<bean id="AuthenticationFilter"

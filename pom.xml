@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.esupportail</groupId>
 	<artifactId>esup-lecture</artifactId>
@@ -27,7 +28,17 @@
 				<enabled>true</enabled>
 			</releases>
 		</repository>
+		<repository>
+			<id>jlehtinen.net</id>
+			<url>http://repo.jlehtinen.net/maven2/</url>
+		</repository>
 	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>jlehtinen.net</id>
+			<url>http://repo.jlehtinen.net/maven2/</url>
+		</pluginRepository>
+	</pluginRepositories>
 	<distributionManagement>
 		<repository>
 			<id>esup</id>
@@ -181,19 +192,28 @@
 					<exists>portlet</exists>
 				</file>
 			</activation>
-			<pluginRepositories>
-				<!-- jlehtinen.net repository -->
-				<pluginRepository>
-					<id>jlehtinen.net</id>
-					<url>http://repo.jlehtinen.net/maven2/</url>
-				</pluginRepository>
-			</pluginRepositories>
 			<build>
 				<defaultGoal>package</defaultGoal>
-				<!-- <pluginManagement> <plugins> <plugin> <groupId>net.jlehtinen.portlet</groupId> 
-					<artifactId>portlet-prototyping-maven-plugin</artifactId> <version>0.6</version> 
-					</plugin> </plugins> </pluginManagement> -->
 				<plugins>
+					<plugin>
+						<groupId>net.jlehtinen.portlet</groupId>
+						<artifactId>portlet-prototyping-maven-plugin</artifactId>
+						<version>0.6</version>
+						<configuration>
+							<!-- Comma-separated list of portlets to be prototyped -->
+							<portletNames>esup-lecture</portletNames>
+							<!-- To use custom CSS in the portal -->
+							<cssUrls>
+								<url>/pluto/pluto.css</url>
+								<url>/pluto/portlet-spec-1.0.css</url>
+								<url>/pluto/portlet-spec-2.0.css</url>
+							</cssUrls>
+							<!-- To use custom Javascript in the portal -->
+							<!-- <jsUrls> <url>http://my.server/custom.js</url> <url>http://my.server/another.js</url> 
+								</jsUrls> -->
+							<portletXml>${basedir}/src/main/config/portlet/WEB-INF/portlet.xml</portletXml>
+						</configuration>
+					</plugin>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
 						<version>2.1</version>
@@ -218,14 +238,6 @@
 								</resource>
 							</webResources>
 							<warName>${project.artifactId}-portlet-uP4</warName>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>net.jlehtinen.portlet</groupId>
-						<artifactId>portlet-prototyping-maven-plugin</artifactId>
-						<version>0.6</version>
-						<configuration>
-							<portletXml>${basedir}/src/main/config/portlet2/WEB-INF/portlet.xml</portletXml>
 						</configuration>
 					</plugin>
 				</plugins>

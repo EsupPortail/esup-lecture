@@ -14,7 +14,7 @@
 
 	<application>
 		<view-handler>com.sun.facelets.FaceletViewHandler</view-handler>
-		<el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+		<el-resolver>org.esupportail.commons.jsf.ResourceBundleFacesELResolver</el-resolver>
 		<locale-config>
 			<default-locale>en</default-locale>
 			<supported-locale>fr</supported-locale>
@@ -26,8 +26,6 @@
 	<!-- En cours: utilisation d'une vue mobile en fonction du terminal
 	-->
 		<phase-listener>org.esupportail.lecture.web.jsf.JasigLikeMobilePhaseListener</phase-listener>
-		<phase-listener>org.esupportail.commons.jsf.MessagesPhaseListener</phase-listener>
-		<phase-listener>org.esupportail.commons.jsf.ResourceBundlePhaseListener</phase-listener>
    </lifecycle>
 	
 </faces-config>
