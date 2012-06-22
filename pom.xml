@@ -52,7 +52,7 @@
 		</snapshotRepository>
 	</distributionManagement>
 	<scm>
-		<developerConnection>scm:svn:https://subversion.cru.fr/esup-lecture/trunk</developerConnection>
+		<developerConnection>scm:git:ssh://git@github.com/EsupPortail/esup-lecture.git</developerConnection>
 		<url>https://subversion.cru.fr/esup-lecture</url>
 	</scm>
 	<build>
