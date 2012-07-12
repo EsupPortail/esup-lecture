@@ -5,6 +5,9 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
@@ -13,7 +16,7 @@ import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
 /**
- * Regular definition of a group : 
+ * Regular definition of a group :
  * Every user that "attribute x" has "value Y".
  * @author gbouteil
  *
@@ -21,34 +24,34 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 public class RegularOfSet {
 
 	/*
-	 *************************** PROPERTIES ******************************** */	
+	 *************************** PROPERTIES ******************************** */
 	/**
 	 * Log instance.
 	 */
 	protected static final Log LOG = LogFactory.getLog(RegularOfSet.class);
-	
+
 	/**
 	 * attribute required value.
 	 */
 	private String attribute = "";
-	
+
 	/**
 	 * Value required by the attribute to be in the group that is defined.
 	 */
 	private String value = "";
 
 	/*
-	 ************************** INIT *********************************/	
+	 ************************** INIT *********************************/
 	/**
-	 * Constructor. 
+	 * Constructor.
 	 */
 	public RegularOfSet() {
 		// Nothing to do
 	}
 
 	/*
-	 *************************** METHODS ******************************** */	
-	
+	 *************************** METHODS ******************************** */
+
 	/**
 	 * Return true if user checks this regular, else returns false
 	 * (returns false when no answer or error from externalService).
@@ -58,11 +61,11 @@ public class RegularOfSet {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("evaluate()");
 		}
-		
-		String userAttributeValue;
+
+		List<String> userAttributeValues;
 		try {
 			ExternalService ex = DomainTools.getExternalService();
-			userAttributeValue = ex.getUserAttribute(attribute);
+			userAttributeValues = ex.getUserAttribute(attribute);
 		} catch (NoExternalValueException e) {
 			LOG.warn("User attribute evaluation impossible (NoExternalValueException) : " + e.getMessage());
 			return false;
@@ -73,14 +76,21 @@ public class RegularOfSet {
 			return false;
 		}
 		// TODO (GB later) voir le cas ou il y est mais que le portail ne connait pas
-		
-		if (userAttributeValue.equals(value)) {
+
+		boolean found = false;
+		Iterator<String> itAttrs = userAttributeValues.iterator();
+		if (value != null && value.length() > 0) {
+			while (!found && itAttrs.hasNext()){
+				found = itAttrs.next().equals(value);
+			}
+		}
+		if (found) {
 			return true;
 		}
 		return false;
 	}
-	
-	
+
+
 	/**
 	 * Check existence of attributes names used in regular definition
 	 * Not used for the moment : see later
@@ -95,22 +105,22 @@ public class RegularOfSet {
 		// TODO (GB later) vérification de l'existence de l'attribut dans le portail :impossible
 	   	// on ne peut verifier que sa declaration dans le portlet.xml ? + log.warn si pb
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		
+
 		String string = "";
 		string += "attribute : " + attribute;
 		string += ", value : " + value;
-		
+
 		return string;
 	}
 
 	/*
-	 *************************** ACCESSORS ******************************** */	
+	 *************************** ACCESSORS ******************************** */
 
 	/**
 	 * Returns attribute name.
@@ -147,5 +157,5 @@ public class RegularOfSet {
 	}
 
 
-	
+
 }

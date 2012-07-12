@@ -5,6 +5,8 @@
  */
 package org.esupportail.lecture.domain;
 
+import java.util.List;
+
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.portlet.PortletRequest;
@@ -33,8 +35,8 @@ import org.springframework.beans.factory.InitializingBean;
  */
 public class ExternalServiceImpl implements ExternalService, InitializingBean {
 
-	/* 
-	 *************************** PROPERTIES ******************************** */	
+	/*
+	 *************************** PROPERTIES ******************************** */
 
 	/**
 	 * the logger for this class.
@@ -62,7 +64,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	private AuthenticationService authenticationService;
 
 	/*
-	 *************************** INIT ************************************** */	
+	 *************************** INIT ************************************** */
 	/**
 	 * Default constructor.
 	 */
@@ -75,19 +77,19 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
 	public void afterPropertiesSet() throws Exception {
-		Assert.notNull(authenticationService, "property authenticationService of class " 
+		Assert.notNull(authenticationService, "property authenticationService of class "
 				+ this.getClass().getName() + " can not be null");
-		Assert.notNull(servletService, "property servletService of class " 
+		Assert.notNull(servletService, "property servletService of class "
 				+ this.getClass().getName() + " can not be null");
-		Assert.notNull(portletService, "property portletService of class " 
+		Assert.notNull(portletService, "property portletService of class "
 				+ this.getClass().getName() + " can not be null");
 		if (defaultService == null) {
 			defaultService = servletService;
 		}
-	}	
+	}
 
 	/*
-	 *************************** METHODS *********************************** */	
+	 *************************** METHODS *********************************** */
 
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
@@ -97,8 +99,8 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	}
 	/**
 	 * Return ID of the current context (from channel instantiation : portlet preference with name "context")).
-	 * @throws InternalExternalException 
-	 * @throws NoExternalValueException 
+	 * @throws InternalExternalException
+	 * @throws NoExternalValueException
 	 * @see org.esupportail.lecture.domain.ExternalService#getCurrentContextId()
 	 */
 	public String getCurrentContextId() throws NoExternalValueException, InternalExternalException {
@@ -106,8 +108,8 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	}
 
 	/**
-	 * @throws InternalExternalException 
-	 * @throws NoExternalValueException 
+	 * @throws InternalExternalException
+	 * @throws NoExternalValueException
 	 * @see org.esupportail.lecture.domain.ExternalService#getPreferences(java.lang.String)
 	 */
 	public String getPreferences(final String name) throws NoExternalValueException, InternalExternalException {
@@ -121,13 +123,13 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	}
 
 	/**
-	 * @throws InternalExternalException 
-	 * @throws NoExternalValueException 
+	 * @throws InternalExternalException
+	 * @throws NoExternalValueException
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserAttribute(java.lang.String)
 	 */
-	public String getUserAttribute(final String attribute) 
+	public List<String> getUserAttribute(final String attribute)
 			throws NoExternalValueException, InternalExternalException {
-		String ret = getModeService().getUserAttribute(attribute);
+		List<String> ret = getModeService().getUserAttribute(attribute);
 
 		if (LOG.isTraceEnabled()) {
 			LOG.trace("getUserAttribute(" + attribute + ") return " + ret);
@@ -137,7 +139,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 
 	/**
 	 * @throws InfoExternalException
-	 * @throws  
+	 * @throws
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserProxyTicketCAS(String)
 	 */
 	public String getUserProxyTicketCAS(final String casTargetService) throws InfoExternalException {
@@ -151,7 +153,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	}
 
 	/**
-	 * @throws InternalExternalException 
+	 * @throws InternalExternalException
 	 * @see org.esupportail.lecture.domain.ExternalService#isUserInGroup(java.lang.String)
 	 */
 	public boolean isUserInGroup(final String group) throws InternalExternalException {
@@ -165,7 +167,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 
 	/**
 	 * Get the current mode service.
-	 * It can be : 
+	 * It can be :
 	 * 	- portletService
 	 *  - servletService
 	 *  - defaultService
@@ -174,17 +176,17 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 */
 	private ModeService getModeService() {
 		ModeService ret = null;
-		if (BridgeUtil.isPortletRequest()) { 
+		if (BridgeUtil.isPortletRequest()) {
 			ret = portletService;
 		} else {
 			// TODO (RB/GB) make better
 			ret = servletService;
-		}			
+		}
 		return ret;
 	}
 
 	/*
-	 *************************** ACCESSORS ********************************* */	
+	 *************************** ACCESSORS ********************************* */
 
 	/**
 	 * @param authenticationService the authenticationService to set
