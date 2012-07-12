@@ -24,9 +24,9 @@ import org.esupportail.lecture.exceptions.domain.InternalExternalException;
  *
  */
 public class DefinitionSets {
-	
+
 	/*
-	 ************************** PROPERTIES ******************************** */	
+	 ************************** PROPERTIES ******************************** */
 	/**
 	 * Log instance.
 	 */
@@ -35,13 +35,18 @@ public class DefinitionSets {
 	 * groups : set definition by existent group listing.
 	 */
 	private List<String> groups = new ArrayList<String>();
-	
+
 	/**
 	 * regulars : set definition by regulars.
 	 */
 	private List<RegularOfSet> regulars = new ArrayList<RegularOfSet>();
-	
-	/* 
+
+	/**
+	 * regexs : set definition by regexs.
+	 */
+	private List<RegexOfSet> regexs = new ArrayList<RegexOfSet>();
+
+	/*
 	 ************************** INIT **********************************/
 
 	/**
@@ -50,10 +55,10 @@ public class DefinitionSets {
 	public DefinitionSets() {
 		// Nothing to do
 	}
-	
+
 	/*
-	 *************************** METHODS ******************************** */	
-	
+	 *************************** METHODS ******************************** */
+
 	/**
 	 * Check existence of group names, attributes names used in group enumeration.
 	 * and regulars definition
@@ -73,14 +78,19 @@ public class DefinitionSets {
 //			group = iteratorString.next();
 //			 TODO (GB later) verification de l'existence du groupe dans le portail
 			// si PB : log.warn();
-			// PAs sure que c'est par le qu'on le fasse 
+			// PAs sure que c'est par le qu'on le fasse
 //		}
-		
+
 		for (RegularOfSet reg : regulars) {
 			reg.checkNamesExistence();
 		}
+
+		// sur le même principe que les regular
+		for (RegexOfSet reg : regexs) {
+			reg.checkNamesExistence();
+		}
 	}
-	
+
 	/**
 	 * Evaluate current user visibility for this DefinitionSets.
 	 * @return true if the user to the set defined by this DefinitionSets
@@ -89,7 +99,7 @@ public class DefinitionSets {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("evaluateVisibility()");
     	}
-			
+
 		/* group evaluation */
 		Iterator<String> iteratorGroups = groups.iterator();
 		while (iteratorGroups.hasNext()) {
@@ -106,25 +116,37 @@ public class DefinitionSets {
 				LOG.error("Group user evaluation impossible (external service unavailable) : "
 						+ e.getMessage());
 			}
-			
+
 		}
-		
+
 		/* regulars evaluation */
 		Iterator<RegularOfSet> iteratorReg = regulars.iterator();
 		while (iteratorReg.hasNext()) {
 			RegularOfSet reg = iteratorReg.next();
 			if (LOG.isTraceEnabled()) {
-				LOG.trace("DefinionSets, evaluation regular : attr(" 
+				LOG.trace("DefinionSets, evaluation regular : attr("
 					+ reg.getAttribute() + ") val(" + reg.getValue() + ")");
 			}
 			if (reg.evaluate()) {
 				return true;
 			}
 		}
-		
+
+		/* regexs evaluation */
+		Iterator<RegexOfSet> iteratorRegex = regexs.iterator();
+		while (iteratorRegex.hasNext()) {
+			RegexOfSet reg = iteratorRegex.next();
+			if (LOG.isTraceEnabled()) {
+				LOG.trace("DefinionSets, evaluation regex : attr("+ reg.toString() + ")");
+			}
+			if (reg.evaluate()) {
+				return true;
+			}
+		}
+
 		return false;
 	}
-	
+
 	/**
 	 * Add a group in groups enumeration of this DefintionSets.
 	 * @param group group to add
@@ -136,7 +158,7 @@ public class DefinitionSets {
     	}
 		this.groups.add(group);
 	}
-	
+
 	/**
 	 * Add a regulars in list of regulars of this DefintionSets.
 	 * @param regular
@@ -144,11 +166,23 @@ public class DefinitionSets {
 	 */
 	public synchronized void addRegular(final RegularOfSet regular) {
 	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("addGroup(regular)");
+	   		LOG.debug("addRegular(" + regular.toString() + ")");
     	}
 		this.regulars.add(regular);
 	}
-	
+
+	/**
+	 * Add a regexs in list of regexs of this DefintionSets.
+	 * @param regex
+	 * @see DefinitionSets#regexs
+	 */
+	public synchronized void addRegex(final RegexOfSet regex) {
+	   	if (LOG.isDebugEnabled()) {
+    		LOG.debug("addRegex(" + regex.toString() + ")");
+    	}
+		this.regexs.add(regex);
+	}
+
 	/**
 	 * Add a definitionSets to the current definitionSets.
 	 * @param definitionSets - the definitionSets to add
@@ -156,32 +190,34 @@ public class DefinitionSets {
 	public void addDefinitionSets(final DefinitionSets definitionSets) {
 		this.groups.addAll(definitionSets.groups);
 		this.regulars.addAll(definitionSets.regulars);
+		this.regexs.addAll(definitionSets.regexs);
 	}
-	
+
 	/**
 	 * @return if DefinitionSets is Empty or not
 	 */
 	public boolean isEmpty() {
 		boolean ret = false;
-		if (groups.isEmpty() && regulars.isEmpty()) {
+		if (groups.isEmpty() && regulars.isEmpty() && regexs.isEmpty()) {
 			ret = true;
 		}
 		return ret;
 	}
-	
+
 	/**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		
+
 		String string = "";
 		string += "		groups : " + groups.toString() + "\n";
 		string += "		regulars : " + regulars.toString() + "\n";
-		
+		string += "		regexs : " + regexs.toString() + "\n";
+
 		return string;
 	}
-	
-	/* ************************** ACCESSORS ******************************** */	
+
+	/* ************************** ACCESSORS ******************************** */
 
 }

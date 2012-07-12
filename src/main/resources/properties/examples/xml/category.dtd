@@ -1,12 +1,12 @@
 <!ELEMENT category (description,sourceProfiles, visibility?)>
-<!ATTLIST category 
+<!ATTLIST category
     name CDATA #REQUIRED
     edit (all|personal|managed|no) "no">
-<!ELEMENT description (#PCDATA)>     
+<!ELEMENT description (#PCDATA)>
 <!ELEMENT sourceProfiles (sourceProfile+)>
 
 <!ELEMENT sourceProfile (visibility?)>
-<!ATTLIST sourceProfile 
+<!ATTLIST sourceProfile
 	id ID #REQUIRED
     name CDATA #REQUIRED
     url CDATA #REQUIRED
@@ -19,14 +19,19 @@
 
 <!ELEMENT visibility (allowed,autoSubscribed,obliged)>
 
-<!ELEMENT allowed (regular*, group*)>
-<!ELEMENT autoSubscribed (regular*, group*)>
-<!ELEMENT obliged (regular*, group*)>
+<!ELEMENT allowed (regular*, regex*, group*)>
+<!ELEMENT autoSubscribed (regular*, regex*, group*)>
+<!ELEMENT obliged (regular*, regex*, group*)>
 
 <!ELEMENT regular EMPTY>
-<!ATTLIST regular 
+<!ATTLIST regular
     attribute CDATA #REQUIRED
     value CDATA #REQUIRED>
+
+<!ELEMENT regex EMPTY>
+<!ATTLIST regex
+    attribute CDATA #REQUIRED
+    pattern CDATA #REQUIRED>
 
 <!ELEMENT group EMPTY>
 <!ATTLIST group name CDATA #REQUIRED>

@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Node;
 import org.esupportail.lecture.domain.model.DefinitionSets;
+import org.esupportail.lecture.domain.model.RegexOfSet;
 import org.esupportail.lecture.domain.model.RegularOfSet;
 
 /**
@@ -17,10 +18,10 @@ public class XMLUtil {
 	 * Log instance.
 	 */
 	private static final Log LOG = LogFactory.getLog(XMLUtil.class);
-	
+
 	/**
 	 * return DefinitionSets from a dom4j node.
-	 * @param node 
+	 * @param node
 	 * @return DefinitionSets the this part of XML
 	 */
 	@SuppressWarnings("unchecked")
@@ -43,7 +44,7 @@ public class XMLUtil {
 				}
 				defAndContentSets.addGroup(name);
 			}
-			// Definition by regular 
+			// Definition by regular
 			List<Node> regulars = node.selectNodes("regular");
 			for (Node regular : regulars) {
 				String attribute = regular.valueOf("@attribute");
@@ -56,8 +57,24 @@ public class XMLUtil {
 				}
 				RegularOfSet regularOfSet = new RegularOfSet();
 				regularOfSet.setAttribute(attribute);
-				regularOfSet.setValue(value);	
+				regularOfSet.setValue(value);
 				defAndContentSets.addRegular(regularOfSet);
+			}
+			// Definition by regex
+			List<Node> regexs = node.selectNodes("regex");
+			for (Node regex : regexs) {
+				String attribute = regex.valueOf("@attribute");
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("attribute = " + attribute);
+				}
+				String pattern = regex.valueOf("@pattern");
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("pattern = " + pattern);
+				}
+				RegexOfSet regexOfSet = new RegexOfSet();
+				regexOfSet.setAttribute(attribute);
+				regexOfSet.setPattern(pattern);
+				defAndContentSets.addRegex(regexOfSet);
 			}
 		}
 		return defAndContentSets;

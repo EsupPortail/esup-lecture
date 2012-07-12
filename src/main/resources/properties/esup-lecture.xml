@@ -2,54 +2,54 @@
 <!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" >
 <channelConfig>
 	<guestUser>guest</guestUser>
-	<context 
+	<context
 	  name = "Démonstration Esup-Lecture"
 	  id = "default">
 	  <description><![CDATA[
 <h1>Contexte de d&eacute;monstration</h1>
 D&eacute;monstration du canal Lecture.<br>
 <br>
-Pour plus d'informations voir le 
+Pour plus d'informations voir le
 <a target="_blank" href="http://sourcesup.cru.fr/projects/esup-lecture">site du projet</a>
-	  ]]></description> 
+	  ]]></description>
   	  <refCategoryProfile refId="demo1"/>
   	  <refCategoryProfile refId="demo2"/>
 	<!-- demo 3 = CAS test -->
 	<!--
   	  <refCategoryProfile refId="demo3"/>
-	 -->  
+	 -->
 	</context>
 
-	<context 
+	<context
 	  name = "Très beau context1"
 	  id = "c1">
-	  <description>C'est le context 1</description> 
+	  <description>C'est le context 1</description>
 	  <refCategoryProfile refId="cp1"/>
   	  <refCategoryProfile refId="cp2"/>
   	  <refCategoryProfile refId="cp3"/>
   	  <refCategoryProfile refId="cp4"/>
   	  <refCategoryProfile refId="cp5"/>
 	</context>
-	
-	<context 
+
+	<context
 	  name = "context2"
 	  id = "c2">
-	  <description>C'est le context 2</description> 
+	  <description>C'est le context 2</description>
 	  <refCategoryProfile refId="cp1"/>
   	  <refCategoryProfile refId="cp2"/>
  	</context>
 
-	<context 
+	<context
 	  name = "context3"
 	  id = "c3">
-	  <description>C'est le context 3</description> 
+	  <description>C'est le context 3</description>
   	  <refCategoryProfile refId="cp2"/>
   	  <refCategoryProfile refId="cp3"/>
-  	  <refCategoryProfile refId="cp4"/>  
+  	  <refCategoryProfile refId="cp4"/>
 	</context>
 
-	<categoryProfile 
-		name="categorie1 : no trust cat"		
+	<categoryProfile
+		name="categorie1 : no trust cat"
 		id="cp1"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
@@ -62,13 +62,18 @@ Pour plus d'informations voir le
 			<obliged>
 				<regular
 					attribute="sn"
-					value="User"/>					
+					value="User"/>
+					<!--
+				<regex
+					attribute="isMemberOf"
+					pattern="esco:Etablissements:[ a-zA-Z0-9]*:SECONDE[ a-zA-Z0-9]*:Eleves_.*"/>
+					 -->
 			</obliged>
 		</visibility>
 	</categoryProfile>
-	
- 	<categoryProfile 
-		name="categorie2 : no trust cat"	
+
+ 	<categoryProfile
+		name="categorie2 : no trust cat"
 		id="cp2"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
@@ -78,14 +83,14 @@ Pour plus d'informations voir le
 	 	<visibility>
 	 		<allowed/>
 			<autoSubscribed/>
-			<obliged>	
+			<obliged>
 				<group
 					name="local.0"/>
-			</obliged>	
+			</obliged>
 		</visibility>
 	</categoryProfile>
-	
-	<categoryProfile 
+
+	<categoryProfile
 		name="categorie3 : no trust cat"
 		id="cp3"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
@@ -94,122 +99,122 @@ Pour plus d'informations voir le
 		ttl = "3600"
 		timeout = "3000"  >
 		<visibility>
-			<allowed/> 
+			<allowed/>
 			<autoSubscribed/>
 			<obliged>
 				<regular
 					attribute="sn"
-					value="Useppr"/>					
+					value="Useppr"/>
 			</obliged>
 		</visibility>
 	</categoryProfile>
-	
-	<categoryProfile 
+
+	<categoryProfile
 		name="categorie4  : no trust cat"
 		id="cp4"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
-		timeout = "3000"  > 
+		timeout = "3000"  >
 		<visibility>
 			<allowed/>
 			<autoSubscribed/>
-			<obliged>	
+			<obliged>
 				<group
 					name="local.0"/>
-			</obliged>	
+			</obliged>
 		</visibility>
 	</categoryProfile>
 
-	<categoryProfile 
+	<categoryProfile
 		name="categorie5  : trust cat"
 		id="cp5"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/categoryTest.xml"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
-		timeout = "3000"  > 
+		timeout = "3000"  >
 		<visibility>
 			<allowed/>
 			<autoSubscribed/>
-			<obliged>	
+			<obliged>
 				<group
 					name="local.0"/>
-			</obliged>	
+			</obliged>
 		</visibility>
 	</categoryProfile>
 
-	<categoryProfile 
+	<categoryProfile
 		name="Categorie de démo 1"
 		id="demo1"
 		urlCategory="${config.url.prefix}/examples/xml/category.offline.xml"
 		trustCategory="yes"
 		access="public"
-		ttl = "3600" 
-		timeout = "3000" > 
+		ttl = "3600"
+		timeout = "3000" >
 		<visibility>
 			<allowed/>
 			<autoSubscribed/>
-			<obliged>	
+			<obliged>
 				<group
 					name="local.0"/>
-			</obliged>	
+			</obliged>
 		</visibility>
 	</categoryProfile>
-		
-	<categoryProfile 
+
+	<categoryProfile
 		name="Categorie de démo 2"
 		id="demo2"
 		urlCategory="${config.url.prefix}/examples/xml/demo2.xml"
 		trustCategory="no"
 		access="public"
-		ttl = "3600" 
-		timeout = "3000" > 
+		ttl = "3600"
+		timeout = "3000" >
 		<visibility>
 			<allowed/>
 			<autoSubscribed/>
-			<obliged>	
+			<obliged>
 				<group
 					name="local.0"/>
-			</obliged>	
+			</obliged>
 		</visibility>
 	</categoryProfile>
-		
-	<categoryProfile 
+
+	<categoryProfile
 		name="Categorie de démo 3"
 		id="demo3"
 		urlCategory="${config.url.prefix}/examples/xml/demo3.xml"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
-		timeout = "3000"  > 
+		timeout = "3000"  >
 		<visibility>
 			<allowed/>
 			<autoSubscribed/>
-			<obliged>	
+			<obliged>
 				<group
 					name="local.0"/>
-			</obliged>	
+			</obliged>
 		</visibility>
 	</categoryProfile>
-		
-	<categoryProfile 
+
+	<categoryProfile
 		name="Categorie de démo 4"
 		id="demo4"
 		urlCategory="http://partages.univ-rennes1.fr/files/partages/Services/CRI/SI/conf_lecture_gwe_ray/demo4.xml"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"
-		timeout = "3000"  > 
+		timeout = "3000"  >
 		<visibility>
 			<allowed/>
 			<autoSubscribed/>
-			<obliged>	
+			<obliged>
 				<group
 					name="local.0"/>
-			</obliged>	
+			</obliged>
 		</visibility>
 	</categoryProfile>
-		
+
 </channelConfig>
