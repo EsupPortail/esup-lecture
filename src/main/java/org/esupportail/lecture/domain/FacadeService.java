@@ -28,7 +28,6 @@ import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
-// test svn
 
 /**
  * The facade service.

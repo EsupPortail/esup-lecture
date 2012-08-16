@@ -98,7 +98,12 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * category to set by t:updateActionListener.
 	 */
 	private CategoryWebBean ualCategory;
-
+	/**
+	 * is Current User is Guest
+	 * This property is used to cache this information in session
+	 * to avoid domain call and CAS proxy ticket call
+	 */
+	private Boolean currentIsGuest = null; 
 	
 	/**
 	 * Controller constructor.
@@ -553,7 +558,10 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @see org.esupportail.lecture.domain.FacadeService#isGuestMode()
 	 */
 	public boolean isGuestMode() {
-		return facadeService.isGuestMode();
+		if (currentIsGuest == null) {
+			currentIsGuest = facadeService.isGuestMode();
+		} 
+		return currentIsGuest;
 	}
 
 	/**
