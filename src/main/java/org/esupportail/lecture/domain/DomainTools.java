@@ -167,7 +167,7 @@ public class DomainTools implements InitializingBean {
 					realMedValue = userAttributes.get(0);
 					if (userAttributes.size() > 1) {
 						LOG.warn("getUserAttribute(" + med + ") "
-								+ "return more than 1 value. Just first one is used !");
+								+ "return more than 1 value. Just first one is used!");
 					}
 				} catch (NoExternalValueException e) {
 					LOG.warn("replaceWithUserAttributes(" + value + ") generate " + e.getMessage());

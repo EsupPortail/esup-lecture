@@ -322,8 +322,8 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					List<String> attributeValues = ex.getUserAttribute(attributeName);
 					sourceURL = sourceURL.replace("{" + attributeName + "}", attributeValues.get(0));
 					if (attributeValues.size() > 1){
-						LOG.warn("L'attribut " + attributeName + " contient plus d'une valeur pour l'utilisateur, " +
-								"Seule la première valeur sera utilisée !");
+						LOG.warn("The attribute " + attributeName + " contents more than one value for the current user. " +
+								"Just first value will be used!");
 					}
 				} catch (NoExternalValueException e) {
 					throw new InfoDaoException("Error remplacing user attributes in URL:", e);

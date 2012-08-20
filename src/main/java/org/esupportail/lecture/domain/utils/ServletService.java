@@ -86,12 +86,12 @@ public class ServletService implements ModeService, InitializingBean {
 			ret = attributeList;
 			if (attributeList.size() > 1) {
 				LOG.warn("getUserAttribute(" + attribute + ") for userId " + userId
-						+ "return more than 1 value. Just first one is used !");
+						+ "return more than 1 value. Just first one is used!");
 			}
 		}
 		if (ret == null) {
 			throw new NoExternalValueException("User Attribute \""
-				+ attribute + "\" not found ! See your portal attributes definition "
+				+ attribute + "\" not found! See your portal attributes definition "
 				+ "(with ant test-portal for example)"
 				+ " and verify your \"regular\" tags in esup-lecture.xml config file.");
 		}

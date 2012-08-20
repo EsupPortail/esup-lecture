@@ -113,7 +113,7 @@ public class PortletService implements ModeService, InitializingBean {
 		}
 		if (values == null) {
 			throw new NoExternalValueException("User Attribute "
-					+ attribute + " not found ! See your portlet.xml file for user-attribute definition.");
+					+ attribute + " not found! See your portlet.xml file for user-attribute definition.");
 		}
 		return values;
 	}
