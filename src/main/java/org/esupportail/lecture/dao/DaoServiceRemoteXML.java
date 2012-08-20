@@ -1,5 +1,6 @@
 package org.esupportail.lecture.dao;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,7 +37,7 @@ import org.springframework.util.StringUtils;
  * this class is used to get remote XML contents (category, source) and manage cache on this contents
  */
 public class DaoServiceRemoteXML implements InitializingBean {
-	
+
 	/**
 	 * Default timeout value.
 	 */
@@ -70,9 +71,9 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * get a Category form cache.
 	 * Synchronized to avoid multiple source get in case of simultaneous first access
 	 * @param profile - Category profile of category to get
-	 * @param withCAS : is a cas PT needed 
+	 * @param withCAS : is a cas PT needed
 	 * @return the Category
-	 * @throws InternalDaoException 
+	 * @throws InternalDaoException
 	 */
 	public synchronized ManagedCategory getManagedCategory(final ManagedCategoryProfile profile, boolean withCAS) throws InternalDaoException {
 
@@ -96,9 +97,9 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		 *  get urlgetManagedCategory
 		 *  send in cache
 		 *  update lastdate
-		 * fi 
+		 * fi
 		 * *************************************
-		 */		
+		 */
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getManagedCategory");
 		}
@@ -108,12 +109,12 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		String cacheKey = "CAT:" + profile.getId() + urlCategory;
 		try {
 			Element element = cache.get(cacheKey);
-			if (element == null) { 
+			if (element == null) {
 				try {
 					String ptCas = null;
 					if (withCAS) {
 						String url = profile.getCategoryURL();
-						ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);						
+						ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);
 					}
 					ret = getFreshManagedCategory(profile, ptCas);
 				} catch (Exception e) {
@@ -129,11 +130,11 @@ public class DaoServiceRemoteXML implements InitializingBean {
 				e.setTimeToLive(ttl);
 
 				if (LOG.isDebugEnabled()) {
-					LOG.debug("Put category in cache : " + cacheKey 
+					LOG.debug("Put category in cache : " + cacheKey
 						+ " Ttl: " + String.valueOf(ret.getTtl()));
 				}
 			} else {
-				LOG.debug("Already in cache : " + cacheKey 
+				LOG.debug("Already in cache : " + cacheKey
 					+ " Ttl: " + String.valueOf(element.getTimeToLive()));
 				//LOG.debug("Already in cache : "+cacheKey+ " Creation time : "+ String.valueOf(element.getCreationTime()));
 				ret = (ManagedCategory) element.getObjectValue();
@@ -150,24 +151,24 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	}
 
 	/**
-	 * @param profile 
+	 * @param profile
 	 * @return a managedCategory
-	 * @throws InternalDaoException 
+	 * @throws InternalDaoException
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(ManagedCategoryProfile)
 	 */
 	public ManagedCategory getManagedCategory(final ManagedCategoryProfile profile) throws InternalDaoException {
 		return getManagedCategory(profile, false);
 	}
-	
+
 	/**
 	 * get a managed category from the web without cache.
 	 * @param profile ManagedCategoryProfile of Managed category to get
 	 * @param ptCas - user and password. null for anonymous access
 	 * @return Managed category
-	 * @throws TimeoutException 
-	 * @throws SourceInterruptedException 
-	 * @throws InternalDaoException 
-	 * @throws XMLParseException 
+	 * @throws TimeoutException
+	 * @throws SourceInterruptedException
+	 * @throws InternalDaoException
+	 * @throws XMLParseException
 	 */
 	private ManagedCategory getFreshManagedCategory(final ManagedCategoryProfile profile,
 			final String ptCas) throws TimeoutException, SourceInterruptedException, InternalDaoException, XMLParseException  {
@@ -177,7 +178,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		ManagedCategory ret = new ManagedCategory(profile);
 		//start a Thread to get FreshManagedCategory
 		FreshManagedCategoryThread thread = new FreshManagedCategoryThread(profile, ptCas);
-		
+
 		int timeout = 0;
 		try {
 			thread.start();
@@ -208,7 +209,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			String msg = "Category not loaded in " + timeout + " milliseconds";
 			LOG.warn(msg);
 			throw new TimeoutException(msg);
-        }	
+        }
 		ret = thread.getManagedCategory();
 		return ret;
 	}
@@ -217,15 +218,15 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * get a source form cache.
 	 * Synchronized to avoid multiple source get in case of simultaneous first access
 	 * @param sourceProfile source profile of source to get
-	 * @param withCAS 
+	 * @param withCAS
 	 * @return the source
-	 * @throws InternalDaoException 
+	 * @throws InternalDaoException
 	 */
-	public synchronized Source getSource(final ManagedSourceProfile sourceProfile, Boolean withCAS) 
+	public synchronized Source getSource(final ManagedSourceProfile sourceProfile, Boolean withCAS)
 	throws InternalDaoException {
 		// TODO (RB <-- GB) Pourquoi ne déclare-tu pas un type Source alors que tu fais un new GlobalSource ?
-		// Je comprends que tu n'as pas le droit de faire un new Source car abstract, 
-		// mais en ne déclarant pas un GlobalSource, tu limites la potentialité du ret. 
+		// Je comprends que tu n'as pas le droit de faire un new Source car abstract,
+		// mais en ne déclarant pas un GlobalSource, tu limites la potentialité du ret.
 		// Ne crois tu pas ? Tu viens m'en parler ?
 		Source ret = new GlobalSource(sourceProfile);
 		String urlSource = sourceProfile.getSourceURL();
@@ -234,14 +235,14 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		}
 		try {
 			Element element = cache.get(urlSource);
-			if ((element == null)) { 
+			if ((element == null)) {
 				try {
 					String ptCas = null;
 					if (withCAS) {
-						String url = sourceProfile.getSourceURL(); 
+						String url = sourceProfile.getSourceURL();
 						ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);
 						if (ptCas == null) {
-							LOG.warn("No Proxy Ticket retruned! Have you a ProxyGrantingTicket?");							
+							LOG.warn("No Proxy Ticket retruned! Have you a ProxyGrantingTicket?");
 						}
 					}
 					ret = getFreshSource(sourceProfile, ptCas);
@@ -267,7 +268,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					}
 				}
 			} else {
-				LOG.debug("Already in cache : " + urlSource 
+				LOG.debug("Already in cache : " + urlSource
 					+ " Ttl: " + String.valueOf(element.getTimeToLive()));
 				//LOG.debug("Already in cache : "+urlSource+ " Creation time : "+ String.valueOf(element.getCreationTime()));
 				ret = (Source) element.getObjectValue();
@@ -287,8 +288,8 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	/**
 	 * get a source from cache.
 	 * @param sourceProfile source profile of source to get
-	 * @return the source 
-	 * @throws InternalDaoException 
+	 * @return the source
+	 * @throws InternalDaoException
 	 */
 	public Source getSource(final ManagedSourceProfile sourceProfile) throws InternalDaoException {
 		return getSource(sourceProfile, false);
@@ -299,8 +300,8 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @param sourceProfile source profile of source to get
 	 * @param ptCas - user and password. null for anonymous access
 	 * @return the source
-	 * @throws InternalDaoException 
-	 * @throws InfoDaoException 
+	 * @throws InternalDaoException
+	 * @throws InfoDaoException
 	 */
 	private Source getFreshSource(final SourceProfile sourceProfile,
 			final String ptCas) throws InternalDaoException, InfoDaoException {
@@ -318,8 +319,12 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			while (matcher.find()) {
 				String attributeName = matcher.group(1);
 				try {
-					String attrbuteValue = ex.getUserAttribute(attributeName);
-					sourceURL = sourceURL.replace("{" + attributeName + "}", attrbuteValue);
+					List<String> attributeValues = ex.getUserAttribute(attributeName);
+					sourceURL = sourceURL.replace("{" + attributeName + "}", attributeValues.get(0));
+					if (attributeValues.size() > 1){
+						LOG.warn("L'attribut " + attributeName + " contient plus d'une valeur pour l'utilisateur, " +
+								"Seule la première valeur sera utilisée !");
+					}
 				} catch (NoExternalValueException e) {
 					throw new InfoDaoException("Error remplacing user attributes in URL:", e);
 				} catch (InternalExternalException e) {
@@ -359,7 +364,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			String msg = "Category not loaded in " + timeout + " milliseconds";
 			LOG.warn(msg);
 			throw new TimeoutException(msg);
-        }	
+        }
 		ret = thread.getSource();
 		return ret;
 	}
@@ -377,11 +382,11 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	public void afterPropertiesSet() {
 		if (!StringUtils.hasText(cacheName)) {
 			setDefaultCacheName();
-			LOG.warn(getClass() + ": no cacheName attribute set, '" 
+			LOG.warn(getClass() + ": no cacheName attribute set, '"
 					+ cacheName + "' will be used");
 		}
-		Assert.notNull(cacheManager, 
-				"property cacheManager of class " + getClass().getName() 
+		Assert.notNull(cacheManager,
+				"property cacheManager of class " + getClass().getName()
 				+ " can not be null");
 		if (!cacheManager.cacheExists(cacheName)) {
 			cacheManager.addCache(cacheName);

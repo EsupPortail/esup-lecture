@@ -5,6 +5,8 @@
  */
 package org.esupportail.lecture.domain.utils;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.context.ExternalContext;
@@ -91,27 +93,29 @@ public class PortletService implements ModeService, InitializingBean {
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getUserAttribute(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
-	public String getUserAttribute(final String attribute)
+	public List<String> getUserAttribute(final String attribute)
 			throws InternalExternalException, NoExternalValueException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getUserAttribute(" + attribute + ")");
 		}
-		String value;
+		List<String> values;
 		try {
 			final FacesContext facesContext = FacesContext.getCurrentInstance();
 			ExternalContext externalContext = facesContext.getExternalContext();
 			PortletRequest request = (PortletRequest) externalContext.getRequest();
-			Map<String, String> userInfo =
-					(Map<String, String>) request.getAttribute(PortletRequest.USER_INFO);
-			value = userInfo.get(attribute);
+			// Portlet Request wich return multivalues attributes doesn't exist, Uportal added his implementation for this case : https://issues.jasig.org/browse/UP-933
+			Map<String, ArrayList<String>> userInfo =
+					(Map<String, ArrayList<String>>) request.getAttribute("org.jasig.portlet.USER_INFO_MULTIVALUED");
+					//(Map<String, ArrayList<String>>) request.getAttribute(PortletRequest.USER_INFO);
+			values = userInfo.get(attribute);
 		} catch (Exception e) {
 			throw new InternalExternalException(e);
 		}
-		if (value == null) {
+		if (values == null) {
 			throw new NoExternalValueException("User Attribute "
 					+ attribute + " not found ! See your portlet.xml file for user-attribute definition.");
 		}
-		return value;
+		return values;
 	}
 
 	/**

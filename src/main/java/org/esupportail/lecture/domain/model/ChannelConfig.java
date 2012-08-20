@@ -28,10 +28,10 @@ import org.esupportail.lecture.exceptions.domain.ChannelConfigException;
  */
 public class ChannelConfig  {
 
-	/* 
-	 ********************** PROPERTIES**************************************/ 
+	/*
+	 ********************** PROPERTIES**************************************/
 	/**
-	 * Log instance. 
+	 * Log instance.
 	 */
 	private static final Log LOG = LogFactory.getLog(ChannelConfig.class);
 
@@ -76,7 +76,7 @@ public class ChannelConfig  {
 	private static int xmlFileTimeOut;
 
 	/*
-	 ************************** INIT *********************************/	
+	 ************************** INIT *********************************/
 
 	/**
 	 * Private Constructor .
@@ -93,7 +93,7 @@ public class ChannelConfig  {
 	/**
 	 * Return a singleton of this class used to load ChannelConfig file.
 	 * @param configFilePath file path of the channel config
-	 * @param defaultTimeOut 
+	 * @param defaultTimeOut
 	 * @return an instance of the file to load (singleton)
 	 * @see ChannelConfig#singleton
 	 */
@@ -158,7 +158,7 @@ public class ChannelConfig  {
 	}
 	/**
 	 * Check syntax file that cannot be checked by DTD.
-	 * @param xmlFileChecked 
+	 * @param xmlFileChecked
 	 * @return xmlFileLoading
 	 */
 	@SuppressWarnings("unchecked")
@@ -210,11 +210,11 @@ public class ChannelConfig  {
 								Element categoryProfileAdded = categoryProfile.createCopy();
 								channelConfig.add(categoryProfileAdded);
 								// delete node categoryProfilesUrl ?
-								// add refCategoryProfile 
+								// add refCategoryProfile
 								context.addElement("refCategoryProfile").addAttribute("refId", categoryProfileId);
 							}
 						}
-					}				
+					}
 					//remove now unneeded categoryProfilesUrl
 					context.remove(node);
 				}
@@ -230,7 +230,7 @@ public class ChannelConfig  {
 	}
 
 	/**
-	 * @param configFilePath 
+	 * @param configFilePath
 	 * @return ret
 	 */
 	protected synchronized static Document getFreshConfigFile(final String configFilePath) {
@@ -254,7 +254,7 @@ public class ChannelConfig  {
 				thread.interrupt();
 				String msg = "configFile not loaded in " + timeout + " milliseconds";
 				LOG.warn(msg);
-			}	
+			}
 			ret = thread.getXmlFile();
 		} catch (InterruptedException e) {
 			String msg = "Thread getting ConfigFile interrupted";
@@ -268,7 +268,7 @@ public class ChannelConfig  {
 			String msg = "Thread getting Source launches XMLParseException";
 			LOG.warn(msg);
 			return null;
-		} 
+		}
 		return ret;
 	}
 
@@ -299,7 +299,7 @@ public class ChannelConfig  {
 		String configTtl = root.valueOf("channelConfig/ttl");
 		if (!(configTtl == null || configTtl.equals(""))) {
 			if (LOG.isDebugEnabled()) {
-				LOG.debug("loadConfigTtl() : overriding defaultConfigTtl (" + DomainTools.getConfigTtl() 
+				LOG.debug("loadConfigTtl() : overriding defaultConfigTtl (" + DomainTools.getConfigTtl()
 						+ " with channelConfig/ttl :" + configTtl );
 			}
 			DomainTools.setConfigTtl(Integer.parseInt(configTtl));
@@ -309,7 +309,7 @@ public class ChannelConfig  {
 	/**
 	 * Load a DefinitionSets that is used to define visibility groups of a managed category profile.
 	 * @param fatherName name of the father XML element refered to (which visibility group)
-	 * @param categoryProfile 
+	 * @param categoryProfile
 	 * @return the initialized DefinitionSets
 	 */
 	@SuppressWarnings("unchecked")
@@ -336,6 +336,16 @@ public class ChannelConfig  {
 			regularOfSet.setAttribute(regular.valueOf("@value"));
 			defAndContentSets.addRegular(regularOfSet);
 		}
+
+		fatherPath = "visibility/" + fatherName + "/regex";
+		List<Node> regexs = categoryProfile.selectNodes(fatherPath);
+		for (Node regex : regexs) {
+			RegexOfSet regexOfSet = new RegexOfSet();
+			regexOfSet.setAttribute(regex.valueOf("@attribute"));
+			regexOfSet.setAttribute(regex.valueOf("@pattern"));
+			defAndContentSets.addRegex(regexOfSet);
+		}
+
 		return defAndContentSets;
 	}
 
@@ -406,7 +416,7 @@ public class ChannelConfig  {
 			// - ajouter les categoryProfile
 			// A faire dans checkXmlFile ?
 
-			Map<String, Integer> orderedCategoryIDs = 
+			Map<String, Integer> orderedCategoryIDs =
 					Collections.synchronizedMap(new HashMap<String, Integer>());
 			int xmlOrder = 1;
 
@@ -456,21 +466,21 @@ public class ChannelConfig  {
 							mcp.setAccess(Accessibility.CAS);
 						}
 						// Visibility
-						VisibilitySets visibilitySets = new VisibilitySets();  
+						VisibilitySets visibilitySets = new VisibilitySets();
 						// foreach (allowed / autoSubscribed / Obliged
 						visibilitySets.setAllowed(loadDefAndContentSets("allowed", categoryProfile));
 						visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed", categoryProfile));
 						visibilitySets.setObliged(loadDefAndContentSets("obliged", categoryProfile));
 						mcp.setVisibility(visibilitySets);
 
-						channel.addManagedCategoryProfile(mcp);    
+						channel.addManagedCategoryProfile(mcp);
 						c.addRefIdManagedCategoryProfile(mcp.getId());
 						orderedCategoryIDs.put(mcp.getId(), xmlOrder);
 
 						break;
 					}
 				}
-				xmlOrder += 1;				
+				xmlOrder += 1;
 			}
 			c.setOrderedCategoryIDs(orderedCategoryIDs);
 			channel.addContext(c);
@@ -492,7 +502,7 @@ public class ChannelConfig  {
 			}
 		}
 		return ret;
-	}    
+	}
 
 
 }
