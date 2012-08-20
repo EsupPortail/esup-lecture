@@ -30,7 +30,10 @@ public enum ItemDisplayMode {
 	/**
 	 * unread items are in first, and read items are at the end.
 	 */
-	UNREADFIRST
-	
+	UNREADFIRST,
+	/**
+	 * undefined is used when no source is selected
+	 */
+	UNDEFINED
 
 }
