@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -29,14 +30,14 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StringUtils;
 /**
  * Provide various tools :
- * - constants defintion for user attributes provided by externalService. 
+ * - constants defintion for user attributes provided by externalService.
  * - single access to DaoService, externalService, channel for domain layer
  * @author gbouteil
  */
 public class DomainTools implements InitializingBean {
-	
+
 	/*
-	 ************************** PROPERTIES *********************************/	
+	 ************************** PROPERTIES *********************************/
 
 
 	/**
@@ -51,21 +52,21 @@ public class DomainTools implements InitializingBean {
 	/**
 	 * the name of the cache.
 	 */
-	
+
 	private String cacheName;
 	/**
 	 * the cacheManager.
 	 */
-	
+
 	private CacheManager cacheManager;
 	/**
 	 * the cache.
 	 */
-	
+
 	private static Cache cache;
-	/* 
+	/*
 	 * Single Access to layers or principal classes */
-	
+
 	/**
 	 * Current DaoService initialised during portlet init.
 	 */
@@ -83,7 +84,7 @@ public class DomainTools implements InitializingBean {
 
 	/*
 	 * Constants definition */
-	
+
 	/**
 	 * Attribute name used to identified the guset user.
 	 * It is defined in the channel config
@@ -96,7 +97,7 @@ public class DomainTools implements InitializingBean {
 	/**
 	 * ttl for dummy elements.
 	 */
-	private static int dummyTtl; 
+	private static int dummyTtl;
 	/**
 	 * default TTL.
 	 */
@@ -117,12 +118,12 @@ public class DomainTools implements InitializingBean {
 	 * default TTL of config file
 	 */
 	private static int configTtl;
-	
 
-	
-	
+
+
+
 	/*
-	 ************************** INIT ******************************** */	
+	 ************************** INIT ******************************** */
 
 	/**
 	 * Dfault constructor.
@@ -131,16 +132,16 @@ public class DomainTools implements InitializingBean {
 	private DomainTools() {
 		super();
 	}
-	
 
-	
-	
+
+
+
 	/*
-	 *************************** METHODS ******************************** */	
+	 *************************** METHODS ******************************** */
 
 	/**
-	 * replace user attibute in a String. Example a user with name "Toto" and age "25" 
-	 * if param="{name} is  {age} years old" then return value is "Toto is 25 years old" 
+	 * replace user attibute in a String. Example a user with name "Toto" and age "25"
+	 * if param="{name} is  {age} years old" then return value is "Toto is 25 years old"
 	 * @param value - string where we try to find user attribute to replace
 	 * @return value with {attribute} replaced by this attribute according to current connected user
 	 */
@@ -162,7 +163,12 @@ public class DomainTools implements InitializingBean {
 				//replacing med value
 				String realMedValue;
 				try {
-					realMedValue = externalService.getUserAttribute(med);
+					List<String> userAttributes = externalService.getUserAttribute(med);
+					realMedValue = userAttributes.get(0);
+					if (userAttributes.size() > 1) {
+						LOG.warn("getUserAttribute(" + med + ") "
+								+ "return more than 1 value. Just first one is used!");
+					}
 				} catch (NoExternalValueException e) {
 					LOG.warn("replaceWithUserAttributes(" + value + ") generate " + e.getMessage());
 				} catch (InternalExternalException e) {
@@ -188,9 +194,9 @@ public class DomainTools implements InitializingBean {
 		}
 		return ret;
 	}
-	
+
 	/*
-	 ************************** ACCESSORS *********************************/	
+	 ************************** ACCESSORS *********************************/
 	/**
 	 * Return an instance of current DaoService initialised by Spring.
 	 * @return current DomainService
@@ -201,7 +207,7 @@ public class DomainTools implements InitializingBean {
 
 	/**
 	 * set current DaoService (used by Spring).
-	 * @param daoService 
+	 * @param daoService
 	 */
 	public static void setDaoService(final DaoService daoService) {
 		DomainTools.daoService = daoService;
@@ -222,7 +228,7 @@ public class DomainTools implements InitializingBean {
 	public static void setChannel(final Channel channel) {
 		DomainTools.channel = channel;
 	}
-	
+
 
 	/**
 	 * @return external service
@@ -230,7 +236,7 @@ public class DomainTools implements InitializingBean {
 	public static ExternalService getExternalService() {
 		return externalService;
 	}
-	
+
 	/**
 	 * @param externalService
 	 */
@@ -363,10 +369,10 @@ public class DomainTools implements InitializingBean {
 		String inputXslt;
 		String cacheKey = "XSLT:" + xsltFileURL;
 		Element element = cache.get(cacheKey);
-		if (element == null) { 
+		if (element == null) {
 			URL url2 = new URL(xsltFileURL);
 			InputStream is =  url2.openStream();
-			
+
 			BufferedReader in = new BufferedReader(
 					new InputStreamReader(is));
 
@@ -377,7 +383,7 @@ public class DomainTools implements InitializingBean {
 		    	inputXslt += line;
 		    }
 		    in.close();
-			
+
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("Put xslt in cache : " + cacheKey);
 				LOG.debug("inputXslt : " + inputXslt);
@@ -403,11 +409,11 @@ public class DomainTools implements InitializingBean {
 	public void afterPropertiesSet() {
 		if (!StringUtils.hasText(cacheName)) {
 			setDefaultCacheName();
-			LOG.warn(getClass() + ": no cacheName attribute set, '" 
+			LOG.warn(getClass() + ": no cacheName attribute set, '"
 					+ cacheName + "' will be used");
 		}
-		Assert.notNull(cacheManager, 
-				"property cacheManager of class " + getClass().getName() 
+		Assert.notNull(cacheManager,
+				"property cacheManager of class " + getClass().getName()
 				+ " can not be null");
 		if (!cacheManager.cacheExists(cacheName)) {
 			cacheManager.addCache(cacheName);
@@ -415,7 +421,7 @@ public class DomainTools implements InitializingBean {
 		LOG.debug("DaoServiceRemoteXML cache : " + cacheName);
 		cache = cacheManager.getCache(cacheName);
 	}
-	
+
 	/**
 	 * set the default cacheName.
 	 */
@@ -468,7 +474,7 @@ public class DomainTools implements InitializingBean {
 
 
 	/**
-	 * @param configTtl 
+	 * @param configTtl
 	 */
 	public static void setConfigTtl(int configTtl) {
 		DomainTools.configTtl = configTtl;

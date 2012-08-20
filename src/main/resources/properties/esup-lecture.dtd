@@ -14,11 +14,11 @@
 <!ELEMENT description (#PCDATA)>
 
 <!ELEMENT refCategoryProfile EMPTY>
-<!ATTLIST refCategoryProfile 
+<!ATTLIST refCategoryProfile
     refId IDREF #REQUIRED>
 
 <!ELEMENT categoryProfilesUrl EMPTY>
-<!ATTLIST categoryProfilesUrl 
+<!ATTLIST categoryProfilesUrl
     url CDATA #REQUIRED
     timeout CDATA #REQUIRED
     idPrefix CDATA #IMPLIED>
@@ -33,19 +33,24 @@
     access (public|cas) "public"
     userCanMarkRead (yes|no) "yes"
     ttl CDATA #REQUIRED
-    timeout CDATA #REQUIRED>	
-    
+    timeout CDATA #REQUIRED>
+
 <!ELEMENT visibility (allowed,autoSubscribed,obliged)>
 
-<!ELEMENT allowed (regular*, group*)>
-<!ELEMENT autoSubscribed (regular*, group*)>
-<!ELEMENT obliged (regular*, group*)>
+<!ELEMENT allowed (regular*, regex*, group*)>
+<!ELEMENT autoSubscribed (regular*, regex*, group*)>
+<!ELEMENT obliged (regular*, regex*, group*)>
 
 <!ELEMENT regular EMPTY>
-<!ATTLIST regular 
+<!ATTLIST regular
     attribute CDATA #REQUIRED
     value CDATA #REQUIRED>
 
+<!ELEMENT regex EMPTY>
+<!ATTLIST regex
+    attribute CDATA #REQUIRED
+    pattern CDATA #REQUIRED>
+
 <!ELEMENT group EMPTY>
-<!ATTLIST group 
-    name CDATA #REQUIRED> 
+<!ATTLIST group
+    name CDATA #REQUIRED>

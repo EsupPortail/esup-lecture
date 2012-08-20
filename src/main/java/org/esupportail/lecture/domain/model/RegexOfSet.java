@@ -7,6 +7,7 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,19 +17,19 @@ import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
 /**
- * Regular definition of a group :
- * Every user that "attribute x" has "value Y".
- * @author gbouteil
+ * Regex definition of a group :
+ * Every user that "attribute x" match with "pattern Y".
+ * @author jgribonvald
  *
  */
-public class RegularOfSet {
+public class RegexOfSet {
 
 	/*
 	 *************************** PROPERTIES ******************************** */
 	/**
 	 * Log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(RegularOfSet.class);
+	protected static final Log LOG = LogFactory.getLog(RegexOfSet.class);
 
 	/**
 	 * attribute required value.
@@ -38,14 +39,14 @@ public class RegularOfSet {
 	/**
 	 * Value required by the attribute to be in the group that is defined.
 	 */
-	private String value = "";
+	private String pattern = "";
 
 	/*
 	 ************************** INIT *********************************/
 	/**
 	 * Constructor.
 	 */
-	public RegularOfSet() {
+	public RegexOfSet() {
 		// Nothing to do
 	}
 
@@ -79,9 +80,14 @@ public class RegularOfSet {
 
 		boolean found = false;
 		Iterator<String> itAttrs = userAttributeValues.iterator();
-		if (value != null && value.length() > 0) {
+		if (pattern != null && pattern.length() > 0) {
+			Pattern patrn = Pattern.compile(pattern);
 			while (!found && itAttrs.hasNext()){
-				found = itAttrs.next().equals(value);
+				final String userAttrVal = itAttrs.next();
+				found = patrn.matcher(userAttrVal).matches();
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("Try to match pattern '" + pattern + "' on user attribute value '" + userAttrVal + "' return : " + found);
+				}
 			}
 		}
 		if (found) {
@@ -114,7 +120,7 @@ public class RegularOfSet {
 
 		String string = "";
 		string += "attribute : " + attribute;
-		string += ", value : " + value;
+		string += ", pattern : " + pattern;
 
 		return string;
 	}
@@ -125,7 +131,7 @@ public class RegularOfSet {
 	/**
 	 * Returns attribute name.
 	 * @return attribute
-	 * @see RegularOfSet#attribute
+	 * @see RegexOfSet#attribute
 	 */
 	protected String getAttribute() {
 		return attribute;
@@ -133,7 +139,7 @@ public class RegularOfSet {
 	/**
 	 * Sets attribute name.
 	 * @param attribute
-	 * @see RegularOfSet#attribute
+	 * @see RegexOfSet#attribute
 	 */
 	public void setAttribute(final String attribute) {
 		this.attribute = attribute;
@@ -142,20 +148,18 @@ public class RegularOfSet {
 	/**
 	 * Returns attribute required value.
 	 * @return value
-	 * @see RegularOfSet#value
+	 * @see RegexOfSet#pattern
 	 */
-	protected String getValue() {
-		return value;
+	protected String getPattern() {
+		return pattern;
 	}
 	/**
 	 * Sets attribute required value.
-	 * @param value
-	 * @see RegularOfSet#value
+	 * @param pattern
+	 * @see RegexOfSet#pattern
 	 */
-	 public void setValue(final String value) {
-		this.value = value;
+	 public void setPattern(final String pattern) {
+		this.pattern = pattern;
 	}
-
-
 
 }

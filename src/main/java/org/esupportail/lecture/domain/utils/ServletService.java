@@ -27,9 +27,9 @@ import org.springframework.beans.factory.InitializingBean;
 public class ServletService implements ModeService, InitializingBean {
 
 	/*
-	 ************************** PROPERTIES ******************************** */	
+	 ************************** PROPERTIES ******************************** */
 	/**
-	 * Log instance. 
+	 * Log instance.
 	 */
 	private static final Log LOG = LogFactory.getLog(ServletService.class);
 	/**
@@ -41,7 +41,7 @@ public class ServletService implements ModeService, InitializingBean {
 	 */
 	private AuthenticationService authenticationService;
 
-	/* 
+	/*
 	 ************************** INIT ****************************************/
 	/**
 	 * Default constructor.
@@ -54,14 +54,14 @@ public class ServletService implements ModeService, InitializingBean {
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
 	public void afterPropertiesSet() throws Exception {
-		Assert.notNull(portalService, "property portalService of class " 
+		Assert.notNull(portalService, "property portalService of class "
 				+ this.getClass().getName() + " can not be null");
-		Assert.notNull(authenticationService, "property authenticationService of class " 
+		Assert.notNull(authenticationService, "property authenticationService of class "
 				+ this.getClass().getName() + " can not be null");
 	}
 
 
-	/* 
+	/*
 	 ************************** METHODS *************************************/
 
 	/**
@@ -78,20 +78,20 @@ public class ServletService implements ModeService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.utils.ModeService#getUserAttribute(java.lang.String)
 	 */
-	public String getUserAttribute(final String attribute) throws NoExternalValueException {
-		String ret = null;
+	public List<String> getUserAttribute(final String attribute) throws NoExternalValueException {
+		List<String> ret = null;
 		String userId = DomainTools.getCurrentUserId(authenticationService);
 		List<String> attributeList = portalService.getUserAttributeValues(userId, attribute);
 		if (attributeList != null && attributeList.size() >= 1) {
-			ret = attributeList.get(0);
+			ret = attributeList;
 			if (attributeList.size() > 1) {
 				LOG.warn("getUserAttribute(" + attribute + ") for userId " + userId
-						+ "return more than 1 value. Just first one is used !");
+						+ "return more than 1 value. Just first one is used!");
 			}
 		}
 		if (ret == null) {
 			throw new NoExternalValueException("User Attribute \""
-				+ attribute + "\" not found ! See your portal attributes definition " 
+				+ attribute + "\" not found! See your portal attributes definition "
 				+ "(with ant test-portal for example)"
 				+ " and verify your \"regular\" tags in esup-lecture.xml config file.");
 		}
@@ -105,7 +105,7 @@ public class ServletService implements ModeService, InitializingBean {
 		String userId = DomainTools.getCurrentUserId(authenticationService);
 		boolean ret = false;
 		try {
-			ret = portalService.isUserMemberOfGroup(userId, group);			
+			ret = portalService.isUserMemberOfGroup(userId, group);
 		} catch (PortalGroupNotFoundException e) {
 			LOG.info("Group " + group + " not found. Return false in isUserInGroup().");
 		}
@@ -113,7 +113,7 @@ public class ServletService implements ModeService, InitializingBean {
 	}
 
 
-	/* 
+	/*
 	 ************************** ACCESSORS *************************************/
 	/**
 	 * @param portalService the portalService to set
@@ -140,7 +140,7 @@ public class ServletService implements ModeService, InitializingBean {
 	}
 
 
-	
+
 
 
 }
