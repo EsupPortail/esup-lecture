@@ -5,7 +5,10 @@
  */
 package org.esupportail.lecture.web.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.model.SelectItem;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,7 +37,7 @@ public class HomeController extends TwoPanesController {
 	/**
 	 * Display mode for item (all | unread | unreadfirst).
 	 */
-	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.ALL;
+	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.UNDEFINED;
 	/**
 	 *  item used by t:updateActionListener.
 	 */
@@ -45,7 +48,6 @@ public class HomeController extends TwoPanesController {
 	 */
 	public HomeController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -206,27 +208,37 @@ public class HomeController extends TwoPanesController {
 	 * @return Display mode form items
 	 */
 	public ItemDisplayMode getItemDisplayMode() {
-		ItemDisplayMode ret = itemDisplayMode;
+		ItemDisplayMode ret = ItemDisplayMode.UNDEFINED;
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getItemDisplayMode()=" + itemDisplayMode);
 		}
 		ContextWebBean currentContext = getContext();
 		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
 		if (selectedCategory != null) {
-			List<SourceWebBean> sources = selectedCategory.getSelectedOrAllSources();
-			if (sources != null) {
-				SourceWebBean source = null;
-				if (sources.size() > 0) {
-					source  = sources.get(0);
+			SourceWebBean source = selectedCategory.getSelectedSource();
+			if (source != null) {
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("getItemDisplayMode() source selected = " + source.getName());
 				}
-				if (source != null) {
-					if (LOG.isDebugEnabled()) {
-						LOG.debug("getItemDisplayMode() source selected = " + source.getName());
-					}
-					ret = source.getItemDisplayMode();
-				}
+				ret = source.getItemDisplayMode();
 			}
 		}
+		return ret;
+	}
+	
+	/**
+	 * @return all available display mode for selected item
+	 */
+	public List<SelectItem> getAvailableItemDisplayModes() {
+		List<SelectItem> ret = new ArrayList<SelectItem>();
+		ContextWebBean currentContext = getContext();
+		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
+		if (selectedCategory == null || selectedCategory.getSelectedSource() == null) {
+			ret.add(new SelectItem(ItemDisplayMode.UNDEFINED, getString("undefined")));			
+		}
+		ret.add(new SelectItem(ItemDisplayMode.ALL, getString("all")));
+		ret.add(new SelectItem(ItemDisplayMode.UNREAD, getString("notRead")));
+		ret.add(new SelectItem(ItemDisplayMode.UNREADFIRST, getString("unreadFirst")));
 		return ret;
 	}
 
@@ -256,27 +268,6 @@ public class HomeController extends TwoPanesController {
 	@Override
 	protected String getContextName() {
 		return this.CONTEXT;
-	}
-
-	/**
-	 * @return ALL value from ItemDisplayMode enumeration for JSF view
-	 */
-	public ItemDisplayMode getAll() {
-		return ItemDisplayMode.ALL;
-	}
-
-	/**
-	 * @return UNREAD value from ItemDisplayMode enumeration for JSF view
-	 */
-	public ItemDisplayMode getUnread() {
-		return ItemDisplayMode.UNREAD;
-	}
-
-	/**
-	 * @return UNREADFIRST value from ItemDisplayMode enumeration for JSF view
-	 */
-	public ItemDisplayMode getUnreadfirt() {
-		return ItemDisplayMode.UNREADFIRST;
 	}
 
 	/**

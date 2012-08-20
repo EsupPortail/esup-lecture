@@ -17,12 +17,7 @@
 					<h:selectOneMenu value="#{homeController.itemDisplayMode}"
 						converter="#{itemDisplayModeConverter}"
 						styleClass="itemDisplayModeSelector">
-						<f:selectItem itemValue="#{homeController.all}"
-							itemLabel="#{msgs['all']}" />
-						<f:selectItem itemValue="#{homeController.unread}"
-							itemLabel="#{msgs['notRead']}" />
-						<f:selectItem itemValue="#{homeController.unreadfirt}"
-							itemLabel="#{msgs['unreadFirst']}" />
+						<f:selectItems value="#{homeController.availableItemDisplayModes}"/>
 					</h:selectOneMenu>
 					<h:commandButton styleClass="itemDisplayModeButton"
 						value="#{msgs['changeItemDisplayModeButtonLabel']}"

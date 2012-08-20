@@ -629,9 +629,15 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		CategoryWebBean selectedCategory = getUalCategory();
 		ContextWebBean ctx = getContext();
 		ctx.setSelectedCategory(selectedCategory);
-		// set source focused by user as selected source in the selecteed category
-		SourceWebBean selectedSource = getUalSource();
+		//if no selected category then we have to invalidate selected source in all categories
+		if (selectedCategory == null) {
+			for (CategoryWebBean category : ctx.getCategories()) {
+				category.setSelectedSource(null);
+			}
+		}
+		// set source focused by user as selected source in the selected category
 		if (selectedCategory != null) {
+			SourceWebBean selectedSource = getUalSource();
 			selectedCategory.setSelectedSource(selectedSource);
 		}
 		return "OK";
