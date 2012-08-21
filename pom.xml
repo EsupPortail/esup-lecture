@@ -212,6 +212,7 @@
 							<!-- <jsUrls> <url>http://my.server/custom.js</url> <url>http://my.server/another.js</url> 
 								</jsUrls> -->
 							<portletXml>${basedir}/src/main/config/portlet/WEB-INF/portlet.xml</portletXml>
+							<webAppSourceDirectory>${project.build.outputDirectory}/../${project.artifactId}-${project.version}</webAppSourceDirectory>
 						</configuration>
 					</plugin>
 					<plugin>

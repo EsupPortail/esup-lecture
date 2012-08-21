@@ -104,7 +104,7 @@ Pour plus d'informations voir le
 			<obliged>
 				<regular
 					attribute="sn"
-					value="Useppr"/>
+					value="User"/>
 			</obliged>
 		</visibility>
 	</categoryProfile>

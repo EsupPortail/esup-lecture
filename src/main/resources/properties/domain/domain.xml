@@ -71,7 +71,7 @@
 	
 
 	<!-- Main domain model class -->
-		<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
+	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
 		<description>
 			This bean is the main domain model class, used by the domainService.
 		</description>
@@ -101,6 +101,12 @@
 	***************************************************-->
 	<bean
 		id="externalService"
+		class="org.esupportail.lecture.domain.ExternalServiceStub">
+	</bean>
+
+<!-- 
+	<bean
+		id="externalService"
 		class="org.esupportail.lecture.domain.ExternalServiceImpl">
 		<description>
 			This bean provides the external (portlet and/or servlet) service of the application, used by the 
@@ -108,12 +114,10 @@
 			It must implement interface org.esupportail.lecture.domain.ExternalService.
 		</description>
 		<property name="authenticationService" ref="${auth.bean}" />
-		<!-- tmp V2
-		<property name="portletService" ref="portletService" />
-		 -->
 		<property name="portletService" ref="portletService" />
 		<property name="servletService" ref="servletService" />
 	</bean>
+ -->
 	
 	<bean id="servletService" class="org.esupportail.lecture.domain.utils.ServletService">
 		<description>external service in servlet mode</description>
