@@ -97,7 +97,7 @@ public interface DomainService {
 	 * @throws InternalDomainException 
 	 * @see FacadeService#marckItemReadMode(UserProfile, String, String, boolean)
 	 */
-	UserProfile marckItemReadMode(UserProfile userProfile, String sourceId, String itemId, boolean isRead)  
+	UserProfile markItemReadMode(UserProfile userProfile, String sourceId, String itemId, boolean isRead)  
 	throws InternalDomainException;
 
 	/**

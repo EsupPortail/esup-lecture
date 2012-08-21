@@ -67,7 +67,7 @@ public class HomeController extends TwoPanesController {
 		SourceWebBean selectedSource = getUalSource();
 		try {
 			UserProfile userProfile = getUserProfile();
-			userProfile = getFacadeService().marckItemReadMode(userProfile, 
+			userProfile = getFacadeService().markItemReadMode(userProfile, 
 					selectedSource.getId(), ualItem.getId(), !ualItem.isRead());
 			setUserProfile(userProfile);
 		} catch (Exception e) {
@@ -117,7 +117,7 @@ public class HomeController extends TwoPanesController {
 				if (sources != null) {
 					UserProfile userProfile = getUserProfile();
 					for (SourceWebBean sourceWeb : sources) {
-						userProfile = getFacadeService().marckItemDisplayMode(userProfile,
+						userProfile = getFacadeService().markItemDisplayMode(userProfile,
 								sourceWeb.getId(), itemDisplayMode);
 						sourceWeb.setItemDisplayMode(itemDisplayMode);
 					}
@@ -165,7 +165,7 @@ public class HomeController extends TwoPanesController {
 						if (items != null) {
 							UserProfile userProfile = getUserProfile();
 							for (ItemWebBean itemWeb : items) {
-								userProfile = getFacadeService().marckItemReadMode(userProfile, 
+								userProfile = getFacadeService().markItemReadMode(userProfile, 
 										sourceWeb.getId(), itemWeb.getId(), read);
 								itemWeb.setRead(read);
 							}
