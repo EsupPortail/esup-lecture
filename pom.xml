@@ -182,7 +182,7 @@
 		<portlet.bridge.version>1.0.0</portlet.bridge.version>
 		<javax.portlet.version>1.0</javax.portlet.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
-		<esupcommons.version>0.2.8</esupcommons.version>
+		<esupcommons.version>0.3.0</esupcommons.version>
 	</properties>
 	<profiles>
 		<profile>

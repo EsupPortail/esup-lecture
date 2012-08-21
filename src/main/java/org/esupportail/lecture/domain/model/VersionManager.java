@@ -3,8 +3,8 @@
  * http://sourcesup.cru.fr/projects/esup-myapp
  */
 package org.esupportail.lecture.domain.model;
- 
-import org.esupportail.commons.domain.beans.AbstractVersionManager;
+
+import org.esupportail.commons.services.application.AbstractVersionManager;
 
 /**
  * A class to store the version number in the database.
