@@ -111,21 +111,23 @@ public class HomeController extends TwoPanesController {
 			throw new SecurityException("Try to access restricted function is guest mode");
 		}
 		List<CategoryWebBean> categoryWebBeans = getSelectedOrAllCategories();
-		try {
-			for (CategoryWebBean categoryWebBean : categoryWebBeans) {
-				List<SourceWebBean> sources = categoryWebBean.getSelectedOrAllSources();
-				if (sources != null) {
-					UserProfile userProfile = getUserProfile();
-					for (SourceWebBean sourceWeb : sources) {
-						userProfile = getFacadeService().markItemDisplayMode(userProfile,
-								sourceWeb.getId(), itemDisplayMode);
-						sourceWeb.setItemDisplayMode(itemDisplayMode);
+		if (itemDisplayMode != ItemDisplayMode.UNDEFINED) {
+			try {
+				for (CategoryWebBean categoryWebBean : categoryWebBeans) {
+					List<SourceWebBean> sources = categoryWebBean.getSelectedOrAllSources();
+					if (sources != null) {
+						UserProfile userProfile = getUserProfile();
+						for (SourceWebBean sourceWeb : sources) {
+							userProfile = getFacadeService().markItemDisplayMode(userProfile,
+									sourceWeb.getId(), itemDisplayMode);
+							sourceWeb.setItemDisplayMode(itemDisplayMode);
+						}
+						setUserProfile(userProfile);
 					}
-					setUserProfile(userProfile);
 				}
-			}
-		} catch (Exception e) {
-			throw new WebException("Error in changeItemDisplayMode", e);
+			} catch (Exception e) {
+				throw new WebException("Error in changeItemDisplayMode", e);
+			}			
 		}
 		return "OK";
 	}	
