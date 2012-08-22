@@ -7,7 +7,6 @@ mvn -P servletDevelopment clean package
 
 Releases management :
 don't forget to :
-- not use ExternalServiceStub in domain.xml
 - uncomment cas in web.xml
 mvn release:prepare -DautoVersionSubmodules
 mvn -P portletDevelopment release:perform -Dgoals=package
@@ -23,6 +22,5 @@ serlet :
 comment cas in web.xml
 mvn jetty:run
 portlet :
-use ExternalServiceStub as externalService in domain.xml
 mvn -P portlet2Development package portlet-prototyping:run
 and go on http://localhost:8080/pluto
