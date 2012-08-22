@@ -27,5 +27,5 @@ mvn jetty:run
 portlet :
 use OfflineFixedUserAuthenticationService as authenticationService in auth.xml
 use ExternalServiceStub as externalService in domain.xml
-mvn -P portletDevelopment package portlet-prototyping:run
+mvn -P portlet2Development package portlet-prototyping:run
 and go on http://localhost:8080/pluto
