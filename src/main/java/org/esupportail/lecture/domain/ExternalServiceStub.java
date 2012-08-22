@@ -58,7 +58,7 @@ public class ExternalServiceStub implements ExternalService {
 	public String getPreferences(final String name) {
 		String ret = null;
 		if (name.equalsIgnoreCase(DomainTools.getContext())) {
-			ret = "c1";
+			ret = "default";
 		}
 		if (LOG.isTraceEnabled()) {
 			LOG.trace("getPreferences(" + name + ") return " );
@@ -70,7 +70,7 @@ public class ExternalServiceStub implements ExternalService {
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserAttribute(java.lang.String)
 	 */
 	public List<String> getUserAttribute(final String attribute) {
-		List<String> ret = null;
+		List<String> ret = new ArrayList<String>();
 		if (attribute.equalsIgnoreCase("uid")) {
 			ret = new ArrayList<String>();
 			ret.add("bourges");
