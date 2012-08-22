@@ -47,7 +47,7 @@
 		<property name="exceptionController" ref="exceptionController">
 			<description>The exception controller.</description>
 		</property>
-		<property name="authenticationService" ref="${auth.bean}" />
+		<property name="authenticationService" ref="${authenticationService.bean}" />
 		<!-- 
         <property name="casLogoutUrl" value="${cas.url}/logout?service=%s">
             <description>The CAS logout URL.</description>

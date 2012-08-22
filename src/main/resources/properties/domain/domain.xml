@@ -47,7 +47,7 @@
 			It must implement interface org.esupportail.lecture.domain.DomainService.
 		</description>
 		<property name="i18nService" ref="i18nService" />
-		<property name="authenticationService" ref="${auth.bean}" />
+		<property name="authenticationService" ref="${authenticationService.bean}" />
 	</bean> 
 	
 	<aop:config>
@@ -113,7 +113,7 @@
 			web interface and the command-line calls.
 			It must implement interface org.esupportail.lecture.domain.ExternalService.
 		</description>
-		<property name="authenticationService" ref="${auth.bean}" />
+		<property name="authenticationService" ref="${authenticationService.bean}" />
 		<property name="portletService" ref="portletService" />
 		<property name="servletService" ref="servletService" />
 	</bean>
@@ -122,7 +122,7 @@
 	<bean id="servletService" class="org.esupportail.lecture.domain.utils.ServletService">
 		<description>external service in servlet mode</description>
 		<property name="portalService" ref="portalService" />
-		<property name="authenticationService" ref="${auth.bean}" />
+		<property name="authenticationService" ref="${authenticationService.bean}" />
 	</bean>
 
 	<bean id="portletService" class="org.esupportail.lecture.domain.utils.PortletService">

@@ -87,7 +87,7 @@
 			<ref bean="daoServiceHibernate"/>
 		</property>
         <property name="authenticationService">
-            <ref bean="authenticationService"/>
+            <ref bean="${authenticationService.bean}"/>
         </property>
 	</bean>
 
