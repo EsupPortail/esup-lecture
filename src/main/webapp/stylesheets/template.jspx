@@ -5,9 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 <f:view locale="#{sessionController.locale}">
 	<head>
-		<title>
-			<h:outputText value="#{applicationService.name}" />
-		</title>
+		<title>#{applicationService.name}</title>
 		<link href="../media/fss/fss-framework-1.2.min.css" rel="stylesheet" type="text/css" />
 		<link href="../media/commons.css" rel="stylesheet" type="text/css" />
 		<link href="../media/portlet.css" rel="stylesheet" type="text/css" />

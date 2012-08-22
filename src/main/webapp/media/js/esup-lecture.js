@@ -1,49 +1,50 @@
 (function($){
 	$(document).ready(function() {
+		var parentID = "#" + getParentID() + " ";
 
 		/***************************************
 		 * esup-lecture functions
 		 * **************************************/
 //hide unused button when js activated
-		$(".itemDisplayModeSelector").change(function () {
-			$(".itemDisplayModeButton").click();
+		$(parentID + ".itemDisplayModeSelector").change(function () {
+			$(parentID + ".itemDisplayModeButton").click();
 		});
-		$(".itemDisplayModeButton").hide();
+		$(parentID + ".itemDisplayModeButton").hide();
 		
 //resize 
-		$(".treeButtonsArea").hide();
-		$(".leftArea").css("width", "25%");
-		$(".rightArea").css("width", "72%");
-		$(".rightArea")
+		$(parentID + ".treeButtonsArea").hide();
+		$(parentID + ".leftArea").css("width", "25%");
+		$(parentID + ".rightArea").css("width", "72%");
+		$(parentID + ".rightArea")
 			.css("border-left-style", "solid")
 			.css("border-color", "#CCCCCC");
-		$(".leftArea")
+		$(parentID + ".leftArea")
 			.resizable({
 			handles : 'e',
 			helper: 'ui-resizable-helper',
             stop: function (event, ui) {
                 var offsetWidth = ui.size.width - ui.originalSize.width;
-                $(".rightArea").css("width", $(".rightArea").width() - offsetWidth);
+                $(parentID + ".rightArea").css("width", $(".rightArea").width() - offsetWidth);
             }
 		});
 		
 		$(window).resize(function() {
-			$(".leftArea").css("width", "25%");
-			$(".rightArea").css("width", "72%");
+			$(parentID + ".leftArea").css("width", "25%");
+			$(parentID + ".rightArea").css("width", "72%");
 		});
 
 		/***************************************
 		 * rss-jquery-clickable functions
 		 * **************************************/
-		$('.lecture-highlightable').mouseover(function() {
+		$(parentID + '.lecture-highlightable').mouseover(function() {
 			$(this).addClass('lecture-highlight');
 		}).mouseout(function(){
 			$(this).removeClass('lecture-highlight');
 		});
 
-		$('.lecture-clickable').css('cursor', 'pointer').attr('title', $(this).find('.lecture-link:first a:first').text());
+		$(parentID + '.lecture-clickable').css('cursor', 'pointer').attr('title', $(this).find('.lecture-link:first a:first').text());
 
-		$('.lecture-clickable').click(function (event) {
+		$(parentID + '.lecture-clickable').click(function (event) {
 			var current = $(this);
 			var markAsUnreadButton = current.closest('.lecture-article').find('.lecture-markAsUnreadButton')[0];
 			var markAsReadButton = current.closest('.lecture-article').find('.lecture-markAsReadButton')[0];
@@ -63,13 +64,13 @@
 		 * rss-jquery-inline functions
 		 * **************************************/
 		//See "En savoir plus.." link in xsl
-		$(".article-block").children("a").click(function(){
+		$(parentID + ".article-block").children("a").click(function(){
 			openNews($(this).attr("href"),$(this));
 			return false;
 		}); 
 
 		//See "Resume..." link in xsl
-		$(".replierArticle").children("a").click(function(){
+		$(parentID + ".replierArticle").children("a").click(function(){
 			closeNews($(this));
 			return false;
 		});
@@ -119,7 +120,7 @@
 		 * rss-jquery-dialog functions
 		 * **************************************/
 		// Dialogs
-		$('.dialog').each(function(index) {
+		$(parentID + '.dialog').each(function(index) {
 			$(this).dialog({
 				autoOpen: false,
 				width: 850,
@@ -133,7 +134,7 @@
 		})
 
 		// Dialog Link
-		$('.dialog_link').click(function(event){
+		$(parentID + '.dialog_link').click(function(event){
 			event.preventDefault();
 			var href = $(this).attr('href');
 			var s1 = 'iframe[src="';
@@ -146,7 +147,7 @@
 		});
 
 		//hover states on the static widgets
-		$('.dialog_link').hover(
+		$(parentID + '.dialog_link').hover(
 				function() { $(this).addClass('ui-state-hover'); }, 
 				function() { $(this).removeClass('ui-state-hover'); }
 		);

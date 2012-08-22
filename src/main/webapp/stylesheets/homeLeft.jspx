@@ -85,7 +85,7 @@
 	<!-- Adjust Tree Size buttons 
 		<hr /> -->
 
-	<h:panelGroup layout="block" styleClass="portlet-section lecture-left"
+	<h:panelGroup  id="tb" layout="block" styleClass="portlet-section lecture-left"
 		rendered="#{!homeController.guestMode}">
 		<div class="fl-force-left treeButtonsArea">
 			<h:commandButton id="tsb"

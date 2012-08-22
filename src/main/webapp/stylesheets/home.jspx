@@ -5,7 +5,7 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	<ui:composition template="/stylesheets/template.jspx">
 		<ui:define name="content">
-			<div class="portlet-section-body esup-lecture">
+			<div id="#{homeController.namespace}main" class="portlet-section-body esup-lecture">
 				<h:form id="f">
 					<h:panelGroup id="m" layout="block"
 						styleClass="#{homeController.mainDivStyleClass}" >
@@ -21,6 +21,7 @@
 					</h:panelGroup>
 				</h:form>
 			</div>
+			<script>function getParentID(){return "#{homeController.namespace}main";};</script>
 		</ui:define>
 	</ui:composition>
 </div>
