@@ -284,5 +284,66 @@ public class HomeController extends TwoPanesController {
 		ContextWebBean currentContext = getContext();
 		return currentContext.getTreeVisible().equals(TreeDisplayMode.NEVERVISIBLE);
 	}
+	
+	public String getMainDivStyleClass() {
+		String ret = "portlet-section";
+		if (isTreeVisible() && !isGuestMode()) {
+			ret += " fl-container-flex";
+		}
+		return ret;
+	}
+
+	public String getLeftDivStyleClass() {
+		String ret = "";
+		if (isTreeVisible() && !isGuestMode()) {
+			ret += "fl-col fl-force-left leftArea";
+		}
+		return ret;
+	}
+
+	public String getRightDivStyleClass() {
+		String ret = "";
+		if (isTreeVisible() && !isGuestMode()) {
+			ret += "fl-col fl-force-right rightArea";
+		}
+		return ret;
+	}
+
+	public String getLeftDivStyle() {
+		String ret = "";
+		if (isTreeVisible() && !isGuestMode()) {
+			ret += "width:" + getTreeSize() + "%";
+		}
+		return ret;
+	}
+
+	public String getRightDivStyle() {
+		String ret = "";
+		if (isTreeVisible() && !isGuestMode()) {
+			int size = 98 - getTreeSize();
+			ret += "width:" + size + "%";
+		}
+		return ret;
+	}
+
+	public String getToggleTreeVisibilityImage() {
+		String ret = "";
+		if (isTreeVisible()) {
+			ret = "/media/XMLWithoutMenu.gif";
+		} else {
+			ret = "/media/menuAndXML.gif";
+		}
+		return ret;
+	}
+
+	public String getToggleTreeVisibilityTitle() {
+		String ret = "";
+		if (isTreeVisible()) {
+			ret = getString("hideTree");
+		} else {
+			ret = getString("showTree");
+		}
+		return ret;
+	}
 
 }

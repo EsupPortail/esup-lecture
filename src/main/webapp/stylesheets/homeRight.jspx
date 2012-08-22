@@ -19,30 +19,23 @@
 						styleClass="itemDisplayModeSelector">
 						<f:selectItems value="#{homeController.availableItemDisplayModes}"/>
 					</h:selectOneMenu>
-					<h:commandButton styleClass="itemDisplayModeButton"
+					<h:commandButton id="idm" styleClass="itemDisplayModeButton"
 						value="#{msgs['changeItemDisplayModeButtonLabel']}"
 						action="#{homeController.changeItemDisplayMode}" />
 				</li>
-				<ui:fragment rendered="#{!homeController.treeVisible and !homeController.forcedNoTreeVisible}">
+				<ui:fragment rendered="#{!homeController.forcedNoTreeVisible}">
 				<li>
-					<h:commandButton action="#{homeController.toggleTreeVisibility}"
-						image="/media/menuAndXML.gif" alt="#{msgs['showTree']}"
-						title="#{msgs['showTree']}" styleClass="valign" />
+					<h:commandButton id="ttv" action="#{homeController.toggleTreeVisibility}"
+						image="#{homeController.toggleTreeVisibilityImage}" alt="#{homeController.toggleTreeVisibilityTitle}"
+						title="#{homeController.toggleTreeVisibilityTitle}" styleClass="valign" />
 				</li></ui:fragment>
-				<ui:fragment rendered="#{homeController.treeVisible and !homeController.forcedNoTreeVisible}">
 				<li>
-					<h:commandButton action="#{homeController.toggleTreeVisibility}"
-						image="/media/XMLWithoutMenu.gif" alt="#{msgs['hideTree']}"
-						title="#{msgs['hideTree']}" styleClass="valign" />
-				</li></ui:fragment>
-				
-				<li>
-					<h:commandButton action="#{homeController.markAllItemsAsRead}"
+					<h:commandButton id="maiar" action="#{homeController.markAllItemsAsRead}"
 						image="/media/unread.png" alt="#{msgs['markAllAsRead']}"
 						title="#{msgs['markAllAsRead']}" styleClass="valign" />
 				</li>
 				<li>
-					<h:commandButton action="#{homeController.markAllItemsAsNotRead}"
+					<h:commandButton id="maiau" action="#{homeController.markAllItemsAsNotRead}"
 						image="/media/read.png" alt="#{msgs['markAllAsNotRead']}"
 						title="#{msgs['markAllAsNotRead']}" styleClass="valign" />
 				</li>
@@ -52,20 +45,20 @@
 	<!-- Source(s) and Items display -->
 	<div class="portlet-section lecture-right" role="region">
 		<!-- categories display -->
-		<ui:repeat value="#{homeController.selectedOrAllCategories}"
+		<ui:repeat id="lcats" value="#{homeController.selectedOrAllCategories}"
 			var="cat">
 			<!-- sources display -->
-			<ui:repeat value="#{cat.selectedOrAllSources}" var="source">
+			<ui:repeat id="lsrcs" value="#{cat.selectedOrAllSources}" var="source">
 				<h:panelGroup layout="block" rendered="#{source.withDisplayedItems}">
 					<h4 class="portlet-section-header fl-push">
 						<h:outputText value="#{cat.name} &gt; #{source.name}" />
 					</h4>
 					<!-- Items display -->
-					<ui:repeat value="#{source.sortedItems}" var="item">
+					<ui:repeat id="items" value="#{source.sortedItems}" var="item">
 						<!-- Read/Unread Button -->
 						<div class="lecture-article fl-push">
 							<div class="lecture-toggleButton fl-force-left">
-								<h:commandButton action="#{homeController.toggleItemReadState}"
+								<h:commandButton id="mar" action="#{homeController.toggleItemReadState}"
 									image="/media/unread.png" alt="#{msgs['markAsRead']}"
 									title="#{msgs['markAsRead']}"
 									rendered="#{!item.read and !homeController.guestMode and !item.dummy and cat.userCanMarkRead}"
@@ -75,7 +68,7 @@
 									<f:setPropertyActionListener target="#{homeController.ualItem}"
 										value="#{item}" />
 								</h:commandButton>
-								<h:commandButton action="#{homeController.toggleItemReadState}"
+								<h:commandButton id="mau" action="#{homeController.toggleItemReadState}"
 									image="/media/read.png" alt="#{msgs['markAsUnread']}"
 									title="#{msgs['markAsUnread']}"
 									rendered="#{item.read and !homeController.guestMode and !item.dummy and cat.userCanMarkRead}"

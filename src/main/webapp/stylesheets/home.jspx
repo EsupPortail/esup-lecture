@@ -5,25 +5,22 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	<ui:composition template="/stylesheets/template.jspx">
 		<ui:define name="content">
-			<h:form id="home">
-				<h:panelGroup layout="block" styleClass="portlet-section fl-container-flex"
-					rendered="#{homeController.treeVisible and !homeController.guestMode}">
-					<div class="fl-col fl-force-left leftArea"
-						style="width: #{homeController.treeSize}%">
-						<ui:include src="homeLeft.jspx" />
-					</div>
-					<div class="fl-col fl-force-right rightArea"
-						style="width: #{98-homeController.treeSize}%">
-						<ui:include src="homeRight.jspx" />
-					</div>
-				</h:panelGroup>
-				<h:panelGroup layout="block" styleClass="portlet-section"
-					rendered="#{!homeController.treeVisible or homeController.guestMode}">
-					<div>
-						<ui:include src="homeRight.jspx" />
-					</div>
-				</h:panelGroup>
-			</h:form>
+			<div class="portlet-section-body esup-lecture">
+				<h:form id="f">
+					<h:panelGroup id="m" layout="block"
+						styleClass="#{homeController.mainDivStyleClass}" >
+						<h:panelGroup id="l"
+							styleClass="#{homeController.leftDivStyleClass}" 
+							rendered="#{homeController.treeVisible and !homeController.guestMode}">
+							<ui:include src="homeLeft.jspx" />
+						</h:panelGroup>
+						<h:panelGroup id="r"
+							styleClass="#{homeController.rightDivStyleClass}">
+							<ui:include src="homeRight.jspx" />
+						</h:panelGroup>
+					</h:panelGroup>
+				</h:form>
+			</div>
 		</ui:define>
 	</ui:composition>
 </div>
