@@ -27,7 +27,7 @@
 										image="#{item.read ? '/media/read.png' : '/media/unread.png'}"
 										alt="#{msgs['markAsRead']}"
 										title="#{item.read ? msgs['markAsUnread'] : msgs['markAsRead']}"
-										rendered="#{!mobileHomeController.guestMode and !item.dummy and cat.userCanMarkRead}"
+										rendered="#{!mobileHomeController.guestMode and !item.dummy and mobileHomeController.selectedCategory.userCanMarkRead}"
 										styleClass="lecture-markAsReadButton">
 										<f:setPropertyActionListener
 											target="#{mobileHomeController.ualSource}"
