@@ -6,40 +6,24 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	<ui:composition template="/stylesheets/template.jspx">
 		<ui:define name="content">
-			<h:form id="edit">
-				<!-- Structure without js-layout -->
-				<div class="portlet-section fl-container-flex">
-					<div class="fl-col fl-force-left" style="width: #{homeController.treeSize}%">
-						<ui:include src="editLeft.jspx" />
+			<div  id="#{homeController.namespace}main" class="portlet-section-body esup-lecture">
+				<h:form id="edit">
+					<!-- Structure without js-layout -->
+					<div class="portlet-section fl-container-flex">
+						<div class="fl-col fl-force-left" style="width: #{homeController.treeSize}%">
+							<ui:include src="editLeft.jspx" />
+						</div>
+						<div class="fl-col fl-force-right" style="width: #{98-homeController.treeSize}%">
+							<ui:include src="editRight.jspx" />
+						</div>
 					</div>
-					<div class="fl-col fl-force-right" style="width: #{98-homeController.treeSize}%">
-						<ui:include src="editRight.jspx" />
-					</div>
-				</div>
-				<!-- End Structure without js-layout -->
-
-				<!-- Structure with js-layout -->
-				<!-- Comment the struct above and uncomment below to use it, 
-					and declare media/js/init-js-layout.js in the Head section of the portal (see skin.xml for uPortal 3.2) -->
-				<!-- 
-				<div id="panels-layout" forceId="true">
-					<div id="panelLeft-ui" styleClass="ui-layout-west" forceId="true"
-						style="width: #{editController.treeSize}%">
-						<ui:include src="editLeft.jspx" />
-					</div>
-					<div id="panelRight-ui" styleClass="ui-layout-center"
-						forceId="true" style="width: #{99-editController.treeSize}%">
-						<ui:include src="editRight.jspx" />
-					</div>
-				</div>
-				-->
-				
-			</h:form>
-			<script type="text/javascript">
-			if (document.getElementById("home:itemDisplayModeButton")) {
-				document.getElementById("home:itemDisplayModeButton").style.display = "none";
-			}
-        	</script>
+				</h:form>
+			</div>
+			<script>
+				(function($){
+					$(document).ready(esup_lecture("#{homeController.namespace}main"));
+				})(jQuery);
+			</script>
 		</ui:define>
 	</ui:composition>
 </div>
