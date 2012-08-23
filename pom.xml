@@ -38,7 +38,12 @@
 			<id>jlehtinen.net</id>
 			<url>http://repo.jlehtinen.net/maven2/</url>
 		</pluginRepository>
-	</pluginRepositories>
+	    <pluginRepository>
+	      <name>oss.sonatype.org</name>
+	      <id>oss.sonatype.org</id>
+	      <url>http://oss.sonatype.org/content/groups/public</url>
+	    </pluginRepository>
+  	</pluginRepositories>
 	<distributionManagement>
 		<repository>
 			<id>esup</id>
@@ -97,7 +102,64 @@
 					<wtpversion>1.5</wtpversion>
 				</configuration>
 			</plugin>
+  	      	<plugin>
+		        <groupId>net.alchim31.maven</groupId>
+		        <artifactId>yuicompressor-maven-plugin</artifactId>
+		        <version>1.1</version>
+		        <executions>
+		          <execution>
+		            <goals>
+		              <goal>compress</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+                <configuration>
+		          <resources>
+		            <resource>${basedir}/src/main/webapp/media/js/esup-lecture.js</resource>
+		          </resources>
+	              <excludes>
+	                <exclude>**/*.css</exclude>
+	                <exclude>**/*.min.js</exclude>
+	              </excludes>	
+	              <suffix>-${project.version}.min</suffix>	          
+		        </configuration>
+   		    </plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											net.alchim31.maven
+										</groupId>
+										<artifactId>
+											yuicompressor-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.1,)
+										</versionRange>
+										<goals>
+											<goal>compress</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	<dependencies>
 		<dependency>

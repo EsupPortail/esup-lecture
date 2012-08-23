@@ -1,6 +1,6 @@
 if (typeof esup_lecture === 'undefined') {
 	function esup_lecture(parentID, $) {
-		var parentID = "#" + parentID + " ";
+		parentID = "#" + parentID + " ";
 
 		/***************************************
 		 * esup-lecture functions
