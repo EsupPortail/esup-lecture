@@ -6,9 +6,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"><!-- TREE --> 
 	<!-- Title -->
 	<div class="portlet-section lecture-left" role="region">
-		<h3 class="portlet-section-header" role="heading">
-			<h:outputText value="#{editController.context.name}" />
-		</h3>
+		<h3 class="portlet-section-header" role="heading">#{editController.context.name}</h3>
 		<div class="portlet-section-body">
 			<ul class="fl-listmenu">
 				<ui:repeat value="#{editController.context.categories}" var="cat">

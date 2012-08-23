@@ -8,7 +8,10 @@ package org.esupportail.lecture.web.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.portlet.faces.BridgeUtil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -346,4 +349,13 @@ public class HomeController extends TwoPanesController {
 		return ret;
 	}
 
+	public String getNamespace() {
+		String ret="servlet_";
+		if (BridgeUtil.isPortletRequest()) {
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			ret = externalContext.encodeNamespace("");
+		}
+		return ret;
+	}
+	
 }

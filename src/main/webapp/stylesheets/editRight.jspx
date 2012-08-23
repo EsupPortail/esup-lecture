@@ -6,9 +6,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<div class="portlet-section lecture-right" role="region">
-		<h3 class="fl-force-left">
-			<h:outputText value="#{editController.selectionTitle}" />
-		</h3>
+		<h3 class="fl-force-left">#{editController.selectionTitle}</h3>
 	</div>
 
 	<!-- Source(s) and Items display -->
@@ -37,7 +35,7 @@
 							</h:commandButton> <h:graphicImage value="/media/forced.png"
 								alt="#{msgs['forcedSource']}" title="#{msgs['forcedSource']}"
 								rendered="#{src.obliged}" styleClass="valign" /> <f:verbatim>&#160;</f:verbatim>
-							<h:outputText value="#{src.name}" /></li>
+							#{src.name}</li>
 					</ui:repeat>
 				</ul>
 			</ui:fragment>

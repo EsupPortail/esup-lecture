@@ -6,15 +6,13 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 	<!-- MENU with Source name, sort list and zoom -->
 	<div class="portlet-section lecture-right" role="region">
-		<h3 class="fl-force-left">
-			<h:outputText value="#{homeController.context.name}" />
-		</h3>
-		<h:panelGroup layout="block" styleClass="lecture-menu fl-force-right"
+		<h3 class="fl-force-left">#{homeController.context.name}</h3>
+		<h:panelGroup id="hr" layout="block" styleClass="lecture-menu fl-force-right"
 			rendered="#{!homeController.guestMode &amp;&amp; homeController.userCanMarkRead}">
 			<ul class="fl-tabs">
 				<li>
-					<h:outputText value="#{msgs['selectorLabel']}" />
-					<h:selectOneMenu value="#{homeController.itemDisplayMode}"
+					#{msgs['selectorLabel']}
+					<h:selectOneMenu id="sidm" value="#{homeController.itemDisplayMode}"
 						converter="#{itemDisplayModeConverter}"
 						styleClass="itemDisplayModeSelector">
 						<f:selectItems value="#{homeController.availableItemDisplayModes}"/>
@@ -49,10 +47,8 @@
 			var="cat">
 			<!-- sources display -->
 			<ui:repeat id="lsrcs" value="#{cat.selectedOrAllSources}" var="source">
-				<h:panelGroup layout="block" rendered="#{source.withDisplayedItems}">
-					<h4 class="portlet-section-header fl-push">
-						<h:outputText value="#{cat.name} &gt; #{source.name}" />
-					</h4>
+				<h:panelGroup id="d4s" layout="block" rendered="#{source.withDisplayedItems}">
+					<h4 class="portlet-section-header fl-push">#{cat.name} &gt; #{source.name}</h4>
 					<!-- Items display -->
 					<ui:repeat id="items" value="#{source.sortedItems}" var="item">
 						<!-- Read/Unread Button -->
@@ -81,7 +77,7 @@
 							</div>
 							<!-- Item Display -->
 							<div class="#{item.read ? 'lecture-readArticle' : 'lecture-unreadArticle'}">
-								<h:outputText value="#{item.htmlContent}" escape="false" />
+								<h:outputText id="item" value="#{item.htmlContent}" escape="false" />
 							</div>
 						</div>
 					</ui:repeat>
