@@ -11,6 +11,8 @@ import java.util.List;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
 import javax.portlet.faces.BridgeUtil;
 
 import org.apache.commons.logging.Log;
@@ -354,6 +356,16 @@ public class HomeController extends TwoPanesController {
 		if (BridgeUtil.isPortletRequest()) {
 			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
 			ret = externalContext.encodeNamespace("");
+		}
+		return ret;
+	}
+
+	public String getContextPath() {
+		String ret = "/";
+		if (BridgeUtil.isPortletRequest()) {
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
+			ret = portletRequest.getContextPath();
 		}
 		return ret;
 	}

@@ -19,11 +19,6 @@
 					</div>
 				</h:form>
 			</div>
-			<script>
-				(function($){
-					$(document).ready(esup_lecture("#{homeController.namespace}main"));
-				})(jQuery);
-			</script>
 		</ui:define>
 	</ui:composition>
 </div>

@@ -1,4 +1,5 @@
-function esup_lecture(parentID) {
+if (typeof esup_lecture === 'undefined') {
+	function esup_lecture(parentID, $) {
 		var parentID = "#" + parentID + " ";
 
 		/***************************************
@@ -152,3 +153,4 @@ function esup_lecture(parentID) {
 		);
 
 	}
+}

@@ -1,0 +1,13 @@
+JS :
+Cf. http://www.google.fr/url?sa=t&rct=j&q=javascrip+uportal&source=web&cd=1&cad=rja&ved=0CE4QFjAA&url=https%3A%2F%2Fwiki.jasig.org%2Fdownload%2Fattachments%2F22940141%2FHow_to_use_JavaScript_in_uPortal_3.pdf%3Fversion%3D1%26modificationDate%3D1236555418842&ei=rh82UPWrGtCIhQfq-oGYDg&usg=AFQjCNGjjLSdzk6sm54wmIVUTxziG8XHvw
+
+uPortal V3 --> JSR 168 --> impossible de charger les js dans les ressources de la portlet :
+- lecture.js dans la conf du portail
+- appel de la fonction esup_lecture en passant par up.JQuery positionné par le portail
+
+uPortal V3 --> JSR 268 --> possibilité de charger les js dans les ressources de la portlet (Tests à faire avec un passage à JSF2) :
+- lecture.js des les ressources de la portlet
+- appel de la fonction esup_lecture en passant par un lecture.JQuery positionné dans la portlet 
+  (et passant par un JQuery.noConflict() dont le JQuery est défini dans un fichier JQuery.js spécifique à la portlet) 
+NB : Il ne semble pas indispensable de passer à JSF2 pour servir directement une ressource. Ceci semble semble seulement lié au portail
+
