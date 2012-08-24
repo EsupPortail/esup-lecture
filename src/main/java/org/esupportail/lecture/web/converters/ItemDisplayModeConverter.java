@@ -32,19 +32,20 @@ public class ItemDisplayModeConverter implements Converter {
 	/**
 	 * @see javax.faces.convert.Converter#getAsObject(javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.String)
 	 */
-	public Object getAsObject(@SuppressWarnings("unused")
-	final FacesContext facesContext, 
-			@SuppressWarnings("unused")
+	public Object getAsObject(final FacesContext facesContext, 
 			final UIComponent component, final String value) throws ConverterException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getAsObject(" + value + ")");
 		}
-		ItemDisplayMode ret = ItemDisplayMode.ALL;
+		ItemDisplayMode ret = ItemDisplayMode.UNDEFINED;
 		if (value.equals("notRead")) {
 			ret = ItemDisplayMode.UNREAD;
 		}
-		if (value.equals("unreadFirst")) {
-			ret = ItemDisplayMode.UNREADFIRST;
+		if (value.equals("all")) {
+			ret = ItemDisplayMode.ALL;
+		}
+		if (value.equals("notRead")) {
+			ret = ItemDisplayMode.UNREAD;
 		}
 		return ret;
 	}
@@ -52,9 +53,7 @@ public class ItemDisplayModeConverter implements Converter {
 	/**
 	 * @see javax.faces.convert.Converter#getAsString(javax.faces.context.FacesContext, javax.faces.component.UIComponent, java.lang.Object)
 	 */
-	public String getAsString(@SuppressWarnings("unused")
-	final FacesContext facesContext, 
-			@SuppressWarnings("unused")
+	public String getAsString(final FacesContext facesContext, 
 			final UIComponent component, final Object obj) throws ConverterException {
 		String ret = "";
 		if (obj instanceof ItemDisplayMode) {
@@ -67,6 +66,9 @@ public class ItemDisplayModeConverter implements Converter {
 			}
 			if (itemDisplayMode == ItemDisplayMode.UNREADFIRST) {
 				ret = "unreadFirst";
+			}
+			if (itemDisplayMode == ItemDisplayMode.UNDEFINED) {
+				ret = "undefined";
 			}
 		}
 		if (LOG.isDebugEnabled()) {

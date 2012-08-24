@@ -28,7 +28,6 @@ import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
-// test svn
 
 /**
  * The facade service.
@@ -190,10 +189,10 @@ public class FacadeService implements InitializingBean {
 	 * @return hb modified UserProfile
 	 * @throws InternalDomainException 
 	 */
-	public UserProfile marckItemReadMode(final UserProfile userProfile, final String sourceId, 
+	public UserProfile markItemReadMode(final UserProfile userProfile, final String sourceId, 
 			final String itemId, final boolean isRead)
 	throws InternalDomainException {
-		return domainService.marckItemReadMode(userProfile, sourceId, itemId, isRead);
+		return domainService.markItemReadMode(userProfile, sourceId, itemId, isRead);
 	}
 
 	/**
@@ -204,7 +203,7 @@ public class FacadeService implements InitializingBean {
 	 * @return userProfile
 	 * @throws InternalDomainException 
 	 */
-	public UserProfile marckItemDisplayMode(final UserProfile userProfile, final String sourceId, final ItemDisplayMode mode) 
+	public UserProfile markItemDisplayMode(final UserProfile userProfile, final String sourceId, final ItemDisplayMode mode) 
 			throws InternalDomainException {
 		return domainService.markItemDisplayMode(userProfile, sourceId, mode);
 	}

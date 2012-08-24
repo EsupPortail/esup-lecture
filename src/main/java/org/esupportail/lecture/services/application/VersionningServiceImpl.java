@@ -117,6 +117,13 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	}
 
 	/**
+	 * @see org.esupportail.commons.services.application.VersionningService#checkVersion()
+	 */
+	public void checkVersion() {
+		checkVersion(true, false);
+	};	
+	
+	/**
 	 * print the last version available.
 	 */
 	private void printLastVersion() {
@@ -214,7 +221,6 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 	 * Upgrade the database to a given version, if needed.
 	 * @param version 
 	 */
-	@SuppressWarnings("unchecked")
 	private void upgradeDatabaseIfNeeded(final String version) {
 		if (!getDatabaseVersion().isOlderThan(version)) {
 			return;

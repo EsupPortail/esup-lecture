@@ -31,7 +31,7 @@
 			It must extend abstract org.esupportail.lecture.domain.FacadeService.
 		</description>
 		<property name="domainService" ref="domainService"/>
-		<property name="externalService" ref="externalService"/>
+		<property name="externalService" ref="${externalService.bean}"/>
 	</bean>
 	 
 	<!-- 
@@ -47,7 +47,7 @@
 			It must implement interface org.esupportail.lecture.domain.DomainService.
 		</description>
 		<property name="i18nService" ref="i18nService" />
-		<property name="authenticationService" ref="${auth.bean}" />
+		<property name="authenticationService" ref="${authenticationService.bean}" />
 	</bean> 
 	
 	<aop:config>
@@ -58,7 +58,7 @@
 
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<tx:attributes>
-			<tx:method name="marck*" propagation="REQUIRED" />
+			<tx:method name="mark*" propagation="REQUIRED" />
 			<tx:method name="set*" propagation="REQUIRED" />
 			<tx:method name="fold*" propagation="REQUIRED" />
 			<tx:method name="unfold*" propagation="REQUIRED" />
@@ -71,13 +71,13 @@
 	
 
 	<!-- Main domain model class -->
-		<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
+	<bean id="channel" class="org.esupportail.lecture.domain.model.Channel">
 		<description>
 			This bean is the main domain model class, used by the domainService.
 		</description>
 		<property name="cacheManager" ref="cacheManager" />
 		<property name="daoService" ref="daoService"/>
-		<property name="externalService" ref="externalService"/>
+		<property name="externalService" ref="${externalService.bean}"/>
 		<property name="configFilePath" value="/properties/esup-lecture.xml"/>
 		<property name="mappingFilePath" value="/properties/mappings.xml"/>	
 		
@@ -100,17 +100,19 @@
 				EXTERNAL SERVICE 
 	***************************************************-->
 	<bean
-		id="externalService"
+		id="externalServiceStub"
+		class="org.esupportail.lecture.domain.ExternalServiceStub">
+	</bean>
+
+	<bean
+		id="externalServiceImpl"
 		class="org.esupportail.lecture.domain.ExternalServiceImpl">
 		<description>
 			This bean provides the external (portlet and/or servlet) service of the application, used by the 
 			web interface and the command-line calls.
 			It must implement interface org.esupportail.lecture.domain.ExternalService.
 		</description>
-		<property name="authenticationService" ref="${auth.bean}" />
-		<!-- tmp V2
-		<property name="portletService" ref="portletService" />
-		 -->
+		<property name="authenticationService" ref="${authenticationService.bean}" />
 		<property name="portletService" ref="portletService" />
 		<property name="servletService" ref="servletService" />
 	</bean>
@@ -118,7 +120,7 @@
 	<bean id="servletService" class="org.esupportail.lecture.domain.utils.ServletService">
 		<description>external service in servlet mode</description>
 		<property name="portalService" ref="portalService" />
-		<property name="authenticationService" ref="${auth.bean}" />
+		<property name="authenticationService" ref="${authenticationService.bean}" />
 	</bean>
 
 	<bean id="portletService" class="org.esupportail.lecture.domain.utils.PortletService">

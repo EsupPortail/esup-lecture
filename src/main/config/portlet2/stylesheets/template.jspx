@@ -5,12 +5,15 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	class="portlet-section-body esup-lecture">
 	<f:view locale="#{sessionController.locale}">
+		<script type="text/javascript" src="#{homeController.contextPath}/media/js/jquery-1.3.2.min.js" />
+		<script type="text/javascript" src="#{homeController.contextPath}/media/js/jquery-ui-1.7.3.custom.min.js" />
+		<script type="text/javascript" src="#{homeController.contextPath}/media/js/esup-lecture.js" />
 		<div class="portlet">
 			<ui:insert name="content" />
 		</div>
 		<script>
 			var lecture = lecture || {};
-			lecture.jQuery = up.jQuery;
+			lecture.jQuery = jQuery.noConflict(true);
 			lecture.jQuery(function(){
 				esup_lecture("#{homeController.namespace}main", lecture.jQuery);
 			});

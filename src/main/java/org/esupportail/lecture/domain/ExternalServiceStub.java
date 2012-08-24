@@ -5,6 +5,9 @@
 */
 package org.esupportail.lecture.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -15,15 +18,15 @@ import org.apache.commons.logging.LogFactory;
 public class ExternalServiceStub implements ExternalService {
 
 	/*
-	 *************************** PROPERTIES ******************************** */	
-	
+	 *************************** PROPERTIES ******************************** */
+
 	/**
 	 * Log instance.
 	 */
-	private static final Log LOG = LogFactory.getLog(ExternalServiceStub.class); 
+	private static final Log LOG = LogFactory.getLog(ExternalServiceStub.class);
 
 	/*
-	 *************************** INIT ******************************** */	
+	 *************************** INIT ******************************** */
 	/**
 	 * Default constructor.
 	 */
@@ -32,9 +35,9 @@ public class ExternalServiceStub implements ExternalService {
 	}
 
 	/*
-	 *************************** METHODS ******************************** */	
+	 *************************** METHODS ******************************** */
 
-	
+
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getConnectedUserId()
 	 */
@@ -55,7 +58,7 @@ public class ExternalServiceStub implements ExternalService {
 	public String getPreferences(final String name) {
 		String ret = null;
 		if (name.equalsIgnoreCase(DomainTools.getContext())) {
-			ret = "c1";
+			ret = "default";
 		}
 		if (LOG.isTraceEnabled()) {
 			LOG.trace("getPreferences(" + name + ") return " );
@@ -66,19 +69,26 @@ public class ExternalServiceStub implements ExternalService {
 	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserAttribute(java.lang.String)
 	 */
-	public String getUserAttribute(final String attribute) {
-		String ret = null;
+	public List<String> getUserAttribute(final String attribute) {
+		List<String> ret = new ArrayList<String>();
 		if (attribute.equalsIgnoreCase("uid")) {
-			ret = "bourges";
+			ret = new ArrayList<String>();
+			ret.add("bourges");
 		} else if (attribute.equalsIgnoreCase("")) {
-			ret = "";
+			ret = new ArrayList<String>();
+			ret.add("");
 		} else if (attribute.equalsIgnoreCase("sn")) {
-			ret = "User";
+			ret = new ArrayList<String>();
+			ret.add("User");
+		} else if (attribute.equalsIgnoreCase("isMemberOf")) {
+			ret = new ArrayList<String>();
+			ret.add("group1");
+			ret.add("group2");
 		}
 		return ret;
 	}
 
-	/** 
+	/**
 	 * @see org.esupportail.lecture.domain.ExternalService#getUserProxyTicketCAS(String)
 	 */
 	public String getUserProxyTicketCAS(@SuppressWarnings("unused") final String casTargetService) {
@@ -95,11 +105,11 @@ public class ExternalServiceStub implements ExternalService {
 			ret = true;
 		}
 		return ret;
-		
+
 	}
-	
-	/* 
-	 ************************* ACCESSORS ******************************** */	
+
+	/*
+	 ************************* ACCESSORS ******************************** */
 
 
 }

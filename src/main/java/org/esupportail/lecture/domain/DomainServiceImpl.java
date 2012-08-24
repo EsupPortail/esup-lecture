@@ -352,7 +352,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * Mark item as read for user uid.
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(UserProfile, String, String, boolean)
 	 */
-	public UserProfile marckItemReadMode(final UserProfile userProfile, final String sourceId, 
+	public UserProfile markItemReadMode(final UserProfile userProfile, final String sourceId, 
 		final String itemId, final boolean isRead) 
 	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
@@ -398,7 +398,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			String errorMsg = "CustomSourceNotFoundException for service 'markItemDisplayMode(user "
 				+ userProfile.getUserId() + ", source " + sourceId + ", mode " + mode + ")";
 			LOG.error(errorMsg);
-			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
 			throw new InternalDomainException(errorMsg, e);
 		}
 		

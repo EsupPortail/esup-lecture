@@ -10,7 +10,7 @@
 			class="#{homeController.guestMode ? 'lecture-logoGuest' : 'lecture-logo' } portlet-section-header"
 			role="heading" />
 		<h3 class="portlet-section-header" role="heading">
-			<h:commandLink value="#{homeController.context.name}"
+			<h:commandLink id="sco" value="#{homeController.context.name}"
 				action="#{homeController.selectElement}">
 				<f:setPropertyActionListener target="#{homeController.ualCategory}"
 					value="#{null}" />
@@ -20,16 +20,16 @@
 		</h3>
 		<div class="portlet-section-body">
 			<ul class="fl-listmenu">
-				<ui:repeat value="#{homeController.context.categories}" var="cat">
+				<ui:repeat id="cats" value="#{homeController.context.categories}" var="cat">
 					<li class="#{cat.folded ? 'collapsed' : 'expanded'}">
 						<div class="fl-force-left">
-							<h:commandButton action="#{homeController.toggleFoldedState}"
+							<h:commandButton id="tf" action="#{homeController.toggleFoldedState}"
 								image="/media/moins.gif" alt="#{msgs['colapseCategory']}"
 								title="#{msgs['colapseCategory']}" rendered="#{!cat.folded}">
 								<f:setPropertyActionListener
 									target="#{homeController.ualCategory}" value="#{cat}" />
 							</h:commandButton>
-							<h:commandButton action="#{homeController.toggleFoldedState}"
+							<h:commandButton id="tfb" action="#{homeController.toggleFoldedState}"
 								image="/media/plus.gif" alt="#{msgs['expandCategory']}"
 								title="#{msgs['expandCategory']}" rendered="#{cat.folded}">
 								<f:setPropertyActionListener
@@ -37,7 +37,7 @@
 							</h:commandButton>
 						</div>
 						<div class="lecture-category">
-							<h:commandLink action="#{homeController.selectElement}"
+							<h:commandLink id="sca" action="#{homeController.selectElement}"
 								title="#{cat.name}" value="#{cat.name}"
 								styleClass="#{cat.id == homeController.ualCategory.id ? 'buttonStyle currentCategory' : 'buttonStyle otherCategory'}">
 								<f:setPropertyActionListener
@@ -48,10 +48,10 @@
 						</div> <ui:fragment rendered="#{!cat.folded}">
 							<ul class="fl-listmenu">
 								<!-- Sources -->
-								<ui:repeat value="#{cat.sources}" var="src">
+								<ui:repeat id="srcs" value="#{cat.sources}" var="src">
 									<li
 										class="#{src.id == homeController.ualSource.id ? 'currentSource' : 'otherSource'} #{src.unreadItemsNumber > 0 ? 'sourceUnreadItems' : 'sourceNoUnreadItems'}">
-										<h:commandLink action="#{homeController.selectElement}"
+										<h:commandLink id="ssr" action="#{homeController.selectElement}"
 											title="#{src.name}"
 											value="#{src.name} (#{src.unreadItemsNumber})"
 											styleClass="buttonStyle"
@@ -64,7 +64,7 @@
 									</li>
 									<li
 										class="#{src.id == homeController.ualSource.id ? 'currentSource' : 'otherSource'} #{src.unreadItemsNumber > 0 ? 'sourceUnreadItems' : 'sourceNoUnreadItems'}">
-										<h:commandLink action="#{homeController.selectElement}"
+										<h:commandLink id="ssrb" action="#{homeController.selectElement}"
 											title="#{src.name}" value="#{src.name}"
 											styleClass="buttonStyle"
 											rendered="#{src.unreadItemsNumber == 0}">
@@ -85,21 +85,21 @@
 	<!-- Adjust Tree Size buttons 
 		<hr /> -->
 
-	<h:panelGroup layout="block" styleClass="portlet-section lecture-left"
+	<h:panelGroup  id="tb" layout="block" styleClass="portlet-section lecture-left"
 		rendered="#{!homeController.guestMode}">
 		<div class="fl-force-left treeButtonsArea">
-			<h:commandButton id="treeSmallerButton"
+			<h:commandButton id="tsb"
 				actionListener="#{homeController.adjustTreeSize}"
 				image="/media/retract.gif" alt="#{msgs['treeSmaller']}"
 				title="#{msgs['treeSmaller']}" />
-			<h:commandButton id="treeLargerButton"
+			<h:commandButton id="tbl"
 				actionListener="#{homeController.adjustTreeSize}"
 				image="/media/extand.gif" alt="#{msgs['treeLarger']}"
 				title="#{msgs['treeLarger']}" />
 		</div>
 
 		<div class="fl-force-left">
-			<h:commandButton styleClass="buttonNoStyle" id="editButton"
+			<h:commandButton id="eb" styleClass="buttonNoStyle" 
 				action="navigationEdit" value="#{msgs['edit']}"
 				alt="#{msgs['edit']}" title="#{msgs['edit']}" />
 		</div>

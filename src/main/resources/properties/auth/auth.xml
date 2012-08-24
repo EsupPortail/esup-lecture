@@ -10,15 +10,13 @@
 		This file should not be modified but by the developers. This file is referenced 
 		by /properties/applicationContext.xml. -->
 
-<!-- 
-	<bean id="authenticationService" 
+	<bean id="offlineFixedUserAuthenticationService" 
 		class="org.esupportail.commons.services.authentication.OfflineFixedUserAuthenticationService"> 
 			<property name="authId" value="bourges" />
 			<property name="authType" value="web" />
 	</bean>
- -->
 
-	<bean id="authenticationService"
+	<bean id="portalOrCasFilterAuthenticationService"
 		class="org.esupportail.commons.services.authentication.PortalOrCasFilterAuthenticationService">
 		<description>
 			The name of the Portal attribute that holds the uid of

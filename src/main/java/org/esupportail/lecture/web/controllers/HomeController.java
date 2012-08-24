@@ -5,7 +5,15 @@
  */
 package org.esupportail.lecture.web.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.portlet.PortletContext;
+import javax.portlet.PortletRequest;
+import javax.portlet.faces.BridgeUtil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,7 +42,7 @@ public class HomeController extends TwoPanesController {
 	/**
 	 * Display mode for item (all | unread | unreadfirst).
 	 */
-	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.ALL;
+	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.UNDEFINED;
 	/**
 	 *  item used by t:updateActionListener.
 	 */
@@ -45,7 +53,6 @@ public class HomeController extends TwoPanesController {
 	 */
 	public HomeController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -65,7 +72,7 @@ public class HomeController extends TwoPanesController {
 		SourceWebBean selectedSource = getUalSource();
 		try {
 			UserProfile userProfile = getUserProfile();
-			userProfile = getFacadeService().marckItemReadMode(userProfile, 
+			userProfile = getFacadeService().markItemReadMode(userProfile, 
 					selectedSource.getId(), ualItem.getId(), !ualItem.isRead());
 			setUserProfile(userProfile);
 		} catch (Exception e) {
@@ -109,21 +116,23 @@ public class HomeController extends TwoPanesController {
 			throw new SecurityException("Try to access restricted function is guest mode");
 		}
 		List<CategoryWebBean> categoryWebBeans = getSelectedOrAllCategories();
-		try {
-			for (CategoryWebBean categoryWebBean : categoryWebBeans) {
-				List<SourceWebBean> sources = categoryWebBean.getSelectedOrAllSources();
-				if (sources != null) {
-					UserProfile userProfile = getUserProfile();
-					for (SourceWebBean sourceWeb : sources) {
-						userProfile = getFacadeService().marckItemDisplayMode(userProfile,
-								sourceWeb.getId(), itemDisplayMode);
-						sourceWeb.setItemDisplayMode(itemDisplayMode);
+		if (itemDisplayMode != ItemDisplayMode.UNDEFINED) {
+			try {
+				for (CategoryWebBean categoryWebBean : categoryWebBeans) {
+					List<SourceWebBean> sources = categoryWebBean.getSelectedOrAllSources();
+					if (sources != null) {
+						UserProfile userProfile = getUserProfile();
+						for (SourceWebBean sourceWeb : sources) {
+							userProfile = getFacadeService().markItemDisplayMode(userProfile,
+									sourceWeb.getId(), itemDisplayMode);
+							sourceWeb.setItemDisplayMode(itemDisplayMode);
+						}
+						setUserProfile(userProfile);
 					}
-					setUserProfile(userProfile);
 				}
-			}
-		} catch (Exception e) {
-			throw new WebException("Error in changeItemDisplayMode", e);
+			} catch (Exception e) {
+				throw new WebException("Error in changeItemDisplayMode", e);
+			}			
 		}
 		return "OK";
 	}	
@@ -163,7 +172,7 @@ public class HomeController extends TwoPanesController {
 						if (items != null) {
 							UserProfile userProfile = getUserProfile();
 							for (ItemWebBean itemWeb : items) {
-								userProfile = getFacadeService().marckItemReadMode(userProfile, 
+								userProfile = getFacadeService().markItemReadMode(userProfile, 
 										sourceWeb.getId(), itemWeb.getId(), read);
 								itemWeb.setRead(read);
 							}
@@ -206,27 +215,37 @@ public class HomeController extends TwoPanesController {
 	 * @return Display mode form items
 	 */
 	public ItemDisplayMode getItemDisplayMode() {
-		ItemDisplayMode ret = itemDisplayMode;
+		ItemDisplayMode ret = ItemDisplayMode.UNDEFINED;
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getItemDisplayMode()=" + itemDisplayMode);
 		}
 		ContextWebBean currentContext = getContext();
 		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
 		if (selectedCategory != null) {
-			List<SourceWebBean> sources = selectedCategory.getSelectedOrAllSources();
-			if (sources != null) {
-				SourceWebBean source = null;
-				if (sources.size() > 0) {
-					source  = sources.get(0);
+			SourceWebBean source = selectedCategory.getSelectedSource();
+			if (source != null) {
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("getItemDisplayMode() source selected = " + source.getName());
 				}
-				if (source != null) {
-					if (LOG.isDebugEnabled()) {
-						LOG.debug("getItemDisplayMode() source selected = " + source.getName());
-					}
-					ret = source.getItemDisplayMode();
-				}
+				ret = source.getItemDisplayMode();
 			}
 		}
+		return ret;
+	}
+	
+	/**
+	 * @return all available display mode for selected item
+	 */
+	public List<SelectItem> getAvailableItemDisplayModes() {
+		List<SelectItem> ret = new ArrayList<SelectItem>();
+		ContextWebBean currentContext = getContext();
+		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
+		if (selectedCategory == null || selectedCategory.getSelectedSource() == null) {
+			ret.add(new SelectItem(ItemDisplayMode.UNDEFINED, getString("undefined")));			
+		}
+		ret.add(new SelectItem(ItemDisplayMode.ALL, getString("all")));
+		ret.add(new SelectItem(ItemDisplayMode.UNREAD, getString("notRead")));
+		ret.add(new SelectItem(ItemDisplayMode.UNREADFIRST, getString("unreadFirst")));
 		return ret;
 	}
 
@@ -259,27 +278,6 @@ public class HomeController extends TwoPanesController {
 	}
 
 	/**
-	 * @return ALL value from ItemDisplayMode enumeration for JSF view
-	 */
-	public ItemDisplayMode getAll() {
-		return ItemDisplayMode.ALL;
-	}
-
-	/**
-	 * @return UNREAD value from ItemDisplayMode enumeration for JSF view
-	 */
-	public ItemDisplayMode getUnread() {
-		return ItemDisplayMode.UNREAD;
-	}
-
-	/**
-	 * @return UNREADFIRST value from ItemDisplayMode enumeration for JSF view
-	 */
-	public ItemDisplayMode getUnreadfirt() {
-		return ItemDisplayMode.UNREADFIRST;
-	}
-
-	/**
 	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#getContextKey()
 	 */
 	@Override
@@ -291,5 +289,85 @@ public class HomeController extends TwoPanesController {
 		ContextWebBean currentContext = getContext();
 		return currentContext.getTreeVisible().equals(TreeDisplayMode.NEVERVISIBLE);
 	}
+	
+	public String getMainDivStyleClass() {
+		String ret = "portlet-section";
+		if (isTreeVisible() && !isGuestMode()) {
+			ret += " fl-container-flex";
+		}
+		return ret;
+	}
 
+	public String getLeftDivStyleClass() {
+		String ret = "";
+		if (isTreeVisible() && !isGuestMode()) {
+			ret += "fl-col fl-force-left leftArea";
+		}
+		return ret;
+	}
+
+	public String getRightDivStyleClass() {
+		String ret = "";
+		if (isTreeVisible() && !isGuestMode()) {
+			ret += "fl-col fl-force-right rightArea";
+		}
+		return ret;
+	}
+
+	public String getLeftDivStyle() {
+		String ret = "";
+		if (isTreeVisible() && !isGuestMode()) {
+			ret += "width:" + getTreeSize() + "%";
+		}
+		return ret;
+	}
+
+	public String getRightDivStyle() {
+		String ret = "";
+		if (isTreeVisible() && !isGuestMode()) {
+			int size = 98 - getTreeSize();
+			ret += "width:" + size + "%";
+		}
+		return ret;
+	}
+
+	public String getToggleTreeVisibilityImage() {
+		String ret = "";
+		if (isTreeVisible()) {
+			ret = "/media/XMLWithoutMenu.gif";
+		} else {
+			ret = "/media/menuAndXML.gif";
+		}
+		return ret;
+	}
+
+	public String getToggleTreeVisibilityTitle() {
+		String ret = "";
+		if (isTreeVisible()) {
+			ret = getString("hideTree");
+		} else {
+			ret = getString("showTree");
+		}
+		return ret;
+	}
+
+	public String getNamespace() {
+		String ret="servlet_";
+		if (BridgeUtil.isPortletRequest()) {
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			ret = externalContext.encodeNamespace("");
+		}
+		return ret;
+	}
+
+	public String getContextPath() {
+		String ret = "/";
+		if (BridgeUtil.isPortletRequest()) {
+			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+			PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
+			ret = portletRequest.getContextPath();
+		}
+		return ret;
+	}
+	
 }

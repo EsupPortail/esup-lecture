@@ -98,7 +98,12 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * category to set by t:updateActionListener.
 	 */
 	private CategoryWebBean ualCategory;
-
+	/**
+	 * is Current User is Guest
+	 * This property is used to cache this information in session
+	 * to avoid domain call and CAS proxy ticket call
+	 */
+	private Boolean currentIsGuest = null; 
 	
 	/**
 	 * Controller constructor.
@@ -553,7 +558,10 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * @see org.esupportail.lecture.domain.FacadeService#isGuestMode()
 	 */
 	public boolean isGuestMode() {
-		return facadeService.isGuestMode();
+		if (currentIsGuest == null) {
+			currentIsGuest = facadeService.isGuestMode();
+		} 
+		return currentIsGuest;
 	}
 
 	/**
@@ -621,9 +629,15 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 		CategoryWebBean selectedCategory = getUalCategory();
 		ContextWebBean ctx = getContext();
 		ctx.setSelectedCategory(selectedCategory);
-		// set source focused by user as selected source in the selecteed category
-		SourceWebBean selectedSource = getUalSource();
+		//if no selected category then we have to invalidate selected source in all categories
+		if (selectedCategory == null) {
+			for (CategoryWebBean category : ctx.getCategories()) {
+				category.setSelectedSource(null);
+			}
+		}
+		// set source focused by user as selected source in the selected category
 		if (selectedCategory != null) {
+			SourceWebBean selectedSource = getUalSource();
 			selectedCategory.setSelectedSource(selectedSource);
 		}
 		return "OK";

@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.esupportail</groupId>
 	<artifactId>esup-lecture</artifactId>
 	<packaging>war</packaging>
-	<version>2.0.0-RC9-SNAPSHOT</version>
+	<version>2.0.1-SNAPSHOT</version>
 	<name>esup-lecture</name>
 	<url><![CDATA[http://www.esup-portail.org/display/PROJESUPLECTURE/Portlet+Lecture]]></url>
 	<repositories>
@@ -38,7 +37,12 @@
 			<id>jlehtinen.net</id>
 			<url>http://repo.jlehtinen.net/maven2/</url>
 		</pluginRepository>
-	</pluginRepositories>
+	    <pluginRepository>
+	      <name>oss.sonatype.org</name>
+	      <id>oss.sonatype.org</id>
+	      <url>http://oss.sonatype.org/content/groups/public</url>
+	    </pluginRepository>
+  	</pluginRepositories>
 	<distributionManagement>
 		<repository>
 			<id>esup</id>
@@ -83,19 +87,6 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.1.2</version>
-				<executions>
-					<execution>
-						<id>bind-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<artifactId>maven-eclipse-plugin</artifactId>
 				<version>2.8</version>
 				<configuration>
@@ -110,7 +101,64 @@
 					<wtpversion>1.5</wtpversion>
 				</configuration>
 			</plugin>
+  	      	<plugin>
+		        <groupId>net.alchim31.maven</groupId>
+		        <artifactId>yuicompressor-maven-plugin</artifactId>
+		        <version>1.1</version>
+		        <executions>
+		          <execution>
+		            <goals>
+		              <goal>compress</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+                <configuration>
+		          <resources>
+		            <resource>${basedir}/src/main/webapp/media/js/esup-lecture.js</resource>
+		          </resources>
+	              <excludes>
+	                <exclude>**/*.css</exclude>
+	                <exclude>**/*.min.js</exclude>
+	              </excludes>	
+	              <suffix>-${project.version}.min</suffix>	          
+		        </configuration>
+   		    </plugin>
 		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											net.alchim31.maven
+										</groupId>
+										<artifactId>
+											yuicompressor-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.1,)
+										</versionRange>
+										<goals>
+											<goal>compress</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 	<dependencies>
 		<dependency>
@@ -182,7 +230,7 @@
 		<portlet.bridge.version>1.0.0</portlet.bridge.version>
 		<javax.portlet.version>1.0</javax.portlet.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
-		<esupcommons.version>0.2.8</esupcommons.version>
+		<esupcommons.version>0.3.0</esupcommons.version>
 	</properties>
 	<profiles>
 		<profile>
@@ -204,19 +252,27 @@
 							<portletNames>esup-lecture</portletNames>
 							<!-- To use custom CSS in the portal -->
 							<cssUrls>
-								<url>/pluto/pluto.css</url>
+ 								<url>/pluto/pluto.css</url>
 								<url>/pluto/portlet-spec-1.0.css</url>
 								<url>/pluto/portlet-spec-2.0.css</url>
+ 								<url>/esup-lecture/media/lecture.css</url>
+								<url>/esup-lecture/media/fss/fss-framework-1.2.min.css</url>
 							</cssUrls>
 							<!-- To use custom Javascript in the portal -->
-							<!-- <jsUrls> <url>http://my.server/custom.js</url> <url>http://my.server/another.js</url> 
-								</jsUrls> -->
+							<!-- 
+							<jsUrls>
+								<url>/esup-lecture/media/js/jquery-1.3.2.min.js</url>
+								<url>/esup-lecture/media/js/jquery-ui-1.7.3.custom.min.js</url>
+								<url>/esup-lecture/media/js/esup-lecture.js</url>
+							</jsUrls>
+							 -->
 							<portletXml>${basedir}/src/main/config/portlet/WEB-INF/portlet.xml</portletXml>
+							<webAppSourceDirectory>${project.build.outputDirectory}/../${project.artifactId}-${project.version}</webAppSourceDirectory>
 						</configuration>
 					</plugin>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
-						<version>2.1</version>
+						<version>2.2</version>
 						<configuration>
 							<webResources>
 								<resource>
@@ -225,7 +281,6 @@
 									<includes>
 										<include>WEB-INF/web.xml</include>
 										<include>WEB-INF/portlet.xml</include>
-										<include>stylesheets/template.jspx</include>
 										<include>stylesheets/mobile/*.*</include>
 									</includes>
 								</resource>
@@ -233,10 +288,12 @@
 									<filtering>true</filtering>
 									<directory>src/main/config/portlet2</directory>
 									<includes>
+										<include>stylesheets/template.jspx</include>
 										<include>WEB-INF/jsf/application.xml</include>
 									</includes>
 								</resource>
 							</webResources>
+  				          	<packagingExcludes>WEB-INF/classes/properties/config.properties</packagingExcludes> 
 							<warName>${project.artifactId}-portlet-uP4</warName>
 						</configuration>
 					</plugin>
@@ -267,7 +324,7 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
-						<version>2.1</version>
+						<version>2.2</version>
 						<configuration>
 							<webResources>
 								<resource>
@@ -282,6 +339,7 @@
 									</includes>
 								</resource>
 							</webResources>
+  				          	<packagingExcludes>WEB-INF/classes/properties/config.properties</packagingExcludes> 
 							<warName>${project.artifactId}-portlet</warName>
 						</configuration>
 					</plugin>
@@ -319,7 +377,7 @@
 				<plugins>
 					<plugin>
 						<artifactId>maven-war-plugin</artifactId>
-						<version>2.1</version>
+						<version>2.2</version>
 						<configuration>
 							<webResources>
 								<resource>
@@ -330,6 +388,7 @@
 									</includes>
 								</resource>
 							</webResources>
+  				          	<packagingExcludes>WEB-INF/classes/properties/config.properties</packagingExcludes> 
 							<warName>${project.artifactId}-servlet</warName>
 						</configuration>
 					</plugin>
