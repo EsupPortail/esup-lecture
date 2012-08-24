@@ -48,11 +48,6 @@
 			<description>The exception controller.</description>
 		</property>
 		<property name="authenticationService" ref="${authenticationService.bean}" />
-		<!-- 
-        <property name="casLogoutUrl" value="${cas.url}/logout?service=%s">
-            <description>The CAS logout URL.</description>
-        </property>
-		 -->
 	</bean>
 
 	<bean id="abstractContextAwareController" 
