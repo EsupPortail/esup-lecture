@@ -1,4 +1,4 @@
-if (typeof esup_lecture === 'undefined') {
+if (typeof(esup_lecture) === 'undefined') {
 	function esup_lecture(parentID, $) {
 		parentID = "#" + parentID + " ";
 

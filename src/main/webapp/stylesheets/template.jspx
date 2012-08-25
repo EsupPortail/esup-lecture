@@ -22,7 +22,9 @@
 			var lecture = lecture || {};
 			lecture.jQuery = jQuery.noConflict(true);
 			lecture.jQuery(function(){
-				esup_lecture("#{homeController.namespace}main", lecture.jQuery);
+				if (typeof(esup_lecture) == 'function') {
+					esup_lecture("#{homeController.namespace}main", lecture.jQuery)
+				};
 			});
 		</script>
 	</body>

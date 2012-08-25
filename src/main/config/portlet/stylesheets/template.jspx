@@ -12,7 +12,9 @@
 			var lecture = lecture || {};
 			lecture.jQuery = up.jQuery;
 			lecture.jQuery(function(){
-				esup_lecture("#{homeController.namespace}main", lecture.jQuery);
+				if (typeof(esup_lecture) == 'function') {
+					esup_lecture("#{homeController.namespace}main", lecture.jQuery)
+				};
 			});
 		</script>
 	</f:view>
