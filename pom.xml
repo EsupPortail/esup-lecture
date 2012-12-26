@@ -163,23 +163,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.esupportail</groupId>
-			<artifactId>esup-commons2-jsf</artifactId>
-			<version>${esupcommons.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>tomahawk12</artifactId>
-					<groupId>org.apache.myfaces.tomahawk</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.esupportail</groupId>
 			<artifactId>esup-commons2-exceptionHandling</artifactId>
-			<version>${esupcommons.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.esupportail</groupId>
-			<artifactId>esup-commons2-jsf-exception</artifactId>
 			<version>${esupcommons.version}</version>
 		</dependency>
 		<dependency>
@@ -220,14 +204,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.myfaces.portlet-bridge</groupId>
-			<artifactId>portlet-bridge-impl</artifactId>
-			<version>${portlet.bridge.version}</version>
-			<scope>compile</scope>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc-portlet</artifactId>
+			<version>3.0.6.RELEASE</version>
 		</dependency>
 	</dependencies>
 	<properties>
-		<portlet.bridge.version>1.0.0</portlet.bridge.version>
 		<javax.portlet.version>1.0</javax.portlet.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
 		<esupcommons.version>0.3.0</esupcommons.version>
@@ -309,103 +291,6 @@
 			<properties>
 				<portlet.bridge.version>2.0.0</portlet.bridge.version>
 				<deploy.type>portlet</deploy.type>
-				<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
-			</properties>
-		</profile>
-		<profile>
-			<id>portletDevelopment</id>
-			<activation>
-				<file>
-					<exists>portlet</exists>
-				</file>
-			</activation>
-			<build>
-				<defaultGoal>package</defaultGoal>
-				<plugins>
-					<plugin>
-						<artifactId>maven-war-plugin</artifactId>
-						<version>2.2</version>
-						<configuration>
-							<webResources>
-								<resource>
-									<filtering>true</filtering>
-									<directory>src/main/config/portlet</directory>
-									<includes>
-										<include>WEB-INF/web.xml</include>
-										<include>WEB-INF/portlet.xml</include>
-										<include>WEB-INF/jsf/application.xml</include>
-										<include>stylesheets/template.jspx</include>
-										<include>stylesheets/mobile/*.*</include>
-									</includes>
-								</resource>
-							</webResources>
-  				          	<packagingExcludes>WEB-INF/classes/properties/config.properties</packagingExcludes> 
-							<warName>${project.artifactId}-portlet</warName>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-			<dependencies>
-				<dependency>
-					<groupId>org.esupportail</groupId>
-					<artifactId>esup-commons2-jsf-portlet</artifactId>
-					<version>${esupcommons.version}</version>
-				</dependency>
-			</dependencies>
-			<properties>
-				<portlet.bridge.version>1.0.0</portlet.bridge.version>
-				<deploy.type>portlet</deploy.type>
-				<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
-			</properties>
-		</profile>
-		<profile>
-			<id>servletDevelopment</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<build>
-				<resources>
-					<resource>
-						<directory>src/main/webapp/WEB-INF</directory>
-						<includes>
-							<include>web.xml</include>
-						</includes>
-						<filtering>true</filtering>
-						<targetPath>${project.build.directory}</targetPath>
-					</resource>
-				</resources>
-				<plugins>
-					<plugin>
-						<artifactId>maven-war-plugin</artifactId>
-						<version>2.2</version>
-						<configuration>
-							<webResources>
-								<resource>
-									<filtering>true</filtering>
-									<directory>src/main/webapp</directory>
-									<includes>
-										<include>WEB-INF/web.xml</include>
-									</includes>
-								</resource>
-							</webResources>
-  				          	<packagingExcludes>WEB-INF/classes/properties/config.properties</packagingExcludes> 
-							<warName>${project.artifactId}-servlet</warName>
-						</configuration>
-					</plugin>
-					<plugin>
-						<groupId>org.mortbay.jetty</groupId>
-						<artifactId>maven-jetty-plugin</artifactId>
-						<version>6.1.26</version>
-						<configuration>
-							<contextPath>/</contextPath>
-							<jettyEnvXml>${basedir}/src/main/config/jetty-env.xml</jettyEnvXml>
-							<webXml>${project.build.directory}/web.xml</webXml>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-			<properties>
-				<deploy.type>servlet</deploy.type>
 				<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
 			</properties>
 		</profile>

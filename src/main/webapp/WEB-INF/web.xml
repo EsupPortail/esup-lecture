@@ -23,66 +23,6 @@
 		<param-value>classpath:/properties/applicationContext.xml</param-value>
 	</context-param>
 
-	<context-param>
-		<param-name>javax.faces.CONFIG_FILES</param-name>
-		<param-value> 
-			/WEB-INF/jsf/application.xml,/WEB-INF/jsf/navigation-rules.xml
-		</param-value>
-	</context-param>
-	<context-param>
-		<param-name>javax.faces.DEFAULT_SUFFIX</param-name>
-		<param-value>.jspx</param-value>
-	</context-param>
-	<context-param>
-		<param-name>facelets.SKIP_COMMENTS</param-name>
-		<param-value>true</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>org.apache.myfaces.ERROR_HANDLER</param-name>
-		<param-value>org.esupportail.commons.exceptions.ExceptionHandler
-		</param-value>
-	</context-param>
-	<context-param>
-		<param-name>org.apache.myfaces.PRETTY_HTML</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<context-param>
-		<param-name>org.apache.myfaces.ALLOW_JAVASCRIPT</param-name>
-		<param-value>true</param-value>
-	</context-param>
-	<context-param>
-		<param-name>org.apache.myfaces.DETECT_JAVASCRIPT</param-name>
-		<param-value>false</param-value>
-	</context-param>
-	<context-param>
-		<param-name>org.apache.myfaces.AUTO_SCROLL</param-name>
-		<param-value>false</param-value>
-	</context-param>
-	<context-param>
-		<param-name>org.apache.myfaces.ADD_RESOURCE_CLASS</param-name>
-		<param-value>org.apache.myfaces.renderkit.html.util.DefaultAddResource</param-value>
-	</context-param>
-
-	<context-param>
-		<param-name>org.apache.myfaces.CHECK_EXTENSIONS_FILTER</param-name>
-		<param-value>true</param-value>
-	</context-param>
-
-	<servlet>
-		<description> The main servlet of the application. This class inherits
-			from the MyFaces implementation and handles exceptions thrown for
-			specific exception handling. </description>
-		<display-name>Faces Servlet</display-name>
-		<servlet-name>Faces Servlet</servlet-name>
-		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>Faces Servlet</servlet-name>
-		<url-pattern>*.faces</url-pattern>
-	</servlet-mapping>
-
 	<listener>
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
@@ -91,24 +31,7 @@
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 
-	<listener>
-		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-	</listener>
-
-	<!-- OpenEntityManagerInViewFilter -->
-	<filter>
-		<display-name>Hibernate Filter</display-name>
-		<filter-name>Hibernate Filter</filter-name>
-		<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>Hibernate Filter</filter-name>
-		<servlet-name>Faces Servlet</servlet-name>
-	</filter-mapping>
-
 	<!-- CAS -->
-	<!-- CAS Validation Filter must be defined first. See https://wiki.jasig.org/display/CASC/Configuring+the+JA-SIG+CAS+Client+for+Java+in+the+web.xml -->
-	<!-- 
 	<filter>
 		<filter-name>CAS Validation Filter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
@@ -117,21 +40,10 @@
 			<param-value>ticketValidationFilter</param-value>
 		</init-param>
 	</filter>
+
 	<filter-mapping>
 		<filter-name>CAS Validation Filter</filter-name>
-		<url-pattern>/*</url-pattern>
+		<url-pattern>/proxy/receptor</url-pattern>
 	</filter-mapping>
-	<filter>
-		<filter-name>CAS Authentication Filter</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-		<init-param>
-			<param-name>targetBeanName</param-name>
-			<param-value>AuthenticationFilter</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>CAS Authentication Filter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	 -->
+
 </web-app>

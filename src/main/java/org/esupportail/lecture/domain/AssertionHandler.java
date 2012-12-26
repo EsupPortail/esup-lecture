@@ -5,8 +5,6 @@ package org.esupportail.lecture.domain;
 
 import java.util.Map;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.portlet.PortletRequest;
 
 import org.apache.commons.logging.Log;
@@ -16,6 +14,8 @@ import org.jasig.cas.client.validation.Assertion;
 import org.jasig.cas.client.validation.TicketValidationException;
 import org.jasig.cas.client.validation.TicketValidator;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.portlet.context.PortletRequestAttributes;
 
 /**
  * @author GIP RECIA - jgribonvald
@@ -60,9 +60,7 @@ public class AssertionHandler implements AssertionAccessor, InitializingBean {
 	public Assertion getAssertion() {
 		//get ProxyTicket for current portlet from uPortal
 		if (assertion == null) {
-			final FacesContext facesContext = FacesContext.getCurrentInstance();
-			final ExternalContext externalContext = facesContext.getExternalContext();
-			final PortletRequest request = (PortletRequest) externalContext.getRequest();
+			final PortletRequest request = ((PortletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest(); 
 			Map<String,String> userinfo = (Map<String,String>) request.getAttribute(PortletRequest.USER_INFO);
 			String ticket = userinfo.get("casProxyTicket");
 			if (log.isDebugEnabled()) {
