@@ -114,15 +114,8 @@
 		</description>
 		<property name="authenticationService" ref="${authenticationService.bean}" />
 		<property name="portletService" ref="portletService" />
-		<property name="servletService" ref="servletService" />
 	</bean>
 	
-	<bean id="servletService" class="org.esupportail.lecture.domain.utils.ServletService">
-		<description>external service in servlet mode</description>
-		<property name="portalService" ref="portalService" />
-		<property name="authenticationService" ref="${authenticationService.bean}" />
-	</bean>
-
 	<bean id="portletService" class="org.esupportail.lecture.domain.utils.PortletService">
 		<description>external service in portlet mode</description>
 		<property name="assertionHandler" ref="assertionHandler" />

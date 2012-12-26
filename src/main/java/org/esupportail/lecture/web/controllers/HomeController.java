@@ -5,15 +5,7 @@
  */
 package org.esupportail.lecture.web.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.faces.model.SelectItem;
-import javax.portlet.PortletContext;
-import javax.portlet.PortletRequest;
-import javax.portlet.faces.BridgeUtil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -236,18 +228,18 @@ public class HomeController extends TwoPanesController {
 	/**
 	 * @return all available display mode for selected item
 	 */
-	public List<SelectItem> getAvailableItemDisplayModes() {
-		List<SelectItem> ret = new ArrayList<SelectItem>();
-		ContextWebBean currentContext = getContext();
-		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
-		if (selectedCategory == null || selectedCategory.getSelectedSource() == null) {
-			ret.add(new SelectItem(ItemDisplayMode.UNDEFINED, getString("undefined")));			
-		}
-		ret.add(new SelectItem(ItemDisplayMode.ALL, getString("all")));
-		ret.add(new SelectItem(ItemDisplayMode.UNREAD, getString("notRead")));
-		ret.add(new SelectItem(ItemDisplayMode.UNREADFIRST, getString("unreadFirst")));
-		return ret;
-	}
+//	public List<SelectItem> getAvailableItemDisplayModes() {
+//		List<SelectItem> ret = new ArrayList<SelectItem>();
+//		ContextWebBean currentContext = getContext();
+//		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
+//		if (selectedCategory == null || selectedCategory.getSelectedSource() == null) {
+//			ret.add(new SelectItem(ItemDisplayMode.UNDEFINED, getString("undefined")));			
+//		}
+//		ret.add(new SelectItem(ItemDisplayMode.ALL, getString("all")));
+//		ret.add(new SelectItem(ItemDisplayMode.UNREAD, getString("notRead")));
+//		ret.add(new SelectItem(ItemDisplayMode.UNREADFIRST, getString("unreadFirst")));
+//		return ret;
+//	}
 
 	/**
 	 * set the item display mode.
@@ -351,23 +343,23 @@ public class HomeController extends TwoPanesController {
 		return ret;
 	}
 
-	public String getNamespace() {
-		String ret="servlet_";
-		if (BridgeUtil.isPortletRequest()) {
-			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-			ret = externalContext.encodeNamespace("");
-		}
-		return ret;
-	}
-
-	public String getContextPath() {
-		String ret = "/";
-		if (BridgeUtil.isPortletRequest()) {
-			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-			PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
-			ret = portletRequest.getContextPath();
-		}
-		return ret;
-	}
+//	public String getNamespace() {
+//		String ret="servlet_";
+//		if (BridgeUtil.isPortletRequest()) {
+//			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+//			ret = externalContext.encodeNamespace("");
+//		}
+//		return ret;
+//	}
+//
+//	public String getContextPath() {
+//		String ret = "/";
+//		if (BridgeUtil.isPortletRequest()) {
+//			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+//			PortletRequest portletRequest = (PortletRequest) externalContext.getRequest();
+//			ret = portletRequest.getContextPath();
+//		}
+//		return ret;
+//	}
 	
 }

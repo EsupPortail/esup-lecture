@@ -5,14 +5,12 @@
  */
 package org.esupportail.lecture.web.controllers;
 
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -132,39 +130,39 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * JSF action : change treesize.
 	 * @param actionEvent JSF ActionEvent used to know which button is used 
 	 */
-	public void adjustTreeSize(final ActionEvent actionEvent) {
-		if (isGuestMode()) {
-			throw new SecurityException("Try to access restricted function is guest mode");
-		}
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("In adjustTreeSize");
-		}
-		int treeSize = getTreeSize();
-		FacesContext ctx = FacesContext.getCurrentInstance();
-		String id = actionEvent.getComponent().getClientId(ctx);
-		if (id.endsWith("treeSmallerButton")) {
-			if (treeSize > MIN_TREE_SIZE) {
-				treeSize -= TREE_SIZE_STEP;
-			}
-		}
-		if (id.endsWith("treeLargerButton")) {
-			if (treeSize < MAX_TREE_SIZE) {
-				treeSize += TREE_SIZE_STEP;
-			}
-		}
-		try {
-			//for current session:
-			getContext().setTreeSize(treeSize);
-			//store in database:
-			UserProfile userProfile = getUserProfile();
-			userProfile = getFacadeService().setTreeSize(userProfile, getContextId(), treeSize);
-			setUserProfile(userProfile);
-		} catch (DomainServiceException e) {
-			throw new WebException("Error in adjustTreeSize", e);
-		} catch (InternalExternalException e) {
-			throw new WebException("Error in adjustTreeSize", e);
-		}
-	}
+//	public void adjustTreeSize(final ActionEvent actionEvent) {
+//		if (isGuestMode()) {
+//			throw new SecurityException("Try to access restricted function is guest mode");
+//		}
+//		if (LOG.isDebugEnabled()) {
+//			LOG.debug("In adjustTreeSize");
+//		}
+//		int treeSize = getTreeSize();
+//		FacesContext ctx = FacesContext.getCurrentInstance();
+//		String id = actionEvent.getComponent().getClientId(ctx);
+//		if (id.endsWith("treeSmallerButton")) {
+//			if (treeSize > MIN_TREE_SIZE) {
+//				treeSize -= TREE_SIZE_STEP;
+//			}
+//		}
+//		if (id.endsWith("treeLargerButton")) {
+//			if (treeSize < MAX_TREE_SIZE) {
+//				treeSize += TREE_SIZE_STEP;
+//			}
+//		}
+//		try {
+//			//for current session:
+//			getContext().setTreeSize(treeSize);
+//			//store in database:
+//			UserProfile userProfile = getUserProfile();
+//			userProfile = getFacadeService().setTreeSize(userProfile, getContextId(), treeSize);
+//			setUserProfile(userProfile);
+//		} catch (DomainServiceException e) {
+//			throw new WebException("Error in adjustTreeSize", e);
+//		} catch (InternalExternalException e) {
+//			throw new WebException("Error in adjustTreeSize", e);
+//		}
+//	}
 	
 	/**
 	 * JSF action : toogle from tree visible to not visible and not visible to visible.

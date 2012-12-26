@@ -7,19 +7,16 @@
 	<portlet>
 		<portlet-name>esup-lecture</portlet-name>
 		<display-name xml:lang="fr">esup-lecture</display-name>
-		<portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
-		<init-param>
-			<name>javax.portlet.faces.defaultViewId.view</name>
-			<value>/stylesheets/home.jspx</value>
-		</init-param>
-		<init-param>
-			<name>javax.portlet.faces.preserveActionParams</name>
-			<value>true</value>
-		</init-param>
+		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+        <init-param>
+            <name>contextConfigLocation</name>
+            <value>classpath:properties/portletContext.xml</value>
+        </init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
+            <portlet-mode>EDIT</portlet-mode>
 		</supports>
 		<supported-locale>fr</supported-locale>
 		<supported-locale>en</supported-locale>
