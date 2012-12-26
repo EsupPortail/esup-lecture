@@ -1,4 +1,4 @@
-package org.esupportail.lecture.web.controllers;
+package org.esupportail.lecture.web.controllers.oldJsf;
 
 import java.util.Hashtable;
 

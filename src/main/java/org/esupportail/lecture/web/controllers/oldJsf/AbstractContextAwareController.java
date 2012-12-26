@@ -2,7 +2,7 @@
  * ESUP-Portail Blank Application - Copyright (c) 2006 ESUP-Portail consortium
  * http://sourcesup.cru.fr/projects/esup-blank
  */
-package org.esupportail.lecture.web.controllers;
+package org.esupportail.lecture.web.controllers.oldJsf;
 
 import org.esupportail.lecture.domain.beans.User;
 import org.esupportail.commons.utils.Assert;
@@ -30,7 +30,7 @@ public abstract class AbstractContextAwareController extends AbstractDomainAware
 	}
 
 	/**
-	 * @see org.esupportail.lecture.web.controllers.AbstractDomainAwareBean#afterPropertiesSetInternal()
+	 * @see org.esupportail.lecture.web.controllers.oldJsf.AbstractDomainAwareBean#afterPropertiesSetInternal()
 	 */
 	@Override
 	public void afterPropertiesSetInternal() {
@@ -53,7 +53,7 @@ public abstract class AbstractContextAwareController extends AbstractDomainAware
 	}
 
 	/**
-	 * @see org.esupportail.lecture.web.controllers.AbstractDomainAwareBean#getCurrentUser()
+	 * @see org.esupportail.lecture.web.controllers.oldJsf.AbstractDomainAwareBean#getCurrentUser()
 	 */
 	@Override
 	protected User getCurrentUser() {

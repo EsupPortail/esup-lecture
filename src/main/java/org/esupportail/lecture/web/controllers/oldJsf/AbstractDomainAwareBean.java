@@ -2,7 +2,7 @@
  * ESUP-Portail Blank Application - Copyright (c) 2006 ESUP-Portail consortium
  * http://sourcesup.cru.fr/projects/esup-blank
  */
-package org.esupportail.lecture.web.controllers;
+package org.esupportail.lecture.web.controllers.oldJsf;
 
 import java.util.Locale;
 

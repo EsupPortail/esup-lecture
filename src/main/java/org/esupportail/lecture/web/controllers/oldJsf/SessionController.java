@@ -2,7 +2,7 @@
  * ESUP-Portail Blank Application - Copyright (c) 2006 ESUP-Portail consortium
  * http://sourcesup.cru.fr/projects/esup-blank
  */
-package org.esupportail.lecture.web.controllers;
+package org.esupportail.lecture.web.controllers.oldJsf;
 
 import java.io.IOException;
 
@@ -55,7 +55,7 @@ public class SessionController extends AbstractDomainAwareBean {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.web.controllers.AbstractDomainAwareBean#afterPropertiesSetInternal()
+	 * @see org.esupportail.lecture.web.controllers.oldJsf.AbstractDomainAwareBean#afterPropertiesSetInternal()
 	 */
 	@Override
 	public void afterPropertiesSetInternal() {

@@ -3,7 +3,7 @@
  * For any information please refer to http://esup-helpdesk.sourceforge.net
  * You may obtain a copy of the licence at http://www.esup-portail.org/license/
  */
-package org.esupportail.lecture.web.controllers;
+package org.esupportail.lecture.web.controllers.oldJsf;
 
 import java.util.List;
 
@@ -138,7 +138,7 @@ public class EditController extends TwoPanesController {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#getSources(org.esupportail.lecture.domain.beans.CategoryBean)
+	 * @see org.esupportail.lecture.web.controllers.oldJsf.TwoPanesController#getSources(org.esupportail.lecture.domain.beans.CategoryBean)
 	 * used to populate edit context with all visible sources
 	 */
 	@Override
@@ -159,7 +159,7 @@ public class EditController extends TwoPanesController {
 
 	/**  
 	 * @throws InternalDomainException 
-	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#getCategories(java.lang.String)
+	 * @see org.esupportail.lecture.web.controllers.oldJsf.TwoPanesController#getCategories(java.lang.String)
 	 * used to populate edit context with all visible categories
 	 */
 	@Override
@@ -175,7 +175,7 @@ public class EditController extends TwoPanesController {
 	}
 	
 	/**
-	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#getContextName()
+	 * @see org.esupportail.lecture.web.controllers.oldJsf.TwoPanesController#getContextName()
 	 */
 	protected String getContextName() {
 		return CONTEXT;
@@ -189,7 +189,7 @@ public class EditController extends TwoPanesController {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#afterPropertiesSet()
+	 * @see org.esupportail.lecture.web.controllers.oldJsf.TwoPanesController#afterPropertiesSet()
 	 */
 	@Override
 	public void afterPropertiesSet() {
@@ -199,7 +199,7 @@ public class EditController extends TwoPanesController {
 	}
 
 	/**
-	 * @see org.esupportail.lecture.web.controllers.TwoPanesController#getContextKey()
+	 * @see org.esupportail.lecture.web.controllers.oldJsf.TwoPanesController#getContextKey()
 	 */
 	@Override
 	String getContextKey() {

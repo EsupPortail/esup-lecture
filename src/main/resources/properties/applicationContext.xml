@@ -32,7 +32,6 @@
 	<import resource="i18n/i18n.xml" />
 	<import resource="misc/abstractBeans.xml" />
 	<import resource="misc/application.xml" />
-	<import resource="mobile/mobile.xml"/>
 
 	<bean id="app_context"
 		class="org.esupportail.commons.context.ApplicationContextHolder" />

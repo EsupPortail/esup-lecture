@@ -3,7 +3,7 @@
  * For any information please refer to http://esup-helpdesk.sourceforge.net
  * You may obtain a copy of the licence at http://www.esup-portail.org/license/
  */
-package org.esupportail.lecture.web.controllers;
+package org.esupportail.lecture.web.controllers.oldJsf;
 
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -517,7 +517,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	}
 
 	/**
-	 * @see org.esupportail.lecture.web.controllers.AbstractContextAwareController#afterPropertiesSet()
+	 * @see org.esupportail.lecture.web.controllers.oldJsf.AbstractContextAwareController#afterPropertiesSet()
 	 */
 	@Override
 	public void afterPropertiesSet() {
@@ -535,7 +535,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	}
 
 	/**
-	 * @see org.esupportail.lecture.web.controllers.AbstractDomainAwareBean#reset()
+	 * @see org.esupportail.lecture.web.controllers.oldJsf.AbstractDomainAwareBean#reset()
 	 */
 	@Override
 	public void reset() {
