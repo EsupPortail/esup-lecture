@@ -251,13 +251,6 @@
 								<url>/esup-lecture/media/fss/fss-framework-1.2.min.css</url>
 							</cssUrls>
 							<webAppSourceDirectory>${project.build.outputDirectory}/../${project.artifactId}-${project.version}</webAppSourceDirectory>
-							<users>
-								<user>
-									<name>bourges</name>
-									<password>toto</password>
-									<roles>local.0,admin</roles>
-								</user>
-							</users>
 						</configuration>
 					</plugin>
 					<plugin>

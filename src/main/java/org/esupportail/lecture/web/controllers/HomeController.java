@@ -21,8 +21,6 @@ import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
@@ -72,8 +70,9 @@ public class HomeController {
 		ContextWebBean context = new ContextWebBean();
 		String ctxId;
 		try {
+			UserProfile userProfile = facadeService.getUserProfile(getUID());
 			ctxId = getContextId();
-			ContextBean contextBean = facadeService.getContext(getUserProfile(), ctxId);
+			ContextBean contextBean = facadeService.getContext(userProfile, ctxId);
 			if (contextBean == null) {
 				throw new WebException("No context with ID \"" + ctxId
 						+ "\" found in lecture-config.xml file. " 
@@ -86,18 +85,18 @@ public class HomeController {
 			context.setTreeSize(contextBean.getTreeSize());
 			context.setTreeVisible(contextBean.getTreeVisible());
 			//find categories in this context
-			List<CategoryBean> categories = getCategories(ctxId);
+			List<CategoryBean> categories = getCategories(ctxId, userProfile);
 			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
 			if (categories != null) {
 				for (CategoryBean categoryBean : categories) {
 					CategoryWebBean categoryWebBean = populateCategoryWebBean(categoryBean);
 					//find sources in this category (if this category is subscribed)
 					if (categoryBean.getType() != AvailabilityMode.NOTSUBSCRIBED) {
-						List<SourceBean> sources = getSources(categoryBean);
+						List<SourceBean> sources = getSources(categoryBean, userProfile);
 						List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
 						if (sources != null) {
 							for (SourceBean sourceBean : sources) {
-								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean);
+								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile);
 								//we add the source order in the Category XML definition file
 								int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
 								sourceWebBean.setXmlOrder(xmlOrder);
@@ -130,15 +129,6 @@ public class HomeController {
 	}
 
 	/**
-	 * To display information about the custom Context of the connected user.
-	 * @return Returns the userProfile.
-	 */
-	private UserProfile getUserProfile() {
-		UserProfile userProfile = facadeService.getUserProfile(getUID());
-		return userProfile;
-	}
-
-	/**
 	 * @return the connected user UID
 	 */
 	private String getUID() {
@@ -149,10 +139,11 @@ public class HomeController {
 	/**
 	 * populate a SourceWebBean from a SourceBean.
 	 * @param sourceBean
+	 * @param userProfile 
 	 * @return populated SourceWebBean
 	 * @throws DomainServiceException
 	 */
-	private SourceWebBean populateSourceWebBean(final SourceBean sourceBean) throws DomainServiceException {
+	private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, UserProfile userProfile) throws DomainServiceException {
 		SourceWebBean sourceWebBean;
 		if (sourceBean instanceof SourceDummyBean) {
 			sourceWebBean = new SourceWebBean(null);
@@ -166,7 +157,7 @@ public class HomeController {
 			sourceWebBean.setUnreadItemsNumber(0);
 		} else {
 			//get Item for the source
-			List<ItemBean> itemsBeans = getItems(sourceBean);
+			List<ItemBean> itemsBeans = facadeService.getItems(userProfile, sourceBean.getId());
 			sourceWebBean = new SourceWebBean(itemsBeans);
 			sourceWebBean.setId(sourceBean.getId());
 			sourceWebBean.setName(sourceBean.getName());
@@ -179,29 +170,18 @@ public class HomeController {
 	}
 
 	/**
-	 * @param sourceBean
-	 * @return a list of ItemBean
-	 * @throws SourceNotLoadedException
-	 * @throws ManagedCategoryNotLoadedException
-	 * @throws InternalDomainException
-	 */
-	private List<ItemBean> getItems(final SourceBean sourceBean) throws SourceNotLoadedException,
-	ManagedCategoryNotLoadedException, InternalDomainException {
-		return facadeService.getItems(getUserProfile(), sourceBean.getId());
-	}
-
-	/**
 	 * @param categoryBean
+	 * @param userProfile 
 	 * @return list of available sources
 	 * @throws DomainServiceException
 	 */
-	private List<SourceBean> getSources(final CategoryBean categoryBean) throws DomainServiceException {
+	private List<SourceBean> getSources(final CategoryBean categoryBean, UserProfile userProfile) throws DomainServiceException {
 		//this method need to be overwrite in edit controller (VisibledSource and not just DisplayedSources)
 		List<SourceBean> tempListSourceBean = null;
 		List<SourceBean> ret = new ArrayList<SourceBean>();
 		String catId;
 		catId = categoryBean.getId();
-		tempListSourceBean = facadeService.getDisplayedSources(getUserProfile(), catId);
+		tempListSourceBean = facadeService.getDisplayedSources(userProfile, catId);
 		for (Iterator<SourceBean> iter = tempListSourceBean.iterator(); iter.hasNext();) {
 			SourceBean element = iter.next();
 			if (!(element instanceof SourceDummyBean)) {
@@ -236,13 +216,14 @@ public class HomeController {
 
 	/**
 	 * @param ctxtId
+	 * @param userProfile 
 	 * @return list of available categories
 	 * @throws InternalDomainException 
 	 */
-	private List<CategoryBean> getCategories(final String ctxtId) throws InternalDomainException {
+	private List<CategoryBean> getCategories(final String ctxtId, UserProfile userProfile) throws InternalDomainException {
 		//Note: this method need to be overwrite in edit controller
 		List<CategoryBean> ret = new ArrayList<CategoryBean>();
-		List<CategoryBean> categories = facadeService.getDisplayedCategories(getUserProfile(), ctxtId);
+		List<CategoryBean> categories = facadeService.getDisplayedCategories(userProfile, ctxtId);
 		//Temporary: remove dummy form the list
 		for (Iterator<CategoryBean> iter = categories.iterator(); iter.hasNext();) {
 			CategoryBean element = iter.next();
