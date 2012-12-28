@@ -10,6 +10,8 @@
 		This file should not be modified but by the developers. This file is referenced 
 		by /properties/applicationContext.xml. -->
 
+	<alias name="${authenticationService.bean}" alias="authenticationService"/>
+	
 	<bean id="offlineFixedUserAuthenticationService" 
 		class="org.esupportail.commons.services.authentication.OfflineFixedUserAuthenticationService"> 
 			<property name="authId" value="bourges" />

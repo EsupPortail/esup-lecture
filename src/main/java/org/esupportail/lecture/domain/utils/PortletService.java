@@ -105,6 +105,7 @@ public class PortletService implements ModeService, InitializingBean {
 					//(Map<String, ArrayList<String>>) request.getAttribute(PortletRequest.USER_INFO);
 			values = userInfo.get(attribute);
 		} catch (Exception e) {
+			LOG.error("Can't find attribute " + attribute);
 			throw new InternalExternalException(e);
 		}
 		if (values == null) {

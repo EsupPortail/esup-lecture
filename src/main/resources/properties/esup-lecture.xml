@@ -149,7 +149,7 @@ Pour plus d'informations voir le
 		name="Categorie de démo 1"
 		id="demo1"
 		urlCategory="${config.url.prefix}/examples/xml/category.offline.xml"
-		trustCategory="yes"
+		trustCategory="no"
 		access="public"
 		ttl = "3600"
 		timeout = "3000" >
@@ -157,8 +157,8 @@ Pour plus d'informations voir le
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>
-				<group
-					name="local.0"/>
+				<!-- <regular attribute="uid" value="bourges"/> -->
+				<group name="local.0"/>
 			</obliged>
 		</visibility>
 	</categoryProfile>
@@ -175,8 +175,8 @@ Pour plus d'informations voir le
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>
-				<group
-					name="local.0"/>
+<!-- 				<regular attribute="uid" value="bourges"/> -->
+				<group name="local.0"/>
 			</obliged>
 		</visibility>
 	</categoryProfile>
