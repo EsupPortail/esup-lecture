@@ -61,12 +61,6 @@
 	</scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -123,6 +117,34 @@
 	              <suffix>-${project.version}.min</suffix>	          
 		        </configuration>
    		    </plugin>
+			<plugin>
+				<groupId>net.jlehtinen.portlet</groupId>
+				<artifactId>portlet-prototyping-maven-plugin</artifactId>
+				<version>0.6</version>
+				<configuration>
+					<!-- Comma-separated list of portlets to be prototyped -->
+					<portletNames>esup-lecture</portletNames>
+					<!-- To use custom CSS in the portal -->
+					<cssUrls>
+						<url>/pluto/pluto.css</url>
+						<url>/pluto/portlet-spec-1.0.css</url>
+						<url>/pluto/portlet-spec-2.0.css</url>
+						<url>/esup-lecture/media/lecture.css</url>
+						<url>/esup-lecture/media/fss/fss-framework-1.2.min.css</url>
+					</cssUrls>
+					<!--
+ 					<webAppSourceDirectory>${project.build.outputDirectory}/../${project.artifactId}-${project.version}</webAppSourceDirectory>
+					-->
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+				          	<packagingExcludes>WEB-INF/classes/properties/config.properties</packagingExcludes> 
+					<warName>${project.artifactId}-portlet-uP4</warName>
+				</configuration>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -170,6 +192,14 @@
 			<groupId>org.esupportail</groupId>
 			<artifactId>esup-commons2-auth</artifactId>
 			<version>${esupcommons.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>
+						jsr168forwardport.org.springframework.web.portlet
+					</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.esupportail</groupId>
@@ -220,61 +250,7 @@
 		</dependency>
 	</dependencies>
 	<properties>
-		<javax.portlet.version>1.0</javax.portlet.version>
 		<javax.servlet.version>2.5</javax.servlet.version>
-		<esupcommons.version>0.3.0</esupcommons.version>
+		<esupcommons.version>0.3.1</esupcommons.version>
 	</properties>
-	<profiles>
-		<profile>
-			<id>portlet2Development</id>
-			<activation>
-				<file>
-					<exists>portlet</exists>
-				</file>
-			</activation>
-			<build>
-				<defaultGoal>package</defaultGoal>
-				<plugins>
-					<plugin>
-						<groupId>net.jlehtinen.portlet</groupId>
-						<artifactId>portlet-prototyping-maven-plugin</artifactId>
-						<version>0.6</version>
-						<configuration>
-							<!-- Comma-separated list of portlets to be prototyped -->
-							<portletNames>esup-lecture</portletNames>
-							<!-- To use custom CSS in the portal -->
-							<cssUrls>
- 								<url>/pluto/pluto.css</url>
-								<url>/pluto/portlet-spec-1.0.css</url>
-								<url>/pluto/portlet-spec-2.0.css</url>
- 								<url>/esup-lecture/media/lecture.css</url>
-								<url>/esup-lecture/media/fss/fss-framework-1.2.min.css</url>
-							</cssUrls>
-							<webAppSourceDirectory>${project.build.outputDirectory}/../${project.artifactId}-${project.version}</webAppSourceDirectory>
-						</configuration>
-					</plugin>
-					<plugin>
-						<artifactId>maven-war-plugin</artifactId>
-						<version>2.2</version>
-						<configuration>
-  				          	<packagingExcludes>WEB-INF/classes/properties/config.properties</packagingExcludes> 
-							<warName>${project.artifactId}-portlet-uP4</warName>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-			<dependencies>
-				<dependency>
-					<groupId>org.esupportail</groupId>
-					<artifactId>esup-commons2-jsf-portlet</artifactId>
-					<version>${esupcommons.version}</version>
-				</dependency>
-			</dependencies>
-			<properties>
-				<portlet.bridge.version>2.0.0</portlet.bridge.version>
-				<deploy.type>portlet</deploy.type>
-				<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
-			</properties>
-		</profile>
-	</profiles>
 </project>

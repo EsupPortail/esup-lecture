@@ -56,7 +56,7 @@ public class HomeController {
 	 */
 	private int dummyId;
 
-	@RenderMapping
+	@RenderMapping()
 	public String goHome() {
 		return "home";
 	}

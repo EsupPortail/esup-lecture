@@ -148,7 +148,7 @@ Pour plus d'informations voir le
 	<categoryProfile
 		name="Categorie de démo 1"
 		id="demo1"
-		urlCategory="${config.url.prefix}/examples/xml/category.offline.xml"
+		urlCategory="&config.url.prefix;/examples/xml/category.offline.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
@@ -157,7 +157,6 @@ Pour plus d'informations voir le
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>
-				<!-- <regular attribute="uid" value="bourges"/> -->
 				<group name="local.0"/>
 			</obliged>
 		</visibility>
@@ -166,7 +165,7 @@ Pour plus d'informations voir le
 	<categoryProfile
 		name="Categorie de démo 2"
 		id="demo2"
-		urlCategory="${config.url.prefix}/examples/xml/demo2.xml"
+		urlCategory="&config.url.prefix;/examples/xml/demo2.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
@@ -175,7 +174,6 @@ Pour plus d'informations voir le
 			<allowed/>
 			<autoSubscribed/>
 			<obliged>
-<!-- 				<regular attribute="uid" value="bourges"/> -->
 				<group name="local.0"/>
 			</obliged>
 		</visibility>
@@ -184,7 +182,7 @@ Pour plus d'informations voir le
 	<categoryProfile
 		name="Categorie de démo 3"
 		id="demo3"
-		urlCategory="${config.url.prefix}/examples/xml/demo3.xml"
+		urlCategory="&config.url.prefix;/examples/xml/demo3.xml"
 		trustCategory="yes"
 		access="public"
 		ttl = "3600"

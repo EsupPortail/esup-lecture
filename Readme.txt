@@ -18,5 +18,5 @@ Prototyping :
 serlet :
  mvn jetty:run
 portlet :
- mvn -P portlet2Development package portlet-prototyping:run
+ mvn clean package portlet-prototyping:run
  and go on http://localhost:8080/pluto

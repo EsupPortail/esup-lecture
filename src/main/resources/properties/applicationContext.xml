@@ -14,7 +14,6 @@
 		<property name="locations">
 			<list>
 				<value>classpath:/properties/defaults.properties</value>
-				<value>classpath:/properties/defaults-${deploy.type}.properties</value>
 				<value>classpath:/properties/config.properties</value>
 				<value>file:${application.config.location}/esup-lecture/config.properties</value>
 			</list>
@@ -42,6 +41,5 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
-		
 
 </beans>

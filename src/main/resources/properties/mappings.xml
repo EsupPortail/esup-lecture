@@ -16,27 +16,27 @@ xlstFiles given here are only samples and must be copied and modified on your ow
 	</mapping>
  -->
 	<mapping 
-		sourceURL="${config.url.prefix}/examples/xml/flux.offline1.xml"
-		xsltFile="${config.url.prefix}/examples/xsl/rss-jquery-clickable.xsl"
-		mobileXsltFile="${config.url.prefix}/examples/xsl/rss-mobile.xsl"
+		sourceURL="&config.url.prefix;/examples/xml/flux.offline1.xml"
+		xsltFile="&config.url.prefix;/examples/xsl/rss-jquery-clickable.xsl"
+		mobileXsltFile="&config.url.prefix;/examples/xsl/rss-mobile.xsl"
 		itemXPath="/rss/channel/item[position()&lt;16]">
 	</mapping>
 	<mapping 
-		sourceURL="${config.url.prefix}/examples/xml/flux.offline2.xml"
-		xsltFile="${config.url.prefix}/examples/xsl/rss-jquery-inline.xsl"
-		mobileXsltFile="${config.url.prefix}/examples/xsl/rss-mobile.xsl"
+		sourceURL="&config.url.prefix;/examples/xml/flux.offline2.xml"
+		xsltFile="&config.url.prefix;/examples/xsl/rss-jquery-inline.xsl"
+		mobileXsltFile="&config.url.prefix;/examples/xsl/rss-mobile.xsl"
 		itemXPath="/rss/channel/item[position()&lt;16]">
 	</mapping>
 	<mapping 
-		sourceURL="${config.url.prefix}/examples/xml/flux.offline3.xml"
-		xsltFile="${config.url.prefix}/examples/xsl/rss-jquery-dialog.xsl"
-		mobileXsltFile="${config.url.prefix}/examples/xsl/rss-mobile.xsl"
+		sourceURL="&config.url.prefix;/examples/xml/flux.offline3.xml"
+		xsltFile="&config.url.prefix;/examples/xsl/rss-jquery-dialog.xsl"
+		mobileXsltFile="&config.url.prefix;/examples/xsl/rss-mobile.xsl"
 		itemXPath="/rss/channel/item[position()&lt;16]">
 	</mapping>
 	<mapping 
 		rootElement="rss"
-		xsltFile="${config.url.prefix}/examples/xsl/rss-jquery-inline.xsl"
-		mobileXsltFile="${config.url.prefix}/examples/xsl/rss-mobile.xsl"
+		xsltFile="&config.url.prefix;/examples/xsl/rss-jquery-inline.xsl"
+		mobileXsltFile="&config.url.prefix;/examples/xsl/rss-mobile.xsl"
 		itemXPath="/rss/channel/item[position()&lt;16]">
 	</mapping>
 <!-- Same format as above, but with thickbox style : comment one of them -->
@@ -50,7 +50,7 @@ xlstFiles given here are only samples and must be copied and modified on your ow
 
 	<mapping 
 		rootElement="RDF"
-		xsltFile="${config.url.prefix}/examples/xsl/rdf.xsl"
+		xsltFile="&config.url.prefix;/examples/xsl/rdf.xsl"
 		itemXPath="/rdf:RDF/default:item">
 		<XPathNameSpace prefix="rdf" uri="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
 		<XPathNameSpace prefix="default" uri="http://purl.org/rss/1.0/" />
@@ -58,13 +58,13 @@ xlstFiles given here are only samples and must be copied and modified on your ow
 
 	<mapping 
 		rootElement="flash"
-		xsltFile="${config.url.prefix}/examples/xsl/flash.xsl"
+		xsltFile="&config.url.prefix;/examples/xsl/flash.xsl"
 		itemXPath="/flash/object">
 	</mapping>
 
 	<mapping 
 		rootElement="java"
-		xsltFile="${config.url.prefix}/examples/xsl/java.xsl"
+		xsltFile="&config.url.prefix;/examples/xsl/java.xsl"
 		itemXPath="/java/applet">
 	</mapping>
 </mappings>
