@@ -7,7 +7,7 @@
 	<portlet>
 		<portlet-name>esup-lecture</portlet-name>
 		<display-name xml:lang="fr">esup-lecture</display-name>
-		<portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+		<portlet-class>org.esupportail.lecture.web.portlet.LectureDispatcherPortlet</portlet-class>
         <init-param>
             <name>contextConfigLocation</name>
             <value>classpath:properties/portletContext.xml</value>

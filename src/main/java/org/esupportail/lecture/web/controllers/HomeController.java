@@ -261,6 +261,7 @@ public class HomeController {
 			LOG.debug("in toggleFoldedState");
 		}
 		if (LOG.isDebugEnabled()) LOG.debug("toggleFoldedState("+ catID +")");
+		//TODO
 //		CategoryWebBean selectedCategory = getUalCategory();
 //		//toggle expanded status
 //		selectedCategory.setFolded(!selectedCategory.isFolded());

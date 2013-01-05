@@ -16,7 +16,7 @@
     <context:annotation-config/>
     <mvc:annotation-driven />
     <context:component-scan base-package="org.esupportail.lecture"/>
-
+    
 	<!-- Regexes of mobile device user agents -->
 	<util:list id="mobileDeviceRegexes">
 	    <value>.*iPhone.*</value>
