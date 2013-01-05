@@ -52,8 +52,10 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
     /**
      * @see org.hibernate.usertype.UserType#nullSafeGet(java.sql.ResultSet, java.lang.String[], java.lang.Object)
      */
-    public Object nullSafeGet(final ResultSet resultSet, final String[] names, @SuppressWarnings("unused") final
-	Object owner) throws HibernateException, SQLException { 
+    public Object nullSafeGet(
+    		final ResultSet resultSet, 
+    		final String[] names, 
+    		final Object owner) throws HibernateException, SQLException { 
         String name = resultSet.getString(names[0]); 
         E result = null; 
         if (!resultSet.wasNull()) { 
@@ -65,7 +67,7 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
     /**
      * @see org.hibernate.usertype.UserType#nullSafeSet(java.sql.PreparedStatement, java.lang.Object, int)
      */
-    @SuppressWarnings("unchecked")
+	@SuppressWarnings("rawtypes")
 	public void nullSafeSet(PreparedStatement preparedStatement, Object value, int index)
     throws HibernateException, SQLException { 
         if (null == value) { 
@@ -92,8 +94,7 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
     /**
      * @see org.hibernate.usertype.UserType#assemble(java.io.Serializable, java.lang.Object)
      */
-    public Object assemble(Serializable cached, @SuppressWarnings("unused")
-	Object owner) throws HibernateException {
+    public Object assemble(Serializable cached, Object owner) throws HibernateException {
          return cached;
     } 
 
@@ -107,9 +108,7 @@ public class EnumUserType<E extends Enum<E>> implements UserType {
     /**
      * @see org.hibernate.usertype.UserType#replace(java.lang.Object, java.lang.Object, java.lang.Object)
      */
-    public Object replace(Object original, @SuppressWarnings("unused")
-	Object target, @SuppressWarnings("unused")
-	Object owner) throws HibernateException { 
+    public Object replace(Object original, Object target, Object owner) throws HibernateException { 
         return original; 
     } 
  

@@ -4,15 +4,9 @@
  */
 package org.esupportail.lecture.web.controllers.oldJsf;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.commons.utils.ContextUtils;
-import org.esupportail.commons.utils.strings.StringUtils;
 import org.esupportail.commons.web.controllers.ExceptionController;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.beans.User;
@@ -26,11 +20,6 @@ public class SessionController extends AbstractDomainAwareBean {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * The name of the parameter that gives the logout URL.
-	 */
-	private static final String LOGOUT_URL_PARAM = "edu.yale.its.tp.cas.client.logoutUrl";
 
 	/**
 	 * The name of the request attribute that holds the current user.

@@ -8,12 +8,11 @@ package org.esupportail.lecture.domain.model;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.utils.DummyInterface;
-import org.esupportail.lecture.exceptions.LectureException;
-import org.esupportail.lecture.exceptions.dao.InfoDaoException;
 
 /**
  * SourceDummy element : a source that cannot be created well.

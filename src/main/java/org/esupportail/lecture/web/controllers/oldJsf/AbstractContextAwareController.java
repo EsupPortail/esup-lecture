@@ -17,6 +17,7 @@ import org.esupportail.commons.utils.Assert;
  */
 public abstract class AbstractContextAwareController extends AbstractDomainAwareBean {
 
+	private static final long serialVersionUID = 1L;
 	/**
 	 * The SessionController.
 	 */

@@ -61,6 +61,7 @@ public class AssertionHandler implements AssertionAccessor, InitializingBean {
 		//get ProxyTicket for current portlet from uPortal
 		if (assertion == null) {
 			final PortletRequest request = ((PortletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest(); 
+			@SuppressWarnings("unchecked")
 			Map<String,String> userinfo = (Map<String,String>) request.getAttribute(PortletRequest.USER_INFO);
 			String ticket = userinfo.get("casProxyTicket");
 			if (log.isDebugEnabled()) {

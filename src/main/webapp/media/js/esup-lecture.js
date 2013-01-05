@@ -131,7 +131,7 @@ if (typeof(esup_lecture) === 'undefined') {
 				},
 				resizable: false
 			});
-		})
+		});
 
 		// Dialog Link
 		$(parentID + '.dialog_link').click(function(event){

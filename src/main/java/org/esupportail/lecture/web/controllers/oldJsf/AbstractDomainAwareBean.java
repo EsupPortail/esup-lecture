@@ -23,6 +23,8 @@ import org.esupportail.commons.web.controllers.Resettable;
  */
 public abstract class AbstractDomainAwareBean extends AbstractApplicationAwareBean implements Resettable {
 
+	private static final long serialVersionUID = 1L;
+
 	/**
 	 * A logger.
 	 */

@@ -15,6 +15,7 @@ package org.esupportail.lecture.exceptions.domain;
  */
 public abstract class InfoDomainException extends DomainServiceException {
 
+	private static final long serialVersionUID = 1L;
 	/**
 	 * Default Constructor.
 	 */

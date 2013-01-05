@@ -299,10 +299,7 @@ public class UserProfile {
 			removeCustomCategory(categoryId);
 			LOG.info("customCatgeory " + categoryId + " has been removed from userProfile " 
 				+ this.getUserId());
-		} else {
-			LOG.info("customCatgeory " + categoryId + " NEEDS TO BE REMOVED from userProfile "
-				+ this.getUserId());
-		}
+		} 
 	}
 	
 	/**
@@ -322,10 +319,7 @@ public class UserProfile {
 			// autoDelCustom (sinon : marquer l'objet)
 			removeCustomSource(sourceId);
 			LOG.info("CustomSource " + sourceId + " has been removed from userProfile " + this.getUserId());
-		} else {
-			LOG.info("CustomSource " + sourceId + " NEEDS TO BE REMOVED from userProfile " 
-				+ this.getUserId());
-		}
+		} 
 	}
 	
 	/**
@@ -599,7 +593,6 @@ public class UserProfile {
 	/**
 	 * @return the customCategories
 	 */
-	@SuppressWarnings("unused")
 	public Map<String, CustomCategory> getCustomCategories() {
 		return customCategories;
 	}
@@ -616,7 +609,6 @@ public class UserProfile {
 	/**
 	 * @return custom sources from this userProfile
 	 */
-	@SuppressWarnings("unused")
 	public Map<String, CustomSource> getCustomSources() {
 		return customSources;
 	}

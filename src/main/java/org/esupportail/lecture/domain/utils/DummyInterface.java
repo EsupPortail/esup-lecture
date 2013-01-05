@@ -5,7 +5,6 @@
 */
 package org.esupportail.lecture.domain.utils;
 
-import org.esupportail.lecture.exceptions.LectureException;
 /**
  * Bean simulator. It is created when a real bean cannot be create 
  * while throwing an exception is too much.

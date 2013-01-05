@@ -5,7 +5,6 @@
  */
 package org.esupportail.lecture.web.controllers.oldJsf;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -51,14 +50,6 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 	 * min value for tree size.
 	 */
 	private static final int MIN_TREE_SIZE = 20;
-	/**
-	 * max value for tree size.
-	 */
-	private static final int MAX_TREE_SIZE = 90;
-	/**
-	 * increment value when changing tree size.
-	 */
-	private static final int TREE_SIZE_STEP = 5;
 	/**
 	 * userProfile Key
 	 */

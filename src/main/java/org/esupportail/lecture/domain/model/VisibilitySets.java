@@ -56,7 +56,6 @@ public class VisibilitySets {
 	 * Not ready to use without modification
 	 * @deprecated
 	 */
-	@SuppressWarnings("deprecation")
 	@Deprecated
 	protected synchronized void checkNamesExistence() {
 	   	if (LOG.isDebugEnabled()) {
