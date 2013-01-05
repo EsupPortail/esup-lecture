@@ -138,6 +138,23 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	public void setSources(final List<SourceWebBean> sources) {
 		this.sources = sources;
 	}
+	
+	/**
+	 * get a source from category
+	 * @param srcID searched source ID
+	 * @return
+	 */
+	public SourceWebBean getSource(String srcID) {
+		if (srcID != null) {
+			List<SourceWebBean> sourceWebBeans = getSources();
+			for (SourceWebBean sourceWebBean : sourceWebBeans) {
+				if (sourceWebBean.getId().equals(srcID)) {
+					return sourceWebBean;
+				}
+			}
+		}
+		return null;
+	}
 	/**
 	 * @return description
 	 */

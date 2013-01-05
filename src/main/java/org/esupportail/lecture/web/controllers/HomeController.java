@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.regexp.recompile;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.FacadeService;
@@ -262,10 +263,9 @@ public class HomeController {
 		}
 		if (LOG.isDebugEnabled()) LOG.debug("toggleFoldedState("+ catID +")");
 		//TODO
-//		CategoryWebBean selectedCategory = getUalCategory();
+		CategoryWebBean selectedCategory = getContext().getCategory(catID);
 //		//toggle expanded status
-//		selectedCategory.setFolded(!selectedCategory.isFolded());
-//		return "OK";
+		selectedCategory.setFolded(!selectedCategory.isFolded());
 	}
 
 	/**
@@ -279,6 +279,41 @@ public class HomeController {
 			currentIsGuest = facadeService.isGuestMode();
 		} 
 		return currentIsGuest;
+	}
+
+	/**
+	 * Select a context from the tree.
+	 */
+	@ActionMapping(params="action=selectContext")
+	public void selectContext(){
+		selectElement(null, null);
+	}
+	
+	/**
+	 * Select a category and a source from the tree.
+	 */
+	@ActionMapping(params="action=selectElement")
+	public void selectElement(
+			@RequestParam(required=true, value="catID") String catID,
+			@RequestParam(required=true, value="srcID") String srcID) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("selectElement(" + catID + ", " + srcID + ")");
+		}
+		// set category focused by user as selected category in the context
+		ContextWebBean ctx = getContext();
+		CategoryWebBean selectedCategory = ctx.getCategory(catID);
+		ctx.setSelectedCategory(selectedCategory);
+		//if no selected category then we have to invalidate selected source in all categories
+		if (selectedCategory == null) {
+			for (CategoryWebBean category : ctx.getCategories()) {
+				category.setSelectedSource(null);
+			}
+		}
+		// set source focused by user as selected source in the selected category
+		if (selectedCategory != null) {
+			SourceWebBean selectedSource = selectedCategory.getSource(srcID);
+			selectedCategory.setSelectedSource(selectedSource);
+		}
 	}
 
 }

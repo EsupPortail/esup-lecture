@@ -103,6 +103,24 @@ public class ContextWebBean {
 	public List<CategoryWebBean> getCategories() {
 		return categories;
 	}
+	
+	/**
+	 * find a category from context
+	 * @param catID
+	 * @return
+	 */
+	public CategoryWebBean getCategory(String catID) {
+		if (catID != null) {
+			List<CategoryWebBean> categoryWebBeans = getCategories();
+			for (CategoryWebBean categoryWebBean : categoryWebBeans) {
+				if (categoryWebBean.getId().equals(catID)) {
+					return categoryWebBean;
+				}
+			}			
+		}
+		return null;
+	}
+	
 	/**
 	 * @param categories
 	 */

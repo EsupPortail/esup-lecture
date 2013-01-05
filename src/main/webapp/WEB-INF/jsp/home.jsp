@@ -11,7 +11,10 @@
 			<div class="lecture-logo" role=heading></div>
 		</c:if>
 		<h3 class="portlet-section-header" role="heading">
-			<a>${context.name}</a>
+			<a href="
+				<portlet:actionURL>
+					<portlet:param name="action" value="selectContext" />
+				</portlet:actionURL>">${context.name}</a>
 		</h3>
 		<div class="portlet-section-body">
 			<ul class="fl-listmenu">
