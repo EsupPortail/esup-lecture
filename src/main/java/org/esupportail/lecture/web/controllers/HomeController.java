@@ -273,6 +273,7 @@ public class HomeController {
 	 * also we are in a guest mode
 	 * @see org.esupportail.lecture.domain.FacadeService#isGuestMode()
 	 */
+	@ModelAttribute("guestMode")
 	public boolean isGuestMode() {
 		if (currentIsGuest == null) {
 			currentIsGuest = facadeService.isGuestMode();

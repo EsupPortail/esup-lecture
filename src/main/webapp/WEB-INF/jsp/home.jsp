@@ -4,6 +4,12 @@
 	<%-- LEFT --%>
 	<%-- TREE --%>
 	<div id="left-menu" class="portlet-section lecture-left" role="region">
+		<c:if test="${guestMode}">
+			<div class="lecture-logoGuest" role=heading></div>
+		</c:if>
+		<c:if test="${!guestMode}">
+			<div class="lecture-logo" role=heading></div>
+		</c:if>
 		<h3 class="portlet-section-header" role="heading">
 			<a>${context.name}</a>
 		</h3>
