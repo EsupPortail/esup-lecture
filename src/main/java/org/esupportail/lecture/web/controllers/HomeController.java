@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.FacadeService;
@@ -28,12 +30,14 @@ import org.esupportail.lecture.web.beans.SourceWebBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 
 @Controller
 @RequestMapping("VIEW")
-@SessionAttributes("context")
+@SessionAttributes("context, currentIsGuest")
 public class HomeController {
 
 	/**
@@ -55,6 +59,16 @@ public class HomeController {
 	 * 0 as default.
 	 */
 	private int dummyId;
+	/**
+	 * is Current User is Guest
+	 * This property is used to cache this information in session
+	 * to avoid domain call and CAS proxy ticket call
+	 */
+	private Boolean currentIsGuest = null;
+	/**
+	 * Log instance.
+	 */
+	private static final Log LOG = LogFactory.getLog(HomeController.class);
 
 	@RenderMapping()
 	public String goHome() {
@@ -232,6 +246,37 @@ public class HomeController {
 			}
 		}
 		return ret;
+	}
+
+	/**
+	 * JSF action : toggle Folded State of the selected category.
+	 */
+	@ActionMapping(params="action=toggleFoldedState")
+	public void toggleFoldedState(
+			@RequestParam(required=true, value="catID") String catID) {
+		if (isGuestMode()) {
+			throw new SecurityException("Try to access restricted function is guest mode");
+		}
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("in toggleFoldedState");
+		}
+		if (LOG.isDebugEnabled()) LOG.debug("toggleFoldedState("+ catID +")");
+//		CategoryWebBean selectedCategory = getUalCategory();
+//		//toggle expanded status
+//		selectedCategory.setFolded(!selectedCategory.isFolded());
+//		return "OK";
+	}
+
+	/**
+	 * @return true if current is the guest user.
+	 * also we are in a guest mode
+	 * @see org.esupportail.lecture.domain.FacadeService#isGuestMode()
+	 */
+	public boolean isGuestMode() {
+		if (currentIsGuest == null) {
+			currentIsGuest = facadeService.isGuestMode();
+		} 
+		return currentIsGuest;
 	}
 
 }

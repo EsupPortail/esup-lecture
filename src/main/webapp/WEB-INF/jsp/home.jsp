@@ -1,4 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0" %>
 <div id="main" class="portlet-section-body esup-lecture">
 	<%-- LEFT --%>
 	<%-- TREE --%>
@@ -12,7 +13,11 @@
 				<c:forEach var="cat" items="${context.categories}">
 					<li class="collapsed">
 						<div class="fl-force-left">
-							<a>homeController.toggleFoldedState</a>
+							<a href="
+								<portlet:actionURL>
+									<portlet:param name="action" value="toggleFoldedState" />
+									<portlet:param name="catID" value="${cat.id}"/>
+								</portlet:actionURL>">homeController.toggleFoldedState</a>
 						</div>
 						<div class="lecture-category">
 							<a>${cat.name}</a>
