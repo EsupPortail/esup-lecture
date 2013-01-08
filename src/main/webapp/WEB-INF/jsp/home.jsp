@@ -26,12 +26,12 @@
 							<a href="<portlet:actionURL><portlet:param name="action" value="toggleFoldedState" /><portlet:param name="catID" value="${cat.id}"/></portlet:actionURL>">homeController.toggleFoldedState</a>
 						</div>
 						<div class="lecture-category">
-							<a>${cat.name}</a>
+							<a href="<portlet:actionURL><portlet:param name="action" value="selectCategory" /><portlet:param name="catID" value="${cat.id}"/></portlet:actionURL>">${cat.name}</a>
 						</div>
 							<c:if test="${!cat.folded}"><ul class="fl-listmenu">
 								<%-- Sources --%>
 								<c:forEach var="src" items="${cat.sources}"><li class="currentSource">
-									<a>${src.name}</a>
+									<a href="<portlet:actionURL><portlet:param name="action" value="selectSource" /><portlet:param name="catID" value="${cat.id}"/><portlet:param name="srcID" value="${src.id}"/></portlet:actionURL>">${src.name}</a>
 								</li></c:forEach>
 							</ul></c:if>
 					</li>

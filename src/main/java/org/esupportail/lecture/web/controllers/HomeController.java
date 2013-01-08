@@ -86,9 +86,18 @@ public class HomeController {
 	}
 
 	/**
+	 * Action : Select a context from the tree.
+	 */
+	@ActionMapping(params="action=selectCategory")
+	public void selectCategory(
+			@RequestParam(required=true, value="catID") String catID){
+		selectElement(catID, null);
+	}
+
+	/**
 	 * Action : Select a category and a source from the tree.
 	 */
-	@ActionMapping(params="action=selectElement")
+	@ActionMapping(params="action=selectSource")
 	public void selectElement(
 			@RequestParam(required=true, value="catID") String catID,
 			@RequestParam(required=true, value="srcID") String srcID) {
