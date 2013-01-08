@@ -1,5 +1,6 @@
 package org.esupportail.lecture.web.beans;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class ContextWebBean {
 	public String getId() {
 		return id;
 	}
+	
 	/**
 	 * set the id of the context.
 	 * @param id id of context
@@ -54,6 +56,7 @@ public class ContextWebBean {
 	public void setId(final String id) {
 		this.id = id;
 	}
+	
 	/**
 	 * get the name of the context.
 	 * @return name of context
@@ -61,6 +64,7 @@ public class ContextWebBean {
 	public String getName() {
 		return name;
 	}
+	
 	/** 
 	 * set the name of the context.
 	 * @param name name of the context
@@ -68,16 +72,29 @@ public class ContextWebBean {
 	public void setName(final String name) {
 		this.name = name;
 	}
+	
 	/**
 	 * get the selected category of the context.
 	 * @return selected category
 	 */
 	public CategoryWebBean getSelectedCategory() {
-//		if (selectedCategory == null && categories.size() > 0) {
-//			selectedCategory = categories.get(0);
-//		}
 		return selectedCategory;
 	}
+	
+	/**
+	 * @return the current selected category or all
+	 */
+	public List<CategoryWebBean> getSelectedOrAllCategories() {
+		List<CategoryWebBean> ret = new ArrayList<CategoryWebBean>();
+		CategoryWebBean selected = getSelectedCategory();
+		if (selected != null) {
+			ret.add(selected);
+		} else {
+			ret = getCategories();
+		}
+		return ret;
+	}
+	
 	/**
 	 * set the selected category of the context.
 	 * @param selectedCategory selected category

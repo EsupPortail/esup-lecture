@@ -73,10 +73,13 @@
 	<%-- Source(s) and Items display --%>
 	<div class="portlet-section lecture-right">
 		<%-- categories display --%>
+		<c:forEach var="cat" items="${context.selectedOrAllCategories}">
 			<%-- sources display --%>
+			<c:forEach var="src" items="${cat.selectedOrAllSources}">
 				<div id="d4s">
-					<h4 class="portlet-section-header fl-push">cat.name &gt; source.name</h4>
+					<h4 class="portlet-section-header fl-push">${cat.name} &gt; ${src.name}</h4>
 					<%-- Items display --%>
+					<c:forEach var="item" items="${src.sortedItems}">
 						<%-- Read/Unread Button --%>
 						<div class="lecture-article fl-push">
 							<div class="lecture-toggleButton fl-force-left">
@@ -85,9 +88,12 @@
 							</div>
 							<%-- Item Display --%>
 							<div class="lecture-readArticle">
-								item.htmlContent
+								${item.htmlContent}
 							</div>
 						</div>
+					</c:forEach>
 				</div>
+			</c:forEach>
+		</c:forEach>
 	</div>	
 </div>

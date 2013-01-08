@@ -32,7 +32,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
@@ -60,7 +59,6 @@ public class HomeController {
 
 	@RenderMapping()
 	public String goHome() {
-		ContextWebBean ctx = (ContextWebBean) RequestContextHolder.getRequestAttributes().getAttribute("context", PortletSession.PORTLET_SCOPE);
 		return "home";
 	}
 
@@ -77,7 +75,6 @@ public class HomeController {
 		CategoryWebBean selectedCategory = getContext().getCategory(catID);
 		//		//toggle expanded status
 		selectedCategory.setFolded(!selectedCategory.isFolded());
-		String toto;
 	}
 
 	/**
