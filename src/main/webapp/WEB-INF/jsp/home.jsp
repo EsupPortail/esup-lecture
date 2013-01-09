@@ -76,7 +76,7 @@
 		<c:forEach var="cat" items="${context.selectedOrAllCategories}">
 			<%-- sources display --%>
 			<c:forEach var="src" items="${cat.selectedOrAllSources}">
-				<div id="d4s">
+				<c:if test="${src.withDisplayedItems}">
 					<h4 class="portlet-section-header fl-push">${cat.name} &gt; ${src.name}</h4>
 					<%-- Items display --%>
 					<c:forEach var="item" items="${src.sortedItems}">
@@ -112,7 +112,7 @@
 							</div>
 						</div>
 					</c:forEach>
-				</div>
+				</c:if>
 			</c:forEach>
 		</c:forEach>
 	</div>	
