@@ -31,7 +31,14 @@
 							<c:if test="${!cat.folded}"><ul class="fl-listmenu">
 								<%-- Sources --%>
 								<c:forEach var="src" items="${cat.sources}"><li class="currentSource">
-									<a href="<portlet:actionURL><portlet:param name="action" value="selectSource" /><portlet:param name="catID" value="${cat.id}"/><portlet:param name="srcID" value="${src.id}"/></portlet:actionURL>">${src.name}</a>
+									<a href="
+										<portlet:actionURL>
+											<portlet:param name="action" value="selectSource" />
+											<portlet:param name="catID" value="${cat.id}"/>
+											<portlet:param name="srcID" value="${src.id}"/>
+										</portlet:actionURL>">
+										${src.name} <c:if test="${src.unreadItemsNumber > 0}">(${src.unreadItemsNumber})</c:if> 
+									</a>
 								</li></c:forEach>
 							</ul></c:if>
 					</li>
