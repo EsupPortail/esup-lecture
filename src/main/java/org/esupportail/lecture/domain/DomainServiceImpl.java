@@ -317,22 +317,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				ItemBean itemBean = new ItemBean(item, customSource);
 				listItemBean.add(itemBean);
 			}
-// GB : No needed because of improve of exception management	
-//		} catch (ManagedCategoryProfileNotFoundException e) {
-//			String errorMsg = "ManagedCategoryProfileNotFoundException for service 'getItems(user "
-//				+ uid + ", source " + sourceId + ")";
-//			LOG.error(errorMsg);
-//			CustomManagedSource customManagedSource = (CustomManagedSource) customSource;
-//			String categoryId = customManagedSource.getManagedSourceProfileParentId();
-//			//userProfile.cleanCustomCategoryFromProfile(categoryId);
-//			userProfile.removeCustomCategoryFromProfile(categoryId);
-//			throw new InternalDomainException(errorMsg, e);
-//		} catch	(SourceProfileNotFoundException e) {
-//			String errorMsg = "SourceProfileNotFoundException for service 'getItems(user "
-//				+ uid + ", source " + sourceId + ")";
-//			LOG.error(errorMsg);
-//			userProfile.removeCustomSourceFromProfile(sourceId);
-//			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomSourceNotFoundException e) {
 			String errorMsg = "CustomSourceNotFoundException for service 'getItems(user "
 				+ userProfile.getUserId() + ", source " + sourceId + ")";
@@ -359,8 +343,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			LOG.debug("marckItemReadMode(" + userProfile.getUserId() + "," + sourceId + "," + itemId + "," + isRead + ")");
 		}
 		try {
-			//merge to attache again userProfile  
-			UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile);
+			UserProfile ret = getAttachedUserProfile(userProfile);
 			/* Get customCoategory */
 			CustomSource customSource;
 			customSource = ret.getCustomSource(sourceId);
@@ -377,7 +360,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		
 	}
 	
-	
 	/**
 	 * @see DomainService#markItemDisplayMode(UserProfile, String, ItemDisplayMode)
 	 */
@@ -387,8 +369,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			LOG.debug("markItemDisplayMode(" + userProfile.getUserId() + "," + sourceId + "," + mode + ")");
 		}
 		try {
-			//merge to attache again userProfile  
-			UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
+			UserProfile ret = getAttachedUserProfile(userProfile); 
 			/* Get customCategory */
 			CustomSource customSource;
 			customSource = ret.getCustomSource(sourceId);
@@ -403,7 +384,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		
 	}
 	
-	
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(UserProfile, String, int)
 	 */
@@ -412,8 +392,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("setTreeSize(" + userProfile.getUserId() + "," + contextId + "," + size + ")");
 		}
-		//merge to attache again userProfile  
-		UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
+		UserProfile ret = getAttachedUserProfile(userProfile); 
 		/* Get customContext */
 		CustomContext customContext;
 		try {
@@ -435,8 +414,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("foldCategory(" + userProfile.getUserId() + "," + cxtId + "," + catId + ")");
 		}
-		//merge to attache again userProfile  
-		UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
+		UserProfile ret = getAttachedUserProfile(userProfile); 
 		/* Get customContext */
 		CustomContext customContext;
 		try {
@@ -458,8 +436,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("unfoldCategory(" + userProfile.getUserId() + "," + cxtId + "," + catId + ")");
 		}
-		//merge to attache again userProfile  
-		UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
+		UserProfile ret = getAttachedUserProfile(userProfile); 
 		/* Get customContext */
 		CustomContext customContext;
 		try {
@@ -518,25 +495,9 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			List<CoupleProfileAvailability> couples = customCategory.getVisibleSources();
 			for (CoupleProfileAvailability couple : couples) {
 				SourceBean source;
-//				try {
-					source = new SourceBean(couple);
-					listSourceBean.add(source);
-// GB : No needed because of improve of exception management	
-//				}catch (InfoDomainException e) {
-//					LOG.error("Error on service 'getVisibleSources(user "
-//						+uid+", category "+categoryId+") : creation of a SourceDummyBean");
-//					source = new SourceDummyBean(e);
-//					listSourceBean.add(source);
-//				}
+				source = new SourceBean(couple);
+				listSourceBean.add(source);
 			}	
-// GB : No needed because of improve of exception management	
-//		} catch	(CategoryProfileNotFoundException e) {
-//			String errorMsg = "CategoryProfileNotFoundException for service 'getVisibleSources(user "
-//				+ uid + ", category " + categoryId + ")";
-//			LOG.error(errorMsg);
-//			//userProfile.cleanCustomCategoryFromProfile(categoryId);
-//			userProfile.removeCustomCategoryFromProfile(categoryId);
-//			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'getVisibleSources(user " 
 				+ userProfile.getUserId() + ", category " + categoryId + ")" 
@@ -558,8 +519,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			LOG.debug("subscribeToCategory(" + userProfile.getUserId() + "," + contextId 
 				+ "," + categoryId + ")");
 		}
-		//merge to attache again userProfile  
-		UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
+		UserProfile ret = getAttachedUserProfile(userProfile); 
 		CustomContext customContext;
 		try {
 			customContext = ret.getCustomContext(contextId);
@@ -585,19 +545,10 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				+ "," + sourceId + ")");
 		}
 		try {
-			//merge to attache again userProfile  
-			UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
+			UserProfile ret = getAttachedUserProfile(userProfile); 
 			CustomCategory customCategory = ret.getCustomCategory(categoryId);
 			customCategory.subscribeToSource(sourceId);
 			return ret;
-// GB : No needed because of improve of exception management	
-//			} catch	(CategoryProfileNotFoundException e) {
-//			String errorMsg = "CategoryProfileNotFoundException for service 'subscribeToSource(user "
-//				+ uid + ", category " + categoryId + ", source " + sourceId + ")";
-//			LOG.error(errorMsg);
-//			//userProfile.cleanCustomCategoryFromProfile(categoryId);
-//			userProfile.removeCustomCategoryFromProfile(categoryId);
-//			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'subscribeToSource(user "
 				+ userProfile.getUserId() + ", category " + categoryId + ", source " + sourceId + ").\n" 
@@ -616,8 +567,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("unsubscribeToCategory(" + userProfile.getUserId() + "," + contextId + "," + categoryId + ")");
 		}
-		//merge to attache again userProfile  
-		UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
+		UserProfile ret = getAttachedUserProfile(userProfile); 
 		CustomContext customContext;
 		try {
 			customContext = ret.getCustomContext(contextId);
@@ -640,34 +590,80 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				+ sourceId + ")");
 		}
 		try {
-			//merge to attache again userProfile  
-			UserProfile ret = DomainTools.getDaoService().mergeUserProfile(userProfile); 
+			UserProfile ret = getAttachedUserProfile(userProfile); 
 			CustomCategory customCategory = ret.getCustomCategory(categoryId);
 			customCategory.unsubscribeToSource(sourceId);
 			return ret;
-// GB : No needed because of improve of exception management	
-//		} catch	(CategoryProfileNotFoundException e) {
-//			String errorMsg = "CategoryProfileNotFoundException for service 'unsubscribeToSource(user "
-//				+ uid + ", category " + categoryId + ", source " + sourceId + ")";
-//			LOG.error(errorMsg);
-//			//userProfile.cleanCustomCategoryFromProfile(categoryId);
-//			userProfile.removeCustomCategoryFromProfile(categoryId);
-//			throw new InternalDomainException(errorMsg, e);
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'unsubscribeToSource(user "
 				+ userProfile.getUserId() + ", category " + categoryId + ", source " + sourceId + ").\n" 
 				+ "User " + userProfile.getUserId() + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);
-			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
 			throw new InternalDomainException(errorMsg, e);
 		} 	
 	}
-	
-	
-	
 
 	/*
 	 ************************** Accessors ************************************/
+	
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#isGuestMode()
+	 */
+	public boolean isGuestMode() {
+		boolean ret;
+		String connectedUser = DomainTools.getCurrentUserId(authenticationService);
+		if (connectedUser == null) {
+			return true;
+		}
+		if (connectedUser.equals(DomainTools.getGuestUser())) {
+			ret = true;
+		} else {
+			ret = false;
+		}
+		return ret;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#updateSQL(java.lang.String)
+	 */
+	public void updateSQL(final String query) {
+		DomainTools.getDaoService().updateSQL(query);
+	}
+
+	/**
+	 * @param userProfile coming from controller 
+	 * @return a userProfile attached to HB session
+	 */
+	private UserProfile getAttachedUserProfile(UserProfile userProfile) {
+		//try to find a UserProfile in database by userId
+		UserProfile ret = DomainTools.getDaoService().getUserProfile(userProfile.getUserId());
+		if (ret == null) {
+			//A new userProfile is inserted in database when merging
+			ret = DomainTools.getDaoService().mergeUserProfile(userProfile);
+		}
+		return ret;
+	}
+
+
+	/**
+	 * @return the first (and only) VersionManager instance of the database.
+	 * @throws ConfigException 
+	 */
+	private VersionManager getVersionManager() throws ConfigException {
+		List<VersionManager> versionManagers = null;
+		try {
+			versionManagers = DomainTools.getDaoService().getVersionManagers();
+		} catch (BadSqlGrammarException e) {
+			throw new ConfigException("your database is not initialized, please run 'ant init'", e);
+		}
+		if (versionManagers.isEmpty()) {
+			return null;
+		}
+		return versionManagers.get(0);
+	}
+
+	/*
+	 *************************** ACCESSORS ********************************* */	
 	
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getDatabaseVersion()
@@ -702,44 +698,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	}
 
 	/**
-	 * @return the first (and only) VersionManager instance of the database.
-	 * @throws ConfigException 
-	 */
-	private VersionManager getVersionManager() throws ConfigException {
-		List<VersionManager> versionManagers = null;
-		try {
-			versionManagers = DomainTools.getDaoService().getVersionManagers();
-		} catch (BadSqlGrammarException e) {
-			throw new ConfigException("your database is not initialized, please run 'ant init'", e);
-		}
-		if (versionManagers.isEmpty()) {
-			return null;
-		}
-		return versionManagers.get(0);
-	}
-
-
-	/**
-	 * @see org.esupportail.lecture.domain.DomainService#isGuestMode()
-	 */
-	public boolean isGuestMode() {
-		boolean ret;
-		String connectedUser = DomainTools.getCurrentUserId(authenticationService);
-		if (connectedUser == null) {
-			return true;
-		}
-		if (connectedUser.equals(DomainTools.getGuestUser())) {
-			ret = true;
-		} else {
-			ret = false;
-		}
-		return ret;
-	}
-
-	/*
-	 *************************** ACCESSORS ********************************* */	
-	
-	/**
 	 * @param authenticationService the authenticationService to set
 	 */
 	public void setAuthenticationService(final AuthenticationService authenticationService) {
@@ -752,15 +710,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 */
 	public void setI18nService(final I18nService service) {
 		i18nService = service;
-	}
-
-
-	/**
-	 * @see org.esupportail.lecture.domain.DomainService#updateSQL(java.lang.String)
-	 */
-	public void updateSQL(final String query) {
-		DomainTools.getDaoService().updateSQL(query);
-		
-	}
+	}	
 
 }
