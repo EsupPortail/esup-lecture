@@ -83,8 +83,28 @@
 						<%-- Read/Unread Button --%>
 						<div class="lecture-article fl-push">
 							<div class="lecture-toggleButton fl-force-left">
-								<a><spring:message code="markAsRead"/></a>
-								<a><spring:message code="markAsUnread"/></a>
+								<c:if test="${!item.read and !guestMode and !item.dummy and cat.userCanMarkRead}">
+									<a class="lecture-markAsReadButton" href="
+										<portlet:actionURL>
+											<portlet:param name="action" value="toggleItemReadState" />
+											<portlet:param name="catID" value="${cat.id}"/>
+											<portlet:param name="srcID" value="${src.id}"/>
+											<portlet:param name="itemID" value="${item.id}"/>
+										</portlet:actionURL>">
+										<spring:message code="markAsRead"/>
+									</a>
+								</c:if>
+								<c:if test="${item.read and !guestMode and !item.dummy and cat.userCanMarkRead}}">
+									<a class="lecture-markAsUnreadButton" href="
+										<portlet:actionURL>
+											<portlet:param name="action" value="toggleItemReadState" />
+											<portlet:param name="catID" value="${cat.id}"/>
+											<portlet:param name="srcID" value="${src.id}"/>
+											<portlet:param name="itemID" value="${item.id}"/>
+										</portlet:actionURL>">
+										<spring:message code="markAsUnread"/>
+									</a>
+								</c:if>
 							</div>
 							<%-- Item Display --%>
 							<div class="lecture-readArticle">

@@ -118,6 +118,16 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 		return items;
 	}
 	
+	public ItemWebBean getItem(String itemID) {
+		ItemWebBean ret = null;
+		for (ItemWebBean item : items) {
+			if (item.getId().equals(itemID)) {
+				return item;
+			}
+		}
+		return ret;
+	}
+	
 	/**
 	 * sort items list in function of itemDisplayMode.
 	 * @return Sorted items list

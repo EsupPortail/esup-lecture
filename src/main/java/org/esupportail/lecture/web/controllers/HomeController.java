@@ -27,6 +27,7 @@ import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
+import org.esupportail.lecture.web.beans.ItemWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -122,6 +123,44 @@ public class HomeController {
 	}
 
 	/**
+	 * action : toogle item from read to unread and unread to read.
+	 * @param catID Category ID
+	 * @param srcID Source ID
+	 * @param itemID Item ID
+	 */
+	@ActionMapping(params="action=toggleItemReadState")
+	public void toggleItemReadState(
+			@RequestParam(required=true, value="catID") String catID,
+			@RequestParam(required=true, value="srcID") String srcID,
+			@RequestParam(required=true, value="itemID") String itemID) {
+		if (isGuestMode()) {
+			throw new SecurityException("Try to access restricted function is guest mode");
+		}
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("toggleItemReadState(" + catID + ", " + srcID + ", " + itemID + ")");
+		}
+		SourceWebBean selectedSource = getContext().getCategory(catID).getSource(srcID);
+		ItemWebBean selectedItem = selectedSource.getItem(itemID);
+		//update model
+		try {
+			UserProfile userProfile = getUserProfile();
+			userProfile = facadeService.markItemReadMode(userProfile, 
+					srcID, itemID, !selectedItem.isRead());
+		} catch (Exception e) {
+			throw new WebException("Error in toggleItemReadState", e);
+		}
+		//update web beans
+		if (selectedItem.isRead()) {
+			selectedSource.setUnreadItemsNumber(selectedSource.getUnreadItemsNumber() + 1);
+		} else {
+			if (selectedSource.getUnreadItemsNumber() > 0) {
+				selectedSource.setUnreadItemsNumber(selectedSource.getUnreadItemsNumber() - 1);
+			}
+		}
+		selectedItem.setRead(!selectedItem.isRead());
+	}
+
+	/**
 	 * Model : Context of the connected user.
 	 * @return Returns the context.
 	 */
@@ -133,7 +172,7 @@ public class HomeController {
 			context = new ContextWebBean();
 			String ctxId;
 			try {
-				UserProfile userProfile = facadeService.getUserProfile(getUID());
+				UserProfile userProfile = getUserProfile();
 				ctxId = facadeService.getCurrentContextId();
 				ContextBean contextBean = facadeService.getContext(userProfile, ctxId);
 				if (contextBean == null) {
@@ -301,6 +340,27 @@ public class HomeController {
 			}
 		}
 		return ret;
+	}
+
+	/**
+	 * To display information about the custom Context of the connected user.
+	 * @return Returns the userProfile.
+	 */
+	private UserProfile getUserProfile() {
+		final String USER_PROFILE = "userProfile"; 
+		UserProfile userProfile = (UserProfile) RequestContextHolder.getRequestAttributes().getAttribute(USER_PROFILE, PortletSession.PORTLET_SCOPE);
+		if (userProfile == null) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("getUserProfile() :  userProfile not yet loaded: loading...");			
+			}
+			try {
+				userProfile = facadeService.getUserProfile(getUID());
+				RequestContextHolder.getRequestAttributes().setAttribute(USER_PROFILE, userProfile, PortletSession.PORTLET_SCOPE);
+			} catch (Exception e) {
+				throw new WebException("Error in getUserProfile", e);
+			} 
+		}
+		return userProfile;
 	}
 
 }
