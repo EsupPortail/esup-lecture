@@ -31,6 +31,7 @@ import org.esupportail.lecture.web.beans.ItemWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
 import org.esupportail.lecture.web.formBeans.ChangeItemDisplayMode;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,6 +42,11 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 @Controller
 @RequestMapping("VIEW")
 public class HomeController {
+	
+	final String GUEST_MODE = "guestMode"; 
+	final String CONTEXT = "context"; 
+	final String CHANGE_ITEM_DISPLAY_MODE = "changeItemDisplayMode";
+	final String AVAILABLE_ITEM_DISPLAY_MODE = "availableItemDisplayModes";
 
 	/**
 	 * Log instance.
@@ -60,7 +66,11 @@ public class HomeController {
 	private AuthenticationService authenticationService;
 
 	@RenderMapping()
-	public String goHome() {
+	public String goHome(ModelMap model) {
+		model.addAttribute(CONTEXT, getContext());
+		model.addAttribute(GUEST_MODE, isGuestMode());
+		model.addAttribute(CHANGE_ITEM_DISPLAY_MODE, getChangeItemDisplayMode());
+		model.addAttribute(AVAILABLE_ITEM_DISPLAY_MODE, getAvailableItemDisplayModes());
 		return "home";
 	}
 
@@ -197,13 +207,11 @@ public class HomeController {
 	/**
 	 * @return the ChangeItemDisplayMode to display in form
 	 */
-	@ModelAttribute("changeItemDisplayMode")
-	public ChangeItemDisplayMode getChangeItemDisplayMode() {
+	private ChangeItemDisplayMode getChangeItemDisplayMode() {
 		return new ChangeItemDisplayMode();
 	}	
 
-	@ModelAttribute("availableItemDisplayModes")
-	public List<ItemDisplayMode> getAvailableItemDisplayModes() {
+	private List<ItemDisplayMode> getAvailableItemDisplayModes() {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getAvailableItemDisplayModes()");
 		}
@@ -224,9 +232,7 @@ public class HomeController {
 	 * Model : Context of the connected user.
 	 * @return Returns the context.
 	 */
-	@ModelAttribute("context")
-	public ContextWebBean getContext() {
-		final String CONTEXT = "context"; 
+	private ContextWebBean getContext() {
 		ContextWebBean context = (ContextWebBean) RequestContextHolder.getRequestAttributes().getAttribute(CONTEXT, PortletSession.PORTLET_SCOPE);
 		if (context == null) {
 			context = new ContextWebBean();
@@ -285,9 +291,7 @@ public class HomeController {
 	 * Model : Guest mode
 	 * @return true if current is the guest user.
 	 */
-	@ModelAttribute("guestMode")
-	public boolean isGuestMode() {
-		final String GUEST_MODE = "guestMode"; 
+	private boolean isGuestMode() {
 		Boolean guestMode = (Boolean) RequestContextHolder.getRequestAttributes().getAttribute(GUEST_MODE, PortletSession.PORTLET_SCOPE);
 		if (guestMode == null) {
 			guestMode = facadeService.isGuestMode();
