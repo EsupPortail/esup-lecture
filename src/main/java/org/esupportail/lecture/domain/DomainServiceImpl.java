@@ -357,7 +357,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
 			throw new InternalDomainException(errorMsg, e);
 		}
-		
 	}
 	
 	/**
