@@ -29,6 +29,7 @@ import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
+import org.esupportail.lecture.web.formBeans.ChangeItemDisplayMode;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -160,6 +161,65 @@ public class HomeController {
 		selectedItem.setRead(!selectedItem.isRead());
 	}
 
+	/**
+	 * action : Change display mode
+	 */
+	@ActionMapping(params="action=changeItemDisplayMode")
+	public String changeItemDisplayMode(@ModelAttribute("changeItemDisplayMode") ChangeItemDisplayMode changeItemDisplayMode) {
+		if (isGuestMode()) {
+			throw new SecurityException("Try to access restricted function is guest mode");
+		}
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("changeItemDisplayMode()");
+		}
+	//		List<CategoryWebBean> categoryWebBeans = getSelectedOrAllCategories();
+	//		if (itemDisplayMode != ItemDisplayMode.UNDEFINED) {
+	//			try {
+	//				for (CategoryWebBean categoryWebBean : categoryWebBeans) {
+	//					List<SourceWebBean> sources = categoryWebBean.getSelectedOrAllSources();
+	//					if (sources != null) {
+	//						UserProfile userProfile = getUserProfile();
+	//						for (SourceWebBean sourceWeb : sources) {
+	//							userProfile = getFacadeService().markItemDisplayMode(userProfile,
+	//									sourceWeb.getId(), itemDisplayMode);
+	//							sourceWeb.setItemDisplayMode(itemDisplayMode);
+	//						}
+	//						setUserProfile(userProfile);
+	//					}
+	//				}
+	//			} catch (Exception e) {
+	//				throw new WebException("Error in changeItemDisplayMode", e);
+	//			}			
+	//		}
+			return "OK";
+		}
+
+	/**
+	 * @return the ChangeItemDisplayMode to display in form
+	 */
+	@ModelAttribute("changeItemDisplayMode")
+	public ChangeItemDisplayMode getChangeItemDisplayMode() {
+		return new ChangeItemDisplayMode();
+	}	
+
+	@ModelAttribute("availableItemDisplayModes")
+	public List<ItemDisplayMode> getAvailableItemDisplayModes() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getAvailableItemDisplayModes()");
+		}
+		List<ItemDisplayMode> ret = new ArrayList<ItemDisplayMode>();
+		ContextWebBean currentContext = getContext();
+		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
+		if (selectedCategory == null || selectedCategory.getSelectedSource() == null) {
+			ret.add(ItemDisplayMode.UNDEFINED);			
+		}
+		ret.add(ItemDisplayMode.ALL);
+		ret.add(ItemDisplayMode.UNREAD);
+		ret.add(ItemDisplayMode.UNREADFIRST);
+		return ret;
+	}
+	
+	
 	/**
 	 * Model : Context of the connected user.
 	 * @return Returns the context.

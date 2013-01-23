@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <div id="main" class="portlet-section-body esup-lecture">
 	<%-- LEFT --%>
 	<%-- TREE --%>
@@ -59,11 +60,15 @@
 		<h3 class="fl-force-left">${context.name}</h3>
 		<div id="hr" class="lecture-menu fl-force-right">
 			<ul class="fl-tabs">
-				<li><spring:message code="selectorLabel"></spring:message>
-					<select id="sidm">
-						<option>homeController.availableItemDisplayModes</option>
-					</select>
-					<a>homeController.changeItemDisplayMode</a>
+				<li>
+					<spring:message code="selectorLabel"></spring:message>
+					<portlet:actionURL var="changeItemDisplayModeUrl">
+						<portlet:param name="action" value="changeItemDisplayMode" />
+					</portlet:actionURL>
+					<form:form commandName="changeItemDisplayMode" method="post"	action="${changeItemDisplayModeUrl}">
+						<form:select id="sidm" path="changeItemDisplayMode" items="${availableItemDisplayModes}" />
+						<input type="submit" value="homeController.changeItemDisplayMode" />
+					</form:form>
 				</li>
 				<li>
 					<a>homeController.toggleTreeVisibilityTitle</a>
