@@ -56,7 +56,7 @@
 	<%-- RIGHT --%>
 	<%-- MENU with Source name, sort list and zoom --%>
 	<div class="portlet-section lecture-right">
-		<h3 class="fl-force-left">homeController.context.name</h3>
+		<h3 class="fl-force-left">${context.name}</h3>
 		<div id="hr" class="lecture-menu fl-force-right">
 			<ul class="fl-tabs">
 				<li><spring:message code="selectorLabel"></spring:message>
