@@ -21,6 +21,7 @@ import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.domain.model.TreeDisplayMode;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
@@ -43,6 +44,7 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 @RequestMapping("VIEW")
 public class HomeController {
 	
+	final String TREE_VISIBLE = "treeVisible"; 
 	final String GUEST_MODE = "guestMode"; 
 	final String CONTEXT = "context"; 
 	final String CHANGE_ITEM_DISPLAY_MODE = "changeItemDisplayMode";
@@ -69,6 +71,7 @@ public class HomeController {
 	public String goHome(ModelMap model) {
 		model.addAttribute(CONTEXT, getContext());
 		model.addAttribute(GUEST_MODE, isGuestMode());
+		model.addAttribute(TREE_VISIBLE, isTreeVisible());
 		model.addAttribute(CHANGE_ITEM_DISPLAY_MODE, getChangeItemDisplayMode());
 		model.addAttribute(AVAILABLE_ITEM_DISPLAY_MODE, getAvailableItemDisplayModes());
 		return "home";
@@ -134,7 +137,7 @@ public class HomeController {
 	}
 
 	/**
-	 * action : toogle item from read to unread and unread to read.
+	 * action : toggle item from read to unread and unread to read.
 	 * @param catID Category ID
 	 * @param srcID Source ID
 	 * @param itemID Item ID
@@ -169,6 +172,21 @@ public class HomeController {
 			}
 		}
 		selectedItem.setRead(!selectedItem.isRead());
+	}
+	
+	/**
+	 * action : toggle tree visibility 
+	 */
+	@ActionMapping(params="action=toggleTreeVisibility")
+	public void toggleTreeVisibility() {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("toggleTreeVisibility()");
+		}
+		if (isTreeVisible()) {
+			setInSession(TREE_VISIBLE, TreeDisplayMode.NOTVISIBLE);
+		} else {
+			setInSession(TREE_VISIBLE, TreeDisplayMode.VISIBLE);
+		}
 	}
 
 	/**
@@ -233,7 +251,7 @@ public class HomeController {
 	 * @return Returns the context.
 	 */
 	private ContextWebBean getContext() {
-		ContextWebBean context = (ContextWebBean) RequestContextHolder.getRequestAttributes().getAttribute(CONTEXT, PortletSession.PORTLET_SCOPE);
+		ContextWebBean context = (ContextWebBean) getFromSession(CONTEXT);
 		if (context == null) {
 			context = new ContextWebBean();
 			String ctxId;
@@ -282,7 +300,7 @@ public class HomeController {
 			} catch (Exception e) {
 				throw new WebException("Error in getContext", e);
 			}
-			RequestContextHolder.getRequestAttributes().setAttribute(CONTEXT, context, PortletSession.PORTLET_SCOPE);
+			setInSession(CONTEXT, context);
 		}
 		return context;
 	}
@@ -292,12 +310,32 @@ public class HomeController {
 	 * @return true if current is the guest user.
 	 */
 	private boolean isGuestMode() {
-		Boolean guestMode = (Boolean) RequestContextHolder.getRequestAttributes().getAttribute(GUEST_MODE, PortletSession.PORTLET_SCOPE);
+		Boolean guestMode = (Boolean) getFromSession(GUEST_MODE);
 		if (guestMode == null) {
 			guestMode = facadeService.isGuestMode();
-			RequestContextHolder.getRequestAttributes().setAttribute(GUEST_MODE, guestMode, PortletSession.PORTLET_SCOPE);
+			setInSession(GUEST_MODE, guestMode);
 		}
 		return guestMode;
+	}
+
+	/*
+	 * **************** Getter and Setter ****************
+	 */
+	
+	/**
+	 * @return if tree is visible or not
+	 */
+	private boolean isTreeVisible() {
+		TreeDisplayMode treeVisible = (TreeDisplayMode) getFromSession(TREE_VISIBLE);
+		if (treeVisible == null) {
+			if (getContext().isTreeNeverVisible()) {
+				treeVisible = TreeDisplayMode.NOTVISIBLE;
+			} else {
+				treeVisible = TreeDisplayMode.VISIBLE;				
+			}
+			setInSession(TREE_VISIBLE, treeVisible);
+		}
+		return treeVisible.equals(TreeDisplayMode.VISIBLE);
 	}
 
 	/**
@@ -412,19 +450,36 @@ public class HomeController {
 	 */
 	private UserProfile getUserProfile() {
 		final String USER_PROFILE = "userProfile"; 
-		UserProfile userProfile = (UserProfile) RequestContextHolder.getRequestAttributes().getAttribute(USER_PROFILE, PortletSession.PORTLET_SCOPE);
+		UserProfile userProfile = (UserProfile) getFromSession(USER_PROFILE);
 		if (userProfile == null) {
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("getUserProfile() :  userProfile not yet loaded: loading...");			
 			}
 			try {
 				userProfile = facadeService.getUserProfile(getUID());
-				RequestContextHolder.getRequestAttributes().setAttribute(USER_PROFILE, userProfile, PortletSession.PORTLET_SCOPE);
+				setInSession(USER_PROFILE, userProfile);
 			} catch (Exception e) {
 				throw new WebException("Error in getUserProfile", e);
 			} 
 		}
 		return userProfile;
+	}
+
+	/**
+	 * Store a object in session
+	 * @param name of stored object
+	 * @param value of stored object
+	 */
+	private void setInSession(final String name, Object value) {
+		RequestContextHolder.getRequestAttributes().setAttribute(name, value, PortletSession.PORTLET_SCOPE);
+	}
+
+	/**
+	 * @param name of stored object
+	 * @return the object stored in session
+	 */
+	private Object getFromSession(final String name) {
+		return RequestContextHolder.getRequestAttributes().getAttribute(name, PortletSession.PORTLET_SCOPE);
 	}
 
 }

@@ -164,7 +164,7 @@ public abstract class TwoPanesController extends AbstractContextAwareController 
 			LOG.debug("In toggleTreeVisibility");
 		}
 		if (isTreeVisible()) {
-			setTreeVisible(TreeDisplayMode.NOTVISBLE);
+			setTreeVisible(TreeDisplayMode.NOTVISIBLE);
 		} else {
 			setTreeVisible(TreeDisplayMode.VISIBLE);
 		}

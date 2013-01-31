@@ -14,7 +14,7 @@ public enum TreeDisplayMode {
 	/**
 	 * Tree not visible but user can force its visibility
 	 */
-	NOTVISBLE,
+	NOTVISIBLE,
 	/**
 	 * Tree visible and user can hide it
 	 */
