@@ -22,7 +22,7 @@ public class LectureDispatcherPortlet extends DispatcherPortlet {
 			Element element = response.createElement(headElement.getName());
 			element.setAttribute("href",
 					response.encodeURL(request.getContextPath() + headElement.getHref()));
-			element.setAttribute("rel", headElement.getHref());
+			element.setAttribute("rel", headElement.getRel());
 			element.setAttribute("type", headElement.getType());
 			response.addProperty(MimeResponse.MARKUP_HEAD_ELEMENT, element);
 		}

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd"
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
 	version="1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd
-                        http://java.sun.com/xml/ns/portlet/portlet-app_1_0.xsd">
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd
+                        http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd">
 
 	<portlet>
 		<portlet-name>esup-lecture</portlet-name>
 		<display-name xml:lang="fr">esup-lecture</display-name>
 		<portlet-class>org.esupportail.lecture.web.portlet.LectureDispatcherPortlet</portlet-class>
-        <init-param>
-            <name>contextConfigLocation</name>
-            <value>classpath:properties/portletContext.xml</value>
-        </init-param>
+		<init-param>
+			<name>contextConfigLocation</name>
+			<value>classpath:properties/portletContext.xml</value>
+		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
 			<mime-type>text/html</mime-type>
 			<portlet-mode>VIEW</portlet-mode>
-            <portlet-mode>EDIT</portlet-mode>
+			<portlet-mode>EDIT</portlet-mode>
 		</supports>
 		<supported-locale>fr</supported-locale>
 		<supported-locale>en</supported-locale>
@@ -25,6 +25,16 @@
 			<short-title>esup-lecture</short-title>
 			<keywords>esup-lecture</keywords>
 		</portlet-info>
+		<portlet-preferences>
+			<preference>
+				<name>context</name>
+				<value>default</value>
+			</preference>
+		</portlet-preferences>
+		<container-runtime-option>
+			<name>javax.portlet.renderHeaders</name>
+			<value>true</value>
+		</container-runtime-option>
 	</portlet>
 	<!-- portal user attributes needed by portlet -->
 	<user-attribute>
