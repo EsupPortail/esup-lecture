@@ -120,7 +120,7 @@
 			<plugin>
 				<groupId>net.jlehtinen.portlet</groupId>
 				<artifactId>portlet-prototyping-maven-plugin</artifactId>
-				<version>0.6</version>
+				<version>0.9</version>
 				<configuration>
 					<!-- Comma-separated list of portlets to be prototyped -->
 					<portletNames>esup-lecture</portletNames>
@@ -129,9 +129,14 @@
 						<url>/pluto/pluto.css</url>
 						<url>/pluto/portlet-spec-1.0.css</url>
 						<url>/pluto/portlet-spec-2.0.css</url>
-						<!-- <url>/esup-lecture/media/lecture.css</url>
-						<url>/esup-lecture/media/fss/fss-framework-1.2.min.css</url> -->
+						<url>/esup-lecture/media/lecture.css</url>
+						<url>/esup-lecture/bootstrap/css/bootstrap.css</url>
+						<!-- <url>/esup-lecture/media/fss/fss-framework-1.2.min.css</url> -->
 					</cssUrls>
+					<jsUrls>
+  						<url>https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js</url>
+  						<url>/esup-lecture/bootstrap/js/bootstrap.js</url>
+ 					</jsUrls>
 					<!--
  					<webAppSourceDirectory>${project.build.outputDirectory}/../${project.artifactId}-${project.version}</webAppSourceDirectory>
 					-->

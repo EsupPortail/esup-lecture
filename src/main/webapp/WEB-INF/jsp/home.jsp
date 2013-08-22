@@ -2,8 +2,9 @@
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<div id="main" class="portlet-section-body esup-lecture">
+<div id="main" class="portlet-section-body esup-lecture" ng-app>
 	<a href="<portlet:resourceURL id="ajaxCall"/>">JSON</a>
+	<input ng-model="test"><br>D{{test}}F
 	<%-- LEFT --%>
 	<c:if test="${treeVisible}">
 		<%-- TREE --%>
