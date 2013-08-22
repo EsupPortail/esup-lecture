@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.portlet.PortletSession;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,6 +41,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
+import org.springframework.web.portlet.bind.annotation.ResourceMapping;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 @Controller
 @RequestMapping("VIEW")
@@ -67,6 +72,13 @@ public class HomeController {
 	@Resource(name="authenticationService")
 	private AuthenticationService authenticationService;
 
+	@ResourceMapping(value="ajaxCall")
+	public View ajaxHandler(ResourceRequest request, ResourceResponse response) {
+		MappingJacksonJsonView view = new MappingJacksonJsonView();
+		view.addStaticAttribute("context", getContext());
+		return view;
+	}
+	
 	@RenderMapping()
 	public String goHome(ModelMap model) {
 		model.addAttribute(CONTEXT, getContext());

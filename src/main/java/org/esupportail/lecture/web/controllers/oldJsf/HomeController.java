@@ -279,7 +279,7 @@ public class HomeController extends TwoPanesController {
 	
 	public boolean isForcedNoTreeVisible() {
 		ContextWebBean currentContext = getContext();
-		return currentContext.getTreeVisible().equals(TreeDisplayMode.NEVERVISIBLE);
+		return currentContext.getTreeVisibleState().equals(TreeDisplayMode.NEVERVISIBLE);
 	}
 	
 	public String getMainDivStyleClass() {

@@ -3,6 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <div id="main" class="portlet-section-body esup-lecture">
+	<a href="<portlet:resourceURL id="ajaxCall"/>">JSON</a>
 	<%-- LEFT --%>
 	<c:if test="${treeVisible}">
 		<%-- TREE --%>

@@ -255,6 +255,11 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.12</version>
+		</dependency>
 	</dependencies>
 	<properties>
 		<javax.servlet.version>2.5</javax.servlet.version>

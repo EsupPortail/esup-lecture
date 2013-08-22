@@ -187,20 +187,20 @@ public class ContextWebBean {
 	 * @return is tree is visible or not
 	 */
 	public boolean isTreeVisible() {
-		return getTreeVisible().equals(TreeDisplayMode.VISIBLE);
+		return getTreeVisibleState().equals(TreeDisplayMode.VISIBLE);
 	}
 	
 	/**
 	 * @return is tree is mark as never visible or not
 	 */
 	public boolean isTreeNeverVisible() {
-		return getTreeVisible().equals(TreeDisplayMode.NEVERVISIBLE);
+		return getTreeVisibleState().equals(TreeDisplayMode.NEVERVISIBLE);
 	}
 	
 	/**
 	 * @return treeVisible
 	 */
-	public TreeDisplayMode getTreeVisible() {
+	public TreeDisplayMode getTreeVisibleState() {
 		return treeVisible;
 	}
 
