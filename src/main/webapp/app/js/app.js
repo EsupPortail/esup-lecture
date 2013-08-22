@@ -1,14 +1,25 @@
-var app = angular.module(appName, []); 
+var app = angular.module(appName, []);
 
 app.controller('testCtrl', function ($scope, $http) {
-	$scope.toto = "Dans le controleur !";
 
-	$scope.getCats = function(url) {
-		$http({method: 'GET', url: url}).
-		success(function(data) {
-			$scope.cats = data.context.categories;
-			$scope.contextName = data.context.name;
-		});
-	};
+    //get context as JSON
+    $http({method: 'GET', url: url}).
+        success(function (data) {
+            $scope.cats = data.context.categories;
+            $scope.contextName = data.context.name;
+            $scope.selectedCats = $scope.cats;
+        });
+
+    $scope.selectCat = function(catID) {
+        angular.forEach($scope.cats, function(cat, key) {
+            if (cat.id == catID) {
+                cat.isSelected = true;
+                $scope.selectedCats = [cat];
+            }
+            else {
+                cat.isSelected = false;
+            }
+        });
+    }
 });
 
