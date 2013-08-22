@@ -129,7 +129,7 @@
 						<url>/pluto/pluto.css</url>
 						<url>/pluto/portlet-spec-1.0.css</url>
 						<url>/pluto/portlet-spec-2.0.css</url>
-						<url>/esup-lecture/media/lecture.css</url>
+						<!-- <url>/esup-lecture/media/lecture.css</url> -->
 						<url>/esup-lecture/app/css/bootstrap.css</url>
 						<!-- <url>/esup-lecture/media/fss/fss-framework-1.2.min.css</url> -->
 					</cssUrls>

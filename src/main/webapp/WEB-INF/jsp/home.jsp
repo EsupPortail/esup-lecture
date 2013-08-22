@@ -3,26 +3,27 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <c:set var="app"><portlet:namespace/></c:set>
-<script type="text/javascript">appName = "${app}";</script>
+<script type="text/javascript">appName = "${app}";url = "<portlet:resourceURL id="ajaxCall"/>";</script>
 <script type="text/javascript" src="${resourcesPath}/app/js/app.js"></script>
-<div id="main" class="portlet-section-body esup-lecture" ng-app="${app}">
-	<div ng-controller="testCtrl">
-		<a href="<portlet:resourceURL id="ajaxCall"/>">JSON</a><br>
-		<hr>
-		<button ng-click="getCats('<portlet:resourceURL id="ajaxCall"/>')">GET cat</button>
-		{{contextName}}
-		<ul ng-repeat="cat in cats">
-			<li>{{cat.name}}</li>
-			<ul ng-repeat="source in cat.sources">
-				<li>{{source.name}}</li>
-				<ul ng-repeat="item in source.items">
-					<li>{{item.id}}</li>
-					<li><p ng-bind-html-unsafe="item.htmlContent" /></li>					
-				</ul>
-			</ul>
-		</ul>	
-		<hr>
-		<input ng-model="test"> --> D{{test}}F
-		<p>{{toto}}</p>
-	</div>
+<div id="main" ng-app="${app}" ng-controller="testCtrl" class="container-fluid">
+    <div class="span4">
+        {{context.Name}}
+        <ul ng-repeat="cat in cats">
+            <li ng-click="selectCat(cat.id)" class="btn-link">{{cat.name}}</li>
+            <ul ng-repeat="source in cat.sources">
+                <li>{{source.name}}</li>
+            </ul>
+        </ul>
+    </div>
+    <div class="span8">
+        <ul ng-repeat="cat in selectedCats">
+            <li>{{ cat.name }}</li>
+            <ul ng-repeat="source in cat.sources">
+                <li>{{ source.name }}</li>
+                <ul ng-repeat="item in source.items">
+                    <li><p ng-bind-html-unsafe="item.htmlContent"></p></li>
+                </ul>
+            </ul>
+        </ul>
+    </div>
 </div>
