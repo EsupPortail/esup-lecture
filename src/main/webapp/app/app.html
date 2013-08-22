@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script type="text/javascript">appName = "dev";</script>
+    <script type="text/javascript" src="js/app.js"></script>
+</head>
+<body ng-app="dev">
+    <div ng-controller="testCtrl">
+        <button ng-click="getCats('json/context.json')">GET cat</button>
+        {{contextName}}
+        <ul ng-repeat="cat in cats">
+            <li>{{cat.name}}</li>
+            <ul ng-repeat="source in cat.sources">
+                <li>{{source.name}}</li>
+                <ul ng-repeat="item in source.items">
+                    <li>{{item.id}}</li>
+                    <li><p ng-bind-html-unsafe="item.htmlContent" /></li>
+                </ul>
+            </ul>
+        </ul>
+    </div>
+</body>
+</html>

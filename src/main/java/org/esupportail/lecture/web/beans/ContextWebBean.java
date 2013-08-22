@@ -82,20 +82,6 @@ public class ContextWebBean {
 	}
 	
 	/**
-	 * @return the current selected category or all
-	 */
-	public List<CategoryWebBean> getSelectedOrAllCategories() {
-		List<CategoryWebBean> ret = new ArrayList<CategoryWebBean>();
-		CategoryWebBean selected = getSelectedCategory();
-		if (selected != null) {
-			ret.add(selected);
-		} else {
-			ret = getCategories();
-		}
-		return ret;
-	}
-	
-	/**
 	 * set the selected category of the context.
 	 * @param selectedCategory selected category
 	 */
