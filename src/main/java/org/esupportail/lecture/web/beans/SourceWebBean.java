@@ -128,45 +128,6 @@ public class SourceWebBean  implements Comparable<SourceWebBean> {
 		return ret;
 	}
 	
-	/**
-	 * sort items list in function of itemDisplayMode.
-	 * @return Sorted items list
-	 */
-	public List<ItemWebBean> getSortedItems() {
-		List<ItemWebBean> list = getItems();
-		List<ItemWebBean> ret = new ArrayList<ItemWebBean>();
-		if (itemDisplayMode == ItemDisplayMode.ALL) {
-			ret = list;
-		} else if (itemDisplayMode == ItemDisplayMode.UNREAD) {
-			if (list != null) {
-				for (ItemWebBean itemWebBean : list) {
-					if (!itemWebBean.isRead()) {
-						ret.add(itemWebBean);
-					}					
-				}
-			}
-		} else if (itemDisplayMode == ItemDisplayMode.UNREADFIRST) {
-			if (list != null) {
-				// find unread
-				for (ItemWebBean itemWebBean : list) {
-					if (!itemWebBean.isRead()) {
-						ret.add(itemWebBean);
-					}					
-				}
-				// and read
-				for (ItemWebBean itemWebBean : list) {
-					if (itemWebBean.isRead()) {
-						ret.add(itemWebBean);
-					}					
-				}
-			}
-		} else {
-			LOG.warn("Unknown itemDisplayMode value \"" + itemDisplayMode + "\" in sortedItems function");
-		}
-		return ret;
-	}
-	
-	
 //	/**
 //	 * @param items
 //	 */
