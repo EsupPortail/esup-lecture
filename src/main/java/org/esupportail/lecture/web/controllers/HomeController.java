@@ -7,6 +7,8 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.portlet.PortletSession;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
@@ -54,7 +56,8 @@ public class HomeController {
 	final String CONTEXT = "context"; 
 	final String CHANGE_ITEM_DISPLAY_MODE = "changeItemDisplayMode";
 	final String AVAILABLE_ITEM_DISPLAY_MODE = "availableItemDisplayModes";
-
+	final String STATICRESOURCESPATH = "resourcesPath";
+	
 	/**
 	 * Log instance.
 	 */
@@ -80,12 +83,13 @@ public class HomeController {
 	}
 	
 	@RenderMapping()
-	public String goHome(ModelMap model) {
+	public String goHome(RenderRequest request, RenderResponse response, ModelMap model) {
 		model.addAttribute(CONTEXT, getContext());
 		model.addAttribute(GUEST_MODE, isGuestMode());
 		model.addAttribute(TREE_VISIBLE, isTreeVisible());
 		model.addAttribute(CHANGE_ITEM_DISPLAY_MODE, getChangeItemDisplayMode());
 		model.addAttribute(AVAILABLE_ITEM_DISPLAY_MODE, getAvailableItemDisplayModes());
+		model.addAttribute(STATICRESOURCESPATH, response.encodeURL(request.getContextPath()));
 		return "home";
 	}
 

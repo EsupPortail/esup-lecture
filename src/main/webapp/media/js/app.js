@@ -1,4 +1,4 @@
-var app = angular.module('lecture', []); 
+var app = angular.module(appName, []); 
 
 app.controller('testCtrl', function ($scope, $http) {
 	$scope.toto = "Dans le controleur !";

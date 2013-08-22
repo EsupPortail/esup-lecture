@@ -2,7 +2,10 @@
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<div id="main" class="portlet-section-body esup-lecture" ng-app="lecture">
+<c:set var="app"><portlet:namespace/></c:set>
+<script type="text/javascript">appName = "${app}";</script>
+<script type="text/javascript" src="${resourcesPath}/media/js/app.js"></script>
+<div id="main" class="portlet-section-body esup-lecture" ng-app="${app}">
 	<div ng-controller="testCtrl">
 		<a href="<portlet:resourceURL id="ajaxCall"/>">JSON</a><br>
 		<hr>

@@ -136,8 +136,6 @@
 					<jsUrls>
   						<url>https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js</url>
   						<!-- <url>/esup-lecture/bootstrap/js/bootstrap.js</url> -->
-  						<url>/esup-lecture/media/js/app.js</url>
-  						
  					</jsUrls>
 					<!--
  					<webAppSourceDirectory>${project.build.outputDirectory}/../${project.artifactId}-${project.version}</webAppSourceDirectory>
