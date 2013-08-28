@@ -5,12 +5,12 @@
             <a class="btn-link" ng-click="toggle(cat.id)">
                 <i class="icon-minus-sign" ng-hide="cat.folded"/></i><i class="icon-plus-sign" ng-show="cat.folded"/></i>
             </a>
-            <a ng-click="selectCat(cat.id)" class="lec-btn-link">{{cat.name}}</a>
+            <a ng-click="select(cat.id)" class="lec-btn-link">{{cat.name}}</a>
         </li>
-        <ul ng-repeat="source in cat.sources" class="list-style-none" ng-hide="cat.folded">
+        <ul ng-repeat="src in cat.sources" class="list-style-none" ng-hide="cat.folded">
             <li>
-                <a class="lec-btn-link"><i class="icon-play"/></i> {{source.name}}</a>
-                <span class="badge" ng-show="source.unreadItemsNumber > 0">{{ source.unreadItemsNumber }}</span>
+                <a class="lec-btn-link" ng-click="select(cat.id, src.id)"><i class="icon-play"/></i> {{src.name}}</a>
+                <span class="badge" ng-show="src.unreadItemsNumber > 0">{{ src.unreadItemsNumber }}</span>
             </li>
         </ul>
     </ul>
@@ -18,7 +18,7 @@
 <div class="span8">
     <ul ng-repeat="cat in selectedCats">
         <li>{{ cat.name }}</li>
-        <ul ng-repeat="source in cat.sources">
+        <ul ng-repeat="source in cat.selectedSrcs">
             <li>{{ source.name }}</li>
             <ul ng-repeat="item in source.items">
                 <li><p ng-bind-html-unsafe="item.htmlContent"></p></li>

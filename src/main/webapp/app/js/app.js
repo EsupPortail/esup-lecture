@@ -8,17 +8,31 @@ lecture = function(appName, appHomePath, contextJsonUrl) {
                     $scope.cats = data.context.categories;
                     $scope.contextName = data.context.name;
                     $scope.selectedCats = $scope.cats;
+                    angular.forEach($scope.cats, function (cat, key) {
+                        cat.selectedSrcs = cat.sources;
+                    });
                 });
 
-            $scope.selectCat = function(catID) {
+            $scope.select = function(catID, srcID) {
                 angular.forEach($scope.cats, function (cat, key) {
                     if (cat.id == catID) {
                         cat.isSelected = true;
                         $scope.selectedCats = [cat];
+                        if (srcID) {
+                            angular.forEach(cat.sources, function (src, key) {
+                                if (src.id == srcID) {
+                                    src.isSelected = true;
+                                    cat.selectedSrcs = [src];
+                                };
+                             });
+                        }
+                        else {
+                            cat.selectedSrcs = cat.sources;
+                        };
                     }
                     else {
                         cat.isSelected = false;
-                    }
+                    };
                 });
             };
 
