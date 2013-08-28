@@ -1,0 +1,18 @@
+.list-style-none {
+    list-style: none;
+}
+
+.margin-left-zero {
+    margin-left: 0px;
+}
+
+a.lec-btn-link {
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+a.lec-btn-link:hover {
+    background-color: #eeeeee;
+    cursor: pointer;
+}

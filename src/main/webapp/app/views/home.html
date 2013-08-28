@@ -1,9 +1,12 @@
 <div class="span4">
     {{contextName}}
-    <ul ng-repeat="cat in cats">
-        <li ng-click="selectCat(cat.id)" class="btn-link">{{cat.name}}</li>
-        <ul ng-repeat="source in cat.sources">
-            <li>{{source.name}}</li>
+    <ul ng-repeat="cat in cats" class="list-style-none margin-left-zero">
+        <li><a class="btn-link" ng-click="toggle(cat.id)">
+                <i class="icon-minus-sign" ng-hide="cat.folded"/></i><i class="icon-plus-sign" ng-show="cat.folded"/></i>
+            </a>
+            <a ng-click="selectCat(cat.id)" class="lec-btn-link">{{cat.name}}</a></li>
+        <ul ng-repeat="source in cat.sources" class="list-style-none" ng-hide="cat.folded">
+            <li><a class="lec-btn-link"><i class="icon-play"/></i> {{source.name}}</a></li>
         </ul>
     </ul>
 </div>

@@ -10,7 +10,7 @@ lecture = function(appName, appHomePath, contextJsonUrl) {
                     $scope.selectedCats = $scope.cats;
                 });
 
-            $scope.selectCat = function (catID) {
+            $scope.selectCat = function(catID) {
                 angular.forEach($scope.cats, function (cat, key) {
                     if (cat.id == catID) {
                         cat.isSelected = true;
@@ -21,6 +21,15 @@ lecture = function(appName, appHomePath, contextJsonUrl) {
                     }
                 });
             };
+
+            $scope.toggle = function(catID) {
+                angular.forEach($scope.cats, function (cat, key) {
+                    if (cat.id == catID) {
+                        cat.folded = !cat.folded;
+                    }
+                });
+            }
+
         }).
         config(['$routeProvider', function ($routeProvider) {
             $routeProvider.
