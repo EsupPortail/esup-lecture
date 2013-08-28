@@ -62,7 +62,9 @@ public class HeadElement implements InitializingBean{
 	public void afterPropertiesSet() throws Exception {
 		Assert.notNull(name, "name attribute can't be null!");
 		Assert.notNull(href, "href attribute can't be null!");
-		Assert.notNull(rel, "rel attribute can't be null!");
+		if (name.equals("link")) {
+			Assert.notNull(rel, "rel attribute can't be null in case of link HeadElement!");
+		}
 		Assert.notNull(type, "type attribute can't be null!");
 	}
 }

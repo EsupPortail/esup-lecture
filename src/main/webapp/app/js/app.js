@@ -1,6 +1,6 @@
 var app = angular.module(appName, []);
 
-app.controller('testCtrl', function ($scope, $http) {
+app.controller('homeCtrl', function ($scope, $http) {
 
     //get context as JSON
     $http({method: 'GET', url: url}).
@@ -22,4 +22,15 @@ app.controller('testCtrl', function ($scope, $http) {
         });
     }
 });
+
+app.config(['$routeProvider', function ($routeProvider) {
+    $routeProvider.
+        when('/', {
+            controller: 'homeCtrl',
+            templateUrl: appHomePath + '/views/home.html'
+        }).
+        otherwise(
+            {redirectTo : '/'}
+        )
+}]);
 
