@@ -6,11 +6,13 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.portlet.MimeResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.portlet.ResourceURL;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -57,6 +59,7 @@ public class HomeController {
 	final String CHANGE_ITEM_DISPLAY_MODE = "changeItemDisplayMode";
 	final String AVAILABLE_ITEM_DISPLAY_MODE = "availableItemDisplayModes";
 	final String STATICRESOURCESPATH = "resourcesPath";
+	final String DYNAMICRESOURCESPATTERN = "dynamicResourcesPattern";
 	
 	/**
 	 * Log instance.
@@ -75,23 +78,60 @@ public class HomeController {
 	@Resource(name="authenticationService")
 	private AuthenticationService authenticationService;
 
-	@ResourceMapping(value="ajaxCall")
-	public View ajaxHandler(ResourceRequest request, ResourceResponse response) {
+	@ResourceMapping(value="getJSON")
+	public View getJSON(ResourceRequest request, ResourceResponse response) {
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
-		view.addStaticAttribute("context", getContext());
-		view.addStaticAttribute("guestMode", isGuestMode());
-		view.addStaticAttribute("treeVisible", isTreeVisible());
+		view.addStaticAttribute(CONTEXT, getContext());
+		view.addStaticAttribute(GUEST_MODE, isGuestMode());
+		view.addStaticAttribute(TREE_VISIBLE, isTreeVisible());
 		return view;
 	}
 	
+	
+	/**
+	 * action : toggle item from read to unread and unread to read.
+	 * @param catID Category ID
+	 * @param srcID Source ID
+	 * @param itemID Item ID
+	 */
+	@ResourceMapping(value="toggleItemReadState")
+	public void toggleItemReadState(
+			@RequestParam(required=true, value="p1") String catID,
+			@RequestParam(required=true, value="p2") String srcID,
+			@RequestParam(required=true, value="p3") String itemID,
+			@RequestParam(required=true, value="p4") boolean isRead) {
+		if (isGuestMode()) {
+			throw new SecurityException("Try to access restricted function is guest mode");
+		}
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("toggleItemReadState(" + catID + ", " + srcID + ", " + itemID + ")");
+		}
+		try {
+			UserProfile userProfile = getUserProfile();
+			userProfile = facadeService.markItemReadMode(userProfile, 
+					srcID, itemID, isRead);
+		} catch (Exception e) {
+			throw new WebException("Error in toggleItemReadState", e);
+		}
+	}
+	
+	/**
+	 * render home page
+	 * @param request
+	 * @param response
+	 * @param model
+	 * @return
+	 */
 	@RenderMapping()
 	public String goHome(RenderRequest request, RenderResponse response, ModelMap model) {
-		model.addAttribute(CONTEXT, getContext());
-		model.addAttribute(GUEST_MODE, isGuestMode());
-		model.addAttribute(TREE_VISIBLE, isTreeVisible());
-		model.addAttribute(CHANGE_ITEM_DISPLAY_MODE, getChangeItemDisplayMode());
-		model.addAttribute(AVAILABLE_ITEM_DISPLAY_MODE, getAvailableItemDisplayModes());
 		model.addAttribute(STATICRESOURCESPATH, response.encodeURL(request.getContextPath()));
+		ResourceURL resourceURL = response.createResourceURL();
+		resourceURL.setResourceID("@@id@@");
+		resourceURL.setParameter("p1", "__p1__");
+		resourceURL.setParameter("p2", "__p2__");
+		resourceURL.setParameter("p3", "__p3__");
+		resourceURL.setParameter("p4", "__p4__");
+		model.addAttribute(DYNAMICRESOURCESPATTERN, resourceURL);
 		return "home";
 	}
 
@@ -110,88 +150,6 @@ public class HomeController {
 		selectedCategory.setFolded(!selectedCategory.isFolded());
 	}
 
-	/**
-	 * Action : Select a context from the tree.
-	 */
-	@ActionMapping(params="action=selectContext")
-	public void selectContext(){
-		selectElement(null, null);
-	}
-
-	/**
-	 * Action : Select a context from the tree.
-	 */
-	@ActionMapping(params="action=selectCategory")
-	public void selectCategory(
-			@RequestParam(required=true, value="catID") String catID){
-		selectElement(catID, null);
-	}
-
-	/**
-	 * Action : Select a category and a source from the tree.
-	 */
-	@ActionMapping(params="action=selectSource")
-	public void selectElement(
-			@RequestParam(required=true, value="catID") String catID,
-			@RequestParam(required=true, value="srcID") String srcID) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("selectElement(" + catID + ", " + srcID + ")");
-		}
-		// set category focused by user as selected category in the context
-		ContextWebBean ctx = getContext();
-		CategoryWebBean selectedCategory = ctx.getCategory(catID);
-		ctx.setSelectedCategory(selectedCategory);
-		//if no selected category then we have to invalidate selected source in all categories
-		if (selectedCategory == null) {
-			for (CategoryWebBean category : ctx.getCategories()) {
-				category.setSelectedSource(null);
-			}
-		}
-		// set source focused by user as selected source in the selected category
-		if (selectedCategory != null) {
-			SourceWebBean selectedSource = selectedCategory.getSource(srcID);
-			selectedCategory.setSelectedSource(selectedSource);
-		}
-	}
-
-	/**
-	 * action : toggle item from read to unread and unread to read.
-	 * @param catID Category ID
-	 * @param srcID Source ID
-	 * @param itemID Item ID
-	 */
-	@ActionMapping(params="action=toggleItemReadState")
-	public void toggleItemReadState(
-			@RequestParam(required=true, value="catID") String catID,
-			@RequestParam(required=true, value="srcID") String srcID,
-			@RequestParam(required=true, value="itemID") String itemID) {
-		if (isGuestMode()) {
-			throw new SecurityException("Try to access restricted function is guest mode");
-		}
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("toggleItemReadState(" + catID + ", " + srcID + ", " + itemID + ")");
-		}
-		SourceWebBean selectedSource = getContext().getCategory(catID).getSource(srcID);
-		ItemWebBean selectedItem = selectedSource.getItem(itemID);
-		//update model
-		try {
-			UserProfile userProfile = getUserProfile();
-			userProfile = facadeService.markItemReadMode(userProfile, 
-					srcID, itemID, !selectedItem.isRead());
-		} catch (Exception e) {
-			throw new WebException("Error in toggleItemReadState", e);
-		}
-		//update web beans
-		if (selectedItem.isRead()) {
-			selectedSource.setUnreadItemsNumber(selectedSource.getUnreadItemsNumber() + 1);
-		} else {
-			if (selectedSource.getUnreadItemsNumber() > 0) {
-				selectedSource.setUnreadItemsNumber(selectedSource.getUnreadItemsNumber() - 1);
-			}
-		}
-		selectedItem.setRead(!selectedItem.isRead());
-	}
-	
 	/**
 	 * action : toggle tree visibility 
 	 */
@@ -247,23 +205,6 @@ public class HomeController {
 		return new ChangeItemDisplayMode();
 	}	
 
-	private List<ItemDisplayMode> getAvailableItemDisplayModes() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("getAvailableItemDisplayModes()");
-		}
-		List<ItemDisplayMode> ret = new ArrayList<ItemDisplayMode>();
-		ContextWebBean currentContext = getContext();
-		CategoryWebBean selectedCategory = currentContext.getSelectedCategory();
-		if (selectedCategory == null || selectedCategory.getSelectedSource() == null) {
-			ret.add(ItemDisplayMode.UNDEFINED);			
-		}
-		ret.add(ItemDisplayMode.ALL);
-		ret.add(ItemDisplayMode.UNREAD);
-		ret.add(ItemDisplayMode.UNREADFIRST);
-		return ret;
-	}
-	
-	
 	/**
 	 * Model : Context of the connected user.
 	 * @return Returns the context.

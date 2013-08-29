@@ -41,10 +41,6 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 */
 	private boolean userCanMarkRead;
 	/**
-	 * selected source of category.
-	 */
-	private SourceWebBean selectedSource;
-	/**
 	 * list of sources of category.
 	 */
 	private List<SourceWebBean> sources;
@@ -59,20 +55,6 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	public CategoryWebBean() {
 		super();
 		folded = false;
-	}
-	/**
-	 * Return list of all sources if no source is selected.
-	 * Just the selectedSource if a source is selected.
-	 * @return list of sources.
-	 */
-	public List<SourceWebBean> getSelectedOrAllSources() {
-		List<SourceWebBean> ret = new ArrayList<SourceWebBean>();
-		if (selectedSource != null) {
-			ret.add(selectedSource);
-		} else {
-			ret = getSources();
-		}
-		return ret;
 	}
 	
 	/**
@@ -110,18 +92,6 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 */
 	public void setName(final String name) {
 		this.name = name;
-	}
-	/**
-	 * @return selected source of category
-	 */
-	public SourceWebBean getSelectedSource() {
-		return selectedSource;
-	}
-	/**
-	 * @param selectedSource
-	 */
-	public void setSelectedSource(final SourceWebBean selectedSource) {
-		this.selectedSource = selectedSource;
 	}
 	/**
 	 * @return list of sources
@@ -235,17 +205,6 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 */
 	public int compareTo(final CategoryWebBean o) {
 		int ret = xmlOrder - o.getXmlOrder();
-		return ret;
-	}
-
-	/**
-	 * @return true if this category have a not null selectedCatogory.
-	 */
-	public boolean isWithSelectedSource() {
-		boolean ret = false;
-		if (selectedSource != null) {
-			ret = true;
-		} 
 		return ret;
 	}
 	/**

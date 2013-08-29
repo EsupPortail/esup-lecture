@@ -1,25 +1,40 @@
 <div class="span4">
     {{contextName}}
-    <ul ng-repeat="cat in cats" class="list-style-none margin-left-zero">
-        <li>
-            <a class="btn-link" ng-click="toggle(cat.id)"><i class="icon-minus-sign" ng-hide="cat.folded"/></i><i class="icon-plus-sign" ng-show="cat.folded"/></i></a>
+    <ul ng-repeat="cat in cats" class="margin-left-zero">
+        <li class="lec-list-style-none">
+            <a class="btn-link" ng-click="toggle(cat.id)" role="button" title="Fermer cette catégorie" ng-show="!cat.folded"><i class="icon-minus-sign"></i></a>
+            <a class="btn-link" ng-click="toggle(cat.id)" role="button" title="Ouvrir cette catégorie" ng-show="cat.folded"><i class="icon-plus-sign"></i></a>
             <a ng-click="select(cat.id)" class="lec-btn-link">{{cat.name}}</a>
+            <ul ng-repeat="src in cat.sources" class="lec-list-style-none" ng-hide="cat.folded">
+                <li class="lec-list-style-none">
+                    <a class="lec-btn-link" ng-click="select(cat.id, src.id)"><i class="icon-play"></i> {{src.name}}</a>
+                    <span class="badge" ng-show="src.unreadItemsNumber > 0">{{ src.unreadItemsNumber }}</span>
+                </li>
+            </ul>
         </li>
-        <ul ng-repeat="src in cat.sources" class="list-style-none" ng-hide="cat.folded">
-            <li><a class="lec-btn-link" ng-click="select(cat.id, src.id)"><i class="icon-play"/></i> {{src.name}}</a>
-                <span class="badge" ng-show="src.unreadItemsNumber > 0">{{ src.unreadItemsNumber }}</span>
-            </li>
-        </ul>
     </ul>
 </div>
 <div class="span8">
-    <ul ng-repeat="cat in selectedCats">
-        <li>{{ cat.name }}</li>
-        <ul ng-repeat="source in cat.selectedSrcs">
-            <li>{{ source.name }}</li>
-            <ul ng-repeat="item in source.items">
-                <li><p ng-bind-html-unsafe="item.htmlContent"></p></li>
-            </ul>
-        </ul>
-    </ul>
+    <div ng-repeat="cat in selectedCats">
+        <div class="portlet-section-header cat-title">{{ cat.name }}</div>
+        <div ng-repeat="source in cat.selectedSrcs">
+            <div class="portlet-section-subheader source-title">{{ source.name }}</div>
+            <div ng-repeat="item in source.items">
+                <div class="article" ng-show="!item.read">
+                    <div class="toggleButton">
+                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat.id, source.id, item)" role="button" title="Marquer comme lu" ><i class="icon-remove"></i></a>
+                    </div>
+                    <div class="unreadArticle" ng-bind-html-unsafe="item.htmlContent">
+                    </div>
+                </div>
+                <div class="article" ng-show="item.read">
+                    <div class="toggleButton">
+                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat.id, source.id, item)" role="button" title="Marquer comme non lu" ng-show="item.read"><i class="icon-check"></i></a>
+                    </div>
+                    <div class="readArticle" ng-bind-html-unsafe="item.htmlContent">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
