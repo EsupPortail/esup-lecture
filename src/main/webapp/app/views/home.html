@@ -2,14 +2,11 @@
     {{contextName}}
     <ul ng-repeat="cat in cats" class="list-style-none margin-left-zero">
         <li>
-            <a class="btn-link" ng-click="toggle(cat.id)">
-                <i class="icon-minus-sign" ng-hide="cat.folded"/></i><i class="icon-plus-sign" ng-show="cat.folded"/></i>
-            </a>
+            <a class="btn-link" ng-click="toggle(cat.id)"><i class="icon-minus-sign" ng-hide="cat.folded"/></i><i class="icon-plus-sign" ng-show="cat.folded"/></i></a>
             <a ng-click="select(cat.id)" class="lec-btn-link">{{cat.name}}</a>
         </li>
         <ul ng-repeat="src in cat.sources" class="list-style-none" ng-hide="cat.folded">
-            <li>
-                <a class="lec-btn-link" ng-click="select(cat.id, src.id)"><i class="icon-play"/></i> {{src.name}}</a>
+            <li><a class="lec-btn-link" ng-click="select(cat.id, src.id)"><i class="icon-play"/></i> {{src.name}}</a>
                 <span class="badge" ng-show="src.unreadItemsNumber > 0">{{ src.unreadItemsNumber }}</span>
             </li>
         </ul>

@@ -95,6 +95,7 @@
 					<wtpversion>1.5</wtpversion>
 				</configuration>
 			</plugin>
+<!-- 
   	      	<plugin>
 		        <groupId>net.alchim31.maven</groupId>
 		        <artifactId>yuicompressor-maven-plugin</artifactId>
@@ -117,6 +118,7 @@
 	              <suffix>-${project.version}.min</suffix>	          
 		        </configuration>
    		    </plugin>
+ -->			
 			<plugin>
 				<groupId>net.jlehtinen.portlet</groupId>
 				<artifactId>portlet-prototyping-maven-plugin</artifactId>

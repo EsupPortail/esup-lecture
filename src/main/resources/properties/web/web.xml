@@ -18,7 +18,7 @@
     <util:list id="headElements">
     	<bean class="org.esupportail.lecture.web.portlet.HeadElement"
     		p:name="link"
-    		p:href="/media/lecture.css"
+    		p:href="/app/css/lecture.css"
     		p:rel="stylesheet"
     		p:type="text/css"/>
     	<bean class="org.esupportail.lecture.web.portlet.HeadElement"
@@ -29,7 +29,10 @@
     	<bean class="org.esupportail.lecture.web.portlet.HeadElement"
     		p:name="script"
     		p:href="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"
-    		p:rel="stylesheet"
+    		p:type="text/javascript"/>
+    	<bean class="org.esupportail.lecture.web.portlet.HeadElement"
+    		p:name="script"
+    		p:href="/app/js/app.js"
     		p:type="text/javascript"/>
     </util:list>
 

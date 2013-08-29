@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.web.controllers.oldJsf.AbstractDomainAwareBean;
+import org.esupportail.lecture.domain.AbstractDomainAwareBean;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.application.Version;
 import org.esupportail.commons.services.application.VersionException;

@@ -2,11 +2,10 @@
  * ESUP-Portail Blank Application - Copyright (c) 2006 ESUP-Portail consortium
  * http://sourcesup.cru.fr/projects/esup-blank
  */
-package org.esupportail.lecture.web.controllers.oldJsf;
+package org.esupportail.lecture.domain;
 
 import java.util.Locale;
 
-import org.esupportail.lecture.domain.DomainService;
 import org.esupportail.lecture.domain.beans.User;
 import org.esupportail.commons.beans.AbstractApplicationAwareBean;
 import org.esupportail.commons.services.logging.Logger;

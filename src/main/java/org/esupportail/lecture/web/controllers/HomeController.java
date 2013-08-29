@@ -79,6 +79,8 @@ public class HomeController {
 	public View ajaxHandler(ResourceRequest request, ResourceResponse response) {
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		view.addStaticAttribute("context", getContext());
+		view.addStaticAttribute("guestMode", isGuestMode());
+		view.addStaticAttribute("treeVisible", isTreeVisible());
 		return view;
 	}
 	
