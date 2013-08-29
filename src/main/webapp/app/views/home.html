@@ -22,14 +22,14 @@
             <div ng-repeat="item in source.items">
                 <div class="article" ng-show="!item.read">
                     <div class="toggleButton">
-                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat.id, source.id, item)" role="button" title="Marquer comme lu" ><i class="icon-remove"></i></a>
+                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat.id, source, item)" role="button" title="Marquer comme lu" ><i class="icon-remove"></i></a>
                     </div>
                     <div class="unreadArticle" ng-bind-html-unsafe="item.htmlContent">
                     </div>
                 </div>
                 <div class="article" ng-show="item.read">
                     <div class="toggleButton">
-                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat.id, source.id, item)" role="button" title="Marquer comme non lu" ng-show="item.read"><i class="icon-check"></i></a>
+                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat.id, source, item)" role="button" title="Marquer comme non lu" ng-show="item.read"><i class="icon-check"></i></a>
                     </div>
                     <div class="readArticle" ng-bind-html-unsafe="item.htmlContent">
                     </div>

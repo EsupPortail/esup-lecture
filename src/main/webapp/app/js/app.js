@@ -53,9 +53,10 @@ lecture = function(appName, appHomePath, resourceURL) {
                 });
             };
 
-            $scope.toggleItemReadState = function(catID, scrID, item) {
-                $http({method: 'GET', url: url(resourceURL, "toggleItemReadState", catID, scrID, item.id, item.read)}).
+            $scope.toggleItemReadState = function(catID, src, item) {
+                $http({method: 'GET', url: url(resourceURL, "toggleItemReadState", catID, src.id, item.id, item.read)}).
                     success(function (data) {
+                            (item.read ? src.unreadItemsNumber++ : src.unreadItemsNumber--);
                             item.read = !item.read;
                         });
                     };
