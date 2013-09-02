@@ -54,13 +54,25 @@ lecture = function(appName, appHomePath, resourceURL) {
                 });
             };
 
-            $scope.toggleItemReadState = function(catID, src, item) {
-                $http({method: 'GET', url: url(resourceURL, "toggleItemReadState", catID, src.id, item.id, item.read)}).
+            $scope.toggleItemReadState = function(cat, src, item) {
+                $http({method: 'GET', url: url(resourceURL, "toggleItemReadState", cat.id, src.id, item.id, item.read)}).
                     success(function (data) {
                             (item.read ? src.unreadItemsNumber++ : src.unreadItemsNumber--);
                             item.read = !item.read;
                         });
                     };
+
+            $scope.markAllItemsAsRead = function(flag) {
+                angular.forEach($scope.selectedCats, function (cat, key) {
+                    angular.forEach(cat.selectedSrcs, function (src, key) {
+                        angular.forEach(src.items, function (item, key) {
+                            if (item.read != flag) {
+                                $scope.toggleItemReadState(cat, src, item);
+                            }
+                        })
+                    })
+                })
+            }
 
         }).
         config(['$routeProvider', function ($routeProvider) {

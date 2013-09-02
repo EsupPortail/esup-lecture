@@ -17,19 +17,25 @@
 <div class="span8">
     <div ng-repeat="cat in selectedCats">
         <div class="portlet-section-header cat-title">{{ cat.name }}</div>
+        <div class="btn-group">
+            <button type="button" class="btn" role="button" title="{{ msgs['markAllAsRead'] }}" ng-click="markAllItemsAsRead(true)"><i class="icon-remove"></i></button>
+            <button type="button" class="btn" role="button" title="{{ msgs['markAllAsNotRead'] }}" ng-click="markAllItemsAsRead(false)"><i class="icon-check"></i></button>
+            <button type="button" class="btn" role="button" title="{{ msgs['hideTree'] }}"><i class="icon-fullscreen"></i></button>
+            <button type="button" class="btn" role="button" title="{{ msgs['showTree'] }}"><i class="icon-indent-left"></i></button>
+        </div>
         <div ng-repeat="source in cat.selectedSrcs">
             <div class="portlet-section-subheader source-title">{{ source.name }}</div>
             <div ng-repeat="item in source.items">
                 <div class="article" ng-show="!item.read">
                     <div class="toggleButton">
-                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat.id, source, item)" role="button" title="{{ msgs['markAsRead'] }}" ><i class="icon-remove"></i></a>
+                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsRead'] }}" ><i class="icon-remove"></i></a>
                     </div>
                     <div class="unreadArticle" ng-bind-html-unsafe="item.htmlContent">
                     </div>
                 </div>
                 <div class="article" ng-show="item.read">
                     <div class="toggleButton">
-                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat.id, source, item)" role="button" title="{{ msgs['markAsUnread'] }}" ng-show="item.read"><i class="icon-check"></i></a>
+                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsUnread'] }}" ng-show="item.read"><i class="icon-check"></i></a>
                     </div>
                     <div class="readArticle" ng-bind-html-unsafe="item.htmlContent">
                     </div>
