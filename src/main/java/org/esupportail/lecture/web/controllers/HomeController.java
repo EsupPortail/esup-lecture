@@ -3,10 +3,11 @@ package org.esupportail.lecture.web.controllers;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+import java.util.Properties;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.portlet.MimeResponse;
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -17,6 +18,7 @@ import javax.portlet.ResourceURL;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.services.authentication.AuthenticationService;
+import org.esupportail.commons.services.i18n.I18nService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.FacadeService;
 import org.esupportail.lecture.domain.beans.CategoryBean;
@@ -34,7 +36,6 @@ import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
-import org.esupportail.lecture.web.beans.ItemWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
 import org.esupportail.lecture.web.formBeans.ChangeItemDisplayMode;
 import org.springframework.stereotype.Controller;
@@ -60,12 +61,13 @@ public class HomeController {
 	final String AVAILABLE_ITEM_DISPLAY_MODE = "availableItemDisplayModes";
 	final String STATICRESOURCESPATH = "resourcesPath";
 	final String DYNAMICRESOURCESPATTERN = "dynamicResourcesPattern";
+	private static final String MESSAGES = "messages";
 	
 	/**
 	 * Log instance.
 	 */
 	private static final Log LOG = LogFactory.getLog(HomeController.class);
-
+	
 	/**
 	 * Access to facade services (init by Spring).
 	 */
@@ -77,6 +79,9 @@ public class HomeController {
 	 */
 	@Resource(name="authenticationService")
 	private AuthenticationService authenticationService;
+	
+	@Resource(name="i18nService")
+	private I18nService i18nService;
 
 	@ResourceMapping(value="getJSON")
 	public View getJSON(ResourceRequest request, ResourceResponse response) {
@@ -84,6 +89,8 @@ public class HomeController {
 		view.addStaticAttribute(CONTEXT, getContext());
 		view.addStaticAttribute(GUEST_MODE, isGuestMode());
 		view.addStaticAttribute(TREE_VISIBLE, isTreeVisible());
+		Locale locale = request.getLocale();
+		view.addStaticAttribute(MESSAGES, i18nService.getStrings(locale));
 		return view;
 	}
 	

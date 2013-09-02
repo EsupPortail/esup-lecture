@@ -5,6 +5,7 @@ lecture = function(appName, appHomePath, resourceURL) {
             //get context as JSON
             $http({method: 'GET', url: url(resourceURL, "getJSON")}).
                 success(function (data) {
+                    $scope.msgs = data.messages;
                     $scope.cats = data.context.categories;
                     $scope.contextName = data.context.name;
                     $scope.selectedCats = [$scope.cats[0]];

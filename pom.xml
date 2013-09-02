@@ -267,6 +267,6 @@
 	</dependencies>
 	<properties>
 		<javax.servlet.version>2.5</javax.servlet.version>
-		<esupcommons.version>0.3.1</esupcommons.version>
+		<esupcommons.version>0.3.3</esupcommons.version>
 	</properties>
 </project>

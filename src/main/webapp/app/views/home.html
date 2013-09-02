@@ -2,8 +2,8 @@
     {{contextName}}
     <ul ng-repeat="cat in cats" class="margin-left-zero">
         <li class="lec-list-style-none">
-            <a class="btn-link" ng-click="toggle(cat.id)" role="button" title="Fermer cette catégorie" ng-show="!cat.folded"><i class="icon-minus-sign"></i></a>
-            <a class="btn-link" ng-click="toggle(cat.id)" role="button" title="Ouvrir cette catégorie" ng-show="cat.folded"><i class="icon-plus-sign"></i></a>
+            <a class="btn-link" ng-click="toggle(cat.id)" role="button" title="{{ msgs['colapseCategory'] }}" ng-show="!cat.folded"><i class="icon-minus-sign"></i></a>
+            <a class="btn-link" ng-click="toggle(cat.id)" role="button" title="{{ msgs['expandCategory'] }}" ng-show="cat.folded"><i class="icon-plus-sign"></i></a>
             <a ng-click="select(cat.id)" class="lec-btn-link">{{cat.name}}</a>
             <ul ng-repeat="src in cat.sources" class="lec-list-style-none" ng-hide="cat.folded">
                 <li class="lec-list-style-none">
@@ -22,14 +22,14 @@
             <div ng-repeat="item in source.items">
                 <div class="article" ng-show="!item.read">
                     <div class="toggleButton">
-                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat.id, source, item)" role="button" title="Marquer comme lu" ><i class="icon-remove"></i></a>
+                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat.id, source, item)" role="button" title="{{ msgs['markAsRead'] }}" ><i class="icon-remove"></i></a>
                     </div>
                     <div class="unreadArticle" ng-bind-html-unsafe="item.htmlContent">
                     </div>
                 </div>
                 <div class="article" ng-show="item.read">
                     <div class="toggleButton">
-                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat.id, source, item)" role="button" title="Marquer comme non lu" ng-show="item.read"><i class="icon-check"></i></a>
+                        <a class="lec-btn-link" ng-click="toggleItemReadState(cat.id, source, item)" role="button" title="{{ msgs['markAsUnread'] }}" ng-show="item.read"><i class="icon-check"></i></a>
                     </div>
                     <div class="readArticle" ng-bind-html-unsafe="item.htmlContent">
                     </div>
