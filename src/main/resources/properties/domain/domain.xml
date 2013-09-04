@@ -64,6 +64,7 @@
 			<tx:method name="unfold*" propagation="REQUIRED" />
 			<tx:method name="subscribe*" propagation="REQUIRED" />
 			<tx:method name="unsubscribe*" propagation="REQUIRED" />
+			<tx:method name="getUserProfile" propagation="REQUIRED" /> <!-- userProfile can be computed -and changed- during get -->
 			<tx:method name="*" propagation="SUPPORTS" read-only="true"/>
 		</tx:attributes>
 	</tx:advice>

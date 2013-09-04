@@ -53,7 +53,7 @@ import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 @Controller
 @RequestMapping("VIEW")
 public class HomeController {
-	
+
 	final String TREE_VISIBLE = "treeVisible"; 
 	final String GUEST_MODE = "guestMode"; 
 	final String CONTEXT = "context"; 
@@ -62,12 +62,12 @@ public class HomeController {
 	final String STATICRESOURCESPATH = "resourcesPath";
 	final String DYNAMICRESOURCESPATTERN = "dynamicResourcesPattern";
 	private static final String MESSAGES = "messages";
-	
+
 	/**
 	 * Log instance.
 	 */
 	private static final Log LOG = LogFactory.getLog(HomeController.class);
-	
+
 	/**
 	 * Access to facade services (init by Spring).
 	 */
@@ -79,7 +79,7 @@ public class HomeController {
 	 */
 	@Resource(name="authenticationService")
 	private AuthenticationService authenticationService;
-	
+
 	@Resource(name="i18nService")
 	private I18nService i18nService;
 
@@ -114,7 +114,7 @@ public class HomeController {
 			LOG.debug("toggleItemReadState(" + catID + ", " + srcID + ", " + itemID + ")");
 		}
 		try {
-			UserProfile userProfile = getUserProfile();
+			UserProfile userProfile = facadeService.getUserProfile(getUID());
 			userProfile = facadeService.markItemReadMode(userProfile, 
 					srcID, itemID, isRead);
 		} catch (Exception e) {
@@ -183,27 +183,8 @@ public class HomeController {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("changeItemDisplayMode()");
 		}
-	//		List<CategoryWebBean> categoryWebBeans = getSelectedOrAllCategories();
-	//		if (itemDisplayMode != ItemDisplayMode.UNDEFINED) {
-	//			try {
-	//				for (CategoryWebBean categoryWebBean : categoryWebBeans) {
-	//					List<SourceWebBean> sources = categoryWebBean.getSelectedOrAllSources();
-	//					if (sources != null) {
-	//						UserProfile userProfile = getUserProfile();
-	//						for (SourceWebBean sourceWeb : sources) {
-	//							userProfile = getFacadeService().markItemDisplayMode(userProfile,
-	//									sourceWeb.getId(), itemDisplayMode);
-	//							sourceWeb.setItemDisplayMode(itemDisplayMode);
-	//						}
-	//						setUserProfile(userProfile);
-	//					}
-	//				}
-	//			} catch (Exception e) {
-	//				throw new WebException("Error in changeItemDisplayMode", e);
-	//			}			
-	//		}
-			return "OK";
-		}
+		return "OK";
+	}
 
 	/**
 	 * @return the ChangeItemDisplayMode to display in form
@@ -217,57 +198,48 @@ public class HomeController {
 	 * @return Returns the context.
 	 */
 	private ContextWebBean getContext() {
-		ContextWebBean context = (ContextWebBean) getFromSession(CONTEXT);
-		if (context == null) {
-			context = new ContextWebBean();
-			String ctxId;
-			try {
-				UserProfile userProfile = getUserProfile();
-				ctxId = facadeService.getCurrentContextId();
-				ContextBean contextBean = facadeService.getContext(userProfile, ctxId);
-				if (contextBean == null) {
-					throw new WebException("No context with ID \"" + ctxId
-							+ "\" found in lecture-config.xml file. " 
-							+ "See this file or portlet preference with name \""
-							+ DomainTools.getContext() + "\".");
-				}
-				context.setName(contextBean.getName());
-				context.setId(contextBean.getId());
-				context.setDescription(contextBean.getDescription());
-				context.setTreeSize(contextBean.getTreeSize());
-				context.setTreeVisible(contextBean.getTreeVisible());
-				//find categories in this context
-				List<CategoryBean> categories = getCategories(ctxId, userProfile);
-				List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
-				if (categories != null) {
-					for (CategoryBean categoryBean : categories) {
-						CategoryWebBean categoryWebBean = populateCategoryWebBean(categoryBean);
-						//find sources in this category (if this category is subscribed)
-						if (categoryBean.getType() != AvailabilityMode.NOTSUBSCRIBED) {
-							List<SourceBean> sources = getSources(categoryBean, userProfile);
-							List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
-							if (sources != null) {
-								for (SourceBean sourceBean : sources) {
-									SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile);
-									//we add the source order in the Category XML definition file
-									int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
-									sourceWebBean.setXmlOrder(xmlOrder);
-									sourcesWeb.add(sourceWebBean);
-								}
+		ContextWebBean context = new ContextWebBean();
+		String ctxId;
+		try {
+			UserProfile userProfile = facadeService.getUserProfile(getUID());
+			ctxId = facadeService.getCurrentContextId();
+			ContextBean contextBean = new ContextBean(userProfile.getCustomContext(ctxId));
+			context.setName(contextBean.getName());
+			context.setId(contextBean.getId());
+			context.setDescription(contextBean.getDescription());
+			context.setTreeSize(contextBean.getTreeSize());
+			context.setTreeVisible(contextBean.getTreeVisible());
+			//find categories in this context
+			List<CategoryBean> categories = getCategories(ctxId, userProfile);
+			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
+			if (categories != null) {
+				for (CategoryBean categoryBean : categories) {
+					CategoryWebBean categoryWebBean = populateCategoryWebBean(categoryBean);
+					//find sources in this category (if this category is subscribed)
+					if (categoryBean.getType() != AvailabilityMode.NOTSUBSCRIBED) {
+						List<SourceBean> sources = getSources(categoryBean, userProfile);
+						List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
+						if (sources != null) {
+							for (SourceBean sourceBean : sources) {
+								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile);
+								//we add the source order in the Category XML definition file
+								int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
+								sourceWebBean.setXmlOrder(xmlOrder);
+								sourcesWeb.add(sourceWebBean);
 							}
-							categoryWebBean.setSources(sourcesWeb);
 						}
-						int xmlOrder = contextBean.getXMLOrder(categoryBean.getId());
-						categoryWebBean.setXmlOrder(xmlOrder);
-						categoriesWeb.add(categoryWebBean);
+						categoryWebBean.setSources(sourcesWeb);
 					}
+					int xmlOrder = contextBean.getXMLOrder(categoryBean.getId());
+					categoryWebBean.setXmlOrder(xmlOrder);
+					categoriesWeb.add(categoryWebBean);
 				}
-				context.setCategories(categoriesWeb);
-			} catch (Exception e) {
-				throw new WebException("Error in getContext", e);
 			}
-			setInSession(CONTEXT, context);
+			context.setCategories(categoriesWeb);
+		} catch (Exception e) {
+			throw new WebException("Error in getContext", e);
 		}
+		setInSession(CONTEXT, context);
 		return context;
 	}
 
@@ -287,7 +259,7 @@ public class HomeController {
 	/*
 	 * **************** Getter and Setter ****************
 	 */
-	
+
 	/**
 	 * @return if tree is visible or not
 	 */
@@ -408,27 +380,6 @@ public class HomeController {
 			}
 		}
 		return ret;
-	}
-
-	/**
-	 * To display information about the custom Context of the connected user.
-	 * @return Returns the userProfile.
-	 */
-	private UserProfile getUserProfile() {
-		final String USER_PROFILE = "userProfile"; 
-		UserProfile userProfile = (UserProfile) getFromSession(USER_PROFILE);
-		if (userProfile == null) {
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("getUserProfile() :  userProfile not yet loaded: loading...");			
-			}
-			try {
-				userProfile = facadeService.getUserProfile(getUID());
-				setInSession(USER_PROFILE, userProfile);
-			} catch (Exception e) {
-				throw new WebException("Error in getUserProfile", e);
-			} 
-		}
-		return userProfile;
 	}
 
 	/**

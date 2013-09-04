@@ -55,7 +55,7 @@ lecture = function(appName, appHomePath, resourceURL) {
             };
 
             $scope.toggleItemReadState = function(cat, src, item) {
-                $http({method: 'GET', url: url(resourceURL, "toggleItemReadState", cat.id, src.id, item.id, item.read)}).
+                $http({method: 'GET', url: url(resourceURL, "toggleItemReadState", cat.id, src.id, item.id, !item.read)}).
                     success(function (data) {
                             (item.read ? src.unreadItemsNumber++ : src.unreadItemsNumber--);
                             item.read = !item.read;
