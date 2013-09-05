@@ -2,6 +2,8 @@ lecture = function(appName, appHomePath, resourceURL) {
     angular.module(appName, [])
         .controller('homeCtrl',function ($scope, $http) {
 
+            var treeVisibleState;
+
             //get context as JSON
             $http({method: 'GET', url: url(resourceURL, "getJSON")}).
                 success(function (data) {
@@ -12,8 +14,10 @@ lecture = function(appName, appHomePath, resourceURL) {
                     angular.forEach($scope.cats, function (cat, key) {
                         cat.selectedSrcs = cat.sources;
                     });
+                    treeVisibleState = data.context.treeVisibleState;
                 });
 
+            //forge a portlet resource url
             function url(pattern, id, p1, p2, p3, p4) {
                 return pattern.
                     replace("@@id@@", id).
@@ -23,6 +27,7 @@ lecture = function(appName, appHomePath, resourceURL) {
                     replace("__p4__", p4)
             }
 
+            //select a category and eventually a source to restrict displayed content
             $scope.select = function(catID, srcID) {
                 angular.forEach($scope.cats, function (cat, key) {
                     if (cat.id == catID) {
@@ -46,6 +51,7 @@ lecture = function(appName, appHomePath, resourceURL) {
                 });
             };
 
+            // fold | unfold a category
             $scope.toggle = function(catID) {
                 angular.forEach($scope.cats, function (cat, key) {
                     if (cat.id == catID) {
@@ -54,7 +60,9 @@ lecture = function(appName, appHomePath, resourceURL) {
                 });
             };
 
+            // mark as read or unread on source item
             $scope.toggleItemReadState = function(cat, src, item) {
+                //call server to store information
                 $http({method: 'GET', url: url(resourceURL, "toggleItemReadState", cat.id, src.id, item.id, !item.read)}).
                     success(function (data) {
                             (item.read ? src.unreadItemsNumber++ : src.unreadItemsNumber--);
@@ -62,6 +70,7 @@ lecture = function(appName, appHomePath, resourceURL) {
                         });
                     };
 
+            // mark as read or unread all displayed source items
             $scope.markAllItemsAsRead = function(flag) {
                 angular.forEach($scope.selectedCats, function (cat, key) {
                     angular.forEach(cat.selectedSrcs, function (src, key) {
@@ -72,7 +81,35 @@ lecture = function(appName, appHomePath, resourceURL) {
                         })
                     })
                 })
-            }
+            };
+
+            // evaluate is hideTree button should be displayed
+            $scope.hideTreeDisplayed = function() {
+                if (treeVisibleState == "NEVERVISIBLE") return false;
+                if (treeVisibleState == "VISIBLE") return true;
+            };
+
+            // evaluate is showTree button should be displayed
+            $scope.showTreeDisplayed = function() {
+                if (treeVisibleState == "NEVERVISIBLE") return false;
+                if (treeVisibleState == "NOTVISIBLE") return true;
+            };
+
+            // evaluate is tree should be displayed
+            $scope.treeDisplayed = function() {
+                if (treeVisibleState == "NEVERVISIBLE") return false;
+                if (treeVisibleState == "VISIBLE") return true;
+            };
+
+            // show the tree
+            $scope.showTree = function() {
+                treeVisibleState = "VISIBLE";
+            };
+
+            // hide the tree
+            $scope.hideTree = function() {
+                treeVisibleState = "NOTVISIBLE";
+            };
 
         }).
         config(['$routeProvider', function ($routeProvider) {

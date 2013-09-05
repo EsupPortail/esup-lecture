@@ -1,4 +1,4 @@
-<div class="span4">
+<div class="span4" ng-show="treeDisplayed()">
     {{contextName}}
     <ul ng-repeat="cat in cats" class="margin-left-zero">
         <li class="lec-list-style-none">
@@ -20,8 +20,8 @@
         <div class="btn-group">
             <button type="button" class="btn" role="button" title="{{ msgs['markAllAsRead'] }}" ng-click="markAllItemsAsRead(true)"><i class="icon-remove"></i></button>
             <button type="button" class="btn" role="button" title="{{ msgs['markAllAsNotRead'] }}" ng-click="markAllItemsAsRead(false)"><i class="icon-check"></i></button>
-            <button type="button" class="btn" role="button" title="{{ msgs['hideTree'] }}"><i class="icon-fullscreen"></i></button>
-            <button type="button" class="btn" role="button" title="{{ msgs['showTree'] }}"><i class="icon-indent-left"></i></button>
+            <button type="button" class="btn" role="button" title="{{ msgs['hideTree'] }}" ng-show="hideTreeDisplayed()" ng-click="hideTree()"><i class="icon-fullscreen"></i></button>
+            <button type="button" class="btn" role="button" title="{{ msgs['showTree'] }}" ng-show="showTreeDisplayed()" ng-click="showTree()"><i class="icon-indent-left"></i></button>
         </div>
         <div ng-repeat="source in cat.selectedSrcs">
             <div class="portlet-section-subheader source-title">{{ source.name }}</div>
