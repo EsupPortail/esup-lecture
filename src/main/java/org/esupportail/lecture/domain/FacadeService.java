@@ -26,6 +26,7 @@ import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
+import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
@@ -80,7 +81,7 @@ public class FacadeService implements InitializingBean {
 
 	/* 
 	 ************************** SERVICES **********************************/
-
+	
 	/**
 	 * return the user profile identified by "userId". 
 	 * @param userId : identifient of the user profile
@@ -89,7 +90,7 @@ public class FacadeService implements InitializingBean {
 	public UserProfile getUserProfile(final String userId) {
 		return domainService.getUserProfile(userId);
 	}
-
+	
 	/**	
 	 * Return the userBean identified by userProfile.
 	 * @param userProfile id of connected user
@@ -104,28 +105,26 @@ public class FacadeService implements InitializingBean {
 	 * @return the id 
 	 * @throws InternalExternalException 
 	 */
-	public String getCurrentContextId() throws InternalExternalException  {
+	public String getCurrentContextId()  {
 		try {
 			return externalService.getCurrentContextId();
 		} catch (NoExternalValueException e) {
-			String errorMsg = "Service getCurrentContextId not available : (NoExternalValueException)";
-			LOG.error(errorMsg);
-			throw new InternalExternalException(errorMsg, e);
-		} 
+			throw new RuntimeException(e);
+		} catch (InternalExternalException e) {
+			throw new RuntimeException(e);
+		}
 	}
 	
 
-	/** 
-	 * Returns the contextBean corresponding to the context identified by contextId for user userProfile.
-	 * @param userProfile id of the connected user
-	 * @param contextId id of the current context
-	 * @return a ContextBean of the current context of the connected user
-	 * @throws InternalDomainException 
+	/**
+	 * @param userId : User ID
+	 * @param ctxId : Context ID
+	 * @return Computed web bean context of the connected user.
 	 */
-	public ContextBean getContext(final UserProfile userProfile, final String contextId) throws InternalDomainException  {
-		return domainService.getContext(userProfile, contextId);
+	public ContextWebBean getContext(String userId, String ctxId) {
+		return domainService.getContext(userId, ctxId);
 	}
-	
+
 	/**
 	 * Returns a list of categoryBean - corresponding to categories to display on interface.
 	 * into context contextId for user userId
@@ -186,13 +185,12 @@ public class FacadeService implements InitializingBean {
 	 * @param sourceId source if
 	 * @param isRead boolean : true = item is read | false = item is not read
 	 * marck a Item form a source for a user as read
-	 * @return hb modified UserProfile
 	 * @throws InternalDomainException 
 	 */
-	public UserProfile markItemReadMode(final UserProfile userProfile, final String sourceId, 
+	public void markItemReadMode(final String userId, final String sourceId, 
 			final String itemId, final boolean isRead)
 	throws InternalDomainException {
-		return domainService.markItemReadMode(userProfile, sourceId, itemId, isRead);
+		domainService.markItemReadMode(userId, sourceId, itemId, isRead);
 	}
 
 	/**

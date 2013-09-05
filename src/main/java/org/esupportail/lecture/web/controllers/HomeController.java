@@ -1,11 +1,6 @@
 package org.esupportail.lecture.web.controllers;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
-import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.portlet.PortletSession;
@@ -21,30 +16,14 @@ import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.services.i18n.I18nService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.FacadeService;
-import org.esupportail.lecture.domain.beans.CategoryBean;
-import org.esupportail.lecture.domain.beans.CategoryDummyBean;
-import org.esupportail.lecture.domain.beans.ContextBean;
-import org.esupportail.lecture.domain.beans.ItemBean;
-import org.esupportail.lecture.domain.beans.SourceBean;
-import org.esupportail.lecture.domain.beans.SourceDummyBean;
-import org.esupportail.lecture.domain.model.AvailabilityMode;
-import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.domain.model.TreeDisplayMode;
 import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.exceptions.domain.DomainServiceException;
-import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.web.WebException;
-import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
-import org.esupportail.lecture.web.beans.SourceWebBean;
-import org.esupportail.lecture.web.formBeans.ChangeItemDisplayMode;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 import org.springframework.web.servlet.View;
@@ -88,7 +67,6 @@ public class HomeController {
 		MappingJacksonJsonView view = new MappingJacksonJsonView();
 		view.addStaticAttribute(CONTEXT, getContext());
 		view.addStaticAttribute(GUEST_MODE, isGuestMode());
-		view.addStaticAttribute(TREE_VISIBLE, isTreeVisible());
 		Locale locale = request.getLocale();
 		view.addStaticAttribute(MESSAGES, i18nService.getStrings(locale));
 		return view;
@@ -114,8 +92,7 @@ public class HomeController {
 			LOG.debug("toggleItemReadState(" + catID + ", " + srcID + ", " + itemID + ")");
 		}
 		try {
-			UserProfile userProfile = facadeService.getUserProfile(getUID());
-			userProfile = facadeService.markItemReadMode(userProfile, 
+			 facadeService.markItemReadMode(getUID(), 
 					srcID, itemID, isRead);
 		} catch (Exception e) {
 			throw new WebException("Error in toggleItemReadState", e);
@@ -143,106 +120,15 @@ public class HomeController {
 	}
 
 	/**
-	 * Action : toggle Folded State of the selected category.
-	 */
-	@ActionMapping(params="action=toggleFoldedState")
-	public void toggleFoldedState(
-			@RequestParam(required=true, value="catID") String catID) {
-		if (isGuestMode()) {
-			throw new SecurityException("Try to access restricted function is guest mode");
-		}
-		if (LOG.isDebugEnabled()) LOG.debug("toggleFoldedState("+ catID +")");
-		CategoryWebBean selectedCategory = getContext().getCategory(catID);
-		//		//toggle expanded status
-		selectedCategory.setFolded(!selectedCategory.isFolded());
-	}
-
-	/**
-	 * action : toggle tree visibility 
-	 */
-	@ActionMapping(params="action=toggleTreeVisibility")
-	public void toggleTreeVisibility() {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("toggleTreeVisibility()");
-		}
-		if (isTreeVisible()) {
-			setInSession(TREE_VISIBLE, TreeDisplayMode.NOTVISIBLE);
-		} else {
-			setInSession(TREE_VISIBLE, TreeDisplayMode.VISIBLE);
-		}
-	}
-
-	/**
-	 * action : Change display mode
-	 */
-	@ActionMapping(params="action=changeItemDisplayMode")
-	public String changeItemDisplayMode(@ModelAttribute("changeItemDisplayMode") ChangeItemDisplayMode changeItemDisplayMode) {
-		if (isGuestMode()) {
-			throw new SecurityException("Try to access restricted function is guest mode");
-		}
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("changeItemDisplayMode()");
-		}
-		return "OK";
-	}
-
-	/**
-	 * @return the ChangeItemDisplayMode to display in form
-	 */
-	private ChangeItemDisplayMode getChangeItemDisplayMode() {
-		return new ChangeItemDisplayMode();
-	}	
-
-	/**
 	 * Model : Context of the connected user.
 	 * @return Returns the context.
 	 */
 	private ContextWebBean getContext() {
-		ContextWebBean context = new ContextWebBean();
 		String ctxId;
-		try {
-			UserProfile userProfile = facadeService.getUserProfile(getUID());
-			ctxId = facadeService.getCurrentContextId();
-			ContextBean contextBean = new ContextBean(userProfile.getCustomContext(ctxId));
-			context.setName(contextBean.getName());
-			context.setId(contextBean.getId());
-			context.setDescription(contextBean.getDescription());
-			context.setTreeSize(contextBean.getTreeSize());
-			context.setTreeVisible(contextBean.getTreeVisible());
-			//find categories in this context
-			List<CategoryBean> categories = getCategories(ctxId, userProfile);
-			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
-			if (categories != null) {
-				for (CategoryBean categoryBean : categories) {
-					CategoryWebBean categoryWebBean = populateCategoryWebBean(categoryBean);
-					//find sources in this category (if this category is subscribed)
-					if (categoryBean.getType() != AvailabilityMode.NOTSUBSCRIBED) {
-						List<SourceBean> sources = getSources(categoryBean, userProfile);
-						List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
-						if (sources != null) {
-							for (SourceBean sourceBean : sources) {
-								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile);
-								//we add the source order in the Category XML definition file
-								int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
-								sourceWebBean.setXmlOrder(xmlOrder);
-								sourcesWeb.add(sourceWebBean);
-							}
-						}
-						categoryWebBean.setSources(sourcesWeb);
-					}
-					int xmlOrder = contextBean.getXMLOrder(categoryBean.getId());
-					categoryWebBean.setXmlOrder(xmlOrder);
-					categoriesWeb.add(categoryWebBean);
-				}
-			}
-			context.setCategories(categoriesWeb);
-		} catch (Exception e) {
-			throw new WebException("Error in getContext", e);
-		}
-		setInSession(CONTEXT, context);
-		return context;
+		ctxId = facadeService.getCurrentContextId();
+		return facadeService.getContext(getUID(), ctxId);
 	}
-
+	
 	/**
 	 * Model : Guest mode
 	 * @return true if current is the guest user.
@@ -261,124 +147,10 @@ public class HomeController {
 	 */
 
 	/**
-	 * @return if tree is visible or not
-	 */
-	private boolean isTreeVisible() {
-		TreeDisplayMode treeVisible = (TreeDisplayMode) getFromSession(TREE_VISIBLE);
-		if (treeVisible == null) {
-			if (getContext().isTreeNeverVisible()) {
-				treeVisible = TreeDisplayMode.NOTVISIBLE;
-			} else {
-				treeVisible = TreeDisplayMode.VISIBLE;				
-			}
-			setInSession(TREE_VISIBLE, treeVisible);
-		}
-		return treeVisible.equals(TreeDisplayMode.VISIBLE);
-	}
-
-	/**
 	 * @return the connected user UID
 	 */
 	private String getUID() {
 		String ret = DomainTools.getCurrentUserId(authenticationService);
-		return ret;
-	}
-
-	/**
-	 * populate a SourceWebBean from a SourceBean.
-	 * @param sourceBean
-	 * @param userProfile 
-	 * @return populated SourceWebBean
-	 * @throws DomainServiceException
-	 */
-	private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, UserProfile userProfile) throws DomainServiceException {
-		SourceWebBean sourceWebBean;
-		if (sourceBean instanceof SourceDummyBean) {
-			sourceWebBean = new SourceWebBean(null);
-			String cause = ((SourceDummyBean) sourceBean).getCause().getMessage();
-			String id = "DummySrc:" + UUID.randomUUID();
-			sourceWebBean.setId(id);
-			sourceWebBean.setName(cause);
-			sourceWebBean.setType(AvailabilityMode.OBLIGED);
-			sourceWebBean.setItemDisplayMode(ItemDisplayMode.ALL);
-			sourceWebBean.setItemsNumber();
-			sourceWebBean.setUnreadItemsNumber(0);
-		} else {
-			//get Item for the source
-			List<ItemBean> itemsBeans = facadeService.getItems(userProfile, sourceBean.getId());
-			sourceWebBean = new SourceWebBean(itemsBeans);
-			sourceWebBean.setId(sourceBean.getId());
-			sourceWebBean.setName(sourceBean.getName());
-			sourceWebBean.setType(sourceBean.getType());		
-			sourceWebBean.setItemDisplayMode(sourceBean.getItemDisplayMode());
-			sourceWebBean.setItemsNumber();
-			sourceWebBean.setUnreadItemsNumber();
-		}
-		return sourceWebBean;
-	}
-
-	/**
-	 * @param categoryBean
-	 * @param userProfile 
-	 * @return list of available sources
-	 * @throws DomainServiceException
-	 */
-	private List<SourceBean> getSources(final CategoryBean categoryBean, UserProfile userProfile) throws DomainServiceException {
-		//this method need to be overwrite in edit controller (VisibledSource and not just DisplayedSources)
-		List<SourceBean> tempListSourceBean = null;
-		List<SourceBean> ret = new ArrayList<SourceBean>();
-		String catId;
-		catId = categoryBean.getId();
-		tempListSourceBean = facadeService.getDisplayedSources(userProfile, catId);
-		for (Iterator<SourceBean> iter = tempListSourceBean.iterator(); iter.hasNext();) {
-			SourceBean element = iter.next();
-			if (!(element instanceof SourceDummyBean)) {
-				ret.add(element);				
-			}
-		}
-		return ret;
-	}
-
-	/**
-	 * populate a CategoryWebBean from a CategoryBean.
-	 * @param categoryBean
-	 * @return populated CategoryWebBean
-	 */
-	private CategoryWebBean populateCategoryWebBean(final CategoryBean categoryBean) {
-		CategoryWebBean categoryWebBean =  new CategoryWebBean();
-		if (categoryBean instanceof CategoryDummyBean) {
-			String cause = ((CategoryDummyBean) categoryBean).getCause().getMessage();
-			String id = "DummyCat:" + UUID.randomUUID();
-			categoryWebBean.setId(id);
-			categoryWebBean.setName("Error!");
-			categoryWebBean.setDescription(cause);			
-		} else {
-			categoryWebBean.setId(categoryBean.getId());
-			categoryWebBean.setName(categoryBean.getName());
-			categoryWebBean.setAvailabilityMode(categoryBean.getType());
-			categoryWebBean.setDescription(categoryBean.getDescription());
-			categoryWebBean.setUserCanMarkRead(categoryBean.isUserCanMarkRead());
-		}
-		return categoryWebBean;
-	}
-
-	/**
-	 * @param ctxtId
-	 * @param userProfile 
-	 * @return list of available categories
-	 * @throws InternalDomainException 
-	 */
-	private List<CategoryBean> getCategories(final String ctxtId, UserProfile userProfile) throws InternalDomainException {
-		//Note: this method need to be overwrite in edit controller
-		List<CategoryBean> ret = new ArrayList<CategoryBean>();
-		List<CategoryBean> categories = facadeService.getDisplayedCategories(userProfile, ctxtId);
-		//Temporary: remove dummy form the list
-		for (Iterator<CategoryBean> iter = categories.iterator(); iter.hasNext();) {
-			CategoryBean element = iter.next();
-			if (!(element instanceof CategoryDummyBean)) {
-				ret.add(element);				
-			}
-		}
 		return ret;
 	}
 

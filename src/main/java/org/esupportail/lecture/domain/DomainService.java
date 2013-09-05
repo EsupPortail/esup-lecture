@@ -25,6 +25,7 @@ import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
+import org.esupportail.lecture.web.beans.ContextWebBean;
 
 /**
  * @author bourges
@@ -47,13 +48,11 @@ public interface DomainService {
 	UserBean getConnectedUser(UserProfile userProfile);
 	
 	/**
-	 * @param userProfile
-	 * @param contextId
-	 * @return ContextBean
-	 * @throws InternalDomainException 
-	 * @see FacadeService#getContext(UserProfile, String)
+	 * @param userId : User ID
+	 * @param ctxId : Context ID
+	 * @return Computed web bean context of the connected user.
 	 */
-	ContextBean getContext(UserProfile userProfile, String contextId) throws InternalDomainException;
+	public ContextWebBean getContext(String userId, String ctxId);
 
 	/**
 	 * @param userProfile
@@ -89,7 +88,7 @@ public interface DomainService {
 	throws SourceNotLoadedException, InternalDomainException, ManagedCategoryNotLoadedException;
 
 	/**
-	 * @param userProfile 
+	 * @param userId 
 	 * @param itemId 
 	 * @param sourceId 
 	 * @param isRead
@@ -97,7 +96,7 @@ public interface DomainService {
 	 * @throws InternalDomainException 
 	 * @see FacadeService#marckItemReadMode(UserProfile, String, String, boolean)
 	 */
-	UserProfile markItemReadMode(UserProfile userProfile, String sourceId, String itemId, boolean isRead)  
+	void markItemReadMode(String userId, String sourceId, String itemId, boolean isRead)  
 	throws InternalDomainException;
 
 	/**

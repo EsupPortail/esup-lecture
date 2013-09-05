@@ -6,7 +6,9 @@
 package org.esupportail.lecture.domain;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,6 +23,7 @@ import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.SourceDummyBean;
 import org.esupportail.lecture.domain.beans.UserBean;
+import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
@@ -45,6 +48,10 @@ import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
+import org.esupportail.lecture.exceptions.web.WebException;
+import org.esupportail.lecture.web.beans.CategoryWebBean;
+import org.esupportail.lecture.web.beans.ContextWebBean;
+import org.esupportail.lecture.web.beans.SourceWebBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.util.Assert;
@@ -115,10 +122,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		}
 		UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
 		if (userProfile == null) {
-			userProfile = new UserProfile(userId);
-			//don't call DAO to attach the object because we want a detached object
-//			DomainTools.getDaoService().saveUserProfile(userProfile);
-//			userProfile = DomainTools.getDaoService().refreshUserProfile(userProfile); 
+			userProfile = DomainTools.getDaoService().mergeUserProfile(new UserProfile(userId));
 		}
 		return userProfile;
 	}
@@ -133,38 +137,9 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getConnectedUser(" + userProfile.getUserId() + ")");
 		}
-		
 		/* userBean creation */
 		UserBean user = new UserBean(userProfile);
-		
 		return user;
-	}
-
-	/**
-	 * Returns the contextBean corresponding to the context identified by contextId for user userId.
-	 * @param userProfile current userProfile
-	 * @param contextId id of the context to get
-	 * @return contextBean
-	 * @throws InternalDomainException 
-	 * @see org.esupportail.lecture.domain.DomainService#getContext(UserProfile, String)
-	 */
-	public ContextBean getContext(final UserProfile userProfile, final String contextId) 
-		throws InternalDomainException {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("getContext(" + userProfile.getUserId() + "," + contextId + ")");
-		}
-		ContextBean contextBean;
-		/* Get customContext */
-		try {
-			CustomContext customContext = userProfile.getCustomContext(contextId);	
-			/* Make the contextUserBean to display */
-			contextBean = new ContextBean(customContext);
-		} catch (ContextNotFoundException e) {
-			String errorMsg = "Unable to getContext because context is not found";
-			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg, e);
-		}
-		return contextBean;		
 	}
 
 	/**
@@ -187,14 +162,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		
 		/* Get customContext */
 		CustomContext customContext;
-		try {
-			customContext = userProfile.getCustomContext(contextId);
-		} catch (ContextNotFoundException e1) {
-			String errorMsg = "Unable to getDisplayedCategories because context is not found";
-			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg, e1);
-		}
-
+		customContext = userProfile.getCustomContext(contextId);
 		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
 		List<CustomCategory> customCategories = customContext.getSortedCustomCategories();
 		for (CustomCategory customCategory : customCategories) {
@@ -286,7 +254,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				+ userProfile.getUserId() + ", category " + categoryId + ")\n" 
 				+ "User " + userProfile.getUserId() + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);
-			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
 			throw new InternalDomainException(errorMsg, e);
 		}
 		
@@ -321,7 +288,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			String errorMsg = "CustomSourceNotFoundException for service 'getItems(user "
 				+ userProfile.getUserId() + ", source " + sourceId + ")";
 			LOG.error(errorMsg);
-			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
 			throw new InternalDomainException(errorMsg, e);
 		} catch (ComputeItemsException e) {
 			String errorMsg = "ComputeItemsException for service 'getItems(user "
@@ -336,25 +302,22 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * Mark item as read for user uid.
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(UserProfile, String, String, boolean)
 	 */
-	public UserProfile markItemReadMode(final UserProfile userProfile, final String sourceId, 
+	public void markItemReadMode(final String userId, final String sourceId, 
 		final String itemId, final boolean isRead) 
 	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("marckItemReadMode(" + userProfile.getUserId() + "," + sourceId + "," + itemId + "," + isRead + ")");
+			LOG.debug("marckItemReadMode(" + userId + "," + sourceId + "," + itemId + "," + isRead + ")");
 		}
 		try {
-			UserProfile ret = getAttachedUserProfile(userProfile);
 			/* Get customCoategory */
+			UserProfile userProfile = getUserProfile(userId);
 			CustomSource customSource;
-			customSource = ret.getCustomSource(sourceId);
+			customSource = userProfile.getCustomSource(sourceId);
 			customSource.setItemReadMode(itemId, isRead);
-			//No need to call DomainTools.getDaoService().saveUserProfile(userProfile) because of hibernate tracking
-			return ret;
 		} catch (CustomSourceNotFoundException e) {
 			String errorMsg = "CustomSourceNotFoundException for service 'marckItemReadMode(user "
-				+ userProfile.getUserId() + ", source " + sourceId + ", item " + itemId + ", isRead " + isRead + ")";
+				+ userId + ", source " + sourceId + ", item " + itemId + ", isRead " + isRead + ")";
 			LOG.error(errorMsg);
-			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
 			throw new InternalDomainException(errorMsg, e);
 		}
 	}
@@ -394,13 +357,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		UserProfile ret = getAttachedUserProfile(userProfile); 
 		/* Get customContext */
 		CustomContext customContext;
-		try {
-			customContext = ret.getCustomContext(contextId);
-		} catch (ContextNotFoundException e) {
-			String errorMsg = "Unable to setTreeSize because context is not found";
-			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg, e);
-		}
+		customContext = ret.getCustomContext(contextId);
 		customContext.modifyTreeSize(size);
 		return ret;
 	}
@@ -416,13 +373,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		UserProfile ret = getAttachedUserProfile(userProfile); 
 		/* Get customContext */
 		CustomContext customContext;
-		try {
-			customContext = ret.getCustomContext(cxtId);
-		} catch (ContextNotFoundException e) {
-			String errorMsg = "Unable to foldCategory because context is not found";
-			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg, e);
-		}
+		customContext = ret.getCustomContext(cxtId);
 		customContext.foldCategory(catId);
 		return ret;
 	}
@@ -438,13 +389,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		UserProfile ret = getAttachedUserProfile(userProfile); 
 		/* Get customContext */
 		CustomContext customContext;
-		try {
-			customContext = ret.getCustomContext(cxtId);
-		} catch (ContextNotFoundException e) {
-			String errorMsg = "Unable to unfoldCategory because context is not found";
-			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg, e);
-		}
+		customContext = ret.getCustomContext(cxtId);
 		customContext.unfoldCategory(catId);
 		return ret;
 	}
@@ -462,13 +407,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		}
 		List<CategoryBean> listCategoryBean = new ArrayList<CategoryBean>();
 		CustomContext customContext;
-		try {
-			customContext = userProfile.getCustomContext(contextId);
-		} catch (ContextNotFoundException e) {
-			String errorMsg = "Unable to getVisibleCategories because context is not found";
-			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg, e);
-		}
+		customContext = userProfile.getCustomContext(contextId);
 		List<CoupleProfileAvailability> couples = customContext.getVisibleCategories();
 		for (CoupleProfileAvailability couple : couples) {
 			CategoryBean category;
@@ -502,7 +441,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				+ userProfile.getUserId() + ", category " + categoryId + ")" 
 				+ "User " + userProfile.getUserId() + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);
-			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
 			throw new InternalDomainException(errorMsg, e);
 		}
 		 return listSourceBean;
@@ -520,13 +458,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		}
 		UserProfile ret = getAttachedUserProfile(userProfile); 
 		CustomContext customContext;
-		try {
-			customContext = ret.getCustomContext(contextId);
-		} catch (ContextNotFoundException e) {
-			String errorMsg = "Unable to subscribeToCategory because context is not found";
-			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg, e);
-		}
+		customContext = ret.getCustomContext(contextId);
 		customContext.subscribeToCategory(categoryId);
 		return ret;
 	}
@@ -553,7 +485,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 				+ userProfile.getUserId() + ", category " + categoryId + ", source " + sourceId + ").\n" 
 				+ "User " + userProfile.getUserId() + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);
-			// TODO (GB RB) Remonter une SubsriptionNotFoundForUserException à la place ?
 			throw new InternalDomainException(errorMsg, e);
 		} 
 	}
@@ -568,13 +499,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		}
 		UserProfile ret = getAttachedUserProfile(userProfile); 
 		CustomContext customContext;
-		try {
-			customContext = ret.getCustomContext(contextId);
-		} catch (ContextNotFoundException e) {
-			String errorMsg = "Unable to unsubscribeToCategory because context is not found";
-			LOG.error(errorMsg);
-			throw new InternalDomainException(errorMsg, e);
-		}
+		customContext = ret.getCustomContext(contextId);
 		customContext.unsubscribeToCategory(categoryId);
 		return ret;
 	}
@@ -709,6 +634,154 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 */
 	public void setI18nService(final I18nService service) {
 		i18nService = service;
+	}
+
+	/**
+	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String)
+	 */
+	public ContextWebBean getContext(String userId, String ctxId) {
+		ContextWebBean context = new ContextWebBean();
+		try {
+			UserProfile userProfile = getUserProfile(userId); 
+			ContextBean contextBean = new ContextBean(userProfile.getCustomContext(ctxId));
+			context.setName(contextBean.getName());
+			context.setId(contextBean.getId());
+			context.setDescription(contextBean.getDescription());
+			context.setTreeSize(contextBean.getTreeSize());
+			context.setTreeVisible(contextBean.getTreeVisible());
+			//find categories in this context
+			List<CategoryBean> categories = getCategories(ctxId, userProfile);
+			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
+			if (categories != null) {
+				for (CategoryBean categoryBean : categories) {
+					CategoryWebBean categoryWebBean = populateCategoryWebBean(categoryBean);
+					//find sources in this category (if this category is subscribed)
+					if (categoryBean.getType() != AvailabilityMode.NOTSUBSCRIBED) {
+						List<SourceBean> sources = getSources(categoryBean, userProfile);
+						List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
+						if (sources != null) {
+							for (SourceBean sourceBean : sources) {
+								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile);
+								//we add the source order in the Category XML definition file
+								int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
+								sourceWebBean.setXmlOrder(xmlOrder);
+								sourcesWeb.add(sourceWebBean);
+							}
+						}
+						categoryWebBean.setSources(sourcesWeb);
+					}
+					int xmlOrder = contextBean.getXMLOrder(categoryBean.getId());
+					categoryWebBean.setXmlOrder(xmlOrder);
+					categoriesWeb.add(categoryWebBean);
+				}
+			}
+			context.setCategories(categoriesWeb);
+		} catch (Exception e) {
+			throw new WebException("Error in getContext", e);
+		}
+		return context;
+	}
+
+
+	/**
+	 * @param ctxtId
+	 * @param userProfile 
+	 * @return list of available categories
+	 * @throws InternalDomainException 
+	 */
+	private List<CategoryBean> getCategories(final String ctxtId, UserProfile userProfile) throws InternalDomainException {
+		//Note: this method need to be overwrite in edit controller
+		List<CategoryBean> ret = new ArrayList<CategoryBean>();
+		List<CategoryBean> categories =  getDisplayedCategories(userProfile, ctxtId);
+		//Temporary: remove dummy form the list
+		for (Iterator<CategoryBean> iter = categories.iterator(); iter.hasNext();) {
+			CategoryBean element = iter.next();
+			if (!(element instanceof CategoryDummyBean)) {
+				ret.add(element);				
+			}
+		}
+		return ret;
+	}
+
+
+	/**
+	 * @param categoryBean
+	 * @param userProfile 
+	 * @return list of available sources
+	 * @throws DomainServiceException
+	 */
+	private List<SourceBean> getSources(final CategoryBean categoryBean, UserProfile userProfile) throws DomainServiceException {
+		//this method need to be overwrite in edit controller (VisibledSource and not just DisplayedSources)
+		List<SourceBean> tempListSourceBean = null;
+		List<SourceBean> ret = new ArrayList<SourceBean>();
+		String catId;
+		catId = categoryBean.getId();
+		tempListSourceBean = getDisplayedSources(userProfile, catId);
+		for (Iterator<SourceBean> iter = tempListSourceBean.iterator(); iter.hasNext();) {
+			SourceBean element = iter.next();
+			if (!(element instanceof SourceDummyBean)) {
+				ret.add(element);				
+			}
+		}
+		return ret;
+	}
+
+
+	/**
+	 * populate a CategoryWebBean from a CategoryBean.
+	 * @param categoryBean
+	 * @return populated CategoryWebBean
+	 */
+	private CategoryWebBean populateCategoryWebBean(final CategoryBean categoryBean) {
+		CategoryWebBean categoryWebBean =  new CategoryWebBean();
+		if (categoryBean instanceof CategoryDummyBean) {
+			String cause = ((CategoryDummyBean) categoryBean).getCause().getMessage();
+			String id = "DummyCat:" + UUID.randomUUID();
+			categoryWebBean.setId(id);
+			categoryWebBean.setName("Error!");
+			categoryWebBean.setDescription(cause);			
+		} else {
+			categoryWebBean.setId(categoryBean.getId());
+			categoryWebBean.setName(categoryBean.getName());
+			categoryWebBean.setAvailabilityMode(categoryBean.getType());
+			categoryWebBean.setDescription(categoryBean.getDescription());
+			categoryWebBean.setUserCanMarkRead(categoryBean.isUserCanMarkRead());
+		}
+		return categoryWebBean;
+	}
+
+
+	/**
+	 * populate a SourceWebBean from a SourceBean.
+	 * @param sourceBean
+	 * @param userProfile 
+	 * @return populated SourceWebBean
+	 * @throws DomainServiceException
+	 */
+	private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, UserProfile userProfile) throws DomainServiceException {
+		SourceWebBean sourceWebBean;
+		if (sourceBean instanceof SourceDummyBean) {
+			sourceWebBean = new SourceWebBean(null);
+			String cause = ((SourceDummyBean) sourceBean).getCause().getMessage();
+			String id = "DummySrc:" + UUID.randomUUID();
+			sourceWebBean.setId(id);
+			sourceWebBean.setName(cause);
+			sourceWebBean.setType(AvailabilityMode.OBLIGED);
+			sourceWebBean.setItemDisplayMode(ItemDisplayMode.ALL);
+			sourceWebBean.setItemsNumber();
+			sourceWebBean.setUnreadItemsNumber(0);
+		} else {
+			//get Item for the source
+			List<ItemBean> itemsBeans = getItems(userProfile, sourceBean.getId());
+			sourceWebBean = new SourceWebBean(itemsBeans);
+			sourceWebBean.setId(sourceBean.getId());
+			sourceWebBean.setName(sourceBean.getName());
+			sourceWebBean.setType(sourceBean.getType());		
+			sourceWebBean.setItemDisplayMode(sourceBean.getItemDisplayMode());
+			sourceWebBean.setItemsNumber();
+			sourceWebBean.setUnreadItemsNumber();
+		}
+		return sourceWebBean;
 	}	
 
 }

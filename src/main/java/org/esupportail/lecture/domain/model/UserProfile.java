@@ -2,6 +2,7 @@ package org.esupportail.lecture.domain.model;
 
 
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -9,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
+import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
@@ -99,8 +101,11 @@ public class UserProfile {
 	 * @param contextId identifier of the context refered by the customContext
 	 * @return customContext (or null)
 	 * @throws ContextNotFoundException 
+	 * @throws InternalDomainException 
+	 * @throws CategoryTimeOutException 
+	 * @throws CategoryNotVisibleException 
 	 */
-	public CustomContext getCustomContext(final String contextId) throws ContextNotFoundException {
+	public CustomContext getCustomContext(final String contextId)  {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug(ID + userId + " - getCustomContext(" + contextId + ")");
     	}
@@ -109,12 +114,11 @@ public class UserProfile {
 			if (!DomainTools.getChannel().isThereContext(contextId)) {
 				String errorMsg = "Context " + contextId + " is not found in Channel";
 				LOG.error(errorMsg);
-				throw new ContextNotFoundException(errorMsg);
+				throw new RuntimeException(errorMsg);
 			}
 			customContext = new CustomContext(contextId, this);
 			addCustomContext(customContext);
-		}
-		
+		}		
 		return customContext;
 	}
 	
@@ -186,18 +190,11 @@ public class UserProfile {
 				// Update on customContexts existing in userProfile
 				if (containsCustomContext(contextId)) {
 					CustomContext customContext;
-					try {
-						customContext = getCustomContext(contextId);
-				
-						VisibilityMode mode = mcp.updateCustomContext(customContext);
-						if (mode == VisibilityMode.NOVISIBLE) {
-							categoryIsVisible = false;
-						} 
-					} catch (ContextNotFoundException e) {
-						LOG.error("Impossible to get CustomContext associated to context " 
-							+ contextId + " for managedCategoryProfile " + mcp.getId()
-							+ " because context not found", e);
-					}
+					customContext = getCustomContext(contextId);
+					VisibilityMode mode = mcp.updateCustomContext(customContext);
+					if (mode == VisibilityMode.NOVISIBLE) {
+						categoryIsVisible = false;
+					} 
 				}
 			}		
 		} catch (ManagedCategoryProfileNotFoundException e) {
@@ -248,10 +245,7 @@ public class UserProfile {
     		LOG.debug(ID + userId + " - addCustomContext(" + customContext.getElementId() + ")");
     	}
 		customContexts.put(customContext.getElementId(), customContext);
-
 		customContext.setUserProfile(this);
-		//DomainTools.getDaoService().updateCustomContext(customContext);
-		// RB VR 19/03/09 : DB automatic update made by parent (see cascade on hibernate mappings)
 	}
 	
 	/**
@@ -451,8 +445,6 @@ public class UserProfile {
 	   	if (custom != null) {
 	   		custom.removeSubscriptions();
 	   		customContexts.remove(contextId);
-//			DomainTools.getDaoService().deleteCustomContext(custom);
-//			DomainTools.getDaoService().updateUserProfile(this);
 	   	}
 	}
 	
@@ -470,8 +462,6 @@ public class UserProfile {
 	   	if (custom != null) {
 	   		custom.removeSubscriptions();
 	   		customCategories.remove(categoryId);
-	   		DomainTools.getDaoService().deleteCustomCategory(custom);
-//			DomainTools.getDaoService().updateUserProfile(this);
 	   	}
 	}
 	
@@ -488,10 +478,6 @@ public class UserProfile {
 	   	//TODO (RB <-- GB): je ne comprends pas ce que tu veux faire
 	   	//boolean foo = customSources.containsKey(sourceId);
 		CustomSource cs = customSources.remove(sourceId);
-		if (cs != null) {
-//			DomainTools.getDaoService().deleteCustomSource(cs);
-//			DomainTools.getDaoService().updateUserProfile(this);
-		}
 	}
 	
 	/* MISCELLANEOUS */
