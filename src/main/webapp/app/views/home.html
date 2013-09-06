@@ -17,6 +17,9 @@
 <div class="span8">
     <div ng-repeat="cat in selectedCats">
         <div class="portlet-section-header cat-title">{{ cat.name }}</div>
+        {{ msgs['selectorLabel'] }}
+        <select ng-model="selectedMode" ng-options="mode.id as mode.value for mode in modes">
+        </select>
         <div class="btn-group">
             <button type="button" class="btn" role="button" title="{{ msgs['markAllAsRead'] }}" ng-click="markAllItemsAsRead(true)"><i class="icon-remove"></i></button>
             <button type="button" class="btn" role="button" title="{{ msgs['markAllAsNotRead'] }}" ng-click="markAllItemsAsRead(false)"><i class="icon-check"></i></button>
@@ -25,7 +28,7 @@
         </div>
         <div ng-repeat="source in cat.selectedSrcs">
             <div class="portlet-section-subheader source-title">{{ source.name }}</div>
-            <div ng-repeat="item in source.items">
+            <div ng-repeat="item in source.items | modeFilter:selectedMode">
                 <div class="article" ng-show="!item.read">
                     <div class="toggleButton">
                         <a class="lec-btn-link" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsRead'] }}" ><i class="icon-remove"></i></a>

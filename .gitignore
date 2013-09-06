@@ -3,3 +3,8 @@
 /.project
 /target
 *~
+/nbactions.xml
+/src/main/webapp/app/nbproject/private/
+/nb-configuration.xml
+/src/main/webapp/app/nbproject/
+/src/main/webapp/META-INF/context.xml
