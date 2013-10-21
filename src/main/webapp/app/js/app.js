@@ -47,16 +47,6 @@ lecture = function(appName, appHomePath, resourceURL) {
             treeVisibleState = data.context.treeVisibleState;
         });
 
-        //forge a portlet resource url
-        function url(pattern, id, p1, p2, p3, p4) {
-            return pattern.
-                    replace("@@id@@", id).
-                    replace("__p1__", p1).
-                    replace("__p2__", p2).
-                    replace("__p3__", p3).
-                    replace("__p4__", p4);
-        }
-
         //select a category and eventually a source to restrict displayed content
         $scope.select = function(catID, srcID) {
             angular.forEach($scope.cats, function(cat, key) {
@@ -149,6 +139,20 @@ lecture = function(appName, appHomePath, resourceURL) {
 
     });
     
+    project.controller('editCtrl', function ($scope, $http) {
+        //get context as JSON
+        $http({method: 'GET', url: url(resourceURL, "getEditJSON")}).
+                success(function(data) {
+            //i18n messages
+            $scope.msgs = data.messages;
+            //categories
+            $scope.cats = data.context.categories;
+            //context name
+            $scope.contextName = data.context.name;
+        });
+        
+    });
+    
     //Mode Filter
     project.filter('modeFilter', function() {
         var modeFilter = function(input, selectedMode) {
@@ -173,5 +177,18 @@ lecture = function(appName, appHomePath, resourceURL) {
         };
         return modeFilter;
     });
+    
+    // ************* utils *************
+    
+    //forge a portlet resource url
+    function url(pattern, id, p1, p2, p3, p4) {
+        return pattern.
+                replace("@@id@@", id).
+                replace("__p1__", p1).
+                replace("__p2__", p2).
+                replace("__p3__", p3).
+                replace("__p4__", p4);
+    }
+    
 };
 

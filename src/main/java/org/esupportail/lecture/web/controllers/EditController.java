@@ -1,17 +1,20 @@
 package org.esupportail.lecture.web.controllers;
 
-import java.util.List;
+import java.util.Locale;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import org.esupportail.lecture.domain.beans.CategoryBean;
-import org.esupportail.lecture.domain.beans.SourceBean;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
+import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 /**
  *
@@ -30,9 +33,19 @@ public class EditController extends TwoPanesController {
      * @return
      */
     @RenderMapping
-    public String goHome(RenderRequest request, RenderResponse response, ModelMap model) {
+    public String goEdit(RenderRequest request, RenderResponse response, ModelMap model) {
         model = bindInitialModel(model, response, request);
         return "edit";
+    }
+
+    @ResourceMapping(value = "getEditJSON")
+    public View getJSON(ResourceRequest request, ResourceResponse response) {
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        view.addStaticAttribute(CONTEXT, getContext());
+        view.addStaticAttribute(GUEST_MODE, isGuestMode());
+        Locale locale = request.getLocale();
+        view.addStaticAttribute(MESSAGES, i18nService.getStrings(locale));
+        return view;
     }
 
     /**
@@ -86,5 +99,16 @@ public class EditController extends TwoPanesController {
             throw new RuntimeException("Error in toogleCategorySubcribtion", e);
         }
     }
-    
+
+        /**
+     * Model : Context of the connected user.
+     *
+     * @return Returns the context.
+     */
+    private ContextWebBean getContext() {
+        String ctxId;
+        ctxId = facadeService.getCurrentContextId();
+        return facadeService.getEditContext(getUID(), ctxId);
+    }
+
 }

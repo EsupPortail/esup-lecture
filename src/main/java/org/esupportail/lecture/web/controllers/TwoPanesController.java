@@ -10,6 +10,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
 import org.esupportail.commons.services.authentication.AuthenticationService;
+import org.esupportail.commons.services.i18n.I18nService;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.FacadeService;
 import org.springframework.ui.ModelMap;
@@ -20,22 +21,38 @@ import org.springframework.web.context.request.RequestContextHolder;
  * @author bourges
  */
 class TwoPanesController {
+    protected static final String MESSAGES = "messages";
     final String STATICRESOURCESPATH = "resourcesPath";
     final String DYNAMICRESOURCESPATTERN = "dynamicResourcesPattern";
     final String GUEST_MODE = "guestMode";
+    final String CONTEXT = "context";
 
     /**
      * Access to facade services (init by Spring).
      */
     @Resource(name = "facadeService")
     protected FacadeService facadeService;
+    
     /**
      * The authentication service.
      */
     @Resource(name = "authenticationService")
     protected AuthenticationService authenticationService;
+    
+    /**
+     * The i18nService
+     */
+    @Resource(name = "i18nService")
+    protected I18nService i18nService;
 
-    protected ModelMap bindInitialModel(final ModelMap model, final RenderResponse response, final RenderRequest request) {
+    /**
+     * Add ressourceURL to spring MVC model
+     * @param model
+     * @param response
+     * @param request
+     * @return completed spring MVC model
+     */
+    protected ModelMap bindInitialModel(ModelMap model, final RenderResponse response, final RenderRequest request) {
         model.addAttribute(STATICRESOURCESPATH, response.encodeURL(request.getContextPath()));
         ResourceURL resourceURL = response.createResourceURL();
         resourceURL.setResourceID("@@id@@");

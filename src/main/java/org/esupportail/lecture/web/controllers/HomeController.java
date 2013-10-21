@@ -2,7 +2,6 @@ package org.esupportail.lecture.web.controllers;
 
 import java.util.Locale;
 
-import javax.annotation.Resource;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -10,7 +9,6 @@ import javax.portlet.ResourceResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.commons.services.i18n.I18nService;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.springframework.stereotype.Controller;
@@ -27,26 +25,12 @@ import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 public class HomeController extends TwoPanesController {
 
     final String TREE_VISIBLE = "treeVisible";
-    final String CONTEXT = "context";
     final String CHANGE_ITEM_DISPLAY_MODE = "changeItemDisplayMode";
     final String AVAILABLE_ITEM_DISPLAY_MODE = "availableItemDisplayModes";
-    private static final String MESSAGES = "messages";
     /**
      * Log instance.
      */
     private static final Log LOG = LogFactory.getLog(HomeController.class);
-    @Resource(name = "i18nService")
-    private I18nService i18nService;
-
-    @ResourceMapping(value = "getJSON")
-    public View getJSON(ResourceRequest request, ResourceResponse response) {
-        MappingJacksonJsonView view = new MappingJacksonJsonView();
-        view.addStaticAttribute(CONTEXT, getContext());
-        view.addStaticAttribute(GUEST_MODE, isGuestMode());
-        Locale locale = request.getLocale();
-        view.addStaticAttribute(MESSAGES, i18nService.getStrings(locale));
-        return view;
-    }
 
     /**
      * render home page
@@ -60,6 +44,16 @@ public class HomeController extends TwoPanesController {
     public String goHome(RenderRequest request, RenderResponse response, ModelMap model) {
         model = bindInitialModel(model, response, request);
         return "home";
+    }
+
+    @ResourceMapping(value = "getJSON")
+    public View getJSON(ResourceRequest request, ResourceResponse response) {
+        MappingJacksonJsonView view = new MappingJacksonJsonView();
+        view.addStaticAttribute(CONTEXT, getContext());
+        view.addStaticAttribute(GUEST_MODE, isGuestMode());
+        Locale locale = request.getLocale();
+        view.addStaticAttribute(MESSAGES, i18nService.getStrings(locale));
+        return view;
     }
 
     /**

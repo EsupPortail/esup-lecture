@@ -698,6 +698,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
                         if (sources != null) {
                             for (SourceBean sourceBean : sources) {
                                 SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile);
+                                //remove items from sourceWebBean
+                                sourceWebBean.removeItems();
                                 //we add the source order in the Category XML definition file
                                 int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
                                 sourceWebBean.setXmlOrder(xmlOrder);
