@@ -1,5 +1,5 @@
 <div class="span4" ng-show="treeDisplayed()">
-    {{contextName}}
+    <h3 class="portlet-section-header">{{contextName}}</h3>
     <ul ng-repeat="cat in cats" class="margin-left-zero">
         <li class="lec-list-style-none">
             <a class="btn-link" ng-click="toggle(cat.id)" role="button" title="{{ msgs['colapseCategory'] }}" ng-show="!cat.folded"><i class="icon-minus-sign"></i></a>

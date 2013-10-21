@@ -4,14 +4,9 @@
  */
 package org.esupportail.lecture.domain;
 
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.domain.beans.CategoryBean;
-import org.esupportail.lecture.domain.beans.ItemBean;
-import org.esupportail.lecture.domain.beans.SourceBean;
-import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
@@ -19,9 +14,7 @@ import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
-import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
@@ -82,24 +75,6 @@ public class FacadeService implements InitializingBean {
 	/* 
 	 ************************** SERVICES **********************************/
 	
-	/**
-	 * return the user profile identified by "userId". 
-	 * @param userId : identifient of the user profile
-	 * @return the user profile
-	 */ 
-	public UserProfile getUserProfile(final String userId) {
-		return domainService.getUserProfile(userId);
-	}
-	
-	/**	
-	 * Return the userBean identified by userProfile.
-	 * @param userProfile id of connected user
-	 * @return a UserBean 
-	 */
-	public UserBean getConnectedUser(final UserProfile userProfile) {
-		return domainService.getConnectedUser(userProfile);
-	}
-	
 	/** 
 	 * Return ID of the current context in externalService.
 	 * @return the id 
@@ -125,59 +100,10 @@ public class FacadeService implements InitializingBean {
 		return domainService.getContext(userId, ctxId);
 	}
 
-	/**
-	 * Returns a list of categoryBean - corresponding to categories to display on interface.
-	 * into context contextId for user userId
-	 * Displayed categories are one that user : 
-	 * - is subscribed to (obliged or allowed or autoSubscribe)
-	 * - has created (personal categories)
-	 * @param contextId id of context
-	 * @param userProfile user ID
-	 * @return List of CategoryBean
-	 * @throws InternalDomainException
-	 */
-	public List<CategoryBean> getDisplayedCategories(final UserProfile userProfile, final String contextId) 
-		throws InternalDomainException  {
-		return domainService.getDisplayedCategories(userProfile, contextId);
-	}
-	
-	/**
-	 * Returns a list of sourceBean - corresponding to sources to display on interface.
-	 * into category categoryId for user userId
-	 * Displayed sources are one that user : 
-	 * - is subscribed to (obliged or allowed or autoSubscribe)
-	 * - has created (personal sources)
-	 * @param categoryId id of category
-	 * @param userProfile user ID
-	 * @return List of SourceBean
-	 * @throws InternalDomainException 
-	 * @throws CategoryTimeOutException 
-	 * @throws CategoryNotVisibleException 
-	 * @throws InternalDomainException 
-	 */
-	public List<SourceBean> getDisplayedSources(final UserProfile userProfile, final String categoryId) 
-	throws CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException  {
-		return domainService.getDisplayedSources(userProfile, categoryId);
-	}
-	
-
-	/**
-	 * Returns a list of itemBean.
-	 * Corresponding to items containing in source sourceId,
-	 * in order to be displayed on user interface for user userProfile
-	 * @param userProfile user ID
-	 * @param sourceId id of source
-	 * @return List of ItemBean in a source
-	 * @throws InternalDomainException 
-	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws SourceNotLoadedException 
-	 */
-	public List<ItemBean> getItems(final UserProfile userProfile, final String sourceId) 
-	throws SourceNotLoadedException, ManagedCategoryNotLoadedException, InternalDomainException {
-		return domainService.getItems(userProfile, sourceId);
+	public ContextWebBean getEditContext(String userId, String ctxId) {
+		return domainService.getEditContext(userId, ctxId);
 	}
 
-	
 	/**
 	 * Mark item as read for user userProfile.
 	 * @param userId user ID
@@ -249,38 +175,6 @@ public class FacadeService implements InitializingBean {
 		return domainService.unfoldCategory(userProfile, cxtId, catId);
 	}
 
-
-
-	/** 
-	 * Return visible categories.
-	 * Obliged, subscribed, obliged for managed category or personal category.
-	 * This for a contextId for user userProfile (for EDIT mode)
-	 * @param userProfile
-	 * @param contextId
-	 * @return List of CategoryBean	 
-	 * @throws InternalDomainException 
-	 * @throws ManagedCategoryNotLoadedException */
-	public List<CategoryBean> getVisibleCategories(final UserProfile userProfile, final String contextId) 
-	throws ManagedCategoryNotLoadedException, InternalDomainException  {
-		return domainService.getVisibleCategories(userProfile, contextId);
-	}
-	
-	/**
-	 * Return visible sources.
-	 * Obliged, subscribed, obliged for managed source or personal source.
-	 * This for a categoryId for user userProfile (for EDIT mode)
-	 * @param categoryId id of category
-	 * @param userProfile user ID
-	 * @return List of SourceBean
-	 * @throws InternalDomainException 
-	 * @throws CategoryTimeOutException 
-	 * @throws CategoryNotVisibleException 
-	 */
-	public List<SourceBean> getVisibleSources(final UserProfile userProfile, final String categoryId) 
-	throws CategoryNotVisibleException, CategoryTimeOutException, InternalDomainException {
-		return domainService.getVisibleSources(userProfile, categoryId);
-	}
-	
 	/** 
 	 * Subscribes category categoryId in Context contextId to user userProfile.
 	 * @param userId

@@ -5,22 +5,15 @@
 */
 package org.esupportail.lecture.domain;
 
-import java.util.List;
 
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.application.Version;
-import org.esupportail.lecture.domain.beans.CategoryBean;
-import org.esupportail.lecture.domain.beans.ItemBean;
-import org.esupportail.lecture.domain.beans.SourceBean;
-import org.esupportail.lecture.domain.beans.UserBean;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
@@ -33,20 +26,6 @@ import org.esupportail.lecture.web.beans.ContextWebBean;
 public interface DomainService {
 
 	/**
-	 * return the user profile identified by "userId". 
-	 * @param userId : identifient of the user profile
-	 * @return the user profile
-	 */ 
-	UserProfile getUserProfile(final String userId);
-
-	/**
-	 * @param userProfile
-	 * @return UserBean
-	 * @see FacadeService#getConnectedUser(UserProfile)
-	 */	
-	UserBean getConnectedUser(UserProfile userProfile);
-	
-	/**
 	 * @param userId : User ID
 	 * @param ctxId : Context ID
 	 * @return Computed web bean context of the connected user.
@@ -54,37 +33,11 @@ public interface DomainService {
 	public ContextWebBean getContext(String userId, String ctxId);
 
 	/**
-	 * @param userProfile
-	 * @param contextId
-	 * @return List(CategoryBean) 
-	 * @throws InternalDomainException 
-	 * @see FacadeService#getDisplayedCategories(UserProfile, String)
+	 * @param userId : User ID
+	 * @param ctxId : Context ID
+	 * @return Computed web bean context of the connected user (in edit portlet mode).
 	 */
-	List<CategoryBean> getDisplayedCategories(UserProfile userProfile, String contextId) throws InternalDomainException;
-
-	/**
-	 * @param categoryId 
-	 * @param userProfile 
-	 * @return List(SourceBean)
-	 * @throws CategoryNotVisibleException  
-	 * @throws InternalDomainException 
-	 * @throws CategoryTimeOutException 
-	 * @see FacadeService#getDisplayedSources(UserProfile, String)
-	 */
-	List<SourceBean> getDisplayedSources(UserProfile userProfile, String categoryId)  
-	throws CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException;
-
-	/**
-	 * @param sourceId 
-	 * @param userProfile 
-	 * @return List(ItemBean)
-	 * @throws SourceNotLoadedException 
-	 * @throws InternalDomainException 
-	 * @throws ManagedCategoryNotLoadedException 
-	 * @see FacadeService#getItems(UserProfile, String)
-	 */
-	List<ItemBean> getItems(UserProfile userProfile, String sourceId)  
-	throws SourceNotLoadedException, InternalDomainException, ManagedCategoryNotLoadedException;
+	public ContextWebBean getEditContext(String userId, String ctxId);
 
 	/**
 	 * @param userId 
@@ -107,30 +60,6 @@ public interface DomainService {
 	 * @see FacadeService#marckItemDisplayMode(UserProfile, String, ItemDisplayMode)
 	 */
 	UserProfile markItemDisplayMode(UserProfile userProfile, String sourceId, ItemDisplayMode mode) throws InternalDomainException;
-	
-	
-	/**
-	 * @param userProfile
-	 * @param contextId
-	 * @return List(CategoryBean)
-	 * @throws InternalDomainException 
-	 * @throws ManagedCategoryNotLoadedException 
-	 * @see FacadeService#getVisibleCategories(UserProfile, String)
-	 */
-	List<CategoryBean> getVisibleCategories(final UserProfile userProfile, final String contextId) 
-	throws InternalDomainException, ManagedCategoryNotLoadedException;
-	
-	/**
-	 * @param categoryId 
-	 * @param userProfile 
-	 * @return List(SourceBean)
-	 * @throws CategoryNotVisibleException 
-	 * @throws InternalDomainException 
-	 * @throws CategoryTimeOutException 
-	 * @see FacadeService#getVisibleSources(UserProfile, String)
-	 */
-	List<SourceBean> getVisibleSources(UserProfile userProfile, String categoryId) 
-	throws CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException;
 	
 	/**
 	 * @param userProfile

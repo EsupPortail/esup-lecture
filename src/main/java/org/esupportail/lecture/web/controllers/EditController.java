@@ -1,7 +1,10 @@
 package org.esupportail.lecture.web.controllers;
 
+import java.util.List;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import org.esupportail.lecture.domain.beans.CategoryBean;
+import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -83,4 +86,5 @@ public class EditController extends TwoPanesController {
             throw new RuntimeException("Error in toogleCategorySubcribtion", e);
         }
     }
+    
 }
