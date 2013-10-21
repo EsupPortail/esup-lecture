@@ -37,7 +37,6 @@ import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
 import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
-import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
 import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
@@ -99,6 +98,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
+        @Override
 	public void afterPropertiesSet() {
 		Assert.notNull(authenticationService, "property authenticationService of class " 
 				+ this.getClass().getName() + " can not be null");
@@ -116,6 +116,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param userId : identifient of the user profile
 	 * @return the user profile
 	 */ 
+        @Override
 	public synchronized UserProfile getUserProfile(final String userId) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getFreshUserProfile(" + userId + ")");
@@ -133,6 +134,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @return userBean
 	 * @see org.esupportail.lecture.domain.DomainService#getConnectedUser(UserProfile)
 	 */
+        @Override
 	public UserBean getConnectedUser(final UserProfile userProfile) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getConnectedUser(" + userProfile.getUserId() + ")");
@@ -154,6 +156,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @throws InternalDomainException
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedCategories(UserProfile, String)
 	 */
+        @Override
 	public List<CategoryBean> getDisplayedCategories(final UserProfile userProfile, final String contextId) 
 	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
@@ -201,6 +204,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * - has created (personal sources)
 	 * @see org.esupportail.lecture.domain.DomainService#getDisplayedSources(UserProfile, String)
 	 */
+        @Override
 	public List<SourceBean> getDisplayedSources(final UserProfile userProfile, final String categoryId) 
 	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
@@ -266,6 +270,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * in order to be displayed on user interface for user uid
 	 * @see org.esupportail.lecture.domain.DomainService#getItems(UserProfile, String)
 	 */
+        @Override
 	public List<ItemBean> getItems(final UserProfile userProfile, final String sourceId) 
 	throws InternalDomainException, SourceNotLoadedException, ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
@@ -273,8 +278,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		}
 		
 		List<ItemBean> listItemBean = new ArrayList<ItemBean>();
-		CustomSource customSource = null;
 		try {
+        		CustomSource customSource = null;
 			/* Get current user profile and customCoategory */
 			customSource = userProfile.getCustomSource(sourceId);
 			List<Item> listItems;
@@ -302,6 +307,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * Mark item as read for user uid.
 	 * @see org.esupportail.lecture.domain.DomainService#marckItemReadMode(UserProfile, String, String, boolean)
 	 */
+        @Override
 	public void markItemReadMode(final String userId, final String sourceId, 
 		final String itemId, final boolean isRead) 
 	throws InternalDomainException {
@@ -325,6 +331,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see DomainService#markItemDisplayMode(UserProfile, String, ItemDisplayMode)
 	 */
+        @Override
 	public UserProfile markItemDisplayMode(final UserProfile userProfile, final String sourceId, 
 			final ItemDisplayMode mode) throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
@@ -349,6 +356,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(UserProfile, String, int)
 	 */
+        @Override
 	public UserProfile setTreeSize(final UserProfile userProfile, final String contextId, final int size) 
 	throws InternalDomainException, TreeSizeErrorException {
 		if (LOG.isDebugEnabled()) {
@@ -365,6 +373,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#foldCategory(UserProfile, String, String)
 	 */
+        @Override
 	public UserProfile foldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
 	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
@@ -381,6 +390,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#unfoldCategory(UserProfile, String, String)
 	 */
+        @Override
 	public UserProfile unfoldCategory(final UserProfile userProfile, final String cxtId, final String catId) 
 	throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
@@ -400,6 +410,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleCategories(UserProfile, String)
 	 */
+        @Override
 	public List<CategoryBean> getVisibleCategories(final UserProfile userProfile, final String contextId) 
 	throws InternalDomainException, ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
@@ -421,6 +432,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getVisibleSources(UserProfile, String)
 	 */
+        @Override
 	public List<SourceBean> getVisibleSources(final UserProfile userProfile, final String categoryId) 
 	throws CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException {
 		if (LOG.isDebugEnabled()) {
@@ -450,13 +462,14 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see DomainService#subscribeToCategory(UserProfile, String, String)
 	 */
-	public UserProfile subscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
+        @Override
+	public UserProfile subscribeToCategory(final String userId, final String contextId, final String categoryId) 
 	throws InternalDomainException, CategoryNotVisibleException  {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("subscribeToCategory(" + userProfile.getUserId() + "," + contextId 
+			LOG.debug("subscribeToCategory(" + userId + "," + contextId 
 				+ "," + categoryId + ")");
 		}
-		UserProfile ret = getAttachedUserProfile(userProfile); 
+		UserProfile ret = getUserProfile(userId); 
 		CustomContext customContext;
 		customContext = ret.getCustomContext(contextId);
 		customContext.subscribeToCategory(categoryId);
@@ -468,22 +481,23 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see DomainService#subscribeToSource(UserProfile, String, String)
 	 */
-	public UserProfile subscribeToSource(final UserProfile userProfile, final String categoryId, final String sourceId) 
+        @Override
+	public UserProfile subscribeToSource(final String userId, final String categoryId, final String sourceId) 
 	throws CategoryNotVisibleException, InternalDomainException, 
 	CategoryTimeOutException, SourceNotVisibleException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("subscribeToSource(" + userProfile.getUserId() + "," + categoryId 
+			LOG.debug("subscribeToSource(" + userId + "," + categoryId 
 				+ "," + sourceId + ")");
 		}
 		try {
-			UserProfile ret = getAttachedUserProfile(userProfile); 
+			UserProfile ret = getAttachedUserProfile(getUserProfile(userId)); 
 			CustomCategory customCategory = ret.getCustomCategory(categoryId);
 			customCategory.subscribeToSource(sourceId);
 			return ret;
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'subscribeToSource(user "
-				+ userProfile.getUserId() + ", category " + categoryId + ", source " + sourceId + ").\n" 
-				+ "User " + userProfile.getUserId() + " is not subscriber of Category " + categoryId;
+				+ userId + ", category " + categoryId + ", source " + sourceId + ").\n" 
+				+ "User " + userId + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
 		} 
@@ -492,12 +506,13 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see DomainService#unsubscribeToCategory(UserProfile, String, String)
 	 */
-	public UserProfile unsubscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
+        @Override
+	public UserProfile unsubscribeToCategory(final String userId, final String contextId, final String categoryId) 
 	throws InternalDomainException, CategoryNotVisibleException, CategoryObligedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("unsubscribeToCategory(" + userProfile.getUserId() + "," + contextId + "," + categoryId + ")");
+			LOG.debug("unsubscribeToCategory(" + userId + "," + contextId + "," + categoryId + ")");
 		}
-		UserProfile ret = getAttachedUserProfile(userProfile); 
+		UserProfile ret = getUserProfile(userId); 
 		CustomContext customContext;
 		customContext = ret.getCustomContext(contextId);
 		customContext.unsubscribeToCategory(categoryId);
@@ -507,21 +522,22 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see DomainService#unsubscribeToSource(UserProfile, String, String)
 	 */
-	public UserProfile unsubscribeToSource(final UserProfile userProfile, final String categoryId, final String sourceId) 
+        @Override
+	public UserProfile unsubscribeToSource(final String userId, final String categoryId, final String sourceId) 
 	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException, SourceObligedException {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("subscribeToSource(" + userProfile.getUserId() + "," + categoryId + "," 
+			LOG.debug("subscribeToSource(" + userId + "," + categoryId + "," 
 				+ sourceId + ")");
 		}
 		try {
-			UserProfile ret = getAttachedUserProfile(userProfile); 
+			UserProfile ret = getAttachedUserProfile(getUserProfile(userId)); 
 			CustomCategory customCategory = ret.getCustomCategory(categoryId);
 			customCategory.unsubscribeToSource(sourceId);
 			return ret;
 		} catch (CustomCategoryNotFoundException e) {
 			String errorMsg = "CustomCategoryNotFound for service 'unsubscribeToSource(user "
-				+ userProfile.getUserId() + ", category " + categoryId + ", source " + sourceId + ").\n" 
-				+ "User " + userProfile.getUserId() + " is not subscriber of Category " + categoryId;
+				+ userId + ", category " + categoryId + ", source " + sourceId + ").\n" 
+				+ "User " + userId + " is not subscriber of Category " + categoryId;
 			LOG.error(errorMsg);
 			throw new InternalDomainException(errorMsg, e);
 		} 	
@@ -533,6 +549,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#isGuestMode()
 	 */
+        @Override
 	public boolean isGuestMode() {
 		boolean ret;
 		String connectedUser = DomainTools.getCurrentUserId(authenticationService);
@@ -550,6 +567,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#updateSQL(java.lang.String)
 	 */
+        @Override
 	public void updateSQL(final String query) {
 		DomainTools.getDaoService().updateSQL(query);
 	}
@@ -592,6 +610,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getDatabaseVersion()
 	 */
+        @Override
 	public Version getDatabaseVersion() throws ConfigException {
 		VersionManager versionManager = getVersionManager();
 		if (versionManager == null) {
@@ -603,6 +622,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#setDatabaseVersion(java.lang.String)
 	 */
+        @Override
 	public void setDatabaseVersion(final String version) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("setting database version to '" + version + "'...");
@@ -639,6 +659,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#getContext(java.lang.String, java.lang.String)
 	 */
+        @Override
 	public ContextWebBean getContext(String userId, String ctxId) {
 		ContextWebBean context = new ContextWebBean();
 		try {

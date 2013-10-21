@@ -10,7 +10,6 @@ import java.util.List;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.application.Version;
 import org.esupportail.lecture.domain.beans.CategoryBean;
-import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
@@ -166,7 +165,7 @@ public interface DomainService {
 	
 
 	/**
-	 * @param userProfile
+	 * @param userId
 	 * @param contextId
 	 * @param categoryId
 	 * @return hibernate modified UserProfile
@@ -174,11 +173,11 @@ public interface DomainService {
 	 * @throws CategoryNotVisibleException 
 	 * @see FacadeService#subscribeToCategory(UserProfile, String, String)
 	 */
-	UserProfile subscribeToCategory(UserProfile userProfile, String contextId, String categoryId) 
+	UserProfile subscribeToCategory(String userId, String contextId, String categoryId) 
 	throws InternalDomainException, CategoryNotVisibleException;
 
 	/**
-	 * @param userProfile
+	 * @param userId
 	 * @param contextId
 	 * @param categoryId
 	 * @return hibernate modified UserProfile
@@ -187,10 +186,10 @@ public interface DomainService {
 	 * @throws CategoryObligedException 
 	 * @see FacadeService#unsubscribeToCategory(UserProfile, String, String)
 	 */
-	UserProfile unsubscribeToCategory(UserProfile userProfile, String contextId, String categoryId)
+	UserProfile unsubscribeToCategory(String userId, String contextId, String categoryId)
 	throws InternalDomainException, CategoryNotVisibleException, CategoryObligedException;
 	/**
-	 * @param userProfile 
+	 * @param userId 
 	 * @param categorieId 
 	 * @param sourceId 
 	 * @return hibernate modified UserProfile
@@ -200,12 +199,12 @@ public interface DomainService {
 	 * @throws SourceNotVisibleException 
 	 * @see FacadeService#subscribeToSource(UserProfile, String, String)
 	 */
-	UserProfile subscribeToSource(UserProfile userProfile, String categorieId, String sourceId) 
+	UserProfile subscribeToSource(String userId, String categorieId, String sourceId) 
 	throws CategoryNotVisibleException, InternalDomainException, 
 	CategoryTimeOutException, SourceNotVisibleException;
 	
 	/**
-	 * @param userProfile 
+	 * @param userId 
 	 * @param categorieId 
 	 * @param sourceId 
 	 * @return hibernate modified UserProfile
@@ -215,7 +214,7 @@ public interface DomainService {
 	 * @throws SourceObligedException 
 	 * @see FacadeService#unsubscribeToSource(UserProfile, String, String)
 	 */	
-	UserProfile unsubscribeToSource(UserProfile userProfile, String categorieId, String sourceId) 
+	UserProfile unsubscribeToSource(String userId, String categorieId, String sourceId) 
 	throws InternalDomainException, CategoryNotVisibleException, CategoryTimeOutException, SourceObligedException;
 
 	/**

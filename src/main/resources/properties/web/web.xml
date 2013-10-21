@@ -28,7 +28,7 @@
     		p:type="text/css"/>
     	<bean class="org.esupportail.lecture.web.portlet.HeadElement"
     		p:name="script"
-    		p:href="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"
+    		p:href="/app/js/angular.min.js"
     		p:type="text/javascript"/>
     	<bean class="org.esupportail.lecture.web.portlet.HeadElement"
     		p:name="script"

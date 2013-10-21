@@ -9,7 +9,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.CategoryBean;
-import org.esupportail.lecture.domain.beans.ContextBean;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.beans.SourceBean;
 import org.esupportail.lecture.domain.beans.UserBean;
@@ -71,6 +70,7 @@ public class FacadeService implements InitializingBean {
 	/**
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
+        @Override
 	public void afterPropertiesSet() throws Exception {
 		Assert.notNull(domainService, 
 		"property domainService can not be null");
@@ -180,7 +180,7 @@ public class FacadeService implements InitializingBean {
 	
 	/**
 	 * Mark item as read for user userProfile.
-	 * @param userProfile user ID
+	 * @param userId user ID
 	 * @param itemId item id
 	 * @param sourceId source if
 	 * @param isRead boolean : true = item is read | false = item is not read
@@ -283,39 +283,39 @@ public class FacadeService implements InitializingBean {
 	
 	/** 
 	 * Subscribes category categoryId in Context contextId to user userProfile.
-	 * @param userProfile
+	 * @param userId
 	 * @param contextId id of the context containing category
 	 * @param categoryId id of the categoy
 	 * @return userProfile
 	 * @throws InternalDomainException 
 	 * @throws CategoryNotVisibleException 
 	 */
-	public UserProfile subscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
+	public UserProfile subscribeToCategory(final String userId, final String contextId, final String categoryId) 
 	throws CategoryNotVisibleException, InternalDomainException {
-		return domainService.subscribeToCategory(userProfile, contextId, categoryId);
+		return domainService.subscribeToCategory(userId, contextId, categoryId);
 	}
 	
 	
 	/**
 	 * Subscribes user userProfile to source sourceId in Category categoryId.
-	 * @param userProfile - user ID
+	 * @param userId - user ID
 	 * @param categorieId - categorie ID
 	 * @param sourceId - Source ID
 	 * @return userProfile
-	 * @throws InternalDomainException 
+	 * @throws InternalDomainException s
 	 * @throws SourceNotVisibleException 
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
 	 */
-	public UserProfile subscribeToSource(final UserProfile userProfile, final String categorieId, final String sourceId) 
+	public UserProfile subscribeToSource(final String userId, final String categorieId, final String sourceId) 
 	throws CategoryNotVisibleException, CategoryTimeOutException, 
 	SourceNotVisibleException, InternalDomainException {
-		return domainService.subscribeToSource(userProfile, categorieId, sourceId);
+		return domainService.subscribeToSource(userId, categorieId, sourceId);
 	}
 	
 	/** 
 	 * Unsubscribes category categoryId in Context contextId to user userProfile.
-	 * @param userProfile
+	 * @param userId
 	 * @param contextId id of the context containing category
 	 * @param categoryId id of the categoy
 	 * @return userProfile
@@ -323,14 +323,14 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryObligedException 
 	 * @throws CategoryNotVisibleException 
 	 */
-	public UserProfile unsubscribeToCategory(final UserProfile userProfile, final String contextId, final String categoryId) 
+	public UserProfile unsubscribeToCategory(final String userId, final String contextId, final String categoryId) 
 	throws CategoryNotVisibleException, CategoryObligedException, InternalDomainException {
-		return domainService.unsubscribeToCategory(userProfile, contextId, categoryId);
+		return domainService.unsubscribeToCategory(userId, contextId, categoryId);
 	}
 
 	/**
 	 * Unsubscribes source sourceId in Category categoryId to user userProfile.
-	 * @param userProfile - user ID
+	 * @param userId - user ID
 	 * @param categorieId - categorie ID
 	 * @param sourceId - Source ID
 	 * @return userProfile
@@ -339,9 +339,9 @@ public class FacadeService implements InitializingBean {
 	 * @throws CategoryTimeOutException 
 	 * @throws CategoryNotVisibleException 
 	 */
-	public UserProfile unsubscribeToSource(final UserProfile userProfile, final String categorieId, final String sourceId) 
+	public UserProfile unsubscribeToSource(final String userId, final String categorieId, final String sourceId) 
 	throws CategoryNotVisibleException, CategoryTimeOutException, SourceObligedException, InternalDomainException {
-		return domainService.unsubscribeToSource(userProfile, categorieId, sourceId);
+		return domainService.unsubscribeToSource(userId, categorieId, sourceId);
 	}
 	
 	/**
