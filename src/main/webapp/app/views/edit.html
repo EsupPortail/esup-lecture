@@ -1,6 +1,26 @@
 <div class="span4">
     <h3 class="portlet-section-header">{{contextName}}</h3>
-</div>
+    <ul ng-repeat="cat in cats" class="margin-left-zero">
+        <li class="lec-list-style-none">
+            <a class="btn-link" role="button" title="{{ msgs['subscribeCategory'] }}" ng-show="cat.notSubscribed"><i class="icon-thumbs-up"></i></a>
+            <a class="btn-link" role="button" title="{{ msgs['unsubscribeCategory'] }}" ng-show="cat.subscribed"><i class="icon-thumbs-down"></i></a>
+            <a class="btn-link" role="button" title="{{ msgs['forcedCategory'] }}" ng-show="cat.obliged"><i class="icon-lock"></i></a>
+            <a class="lec-btn-link" ng-click="select(cat)">{{cat.name}}</a>
+        </li>
+    </ul></div>
 <div class="span8">
-    Droite
+	<div class="portlet-section lecture-right" role="region">
+            <h3 class="fl-force-left">{{selectedCat.name}}</h3>
+            <ul ng-repeat="src in selectedCat.sources" class="margin-left-zero">
+                <li class="lec-list-style-none">
+                    <a class="btn-link" role="button" title="{{ msgs['subscribeSource'] }}" ng-show="src.notSubscribed"><i class="icon-thumbs-up"></i></a>
+                    <a class="btn-link" role="button" title="{{ msgs['unsubscribeSource'] }}" ng-show="src.subscribed"><i class="icon-thumbs-down"></i></a>
+                    <a class="btn-link" role="button" title="{{ msgs['forcedSource'] }}" ng-show="src.obliged"><i class="icon-lock"></i></a>
+                    {{src.name}}
+                </li>
+            </ul>
+	</div>
+
+	<!-- Source(s) and Items display -->
+        <div class="portlet-section lecture-right" role="region"></div>
 </div>

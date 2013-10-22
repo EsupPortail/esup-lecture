@@ -4,7 +4,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <script type="text/javascript">
 	angular.element(document).ready(function() {
-			lecture("<portlet:namespace/>", "${resourcesPath}/app", "${dynamicResourcesPattern}");
+			lectureEdit("<portlet:namespace/>", "${resourcesPath}/app", "${dynamicResourcesPattern}");
 			angular.bootstrap(angular.element(document.getElementById("lecture-<portlet:namespace/>")), ["<portlet:namespace/>"]);
 		});
 </script>
