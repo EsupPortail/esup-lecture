@@ -179,20 +179,25 @@ lectureEdit = function(appName, appHomePath, resourceURL) {
     }]);
 
     project.controller('editCtrl', function ($scope, $http) {
+
+        refreshJSON();
+        
         //get context as JSON
-        $http({method: 'GET', url: url(resourceURL, "getEditJSON")}).
-                success(function(data) {
-            //i18n messages
-            $scope.msgs = data.messages;
-            //context
-            $scope.ctx = data.context;
-            //categories
-            $scope.cats = data.context.categories;
-            //context name
-            $scope.contextName = data.context.name;
-            //first category selected by default
-            $scope.selectedCat = $scope.cats[0];
-        });        
+        function refreshJSON() {
+            $http({method: 'GET', url: url(resourceURL, "getEditJSON")}).
+                    success(function(data) {
+                //i18n messages
+                $scope.msgs = data.messages;
+                //context
+                $scope.ctx = data.context;
+                //categories
+                $scope.cats = data.context.categories;
+                //context name
+                $scope.contextName = data.context.name;
+                //first category selected by default
+                $scope.selectedCat = $scope.cats[0];
+            });        
+        }
         
         $scope.select = function(cat) {
             $scope.selectedCat = cat;
@@ -203,6 +208,7 @@ lectureEdit = function(appName, appHomePath, resourceURL) {
                     success(function(data) {
                 cat.subscribed = !cat.subscribed;
                 cat.notSubscribed = !cat.notSubscribed;
+                refreshJSON();
             });
         };
 
