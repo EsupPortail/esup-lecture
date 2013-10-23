@@ -9,10 +9,11 @@
 			url="&config.url.prefix;/examples/xml/flux.offline1.xml">
 			<visibility>
 				<allowed></allowed>
-				<autoSubscribed></autoSubscribed>
+				<autoSubscribed>
+                                    <group name="local.0" />  <!-- Tous les groupes de personnes -->
+                                </autoSubscribed>
 				<obliged>
-					<group name="local.0" />  <!-- Tous les groupes de personnes -->
-					<group name="local.15" /> <!-- Anonymes -->
+                                    <group name="local.15" /> <!-- Anonymes -->
 				</obliged>
 			</visibility>
 		</sourceProfile>
@@ -21,10 +22,11 @@
 			name="Divers liens (rss-jquery-inline)" specificUserContent="no"
 			url="&config.url.prefix;/examples/xml/flux.offline2.xml">
 			<visibility>
-				<allowed></allowed>
+				<allowed>
+					<group name="local.0" />  <!-- Tous les groupes de personnes -->                                    
+                                </allowed>
 				<autoSubscribed></autoSubscribed>
 				<obliged>
-					<group name="local.0" />  <!-- Tous les groupes de personnes -->
 					<group name="local.15" /> <!-- Anonymes -->
 				</obliged>
 			</visibility>
@@ -86,10 +88,11 @@
 	</sourceProfiles>
 
 	<visibility>
-		<allowed></allowed>
+		<allowed>
+			<group name="local.0" />                    
+                </allowed>
 		<autoSubscribed></autoSubscribed>
 		<obliged>
-			<group name="local.0" />
 			<group name="local.15" />
 		</obliged>
 	</visibility>

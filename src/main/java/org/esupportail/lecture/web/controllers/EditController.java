@@ -81,6 +81,7 @@ public class EditController extends TwoPanesController {
      * @param srcID Source ID
      * @param isSubscribed is source subscribed ?
      */
+    @ResourceMapping(value = "toogleCategorySubcribtion")
     public void toogleCategorySubcribtion(
             @RequestParam(required = true, value = "p1") String ctxID,
             @RequestParam(required = true, value = "p2") String catID,

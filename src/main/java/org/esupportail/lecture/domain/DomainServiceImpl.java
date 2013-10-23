@@ -697,9 +697,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
                         List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
                         if (sources != null) {
                             for (SourceBean sourceBean : sources) {
-                                SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile);
-                                //remove items from sourceWebBean
-                                sourceWebBean.removeItems();
+                                SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile, false);
                                 //we add the source order in the Category XML definition file
                                 int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
                                 sourceWebBean.setXmlOrder(xmlOrder);
@@ -794,6 +792,18 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
      * @throws DomainServiceException
      */
     private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, UserProfile userProfile) throws DomainServiceException {
+        return populateSourceWebBean(sourceBean, userProfile, true);
+    }
+    
+    /**
+     * populate a SourceWebBean from a SourceBean with or without items
+     * @param sourceBean
+     * @param userProfile
+     * @param withItems
+     * @return populated SourceWebBean with or without items
+     * @throws DomainServiceException 
+     */
+    private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, UserProfile userProfile, boolean withItems) throws DomainServiceException {
         SourceWebBean sourceWebBean;
         if (sourceBean instanceof SourceDummyBean) {
             sourceWebBean = new SourceWebBean(null);
@@ -807,7 +817,10 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
             sourceWebBean.setUnreadItemsNumber(0);
         } else {
             //get Item for the source
-            List<ItemBean> itemsBeans = getItems(userProfile, sourceBean.getId());
+            List<ItemBean> itemsBeans = new ArrayList<ItemBean>();
+            if (withItems) {
+                itemsBeans = getItems(userProfile, sourceBean.getId());
+            }
             sourceWebBean = new SourceWebBean(itemsBeans);
             sourceWebBean.setId(sourceBean.getId());
             sourceWebBean.setName(sourceBean.getName());

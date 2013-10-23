@@ -184,6 +184,8 @@ lectureEdit = function(appName, appHomePath, resourceURL) {
                 success(function(data) {
             //i18n messages
             $scope.msgs = data.messages;
+            //context
+            $scope.ctx = data.context;
             //categories
             $scope.cats = data.context.categories;
             //context name
@@ -194,6 +196,22 @@ lectureEdit = function(appName, appHomePath, resourceURL) {
         
         $scope.select = function(cat) {
             $scope.selectedCat = cat;
+        };
+        
+        $scope.toogleCategorySubcribtion = function(cat) {
+            $http({method: 'GET', url: url(resourceURL, "toogleCategorySubcribtion", $scope.ctx.id, cat.id, cat.subscribed)}).
+                    success(function(data) {
+                cat.subscribed = !cat.subscribed;
+                cat.notSubscribed = !cat.notSubscribed;
+            });
+        };
+
+        $scope.toogleSourceSubcribtion = function(cat, src) {
+            $http({method: 'GET', url: url(resourceURL, "toogleSourceSubcribtion", cat.id, src.id, src.subscribed)}).
+                    success(function(data) {
+                src.subscribed = !src.subscribed;
+                src.notSubscribed = !src.notSubscribed;
+            });            
         };
     });
         

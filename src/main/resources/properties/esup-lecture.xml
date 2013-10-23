@@ -149,7 +149,7 @@ Pour plus d'informations voir le
 		name="Categorie de démo 1"
 		id="demo1"
 		urlCategory="&config.url.prefix;/examples/xml/category.offline.xml"
-		trustCategory="no"
+		trustCategory="yes"
 		access="public"
 		ttl = "3600"
 		timeout = "3000" >

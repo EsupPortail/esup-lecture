@@ -74,19 +74,19 @@ public class UserProfile {
 	 * @param userId
 	 */
 	public UserProfile(final String userId) {
-	   	if (LOG.isDebugEnabled()) {
+	   if (LOG.isDebugEnabled()) {
     		LOG.debug("UserProfile(" + userId + ")");
-    	}
-		this.setUserId(userId);
+            }
+            this.setUserId(userId);
 	}
 
 	/**
 	 * Default Constructor.
 	 */
 	public UserProfile() {
-		if (LOG.isDebugEnabled()) {
+            if (LOG.isDebugEnabled()) {
     		LOG.debug("UserProfile(" + userId + ")");
-    	}
+            }
 	}
 
 	/*
