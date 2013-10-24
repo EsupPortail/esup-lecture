@@ -8,6 +8,5 @@
 			angular.bootstrap(angular.element(document.getElementById("lecture-<portlet:namespace/>")), ["<portlet:namespace/>"]);
 		});
 </script>
-<div class="esup-lecture" id="lecture-<portlet:namespace/>" ng-view class="container-fluid">
-    EDIT!!!!!
+<div class="esup-lecture row" id="lecture-<portlet:namespace/>" ng-view>
 </div>

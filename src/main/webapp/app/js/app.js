@@ -99,24 +99,10 @@ lecture = function(appName, appHomePath, resourceURL) {
             });
         };
 
-        // evaluate is hideTree button should be displayed
-        $scope.hideTreeDisplayed = function() {
-            if (treeVisibleState === "NEVERVISIBLE")
-                return false;
-            if (treeVisibleState === "VISIBLE")
-                return true;
-        };
-
-        // evaluate is showTree button should be displayed
-        $scope.showTreeDisplayed = function() {
-            if (treeVisibleState === "NEVERVISIBLE")
-                return false;
-            if (treeVisibleState === "NOTVISIBLE")
-                return true;
-        };
-
         // evaluate is tree should be displayed
         $scope.treeDisplayed = function() {
+            if (treeVisibleState === "NOTVISIBLE")
+                return false;
             if (treeVisibleState === "NEVERVISIBLE")
                 return false;
             if (treeVisibleState === "VISIBLE")
