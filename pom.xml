@@ -231,7 +231,14 @@
 			<artifactId>jaxen</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-		<dependency>
+        <!-- overwrite xom 1.0 from jaxen to avoid icu4j used.
+             icu4j is not compatible with jetty -->
+        <dependency>
+            <groupId>xom</groupId>
+            <artifactId>xom</artifactId>
+            <version>1.1</version>
+        </dependency>
+        <dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib-nodep</artifactId>
 			<version>2.1_3</version>
