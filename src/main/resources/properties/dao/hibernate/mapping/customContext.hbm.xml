@@ -23,14 +23,14 @@
 		<property name="treeSize" type="int">
 			<column name="TREEWINWIDTH" not-null="true"/>
 		</property>
-		<map name="subscriptions" cascade="all, delete-orphan" lazy="false">
+		<map name="subscriptions" cascade="all, delete-orphan">
 			<key foreign-key="FK_CUSTOMCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED">
 				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED"/>
 			</key>
 			<map-key type="string" formula="ELEMENTID"/>
 			<one-to-many class="CustomManagedCategory"/>
 		</map>
-		<set name="unfoldedCategories" table="LECT_UNFOLDEDCATEGORY" lazy="false">
+		<set name="unfoldedCategories" table="LECT_UNFOLDEDCATEGORY">
 			<key foreign-key="FK_UNFOLDEDCATEGORYFLAG_CUSTOMCONTEXT_CUSTOMCONTEXTPK" not-null="true">
 				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK"/>
 			</key>
@@ -38,7 +38,7 @@
 				<column name="CATEGORYID" not-null="true"/>
 			</element>
 		</set>
-		<map name="unsubscribedAutoSubscribedCategories" table="LECT_UNSUBSCRIBEDCATEGORYFLAG" cascade="all, delete-orphan" inverse="true" lazy="false">
+		<map name="unsubscribedAutoSubscribedCategories" table="LECT_UNSUBSCRIBEDCATEGORYFLAG" cascade="all, delete-orphan" inverse="true">
 			<key foreign-key="FK_UNSUBSCRIBECATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK" not-null="true">
 				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK"/>
 			</key>

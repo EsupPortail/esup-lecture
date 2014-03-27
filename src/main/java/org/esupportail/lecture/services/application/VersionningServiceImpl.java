@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.web.controllers.AbstractDomainAwareBean;
+import org.esupportail.lecture.domain.AbstractDomainAwareBean;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.application.Version;
 import org.esupportail.commons.services.application.VersionException;
@@ -227,6 +227,7 @@ public class VersionningServiceImpl extends AbstractDomainAwareBean implements V
 		}
 		printOlderThanMessage(version);
 		String methodName = "upgrade" + version.replace('.', 'd');
+		@SuppressWarnings("rawtypes")
 		Class [] methodArgs = new Class [] {};
 		Method method;
 		try {

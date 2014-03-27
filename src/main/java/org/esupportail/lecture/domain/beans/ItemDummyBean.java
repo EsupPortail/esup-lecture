@@ -8,7 +8,6 @@ package org.esupportail.lecture.domain.beans;
 import java.util.Collection;
 
 import org.esupportail.commons.services.exceptionHandling.ExceptionUtils;
-import org.esupportail.commons.utils.strings.StringUtils;
 import org.esupportail.lecture.domain.utils.DummyInterface;
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.exceptions.domain.UnknownException;

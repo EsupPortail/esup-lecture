@@ -12,8 +12,10 @@
 		<property name="messageSource" ref="msgs" />
 	</bean>
 
+	<alias name="msgs" alias="messageSource"/>
+
 	<bean id="msgs"
-		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		class="org.esupportail.commons.services.i18n.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
 				<value>classpath:properties/i18n/bundles/Custom</value>

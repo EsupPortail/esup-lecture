@@ -81,7 +81,6 @@ public class DomainTest {
 	 * @param args non argumet needed
 	 * @throws InternalDomainException 
 	 */
-	@SuppressWarnings({ "unused", "hiding" })
 	public static void main(final String[] args) throws InternalDomainException  {
 		ClassPathResource res = new ClassPathResource("properties/applicationContext.xml");
 		XmlBeanFactory factory = new XmlBeanFactory(res);
@@ -136,14 +135,7 @@ public class DomainTest {
 			System.out.println("\n!!! EXCEPTION !!!");
 			System.out.println("\n!!! Catching InfoDomainException");
 			e.printStackTrace();
-		} catch (DomainServiceException e) {
-			System.out.println("\n!!! EXCEPTION !!!");
-			System.out.println("\n!!! Catching DomainServiceException");
-			e.printStackTrace();
 		} 
-		
-
-	
 	}
 
 
@@ -569,7 +561,6 @@ public class DomainTest {
 	 * @throws ManagedCategoryNotLoadedException 
 	 * @throws SourceNotLoadedException 
 	 */
-	@SuppressWarnings("unused")
 	private static void testGetItems() 
 	throws SourceNotLoadedException, ManagedCategoryNotLoadedException {
 		printIntro("getItems");

@@ -398,7 +398,7 @@ public class ChannelConfig  {
 			//treeVisible
 			String treeVisible = context.valueOf("@treeVisible");
 			if (treeVisible.equals("no")) {
-				c.setTreeVisible(TreeDisplayMode.NOTVISBLE);
+				c.setTreeVisible(TreeDisplayMode.NOTVISIBLE);
 			} else if (treeVisible.equals("forceNo")) {
 				c.setTreeVisible(TreeDisplayMode.NEVERVISIBLE);
 			} else {

@@ -7,17 +7,9 @@ package org.esupportail.lecture.domain;
 
 import java.util.List;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
-import javax.portlet.PortletRequest;
-import javax.portlet.faces.BridgeUtil;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.myfaces.portlet.PortletUtil;
 import org.esupportail.commons.services.authentication.AuthenticationService;
-import org.esupportail.commons.services.cas.CasException;
-import org.esupportail.commons.services.cas.CasService;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.lecture.domain.utils.ModeService;
 import org.esupportail.lecture.exceptions.domain.InfoExternalException;
@@ -49,11 +41,6 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	private ModeService portletService;
 
 	/**
-	 * servlet version of ExternalService.
-	 */
-	private ModeService servletService;
-
-	/**
 	 * default version of ExternalService.
 	 */
 	private ModeService defaultService;
@@ -79,12 +66,10 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	public void afterPropertiesSet() throws Exception {
 		Assert.notNull(authenticationService, "property authenticationService of class "
 				+ this.getClass().getName() + " can not be null");
-		Assert.notNull(servletService, "property servletService of class "
-				+ this.getClass().getName() + " can not be null");
 		Assert.notNull(portletService, "property portletService of class "
 				+ this.getClass().getName() + " can not be null");
 		if (defaultService == null) {
-			defaultService = servletService;
+			defaultService = portletService;
 		}
 	}
 
@@ -176,12 +161,7 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 */
 	private ModeService getModeService() {
 		ModeService ret = null;
-		if (BridgeUtil.isPortletRequest()) {
-			ret = portletService;
-		} else {
-			// TODO (RB/GB) make better
-			ret = servletService;
-		}
+		ret = portletService;
 		return ret;
 	}
 
@@ -200,13 +180,6 @@ public class ExternalServiceImpl implements ExternalService, InitializingBean {
 	 */
 	public void setPortletService(final ModeService portletService) {
 		this.portletService = portletService;
-	}
-
-	/**
-	 * @param servletService the servletService to set
-	 */
-	public void setServletService(final ModeService servletService) {
-		this.servletService = servletService;
 	}
 
 	/**

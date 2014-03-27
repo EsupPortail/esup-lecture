@@ -66,7 +66,6 @@ public class DefinitionSets {
 	 * Not ready to use without modification
 	 * @deprecated
 	 */
-	@SuppressWarnings("deprecation")
 	@Deprecated
 	protected void checkNamesExistence() {
 	   	if (LOG.isDebugEnabled()) {

@@ -1,5 +1,6 @@
 package org.esupportail.lecture.web.beans;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class ContextWebBean {
 	public String getId() {
 		return id;
 	}
+	
 	/**
 	 * set the id of the context.
 	 * @param id id of context
@@ -54,6 +56,7 @@ public class ContextWebBean {
 	public void setId(final String id) {
 		this.id = id;
 	}
+	
 	/**
 	 * get the name of the context.
 	 * @return name of context
@@ -61,6 +64,7 @@ public class ContextWebBean {
 	public String getName() {
 		return name;
 	}
+	
 	/** 
 	 * set the name of the context.
 	 * @param name name of the context
@@ -68,16 +72,15 @@ public class ContextWebBean {
 	public void setName(final String name) {
 		this.name = name;
 	}
+	
 	/**
 	 * get the selected category of the context.
 	 * @return selected category
 	 */
 	public CategoryWebBean getSelectedCategory() {
-//		if (selectedCategory == null && categories.size() > 0) {
-//			selectedCategory = categories.get(0);
-//		}
 		return selectedCategory;
 	}
+	
 	/**
 	 * set the selected category of the context.
 	 * @param selectedCategory selected category
@@ -103,6 +106,24 @@ public class ContextWebBean {
 	public List<CategoryWebBean> getCategories() {
 		return categories;
 	}
+	
+	/**
+	 * find a category from context
+	 * @param catID
+	 * @return
+	 */
+	public CategoryWebBean getCategory(String catID) {
+		if (catID != null) {
+			List<CategoryWebBean> categoryWebBeans = getCategories();
+			for (CategoryWebBean categoryWebBean : categoryWebBeans) {
+				if (categoryWebBean.getId().equals(catID)) {
+					return categoryWebBean;
+				}
+			}			
+		}
+		return null;
+	}
+	
 	/**
 	 * @param categories
 	 */
@@ -149,9 +170,23 @@ public class ContextWebBean {
 	}
 
 	/**
+	 * @return is tree is visible or not
+	 */
+	public boolean isTreeVisible() {
+		return getTreeVisibleState().equals(TreeDisplayMode.VISIBLE);
+	}
+	
+	/**
+	 * @return is tree is mark as never visible or not
+	 */
+	public boolean isTreeNeverVisible() {
+		return getTreeVisibleState().equals(TreeDisplayMode.NEVERVISIBLE);
+	}
+	
+	/**
 	 * @return treeVisible
 	 */
-	public TreeDisplayMode getTreeVisible() {
+	public TreeDisplayMode getTreeVisibleState() {
 		return treeVisible;
 	}
 

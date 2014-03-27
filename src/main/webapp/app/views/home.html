@@ -1,0 +1,61 @@
+<div ng-class="{true:'col-lg-3 col-md-4 col-sm-4 hidden-xs', false:'hidden-lg hidden-md hidden-sm hidden-xs'}[treeDisplayed()]">
+    <h3 class="portlet-section-header">{{contextName}}</h3>
+    <ul ng-repeat="cat in cats" class="margin-left-zero">
+        <li class="lec-list-style-none">
+            <a class="lec-btn-link" ng-click="toggle(cat.id)" role="button" title="{{ msgs['colapseCategory'] }}" ng-show="!cat.folded"><i class="glyphicon glyphicon-minus-sign"></i></a>
+            <a class="lec-btn-link" ng-click="toggle(cat.id)" role="button" title="{{ msgs['expandCategory'] }}" ng-show="cat.folded"><i class="glyphicon glyphicon-plus-sign"></i></a>
+            <a ng-click="select(cat.id)" class="lec-btn-link">{{cat.name}}</a>
+            <ul ng-repeat="src in cat.sources" class="lec-list-style-none" ng-hide="cat.folded">
+                <li class="lec-list-style-none">
+                    <a class="lec-btn-link" ng-click="select(cat.id, src.id)"><i class="glyphicon glyphicon-play"></i> {{src.name}}</a>
+                    <span class="badge" ng-show="src.unreadItemsNumber > 0">{{ src.unreadItemsNumber }}</span>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div ng-class="{true:'col-lg-9 col-md-8 col-sm-8 col-xs-12', false:'col-lg-12'}[treeDisplayed()]">
+    <div ng-repeat="cat in selectedCats" class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="pull-left">
+                    <h3 class="portlet-section-header">{{ cat.name }}</h3>                        
+                </div>
+            </div>
+            <div class="col-lg-6 menuButton">
+                <div class="pull-right">
+                    {{ msgs['selectorLabel'] }}
+                    <select ng-model="selectedMode" ng-options="mode.id as mode.value for mode in modes">
+                    </select>
+                    <div class="btn-group">
+                        <button type="button" class="btn" role="button" title="{{ msgs['markAllAsRead'] }}" ng-click="markAllItemsAsRead(true)"><i class="glyphicon glyphicon-remove"></i></button>
+                        <button type="button" class="btn" role="button" title="{{ msgs['markAllAsNotRead'] }}" ng-click="markAllItemsAsRead(false)"><i class="glyphicon glyphicon-check"></i></button>
+                        <button type="button" ng-class="{true:'btn hidden-xs', false:'hidden-lg hidden-md hidden-sm hidden-xs'}[!treeDisplayed()]" role="button" title="{{ msgs['showTree'] }}" ng-click="showTree()"><i class="glyphicon glyphicon-indent-left"></i></button>
+                        <button type="button" ng-class="{true:'btn hidden-xs', false:'hidden-lg hidden-md hidden-sm hidden-xs'}[treeDisplayed()]" role="button" title="{{ msgs['hideTree'] }}" ng-click="hideTree()"><i class="glyphicon glyphicon-fullscreen"></i></button>
+                    </div>                                
+                </div>
+            </div>            
+        </div>
+        <div ng-repeat="source in cat.selectedSrcs" class="row">
+            <div class="col-lg-12">
+                <div class="portlet-section-subheader source-title">{{ source.name }}</div>
+                <div ng-repeat="item in source.items | modeFilter:selectedMode">
+                    <div class="article" ng-show="!item.read">
+                        <div class="toggleButton">
+                            <a class="lec-btn-link" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsRead'] }}" ><i class="glyphicon glyphicon-remove"></i></a>
+                        </div>
+                        <div class="unreadArticle" ng-bind-html-unsafe="item.htmlContent">
+                        </div>
+                    </div>
+                    <div class="article" ng-show="item.read">
+                        <div class="toggleButton">
+                            <a class="lec-btn-link" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsUnread'] }}" ng-show="item.read"><i class="glyphicon glyphicon-check"></i></a>
+                        </div>
+                        <div class="readArticle" ng-bind-html-unsafe="item.htmlContent">
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>

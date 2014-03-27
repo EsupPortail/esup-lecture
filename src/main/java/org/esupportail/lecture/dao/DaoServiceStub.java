@@ -71,9 +71,9 @@ public class DaoServiceStub  implements DaoService {
 	 * @see org.esupportail.lecture.dao.DaoService#getManagedCategory(
 	 *  org.esupportail.lecture.domain.model.ManagedCategoryProfile, java.lang.String)
 	 */
-	public ManagedCategory getManagedCategory(@SuppressWarnings("unused")
-	final ManagedCategoryProfile profile, @SuppressWarnings("unused")
-	final boolean withCAS) {
+	public ManagedCategory getManagedCategory(
+			final ManagedCategoryProfile profile, 
+			final boolean withCAS) {
 		return null;
 	}
 	
@@ -89,8 +89,9 @@ public class DaoServiceStub  implements DaoService {
 	 * @see org.esupportail.lecture.dao.DaoService#getSource(
 	 *  org.esupportail.lecture.domain.model.ManagedSourceProfile, java.lang.String)
 	 */
-	public Source getSource(@SuppressWarnings("unused") final ManagedSourceProfile profile,
-			@SuppressWarnings("unused")	final boolean withCAS) {
+	public Source getSource(
+			final ManagedSourceProfile profile,
+			final boolean withCAS) {
 		return null;
 	}
 	
@@ -248,8 +249,7 @@ public class DaoServiceStub  implements DaoService {
 	 * @see org.esupportail.lecture.dao.DaoService#addVersionManager(
 	 *  org.esupportail.lecture.domain.model.VersionManager)
 	 */
-	public void addVersionManager(@SuppressWarnings("unused")
-	final VersionManager versionManager) {
+	public void addVersionManager(final VersionManager versionManager) {
 		// TODO Auto-generated method stub
 	}
 
@@ -257,8 +257,7 @@ public class DaoServiceStub  implements DaoService {
 	 * @see org.esupportail.lecture.dao.DaoService#updateVersionManager(
 	 *  org.esupportail.lecture.domain.model.VersionManager)
 	 */
-	public void updateVersionManager(@SuppressWarnings("unused")
-	final VersionManager versionManager) {
+	public void updateVersionManager(final VersionManager versionManager) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -266,8 +265,7 @@ public class DaoServiceStub  implements DaoService {
 	/**
 	 * @see org.esupportail.lecture.dao.DaoService#mergeUserProfile(org.esupportail.lecture.domain.model.UserProfile)
 	 */
-	public UserProfile mergeUserProfile(@SuppressWarnings("unused")
-	UserProfile userProfile) {
+	public UserProfile mergeUserProfile(UserProfile userProfile) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -276,8 +274,7 @@ public class DaoServiceStub  implements DaoService {
 	 * @param query 
 	 * @see org.esupportail.lecture.dao.DaoService#updateSQL(java.lang.String)
 	 */
-	public void updateSQL(@SuppressWarnings("unused")
-	final String query) {
+	public void updateSQL(final String query) {
 		// TODO Auto-generated method stub
 		
 	}

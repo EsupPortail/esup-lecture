@@ -64,6 +64,7 @@
 			<tx:method name="unfold*" propagation="REQUIRED" />
 			<tx:method name="subscribe*" propagation="REQUIRED" />
 			<tx:method name="unsubscribe*" propagation="REQUIRED" />
+			<tx:method name="getContext" propagation="REQUIRED" /> <!-- userProfile and context can be computed -and changed- during getContext -->
 			<tx:method name="*" propagation="SUPPORTS" read-only="true"/>
 		</tx:attributes>
 	</tx:advice>
@@ -78,7 +79,7 @@
 		<property name="cacheManager" ref="cacheManager" />
 		<property name="daoService" ref="daoService"/>
 		<property name="externalService" ref="${externalService.bean}"/>
-		<property name="configFilePath" value="/properties/esup-lecture.xml"/>
+		<property name="configFilePath" value="${configFilePath}"/>
 		<property name="mappingFilePath" value="/properties/mappings.xml"/>	
 		
 		<!--  TODO : export these values in config.properties -->
@@ -114,15 +115,8 @@
 		</description>
 		<property name="authenticationService" ref="${authenticationService.bean}" />
 		<property name="portletService" ref="portletService" />
-		<property name="servletService" ref="servletService" />
 	</bean>
 	
-	<bean id="servletService" class="org.esupportail.lecture.domain.utils.ServletService">
-		<description>external service in servlet mode</description>
-		<property name="portalService" ref="portalService" />
-		<property name="authenticationService" ref="${authenticationService.bean}" />
-	</bean>
-
 	<bean id="portletService" class="org.esupportail.lecture.domain.utils.PortletService">
 		<description>external service in portlet mode</description>
 		<property name="assertionHandler" ref="assertionHandler" />

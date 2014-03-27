@@ -1,0 +1,26 @@
+<div class="col-lg-3 col-md-4 col-sm-5">
+    <h3 class="portlet-section-header">{{contextName}}</h3>
+    <ul ng-repeat="cat in cats" class="margin-left-zero">
+        <li class="lec-list-style-none">
+            <a class="lec-btn-link" role="button" title="{{ msgs['subscribeCategory'] }}" ng-click="toogleCategorySubcribtion(cat)" ng-show="cat.notSubscribed"><i class="glyphicon glyphicon-thumbs-up"></i></a>
+            <a class="lec-btn-link" role="button" title="{{ msgs['unsubscribeCategory'] }}" ng-click="toogleCategorySubcribtion(cat)" ng-show="cat.subscribed"><i class="glyphicon glyphicon-thumbs-down"></i></a>
+            <a class="lec-btn-link" role="button" title="{{ msgs['forcedCategory'] }}" ng-show="cat.obliged"><i class="glyphicon glyphicon-lock"></i></a>
+            <a class="lec-btn-link" ng-click="select(cat)">{{cat.name}}</a>
+        </li>
+    </ul></div>
+<div class="col-lg-9 col-md-8 col-sm-7">
+	<div class="portlet-section lecture-right" role="region">
+            <h3 class="fl-force-left">{{selectedCat.name}}</h3>
+            <ul ng-repeat="src in selectedCat.sources" class="margin-left-zero">
+                <li class="lec-list-style-none">
+                    <a class="lec-btn-link" role="button" title="{{ msgs['subscribeSource'] }}" ng-click="toogleSourceSubcribtion(selectedCat, src)" ng-show="src.notSubscribed"><i class="glyphicon glyphicon-thumbs-up"></i></a>
+                    <a class="lec-btn-link" role="button" title="{{ msgs['unsubscribeSource'] }}" ng-click="toogleSourceSubcribtion(selectedCat, src)" ng-show="src.subscribed"><i class="glyphicon glyphicon-thumbs-down"></i></a>
+                    <a class="lec-btn-link" role="button" title="{{ msgs['forcedSource'] }}" ng-show="src.obliged"><i class="glyphicon glyphicon-lock"></i></a>
+                    {{src.name}}
+                </li>
+            </ul>
+	</div>
+
+	<!-- Source(s) and Items display -->
+        <div class="portlet-section lecture-right" role="region"></div>
+</div>

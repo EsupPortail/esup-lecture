@@ -1,0 +1,77 @@
+.esup-lecture .lec-list-style-none {
+    list-style: none;
+}
+
+.esup-lecture .margin-left-zero {
+    margin-left: 0px;
+}
+
+.esup-lecture a.lec-btn-link {
+    text-decoration: none;
+    border-radius: 5px;
+    padding: 5px;
+    color: black;
+}
+
+.esup-lecture a.lec-btn-link:hover {
+    background-color: #eeeeee;
+    cursor: pointer;
+}
+.esup-lecture .menuTitle {
+    float: left;
+    padding-left: 10px;
+}
+
+.esup-lecture .source-title {
+    height: 22px;
+    color: black;
+    text-align: left;
+    letter-spacing: 1px;
+    text-align: left;
+    text-indent: 5px;
+    font-weight: lighter;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    padding-top: 5px;
+    background-color: #ddd;
+}
+
+.esup-lecture div.toggleButton {
+    float: left;
+    margin: 2px 0px 18px 5px;
+    padding: 0px 10px 10px 10px;
+    width: 16px;
+    height: 16px;
+}
+
+.esup-lecture div.unreadArticle {
+    margin: 2px 0px 0px 35px;
+    padding: 2px;
+    background-color: transparent;
+    line-height: 17px;
+    margin-bottom: 10px;
+    border-bottom: dotted thin;
+    font-size: 95%;
+    padding-bottom: 15px;
+    letter-spacing: .4px;
+}
+
+.esup-lecture div.readArticle {
+    min-height : 1px; /*for IE 7 and opacity ! IE 6 don't work !*/
+    margin: 2px 0px 0px 35px;
+    padding: 2px;
+    opacity: 0.30;
+    opacity: 0.30;
+    margin-bottom: 15px;
+    border-bottom: dotted thin;
+    font-size: 70%;
+    padding-bottom: 15px;
+}
+
+.esup-lecture h1,h2,h3 {
+    margin: 10px;
+}
+
+.esup-lecture .menuButton {
+    margin-top: 5px;
+}

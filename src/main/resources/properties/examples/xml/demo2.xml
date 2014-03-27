@@ -6,7 +6,7 @@
 	<sourceProfiles>
 		<sourceProfile id="trois" access="public" name="RSS Jeux en Flash"
 			specificUserContent="no"
-			url="${config.url.prefix}/examples/xml/jeux-flash.xml">
+			url="&config.url.prefix;/examples/xml/jeux-flash.xml">
 			<visibility>
 				<allowed></allowed>
 				<autoSubscribed></autoSubscribed>
@@ -17,7 +17,7 @@
 		</sourceProfile>
 		<sourceProfile id="cinq" access="public" name="Un jeu (applet java)"
 			specificUserContent="no"
-			url="${config.url.prefix}/examples/xml/jeu-java-seul.xml">
+			url="&config.url.prefix;/examples/xml/jeu-java-seul.xml">
 			<visibility>
 				<allowed></allowed>
 				<autoSubscribed></autoSubscribed>

@@ -14,7 +14,6 @@
 		<property name="locations">
 			<list>
 				<value>classpath:/properties/defaults.properties</value>
-				<value>classpath:/properties/defaults-${deploy.type}.properties</value>
 				<value>classpath:/properties/config.properties</value>
 				<value>file:${application.config.location}/esup-lecture/config.properties</value>
 			</list>
@@ -32,8 +31,7 @@
 	<import resource="i18n/i18n.xml" />
 	<import resource="misc/abstractBeans.xml" />
 	<import resource="misc/application.xml" />
-	<import resource="web/controllers.xml" />
-	<import resource="mobile/mobile.xml"/>
+	<import resource="web/web.xml" />
 
 	<bean id="app_context"
 		class="org.esupportail.commons.context.ApplicationContextHolder" />

@@ -1,3 +1,5 @@
+<!ENTITY config.url.prefix "file:///opt/A_GARDER_UN_PEU/projets/esup-lecture/target/classes/properties">
+
 <!ELEMENT category (description,sourceProfiles, visibility?)>
 <!ATTLIST category
     name CDATA #REQUIRED

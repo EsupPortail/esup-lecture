@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
@@ -21,6 +19,8 @@ import org.esupportail.lecture.domain.AssertionAccessor;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.portlet.context.PortletRequestAttributes;
 
 
 /**
@@ -71,9 +71,7 @@ public class PortletService implements ModeService, InitializingBean {
 		}
 		String value;
 		try {
-			final FacesContext facesContext = FacesContext.getCurrentInstance();
-			final ExternalContext externalContext = facesContext.getExternalContext();
-			final PortletRequest request = (PortletRequest) externalContext.getRequest();
+			final PortletRequest request = ((PortletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest(); 
 			final PortletPreferences portletPreferences = request.getPreferences();
 			value = portletPreferences.getValue(name, "default");
 		} catch (Exception e) {
@@ -100,15 +98,14 @@ public class PortletService implements ModeService, InitializingBean {
 		}
 		List<String> values;
 		try {
-			final FacesContext facesContext = FacesContext.getCurrentInstance();
-			ExternalContext externalContext = facesContext.getExternalContext();
-			PortletRequest request = (PortletRequest) externalContext.getRequest();
+			final PortletRequest request = ((PortletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest(); 
 			// Portlet Request wich return multivalues attributes doesn't exist, Uportal added his implementation for this case : https://issues.jasig.org/browse/UP-933
 			Map<String, ArrayList<String>> userInfo =
 					(Map<String, ArrayList<String>>) request.getAttribute("org.jasig.portlet.USER_INFO_MULTIVALUED");
 					//(Map<String, ArrayList<String>>) request.getAttribute(PortletRequest.USER_INFO);
 			values = userInfo.get(attribute);
 		} catch (Exception e) {
+			LOG.error("Can't find attribute " + attribute);
 			throw new InternalExternalException(e);
 		}
 		if (values == null) {
@@ -128,9 +125,7 @@ public class PortletService implements ModeService, InitializingBean {
 		}
 		boolean value = Boolean.FALSE;
 		try {
-			FacesContext facesContext = FacesContext.getCurrentInstance();
-			ExternalContext externalContext = facesContext.getExternalContext();
-			PortletRequest request = (PortletRequest) externalContext.getRequest();
+			final PortletRequest request = ((PortletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest(); 
 			if (request.isUserInRole(group)) {
 				value = Boolean.TRUE;
 			}

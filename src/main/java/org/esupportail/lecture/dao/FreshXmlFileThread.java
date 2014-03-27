@@ -55,7 +55,6 @@ public class FreshXmlFileThread extends Thread {
 	 * @return Managed category
 	 * @throws XMLParseException 
 	 */
-	@SuppressWarnings("unchecked")
 	private Document getFreshXmlFileThread(final String xmlFilePathGet)
 		throws XMLParseException {
 		if (LOG.isDebugEnabled()) {

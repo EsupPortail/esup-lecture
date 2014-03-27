@@ -67,7 +67,6 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	 * @see org.esupportail.portal.ws.client.PortalService#getUser(java.lang.String)
 	 */
 	public PortalUser getUser(
-			@SuppressWarnings("unused")
 			final String userId) {
 		return portalUser;
 	}
@@ -76,7 +75,6 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	 * @see org.esupportail.portal.ws.client.PortalService#searchUsers(java.lang.String)
 	 */
 	public List<PortalUser> searchUsers(
-			@SuppressWarnings("unused")
 			final String token) 
 	throws PortalErrorException, PortalUserNotFoundException {
 		List<PortalUser> ret = new ArrayList<PortalUser>();
@@ -92,7 +90,6 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	 * @see org.esupportail.portal.ws.client.PortalService#getGroupById(java.lang.String)
 	 */
 	public PortalGroup getGroupById(
-			@SuppressWarnings("unused")
 			final String groupId) {
 		return portalGroup;
 	}
@@ -101,7 +98,6 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	 * @see org.esupportail.portal.ws.client.PortalService#getGroupByName(java.lang.String)
 	 */
 	public PortalGroup getGroupByName(
-			@SuppressWarnings("unused")
 			final String groupName) {
 		return portalGroup;
 	}
@@ -110,7 +106,6 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	 * @see org.esupportail.portal.ws.client.PortalService#searchGroupsByName(java.lang.String)
 	 */
 	public List<PortalGroup> searchGroupsByName(
-			@SuppressWarnings("unused")
 			final String token) {
 		List<PortalGroup> ret = new ArrayList<PortalGroup>();
 		ret.add(portalGroup);
@@ -121,7 +116,6 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	 * @see org.esupportail.portal.ws.client.PortalService#getSubGroupsById(java.lang.String)
 	 */
 	public List<PortalGroup> getSubGroupsById(
-			@SuppressWarnings("unused")
 			final String arg0) 
 			throws PortalErrorException, PortalGroupNotFoundException {
 		List<PortalGroup> ret = new ArrayList<PortalGroup>();
@@ -133,7 +127,6 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	 * @see org.esupportail.portal.ws.client.PortalService#getSubGroupsByName(java.lang.String)
 	 */
 	public List<PortalGroup> getSubGroupsByName(
-			@SuppressWarnings("unused")
 			final String arg0) 
 			throws PortalErrorException, PortalGroupNotFoundException {
 		List<PortalGroup> ret = new ArrayList<PortalGroup>();
@@ -149,7 +142,6 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	 * @see org.esupportail.portal.ws.client.PortalService#getGroupHierarchyById(java.lang.String)
 	 */
 	public PortalGroupHierarchy getGroupHierarchyById(
-			@SuppressWarnings("unused")
 			final String arg0) 
 	throws PortalErrorException, PortalGroupNotFoundException {
 		return portalGroupHierarchy;
@@ -159,7 +151,6 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	 * @see org.esupportail.portal.ws.client.PortalService#getGroupHierarchyByName(java.lang.String)
 	 */
 	public PortalGroupHierarchy getGroupHierarchyByName(
-			@SuppressWarnings("unused")
 			final String arg0) 
 	throws PortalErrorException, PortalGroupNotFoundException {
 		return portalGroupHierarchy;
@@ -187,7 +178,6 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	 * @see org.esupportail.portal.ws.client.PortalService#getUserGroups(java.lang.String)
 	 */
 	public List<PortalGroup> getUserGroups(
-			@SuppressWarnings("unused")
 			final String userId) {
 		List<PortalGroup> ret = new ArrayList<PortalGroup>();
 		ret.add(portalGroup);
@@ -198,7 +188,6 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	 * @see org.esupportail.portal.ws.client.PortalService#getGroupUsers(java.lang.String)
 	 */
 	public List<PortalUser> getGroupUsers(
-			@SuppressWarnings("unused")
 			final String groupId) {
 		List<PortalUser> ret = new ArrayList<PortalUser>();
 		ret.add(portalUser);
@@ -210,9 +199,7 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	 * java.lang.String, java.lang.String)
 	 */
 	public boolean isUserMemberOfGroup(
-			@SuppressWarnings("unused")
 			final String userId, 
-			@SuppressWarnings("unused")
 			final String groupId) {
 		return true;
 	}
@@ -221,8 +208,7 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	/**
 	 * @see org.esupportail.portal.ws.client.PortalService#getContainingGroupsById(java.lang.String)
 	 */
-	public List<PortalGroup> getContainingGroupsById(@SuppressWarnings("unused")
-	String arg0)
+	public List<PortalGroup> getContainingGroupsById(String arg0)
 			throws PortalErrorException, PortalGroupNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
@@ -231,8 +217,7 @@ public class MockPortalServiceImpl extends AbstractPortalService implements Seri
 	/**
 	 * @see org.esupportail.portal.ws.client.PortalService#getContainingGroupsByName(java.lang.String)
 	 */
-	public List<PortalGroup> getContainingGroupsByName(@SuppressWarnings("unused")
-	String arg0)
+	public List<PortalGroup> getContainingGroupsByName(String arg0)
 			throws PortalErrorException, PortalGroupNotFoundException {
 		// TODO Auto-generated method stub
 		return null;
