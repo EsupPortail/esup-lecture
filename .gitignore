@@ -8,3 +8,5 @@
 /nb-configuration.xml
 /src/main/webapp/app/nbproject/
 /src/main/webapp/META-INF/context.xml
+.idea/
+esup-lecture.iml
