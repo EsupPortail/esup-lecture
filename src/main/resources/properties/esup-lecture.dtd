@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ENTITY config.url.prefix "file:///opt/A_GARDER_UN_PEU/projets/esup-lecture/target/classes/properties">
-
 <!ELEMENT channelConfig (ttl?, userId?, guestUser?, context*, categoryProfile*)>
 
 <!ELEMENT userId (#PCDATA)> <!-- deprecated since 0.8.4 -->

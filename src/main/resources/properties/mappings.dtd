@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ENTITY config.url.prefix "file:///opt/A_GARDER_UN_PEU/projets/esup-lecture/target/classes/properties">
 
 <!ELEMENT mappings (mapping+)>
 

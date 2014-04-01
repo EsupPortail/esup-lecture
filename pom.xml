@@ -61,6 +61,16 @@
 	</scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>properties/esup-lecture.xml</include>
+					<include>properties/mappings.xml</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -286,5 +296,6 @@
 	<properties>
 		<javax.servlet.version>2.5</javax.servlet.version>
 		<esupcommons.version>0.3.3</esupcommons.version>
+		<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
 	</properties>
 </project>
