@@ -2,6 +2,7 @@
 /.classpath
 /.project
 /target
+/overlays
 *~
 /nbactions.xml
 /src/main/webapp/app/nbproject/private/

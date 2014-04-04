@@ -4,9 +4,9 @@
 	<xsl:output method="html" encoding="utf-8" />
 	<xsl:template match="/">
 		<div class="lecture-clickable lecture-highlightable">
-			<h1>
+			<div class="h4">
 				<xsl:value-of select="/item/title" />
-			</h1>
+			</div>
 			<div class="lecture-link"  style="display:none">
 				Lien :
 				<a target="_blank" href="{item/link}">
@@ -20,8 +20,11 @@
 <!-- 			Auteur : -->
 <!-- 			<xsl:value-of select="item/author" /> -->
 <!-- 			<br /> -->
-			<xsl:value-of select="/item/description"
-				disable-output-escaping="yes" />
+            <div class="row">
+                <p>
+			        <xsl:value-of select="/item/description" disable-output-escaping="yes" />
+                </p>
+            </div>
 		</div>
 	</xsl:template>
 </xsl:stylesheet>

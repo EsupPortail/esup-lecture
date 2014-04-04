@@ -13,15 +13,21 @@
 					TEST
 				</iframe>
 			</div>
-			<h1>
+			<div class="h4">
 				<xsl:value-of select="/item/title" />
-			</h1>
-			<xsl:value-of select="/item/description"
-				disable-output-escaping="yes" />
-			<br />
-			<div>
-				<a href="{/item/link}" class="ui-state-default ui-corner-all dialog_link">En savoir plus ...</a>
 			</div>
+            <div class="row">
+                <p>
+                    <xsl:value-of select="/item/description"
+                        disable-output-escaping="yes" />
+                    <br />
+                </p>
+			<div>
+                <p>
+				    <a href="{/item/link}" class="ui-state-default ui-corner-all dialog_link">En savoir plus ...</a>
+                </p>
+			</div>
+            </div>
 		</div>
 	</xsl:template>
 </xsl:stylesheet>

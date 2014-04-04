@@ -119,6 +119,10 @@ lecture = function(appName, appHomePath, resourceURL) {
             treeVisibleState = "NOTVISIBLE";
         };
 
+        $scope.callTooltip = function(obj) {
+            $( '#'+obj).fadeToggle('slow');
+        }
+
     });
     
     //Mode Filter

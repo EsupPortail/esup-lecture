@@ -1,4 +1,4 @@
-<!ENTITY config.url.prefix "file:///opt/A_GARDER_UN_PEU/projets/esup-lecture/target/classes/properties">
+<!ENTITY config.url.prefix "file:////home/nhenry/IDEA/Idea-Projects/esup-lecture/target/classes/properties">
 
 <!ELEMENT category (description,sourceProfiles, visibility?)>
 <!ATTLIST category

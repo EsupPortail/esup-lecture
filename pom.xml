@@ -108,7 +108,7 @@
 					<wtpversion>1.5</wtpversion>
 				</configuration>
 			</plugin>
-<!-- 
+
   	      	<plugin>
 		        <groupId>net.alchim31.maven</groupId>
 		        <artifactId>yuicompressor-maven-plugin</artifactId>
@@ -121,17 +121,17 @@
 		          </execution>
 		        </executions>
                 <configuration>
-		          <resources>
-		            <resource>${basedir}/src/main/webapp/media/js/esup-lecture.js</resource>
-		          </resources>
+		          <!--<resources>-->
+		            <!--<resource>${basedir}/src/main/webapp/media/js/esup-lecture.js</resource>-->
+		          <!--</resources>-->
 	              <excludes>
 	                <exclude>**/*.css</exclude>
 	                <exclude>**/*.min.js</exclude>
-	              </excludes>	
-	              <suffix>-${project.version}.min</suffix>	          
+	              </excludes>
+	              <suffix>-${project.version}.min</suffix>
 		        </configuration>
    		    </plugin>
- -->			
+
 			<plugin>
 				<groupId>net.jlehtinen.portlet</groupId>
 				<artifactId>portlet-prototyping-maven-plugin</artifactId>
@@ -158,7 +158,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
-				          	<packagingExcludes>WEB-INF/classes/properties/config.properties</packagingExcludes> 
+				          	<packagingExcludes>WEB-INF/classes/properties/config.properties</packagingExcludes>
 					<warName>${project.artifactId}-portlet-uP4</warName>
 				</configuration>
 			</plugin>
@@ -295,6 +295,17 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.12</version>
 		</dependency>
+        <dependency>
+            <groupId>org.jasig.resourceserver</groupId>
+            <artifactId>resource-server-utils</artifactId>
+            <version>1.0.35</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-api</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 	</dependencies>
 	<properties>
 		<javax.servlet.version>2.5</javax.servlet.version>

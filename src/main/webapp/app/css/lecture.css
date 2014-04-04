@@ -1,16 +1,38 @@
+html > body {
+    font-family: 'Open Sans','Helvetica Neue','Helvetica','Arial',sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.menu-group {
+    display: inline-block;
+}
+
+.menu-collapse {
+    position: absolute;
+    display: inline-block;
+    max-width: 300px;
+    right: 0;
+    top: 40px;
+    width: 100%;
+    z-index: 2000;
+}
+
+
 .esup-lecture .lec-list-style-none {
     list-style: none;
 }
 
 .esup-lecture .margin-left-zero {
+    margin-top: 15px;
     margin-left: 0px;
 }
 
 .esup-lecture a.lec-btn-link {
     text-decoration: none;
     border-radius: 5px;
+    padding-top: 5px;
     padding: 5px;
-    color: black;
 }
 
 .esup-lecture a.lec-btn-link:hover {
@@ -36,7 +58,8 @@
     background-color: #ddd;
 }
 
-.esup-lecture div.toggleButton {
+div.toggleButton {
+    display: inline;
     float: left;
     margin: 2px 0px 18px 5px;
     padding: 0px 10px 10px 10px;
@@ -53,7 +76,7 @@
     border-bottom: dotted thin;
     font-size: 95%;
     padding-bottom: 15px;
-    letter-spacing: .4px;
+    letter-spacing: 0.4px;
 }
 
 .esup-lecture div.readArticle {
@@ -74,4 +97,52 @@
 
 .esup-lecture .menuButton {
     margin-top: 5px;
+}
+
+.nav-pills > li > span,
+.nav-pills > li.disabled > span,
+.nav-pills > li.disabled > span {
+    border: 1px solid #e5e5e5;
+    background-color: #ffffff;
+}
+
+.nav-pills > li > span {
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.nav-pills [class^="icon-"],
+.nav-pills [class*=" icon-"],
+.nav-pills .icon-large[class^="icon-"],
+.nav-pills .icon-large[class*=" icon-"] {
+    line-height: inherit !important;
+}
+
+.cat-panel {
+    margin-left: 0;
+    margin-right: 0;
+    background-color: #fff;
+    border-width: 1px;
+    border-color: #ddd;
+    border-radius: 4px 4px 0 0;
+    box-shadow: none;
+}
+
+.portlet-container .menu-btn .hidden-xs,
+.portlet-container .menu-btn.hidden-sm {
+    display: inline-block !important;
+}
+
+@media (max-width: 767px) {
+    .menu-btn .hidden-xs {
+        display: none!important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .menu-btn.hidden-xs,
+    .menu-btn.hidden-sm {
+        display: none !important;
+    }
 }

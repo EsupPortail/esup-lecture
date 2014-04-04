@@ -5,10 +5,12 @@
 	<xsl:template match="/">
 		<div class="lecture-clickable lecture-highlightable fl-list-menu">
 			<a target="_blank" href="{item/link}">
-				<h3>
+				<div class="h4">
 					<xsl:value-of select="/item/title" />
-				</h3>
-				<p><xsl:value-of select="/item/description" /></p>
+				</div>
+                <div class="row">
+				    <p><xsl:value-of select="/item/description" /></p>
+                </div>
 			</a>
 		</div>
 	</xsl:template>

@@ -5,9 +5,9 @@
 	<xsl:output method="html" encoding="utf-8" />
 	<xsl:template match="/">
 		<div class="lecture-clickable lecture-highlightable">
-			<h1>
+			<div class="h4">
 				<xsl:value-of select="/b:item/b:title" />
-			</h1>
+			</div>
 			<div class="lecture-link" style="display:none">
 				Lien :
 				<a href="{/b:item/b:link}">
@@ -15,8 +15,10 @@
 				</a>
 				<br />
 			</div>
+            <p>
 			<xsl:value-of select="/b:item/b:description"
 				disable-output-escaping="yes" />
+            </p>
 		</div>
 	</xsl:template>
 </xsl:stylesheet>

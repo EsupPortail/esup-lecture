@@ -15,25 +15,4 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <util:list id="headElements">
-    	<bean class="org.esupportail.lecture.web.portlet.HeadElement"
-    		p:name="link"
-    		p:href="/app/css/lecture.css"
-    		p:rel="stylesheet"
-    		p:type="text/css"/>
-    	<bean class="org.esupportail.lecture.web.portlet.HeadElement"
-    		p:name="link"
-    		p:href="/app/css/bootstrap.css"
-    		p:rel="stylesheet"
-    		p:type="text/css"/>
-    	<bean class="org.esupportail.lecture.web.portlet.HeadElement"
-    		p:name="script"
-    		p:href="/app/js/angular.min.js"
-    		p:type="text/javascript"/>
-    	<bean class="org.esupportail.lecture.web.portlet.HeadElement"
-    		p:name="script"
-    		p:href="/app/js/app.js"
-    		p:type="text/javascript"/>
-    </util:list>
-
 </beans>

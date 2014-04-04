@@ -1,0 +1,18 @@
+<resources xmlns="http://www.jasig.org/uportal/web/skin"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.jasig.org/uportal/web/skin https://source.jasig.org/schemas/resource-server/skin-configuration/skin-configuration-v1.2.xsd">
+
+    <css>app/css/lecture.css</css>
+    <css>app/css/bootstrap.dev.3.0.1.modified.v4.css</css>
+    <css>app/css/bootstrap-theme.css</css>
+    <css>app/font-awesome-4.0.3/css/font-awesome.css</css>
+
+
+
+    <js>app/rs/jquery/1.9.1/jquery-1.9.1.min.js</js>
+    <js>app/js/angular.min.js</js>
+    <js>app/js/app.js</js>
+    <js>app/js/portlet-size.js</js>
+    <js>app/js/bootstrap.js</js>
+	
+</resources>
