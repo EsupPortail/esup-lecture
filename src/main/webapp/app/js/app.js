@@ -1,4 +1,5 @@
 lecture = function(appName, appHomePath, resourceURL) {
+    'use strict';
     var project = angular.module(appName, []);
 
     //config

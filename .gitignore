@@ -11,3 +11,4 @@
 /src/main/webapp/META-INF/context.xml
 .idea/
 esup-lecture.iml
+lectureDB.*

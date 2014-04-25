@@ -146,7 +146,7 @@
 						<url>/pluto/portlet-spec-2.0.css</url>
 					</cssUrls>
 <!-- 					<jsUrls>
-  						<url>https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js</url>
+  						<url>https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-1.0.6.min.js</url>
   						<url>/esup-lecture/bootstrap/js/bootstrap.js</url>
  					</jsUrls> -->
  					<!--

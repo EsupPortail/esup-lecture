@@ -129,6 +129,10 @@ div.toggleButton {
     box-shadow: none;
 }
 
+.portlet-container .btn-forced {
+    cursor: not-allowed!important;
+}
+
 .portlet-container .menu-btn .hidden-xs,
 .portlet-container .menu-btn.hidden-sm {
     display: inline-block !important;

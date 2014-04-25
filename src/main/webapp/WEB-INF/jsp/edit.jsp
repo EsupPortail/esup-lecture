@@ -5,11 +5,25 @@
 <%@ taglib prefix="rs" uri="http://www.jasig.org/resource-server" %>
 <rs:aggregatedResources path="/resources.xml"/>
 
-<script type="text/javascript">
-	angular.element(document).ready(function() {
-			lectureEdit("<portlet:namespace/>", "${resourcesPath}/app", "${dynamicResourcesPattern}");
-			angular.bootstrap(angular.element(document.getElementById("lecture-<portlet:namespace/>")), ["<portlet:namespace/>"]);
-		});
-</script>
-<div class="esup-lecture portlet-container" id="lecture-<portlet:namespace/>" ng-view>
+<div class="esup-lecture portlet-container">
+    <div id="lecture-<portlet:namespace/>" ng-view></div>
+    <portlet:actionURL var="actionURL">
+        <portlet:param name="action" value="back"/>
+    </portlet:actionURL>
+    <spring:message var="libBack" code="back" />
+    <form:form method="post" action="${actionURL}">
+        <div class="row">
+            <div class="col-xs-2 col-xs-offset-5">
+                <input type="submit" class="btn btn-primary btn-block" />
+            </div>
+        </div>
+    </form:form>
 </div>
+
+<rs:aggregatedResources path="/resources-footer.xml"/>
+<script type="text/javascript">
+    angular.element(document).ready(function() {
+        lectureEdit("<portlet:namespace/>", "${resourcesPath}/app", "${dynamicResourcesPattern}");
+        angular.bootstrap(angular.element(document.getElementById("lecture-<portlet:namespace/>")), ["<portlet:namespace/>"]);
+    });
+</script>

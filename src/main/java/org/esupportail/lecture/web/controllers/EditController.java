@@ -1,16 +1,15 @@
 package org.esupportail.lecture.web.controllers;
 
 import java.util.Locale;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
+import javax.portlet.*;
+
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 import org.springframework.web.servlet.View;
@@ -35,7 +34,19 @@ public class EditController extends TwoPanesController {
     @RenderMapping
     public String goEdit(RenderRequest request, RenderResponse response, ModelMap model) {
         model = bindInitialModel(model, response, request);
+
         return "edit";
+    }
+
+    /**
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    @ActionMapping(params = "action=back")
+    public void goView(ActionRequest request, ActionResponse response) throws PortletModeException {
+        response.setPortletMode(PortletMode.VIEW);
     }
 
     @ResourceMapping(value = "getEditJSON")
@@ -77,8 +88,8 @@ public class EditController extends TwoPanesController {
     /**
      * Change subscription status of a category.
      *
+     * @param ctxID Source ID
      * @param catID Category ID
-     * @param srcID Source ID
      * @param isSubscribed is source subscribed ?
      */
     @ResourceMapping(value = "toogleCategorySubcribtion")

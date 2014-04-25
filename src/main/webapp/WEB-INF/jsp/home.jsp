@@ -5,11 +5,12 @@
 <%@ taglib prefix="rs" uri="http://www.jasig.org/resource-server" %>
 <rs:aggregatedResources path="/resources.xml"/>
 
-<script type="text/javascript">
-	angular.element(document).ready(function() {
-			lecture("<portlet:namespace/>", "${resourcesPath}/app", "${dynamicResourcesPattern}");
-			angular.bootstrap(angular.element(document.getElementById("lecture-<portlet:namespace/>")), ["<portlet:namespace/>"]);
-		});
-</script>
 <div class="esup-lecture portlet-container" id="lecture-<portlet:namespace/>" ng-view>
 </div>
+<rs:aggregatedResources path="/resources-footer.xml"/>
+<script type="text/javascript">
+    angular.element(document).ready(function() {
+        lecture("<portlet:namespace/>", "${resourcesPath}/app", "${dynamicResourcesPattern}");
+        angular.bootstrap(angular.element(document.getElementById("lecture-<portlet:namespace/>")), ["<portlet:namespace/>"]);
+    });
+</script>
