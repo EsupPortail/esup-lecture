@@ -333,7 +333,7 @@ public class ChannelConfig  {
 		for (Node regular : regulars) {
 			RegularOfSet regularOfSet = new RegularOfSet();
 			regularOfSet.setAttribute(regular.valueOf("@attribute"));
-			regularOfSet.setAttribute(regular.valueOf("@value"));
+			regularOfSet.setValue(regular.valueOf("@value"));
 			defAndContentSets.addRegular(regularOfSet);
 		}
 
@@ -342,7 +342,7 @@ public class ChannelConfig  {
 		for (Node regex : regexs) {
 			RegexOfSet regexOfSet = new RegexOfSet();
 			regexOfSet.setAttribute(regex.valueOf("@attribute"));
-			regexOfSet.setAttribute(regex.valueOf("@pattern"));
+			regexOfSet.setPattern(regex.valueOf("@pattern"));
 			defAndContentSets.addRegex(regexOfSet);
 		}
 
