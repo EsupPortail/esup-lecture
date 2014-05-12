@@ -1,49 +1,8 @@
 <div class="col-xs-12">
     <div class="row">
-        <!--<div class="h1">-->
-            <!--<span style="display:inline-block; vertical-align: bottom;">-->
-                <!--<small class="visible-md visible-lg">{{contextName}}</small>-->
-            <!--</span>-->
-        <!--</div>-->
         <h1 class="visible-md visible-lg">{{contextName}}</h1>
     </div>
     <div class="row">
-        <!--<div class="col-lg-3 col-md-4 col-sm-5 col-xs-5">-->
-            <!--<div>-->
-                <!--<ul class="margin-left-zero">-->
-                    <!--<li ng-repeat="cat in cats"  class="lec-list-style-none">-->
-                        <!--<a class="lec-btn-link" role="button" title="{{ msgs['subscribeCategory'] }}" ng-click="toogleCategorySubcribtion(cat)" ng-show="cat.notSubscribed"><i class="fa fa-rss"></i></a>-->
-                        <!--<a class="lec-btn-link" role="button" title="{{ msgs['unsubscribeCategory'] }}" ng-click="toogleCategorySubcribtion(cat)" ng-show="cat.subscribed"><i class="fa fa-rss-square"></i></a>-->
-                        <!--<a class="lec-btn-link" role="button" title="{{ msgs['forcedCategory'] }}" ng-show="cat.obliged"><i class="fa fa-link"></i></a>-->
-                        <!--<a class="lec-btn-link" ng-click="select(cat)">{{cat.name}}</a>-->
-                    <!--</li>-->
-                <!--</ul>-->
-            <!--</div>-->
-        <!--</div>-->
-
-        <!--<div class="col-lg-9 col-md-8 col-sm-7 col-xs-7">-->
-            <!--<div class="panel panel-default" role="region">-->
-                <!--<div class="panel-heading">-->
-                    <!--<h3 class="fl-force-left">{{selectedCat.name}}</h3>-->
-                <!--</div>-->
-                <!--<div class="panel-body">-->
-                    <!--<ul ng-repeat="src in selectedCat.sources" class="margin-left-zero">-->
-                        <!--<li class="lec-list-style-none">-->
-                            <!--<a class="lec-btn-link" role="button" title="{{ msgs['subscribeSource'] }}" ng-click="toogleSourceSubcribtion(selectedCat, src)" ng-show="src.notSubscribed"><i class="fa fa-rss"></i></a>-->
-                            <!--<a class="lec-btn-link" role="button" title="{{ msgs['unsubscribeSource'] }}" ng-click="toogleSourceSubcribtion(selectedCat, src)" ng-show="src.subscribed">-->
-                                <!--<i class="fa fa-rss-square"></i>-->
-                            <!--</a>-->
-                            <!--<a class="lec-btn-link" role="button" title="{{ msgs['forcedSource'] }}" ng-show="src.obliged"><i class="fa fa-link"></i></a>-->
-                            <!--{{src.name}}-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-            <!--</div>-->
-
-            <!--&lt;!&ndash; Source(s) and Items display &ndash;&gt;-->
-            <!--<div class="portlet-section lecture-right" role="region"></div>-->
-        <!--</div>-->
-
         <div class="panel panel-default" role="region" ng-repeat="cat in cats">
             <div class="panel-heading" data-toggle="collapse">
                 <div class="h4">

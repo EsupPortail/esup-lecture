@@ -1,104 +1,101 @@
-<div class="container">
+<div class="col-xs-12">
     <div class="row">
-        <div class="h1">
-                <span style="display:inline-block; vertical-align: bottom;">
-                    <small class="visible-md visible-lg">{{contextName}}</small>
-                </span>
-        </div>
+        <h1 class="visible-md visible-lg">{{contextName}}</h1>
     </div>
     <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="menu-group pull-right" style="margin: 15px auto;">
-                <div id="menu-sm" class="collapse menu-collapse">
-                    <span class="visible-sm visible-xs">
-                        <ul class="nav nav-pills nav-stacked">
-                            <li ng-repeat="cat in cats" class="dropdown">
-                                <span><a ng-click="select(cat.id)">{{cat.name}}</a>
-                                    <div class="pull-right">
-                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                            <i class="fa fa-caret-down fa-lg"></i>
-                                        </a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li ng-repeat="src in cat.sources">
-                                                <div>
-                                                    <a class="lec-btn-link"
-                                                       ng-click="select(cat.id, src.id);callTooltip('menu-sm');">{{src.name}}</a>
-                                                    <span class="badge"
-                                                          ng-show="src.unreadItemsNumber > 0">{{ src.unreadItemsNumber }}</span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </span>
-                            </li>
-                        </ul>
-                    </span>
-                </div>
-                <a class="btn btn-default btn-sm visible-sm visible-xs" ng-click="callTooltip('menu-sm')" title="Navigation">
-                    <i class="fa fa-bars fa-lg"></i>
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div ng-class="{true:'col-md-2 hidden-sm hidden-xs', false:'hidden-lg hidden-md hidden-sm hidden-xs'}[treeDisplayed()]">
-            <ul class="nav nav-pills nav-stacked">
-                <li ng-repeat="cat in cats" class="dropdown">
-                    <span><a ng-click="select(cat.id)">{{cat.name}}</a>
-                        <div class="pull-right">
-                        <a class="dropdown-toggle cat-open" data-toggle="dropdown" href="#">
-                            <i class="fa fa-caret-down fa-lg"></i>
+        <div ng-class="{true:'col-md-3 hidden-sm hidden-xs', false:'hidden-lg hidden-md hidden-sm hidden-xs'}[treeDisplayed()]">
+            <div class="panel panel-info" ng-repeat="cat in cats">
+                <div class="panel-heading"><a name="{{cat.name}}" ng-click="select(cat.id)" class="link">{{cat.name}}</a></div>
+                <ul class="list-group list-unstyled">
+                    <li class="list-group-item" ng-repeat="src in cat.sources">
+                        <a name="{{src.name}}" ng-click="select(cat.id, src.id)" class="link">{{src.name}}
+                            <span class="badge pull-right" ng-show="src.unreadItemsNumber > 0">{{ src.unreadItemsNumber }}</span>
                         </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li ng-repeat="src in cat.sources">
-                                <a ng-click="select(cat.id, src.id)">{{src.name}}
-                                    <span class="badge" ng-show="src.unreadItemsNumber > 0">{{ src.unreadItemsNumber }}</span>
-                                </a>
-                            </li>
-                        </ul>
-                        </div>
-                    </span>
-                </li>
-            </ul>
-        </div>
-        <div ng-class="{true:'col-md-10', false:'col-lg-12'}[treeDisplayed()]">
-
-            <div class="row btn-group" style="margin: 15px auto;">
-                <span class="menu-btn">{{ msgs['selectorLabel'] }}
-                    <select ng-model="selectedMode" ng-options="mode.id as mode.value for mode in modes">
-                    </select></span>
-                <span class="menu-btn">
-                    <a class="btn btn-default btn-sm" role="button" title="{{ msgs['markAllAsRead'] }}" ng-click="markAllItemsAsRead(true)"><i class="glyphicon glyphicon-eye-open"></i></a>
-                    <a class="btn btn-default btn-sm" role="button" title="{{ msgs['markAllAsNotRead'] }}" ng-click="markAllItemsAsRead(false)"><i class="glyphicon glyphicon-eye-close"></i></a>
-                    <a ng-class="{true:'btn btn-default hidden-sm hidden-xs', false:'hidden-lg hidden-md hidden-sm hidden-xs'}[!treeDisplayed()]" role="button" title="{{ msgs['showTree'] }}" ng-click="showTree()"><i class="glyphicon glyphicon-indent-left"></i></a>
-                    <a ng-class="{true:'btn btn-default hidden-sm hidden-xs', false:'hidden-lg hidden-md hidden-sm hidden-xs'}[treeDisplayed()]" role="button" title="{{ msgs['hideTree'] }}" ng-click="hideTree()"><i class="glyphicon glyphicon-fullscreen"></i></a>
-                </span>
+                    </li>
+                </ul>
             </div>
-            <div ng-repeat="cat in selectedCats" class="row col-lg-12">
-                <div class="cat-panel">
-                    <div class="h1">
-                    <span style="display:inline-block; vertical-align: bottom;">
-                        <small class="visible-md visible-lg">{{ cat.name }}</small>
-                    </span>
+        </div>
+        <div ng-class="{true:'col-xs-9', false:'col-xs-12'}[treeDisplayed()]">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="pull-right">
+                        <select ng-model="selectedMode" ng-options="mode.id as mode.value for mode in modes" class="form-control"/>
                     </div>
-                    <div ng-repeat="source in cat.selectedSrcs" class="panel panel-default">
-                        <div class="col-lg-12 panel-heading">
-                            <h3>{{ source.name }}</h3>
-                        </div>
+                    <div class="btn-group">
+                        <span class="dropdown visible-sm visible-xs">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-circle fa-stack-2x"/>
+                                    <i class="fa fa-bars fa-stack-1x fa-inverse"/>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu list-unstyled">
+                                <li ng-repeat="cat in cats" class="dropdown-submenu">
+                                    <a ng-click="select(cat.id)" class="link">{{cat.name}}</a>
+                                    <ul class="dropdown-menu list-unstyled" role="menu">
+                                        <li ng-repeat="src in cat.sources">
+                                            <a class="link" ng-click="select(cat.id, src.id);">{{src.name}}
+                                                <span class="badge pull-right" ng-show="src.unreadItemsNumber > 0">{{ src.unreadItemsNumber }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </span>
+                        <a title="{{ msgs['markAllAsRead'] }}" class="link" ng-click="markAllItemsAsRead(true)">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"/>
+                                <i class="fa fa-eye-slash fa-stack-1x fa-inverse"/>
+                            </span>
+                        </a>
+                        <a title="{{ msgs['markAllAsNotRead'] }}" class="link" ng-click="markAllItemsAsRead(false)">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"/>
+                                <i class="fa fa-eye fa-stack-1x fa-inverse"/>
+                            </span>
+                        </a>
 
-                        <div ng-repeat="item in source.items | modeFilter:selectedMode" class="panel-body">
-                            <div ng-show="!item.read">
-                                <!--<span class="toggleButton">-->
-                                    <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsRead'] }}" ><i class="fa fa-eye-slash"></i></a>
-                                <!--</span>-->
-                                <div class="unreadArticle" ng-bind-html-unsafe="item.htmlContent">
-                                </div>
+                        <a ng-class="{true:'link hidden-sm hidden-xs', false:'hidden-lg hidden-md hidden-sm hidden-xs'}[!treeDisplayed()]" role="button" title="{{ msgs['showTree'] }}" ng-click="showTree()">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"/>
+                                <i class="fa fa-th-list fa-stack-1x fa-inverse"/>
+                            </span>
+                        </a>
+                        <a ng-class="{true:'link hidden-sm hidden-xs', false:'hidden-lg hidden-md hidden-sm hidden-xs'}[treeDisplayed()]" role="button" title="{{ msgs['hideTree'] }}" ng-click="hideTree()">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"/>
+                                <i class="fa fa-arrows-alt fa-stack-1x fa-inverse"/>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div ng-repeat="cat in selectedCats" class="col-xs-12">
+                    <div class="cat-panel">
+
+                        <h2 class="visible-md visible-lg">{{cat.name}}</h2>
+
+                        <div ng-repeat="source in cat.selectedSrcs" class="panel panel-default">
+                            <div class="col-lg-12 panel-heading">
+                                <h3>{{ source.name }}</h3>
                             </div>
-                            <div ng-show="item.read">
-                                <!--<span class="toggleButton">-->
-                                    <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsUnread'] }}" ng-show="item.read"><i class="fa fa-eye"></i></a>
-                                <!--</span>-->
-                                <div class="readArticle" ng-bind-html-unsafe="item.htmlContent">
+
+                            <div ng-repeat="item in source.items | modeFilter:selectedMode" class="panel-body">
+                                <div ng-show="!item.read">
+                                    <!--<span class="toggleButton">-->
+                                        <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsRead'] }}" ><i class="fa fa-eye-slash"></i></a>
+                                    <!--</span>-->
+                                    <div class="unreadArticle" ng-bind-html-unsafe="item.htmlContent">
+                                    </div>
+                                </div>
+                                <div ng-show="item.read">
+                                    <!--<span class="toggleButton">-->
+                                        <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsUnread'] }}" ng-show="item.read"><i class="fa fa-eye"></i></a>
+                                    <!--</span>-->
+                                    <div class="readArticle" ng-bind-html-unsafe="item.htmlContent">
+                                    </div>
                                 </div>
                             </div>
                         </div>
