@@ -1,6 +1,7 @@
 lecture = function(appName, appHomePath, resourceURL) {
     'use strict';
     var project = angular.module(appName, []);
+    resourceURL = decodeURI(resourceURL);
 
     //config
     project.config(['$routeProvider', function($routeProvider) {
