@@ -124,14 +124,21 @@ public class DaoServiceRemoteXML implements InitializingBean {
 					LOG.warn(msg);
 					LOG.warn("=========");
 				}
-				cache.put(new Element(cacheKey, ret));
-				Element e = cache.get(cacheKey);
-				int ttl = ret.getTtl();
-				e.setTimeToLive(ttl);
+				if (!profile.isSpecificUserContent()) {
+					cache.put(new Element(cacheKey, ret));
+					Element e = cache.get(cacheKey);
+					int ttl = ret.getTtl();
+					e.setTimeToLive(ttl);
 
-				if (LOG.isDebugEnabled()) {
-					LOG.debug("Put category in cache : " + cacheKey
-						+ " Ttl: " + String.valueOf(ret.getTtl()));
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("Put category in cache : " + cacheKey
+							+ " Ttl: " + String.valueOf(ret.getTtl()));
+					}
+				} else {
+					// don't put SpecificUserContent in cache
+					if (LOG.isDebugEnabled()) {
+						LOG.debug("Category SpecificUserContent (not in cache) : " + urlCategory);
+					}
 				}
 			} else {
 				LOG.debug("Already in cache : " + cacheKey
@@ -204,12 +211,12 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			LOG.warn(msg);
 			throw new XMLParseException(msg, e);
 		}
-        if (thread.isAlive()) {
-    		thread.interrupt();
+		if (thread.isAlive()) {
+			thread.interrupt();
 			String msg = "Category not loaded in " + timeout + " milliseconds";
 			LOG.warn(msg);
 			throw new TimeoutException(msg);
-        }
+		}
 		ret = thread.getManagedCategory();
 		return ret;
 	}
@@ -359,12 +366,12 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			LOG.error(e.getMessage());
 			throw new InternalDaoException(e);
 		}
-        if (thread.isAlive()) {
-    		thread.interrupt();
+		if (thread.isAlive()) {
+			thread.interrupt();
 			String msg = "Category not loaded in " + timeout + " milliseconds";
 			LOG.warn(msg);
 			throw new TimeoutException(msg);
-        }
+		}
 		ret = thread.getSource();
 		return ret;
 	}

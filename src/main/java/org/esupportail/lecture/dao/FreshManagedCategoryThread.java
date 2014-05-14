@@ -7,7 +7,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -46,17 +45,17 @@ public class FreshManagedCategoryThread extends Thread {
 	 */
 	private Exception exception;
 	/**
-	 * Proxy ticket CAS 
+	 * Proxy ticket CAS
 	 * null for anonymous access.
 	 */
 	private String ptCas;
-	
+
 	/**
 	 * Constructor.
 	 * @param profile used to return a ManagedCategory
 	 * @param ptCas - user and password. null for anonymous access
 	 */
-	public FreshManagedCategoryThread(final ManagedCategoryProfile profile, 
+	public FreshManagedCategoryThread(final ManagedCategoryProfile profile,
 			final String ptCas) {
 		this.managedCategoryProfile = profile;
 		this.exception = null;
@@ -80,7 +79,7 @@ public class FreshManagedCategoryThread extends Thread {
 	 * @param profile ManagedCategoryProfile of Managed category to get
 	 * @param ptCasGet - user and password. null for anonymous access
 	 * @return Managed category
-	 * @throws XMLParseException 
+	 * @throws XMLParseException
 	 */
 	@SuppressWarnings("unchecked")
 	private ManagedCategory getFreshManagedCategory(final ManagedCategoryProfile profile,
@@ -88,13 +87,13 @@ public class FreshManagedCategoryThread extends Thread {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshManagedCategory");
 		}
-		// TODO (RB <-- GB) gestion des attributs xml IMPLIED 
+		// TODO (RB <-- GB) gestion des attributs xml IMPLIED
 		ManagedCategory ret = new ManagedCategory(profile);
 		try {
 			//get the XML
 			String categoryURL = profile.getCategoryURL();
 			if (ptCasGet != null) {
-				if (categoryURL.contains("?")) { 
+				if (categoryURL.contains("?")) {
 					categoryURL = categoryURL + "&ticket=" + ptCasGet;
 				} else {
 					categoryURL = categoryURL + "?ticket=" + ptCasGet;
@@ -106,11 +105,11 @@ public class FreshManagedCategoryThread extends Thread {
 			// Category properties
 			ret.setName(root.valueOf("@name"));
 			ret.setDescription(root.valueOf("/category/description"));
-			// GB : devenu inutile 
+			// GB : devenu inutile
 			//ret.setProfileId(profile.getId());
 			// SourceProfiles loop
 			Hashtable<String, SourceProfile> sourceProfiles = new Hashtable<String, SourceProfile>();
-			Map<String, Integer> orderedSourceIDs = 
+			Map<String, Integer> orderedSourceIDs =
 				Collections.synchronizedMap(new HashMap<String, Integer>());
 			List<Node> srcProfiles = root.selectNodes("/category/sourceProfiles/sourceProfile");
 			int xmlOrder = 1;
@@ -131,13 +130,13 @@ public class FreshManagedCategoryThread extends Thread {
 				if (!(timeout.equals(""))) {
 					sp.setTimeOut(Integer.parseInt(timeout));
 					if (LOG.isTraceEnabled()) {
-						LOG.trace("1 getFreshManagedCategory : " 
+						LOG.trace("1 getFreshManagedCategory : "
 								+ "first vcalue of timeout (string) : "
 								+ timeout);
-						LOG.trace("2 getFreshManagedCategory : " 
+						LOG.trace("2 getFreshManagedCategory : "
 								+ "value of timeout in xml :"
 								+ srcProfile.valueOf("@timeout"));
-						LOG.trace("3 getFreshManagedCategory : " 
+						LOG.trace("3 getFreshManagedCategory : "
 								+ "value of timeout in Integer :"
 								+ Integer.parseInt(srcProfile.valueOf("@timeout")));
 					}
@@ -145,7 +144,7 @@ public class FreshManagedCategoryThread extends Thread {
 					LOG.trace("4 getFreshManagedCategory : timeout (string) is empty");
 				}
 				String specificUserContentValue = srcProfile.valueOf("@specificUserContent");
-				if (specificUserContentValue.equals("yes")) {
+				if (profile.isSpecificUserContent() || specificUserContentValue.equals("yes")) {
 					sp.setSpecificUserContent(true);
 				} else {
 					sp.setSpecificUserContent(false);
@@ -160,7 +159,7 @@ public class FreshManagedCategoryThread extends Thread {
 					sp.setAccess(Accessibility.CAS);
 				}
 				// SourceProfile visibility
-				VisibilitySets visibilitySets = new VisibilitySets();  
+				VisibilitySets visibilitySets = new VisibilitySets();
 				// foreach (allowed / autoSubscribed / Obliged)
 				visibilitySets.setAllowed(
 						XMLUtil.loadDefAndContentSets(
@@ -173,12 +172,12 @@ public class FreshManagedCategoryThread extends Thread {
 								srcProfile.selectSingleNode(
 										"visibility/autoSubscribed")));
 				sp.setVisibility(visibilitySets);
-				sourceProfiles.put(sp.getId(), sp);				
+				sourceProfiles.put(sp.getId(), sp);
 			}
 			ret.setSourceProfilesHash(sourceProfiles);
 			ret.setOrderedSourceIDs(orderedSourceIDs);
 			// Category visibility
-			VisibilitySets visibilitySets = new VisibilitySets();  
+			VisibilitySets visibilitySets = new VisibilitySets();
 			// foreach (allowed / autoSubscribed / Obliged)
 			visibilitySets.setAllowed(
 					XMLUtil.loadDefAndContentSets(

@@ -32,6 +32,7 @@
     edit (all|personal|managed|no) "no"
     access (public|cas) "public"
     userCanMarkRead (yes|no) "yes"
+    specificUserContent (yes|no) "no"
     ttl CDATA #REQUIRED
     timeout CDATA #REQUIRED>
 
