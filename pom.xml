@@ -3,7 +3,7 @@
 	<groupId>org.esupportail</groupId>
 	<artifactId>esup-lecture</artifactId>
 	<packaging>war</packaging>
-	<version>3.0.0-beta4-SNAPSHOT</version>
+	<version>3.0.0-beta5</version>
 	<name>esup-lecture</name>
 	<url><![CDATA[http://www.esup-portail.org/display/PROJESUPLECTURE/Portlet+Lecture]]></url>
 	<repositories>
@@ -58,7 +58,8 @@
 	<scm>
 		<developerConnection>scm:git:ssh://git@github.com/EsupPortail/esup-lecture.git</developerConnection>
 		<url>https://subversion.cru.fr/esup-lecture</url>
-	</scm>
+	  <tag>3.0.0-beta5</tag>
+  </scm>
 	<build>
 		<defaultGoal>install</defaultGoal>
 		<resources>
