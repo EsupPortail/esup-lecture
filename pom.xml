@@ -84,6 +84,15 @@
 					<tagNameFormat>@{project.version}</tagNameFormat>
 				</configuration>
 			</plugin>
+            <plugin>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <configuration>
+                    <goal>javadoc:javadoc</goal>
+                    <reportOutputDirectory>docs/javadoc</reportOutputDirectory>
+                    <failOnError>false</failOnError>
+                </configuration>
+            </plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
