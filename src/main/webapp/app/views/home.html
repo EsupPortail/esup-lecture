@@ -3,11 +3,11 @@
         <h1 class="visible-md visible-lg">{{contextName}}</h1>
     </div>
     <div class="row">
-        <div ng-class="{true:'col-md-3 hidden-sm hidden-xs', false:'hidden-lg hidden-md hidden-sm hidden-xs'}[treeDisplayed()]">
+        <div ng-class="{true:'col-xs-3 hidden-sm hidden-xs', false:'hidden-lg hidden-md hidden-sm hidden-xs'}[treeDisplayed()]">
             <div class="panel panel-info" ng-repeat="cat in cats">
                 <div class="panel-heading"><a name="{{cat.name}}" ng-click="select(cat.id)" class="link">{{cat.name}}</a></div>
-                <ul class="list-group list-unstyled">
-                    <li class="list-group-item" ng-repeat="src in cat.sources">
+                <ul class="list-group lec-list-style-none">
+                    <li class="list-group-item lec-list-style-none" ng-repeat="src in cat.sources">
                         <a name="{{src.name}}" ng-click="select(cat.id, src.id)" class="link">{{src.name}}
                             <span class="badge pull-right" ng-show="src.unreadItemsNumber > 0">{{ src.unreadItemsNumber }}</span>
                         </a>
@@ -18,9 +18,6 @@
         <div ng-class="{true:'col-xs-9', false:'col-xs-12'}[treeDisplayed()]">
             <div class="row">
                 <div class="col-xs-12">
-                    <div class="pull-right">
-                        <select ng-model="selectedMode" ng-options="mode.id as mode.value for mode in modes" class="form-control"/>
-                    </div>
                     <div class="btn-group">
                         <span class="dropdown visible-sm visible-xs">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -30,12 +27,12 @@
                                 </span>
                             </a>
                             <ul class="dropdown-menu list-unstyled">
-                                <li ng-repeat="cat in cats" class="dropdown-submenu">
+                                <li ng-repeat="cat in cats" class="dropdown-submenu list-unstyled">
                                     <a ng-click="select(cat.id)" class="link">{{cat.name}}</a>
                                     <ul class="dropdown-menu list-unstyled" role="menu">
-                                        <li ng-repeat="src in cat.sources">
+                                        <li ng-repeat="src in cat.sources" class="list-unstyled">
                                             <a class="link" ng-click="select(cat.id, src.id);">{{src.name}}
-                                                <span class="badge pull-right" ng-show="src.unreadItemsNumber > 0">{{ src.unreadItemsNumber }}</span>
+                                                <span class="badge" ng-show="src.unreadItemsNumber > 0">{{ src.unreadItemsNumber }}</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -68,6 +65,9 @@
                             </span>
                         </a>
                     </div>
+                    <div class="pull-right">
+                        <select ng-model="selectedMode" ng-options="mode.id as mode.value for mode in modes" class="form-control"/>
+                    </div>
                 </div>
             </div>
 
@@ -84,16 +84,12 @@
 
                             <div ng-repeat="item in source.items | modeFilter:selectedMode" class="panel-body">
                                 <div ng-show="!item.read">
-                                    <!--<span class="toggleButton">-->
                                         <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsRead'] }}" ><i class="fa fa-eye-slash"></i></a>
-                                    <!--</span>-->
                                     <div class="unreadArticle" ng-bind-html-unsafe="item.htmlContent">
                                     </div>
                                 </div>
                                 <div ng-show="item.read">
-                                    <!--<span class="toggleButton">-->
                                         <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsUnread'] }}" ng-show="item.read"><i class="fa fa-eye"></i></a>
-                                    <!--</span>-->
                                     <div class="readArticle" ng-bind-html-unsafe="item.htmlContent">
                                     </div>
                                 </div>

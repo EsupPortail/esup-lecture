@@ -21,6 +21,7 @@ html > body {
 
 .esup-lecture .lec-list-style-none {
     list-style: none;
+    margin: 0 !important;
 }
 
 .esup-lecture .margin-left-zero {
@@ -134,7 +135,8 @@ div.toggleButton {
     box-shadow: none;
 }
 
-.portlet-container .btn-forced {
+.portlet-container .btn.forced,
+.portlet-container .link.forced {
     cursor: not-allowed!important;
 }
 
@@ -143,7 +145,8 @@ div.toggleButton {
     display: inline-block !important;
 }
 
-.portlet-container.sm .visible-xs.visible-sm {
+.portlet-container.sm .visible-xs.visible-sm,
+.portlet-container.xs .visible-sm.visible-xs{
     display: inline-block !important;
 }
 
@@ -191,4 +194,8 @@ div.toggleButton {
     border-left-color: #cccccc;
     margin-top: 5px;
     margin-right: -10px;
+}
+
+.portlet-container.esup-lecture .panel > .list-group .list-group-item {
+    border-width: 0 0 1px 0;
 }

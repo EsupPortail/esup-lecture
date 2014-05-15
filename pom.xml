@@ -70,7 +70,8 @@
 				<filtering>true</filtering>
 				<includes>
 					<include>properties/esup-lecture.xml</include>
-					<include>properties/mappings.xml</include>
+                    <include>properties/mappings.xml</include>
+                    <include>properties/examples/xml/category.dtd</include>
 				</includes>
 			</resource>
 		</resources>
@@ -78,16 +79,14 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.2.1</version>
+				<version>2.5</version>
 				<configuration>
-					<tagBase>https://subversion.cru.fr/esup-lecture/tags</tagBase>
 					<tagNameFormat>@{project.version}</tagNameFormat>
-					<goals />
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
+				<version>3.1</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>

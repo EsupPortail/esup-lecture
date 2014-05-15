@@ -1,7 +1,6 @@
 lecture = function(appName, appHomePath, resourceURL) {
     'use strict';
     var project = angular.module(appName, []);
-    resourceURL = decodeURI(resourceURL);
 
     //config
     project.config(['$routeProvider', function($routeProvider) {
@@ -20,7 +19,7 @@ lecture = function(appName, appHomePath, resourceURL) {
         var treeVisibleState;
 
         //get context as JSON
-        $http({method: 'GET', url: url(resourceURL, "getJSON")}).
+        $http({method: 'GET', url: url(encodeUrl(resourceURL), "getJSON")}).
                 success(function(data) {
             //i18n messages
             $scope.msgs = data.messages;
@@ -81,7 +80,7 @@ lecture = function(appName, appHomePath, resourceURL) {
         // mark as read or unread on source item
         $scope.toggleItemReadState = function(cat, src, item) {
             //call server to store information
-            $http({method: 'GET', url: url(resourceURL, "toggleItemReadState", cat.id, src.id, item.id, !item.read)}).
+            $http({method: 'GET', url: url(encodeUrl(resourceURL), "toggleItemReadState", cat.id, src.id, item.id, !item.read)}).
                     success(function(data) {
                 (item.read ? src.unreadItemsNumber++ : src.unreadItemsNumber--);
                 item.read = !item.read;
@@ -176,7 +175,7 @@ lectureEdit = function(appName, appHomePath, resourceURL) {
         
         //get context as JSON
         function refreshJSON() {
-            $http({method: 'GET', url: url(resourceURL, "getEditJSON")}).
+            $http({method: 'GET', url: url(encodeUrl(resourceURL), "getEditJSON")}).
                     success(function(data) {
                 //i18n messages
                 $scope.msgs = data.messages;
@@ -196,7 +195,7 @@ lectureEdit = function(appName, appHomePath, resourceURL) {
         };
         
         $scope.toogleCategorySubcribtion = function(cat) {
-            $http({method: 'GET', url: url(resourceURL, "toogleCategorySubcribtion", $scope.ctx.id, cat.id, cat.subscribed)}).
+            $http({method: 'GET', url: url(encodeUrl(resourceURL), "toogleCategorySubcribtion", $scope.ctx.id, cat.id, cat.subscribed)}).
                     success(function(data) {
                 cat.subscribed = !cat.subscribed;
                 cat.notSubscribed = !cat.notSubscribed;
@@ -205,7 +204,7 @@ lectureEdit = function(appName, appHomePath, resourceURL) {
         };
 
         $scope.toogleSourceSubcribtion = function(cat, src) {
-            $http({method: 'GET', url: url(resourceURL, "toogleSourceSubcribtion", cat.id, src.id, src.subscribed)}).
+            $http({method: 'GET', url: url(encodeUrl(resourceURL), "toogleSourceSubcribtion", cat.id, src.id, src.subscribed)}).
                     success(function(data) {
                 src.subscribed = !src.subscribed;
                 src.notSubscribed = !src.notSubscribed;
@@ -216,6 +215,14 @@ lectureEdit = function(appName, appHomePath, resourceURL) {
 };
 
 // ************* utils *************
+
+function encodeUrl(requestUrl) {
+    return requestUrl.
+        replace(/%40/gi, '@').
+        replace(/%3A/gi, ':').
+        replace(/%24/g, '$').
+        replace(/%2C/gi, ',');
+}
 
 //forge a portlet resource url
 function url(pattern, id, p1, p2, p3, p4) {
