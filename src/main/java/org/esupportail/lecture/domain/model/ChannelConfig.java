@@ -5,13 +5,6 @@
  */
 package org.esupportail.lecture.domain.model;
 
-import java.io.File;
-import java.net.URL;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -21,6 +14,13 @@ import org.esupportail.lecture.dao.FreshXmlFileThread;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
 import org.esupportail.lecture.exceptions.domain.ChannelConfigException;
+
+import java.io.File;
+import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Channel Config : class used to load and parse XML channel file config.
@@ -447,7 +447,9 @@ public class ChannelConfig  {
 							LOG.debug("loadContextsAndCategoryprofiles() : categoryProfileId " + mcp.getId() + " matches... create mcp");
 						}
 
-						mcp.setName(categoryProfile.valueOf("@name"));
+						mcp.setEntityName(categoryProfile.valueOf("@entity"));
+                        mcp.setGroupCategoryByEntity(getBoolean(categoryProfile.valueOf("@groupCategory"), false));
+                        mcp.setName(categoryProfile.valueOf("@name"));
 						mcp.setCategoryURL(categoryProfile.valueOf("@urlCategory"));
 						mcp.setTrustCategory(getBoolean(categoryProfile.valueOf("@trustCategory"), false));
 						mcp.setUserCanMarkRead(getBoolean(categoryProfile.valueOf("@userCanMarkRead"), true));

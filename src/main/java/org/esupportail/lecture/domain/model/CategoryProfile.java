@@ -5,12 +5,12 @@
 */
 package org.esupportail.lecture.domain.model;
 
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
+
+import java.util.Map;
 
 /**
  * Category profile element : a category profile can be a managed or personal one.
@@ -47,11 +47,16 @@ public abstract class CategoryProfile implements ElementProfile {
 	/**
 	 *  Category profile description.
 	 */
-	private String description = "";	
-
-	
-	
-	/*
+	private String description = "";
+    /**
+     * Entity name
+     */
+    private String entityName;
+    /**
+     * Category should be grouped by entity name
+     */
+    private boolean groupCategoryByEntity = false;
+    /*
 	 ************************** INITIALIZATION ******************************** */	
 	
 	/**
@@ -191,6 +196,22 @@ public abstract class CategoryProfile implements ElementProfile {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+    public String getEntityName() {
+        return entityName;
+    }
+
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
+
+    public boolean isGroupCategoryByEntity() {
+        return groupCategoryByEntity;
+    }
+
+    public void setGroupCategoryByEntity(boolean groupCategoryByEntity) {
+        this.groupCategoryByEntity = groupCategoryByEntity;
+    }
 
 	/**
 	 * Make the (long)id of this categoryProfile (context:type:interneId).

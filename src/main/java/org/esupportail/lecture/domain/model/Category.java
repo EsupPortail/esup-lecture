@@ -6,14 +6,15 @@
 package org.esupportail.lecture.domain.model;
 
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
 
 /**
  * Category element : a category can be a managed or personal one.
@@ -127,6 +128,22 @@ public abstract class Category implements Element, Serializable {
 	public void setDescription(final String description) {
 		getProfile().setDescription(description);
 	}
+
+    public boolean isGroupCategoryByEntity() {
+        return getProfile().isGroupCategoryByEntity();
+    }
+
+    public void setGroupCategoryByEntity(boolean gcbe) {
+        getProfile().setGroupCategoryByEntity(gcbe);
+    }
+
+    public String getEntityName() {
+        return getProfile().getEntityName();
+    }
+
+    public void setEntityName(String en) {
+        getProfile().setEntityName(en);
+    }
 	
 	/*
 	 *************************** ACCESSORS *********************************/	

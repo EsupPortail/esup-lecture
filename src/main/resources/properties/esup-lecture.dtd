@@ -33,7 +33,9 @@
     access (public|cas) "public"
     userCanMarkRead (yes|no) "yes"
     ttl CDATA #REQUIRED
-    timeout CDATA #REQUIRED>
+    timeout CDATA #REQUIRED
+    groupCategory (true|false) "false"
+    entity CDATA "undefined">
 
 <!ELEMENT visibility (allowed,autoSubscribed,obliged)>
 

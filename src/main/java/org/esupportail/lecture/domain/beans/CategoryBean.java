@@ -5,17 +5,13 @@
 */
 package org.esupportail.lecture.domain.beans;
 
+import org.esupportail.lecture.domain.model.*;
+import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
+import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.esupportail.lecture.domain.model.AvailabilityMode;
-import org.esupportail.lecture.domain.model.CategoryProfile;
-import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
-import org.esupportail.lecture.domain.model.CustomCategory;
-import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 /**
  * used to store category informations.
  * @author bourges
@@ -44,7 +40,15 @@ public class CategoryBean {
 	/**
 	 * store if category is folded or not.
 	 */
-	private boolean folded = true;	
+	private boolean folded = true;
+    /**
+     * Entity name
+     */
+    private String entityName;
+    /**
+     * Category should be grouped by entity name
+     */
+    private boolean groupCategoryByEntity = false;
 	/**
 	 * type of category.
 	 * "subscribed" --> The category is allowed and subscribed by the user
@@ -84,6 +88,8 @@ public class CategoryBean {
 		this.folded = customContext.isCategoryFolded(id);
 		this.orderedSourceIDs = profile.getOrderedSourceIDs();
 		this.userCanMarkRead = profile.isUserCanMarkRead();
+        this.entityName = profile.getEntityName();
+        this.groupCategoryByEntity = profile.isGroupCategoryByEntity();
 	}
 	
 	/**
@@ -194,7 +200,24 @@ public class CategoryBean {
 		this.userCanMarkRead = userCanMarkRead;
 	}
 
-	/**
+    public String getEntityName() {
+        return entityName;
+    }
+
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
+
+    public boolean isGroupCategoryByEntity() {
+        return groupCategoryByEntity;
+    }
+
+    public void setGroupCategoryByEntity(boolean groupCategoryByEntity) {
+        this.groupCategoryByEntity = groupCategoryByEntity;
+    }
+
+
+    /**
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

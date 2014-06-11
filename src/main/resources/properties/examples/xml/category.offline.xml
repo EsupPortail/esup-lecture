@@ -1,99 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE category SYSTEM "category.dtd">
 <category edit="all" name="Exemples">
-	<description>Exemples</description>
-	<sourceProfiles>
-		<!-- rss-jquery-clickable.xsl -->
-		<sourceProfile id="un" access="public"
-			name="Divers liens (rss-jquery-clickable)" specificUserContent="no"
-			url="&config.url.prefix;/examples/xml/flux.offline1.xml">
-			<visibility>
-				<allowed></allowed>
-				<autoSubscribed>
-                                    <group name="local.0" />  <!-- Tous les groupes de personnes -->
-                                </autoSubscribed>
-				<obliged>
-                                    <group name="local.15" /> <!-- Anonymes -->
-				</obliged>
-			</visibility>
-		</sourceProfile>
-		<!-- rss-jquery-inline.xsl -->
-		<sourceProfile id="deux" access="public"
-			name="Divers liens (rss-jquery-inline)" specificUserContent="no"
-			url="&config.url.prefix;/examples/xml/flux.offline2.xml">
-			<visibility>
-				<allowed>
-					<group name="local.0" />  <!-- Tous les groupes de personnes -->                                    
-                                </allowed>
-				<autoSubscribed></autoSubscribed>
-				<obliged>
-					<group name="local.15" /> <!-- Anonymes -->
-				</obliged>
-			</visibility>
-		</sourceProfile>
-		<!-- rss-jquery-dialog.xsl -->
-		<sourceProfile id="trois" access="public"
-			name="Divers liens (rss-jquery-dialog)" specificUserContent="no"
-			url="&config.url.prefix;/examples/xml/flux.offline3.xml">
-			<visibility>
-				<allowed></allowed>
-				<autoSubscribed></autoSubscribed>
-				<obliged>
-					<group name="local.0" />  <!-- Tous les groupes de personnes -->
-					<group name="local.15" /> <!-- Anonymes -->
-				</obliged>
-			</visibility>
-		</sourceProfile>
- 		<sourceProfile id="quatre" access="public"
-			name="Actus de Rennes 1" specificUserContent="no"
-			url="http://www.univ-rennes1.fr/bas-de-page/RSS/actualites/">
-			<visibility>
-				<allowed></allowed>
-				<autoSubscribed></autoSubscribed>
-				<obliged>
-					<group name="local.0" />
-					<group name="local.15" />
-				</obliged>
-			</visibility>
-		</sourceProfile>
-<!--  test CAS en portlet
- 		<sourceProfile id="trois" access="cas"
-			name="Actus de Rennes 1 (en CAS)" specificUserContent="no"
-			url="http://uportal.univ-rennes1.fr/flux-cas/media/Actualites.xml">
-			<visibility>
-				<allowed></allowed>
-				<autoSubscribed></autoSubscribed>
-				<obliged>
-					<group name="local.0" />  
-					<group name="local.15" />  
-				</obliged>
-			</visibility>
-		</sourceProfile>
--->		
-
-<!--  test CAS en servlet -->
-<!--  		<sourceProfile id="trois" access="cas" -->
-<!-- 			name="Actus de Rennes 1 (en CAS)" specificUserContent="no" -->
-<!-- 			url="http://uportal.univ-rennes1.fr/media/Actualites.xml"> -->
-<!-- 			<visibility> -->
-<!-- 				<allowed></allowed> -->
-<!-- 				<autoSubscribed></autoSubscribed> -->
-<!-- 				<obliged> -->
-<!-- 					<group name="local.0" />   -->
-<!-- 					<group name="local.15" />   -->
-<!-- 				</obliged> -->
-<!-- 			</visibility> -->
-<!-- 		</sourceProfile> -->
-		
-	</sourceProfiles>
-
-	<visibility>
-		<allowed>
-			<group name="local.0" />                    
+    <description>Exemples</description>
+    <sourceProfiles>
+        <!-- rss-jquery-clickable.xsl -->
+        <sourceProfile id="un" access="public"
+                       name="Divers liens (rss-jquery-clickable)" specificUserContent="no"
+                       url="&config.url.prefix;/examples/xml/flux.offline1.xml">
+            <visibility>
+                <allowed></allowed>
+                <autoSubscribed>
+                    <group name="local.0"/>
+                    <!-- Tous les groupes de personnes -->
+                </autoSubscribed>
+                <obliged>
+                    <group name="local.15"/>
+                    <!-- Anonymes -->
+                </obliged>
+            </visibility>
+        </sourceProfile>
+        <!-- rss-jquery-inline.xsl -->
+        <sourceProfile id="deux" access="public"
+                       name="Divers liens (rss-jquery-inline)" specificUserContent="no"
+                       url="&config.url.prefix;/examples/xml/flux.offline2.xml">
+            <visibility>
+                <allowed>
+                    <group name="local.0"/>
+                    <!-- Tous les groupes de personnes -->
                 </allowed>
-		<autoSubscribed></autoSubscribed>
-		<obliged>
-			<group name="local.15" />
-		</obliged>
-	</visibility>
+                <autoSubscribed></autoSubscribed>
+                <obliged>
+                    <group name="local.15"/>
+                    <!-- Anonymes -->
+                </obliged>
+            </visibility>
+        </sourceProfile>
+        <!-- rss-jquery-dialog.xsl -->
+        <sourceProfile id="trois" access="public"
+                       name="Divers liens (rss-jquery-dialog)" specificUserContent="no"
+                       url="&config.url.prefix;/examples/xml/flux.offline3.xml">
+            <visibility>
+                <allowed></allowed>
+                <autoSubscribed></autoSubscribed>
+                <obliged>
+                    <group name="local.0"/>
+                    <!-- Tous les groupes de personnes -->
+                    <group name="local.15"/>
+                    <!-- Anonymes -->
+                </obliged>
+            </visibility>
+        </sourceProfile>
+        <sourceProfile id="quatre" access="public"
+                       name="Actus de Rennes 1" specificUserContent="no"
+                       url="http://www.univ-rennes1.fr/bas-de-page/RSS/actualites/">
+            <visibility>
+                <allowed></allowed>
+                <autoSubscribed></autoSubscribed>
+                <obliged>
+                    <group name="local.0"/>
+                    <group name="local.15"/>
+                </obliged>
+            </visibility>
+        </sourceProfile>
+        <!--  test CAS en portlet
+                 <sourceProfile id="trois" access="cas"
+                    name="Actus de Rennes 1 (en CAS)" specificUserContent="no"
+                    url="http://uportal.univ-rennes1.fr/flux-cas/media/Actualites.xml">
+                    <visibility>
+                        <allowed></allowed>
+                        <autoSubscribed></autoSubscribed>
+                        <obliged>
+                            <group name="local.0" />
+                            <group name="local.15" />
+                        </obliged>
+                    </visibility>
+                </sourceProfile>
+        -->
+
+        <!--  test CAS en servlet -->
+        <!--  		<sourceProfile id="trois" access="cas" -->
+        <!-- 			name="Actus de Rennes 1 (en CAS)" specificUserContent="no" -->
+        <!-- 			url="http://uportal.univ-rennes1.fr/media/Actualites.xml"> -->
+        <!-- 			<visibility> -->
+        <!-- 				<allowed></allowed> -->
+        <!-- 				<autoSubscribed></autoSubscribed> -->
+        <!-- 				<obliged> -->
+        <!-- 					<group name="local.0" />   -->
+        <!-- 					<group name="local.15" />   -->
+        <!-- 				</obliged> -->
+        <!-- 			</visibility> -->
+        <!-- 		</sourceProfile> -->
+
+    </sourceProfiles>
+
+    <visibility>
+        <allowed>
+            <group name="local.0"/>
+        </allowed>
+        <autoSubscribed></autoSubscribed>
+        <obliged>
+            <group name="local.15"/>
+        </obliged>
+    </visibility>
 </category>

@@ -1,13 +1,6 @@
 package org.esupportail.lecture.dao;
 
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
-
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -15,13 +8,10 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
-import org.esupportail.lecture.domain.model.Accessibility;
-import org.esupportail.lecture.domain.model.ManagedCategory;
-import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
-import org.esupportail.lecture.domain.model.ManagedSourceProfile;
-import org.esupportail.lecture.domain.model.SourceProfile;
-import org.esupportail.lecture.domain.model.VisibilitySets;
+import org.esupportail.lecture.domain.model.*;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
+
+import java.util.*;
 
 /**
  * Get a Freash Managed Category from a distinct Thread.
@@ -106,7 +96,7 @@ public class FreshManagedCategoryThread extends Thread {
 			// Category properties
 			ret.setName(root.valueOf("@name"));
 			ret.setDescription(root.valueOf("/category/description"));
-			// GB : devenu inutile 
+			// GB : devenu inutile
 			//ret.setProfileId(profile.getId());
 			// SourceProfiles loop
 			Hashtable<String, SourceProfile> sourceProfiles = new Hashtable<String, SourceProfile>();

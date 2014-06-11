@@ -1,10 +1,9 @@
 package org.esupportail.lecture.web.beans;
 
-import java.util.ArrayList;
+import org.esupportail.lecture.domain.model.AvailabilityMode;
+
 import java.util.Collections;
 import java.util.List;
-
-import org.esupportail.lecture.domain.model.AvailabilityMode;
 
 /**
  * @author bourges
@@ -48,8 +47,10 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 * xmlOrder is used to store the order of the corresponding categoryProfile in an Context XML file.
 	 */
 	private int xmlOrder = Integer.MAX_VALUE;
+    private boolean groupCategoryByEntity;
+    private String entityName;
 
-	/**
+    /**
 	 * Default constructor.
 	 */
 	public CategoryWebBean() {
@@ -221,4 +222,19 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 		this.userCanMarkRead = userCanMarkRead;
 	}
 
+    public void setEntityName(String entityName) {
+        this.entityName = entityName;
+    }
+
+    public void setGroupCategoryByEntity(boolean groupCategoryByEntity) {
+        this.groupCategoryByEntity = groupCategoryByEntity;
+    }
+
+    public boolean isGroupCategoryByEntity() {
+        return groupCategoryByEntity;
+    }
+
+    public String getEntityName() {
+        return entityName;
+    }
 }
