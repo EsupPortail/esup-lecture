@@ -1,13 +1,13 @@
 package org.esupportail.lecture.web.beans;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.beans.ItemBean;
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 import org.esupportail.lecture.domain.model.ItemDisplayMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author bourges used to display source information in view
@@ -61,13 +61,15 @@ public class SourceWebBean implements Comparable<SourceWebBean> {
      *
      * @param itemsBeans
      */
-    public SourceWebBean(final List<ItemBean> itemsBeans) {
+    public SourceWebBean(final List<ItemBean> itemsBeans, String srcId, String catId) {
         super();
         items = new ArrayList<ItemWebBean>();
         if (itemsBeans != null) {
             for (ItemBean itemBean : itemsBeans) {
                 ItemWebBean itemWebBean = new ItemWebBean();
                 itemWebBean.setId(itemBean.getId());
+                itemWebBean.setSrcId(srcId);
+                itemWebBean.setCatId(catId);
                 itemWebBean.setHtmlContent(itemBean.getHtmlContent());
                 itemWebBean.setMobileHtmlContent(itemBean.getMobileHtmlContent());
                 itemWebBean.setRead(itemBean.isRead());

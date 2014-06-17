@@ -9,6 +9,14 @@ public class ItemWebBean {
 	 * id of item.
 	 */
 	private String id;
+    /**
+     * id of parent source
+     */
+    private String srcId;
+    /**
+     * id of parent category
+     */
+    private String catId;
 	/**
 	 * html content of item.
 	 */
@@ -85,6 +93,20 @@ public class ItemWebBean {
 	public boolean isDummy() {
 		return dummy;
 	}
-	
 
+    public String getSrcId() {
+        return srcId;
+    }
+
+    public void setSrcId(String srcId) {
+        this.srcId = srcId;
+    }
+
+    public String getCatId() {
+        return catId;
+    }
+
+    public void setCatId(String catId) {
+        this.catId = catId;
+    }
 }

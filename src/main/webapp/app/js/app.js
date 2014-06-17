@@ -78,9 +78,9 @@ lecture = function(appName, appHomePath, resourceURL) {
         };
 
         // mark as read or unread on source item
-        $scope.toggleItemReadState = function(cat, src, item) {
+        $scope.toggleItemReadState = function(item, src) {
             //call server to store information
-            $http({method: 'GET', url: url(encodeUrl(resourceURL), "toggleItemReadState", cat.id, src.id, item.id, !item.read)}).
+            $http({method: 'GET', url: url(encodeUrl(resourceURL), "toggleItemReadState", item.catId, item.srcId, item.id, !item.read)}).
                     success(function(data) {
                 (item.read ? src.unreadItemsNumber++ : src.unreadItemsNumber--);
                 item.read = !item.read;
@@ -93,7 +93,7 @@ lecture = function(appName, appHomePath, resourceURL) {
                 angular.forEach(cat.selectedSrcs, function(src, key) {
                     angular.forEach(src.items, function(item, key) {
                         if (item.read !== flag) {
-                            $scope.toggleItemReadState(cat, src, item);
+                            $scope.toggleItemReadState(item, src);
                         }
                     });
                 });

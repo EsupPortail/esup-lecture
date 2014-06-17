@@ -652,7 +652,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
                         List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
                         if (sources != null) {
                             for (SourceBean sourceBean : sources) {
-                                SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile);
+                                SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, categoryBean.getId(), userProfile);
                                 //we add the source order in the Category XML definition file
                                 int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
                                 sourceWebBean.setXmlOrder(xmlOrder);
@@ -697,7 +697,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
                         List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
                         if (sources != null) {
                             for (SourceBean sourceBean : sources) {
-                                SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile, false);
+                                SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, categoryBean.getId(), userProfile, false);
                                 //we add the source order in the Category XML definition file
                                 int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
                                 sourceWebBean.setXmlOrder(xmlOrder);
@@ -793,8 +793,8 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
      * @return populated SourceWebBean
      * @throws DomainServiceException
      */
-    private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, UserProfile userProfile) throws DomainServiceException {
-        return populateSourceWebBean(sourceBean, userProfile, true);
+    private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, String catId, UserProfile userProfile) throws DomainServiceException {
+        return populateSourceWebBean(sourceBean, catId, userProfile, true);
     }
     
     /**
@@ -805,10 +805,10 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
      * @return populated SourceWebBean with or without items
      * @throws DomainServiceException 
      */
-    private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, UserProfile userProfile, boolean withItems) throws DomainServiceException {
+    private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, String catId, UserProfile userProfile, boolean withItems) throws DomainServiceException {
         SourceWebBean sourceWebBean;
         if (sourceBean instanceof SourceDummyBean) {
-            sourceWebBean = new SourceWebBean(null);
+            sourceWebBean = new SourceWebBean(null, sourceBean.getId(), catId);
             String cause = ((SourceDummyBean) sourceBean).getCause().getMessage();
             String id = "DummySrc:" + UUID.randomUUID();
             sourceWebBean.setId(id);
@@ -818,12 +818,12 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
             sourceWebBean.setItemsNumber();
             sourceWebBean.setUnreadItemsNumber(0);
         } else {
-            //get Item for the source
+            //get Item form the source
             List<ItemBean> itemsBeans = new ArrayList<ItemBean>();
             if (withItems) {
                 itemsBeans = getItems(userProfile, sourceBean.getId());
             }
-            sourceWebBean = new SourceWebBean(itemsBeans);
+            sourceWebBean = new SourceWebBean(itemsBeans, sourceBean.getId(), catId);
             sourceWebBean.setId(sourceBean.getId());
             sourceWebBean.setName(sourceBean.getName());
             sourceWebBean.setType(sourceBean.getType());

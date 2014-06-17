@@ -5,7 +5,7 @@
     <div class="row">
         <div ng-class="{true:'col-xs-3 hidden-sm hidden-xs', false:'hidden-lg hidden-md hidden-sm hidden-xs'}[treeDisplayed()]">
             <div class="panel panel-info" ng-repeat="cat in cats">
-                <div class="panel-heading"><a name="{{cat.name}}" ng-click="select(cat.id)" class="link">{{cat.name}}</a></div>
+                <div class="panel-heading"><a name="{{cat.name}}" ng-click="select(cat.id)" class="link">{{cat.name}} - {{cat.groupCategoryByEntity}} - {{cat.entityName}}</a></div>
                 <ul class="list-group lec-list-style-none">
                     <li class="list-group-item lec-list-style-none" ng-repeat="src in cat.sources">
                         <a name="{{src.name}}" ng-click="select(cat.id, src.id)" class="link">{{src.name}}
@@ -15,7 +15,7 @@
                 </ul>
             </div>
         </div>
-        <div ng-class="{true:'col-xs-9', false:'col-xs-12'}[treeDisplayed()]">
+        <div ng-class="{true:'col-xs-12 col-md-9', false:'col-xs-12'}[treeDisplayed()]">
             <div class="row">
                 <div class="col-xs-12">
                     <div class="btn-group">
@@ -84,12 +84,12 @@
 
                             <div ng-repeat="item in source.items | modeFilter:selectedMode" class="panel-body">
                                 <div ng-show="!item.read">
-                                        <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsRead'] }}" ><i class="fa fa-eye-slash"></i></a>
+                                        <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(item, source)" role="button" title="{{ msgs['markAsRead'] }}" ><i class="fa fa-eye-slash"></i></a>
                                     <div class="unreadArticle" ng-bind-html-unsafe="item.htmlContent">
                                     </div>
                                 </div>
                                 <div ng-show="item.read">
-                                        <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsUnread'] }}" ng-show="item.read"><i class="fa fa-eye"></i></a>
+                                        <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(item, source)" role="button" title="{{ msgs['markAsUnread'] }}" ng-show="item.read"><i class="fa fa-eye"></i></a>
                                     <div class="readArticle" ng-bind-html-unsafe="item.htmlContent">
                                     </div>
                                 </div>
