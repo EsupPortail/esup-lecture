@@ -2,9 +2,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.jasig.org/uportal/web/skin https://source.jasig.org/schemas/resource-server/skin-configuration/skin-configuration-v1.2.xsd">
 
-    <js>app/rs/jquery/1.9.1/jquery-1.9.1.min.js</js>
-    <js>app/js/bootstrap.min.js</js>
-    <js>app/js/angular-1.0.6.min.js</js>
+    <js resource="true">rs/jquery/1.11.1/jquery-1.11.1.min.js</js>
+    <js resource="true">rs/bootstrap/3.0.1/js/bootstrap-3.0.1.min.js</js>
+    <js resource="true">rs/angularjs/1.2.18/angular-1.2.18.min.js</js>
+    <js resource="true">rs/angularjs/1.2.18/angular-route-1.2.18.min.js</js>
+    <js resource="true">rs/angularjs/1.2.18/angular-sanitize-1.2.18.min.js</js>
     <js>app/js/portlet-size.js</js>
     <js>app/js/app.js</js>
 	

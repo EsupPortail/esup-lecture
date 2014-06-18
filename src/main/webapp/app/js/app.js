@@ -1,6 +1,6 @@
 lecture = function(appName, appHomePath, resourceURL) {
     'use strict';
-    var project = angular.module(appName, []);
+    var project = angular.module(appName, ['ngRoute', 'ngSanitize']);
 
     //config
     project.config(['$routeProvider', function($routeProvider) {
@@ -155,7 +155,7 @@ lecture = function(appName, appHomePath, resourceURL) {
 };
 
 lectureEdit = function(appName, appHomePath, resourceURL) {
-    var project = angular.module(appName, []);
+    var project = angular.module(appName, ['ngRoute', 'ngSanitize']);
 
     //config
     project.config(['$routeProvider', function($routeProvider) {
