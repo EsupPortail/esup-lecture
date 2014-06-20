@@ -5,47 +5,15 @@
  */
 package org.esupportail.lecture.domain;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.application.Version;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.services.i18n.I18nService;
-import org.esupportail.lecture.domain.beans.CategoryBean;
-import org.esupportail.lecture.domain.beans.CategoryDummyBean;
-import org.esupportail.lecture.domain.beans.ContextBean;
-import org.esupportail.lecture.domain.beans.ItemBean;
-import org.esupportail.lecture.domain.beans.SourceBean;
-import org.esupportail.lecture.domain.beans.SourceDummyBean;
-import org.esupportail.lecture.domain.model.AvailabilityMode;
-import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
-import org.esupportail.lecture.domain.model.CustomCategory;
-import org.esupportail.lecture.domain.model.CustomContext;
-import org.esupportail.lecture.domain.model.CustomSource;
-import org.esupportail.lecture.domain.model.Item;
-import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.domain.model.UserProfile;
-import org.esupportail.lecture.domain.model.VersionManager;
-import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
-import org.esupportail.lecture.exceptions.domain.CategoryObligedException;
-import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
-import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
-import org.esupportail.lecture.exceptions.domain.ComputeItemsException;
-import org.esupportail.lecture.exceptions.domain.CustomCategoryNotFoundException;
-import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
-import org.esupportail.lecture.exceptions.domain.DomainServiceException;
-import org.esupportail.lecture.exceptions.domain.InfoDomainException;
-import org.esupportail.lecture.exceptions.domain.InternalDomainException;
-import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
-import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
-import org.esupportail.lecture.exceptions.domain.SourceObligedException;
-import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
+import org.esupportail.lecture.domain.beans.*;
+import org.esupportail.lecture.domain.model.*;
+import org.esupportail.lecture.exceptions.domain.*;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
@@ -53,6 +21,10 @@ import org.esupportail.lecture.web.beans.SourceWebBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.util.Assert;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Service implementation provided by domain layer All of services are available
@@ -64,6 +36,7 @@ import org.springframework.util.Assert;
  *
  * @author gbouteil
  */
+@SuppressWarnings("ThrowableResultOfMethodCallIgnored")
 public class DomainServiceImpl implements DomainService, InitializingBean {
     /*
      ************************** PROPERTIES ******************************** */
@@ -220,14 +193,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
         return listSourceBean;
     }
 
-    /**
-     * @param sourceId 
-     * @param userProfile 
-     * @return List(ItemBean)
-     * @throws SourceNotLoadedException 
-     * @throws InternalDomainException 
-     * @throws ManagedCategoryNotLoadedException 
-     */
     private List<ItemBean> getItems(final UserProfile userProfile, final String sourceId)
             throws InternalDomainException, SourceNotLoadedException, ManagedCategoryNotLoadedException {
         if (LOG.isDebugEnabled()) {
@@ -261,10 +226,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 
     /**
      * Mark item as read for user uid.
-     *
-     * @see
-     * org.esupportail.lecture.domain.DomainService#marckItemReadMode(UserProfile,
-     * String, String, boolean)
      */
     @Override
     public void markItemReadMode(final String userId, final String sourceId,
@@ -374,11 +335,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
      * Return visible categories.
      * Obliged, subscribed, obliged for managed category or personal category.
      * This for a contextId for user userProfile (for EDIT mode)
-     * @param contextId
-     * @param userProfile
-     * @return List of CategoryBean	 
-     * @throws InternalDomainException 
-     * @throws ManagedCategoryNotLoadedException */
+     */
     private List<CategoryBean> getVisibleCategories(final String contextId, final UserProfile userProfile)
             throws InternalDomainException, ManagedCategoryNotLoadedException {
         if (LOG.isDebugEnabled()) {
@@ -397,15 +354,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 
     }
 
-    /**
-     * @param categoryId 
-     * @param userProfile 
-     * @return List(SourceBean)
-     * @throws CategoryNotVisibleException 
-     * @throws InternalDomainException 
-     * @throws CategoryTimeOutException 
-     * @see FacadeService#getVisibleSources(UserProfile, String)
-     */
     private List<SourceBean> getVisibleSources(final CategoryBean categoryBean, final UserProfile userProfile)
             throws CategoryNotVisibleException, InternalDomainException, CategoryTimeOutException {
         if (LOG.isDebugEnabled()) {
@@ -434,7 +382,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
     }
 
     /**
-     * @see DomainService#subscribeToCategory(UserProfile, String, String)
+     * @see DomainService#subscribeToCategory(String, String, String)
      */
     @Override
     public UserProfile subscribeToCategory(final String userId, final String contextId, final String categoryId)
@@ -451,7 +399,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
     }
 
     /**
-     * @see DomainService#subscribeToSource(UserProfile, String, String)
+     * @see DomainService#subscribeToSource(String, String, String)
      */
     @Override
     public UserProfile subscribeToSource(final String userId, final String categoryId, final String sourceId)
@@ -476,7 +424,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
     }
 
     /**
-     * @see DomainService#unsubscribeToCategory(UserProfile, String, String)
+     * @see DomainService#unsubscribeToCategory(String, String, String)
      */
     @Override
     public UserProfile unsubscribeToCategory(final String userId, final String contextId, final String categoryId)
@@ -492,7 +440,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
     }
 
     /**
-     * @see DomainService#unsubscribeToSource(UserProfile, String, String)
+     * @see DomainService#unsubscribeToSource(String, String, String)
      */
     @Override
     public UserProfile unsubscribeToSource(final String userId, final String categoryId, final String sourceId)
@@ -527,11 +475,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
         if (connectedUser == null) {
             return true;
         }
-        if (connectedUser.equals(DomainTools.getGuestUser())) {
-            ret = true;
-        } else {
-            ret = false;
-        }
+        ret = connectedUser.equals(DomainTools.getGuestUser());
         return ret;
     }
 
@@ -563,7 +507,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
      * @throws ConfigException
      */
     private VersionManager getVersionManager() throws ConfigException {
-        List<VersionManager> versionManagers = null;
+        List<VersionManager> versionManagers;
         try {
             versionManagers = DomainTools.getDaoService().getVersionManagers();
         } catch (BadSqlGrammarException e) {
@@ -718,19 +662,12 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
         return context;
     }
 
-    /**
-     * @param ctxtId
-     * @param userProfile
-     * @return list of available categories
-     * @throws InternalDomainException
-     */
     private List<CategoryBean> getCategories(final String ctxtId, UserProfile userProfile) throws InternalDomainException {
         //Note: this method need to be overwrite in edit controller
         List<CategoryBean> ret = new ArrayList<CategoryBean>();
         List<CategoryBean> categories = getDisplayedCategories(userProfile, ctxtId);
         //Temporary: remove dummy form the list
-        for (Iterator<CategoryBean> iter = categories.iterator(); iter.hasNext();) {
-            CategoryBean element = iter.next();
+        for (CategoryBean element : categories) {
             if (!(element instanceof CategoryDummyBean)) {
                 ret.add(element);
             }
@@ -738,20 +675,13 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
         return ret;
     }
 
-    /**
-     * @param categoryBean
-     * @param userProfile
-     * @return list of available sources
-     * @throws DomainServiceException
-     */
     private List<SourceBean> getSources(final CategoryBean categoryBean, UserProfile userProfile) throws DomainServiceException {
         //this method need to be overwrite in edit controller (VisibledSource and not just DisplayedSources)
         List<SourceBean> ret = new ArrayList<SourceBean>();
         String catId;
         catId = categoryBean.getId();
         List<SourceBean> tempListSourceBean = getDisplayedSources(userProfile, catId);
-        for (Iterator<SourceBean> iter = tempListSourceBean.iterator(); iter.hasNext();) {
-            SourceBean element = iter.next();
+        for (SourceBean element : tempListSourceBean) {
             if (!(element instanceof SourceDummyBean)) {
                 ret.add(element);
             }
@@ -761,9 +691,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 
     /**
      * populate a CategoryWebBean from a CategoryBean.
-     *
-     * @param categoryBean
-     * @return populated CategoryWebBean
      */
     private CategoryWebBean populateCategoryWebBean(final CategoryBean categoryBean) {
         CategoryWebBean categoryWebBean = new CategoryWebBean();
@@ -787,11 +714,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 
     /**
      * populate a SourceWebBean from a SourceBean.
-     *
-     * @param sourceBean
-     * @param userProfile
-     * @return populated SourceWebBean
-     * @throws DomainServiceException
      */
     private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, String catId, UserProfile userProfile) throws DomainServiceException {
         return populateSourceWebBean(sourceBean, catId, userProfile, true);
@@ -799,11 +721,6 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
     
     /**
      * populate a SourceWebBean from a SourceBean with or without items
-     * @param sourceBean
-     * @param userProfile
-     * @param withItems
-     * @return populated SourceWebBean with or without items
-     * @throws DomainServiceException 
      */
     private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, String catId, UserProfile userProfile, boolean withItems) throws DomainServiceException {
         SourceWebBean sourceWebBean;
