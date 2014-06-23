@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://www.jasig.org/uportal/web/skin https://source.jasig.org/schemas/resource-server/skin-configuration/skin-configuration-v1.2.xsd">
 
     <css>app/css/bootstrap.dev.3.0.1.modified.v4.css</css>
-    <css resource="true">rs/font-awesome/4.1.0/css/font-awesome-4.1.0.css</css>
+    <css resource="true">/rs/font-awesome/4.1.0/css/font-awesome-4.1.0.css</css>
     <css>app/css/lecture.css</css>
 	
 </resources>
