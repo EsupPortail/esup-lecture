@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE channelConfig SYSTEM "esup-lecture.dtd" >
+<channelConfig>
+	<guestUser>guest</guestUser>
+    <context
+            name="Démonstration Esup-Lecture"
+            id="saisieSimplifiee">
+        <description></description>
+        <refCategoryProfile refId="demo1"/>
+        <refCategoryProfile refId="demo2"/>
+        <refCategoryProfile refId="news2-1"/>
+        <refCategoryProfile refId="news2-2"/>
+    </context>
+
+    <context
+            name="Démonstration Esup-Lecture"
+            id="saisieNormale">
+        <description></description>
+        <refCategoryProfile refId="demo1"/>
+        <refCategoryProfile refId="demo2"/>
+    </context>
+
+    <categoryProfile
+		name="Categorie de démo 1"
+		id="demo1"
+		urlCategory="${config.url.prefix}/examples/xml/category.offline.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600"
+		timeout = "3000" >
+		<visibility>
+			<allowed/>
+			<autoSubscribed/>
+			<obliged>
+				<group name="local.0"/>
+			</obliged>
+		</visibility>
+	</categoryProfile>
+
+	<categoryProfile
+		name="Categorie de démo 2"
+		id="demo2"
+		urlCategory="${config.url.prefix}/examples/xml/demo2.xml"
+		trustCategory="no"
+		access="public"
+		ttl = "3600"
+		timeout = "3000" >
+		<visibility>
+			<allowed/>
+			<autoSubscribed/>
+			<obliged>
+				<group name="local.0"/>
+			</obliged>
+		</visibility>
+	</categoryProfile>
+
+    <categoryProfile
+            name="Catégorie (saisie simplifié de News 2)"
+            id="news2-1"
+            urlCategory="${config.url.prefix}/examples/xml/category.offline.xml"
+            trustCategory="no"
+            access="public"
+            ttl="3600"
+            timeout="3000"
+            groupCategory="true"
+            entity="Catégorie News 2">
+        <visibility>
+            <allowed/>
+            <autoSubscribed/>
+            <obliged>
+                <group
+                        name="local.0"/>
+            </obliged>
+        </visibility>
+    </categoryProfile>
+
+    <categoryProfile
+            name="Categorie de démo 2"
+            id="news2-2"
+            urlCategory="${config.url.prefix}/examples/xml/demo2.xml"
+            trustCategory="no"
+            access="public"
+            ttl = "3600"
+            timeout = "3000"
+            groupCategory="true"
+            entity="Catégorie News 2">
+        <visibility>
+            <allowed/>
+            <autoSubscribed/>
+            <obliged>
+                <group name="local.0"/>
+            </obliged>
+        </visibility>
+    </categoryProfile>
+
+</channelConfig>

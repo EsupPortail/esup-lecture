@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+
+	<bean id="daoService" class="org.esupportail.lecture.dao.DaoServiceStub" lazy-init="true">
+        <constructor-arg>
+            <util:list>
+                <bean class="org.esupportail.lecture.domain.model.UserProfile">
+                    <constructor-arg value="bourges" />
+                </bean>
+            </util:list>
+        </constructor-arg>
+        <property name="remoteXMLService">
+            <ref bean="daoServiceRemoteXML" />
+        </property>
+	</bean>
+
+    <bean id="daoServiceRemoteXML"
+          class="org.esupportail.lecture.dao.DaoServiceRemoteXML">
+        <property name="cacheManager" ref="cacheManager" />
+        <property name="defaultTimeout" value="3000">
+            <description>Timeout used when getting a category or a source from URL in milliseconds</description>
+        </property>
+    </bean>
+
+</beans>

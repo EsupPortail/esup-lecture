@@ -51,8 +51,15 @@ public class DaoServiceStub  implements DaoService {
 	public DaoServiceStub() {
 		userProfiles = new Hashtable<String, UserProfile>();
 	}
-	
-	/* 
+
+    public DaoServiceStub(List<UserProfile> profiles) {
+        userProfiles = new Hashtable<String, UserProfile>();
+        for (UserProfile profile : profiles) {
+            userProfiles.put(profile.getUserId(), profile);
+        }
+    }
+
+	/*
 	 *************************** METHODS *********************************/	
 	
 	/* Remote Data */

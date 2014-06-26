@@ -66,16 +66,30 @@
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-				<includes>
-					<include>properties/esup-lecture.xml</include>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>properties/esup-lecture.xml</include>
                     <include>properties/mappings.xml</include>
                     <include>properties/examples/xml/category.dtd</include>
-				</includes>
-			</resource>
+                </includes>
+            </resource>
 		</resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>properties/esup-lecture.xml</include>
+                    <include>properties/mappings.xml</include>
+                    <include>properties/examples/xml/category.dtd</include>
+                </includes>
+            </testResource>
+        </testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -315,7 +329,13 @@
                 </exclusion>
             </exclusions>
         </dependency>
-	</dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 	<properties>
 		<javax.servlet.version>2.5</javax.servlet.version>
 		<esupcommons.version>0.3.3</esupcommons.version>

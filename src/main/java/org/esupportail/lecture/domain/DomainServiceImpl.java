@@ -587,6 +587,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
             //find categories in this context
             List<CategoryBean> categories = getCategories(ctxId, userProfile);
             List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();
+            List<CategoryWebBean> categoriesWebByEntity = new ArrayList<CategoryWebBean>();
             if (categories != null) {
                 for (CategoryBean categoryBean : categories) {
                     CategoryWebBean categoryWebBean = populateCategoryWebBean(categoryBean);
@@ -609,8 +610,47 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
                     categoryWebBean.setXmlOrder(xmlOrder);
                     categoriesWeb.add(categoryWebBean);
                 }
+                // *******************
+                // * Group by entity *
+                // *******************
+                //Parcours des categoriesWeb
+                for (CategoryWebBean cur : categoriesWeb) {
+                    //Est-ce une category à grouper par entity ?
+                    if (cur.isGroupCategoryByEntity()) {
+                        String entityName = cur.getEntityName();
+                        //On parcours à nouveau les categoriesWeb pour savoir si on en a une qui permet le regroupement
+                        CategoryWebBean candidate = null;
+                        for (CategoryWebBean cur2 : categoriesWebByEntity) {
+                            //on a une déjà une category de regroupement ?
+                            if (cur2.getEntityName().equals(entityName)) {
+                                candidate = cur2;
+                            }
+                        }
+                        if (candidate == null) {
+                            // on crée cette category de regroupement avec le contenu de la category courante
+                            CategoryWebBean cat = new CategoryWebBean();
+                            cat.setId(cur.getId());
+                            cat.setName(cur.getName());
+                            cat.setAvailabilityMode(cur.getAvailabilityMode());
+                            cat.setDescription(cur.getDescription());
+                            cat.setUserCanMarkRead(cur.isUserCanMarkRead());
+                            cat.setEntityName(cur.getEntityName());
+                            cat.setGroupCategoryByEntity(cur.isGroupCategoryByEntity());
+                            categoriesWebByEntity.add(cat);
+                            //TODO: regrouper les items dans une source du nom de la category
+                        }
+                        else {
+                            // on ajoute le contenu de la category courante à cette category de regroupement
+                            //TODO
+                        }
+                    }
+                    else {
+                        categoriesWebByEntity.add(cur);
+                    }
+                }
+
             }
-            context.setCategories(categoriesWeb);
+            context.setCategories(categoriesWebByEntity);
         } catch (Exception e) {
             throw new WebException("Error in getContext", e);
         }
