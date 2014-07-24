@@ -3,7 +3,7 @@
 	<groupId>org.esupportail</groupId>
 	<artifactId>esup-lecture</artifactId>
 	<packaging>war</packaging>
-	<version>3.0.0-beta6-SNAPSHOT</version>
+    <version>3.1.0-SNAPSHOT</version>
 	<name>esup-lecture</name>
 	<url><![CDATA[http://www.esup-portail.org/display/PROJESUPLECTURE/Portlet+Lecture]]></url>
 	<repositories>
@@ -66,30 +66,16 @@
             <resource>
                 <directory>src/main/resources</directory>
             </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>properties/esup-lecture.xml</include>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>properties/esup-lecture.xml</include>
                     <include>properties/mappings.xml</include>
                     <include>properties/examples/xml/category.dtd</include>
-                </includes>
-            </resource>
+				</includes>
+			</resource>
 		</resources>
-        <testResources>
-            <testResource>
-                <directory>src/test/resources</directory>
-            </testResource>
-            <testResource>
-                <directory>src/test/resources</directory>
-                <filtering>true</filtering>
-                <includes>
-                    <include>properties/esup-lecture.xml</include>
-                    <include>properties/mappings.xml</include>
-                    <include>properties/examples/xml/category.dtd</include>
-                </includes>
-            </testResource>
-        </testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -329,17 +315,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.11</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+	</dependencies>
 	<properties>
 		<javax.servlet.version>2.5</javax.servlet.version>
 		<esupcommons.version>0.3.3</esupcommons.version>
-        <config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
-        <config.url.prefix.test>file://${project.build.testOutputDirectory}/properties</config.url.prefix.test>
+		<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
 	</properties>
 </project>

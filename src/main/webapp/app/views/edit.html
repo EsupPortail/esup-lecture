@@ -8,7 +8,7 @@
                 <div class="h4">
                     <div class="pull-right">
                         <a class="link" role="button" title="{{ msgs['unsubscribeCategory'] }}" ng-click="toogleCategorySubcribtion(cat)" ng-show="cat.subscribed && !cat.obliged"><i class="fa fa-lg fa-check-square text-muted"></i></a>
-                        <a class="link" role="button" title="{{ msgs['unsubscribeCategory'] }}" ng-click="toogleCategorySubcribtion(cat)" ng-show="!cat.subscribed && !cat.obliged"><i class="fa fa-lg fa-square text-muted"></i></a>
+                        <a class="link" role="button" title="{{ msgs['subscribeCategory'] }}" ng-click="toogleCategorySubcribtion(cat)" ng-show="!cat.subscribed && !cat.obliged"><i class="fa fa-lg fa-square text-muted"></i></a>
                         <span class="link forced" title="{{ msgs['forcedSource'] }}" ng-show="cat.obliged"><i class="fa fa-lg fa-lock text-muted"></i></span>
                     </div>{{cat.name}}
                 </div>

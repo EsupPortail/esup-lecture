@@ -1,14 +1,18 @@
-html > body {
+.esup-lecture {
     font-family: 'Open Sans','Helvetica Neue','Helvetica','Arial',sans-serif;
     font-size: 14px;
     font-weight: 400;
 }
 
-.menu-group {
+.esup-lecture h1 {
+    border-bottom: none!important;
+}
+
+.esup-lecture .menu-group {
     display: inline-block;
 }
 
-.menu-collapse {
+.esup-lecture .menu-collapse {
     position: absolute;
     display: inline-block;
     max-width: 300px;
@@ -27,12 +31,12 @@ html > body {
 .esup-lecture .margin-left-zero {
     margin-top: 15px;
     margin-left: 0px;
+    padding: 0;
 }
 
 .esup-lecture a.lec-btn-link {
     text-decoration: none;
     border-radius: 5px;
-    padding-top: 5px;
     padding: 5px;
 }
 
@@ -59,7 +63,7 @@ html > body {
     background-color: #ddd;
 }
 
-div.toggleButton {
+.esup-lecture div.toggleButton {
     display: inline;
     float: left;
     margin: 2px 0px 18px 5px;
@@ -69,27 +73,22 @@ div.toggleButton {
 }
 
 .esup-lecture div.unreadArticle {
-    margin: 2px 0px 0px 35px;
-    padding: 2px;
     background-color: transparent;
     line-height: 17px;
-    margin-bottom: 10px;
+    margin: 2px 0px 10px 35px;
     border-bottom: dotted thin;
     font-size: 95%;
-    padding-bottom: 15px;
+    padding: 2px 2px 15px;
     letter-spacing: 0.4px;
 }
 
 .esup-lecture div.readArticle {
     min-height : 1px; /*for IE 7 and opacity ! IE 6 don't work !*/
-    margin: 2px 0px 0px 35px;
-    padding: 2px;
     opacity: 0.30;
-    opacity: 0.30;
-    margin-bottom: 15px;
+    margin: 2px 0px 15px 35px;
     border-bottom: dotted thin;
     font-size: 70%;
-    padding-bottom: 15px;
+    padding: 2px 2px 15px;
 }
 
 .esup-lecture h1,h2,h3 {
@@ -105,60 +104,63 @@ div.toggleButton {
     text-decoration: none!important;
 }
 
-.nav-pills > li > span,
-.nav-pills > li.disabled > span,
-.nav-pills > li.disabled > span {
+.esup-lecture a.link.text {
+    color: #555;
+}
+
+.esup-lecture .nav-pills > li > span,
+.esup-lecture .nav-pills > li.disabled > span,
+.esup-lecture .nav-pills > li.disabled > span {
     border: 1px solid #e5e5e5;
     background-color: #ffffff;
 }
 
-.nav-pills > li > span {
+.esup-lecture .nav-pills > li > span {
     display: block;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
-.nav-pills [class^="icon-"],
-.nav-pills [class*=" icon-"],
-.nav-pills .icon-large[class^="icon-"],
-.nav-pills .icon-large[class*=" icon-"] {
+.esup-lecture .nav-pills [class^="icon-"],
+.esup-lecture .nav-pills [class*=" icon-"],
+.esup-lecture .nav-pills .icon-large[class^="icon-"],
+.esup-lecture .nav-pills .icon-large[class*=" icon-"] {
     line-height: inherit !important;
 }
 
-.cat-panel {
+.esup-lecture .cat-panel {
     margin-left: 0;
     margin-right: 0;
     background-color: #fff;
-    border-width: 1px;
-    border-color: #ddd;
+    border: 1px #ddd;
     border-radius: 4px 4px 0 0;
     box-shadow: none;
 }
 
-.portlet-container .btn.forced,
-.portlet-container .link.forced {
+.portlet-container.esup-lecture .btn.forced,
+.portlet-container.esup-lecture .link.forced {
     cursor: not-allowed!important;
 }
 
-.portlet-container .hidden-xs,
-.portlet-container .hidden-sm {
+.portlet-container.esup-lecture .hidden-xs,
+.portlet-container.esup-lecture .hidden-sm {
     display: inline-block !important;
 }
 
-.portlet-container.sm .visible-xs.visible-sm,
-.portlet-container.xs .visible-sm.visible-xs{
+.portlet-container.esup-lecture.sm .visible-xs.visible-sm,
+.portlet-container.esup-lecture.xs .visible-sm.visible-xs{
     display: inline-block !important;
 }
 
 @media (max-width: 767px) {
-    .menu-btn .hidden-xs {
+    .esup-lecture .menu-btn .hidden-xs {
         display: none!important;
     }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-    .menu-btn.hidden-xs,
-    .menu-btn.hidden-sm {
+    .esup-lecture .menu-btn.hidden-xs,
+    .esup-lecture .menu-btn.hidden-sm {
         display: none !important;
     }
 }
@@ -173,9 +175,9 @@ div.toggleButton {
     left:100%;
     margin-top:-6px;
     margin-left:-1px;
+    border-radius:6px  6px 6px 6px;
     -webkit-border-radius:6px 6px 6px 6px;
     -moz-border-radius:6px  6px 6px 6px;
-    border-radius:6px  6px 6px 6px;
 }
 
 .esup-lecture .dropdown-submenu:hover > .dropdown-menu {
@@ -198,4 +200,12 @@ div.toggleButton {
 
 .portlet-container.esup-lecture .panel > .list-group .list-group-item {
     border-width: 0 0 1px 0;
+}
+
+.esup-lecture .panel-body .lecture-link a {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+    display: inline-block;
+    vertical-align: bottom;
 }

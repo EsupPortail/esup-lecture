@@ -453,6 +453,12 @@ public class ChannelConfig  {
 						mcp.setCategoryURL(categoryProfile.valueOf("@urlCategory"));
 						mcp.setTrustCategory(getBoolean(categoryProfile.valueOf("@trustCategory"), false));
 						mcp.setUserCanMarkRead(getBoolean(categoryProfile.valueOf("@userCanMarkRead"), true));
+						String specificUserContentValue = categoryProfile.valueOf("@specificUserContent");
+						if (specificUserContentValue.equals("yes")) {
+							mcp.setSpecificUserContent(true);
+						} else {
+							mcp.setSpecificUserContent(false);
+						}
 
 						String ttl = categoryProfile.valueOf("@ttl");
 						mcp.setTtl(Integer.parseInt(ttl));

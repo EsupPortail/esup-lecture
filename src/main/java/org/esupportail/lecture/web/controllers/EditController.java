@@ -1,8 +1,5 @@
 package org.esupportail.lecture.web.controllers;
 
-import java.util.Locale;
-import javax.portlet.*;
-
 import org.esupportail.lecture.exceptions.domain.DomainServiceException;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.springframework.stereotype.Controller;
@@ -14,6 +11,9 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
+
+import javax.portlet.*;
+import java.util.Locale;
 
 /**
  *
@@ -33,8 +33,10 @@ public class EditController extends TwoPanesController {
      */
     @RenderMapping
     public String goEdit(RenderRequest request, RenderResponse response, ModelMap model) {
+        if (request.getWindowState().equals(WindowState.MINIMIZED)) {
+            return "mini";
+        }
         model = bindInitialModel(model, response, request);
-
         return "edit";
     }
 

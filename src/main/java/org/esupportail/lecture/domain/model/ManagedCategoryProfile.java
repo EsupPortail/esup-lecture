@@ -29,19 +29,19 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(ManagedCategoryProfile.class); 
+	protected static final Log LOG = LogFactory.getLog(ManagedCategoryProfile.class);
 	/**
 	 * Used in log messages.
 	 */
 	private static final  String IDEGAL = "id=";
-	
+
 	/*
-	 ************************** PROPERTIES ******************************** */	
-	
+	 ************************** PROPERTIES ******************************** */
+
 	/**
 	 * Contexts where these category profiles are referenced.
 	 */
-	private Set<Context> contextsSet = new HashSet<Context>();	
+	private Set<Context> contextsSet = new HashSet<Context>();
 	/**
 	 * URL of the remote managed category.
 	 */
@@ -55,6 +55,13 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	private boolean userCanMarkRead;
 	/**
+	 * Specific user content parameter.
+	 * Indicates source multiplicity :
+	 * - true : source is specific to a user, it is loaded in user profile => source is a SingleSource
+	 * - false : source is global to users, it is loaded in channel environnement => source is a GlobalSource
+	 */
+	private boolean specificUserContent;
+	/**
 	 * Ttl of remote reloading.
 	 */
 	private int ttl;
@@ -62,20 +69,20 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * TimeOut of remote reloading.
 	 */
 	private int timeOut;
-	
+
 	/**
 	 * category profile Id.
 	 * Defined in the xml file : interne Id of the category Profile
 	 */
 	private String fileId;
-	
+
 	/* FEATURES */
-	
+
 	/**
 	 * trustCategory parameter : indicates between managed category and category profile, which one to trust
 	 * (used for inheritance regulars in computeFeatures())
-	 * True : category is trusted. 
-	 * False : category is not trusted, only parameters profile are good 
+	 * True : category is trusted.
+	 * False : category is not trusted, only parameters profile are good
 	 */
 	private boolean trustCategory;
 	/**
@@ -88,20 +95,20 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	private boolean featuresComputed;
 	/**
 	 * Editability mode on the category (takes care of inheritance regulars).
-	 */	
+	 */
 	private Editability edit;
 	/**
 	 * Visibility rights on the managed category (takes care of inheritance regulars).
 	 */
 	private VisibilitySets visibility;
-	
-	
+
+
 	/*
-	 ************************** INITIALIZATION ******************************** */	
-	
-	
+	 ************************** INITIALIZATION ******************************** */
+
+
 	/**
-	 * Constructor. 
+	 * Constructor.
 	 */
 	public ManagedCategoryProfile() {
 		if (LOG.isDebugEnabled()) {
@@ -110,28 +117,28 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		inner = new InnerFeatures();
 		featuresComputed = false;
 	}
-	
+
 	/*
-	 ************************** METHODS ******************************** */	
-	
+	 ************************** METHODS ******************************** */
+
 	/**
 	 * @return Returns the category referenced by this CategoryProfile
-	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException
 	 */
 	@Override
 	protected ManagedCategory getElement() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(IDEGAL + getId() + " - getElement()");
 		}
-		ManagedCategory element = (ManagedCategory) super.getElement(); 
+		ManagedCategory element = (ManagedCategory) super.getElement();
 //	GB : incorrect
 //		if (element == null) {
 			loadCategory();
-			element = (ManagedCategory) super.getElement(); 
+			element = (ManagedCategory) super.getElement();
 //		}
 		return element;
 	}
-	
+
 	/**
 	 * @param category The category to set.
 	 */
@@ -140,7 +147,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		ManagedCategory cat = (ManagedCategory) category;
 		super.setElement(cat);
 	}
-	
+
 	/**
 	 * Return the name of the referenced category. When the category is not loaded, it returns
 	 * the name of this CategoryProfile.
@@ -152,7 +159,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			LOG.debug(IDEGAL + getId() + " - getName()");
 		}
 		String currentName;
-		
+
 		try {
 			currentName = getElement().getName();
 		} catch (ManagedCategoryNotLoadedException e) {
@@ -161,7 +168,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		}
 		return currentName;
 	}
-	
+
 	/**
 	 * Return the name of the referenced category. When the category is not loaded, it returns
 	 * the name of this CategoryProfile.
@@ -173,7 +180,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			LOG.debug(IDEGAL + getId() + " - getDescription()");
 		}
 		String currentDesc;
-		
+
 		try {
 			currentDesc = getElement().getDescription();
 		} catch (ManagedCategoryNotLoadedException e) {
@@ -182,7 +189,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		}
 		return currentDesc;
 	}
-	
+
 
 	/**
 	 * Add a context to the set of context of this managed category profile.
@@ -195,17 +202,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		}
 		contextsSet.add(c);
 	}
-	
+
 	/**
 	 * Returns the managedSourceProfile identified by id, accessible by this ManagedCategoryProfile.
 	 * (Defined in ManagedCategory referred by this ManagedCategoryProfile)
 	 * @param id id of the sourceProfile to get
 	 * @return the sourceProfile
-	 * @throws ManagedCategoryNotLoadedException 
-	 * @throws SourceProfileNotFoundException 
+	 * @throws ManagedCategoryNotLoadedException
+	 * @throws SourceProfileNotFoundException
 	 */
 	@Override
-	protected ManagedSourceProfile getSourceProfileById(final String id) 
+	protected ManagedSourceProfile getSourceProfileById(final String id)
 	throws ManagedCategoryNotLoadedException, SourceProfileNotFoundException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(IDEGAL + this.getId() + " - getSourceProfileById(" + id + ")");
@@ -221,9 +228,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getAdoptiveParents(" + this.getId() + ")");
 		}
-		
+
 		List<Context> parents = new ArrayList<Context>();
-		
+
 		// For all contexts refered by this managedCategoryProfile
 		for (Context context : contextsSet) {
 			parents.add(context);
@@ -233,15 +240,15 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 	/**
 	 * @return ttl
-	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException
 	 */
 	public int getTtl() throws ManagedCategoryNotLoadedException {
 		computeFeatures();
 		return ttl;
 	}
-	
+
 	/**
-	 * @param ttl 
+	 * @param ttl
 	 */
 	public void setTtl(final int ttl) {
 		inner.setTtl(ttl);
@@ -250,7 +257,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	/**
 	 * Return visibility of the category (or categoryProfile), taking care of inheritance regulars.
 	 * @return visibility
-	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException
 	 * @see org.esupportail.lecture.domain.model.ManagedElementProfile#getVisibility()
 	 */
 	public VisibilitySets getVisibility() throws ManagedCategoryNotLoadedException {
@@ -260,17 +267,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 	/**
 	 * Sets visibility of category profile (value defined in XML file).
-	 * @param visibility 
+	 * @param visibility
 	 */
 	public void setVisibility(final VisibilitySets visibility) {
 		inner.setVisibility(visibility);
 		featuresComputed = false;
 	}
-	
+
 	/**
 	 * Return editability mode of the category, taking care of inheritance regulars.
 	 * @return edit
-	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException
 	 */
 	protected Editability getEdit() throws ManagedCategoryNotLoadedException {
 		computeFeatures();
@@ -278,23 +285,23 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 
 	/**
-	 * @param edit 
+	 * @param edit
 	 */
 	public void setEdit(final Editability edit) {
 		inner.setEdit(edit);
 		featuresComputed = false;
 	}
-	
+
 	/**
 	 * Computes rights on parameters shared between parent ManagedCategory and managedCategoryProfile.
 	 * taking care of inheritance rules (on param visibility,edit)
-	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException
 	 */
 	private void computeFeatures() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(IDEGAL + this.getId() + " - computeFeatures()");
 		}
-		
+
 		if (!featuresComputed) {
 
 			if (getTrustCategory()) {
@@ -302,8 +309,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 				visibility = cat.inner.getVisibility();
 				edit = cat.inner.getEdit();
 				ttl = cat.inner.getTtl();
-					
-				// Inutile : edit est obligatoire dans le XML d'une category				
+
+				// Inutile : edit est obligatoire dans le XML d'une category
 				if (edit == null) {
 					edit = inner.getEdit();
 				}
@@ -315,9 +322,9 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 				if (ttl == 0) {
 					ttl = inner.getTtl();
 				}
-				
+
 			} else {
-				// No trust => features of categoryProfile 
+				// No trust => features of categoryProfile
 				edit = inner.getEdit();
 				visibility = inner.getVisibility();
 				ttl = inner.getTtl();
@@ -325,19 +332,19 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			featuresComputed = true;
 		}
 	}
-	
-	
-	/* 
-	 *************************** INNER CLASS ******************************** */	
-	
+
+
+	/*
+	 *************************** INNER CLASS ******************************** */
+
 	/**
-	 * Inner Features (editability,visibility) declared in xml file. 
+	 * Inner Features (editability,visibility) declared in xml file.
 	 * These values are used according to inheritance regulars
 	 * @author gbouteil
 	 */
 	private class InnerFeatures {
-		 
- 		/** 
+
+		/**
 		 * Managed category edit mode .
 		*/
 		private Editability edit;
@@ -345,19 +352,19 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		 * Visibility rights for groups on the remote source.
 		 */
 		private VisibilitySets visibility;
-		
+
 		/**
 		 * ttl for the category
 		 */
 		private int ttl;
-	
+
 		/**
-		 * Constructor. 
+		 * Constructor.
 		 */
 		protected InnerFeatures() {
 			// Nothing to do
 		}
-		
+
 		/**
 		 * @return edit
 		 */
@@ -394,34 +401,34 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		protected void setTtl(final int ttl) {
 			this.ttl = ttl;
 		}
-		
+
 	}
 
 	/* UPDATING */
-	
+
 	/**
-	 * Update CustomContext with this ManagedCategoryProfile. 
-	 * It evaluates visibility for user profile and subscribe it 
+	 * Update CustomContext with this ManagedCategoryProfile.
+	 * It evaluates visibility for user profile and subscribe it
 	 * or not to customContext.
 	 * @param customContext the customContext to update
 	 * @return true if the category is visible by the userProfile
-	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException
 	 */
-	protected VisibilityMode updateCustomContext(final CustomContext customContext) 
+	protected VisibilityMode updateCustomContext(final CustomContext customContext)
 	throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(IDEGAL + this.getId() + " - updateCustomContext("
 					+ customContext.getElementId() + ")");
 		}
-		// GB : devenu intuile : loadCategory appelée par getElement() 
-		// loadCategory(); 
+		// GB : devenu intuile : loadCategory appelée par getElement()
+		// loadCategory();
 		return setUpCustomContextVisibility(customContext);
-		
+
 	}
 
 	/**
 	 *  Load the category referenced by this ManagedCategoryProfile.
-	 *  @throws ManagedCategoryNotLoadedException 
+	 *  @throws ManagedCategoryNotLoadedException
 	 */
 	private synchronized void loadCategory() throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
@@ -442,17 +449,17 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			throw new ManagedCategoryNotLoadedException(errorMsg, e);
 		}
 	}
-	
+
 	/**
 	 * Evaluate visibility of current user for this managed category.
 	 * Update customContext (belongs to user) if needed :
 	 * add or remove subscription associated with this managedCategoryProfile
 	 * (true if in Obliged or in autoSubscribed, or in Allowed)
 	 * @param customContext customContext to set up
-	 * @return true if the mcp is visible by the user of the customContext else return false 
-	 * @throws ManagedCategoryNotLoadedException 
+	 * @return true if the mcp is visible by the user of the customContext else return false
+	 * @throws ManagedCategoryNotLoadedException
 	 */
-	private VisibilityMode setUpCustomContextVisibility(final CustomContext customContext) 
+	private VisibilityMode setUpCustomContextVisibility(final CustomContext customContext)
 	throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(IDEGAL + this.getId() + " - setUpCustomContextVisibility("
@@ -468,7 +475,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		 */
 
 		VisibilityMode mode = getVisibility().whichVisibility();
-		
+
 		if (mode == VisibilityMode.OBLIGED) {
 			if (LOG.isTraceEnabled()) {
 				LOG.trace("IsInObliged : " + mode);
@@ -476,7 +483,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			customContext.addSubscription(this);
 			return mode;
 		}
-		
+
 		if (mode == VisibilityMode.AUTOSUBSCRIBED) {
 			if (LOG.isTraceEnabled()) {
 				LOG.trace("IsInAutoSubscribed : " + mode);
@@ -487,32 +494,32 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			}
 			return mode;
 		}
-		
+
 		if (mode == VisibilityMode.ALLOWED) {
 			if (LOG.isTraceEnabled()) {
 				LOG.trace("IsInAllowed : " + mode);
 			}
 			// Nothing to do
 			return mode;
-		} 
-		
+		}
+
 		// ELSE not Visible
 		customContext.removeCustomManagedCategoryFromProfile(this.getId());
 
 		mode = VisibilityMode.NOVISIBLE;
 		return mode;
 	}
-	
-		
+
+
 	/**
 	 * Update the CustomManagedCategory linked to this ManagedCategoryProfile.
 	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles
 	 * defined in ManagedCategory of this Profile, according to managedSourceProfiles visibility
 	 * (there is not any loading of source at this time)
 	 * @param customManagedCategory customManagedCategory to update
-	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException
 	 */
-	protected void updateCustom(final CustomManagedCategory customManagedCategory) 
+	protected void updateCustom(final CustomManagedCategory customManagedCategory)
 	throws ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug(IDEGAL + this.getId() + " - updateCustom(" + customManagedCategory.getElementId()
@@ -521,16 +528,16 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		ManagedCategory cat = getElement();
 		cat.updateCustom(customManagedCategory);
 	}
-	
+
 	/**
-	 * Return a list of (SourceProfile,VisibilityMode). 
-	 * Corresponding to visible sources for user, 
-	 * in this ManagedCategory and update its related custom (like methode updateCustom): 
+	 * Return a list of (SourceProfile,VisibilityMode).
+	 * Corresponding to visible sources for user,
+	 * in this ManagedCategory and update its related custom (like methode updateCustom):
 	 * It sets up subscriptions of customManagedCategory on managedSourcesProfiles
 	 * defined in ManagedCategory of this Profile, according to managedSourceProfiles visibility
 	 * @param customManagedCategory custom to update
 	 * @return list of (ProfileVisibility)
-	 * @throws ManagedCategoryNotLoadedException 
+	 * @throws ManagedCategoryNotLoadedException
 	 * @see ManagedCategoryProfile#updateCustom(CustomManagedCategory)
 	 */
 	protected List<CoupleProfileVisibility> getVisibleSourcesAndUpdateCustom(
@@ -542,13 +549,13 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		ManagedCategory cat = getElement();
 		return cat.getVisibleSourcesAndUpdateCustom(customManagedCategory);
 	}
-	
-	
-	
-	/*
-	 *************************** SIMPLE ACCESSORS ******************************** */	
 
-	
+
+
+	/*
+	 *************************** SIMPLE ACCESSORS ******************************** */
+
+
 	/**
 	 * Returns the URL of the remote managed category.
 	 * @return categoryURL
@@ -556,8 +563,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	public String getCategoryURL() {
 		return categoryURL;
 	}
-	
-	/** 
+
+	/**
 	 * Sets the URL of the remote managed category.
 	 * @param categoryURL the URL to set
 	 */
@@ -573,10 +580,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	protected boolean getTrustCategory() {
 		return trustCategory;
 	}
-	
+
 	/**
 	 * Sets the trust category parameter?
-	 * @param trustCategory 
+	 * @param trustCategory
 	 */
 	public void setTrustCategory(final boolean trustCategory) {
 		this.trustCategory = trustCategory;
@@ -588,14 +595,14 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	public Accessibility getAccess() {
 		return access;
 	}
-	
+
 	/**
-	 * @param access 
+	 * @param access
 	 */
 	public void setAccess(final Accessibility access) {
 		this.access = access;
 	}
-	
+
 	/**
 	 * @return contextSets
 	 */
@@ -610,7 +617,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 			this.featuresComputed = featuresComputed;
 		}
 
-	
+
 
 	/**
 	 * @return timeOut
@@ -641,6 +648,22 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 
 	/**
+	 * Getter of member specificUserContent.
+	 * @return <code>boolean</code> the attribute specificUserContent
+	 */
+	public boolean isSpecificUserContent() {
+		return specificUserContent;
+	}
+
+	/**
+	 * Setter of attribute specificUserContent.
+	 * @param specificUserContent the attribute specificUserContent to set
+	 */
+	public void setSpecificUserContent(final boolean specificUserContent) {
+		this.specificUserContent = specificUserContent;
+	}
+
+	/**
 	 * @return the fileId
 	 */
 	public final String getFileId() {
@@ -648,12 +671,12 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 
 	/**
-	 * @param contextId 
+	 * @param contextId
 	 * @param fileId the fileId to set
 	 */
 	public final void setFileId(String contextId, String fileId) {
 		this.fileId = fileId;
 		super.setId(super.makeId(contextId, "m", fileId));
 	}
-	
+
 }
