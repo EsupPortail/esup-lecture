@@ -84,12 +84,12 @@
 
                             <div ng-repeat="item in source.items | modeFilter:selectedMode" class="panel-body">
                                 <div ng-show="!item.read">
-                                        <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsRead'] }}" ><i class="fa fa-eye-slash"></i></a>
+                                        <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(item, source)" role="button" title="{{ msgs['markAsRead'] }}" ><i class="fa fa-eye-slash"></i></a>
                                     <div class="unreadArticle" ng-bind-html="item.htmlContent">
                                     </div>
                                 </div>
                                 <div ng-show="item.read">
-                                        <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(cat, source, item)" role="button" title="{{ msgs['markAsUnread'] }}" ng-show="item.read"><i class="fa fa-eye"></i></a>
+                                        <a class="lec-btn-link toggleButton pull-left" ng-click="toggleItemReadState(item, source)" role="button" title="{{ msgs['markAsUnread'] }}" ng-show="item.read"><i class="fa fa-eye"></i></a>
                                     <div class="readArticle" ng-bind-html="item.htmlContent">
                                     </div>
                                 </div>
