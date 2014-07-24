@@ -76,6 +76,20 @@
 				</includes>
 			</resource>
 		</resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+            </testResource>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>properties/esup-lecture.xml</include>
+                    <include>properties/mappings.xml</include>
+                    <include>properties/examples/xml/category.dtd</include>
+                </includes>
+            </testResource>
+        </testResources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -118,28 +132,6 @@
 				</configuration>
 			</plugin>
 
-  	      	<plugin>
-		        <groupId>net.alchim31.maven</groupId>
-		        <artifactId>yuicompressor-maven-plugin</artifactId>
-		        <version>1.1</version>
-		        <executions>
-		          <execution>
-		            <goals>
-		              <goal>compress</goal>
-		            </goals>
-		          </execution>
-		        </executions>
-                <configuration>
-		          <!--<resources>-->
-		            <!--<resource>${basedir}/src/main/webapp/media/js/esup-lecture.js</resource>-->
-		          <!--</resources>-->
-	              <excludes>
-	                <exclude>**/*.css</exclude>
-	                <exclude>**/*.min.js</exclude>
-	              </excludes>
-	              <suffix>-${project.version}.min</suffix>
-		        </configuration>
-   		    </plugin>
 
 			<plugin>
 				<groupId>net.jlehtinen.portlet</groupId>
@@ -154,13 +146,6 @@
 						<url>/pluto/portlet-spec-1.0.css</url>
 						<url>/pluto/portlet-spec-2.0.css</url>
 					</cssUrls>
-<!-- 					<jsUrls>
-  						<url>https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-1.0.6.min.js</url>
-  						<url>/esup-lecture/bootstrap/js/bootstrap.js</url>
- 					</jsUrls> -->
- 					<!--
- 					<webAppSourceDirectory>${project.build.outputDirectory}/../${project.artifactId}-${project.version}</webAppSourceDirectory>
-					-->
 				</configuration>
 			</plugin>
 			<plugin>
@@ -315,10 +300,17 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 	<properties>
 		<javax.servlet.version>2.5</javax.servlet.version>
 		<esupcommons.version>0.3.3</esupcommons.version>
 		<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
+        <config.url.prefix.test>file://${project.build.testOutputDirectory}/properties</config.url.prefix.test>
 	</properties>
 </project>
