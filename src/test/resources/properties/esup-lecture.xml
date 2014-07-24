@@ -23,7 +23,7 @@
     <categoryProfile
 		name="Categorie de démo 1"
 		id="demo1"
-		urlCategory="${config.url.prefix}/examples/xml/category.offline.xml"
+		urlCategory="${config.url.prefix.test}/examples/xml/category.offline.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
@@ -40,7 +40,7 @@
 	<categoryProfile
 		name="Categorie de démo 2"
 		id="demo2"
-		urlCategory="${config.url.prefix}/examples/xml/demo2.xml"
+		urlCategory="${config.url.prefix.test}/examples/xml/demo2.xml"
 		trustCategory="no"
 		access="public"
 		ttl = "3600"
@@ -57,7 +57,7 @@
     <categoryProfile
             name="Catégorie (saisie simplifié de News 2)"
             id="news2-1"
-            urlCategory="${config.url.prefix}/examples/xml/category.offline.xml"
+            urlCategory="${config.url.prefix.test}/examples/xml/category.offline.xml"
             trustCategory="no"
             access="public"
             ttl="3600"
@@ -77,7 +77,7 @@
     <categoryProfile
             name="Categorie de démo 2"
             id="news2-2"
-            urlCategory="${config.url.prefix}/examples/xml/demo2.xml"
+            urlCategory="${config.url.prefix.test}/examples/xml/demo2.xml"
             trustCategory="no"
             access="public"
             ttl = "3600"

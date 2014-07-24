@@ -17,6 +17,7 @@ import org.esupportail.lecture.exceptions.domain.*;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
+import org.esupportail.lecture.web.beans.ItemWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -630,19 +631,32 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
                             // on crée cette category de regroupement avec le contenu de la category courante
                             CategoryWebBean cat = new CategoryWebBean();
                             cat.setId(cur.getId());
-                            cat.setName(cur.getName());
+                            cat.setName(entityName);
                             cat.setAvailabilityMode(cur.getAvailabilityMode());
                             cat.setDescription(cur.getDescription());
                             cat.setUserCanMarkRead(cur.isUserCanMarkRead());
                             cat.setEntityName(cur.getEntityName());
                             cat.setGroupCategoryByEntity(cur.isGroupCategoryByEntity());
                             categoriesWebByEntity.add(cat);
-                            //TODO: regrouper les items dans une source du nom de la category
+                            candidate = cat;
                         }
-                        else {
-                            // on ajoute le contenu de la category courante à cette category de regroupement
-                            //TODO
+                        //on contruit la liste des items des sources de la categorie...
+                        List<ItemWebBean> itemWebBeans = new ArrayList<ItemWebBean>();
+                        List<SourceWebBean> srcs = cur.getSources();
+                        for (SourceWebBean src : srcs) {
+                            for (ItemWebBean item : src.getItems()) {
+                                itemWebBeans.add(item);
+                            }
                         }
+                        SourceWebBean curFirstSrc = cur.getSources().get(0);
+                        //...pour regrouper ces items dans une source portant le nom de la categorie de départ
+                        SourceWebBean src = new SourceWebBean(
+                                itemWebBeans,
+                                curFirstSrc.getId(),
+                                cur.getName(),
+                                curFirstSrc.getType(),
+                                curFirstSrc.getItemDisplayMode());
+                        candidate.getSources().add(src);
                     }
                     else {
                         categoriesWebByEntity.add(cur);

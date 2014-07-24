@@ -1,0 +1,39 @@
+<!ENTITY config.url.prefix "${config.url.prefix.test}">
+
+<!ELEMENT category (description,sourceProfiles, visibility?)>
+<!ATTLIST category
+    name CDATA #REQUIRED
+    edit (all|personal|managed|no) "no">
+<!ELEMENT description (#PCDATA)>
+<!ELEMENT sourceProfiles (sourceProfile+)>
+
+<!ELEMENT sourceProfile (visibility?)>
+<!ATTLIST sourceProfile
+	id ID #REQUIRED
+    name CDATA #REQUIRED
+    url CDATA #REQUIRED
+    xslt CDATA #IMPLIED
+    mobileXslt CDATA #IMPLIED
+    xpath CDATA #IMPLIED
+    access (public|cas) #IMPLIED
+    specificUserContent (yes|no) "no"
+    timeout CDATA #IMPLIED>
+
+<!ELEMENT visibility (allowed,autoSubscribed,obliged)>
+
+<!ELEMENT allowed (regular*, regex*, group*)>
+<!ELEMENT autoSubscribed (regular*, regex*, group*)>
+<!ELEMENT obliged (regular*, regex*, group*)>
+
+<!ELEMENT regular EMPTY>
+<!ATTLIST regular
+    attribute CDATA #REQUIRED
+    value CDATA #REQUIRED>
+
+<!ELEMENT regex EMPTY>
+<!ATTLIST regex
+    attribute CDATA #REQUIRED
+    pattern CDATA #REQUIRED>
+
+<!ELEMENT group EMPTY>
+<!ATTLIST group name CDATA #REQUIRED>

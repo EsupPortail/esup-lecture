@@ -339,6 +339,7 @@
 	<properties>
 		<javax.servlet.version>2.5</javax.servlet.version>
 		<esupcommons.version>0.3.3</esupcommons.version>
-		<config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
+        <config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>
+        <config.url.prefix.test>file://${project.build.testOutputDirectory}/properties</config.url.prefix.test>
 	</properties>
 </project>

@@ -2,6 +2,7 @@ package org.esupportail.lecture.web.beans;
 
 import org.esupportail.lecture.domain.model.AvailabilityMode;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -56,6 +57,7 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	public CategoryWebBean() {
 		super();
 		folded = false;
+        sources = new ArrayList<SourceWebBean>();
 	}
 	
 	/**

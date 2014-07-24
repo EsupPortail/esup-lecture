@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="0.91">
+	<channel>
+		<image />
+		<title>Divers liens (rss-jquery-dialog)</title>
+		<link />
+		<language>fr</language>
+		<webMaster>webmaster@univ-rennes1.fr</webMaster>
+		<lastBuildDate>20/07/2008</lastBuildDate>
+		<item>
+			<title>Chaine éditoriale (lien distant)</title>
+			<link>http://chainedit.univ-rennes1.fr</link>
+			<description>Outil d'aide à la création de supports de cours
+				multimédia.</description>
+		</item>
+	</channel>
+</rss>

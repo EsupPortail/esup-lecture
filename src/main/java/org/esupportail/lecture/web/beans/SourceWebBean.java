@@ -79,6 +79,16 @@ public class SourceWebBean implements Comparable<SourceWebBean> {
         }
     }
 
+    public  SourceWebBean(final List<ItemWebBean> itemWebBeans, String srcId, String name, AvailabilityMode availabilityMode, ItemDisplayMode itemDisplayMode) {
+        this.items = itemWebBeans;
+        this.id = srcId;
+        this.name = name;
+        this.type = availabilityMode;
+        this.itemDisplayMode = itemDisplayMode;
+        setItemsNumber();
+        setUnreadItemsNumber();
+    }
+
     /**
      * @return name of source
      */
