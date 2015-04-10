@@ -3,7 +3,7 @@
     <groupId>org.esupportail</groupId>
     <artifactId>esup-lecture</artifactId>
     <packaging>war</packaging>
-    <version>3.0.0-beta7-SNAPSHOT</version>
+    <version>3.0.1-SNAPSHOT</version>
     <name>esup-lecture</name>
     <url><![CDATA[http://www.esup-portail.org/display/PROJESUPLECTURE/Portlet+Lecture]]></url>
     <repositories>

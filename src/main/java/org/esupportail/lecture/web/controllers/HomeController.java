@@ -1,12 +1,5 @@
 package org.esupportail.lecture.web.controllers;
 
-import java.util.Locale;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-import javax.portlet.ResourceRequest;
-import javax.portlet.ResourceResponse;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.web.WebException;
@@ -19,6 +12,9 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
+
+import javax.portlet.*;
+import java.util.Locale;
 
 @Controller
 @RequestMapping("VIEW")
@@ -42,6 +38,9 @@ public class HomeController extends TwoPanesController {
      */
     @RenderMapping
     public String goHome(RenderRequest request, RenderResponse response, ModelMap model) {
+        if (request.getWindowState().equals(WindowState.MINIMIZED)) {
+            return "mini";
+        }
         model = bindInitialModel(model, response, request);
         return "home";
     }
