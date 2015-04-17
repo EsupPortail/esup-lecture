@@ -1,6 +1,6 @@
 lecture = function(appName, appHomePath, resourceURL) {
     'use strict';
-    var project = angular.module(appName, ['ngRoute', 'ngSanitize']);
+    var project = angular.module(appName, ['ngRoute', 'ngSanitize', 'ui.bootstrap']);
 
     //config
     project.config(['$routeProvider', function($routeProvider) {
@@ -123,6 +123,16 @@ lecture = function(appName, appHomePath, resourceURL) {
         $scope.callTooltip = function(obj) {
             $( '#'+obj).fadeToggle('slow');
         }
+
+        $scope.status = {
+            isopen: false
+        };
+
+        $scope.toggleDropdown = function($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.status.isopen = !$scope.status.isopen;
+        };
 
     });
     

@@ -3,7 +3,14 @@
 	xsi:schemaLocation="http://www.jasig.org/uportal/web/skin https://source.jasig.org/schemas/resource-server/skin-configuration/skin-configuration-v1.2.xsd">
 
     <css>app/css/bootstrap.dev.3.0.1.modified.v4.css</css>
-    <css resource="true">/rs/font-awesome/4.1.0/css/font-awesome-4.1.0.css</css>
+    <css resource="true">rs/font-awesome/4.3.0/css/font-awesome-4.3.0.min.css</css>
     <css>app/css/lecture.css</css>
+
+    <js resource="true">rs/jquery/2.1.3/jquery-2.1.3.min.js</js>
+    <js resource="true">rs/angularjs/1.3.15/angular-1.3.15.min.js</js>
+    <js resource="true">rs/angular-bootstrap/0.12.1/ui-bootstrap-tpls-0.12.1.min.js</js>
+    <js resource="true">rs/bootstrap/3.3.2/js/bootstrap-3.3.2.min.js</js>
+    <js resource="true">rs/angular-route/1.3.15/angular-route-1.3.15.min.js</js>
+    <js resource="true">rs/angular-sanitize/1.3.15/angular-sanitize-1.3.15.min.js</js>
 	
 </resources>
