@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.esupportail</groupId>
     <artifactId>esup-lecture</artifactId>
@@ -118,25 +119,25 @@
                 </configuration>
             </plugin>
 
-            <!--<plugin>-->
-                <!--<groupId>net.alchim31.maven</groupId>-->
-                <!--<artifactId>yuicompressor-maven-plugin</artifactId>-->
-                <!--<version>1.1</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>compress</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<excludes>-->
-                        <!--<exclude>**/rs/**/*.css</exclude>-->
-                        <!--<exclude>**/rs/**/*.min.js</exclude>-->
-                    <!--</excludes>-->
-                    <!--<suffix>-${project.version}.min</suffix>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
+            <!--<plugin> -->
+            <!--<groupId>net.alchim31.maven</groupId> -->
+            <!--<artifactId>yuicompressor-maven-plugin</artifactId> -->
+            <!--<version>1.1</version> -->
+            <!--<executions> -->
+            <!--<execution> -->
+            <!--<goals> -->
+            <!--<goal>compress</goal> -->
+            <!--</goals> -->
+            <!--</execution> -->
+            <!--</executions> -->
+            <!--<configuration> -->
+            <!--<excludes> -->
+            <!--<exclude>**/rs/**/*.css</exclude> -->
+            <!--<exclude>**/rs/**/*.min.js</exclude> -->
+            <!--</excludes> -->
+            <!--<suffix>-${project.version}.min</suffix> -->
+            <!--</configuration> -->
+            <!--</plugin> -->
 
             <plugin>
                 <groupId>net.jlehtinen.portlet</groupId>
@@ -164,7 +165,8 @@
         </plugins>
         <pluginManagement>
             <plugins>
-                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <!--This plugin's configuration is used to store Eclipse m2e settings
+                    only. It has no influence on the Maven build itself. -->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
@@ -209,6 +211,12 @@
                 <groupId>org.esupportail</groupId>
                 <artifactId>esup-commons2-exceptionHandling</artifactId>
                 <version>${esupcommons.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-simple</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.esupportail</groupId>
@@ -221,12 +229,22 @@
                         </artifactId>
                         <groupId>org.springframework</groupId>
                     </exclusion>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-simple</artifactId>
+                    </exclusion>
                 </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.esupportail</groupId>
                 <artifactId>esup-commons2-jpa</artifactId>
                 <version>${esupcommons.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-simple</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.hibernate</groupId>
@@ -249,8 +267,8 @@
                 <artifactId>jaxen</artifactId>
                 <version>1.1.1</version>
             </dependency>
-            <!-- overwrite xom 1.0 from jaxen to avoid icu4j used.
-                 icu4j is not compatible with jetty -->
+            <!-- overwrite xom 1.0 from jaxen to avoid icu4j used. icu4j is not compatible
+                with jetty -->
             <dependency>
                 <groupId>xom</groupId>
                 <artifactId>xom</artifactId>
@@ -311,6 +329,16 @@
                     </exclusion>
                 </exclusions>
             </dependency>
+            <dependency>
+                <groupId>log4j</groupId>
+                <artifactId>log4j</artifactId>
+                <version>1.2.17</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.20</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -339,8 +367,8 @@
             <groupId>jaxen</groupId>
             <artifactId>jaxen</artifactId>
         </dependency>
-        <!-- overwrite xom 1.0 from jaxen to avoid icu4j used.
-             icu4j is not compatible with jetty -->
+        <!-- overwrite xom 1.0 from jaxen to avoid icu4j used. icu4j is not compatible
+            with jetty -->
         <dependency>
             <groupId>xom</groupId>
             <artifactId>xom</artifactId>
@@ -388,6 +416,10 @@
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
         </dependency>
     </dependencies>
     <properties>
