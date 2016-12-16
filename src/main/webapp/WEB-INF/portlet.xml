@@ -44,4 +44,7 @@
 	<user-attribute>
 		<name>casProxyTicket</name>
 	</user-attribute>
+	<user-attribute>
+		<name>isMemberOf</name>
+	</user-attribute>
 </portlet-app>
