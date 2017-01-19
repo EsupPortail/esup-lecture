@@ -11,7 +11,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -298,26 +301,42 @@ public abstract class Source implements Element, Serializable {
 	 * @throws ComputeItemsException 
 	 */
 	@SuppressWarnings("unchecked")
-	synchronized private void computeItems() throws ComputeItemsException {
-	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("id=" + this.profileId + " - computeItems()");
-    	}
-	   	if (!itemComputed) {
-	   		try {
-	   			//create dom4j document
-	   			Document document = DocumentHelper.parseText(xmlStream);
-	   			//	get encoding
-	   			String encoding = document.getXMLEncoding();
-	   			//lauch Xpath find
-	   			String x = getItemXPath();
+	synchronized private void computeItems(boolean isComplex, ItemParser parser) throws ComputeItemsException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("id=" + this.profileId + " - computeItems()");
+		}
+		if (!itemComputed) {
+			try {
+				// lauch Xpath find
+				String x = getItemXPath();
+				// create dom4j document
+				Document document = null;
+
+				if (isComplex && parser != null) {
+					parser.setItemXpath(this.getItemXPath());
+					LOG.error(parser.getXMLStream());
+					document = DocumentHelper.parseText(parser.getXMLStream());
+				} else {
+					document = DocumentHelper.parseText(xmlStream);
+				}
+				// get encoding
+				String encoding = document.getXMLEncoding();
+
 				XPath xpath = document.createXPath(x);
 				xpath.setNamespaceURIs(getXPathNameSpaces());
 				List<Node> list = xpath.selectNodes(document);
-				//List<Node> list = document.selectNodes(getItemXPath());
+				// List<Node> list = document.selectNodes(getItemXPath());
 				Iterator<Node> iter = list.iterator();
 				while (iter.hasNext()) {
 					Node node = iter.next();
-					Item item = new Item(this);
+					Item item = null;
+					if (!isComplex) {
+						item = new Item(this);
+					} else {
+						//pour le nouveau parametrage
+						item = new ComplexItem(this);
+					}
+
 					StringBuffer xml = new StringBuffer("<?xml version=\"1.0\" encoding=\"");
 					xml.append(encoding);
 					xml.append("\" ?>");
@@ -327,7 +346,8 @@ public abstract class Source implements Element, Serializable {
 					item.setHtmlContent(htmlContent);
 					String MobileHtmlContent = xml2html(xmlAsString, getMobileXsltURL(), encoding);
 					item.setMobileHtmlContent(MobileHtmlContent);
-					//find MD5 of item content for his ID
+					// find MD5 of item content for his ID
+
 					byte[] hash = MessageDigest.getInstance("MD5").digest(xmlAsString.getBytes());
 					StringBuffer hashString = new StringBuffer();
 					for (int i = 0; i < hash.length; ++i) {
@@ -340,6 +360,20 @@ public abstract class Source implements Element, Serializable {
 						}
 					}
 					item.setId(hashString.toString());
+					if (item instanceof ComplexItem && parser != null) {
+						item = (ComplexItem) item;
+						((ComplexItem) item).setAuthor(parser.getItemAuth().get(item.getId()));
+						((ComplexItem) item).setRubriques(parser.getRubriquesItem().get(item.getId()));
+					}
+					try{
+					DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
+					Date odt = df.parse(node.selectSingleNode("pubDate").getText());
+
+					item.setPubDate(Date.from(odt.toInstant()));
+					} catch (Exception e){
+						String errorMsg = "Error parsing Date of the item ";
+						LOG.error(errorMsg, e);
+					}
 					items.add(item);
 				}
 			} catch (DocumentException e) {
@@ -363,8 +397,8 @@ public abstract class Source implements Element, Serializable {
 				LOG.error(errorMsg, e);
 				throw new ComputeItemsException(errorMsg, e);
 			}
-		itemComputed = true;
-	   	}
+			itemComputed = true;
+		}
 	}
 	
 	/**
@@ -433,11 +467,11 @@ public abstract class Source implements Element, Serializable {
 	 * @return the items lits 
 	 * @throws ComputeItemsException 
 	 */
-	protected List<Item> getItems() throws ComputeItemsException {
+	protected List<Item> getItems(boolean isComplex, ItemParser parser) throws ComputeItemsException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + this.profileId + " - getItems()");
     	}
-		computeItems();
+	   	computeItems(isComplex, parser);
 		return items;
 	}
 	

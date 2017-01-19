@@ -118,27 +118,6 @@
 					<wtpversion>1.5</wtpversion>
 				</configuration>
 			</plugin>
-
-			<!--<plugin> -->
-			<!--<groupId>net.alchim31.maven</groupId> -->
-			<!--<artifactId>yuicompressor-maven-plugin</artifactId> -->
-			<!--<version>1.1</version> -->
-			<!--<executions> -->
-			<!--<execution> -->
-			<!--<goals> -->
-			<!--<goal>compress</goal> -->
-			<!--</goals> -->
-			<!--</execution> -->
-			<!--</executions> -->
-			<!--<configuration> -->
-			<!--<excludes> -->
-			<!--<exclude>**/rs/**/*.css</exclude> -->
-			<!--<exclude>**/rs/**/*.min.js</exclude> -->
-			<!--</excludes> -->
-			<!--<suffix>-${project.version}.min</suffix> -->
-			<!--</configuration> -->
-			<!--</plugin> -->
-
 			<plugin>
 				<groupId>net.jlehtinen.portlet</groupId>
 				<artifactId>portlet-prototyping-maven-plugin</artifactId>
@@ -305,7 +284,7 @@
 			<dependency>
 				<groupId>org.jasig.resourceserver</groupId>
 				<artifactId>resource-server-utils</artifactId>
-				<version>1.0.35</version>
+				<version>1.0.43</version>
 				<exclusions>
 					<exclusion>
 						<artifactId>slf4j-api</artifactId>
@@ -345,7 +324,17 @@
 					<artifactId>xercesImpl</artifactId>
 					<groupId>xerces</groupId>
 				</exclusion>
+				<exclusion>
+					<groupId>xerces</groupId>
+					<artifactId>xmlParserAPIs</artifactId>
+				</exclusion>
 			</exclusions>
+		</dependency>
+		<!-- pour pouvoir parser resourcesLecture.xml -->
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.4.01</version>
 		</dependency>
 		<!-- overwrite xom 1.0 from jaxen to avoid icu4j used. icu4j is not compatible 
 			with jetty -->
@@ -357,10 +346,10 @@
 					<artifactId>xercesImpl</artifactId>
 					<groupId>xerces</groupId>
 				</exclusion>
-				<exclusion>
-					<artifactId>xmlParserAPIs</artifactId>
-					<groupId>xerces</groupId>
-				</exclusion>
+				<!-- <exclusion> -->
+				<!-- <artifactId>xmlParserAPIs</artifactId> -->
+				<!-- <groupId>xerces</groupId> -->
+				<!-- </exclusion> -->
 			</exclusions>
 		</dependency>
 		<dependency>

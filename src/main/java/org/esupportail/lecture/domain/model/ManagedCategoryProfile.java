@@ -102,7 +102,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	private VisibilitySets visibility;
 
-
+	private boolean isFromPublisher = false ;
+	private String urlActualites;
 	/*
 	 ************************** INITIALIZATION ******************************** */
 
@@ -678,5 +679,23 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		this.fileId = fileId;
 		super.setId(super.makeId(contextId, "m", fileId));
 	}
+
+	public boolean isFromPublisher() {
+		return isFromPublisher;
+	}
+	public void setFromPublisher(boolean b) {
+		this.isFromPublisher=b;
+		
+	}
+
+	public String getUrlActualites() {
+		return urlActualites;
+	}
+	
+	public void setUrlActualites(String urlActualites) {
+		this.urlActualites = urlActualites;
+	}
+
+	
 
 }

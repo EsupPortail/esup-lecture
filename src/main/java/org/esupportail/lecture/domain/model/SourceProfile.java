@@ -78,6 +78,15 @@ public abstract class SourceProfile implements ElementProfile {
 	 */
 	private int timeOut;
 
+	public boolean isComplexItems() {
+		return complexItems;
+	}
+
+	public void setComplexItems(boolean complexItems) {
+		this.complexItems = complexItems;
+	}
+
+	private boolean complexItems;
 	/*
 	 *************************** INIT	 ******************************** */	
 		
@@ -118,7 +127,17 @@ public abstract class SourceProfile implements ElementProfile {
     	}
 		// GB : ligne a supprimer loadSource();
 		Source s = getElement();
-		return s.getItems();
+		List<Item> ret = null;
+	   	if ( this.isComplexItems()){
+	   		//Produit le flux xml (liste d'items) des flux publisher : 
+	   		//	gere la visibilité; les rubriques; permet de generer les rubriques et les auteurs
+	   		ItemParser parser = new ItemParser(s);
+	   		 ret = s.getItems(true, parser);
+	   	}else{
+	   		 ret = s.getItems(false, null);
+	   		}
+		return ret;
+		//return s.getItems();
 	}
 
 	/**

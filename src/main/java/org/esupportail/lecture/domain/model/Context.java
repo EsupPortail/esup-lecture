@@ -49,6 +49,8 @@ public class Context {
 	 * The context id.
 	 */
 	private String id;
+	
+	private Boolean modePublisher;
 
 	// later 
 //	/**
@@ -367,6 +369,14 @@ public class Context {
 	 */
 	public void setTreeVisible(TreeDisplayMode treeVisible) {
 		this.treeVisible = treeVisible;
+	}
+
+	public Boolean getModePublisher() {
+		return modePublisher;
+	}
+
+	public void setModePublisher(Boolean modePublisher) {
+		this.modePublisher = modePublisher;
 	}
 	
 }

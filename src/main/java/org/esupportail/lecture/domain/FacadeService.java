@@ -22,6 +22,8 @@ import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
+import antlr.collections.List;
+
 /**
  * The facade service.
  * It provide services from DomainService and external service
@@ -96,8 +98,8 @@ public class FacadeService implements InitializingBean {
 	 * @param ctxId : Context ID
 	 * @return Computed web bean context of the connected user.
 	 */
-	public ContextWebBean getContext(String userId, String ctxId) {
-		return domainService.getContext(userId, ctxId);
+	public ContextWebBean getContext(String userId, String ctxId, boolean viewDef, int nbreArticle, String lienVue) {
+		return domainService.getContext(userId, ctxId, viewDef, nbreArticle,lienVue);
 	}
 
 	public ContextWebBean getEditContext(String userId, String ctxId) {
@@ -114,9 +116,9 @@ public class FacadeService implements InitializingBean {
 	 * @throws InternalDomainException 
 	 */
 	public void markItemReadMode(final String userId, final String sourceId, 
-			final String itemId, final boolean isRead)
+			final String itemId, final boolean isRead, final boolean isPublisherMode)
 	throws InternalDomainException {
-		domainService.markItemReadMode(userId, sourceId, itemId, isRead);
+		domainService.markItemReadMode(userId, sourceId, itemId, isRead,isPublisherMode);
 	}
 
 	/**
@@ -270,5 +272,17 @@ public class FacadeService implements InitializingBean {
 		return externalService;
 	}
 
+	public boolean getCurrentViewDef() {
+		return externalService.getCurrentViewDef();
+	}
+
+
+	public int getNombreArcticle() {
+		return externalService.getNombreArticle();
+	}
+	
+	public String getLienVue() {
+		return externalService.getLienVue();
+	}
 
 }

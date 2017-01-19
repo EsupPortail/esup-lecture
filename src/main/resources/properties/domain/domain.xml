@@ -93,6 +93,9 @@
 		<property name="maxTreeSize" value="100"/>
 		<property name="defaultTreeSize" value="20"/>
 		<property name="configTtl" value="120"/>
+		<property name="viewDef" value="viewDef"/>
+		<property name="nbreArticle" value="nbreArticle"/>
+		<property name="lienVue" value="lienVue"/>
 		
 	</bean>
 	

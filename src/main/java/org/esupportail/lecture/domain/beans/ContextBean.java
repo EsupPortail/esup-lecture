@@ -35,6 +35,7 @@ public class ContextBean {
 	 */
 	private String description;
 	
+	private boolean modePublisher;
 	/**
 	 * size of tree window.
 	 */
@@ -66,6 +67,7 @@ public class ContextBean {
 		setId(context.getId());
 		setOrderedCategoryIDs(context.getOrderedCategoryIDs());
 		setTreeVisible(context.getTreeVisible());
+		setModePublisher(context.getModePublisher());
 	}
 	
 	/*
@@ -188,5 +190,16 @@ public class ContextBean {
 	public void setTreeVisible(final TreeDisplayMode treeVisible) {
 		this.treeVisible = treeVisible;
 	}
+
+	public boolean isModePublisher() {
+		return modePublisher;
+	}
+
+	public void setModePublisher(boolean modePublisher) {
+		this.modePublisher = modePublisher;
+	}
+
+	
+	
 	
 }

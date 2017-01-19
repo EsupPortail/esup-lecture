@@ -3,9 +3,12 @@ package org.esupportail.lecture.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.esupportail.lecture.web.beans.CategoryWebBean;
+import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
 
@@ -71,5 +74,67 @@ public class SeviceUtilLecture {
 		return listCatFiltre;
 		
 	}
+	
+	public static List<ItemWebBean> getListItemAccueil(ContextWebBean contexte,List<CategoryWebBean> listCat){
+		List<ItemWebBean> listeItemNonDup = new ArrayList<ItemWebBean>();
+		List<ItemWebBean> listeItemAcceuil = new ArrayList<ItemWebBean>();
+		int nbrArticleNonLu=0;
+		Set<String> idBean = new HashSet<String>();
+		int i = 0;
+		for (CategoryWebBean cat : listCat) {
+
+			for (SourceWebBean src : cat.getSources()) {
+
+				for (ItemWebBean item : src.getItems()) {
+
+					if (src.getHighlight()) {
+						if (i < contexte.getNombreArticle()) {
+							listeItemAcceuil.add(item);
+							idBean.add(item.getId());
+							if(!item.isRead()){
+								nbrArticleNonLu++;
+							}
+							i++;
+							
+						}
+					} else {
+						//liste des articles qui ne sont pas à la une
+						if (!(idBean.contains(item.getId()))) {
+							listeItemNonDup.add(item);
+							idBean.add(item.getId());
+							if(!item.isRead()){
+								nbrArticleNonLu++;
+							}
+						}
+					}
+				}
+			}
+		}
+		contexte.setNbrUnreadItem(nbrArticleNonLu);
+		if (i < contexte.getNombreArticle()) {
+			for (ItemWebBean item : listeItemNonDup) {
+				// non lu en premier
+					if (!item.isRead()&&i<contexte.getNombreArticle()) {
+						listeItemAcceuil.add(item);
+						i++;
+					}
+			}
+			if (i < contexte.getNombreArticle()){
+				for (ItemWebBean item : listeItemNonDup) {
+				// compléter par les lus
+						if (item.isRead()&&i<contexte.getNombreArticle()) {
+							listeItemAcceuil.add(item);
+							i++;
+						}
+				
+				}	
+			}
+		}
+		
+		return listeItemAcceuil;
+		
+	}
+	
+	
 
 }

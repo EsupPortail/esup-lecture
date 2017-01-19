@@ -395,6 +395,12 @@ public class ChannelConfig  {
 			Context c = new Context();
 			c.setId(context.valueOf("@id"));
 			c.setName(context.valueOf("@name"));
+			//pour distinguer le nouveau mode d'affichage
+			if("yes".equals(context.valueOf("@isPublisher"))){
+				c.setModePublisher(true);
+			}else{
+				c.setModePublisher(false);
+			}
 			//treeVisible
 			String treeVisible = context.valueOf("@treeVisible");
 			if (treeVisible.equals("no")) {
@@ -478,6 +484,13 @@ public class ChannelConfig  {
 						visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed", categoryProfile));
 						visibilitySets.setObliged(loadDefAndContentSets("obliged", categoryProfile));
 						mcp.setVisibility(visibilitySets);
+						//pour gerer le nouveau parametrage
+						if(categoryProfile.valueOf("@urlCategory") != null && !"".equals(categoryProfile.valueOf("@urlCategory"))){
+							mcp.setCategoryURL(categoryProfile.valueOf("@urlCategory"));
+						}else if (!"".equals(categoryProfile.valueOf("@urlActualites"))){
+							mcp.setFromPublisher(true);
+							mcp.setUrlActualites(categoryProfile.valueOf("@urlActualites"));
+						}
 
 						channel.addManagedCategoryProfile(mcp);
 						c.addRefIdManagedCategoryProfile(mcp.getId());

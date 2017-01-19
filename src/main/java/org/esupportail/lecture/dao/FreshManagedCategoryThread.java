@@ -87,6 +87,10 @@ public class FreshManagedCategoryThread extends Thread {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("in getFreshManagedCategory");
 		}
+		//pour gerer le nouveau paramétrage
+		if (profile.isFromPublisher()) {
+			return this.getFreshManagedCategoryActus(profile, ptCasGet);
+		}
 		// TODO (RB <-- GB) gestion des attributs xml IMPLIED
 		ManagedCategory ret = new ManagedCategory(profile);
 		try {
@@ -197,6 +201,54 @@ public class FreshManagedCategoryThread extends Thread {
 			String msg = "getFreshManagedCategory(" + profileId + "). Can't read configuration file.";
 			LOG.error(msg, e);
 			throw new XMLParseException(msg , e);
+		}
+		return ret;
+	}
+
+	private ManagedCategory getFreshManagedCategoryActus(ManagedCategoryProfile profile, String ptCasGet) {
+		ManagedCategory ret = new ManagedCategory(profile);
+
+		String actualiteURL = profile.getUrlActualites();
+		SAXReader reader = new SAXReader();
+		try {
+			ret.setName("Category-Publisher-"+profile.getId());
+			ret.setDescription("Publisher category n° "+profile.getId());
+			Hashtable<String, SourceProfile> sourceProfiles = new Hashtable<String, SourceProfile>();
+			Map<String, Integer> orderedSourceIDs = Collections.synchronizedMap(new HashMap<String, Integer>());
+			Document doc = reader.read(actualiteURL);
+			Element root = doc.getRootElement();
+			List<Node> rubriquesNodes = root.selectNodes("/actualites/rubriques/rubrique");
+			int xmlOrder = 1;
+			for (Node node : rubriquesNodes) {
+				RubriquesSourceProfile sp = new RubriquesSourceProfile(ret);
+				sp.setName(node.selectSingleNode("name").getText());
+				sp.setColor(node.selectSingleNode("color").getText());
+				sp.setHighlight(false);
+				if (node.selectSingleNode("highlight").getText().equals("true")) {
+					sp.setHighlight(true);
+				}
+				sp.setUuid(Integer.valueOf(node.selectSingleNode("uuid").getText()));
+				sp.setSourceURL(profile.getUrlActualites()+"#"+sp.getUuid());
+				sp.setFileId(sp.getName().trim()+sp.getUuid());
+				sp.setComplexItems(true);
+				sp.setItemXPath(node.valueOf("@itemXPath"));
+				if(sp.getHighlight()){
+					for(Map.Entry<String, Integer> entry  : orderedSourceIDs.entrySet()){
+						entry.setValue(entry.getValue() + 1);
+					}
+					orderedSourceIDs.put(sp.getId(), 1);
+					xmlOrder += 1;
+				}else{
+					orderedSourceIDs.put(sp.getId(), xmlOrder);
+				}
+				xmlOrder += 1;
+				sourceProfiles.put(sp.getId(), sp);
+				
+			}
+			ret.setSourceProfilesHash(sourceProfiles);
+			ret.setOrderedSourceIDs(orderedSourceIDs);
+		} catch (DocumentException e) {
+			LOG.error("error reading document " + e);
 		}
 		return ret;
 	}

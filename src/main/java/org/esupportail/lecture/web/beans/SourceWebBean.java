@@ -47,6 +47,12 @@ public class SourceWebBean implements Comparable<SourceWebBean> {
      */
     private ItemDisplayMode itemDisplayMode;
     /**
+     * color of the source
+     */
+    private String color;
+    
+    private Boolean Highlight;
+	/**
      * List of items of source.
      */
     private List<ItemWebBean> items;
@@ -72,6 +78,9 @@ public class SourceWebBean implements Comparable<SourceWebBean> {
                 itemWebBean.setMobileHtmlContent(itemBean.getMobileHtmlContent());
                 itemWebBean.setRead(itemBean.isRead());
                 itemWebBean.setDummy(itemBean.isDummy());
+                itemWebBean.setAuthor(itemBean.getAuthor());
+                itemWebBean.setRubriques(itemBean.getRubriques());
+                itemWebBean.setPubDate(itemBean.getPubDate());
                 items.add(itemWebBean);
             }
         }
@@ -111,6 +120,20 @@ public class SourceWebBean implements Comparable<SourceWebBean> {
     public AvailabilityMode getType() {
         return type;
     }
+    
+    /**
+     * @return color of source
+     */
+    public String getColor() {
+		return color;
+	}
+
+	/**
+	 * @param color
+	 */
+	public void setColor(String color) {
+		this.color = color;
+	}
 
     /**
      * @param type
@@ -270,4 +293,15 @@ public class SourceWebBean implements Comparable<SourceWebBean> {
         }
         return false;
     }
+
+	public Boolean getHighlight() {
+		return Highlight;
+	}
+
+	public void setHighlight(Boolean highlight) {
+		Highlight = highlight;
+	}
+
+	
+
 }

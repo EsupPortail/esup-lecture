@@ -34,6 +34,10 @@ import org.springframework.util.StringUtils;
  * - single access to DaoService, externalService, channel for domain layer
  * @author gbouteil
  */
+/**
+ * @author rihab
+ *
+ */
 public class DomainTools implements InitializingBean {
 
 	/*
@@ -118,12 +122,52 @@ public class DomainTools implements InitializingBean {
 	 * default TTL of config file
 	 */
 	private static int configTtl;
+	/**
+	 * the current view
+	 */
+	private static  String viewDef;
 
+	/**
+	 * Number of articles to display
+	 */
+	private static  String nbreArticle;
 
+    /**
+     * link to see all items
+     */
+    private static String lienVue;
 
 
 	/*
 	 ************************** INIT ******************************** */
+
+	public static String getViewDef() {
+		return viewDef;
+	}
+
+
+
+
+	public static void setViewDef(String viewDef) {
+		DomainTools.viewDef = viewDef;
+	}
+
+
+
+
+	public static  String getNbreArticle() {
+		return nbreArticle;
+	}
+
+
+
+
+	public static  void setNbreArticle(String nbreArticle) {
+		DomainTools.nbreArticle = nbreArticle;
+	}
+
+
+
 
 	/**
 	 * Dfault constructor.
@@ -481,6 +525,20 @@ public class DomainTools implements InitializingBean {
 	}
 
 
+
+
+	public static String getLienVue() {
+		return lienVue;
+	}
+
+
+
+
+	public static void setLienVue(String lienVue) {
+		DomainTools.lienVue = lienVue;
+	}
+
+	
 
 
 }

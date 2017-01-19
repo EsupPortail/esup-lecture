@@ -30,7 +30,7 @@ public interface DomainService {
 	 * @param ctxId : Context ID
 	 * @return Computed web bean context of the connected user.
 	 */
-	public ContextWebBean getContext(String userId, String ctxId);
+	public ContextWebBean getContext(String userId, String ctxId, boolean viewDef, int nombreArticle,String lienVue);
 
 	/**
 	 * @param userId : User ID
@@ -48,7 +48,7 @@ public interface DomainService {
 	 * @throws InternalDomainException 
 	 * @see FacadeService#marckItemReadMode(UserProfile, String, String, boolean)
 	 */
-	void markItemReadMode(String userId, String sourceId, String itemId, boolean isRead)  
+	void markItemReadMode(String userId, String sourceId, String itemId, boolean isRead, boolean isPubliserMode)  
 	throws InternalDomainException;
 
 	/**

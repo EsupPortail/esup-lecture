@@ -8,6 +8,7 @@
 <!ATTLIST context
     name CDATA #REQUIRED
 	id ID #REQUIRED
+	isPublisher (yes|no) "no"
     treeVisible (yes|no|forceNo) "yes"
     edit (all|personal|managed|no) "no">
 

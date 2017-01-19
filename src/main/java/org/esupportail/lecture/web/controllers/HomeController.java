@@ -2,6 +2,7 @@ package org.esupportail.lecture.web.controllers;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.commons.services.portal.PortalUtils;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.utils.SeviceUtilLecture;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
@@ -26,8 +27,10 @@ import javax.portlet.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 import java.util.function.Predicate;
 
 @Controller
@@ -57,9 +60,17 @@ public class HomeController extends TwoPanesController {
 		}
 		ContextWebBean contexte = getContext();
 		List<CategoryWebBean> listCat = contexte.getCategories();
+		List<ItemWebBean> listeItemAcceuil = new ArrayList<ItemWebBean>();
+		int nbrArticleNonLu=0;
+		if(contexte.isViewDef()){
+			//la liste des articles à afficher+nombre d'articles non lus
+			listeItemAcceuil = SeviceUtilLecture.getListItemAccueil(contexte, listCat);
+		}
 		model = bindInitialModel(model, response, request);
 		model.addAttribute("listCat", listCat);
 		model.addAttribute("contexte", contexte);
+		model.addAttribute("nombreArticleNonLu",nbrArticleNonLu);
+		model.addAttribute("listeItemAcceuil", listeItemAcceuil);
 		return "home";
 	}
 
@@ -89,7 +100,8 @@ public class HomeController extends TwoPanesController {
 	public @ResponseBody void toggleItemReadState(@RequestParam(required = true, value = "p1") String catID,
 			@RequestParam(required = true, value = "p2") String srcID,
 			@RequestParam(required = true, value = "p3") String itemID,
-			@RequestParam(required = true, value = "p4") boolean isRead) {
+			@RequestParam(required = true, value = "p4") boolean isRead,
+			@RequestParam(required = true, value = "p5") boolean isPublisherMode){
 		if (isGuestMode()) {
 			throw new SecurityException("Try to access restricted function is guest mode");
 		}
@@ -97,7 +109,7 @@ public class HomeController extends TwoPanesController {
 			LOG.debug("toggleItemReadState(" + catID + ", " + srcID + ", " + itemID + ")");
 		}
 		try {
-			facadeService.markItemReadMode(getUID(), srcID, itemID, isRead);
+			facadeService.markItemReadMode(getUID(), srcID, itemID, isRead,isPublisherMode);
 		} catch (Exception e) {
 			throw new WebException("Error in toggleItemReadState", e);
 		}
@@ -114,10 +126,7 @@ public class HomeController extends TwoPanesController {
 			@RequestParam(required = true, value = "p2") String idCat,
 			@RequestParam(required = true, value = "p3") String idSrc,
 			@RequestParam(required = true, value = "p4") String filtreNonLu, Model model) {
-		List<CategoryWebBean> listCatFiltre = new ArrayList<CategoryWebBean>();// contient
-																				// un
-																				// seul
-																				// élément
+		List<CategoryWebBean> listCatFiltre = new ArrayList<CategoryWebBean>();
 		if (isGuestMode()) {
 			throw new SecurityException("Try to access restricted function is guest mode");
 		}
@@ -131,11 +140,11 @@ public class HomeController extends TwoPanesController {
 							LOG.debug("toggleAllItemReadState(" + cat.getId() + ", " + src.getId() + ", " + item.getId()
 									+ ")");
 						}
-						facadeService.markItemReadMode(getUID(), src.getId(), item.getId(), isRead);
-						listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc, filtreNonLu);
+						facadeService.markItemReadMode(getUID(), src.getId(), item.getId(), isRead,false);
 					}
 				}
 			}
+			listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc, filtreNonLu);
 			model.addAttribute("listCat", listCatFiltre);
 			model.addAttribute("isRead", isRead);
 		} catch (Exception e) {
@@ -146,6 +155,7 @@ public class HomeController extends TwoPanesController {
 
 	/**
 	 * action : Filter items by idCat, idSrc,
+	 * 
 	 * @param idCat
 	 * @param idSrc
 	 * @param filtreNonLu
@@ -155,7 +165,8 @@ public class HomeController extends TwoPanesController {
 	@ResourceMapping(value = "FilteredItem")
 	public @ResponseBody ModelAndView FilteredItem(@RequestParam(required = true, value = "p1") String idCat,
 			@RequestParam(required = true, value = "p2") String idSrc,
-			@RequestParam(required = true, value = "p3") String filtreNonLu, Model model) {
+			@RequestParam(required = true, value = "p3") String filtreNonLu
+			,Model model) {
 		List<CategoryWebBean> listCatFiltre = new ArrayList<CategoryWebBean>();
 		if (isGuestMode()) {
 			throw new SecurityException("Try to access restricted function is guest mode");
@@ -164,6 +175,7 @@ public class HomeController extends TwoPanesController {
 			ContextWebBean contexte = getContext();
 			List<CategoryWebBean> listCat = contexte.getCategories();
 			listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc, filtreNonLu);
+			model.addAttribute("contexte", contexte);
 			model.addAttribute("listCat", listCatFiltre);
 		} catch (Exception e) {
 			throw new WebException("Error in FilteredItem", e);
@@ -179,6 +191,9 @@ public class HomeController extends TwoPanesController {
 	private ContextWebBean getContext() {
 		String ctxId;
 		ctxId = facadeService.getCurrentContextId();
-		return facadeService.getContext(getUID(), ctxId);
+		boolean viewDef = facadeService.getCurrentViewDef();
+		int nbreArticle = facadeService.getNombreArcticle();
+		String lienVue =facadeService.getLienVue();
+		return facadeService.getContext(getUID(), ctxId, viewDef, nbreArticle,lienVue);
 	}
 }
