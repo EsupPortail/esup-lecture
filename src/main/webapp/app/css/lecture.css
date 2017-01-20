@@ -39,10 +39,9 @@
 	.esup-lecture i{
 		cursor:pointer;
 	}
-	/*.esup-lecture .scrollDivArticle{
-		height: 80vh;
-		overflow: scroll;
-	} */
+	.esup-lecture .cursPoint{
+		cursor:pointer;
+	}
 	@media only screen and (max-width: 640px) {
 		.esup-lecture .navModeDesk {
 	        	display: none;

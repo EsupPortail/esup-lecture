@@ -11,7 +11,7 @@
 <nav class="col-sm-3 navModeDesk" id='<portlet:namespace />listOfCat'>
 	<ul class="nav nav-pills nav-stacked menuRubrique">
 		<li>
-			<div class="row" onclick="<portlet:namespace />AfficherTout()">
+			<div class="row" onclick="AfficherTout()">
 				Toutes les actualités<span class="badge pull-right"><c:out
 						value="xx"></c:out></span>
 			</div>
@@ -20,7 +20,7 @@
 			<c:forEach items="${listCat}" var="cat">
 				<c:forEach items="${cat.sources}" var="src">
 					<li><div class="row"
-							onclick="<portlet:namespace />filtrerParRubrique('${cat.id}','${src.id}','${src.name}')">
+							onclick="filtrerParRubrique('${cat.id}','${src.id}','${src.name}')">
 							<c:out value="${src.name}"></c:out>
 							<span class="badge pull-right"
 								style="background-color:${src.color}"><c:out

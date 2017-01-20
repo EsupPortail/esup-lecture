@@ -18,7 +18,7 @@
 				</div>
 				<input type="hidden" class="eye${article.id}"
 					value="${article.id}${idSources}" />
-				<c:if test="${cat.userCanMarkRead=='true'}">
+				<c:if test="${cat.userCanMarkRead=='false'}">
 					<div class='ol-xs-1 col-sm-1 articleDiv'
 						id="eye${article.id}${idSources}">
 						<c:if test="${article.read=='true'}">
@@ -26,11 +26,11 @@
 								class="listeIdArti${contexte.modePublisher}"
 								value="contenuArti${contexte.modePublisher}${article.id}${idSources}" />
 							<i class="fa fa-eye-slash fa-stack-1x"
-								onclick="<portlet:namespace />marquerItemLu('${cat.id}','${src.id}','${article.id}',${article.read},${contexte.modePublisher})"></i>
+								onclick="marquerItemLu('${cat.id}','${src.id}','${article.id}',${article.read},${contexte.modePublisher})"></i>
 						</c:if>
 						<c:if test="${article.read=='false'}">
 							<i class="fa fa-eye fa-stack-1x"
-								onclick="<portlet:namespace />marquerItemLu('${cat.id}','${src.id}','${article.id}',${article.read},${contexte.modePublisher})"></i>
+								onclick="marquerItemLu('${cat.id}','${src.id}','${article.id}',${article.read},${contexte.modePublisher})"></i>
 						</c:if>
 					</div>
 				</c:if>
