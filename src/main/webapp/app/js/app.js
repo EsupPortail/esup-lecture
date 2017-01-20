@@ -90,12 +90,13 @@ lecture.init = function($, namespace, portletId,urlMarkRead, urlMarkAllRead, url
 	 	function filtrerNonLus(){
 	 		var optionChoisit=$("#" + portletId + "listNonLu").val();
 	 		var catSelectionne=$("#" + portletId + "catSeletc").val();
-	 		var rubSelectionne=$("#" + portletId + "SrcSeletc").val();
+	 		var nomRub =$("#" + portletId + "rubSeletc").val();
+	 		var idrubSelectionne=$("#" + portletId + "SrcSeletc").val();
 	 		var urlAjax = urlFiltrItem;
 	 			$.ajax({
 	 				url : urlAjax,
 	 				type : 'GET',
-	 				data : 'p1=' + catSelectionne + '&p2=' + rubSelectionne
+	 				data : 'p1=' + catSelectionne + '&p2=' + idrubSelectionne+'&nomSrc='+nomRub
 	 						+ '&p3=' + optionChoisit,
 	 				success : function(reponse) {
 	 					$("#" + portletId + "zoneArticles").html(reponse);
@@ -111,6 +112,7 @@ lecture.init = function($, namespace, portletId,urlMarkRead, urlMarkAllRead, url
 	 		function filtrerParCategorie(catid) {
 	 			$("#" + portletId + "catSeletc").val(catid);
 	 			$("#" + portletId + "SrcSeletc").val('');
+	 			$("#" + portletId + "rubSeletc").val('');
 	 			filtrerNonLus();
 	 		}
 	 		window.filtrerParCategorie = filtrerParCategorie;
@@ -123,6 +125,7 @@ lecture.init = function($, namespace, portletId,urlMarkRead, urlMarkAllRead, url
 	 			}
 	 			$("#" + portletId + "catSeletc").val(catid);
 	 			$("#" + portletId + "SrcSeletc").val(srcid);
+	 			$("#" + portletId + "rubSeletc").val(afficherRubSelect);
 	 			filtrerNonLus();
 	 		}
 	 		window.filtrerParRubrique = filtrerParRubrique;
@@ -130,6 +133,7 @@ lecture.init = function($, namespace, portletId,urlMarkRead, urlMarkAllRead, url
 	 		function AfficherTout() {
 	 			$("#" + portletId + "catSeletc").val('');
 	 			$("#" + portletId + "SrcSeletc").val('');
+	 			$("#" + portletId + "rubSeletc").val('');
 	 			var reponse = "<label>Toutes les actualités</label>";
 	 			$("#" + portletId + "rubSelectedDiv").html(reponse);
 	 			filtrerNonLus();

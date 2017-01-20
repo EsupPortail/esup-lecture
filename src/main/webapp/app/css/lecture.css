@@ -42,6 +42,12 @@
 	.esup-lecture .cursPoint{
 		cursor:pointer;
 	}
+	.esup-lecture .divLargeWith{
+		width: 200px;
+	}
+	.esup-lecture .largeHeadPanel{
+		height: 50px;
+	}
 	@media only screen and (max-width: 640px) {
 		.esup-lecture .navModeDesk {
 	        	display: none;

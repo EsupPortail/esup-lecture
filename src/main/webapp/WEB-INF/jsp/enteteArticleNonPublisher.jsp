@@ -12,7 +12,7 @@
 			<c:set var="affichereye" value="true"></c:set>
 		</c:if>
 	</c:forEach>
-	<c:if test="${affichereye=='false'}">
+	<c:if test="${affichereye=='true'}">
 		<div class="col-xs-1 col-sm-1">
 			<i class="fa fa-eye-slash fa-stack-1x"
 				onclick="marquerToutItemLu(true)"
@@ -32,7 +32,7 @@
 				data-placement="top" title="afficher la liste des rubriques"></i>
 		</div>
 	</c:if>
-	<c:if test="${affichereye=='false'}">
+	<c:if test="${affichereye=='true'}">
 		<div class="col-xs-1 col-sm-1">
 			<i class="fa fa-eye fa-stack-1x"
 				onclick="marquerToutItemLu(false)"

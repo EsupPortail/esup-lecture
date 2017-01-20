@@ -144,7 +144,7 @@ public class HomeController extends TwoPanesController {
 					}
 				}
 			}
-			listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc, filtreNonLu);
+			listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc,"", filtreNonLu);
 			model.addAttribute("listCat", listCatFiltre);
 			model.addAttribute("isRead", isRead);
 		} catch (Exception e) {
@@ -165,7 +165,8 @@ public class HomeController extends TwoPanesController {
 	@ResourceMapping(value = "FilteredItem")
 	public @ResponseBody ModelAndView FilteredItem(@RequestParam(required = true, value = "p1") String idCat,
 			@RequestParam(required = true, value = "p2") String idSrc,
-			@RequestParam(required = true, value = "p3") String filtreNonLu
+			@RequestParam(required = true, value = "p3") String filtreNonLu,
+			@RequestParam(required = true, value = "nomSrc") String nameSrc
 			,Model model) {
 		List<CategoryWebBean> listCatFiltre = new ArrayList<CategoryWebBean>();
 		if (isGuestMode()) {
@@ -174,7 +175,7 @@ public class HomeController extends TwoPanesController {
 		try {
 			ContextWebBean contexte = getContext();
 			List<CategoryWebBean> listCat = contexte.getCategories();
-			listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc, filtreNonLu);
+			listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc,nameSrc, filtreNonLu);
 			model.addAttribute("contexte", contexte);
 			model.addAttribute("listCat", listCatFiltre);
 		} catch (Exception e) {

@@ -18,7 +18,7 @@
 				</div>
 				<input type="hidden" class="eye${article.id}"
 					value="${article.id}${idSources}" />
-				<c:if test="${cat.userCanMarkRead=='false'}">
+				<c:if test="${cat.userCanMarkRead=='true'}">
 					<div class='ol-xs-1 col-sm-1 articleDiv'
 						id="eye${article.id}${idSources}">
 						<c:if test="${article.read=='true'}">
@@ -39,7 +39,7 @@
 				<div class='row esup_lecture_margin_bottom rubriqueArticle'>
 					<div class="col-xs-8 col-sm-8 col-md-offset-2">
 						<c:forEach items="${article.rubriques}" var="rub">
-							<span class="badge" style="background-color:${rub.couleur}"><c:out
+							<span class="badge" style="background-color:${rub.couleur}" onclick="filtrerParRubrique('${cat.id}','','${rub.nom}')"><c:out
 									value="${rub.nom}"></c:out></span>
 						</c:forEach>
 					</div>
