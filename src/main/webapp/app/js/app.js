@@ -87,7 +87,10 @@ lecture.init = function($, namespace, portletId,urlMarkRead, urlMarkAllRead, url
 	 	}
 	 	window.marquerToutItemLu=marquerToutItemLu;
 //	 	//filtrer les articles
-	 	function filtrerNonLus(){
+	 	function filtrerNonLus(valFilter){
+	 		if(valFilter!=''){
+	 		$("#" + portletId + "listNonLu").val(valFilter);
+	 		}
 	 		var optionChoisit=$("#" + portletId + "listNonLu").val();
 	 		var catSelectionne=$("#" + portletId + "catSeletc").val();
 	 		var nomRub =$("#" + portletId + "rubSeletc").val();
@@ -113,7 +116,7 @@ lecture.init = function($, namespace, portletId,urlMarkRead, urlMarkAllRead, url
 	 			$("#" + portletId + "catSeletc").val(catid);
 	 			$("#" + portletId + "SrcSeletc").val('');
 	 			$("#" + portletId + "rubSeletc").val('');
-	 			filtrerNonLus();
+	 			filtrerNonLus('');
 	 		}
 	 		window.filtrerParCategorie = filtrerParCategorie;
 	 		
@@ -126,7 +129,7 @@ lecture.init = function($, namespace, portletId,urlMarkRead, urlMarkAllRead, url
 	 			$("#" + portletId + "catSeletc").val(catid);
 	 			$("#" + portletId + "SrcSeletc").val(srcid);
 	 			$("#" + portletId + "rubSeletc").val(afficherRubSelect);
-	 			filtrerNonLus();
+	 			filtrerNonLus('');
 	 		}
 	 		window.filtrerParRubrique = filtrerParRubrique;
 
@@ -136,7 +139,7 @@ lecture.init = function($, namespace, portletId,urlMarkRead, urlMarkAllRead, url
 	 			$("#" + portletId + "rubSeletc").val('');
 	 			var reponse = "<label>Toutes les actualités</label>";
 	 			$("#" + portletId + "rubSelectedDiv").html(reponse);
-	 			filtrerNonLus();
+	 			filtrerNonLus('');
 	 		}
 	 		window.AfficherTout = AfficherTout;
 	 		

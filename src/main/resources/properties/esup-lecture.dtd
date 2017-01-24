@@ -10,6 +10,7 @@
 	id ID #REQUIRED
 	isPublisher (yes|no) "no"
     treeVisible (yes|no|forceNo) "yes"
+    userCanMarkRead (yes|no) "yes"
     edit (all|personal|managed|no) "no">
 
 <!ELEMENT description (#PCDATA)>
@@ -21,6 +22,7 @@
 <!ELEMENT categoryProfilesUrl EMPTY>
 <!ATTLIST categoryProfilesUrl
     url CDATA #REQUIRED
+    userCanMarkRead (yes|no) "yes"
     timeout CDATA #REQUIRED
     idPrefix CDATA #IMPLIED>
 

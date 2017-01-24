@@ -39,6 +39,7 @@ public class ContextBean {
 	/**
 	 * size of tree window.
 	 */
+	private boolean userCanMarckRead;
 	private int treeSize;
 
 	/**
@@ -68,11 +69,20 @@ public class ContextBean {
 		setOrderedCategoryIDs(context.getOrderedCategoryIDs());
 		setTreeVisible(context.getTreeVisible());
 		setModePublisher(context.getModePublisher());
+		setUserCanMarckRead(context.getUserCanMarckRead());
 	}
 	
 	/*
 	 *************************** ACCESSORS ********************************* */	
 	
+	public boolean isUserCanMarckRead() {
+		return userCanMarckRead;
+	}
+
+	public void setUserCanMarckRead(boolean userCanMarckRead) {
+		this.userCanMarckRead = userCanMarckRead;
+	}
+
 	/**
 	 * get the id of the context.
 	 * @return id of context

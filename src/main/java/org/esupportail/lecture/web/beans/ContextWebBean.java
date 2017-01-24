@@ -58,6 +58,8 @@ public class ContextWebBean {
 	private int nbrUnreadItem;
 	
 	private boolean modePublisher;
+	
+	private boolean userCanMarckRead;
 	/**
 	 * get the id of the context.
 	 * @return id of context
@@ -253,6 +255,12 @@ public class ContextWebBean {
 	public void setModePublisher(boolean modePublisher) {
 		this.modePublisher = modePublisher;
 	}
-	
-	
+
+	public boolean isUserCanMarckRead() {
+		return userCanMarckRead;
+	}
+
+	public void setUserCanMarckRead(boolean userCanMarckRead) {
+		this.userCanMarckRead = userCanMarckRead;
+	}	
 }

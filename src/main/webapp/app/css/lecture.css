@@ -1,92 +1,130 @@
-	.esup-lecture .imageArticle img{
-		 width: 100%;
-		 margin-top: 10px;	 
-	}
-	.esup-lecture .menuRubrique li{
-		width: 100px;
-		height: 30px;
-		cursor:pointer;
-	}
-	.esup-lecture .menuRubrique li div{
-	  height: 100%;
-	  cursor:pointer;
-	}
-	
-	.esup-lecture .menuRubrique li div:hover {
-        background: #A9A9A9;
-    }
-	.esup_lecture_margin_bottom{
-		margin-bottom: 10px;
-	}
-	.esup_lecture_margin_top{
-		margin-top: 10px;
-	}
-	.esup-lecture .menuRubDropDown{
+.esup-lecture .imageArticle img {
+	width: 100%;
+	margin-top: 10px;
+}
+
+.esup-lecture .menuRubrique {
+	margin-top: 50px;
+}
+
+.esup-lecture .menuRubrique li {
+	width: 100px;
+	height: 30px;
+	cursor: pointer;
+}
+
+.esup-lecture .menuRubrique li div {
+	height: 100%;
+	cursor: pointer;
+}
+
+.esup-lecture .menuRubrique li div:hover {
+	background: #A9A9A9;
+}
+
+.esup_lecture_margin_bottom {
+	margin-bottom: 10px;
+}
+
+.esup_lecture_margin_top {
+	margin-top: 10px;
+}
+
+.esup-lecture .menuRubDropDown {
+	display: none;
+}
+
+.esup-lecture .ligneRubriqueMenu {
+	width: 90%;
+	margin: auto;
+	height: 30px;
+}
+
+.esup-lecture .ligneRubriqueMenu:hover {
+	background: #A9A9A9;
+}
+
+.esup-lecture .griseImageArticle {
+	filter: grayscale(100%);
+}
+
+.esup-lecture i {
+	cursor: pointer;
+}
+
+.esup-lecture .cursPoint {
+	cursor: pointer;
+}
+
+.esup-lecture .divLargeWith {
+	width: 200px;
+}
+
+.esup-lecture .largeHeadPanel {
+	height: 50px;
+}
+
+.esup-lecture .afficherLuWith {
+	width: 300px;
+}
+
+.esup-lecture input[type="checkbox"] {
+	margin-left: auto;
+}
+
+.esup-lecture p {
+	font-size: 13px;
+}
+
+.esup-lecture .listOptionNonPublisher li:hover {
+	background: #A9A9A9;
+}
+
+.esup-lecture .listOptionNonPublisher li {
+	height: 30px;
+	cursor: pointer;
+	margin-left: 5px;
+	border-bottom: solid 0.1px;
+	margin-right: 5px;
+}
+
+@media only screen and (max-width: 640px) {
+	.esup-lecture .navModeDesk {
 		display: none;
 	}
-	
-	.esup-lecture .ligneRubriqueMenu{
+	.esup-lecture .divModeDesk {
+		width: 100%;
+		display: block;
+		padding: 0;
+	}
+	.esup-lecture .imageArticle img {
+		width: 5em;
+		height: 5em;
+		border-radius: 5em;
+		/*margin-left: 5%; */
+	}
+	.esup-lecture .rubriqueArticle {
+		margin-left: 10%;
+	}
+	.esup-lecture p {
+		font-size: 11px;
+	}
+	.esup-lecture span {
+		font-size: 11px;
+	}
+	.esup-lecture .menuRubDropDown {
+		display: block;
+	}
+	.esup-lecture .btnRubriqueDropDown {
+		width: 100%;
+		height: 20px;
+		border: transparent;
+	}
+	.esup-lecture .mobileiconList {
+		display: none;
+	}
+	.esup-lecture .menuListRubrique {
 		width: 90%;
-		margin: auto;
-		height: 30px;
+		margin-left: 5%;
 	}
-	.esup-lecture .ligneRubriqueMenu:hover{
-		 background: #A9A9A9;
-	}
-	.esup-lecture .griseImageArticle{	
-		filter: grayscale(100%);
-	}
-	.esup-lecture i{
-		cursor:pointer;
-	}
-	.esup-lecture .cursPoint{
-		cursor:pointer;
-	}
-	.esup-lecture .divLargeWith{
-		width: 200px;
-	}
-	.esup-lecture .largeHeadPanel{
-		height: 50px;
-	}
-	@media only screen and (max-width: 640px) {
-		.esup-lecture .navModeDesk {
-	        	display: none;
-	       }
-		.esup-lecture .divModeDesk {
-	        	width: 100%;
-	        	display: block;
-	        	padding: 0;
-	        }
-		.esup-lecture .imageArticle img {
-	 		width: 5em;
-			height: 5em;
-			border-radius: 5em;
-			/*margin-left: 5%; */
-	        }
-		.esup-lecture .rubriqueArticle{
-			margin-left: 10%;
-		}
-	    .esup-lecture p{
-	     	font-size: 10px;
-	     }
-	     
-	     .esup-lecture span{
-	     	font-size: 11px;
-	     }
-	     .esup-lecture .menuRubDropDown{
-			display: block;
-		}
-		
-		.esup-lecture .btnRubriqueDropDown{
-			width: 100%;
-			height: 50px;
-		}
-		.esup-lecture .mobileiconList{
-				display: none;
-		}
-		.esup-lecture .menuListRubrique{
-			width:90%;
-			margin-left: 5%;
-		}
-
-	}
+}

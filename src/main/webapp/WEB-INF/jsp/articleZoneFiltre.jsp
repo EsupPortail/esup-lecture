@@ -39,7 +39,9 @@
 				<div class='row esup_lecture_margin_bottom rubriqueArticle'>
 					<div class="col-xs-8 col-sm-8 col-md-offset-2">
 						<c:forEach items="${article.rubriques}" var="rub">
-							<span class="badge" style="background-color:${rub.couleur}" onclick="filtrerParRubrique('${cat.id}','','${rub.nom}')"><c:out
+							<span class="badge cursPoint"
+								style="background-color:${rub.couleur}"
+								onclick="filtrerParRubrique('${cat.id}','','${rub.nom}')"><c:out
 									value="${rub.nom}"></c:out></span>
 						</c:forEach>
 					</div>

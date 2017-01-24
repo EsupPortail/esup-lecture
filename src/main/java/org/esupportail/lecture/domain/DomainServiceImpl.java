@@ -663,6 +663,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			context.setLienVue(lienVue);
 			context.setTreeVisible(contextBean.getTreeVisible());
 			context.setModePublisher(contextBean.isModePublisher());
+			context.setUserCanMarckRead(contextBean.isUserCanMarckRead());
 			// find categories in this context
 			List<CategoryBean> categories = getCategories(ctxId, userProfile);
 			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();

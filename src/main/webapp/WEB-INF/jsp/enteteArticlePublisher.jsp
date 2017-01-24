@@ -15,11 +15,11 @@
 			<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
 		</div>
 		<div class="dropdown-menu pull-right">
-			<div class="checkbox">
-				<label> Afficher uniquement les actualités non lues<input
+			<div class="checkbox afficherLuWith">
+			<label> Afficher uniquement les actualités non lues</label>
+				<input
 					type="checkbox" id="<portlet:namespace />checkBoxNonLu"
-					onchange="<portlet:namespace />filtrerPublisherNonLus()">
-				</label>
+					onchange="filtrerPublisherNonLus()">
 			</div>
 		</div>
 	</div>
@@ -33,7 +33,7 @@
 				<div class="dropdown-menu menuListRubrique">
 					<c:forEach items="${cat.sources}" var="src">
 						<div class="row ligneRubriqueMenu"
-							onclick="<portlet:namespace />filtrerParRubrique('${cat.id}','${src.id}')">
+							onclick="filtrerParRubrique('${cat.id}','${src.id}','${src.name}')">
 							<c:out value="${src.name}"></c:out>
 							<span class="badge pull-right"
 								style="background-color:${src.color}"><c:out

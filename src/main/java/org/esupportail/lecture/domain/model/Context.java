@@ -51,6 +51,7 @@ public class Context {
 	private String id;
 	
 	private Boolean modePublisher;
+	private Boolean userCanMarckRead;
 
 	// later 
 //	/**
@@ -378,5 +379,15 @@ public class Context {
 	public void setModePublisher(Boolean modePublisher) {
 		this.modePublisher = modePublisher;
 	}
+
+	public Boolean getUserCanMarckRead() {
+		return userCanMarckRead;
+	}
+
+	public void setUserCanMarckRead(Boolean userCanMarckRead) {
+		this.userCanMarckRead = userCanMarckRead;
+	}
+	
+	
 	
 }

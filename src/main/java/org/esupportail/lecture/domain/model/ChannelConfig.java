@@ -395,11 +395,10 @@ public class ChannelConfig  {
 			Context c = new Context();
 			c.setId(context.valueOf("@id"));
 			c.setName(context.valueOf("@name"));
-			//pour distinguer le nouveau mode d'affichage
-			if("yes".equals(context.valueOf("@isPublisher"))){
-				c.setModePublisher(true);
+			if("yes".equals(context.valueOf("@userCanMarkRead"))){
+				c.setUserCanMarckRead(true);
 			}else{
-				c.setModePublisher(false);
+				c.setUserCanMarckRead(false);
 			}
 			//treeVisible
 			String treeVisible = context.valueOf("@treeVisible");
@@ -487,7 +486,9 @@ public class ChannelConfig  {
 						//pour gerer le nouveau parametrage
 						if(categoryProfile.valueOf("@urlCategory") != null && !"".equals(categoryProfile.valueOf("@urlCategory"))){
 							mcp.setCategoryURL(categoryProfile.valueOf("@urlCategory"));
+							c.setModePublisher(false);
 						}else if (!"".equals(categoryProfile.valueOf("@urlActualites"))){
+							c.setModePublisher(true);
 							mcp.setFromPublisher(true);
 							mcp.setUrlActualites(categoryProfile.valueOf("@urlActualites"));
 						}
