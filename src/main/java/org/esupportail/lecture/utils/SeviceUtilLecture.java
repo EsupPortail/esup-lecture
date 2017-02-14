@@ -155,4 +155,24 @@ public class SeviceUtilLecture {
 
 	}
 
+	public static int compteNombreArticleNonLu(ContextWebBean contexte) {
+		List<CategoryWebBean> listCat = new ArrayList<CategoryWebBean>();
+		listCat = contexte.getCategories();
+		int nbrArtic = 0;
+		// TODO Auto-generated method stub
+		for (CategoryWebBean cat : listCat) {
+
+			for (SourceWebBean src : cat.getSources()) {
+
+				for (ItemWebBean item : src.getItems()) {
+					if (!item.isRead()) {
+						nbrArtic++;
+					}
+				}
+			}
+		}
+		return nbrArtic;
+
+	}
+
 }

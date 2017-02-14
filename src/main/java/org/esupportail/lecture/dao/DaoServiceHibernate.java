@@ -164,7 +164,6 @@ public class DaoServiceHibernate {
 		//Object merged = getHibernateTemplate().merge(customContext);
 		entityManager.merge(customContext);
 	}
-
 	/**
 	 * @param cco 
 	 * @see org.esupportail.lecture.dao.DaoService#deleteCustomContext(

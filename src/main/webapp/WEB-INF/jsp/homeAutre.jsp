@@ -7,23 +7,24 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <div class="row">
 	<input type="hidden" id="<portlet:namespace />catSeletc" value='' /> <input
-		type="hidden" id="<portlet:namespace />SrcSeletc" value='' /> <input
-		type="hidden" id="<portlet:namespace />treeVisible"
-		value="${contexte.treeVisible}" />
-		<input type="hidden" id="<portlet:namespace />rubSeletc" value='' />
-	<c:if test="${contexte.treeVisible=='true'}">
-		<c:if test="${contexte.modePublisher=='true'}">
-			<%@include file="listeRubZonePublisher.jsp"%>
+		type="hidden" id="<portlet:namespace />SrcSeletc" value='' /> 
+		<input type="hidden"
+		id="<portlet:namespace />rubSeletc" value='' />
+	<div class=" col-sm-3">
+		<c:if test="${contexte.treeVisible=='true'}">
+			<c:if test="${contexte.modePublisher=='true'}">
+				<%@include file="listeRubZonePublisher.jsp"%>
+			</c:if>
+			<c:if test="${contexte.modePublisher=='false'}">
+				<%@include file="listeRubZoneNonPublisher.jsp"%>
+			</c:if>
 		</c:if>
-		<c:if test="${contexte.modePublisher=='false'}">
-			<%@include file="listeRubZoneNonPublisher.jsp"%>
-		</c:if>
-	</c:if>
-	<div class="col-xs-12 col-sm-9 divModeDesk"
-		id="<portlet:namespace />divModeDesk">
+	</div>
+	<div class="col-xs-12 col-sm-9 divModeDesk" id="<portlet:namespace />divModeDesk">
 		<div class="row">
 			<div class="panel panel-default">
-				<div class="panel panel-heading largeHeadPanel">
+				<div class="panel panel-heading largeHeadPanel"
+					id="<portlet:namespace />fixHead${contexte.modePublisher}">
 					<c:if test="${contexte.modePublisher=='true'}">
 						<%@include file="enteteArticlePublisher.jsp"%>
 					</c:if>
@@ -31,7 +32,8 @@
 						<%@include file="enteteArticleNonPublisher.jsp"%>
 					</c:if>
 				</div>
-				<div class="panel-body scrollDivArticle" id="<portlet:namespace />zoneArticles">
+				<div class="panel-body scrollDivArticle"
+					id="<portlet:namespace />zoneArticles">
 					<%@include file="articleZoneFiltre.jsp"%>
 				</div>
 			</div>

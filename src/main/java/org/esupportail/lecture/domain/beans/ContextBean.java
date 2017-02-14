@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.TreeDisplayMode;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 
@@ -46,6 +47,14 @@ public class ContextBean {
 	* visibility of the tree panel.
 	*/
 	private TreeDisplayMode treeVisible = TreeDisplayMode.VISIBLE;
+	private ItemDisplayMode itemDisplayMode;
+	public ItemDisplayMode getItemDisplayMode() {
+		return itemDisplayMode;
+	}
+
+	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) {
+		this.itemDisplayMode = itemDisplayMode;
+	}
 
 	/**
 	 * orderedSourceIDs store SourceID and ordering order in the CategoryProfile definition.
@@ -70,6 +79,7 @@ public class ContextBean {
 		setTreeVisible(context.getTreeVisible());
 		setModePublisher(context.getModePublisher());
 		setUserCanMarckRead(context.getUserCanMarckRead());
+		setItemDisplayMode(customContext.getItemDisplayMode());
 	}
 	
 	/*

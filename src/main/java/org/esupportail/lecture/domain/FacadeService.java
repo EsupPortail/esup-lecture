@@ -134,6 +134,9 @@ public class FacadeService implements InitializingBean {
 		return domainService.markItemDisplayMode(userProfile, sourceId, mode);
 	}
 	
+	public void markItemDisplayModeContext(final String userId, final String contextId,final boolean isUnreadMode) throws InternalDomainException{
+		 domainService.markItemDisplayModeContext(userId, contextId, isUnreadMode);
+	}
 	/**
 	 * Set the tree size of the customContext.
 	 * @param userProfile user ID

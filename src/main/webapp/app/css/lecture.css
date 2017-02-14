@@ -3,6 +3,10 @@
 	margin-top: 10px;
 }
 
+.esup-lecture .imageArticle {
+	font-size: 13px;
+}
+
 .esup-lecture .menuRubrique {
 	margin-top: 50px;
 }
@@ -35,9 +39,10 @@
 }
 
 .esup-lecture .ligneRubriqueMenu {
-	width: 90%;
+	width: 200px;
 	margin: auto;
 	height: 30px;
+	margin-left: 0px;
 }
 
 .esup-lecture .ligneRubriqueMenu:hover {
@@ -57,11 +62,17 @@
 }
 
 .esup-lecture .divLargeWith {
-	width: 200px;
+	width: 15vw;
 }
 
 .esup-lecture .largeHeadPanel {
 	height: 50px;
+	z-index: 1;
+}
+
+.esup-lecture .navClass {
+	z-index: 1;
+	padding-left: 10%;
 }
 
 .esup-lecture .afficherLuWith {
@@ -88,7 +99,29 @@
 	margin-right: 5px;
 }
 
-@media only screen and (max-width: 640px) {
+.esup-lecture .classHeadLarg {
+	width: 56.7%
+}
+
+.esup-lecture .madalSize {
+	width: initial;
+	margin-top: 2%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+/*640*/
+.esup-lecture .large-btn {
+	height: 30px;
+}
+
+.esup-lecture .padding-botom-head {
+	padding-bottom: 2%;
+}
+
+.esup-lecture .div_cat {
+	width: 10vw;
+}
+@media only screen and (max-width: 935px) {
 	.esup-lecture .navModeDesk {
 		display: none;
 	}
@@ -102,6 +135,9 @@
 		height: 5em;
 		border-radius: 5em;
 		/*margin-left: 5%; */
+	}
+	.esup-lecture .imageArticle {
+		font-size: 10px;
 	}
 	.esup-lecture .rubriqueArticle {
 		margin-left: 10%;
@@ -117,14 +153,52 @@
 	}
 	.esup-lecture .btnRubriqueDropDown {
 		width: 100%;
-		height: 20px;
-		border: transparent;
+		height: 50px;
+		padding-top: 5%;
+		/* 		border: transparent; */
 	}
 	.esup-lecture .mobileiconList {
 		display: none;
 	}
 	.esup-lecture .menuListRubrique {
-		width: 90%;
+		width: 90vw;
 		margin-left: 5%;
+		left: -54vw;
+		padding-left: 5%;
+		padding-bottom: 5%;
 	}
+	.esup-lecture .classHeadLarg {
+		width: 100%
+	}
+	.esup-lecture .ligneRubriqueMenu {
+		/* 		width: 100%; */
+		margin: auto;
+		height: 30px;
+		margin-left: 0px;
+	}
+	.esup-lecture .ligneRubriqueMenuPub {
+		width: 90%;
+	}
+	.esup-lecture .ligneRubriqueMenu:hover {
+		background: #A9A9A9;
+	}
+	.esup-lecture .enteteEcranLarge {
+		display: none;
+	}
+	.esup-lecture .menuRubDropDown {
+		width: 100%
+	}
+	.esup-lecture .listRubPers {
+		background-color: whitesmoke;
+		border: 0px;
+		padding: 0px;
+		padding-left: 4px;
+	}
+	.esup-lecture .modalPadding{
+    padding: 0px;
+}
+.esup-lecture .modalMarge {
+    margin: 0px;
+    margin-top: 35px;
+}
 }

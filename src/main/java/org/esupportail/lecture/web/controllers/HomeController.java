@@ -3,6 +3,8 @@ package org.esupportail.lecture.web.controllers;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.commons.services.portal.PortalUtils;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
+import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.utils.SeviceUtilLecture;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
 
 import javax.portlet.*;
 
+import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,15 +64,17 @@ public class HomeController extends TwoPanesController {
 		ContextWebBean contexte = getContext();
 		List<CategoryWebBean> listCat = contexte.getCategories();
 		List<ItemWebBean> listeItemAcceuil = new ArrayList<ItemWebBean>();
-		int nbrArticleNonLu=0;
-		if(contexte.isViewDef()){
-			//la liste des articles à afficher+nombre d'articles non lus
+		int nbrArticleNonLu = 0;
+		nbrArticleNonLu= SeviceUtilLecture.compteNombreArticleNonLu(contexte);
+		if (contexte.isViewDef()) {
+			nbrArticleNonLu = 0;
+			// la liste des articles à afficher+nombre d'articles non lus
 			listeItemAcceuil = SeviceUtilLecture.getListItemAccueil(contexte, listCat);
 		}
 		model = bindInitialModel(model, response, request);
 		model.addAttribute("listCat", listCat);
 		model.addAttribute("contexte", contexte);
-		model.addAttribute("nombreArticleNonLu",nbrArticleNonLu);
+		model.addAttribute("nombreArticleNonLu", nbrArticleNonLu);
 		model.addAttribute("listeItemAcceuil", listeItemAcceuil);
 		return "home";
 	}
@@ -101,7 +106,7 @@ public class HomeController extends TwoPanesController {
 			@RequestParam(required = true, value = "p2") String srcID,
 			@RequestParam(required = true, value = "p3") String itemID,
 			@RequestParam(required = true, value = "p4") boolean isRead,
-			@RequestParam(required = true, value = "p5") boolean isPublisherMode){
+			@RequestParam(required = true, value = "p5") boolean isPublisherMode) {
 		if (isGuestMode()) {
 			throw new SecurityException("Try to access restricted function is guest mode");
 		}
@@ -109,7 +114,7 @@ public class HomeController extends TwoPanesController {
 			LOG.debug("toggleItemReadState(" + catID + ", " + srcID + ", " + itemID + ")");
 		}
 		try {
-			facadeService.markItemReadMode(getUID(), srcID, itemID, isRead,isPublisherMode);
+			facadeService.markItemReadMode(getUID(), srcID, itemID, isRead, isPublisherMode);
 		} catch (Exception e) {
 			throw new WebException("Error in toggleItemReadState", e);
 		}
@@ -140,11 +145,11 @@ public class HomeController extends TwoPanesController {
 							LOG.debug("toggleAllItemReadState(" + cat.getId() + ", " + src.getId() + ", " + item.getId()
 									+ ")");
 						}
-						facadeService.markItemReadMode(getUID(), src.getId(), item.getId(), isRead,false);
+						facadeService.markItemReadMode(getUID(), src.getId(), item.getId(), isRead, false);
 					}
 				}
 			}
-			listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc,"", filtreNonLu);
+			listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc, "", filtreNonLu);
 			model.addAttribute("listCat", listCatFiltre);
 			model.addAttribute("isRead", isRead);
 		} catch (Exception e) {
@@ -166,16 +171,23 @@ public class HomeController extends TwoPanesController {
 	public @ResponseBody ModelAndView FilteredItem(@RequestParam(required = true, value = "p1") String idCat,
 			@RequestParam(required = true, value = "p2") String idSrc,
 			@RequestParam(required = true, value = "p3") String filtreNonLu,
-			@RequestParam(required = true, value = "nomSrc") String nameSrc
-			,Model model) {
+			@RequestParam(required = true, value = "nomSrc") String nameSrc, Model model) {
 		List<CategoryWebBean> listCatFiltre = new ArrayList<CategoryWebBean>();
 		if (isGuestMode()) {
 			throw new SecurityException("Try to access restricted function is guest mode");
 		}
 		try {
+			String ctxId;
+			ctxId = facadeService.getCurrentContextId();
+			//ContextWebBean contexte = getContext();
+			if ("val2".equals(filtreNonLu)) {
+				facadeService.markItemDisplayModeContext(getUID(),ctxId, true);
+			} else {
+				facadeService.markItemDisplayModeContext(getUID(),ctxId, false);
+			}
 			ContextWebBean contexte = getContext();
 			List<CategoryWebBean> listCat = contexte.getCategories();
-			listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc,nameSrc, filtreNonLu);
+			listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc, nameSrc, filtreNonLu);
 			model.addAttribute("contexte", contexte);
 			model.addAttribute("listCat", listCatFiltre);
 		} catch (Exception e) {
@@ -194,7 +206,7 @@ public class HomeController extends TwoPanesController {
 		ctxId = facadeService.getCurrentContextId();
 		boolean viewDef = facadeService.getCurrentViewDef();
 		int nbreArticle = facadeService.getNombreArcticle();
-		String lienVue =facadeService.getLienVue();
-		return facadeService.getContext(getUID(), ctxId, viewDef, nbreArticle,lienVue);
+		String lienVue = facadeService.getLienVue();
+		return facadeService.getContext(getUID(), ctxId, viewDef, nbreArticle, lienVue);
 	}
 }

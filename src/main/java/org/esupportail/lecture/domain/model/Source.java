@@ -366,7 +366,7 @@ public abstract class Source implements Element, Serializable {
 						((ComplexItem) item).setRubriques(parser.getRubriquesItem().get(item.getId()));
 					}
 					try{
-					DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
+					DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 					Date odt = df.parse(node.selectSingleNode("pubDate").getText());
 
 					item.setPubDate(Date.from(odt.toInstant()));

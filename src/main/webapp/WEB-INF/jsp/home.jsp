@@ -15,11 +15,19 @@
 <portlet:resourceURL id='toggleAllItemReadState'
 	var="toggleAllItemReadState"></portlet:resourceURL>
 <portlet:resourceURL id='FilteredItem' var="FilteredItem"></portlet:resourceURL>
-<c:set var="portletNameSpace"><portlet:namespace/></c:set>
+<c:set var="portletNameSpace">
+	<portlet:namespace />
+</c:set>
+<input type="hidden" id="<portlet:namespace />treeVisible"
+	value="${contexte.treeVisible}" />
 <script type="text/javascript">
-	(function($, namespace, portletId, urlMarkRead, urlMarkAllRead, urlFiltrItem) {
-		lecture.init($, namespace, portletId, urlMarkRead, urlMarkAllRead, urlFiltrItem);
-	})(up.jQuery, '#lecture-${portletNameSpace}', '${portletNameSpace}', '${toggleItemReadState}', '${toggleAllItemReadState}', '${FilteredItem}');
+	(function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
+			urlFiltrItem) {
+		lecture.init($, namespace, portletId, urlMarkRead, urlMarkAllRead,
+				urlFiltrItem);
+	})(up.jQuery, '#lecture-${portletNameSpace}', '${portletNameSpace}',
+			'${toggleItemReadState}', '${toggleAllItemReadState}',
+			'${FilteredItem}');
 </script>
 <div class="esup-lecture portlet-container"
 	id="lecture-<portlet:namespace/>">

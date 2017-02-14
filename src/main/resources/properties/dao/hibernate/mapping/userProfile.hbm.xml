@@ -18,7 +18,7 @@
 	        </property>
 		</natural-id>
 		<!-- userProfile/CustomContext is bidirectional -->
-		<map name="customContexts" cascade="all, delete-orphan" inverse="true"> 
+		<map name="customContexts" cascade="all, delete-orphan, save-update" inverse="true"> 
 			<key foreign-key="FK_CUSTOMCONTEXT_USERPROFILE_USERPROFILEPK" not-null="true">
 				<column name="USERPROFILE_USERPROFILEPK" not-null="true" />
 			</key>
@@ -47,5 +47,14 @@
 			</map-key>
 			<one-to-many class="CustomManagedSource" />
 		</map>
+<!-- 		<map name="displayUNREADMODE" table="LECT_DISPLMODECTXT" cascade="all, delete-orphan" inverse="true"> -->
+<!-- 			<key foreign-key="FK_displayUNREADMODE_USERPROFILE_USERPROFILEPK" not-null="true"> -->
+<!-- 				<column name="USERPROFILE_USERPROFILEPK" not-null="true" /> -->
+<!-- 			</key> -->
+<!-- 			<map-key type="string" > -->
+<!--                 <column name="USERId"/> -->
+<!-- 			</map-key> -->
+<!-- 			<one-to-many class="CtxtProfileDisplayMode" /> -->
+<!-- 		</map> -->
 	</class>
 </hibernate-mapping>

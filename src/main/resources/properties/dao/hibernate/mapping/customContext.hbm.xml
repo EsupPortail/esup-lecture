@@ -23,6 +23,9 @@
 		<property name="treeSize" type="int">
 			<column name="TREEWINWIDTH" not-null="true"/>
 		</property>
+		<property name="itemDisplayMode" type="org.esupportail.lecture.dao.ItemDisplayModeUserType">
+			<column name="DISPLAYMODECTX" not-null="true" length="32" />
+		</property>
 		<map name="subscriptions" cascade="all, delete-orphan">
 			<key foreign-key="FK_CUSTOMCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED">
 				<column name="CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED"/>

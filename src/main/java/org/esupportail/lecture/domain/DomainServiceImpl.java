@@ -16,6 +16,7 @@ import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.application.Version;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.services.i18n.I18nService;
+import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.CategoryDummyBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
@@ -333,7 +334,21 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		}
 
 	}
+	@Override
+	public void markItemDisplayModeContext(final String userId, final String contextId,
+			final boolean isUnreadMode) throws InternalDomainException {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("saveMarkItemDisplayModeContext(" + userId + "," + contextId + "," + isUnreadMode + ")");
+		}
+			UserProfile ret = getUserProfile(userId);
+			if(isUnreadMode){
+				ret.setContextUnreadMode(contextId,ItemDisplayMode.UNREAD);
+			}else{
+				ret.setContextUnreadMode(contextId,ItemDisplayMode.ALL);
+			}
+			
 
+	}
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(UserProfile,
 	 *      String, int)
@@ -664,6 +679,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			context.setTreeVisible(contextBean.getTreeVisible());
 			context.setModePublisher(contextBean.isModePublisher());
 			context.setUserCanMarckRead(contextBean.isUserCanMarckRead());
+			context.setItemDisplayMode(contextBean.getItemDisplayMode());
 			// find categories in this context
 			List<CategoryBean> categories = getCategories(ctxId, userProfile);
 			List<CategoryWebBean> categoriesWeb = new ArrayList<CategoryWebBean>();

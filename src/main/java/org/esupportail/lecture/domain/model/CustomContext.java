@@ -84,7 +84,15 @@ public class CustomContext implements CustomElement {
 	 * Database Primary Key.
 	 */
 	private long customContextPK; 
-
+	/**
+	 * item display mode of this customContext. 
+	 */
+	private ItemDisplayMode itemDisplayMode= ItemDisplayMode.ALL;;
+	/**
+	 * Used in log messages.
+	 */
+	private static final  String IDEGAL = "id=";
+	
 	
 	/*
 	 ************************** INIT *********************************/	
@@ -812,6 +820,32 @@ public class CustomContext implements CustomElement {
 			}
 		}
 		
-	
+		/**
+		 * @param mode item display mode to set
+		 */
+		public void modifyItemDisplayMode(final ItemDisplayMode mode) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(IDEGAL + elementId + " - modifyItemDisplayMode(" + mode + ")");
+			}
+			this.itemDisplayMode = mode;
+			DomainTools.getDaoService().updateCustomContext(this);
+		}
+		
+		/**
+		 * @return the item display mode of this customSource
+		 */
+		public ItemDisplayMode getItemDisplayMode() {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug(IDEGAL + elementId + " - itemDisplayMode(" + itemDisplayMode + ")");
+			}
+			return itemDisplayMode;
+		}
+
+		public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) {
+			this.itemDisplayMode = itemDisplayMode;
+		}
+		
+		
+		
 
 }

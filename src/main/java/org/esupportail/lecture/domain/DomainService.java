@@ -167,5 +167,8 @@ public interface DomainService {
 	 * @param query
 	 */
 	void updateSQL(String query);
+
+	void markItemDisplayModeContext(String userId, String contextId,boolean isUnreadMode)
+			throws InternalDomainException;
 	
 }

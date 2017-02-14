@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.TreeDisplayMode;
 
 /**
@@ -60,6 +61,8 @@ public class ContextWebBean {
 	private boolean modePublisher;
 	
 	private boolean userCanMarckRead;
+	private ItemDisplayMode itemDisplayMode =ItemDisplayMode.ALL;
+	private Boolean isContextUnreadMode;
 	/**
 	 * get the id of the context.
 	 * @return id of context
@@ -262,5 +265,23 @@ public class ContextWebBean {
 
 	public void setUserCanMarckRead(boolean userCanMarckRead) {
 		this.userCanMarckRead = userCanMarckRead;
+	}
+
+	public ItemDisplayMode getItemDisplayMode() {
+		return itemDisplayMode;
+	}
+
+	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) {
+		this.itemDisplayMode = itemDisplayMode;
+	}
+
+	public Boolean getIsContextUnreadMode() {
+		return isContextUnreadMode;
+	}
+
+	public void setIsContextUnreadMode(Boolean isContextUnreadMode) {
+		this.isContextUnreadMode = isContextUnreadMode;
 	}	
+	
+	
 }

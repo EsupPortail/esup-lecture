@@ -52,6 +52,7 @@ public class Context {
 	
 	private Boolean modePublisher;
 	private Boolean userCanMarckRead;
+	private Boolean unreadMode;
 
 	// later 
 //	/**
@@ -386,6 +387,14 @@ public class Context {
 
 	public void setUserCanMarckRead(Boolean userCanMarckRead) {
 		this.userCanMarckRead = userCanMarckRead;
+	}
+
+	public Boolean getUnreadMode() {
+		return unreadMode;
+	}
+
+	public void setUnreadMode(Boolean unreadMode) {
+		this.unreadMode = unreadMode;
 	}
 	
 	
