@@ -63,13 +63,13 @@
 	</div>
 </div>
 <div class="row menuRubDropDown" id="mainmenurow<portlet:namespace />">
-	<div id="mainmenu<portlet:namespace />" class="col-xs-11 col-sm-11">
+	<div id="mainmenu<portlet:namespace />" class="col-xs-10 col-sm-11">
 		<div id="<portlet:namespace />rubSelectedDiv2" data-toggle="modal"
 			data-target="#myModal<portlet:namespace />">
-			<label>Toutes les actualités</label> <span class="caret pull-right"></span>
+			<label>Toutes les actualités</label> <span class="caret pull-right margeCarret"></span>
 		</div>
 	</div>
-	<div class="dropdown pull-right col-xs-1 col-sm-1">
+	<div class="dropdown pull-right col-xs-2 col-sm-1">
 		<div class="dropdown-toggle  pull-right" data-toggle="dropdown">
 			<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
 		</div>
@@ -109,7 +109,6 @@
 				</c:forEach>
 			</div>
 		</div>
-
 	</div>
 </div>
 

@@ -149,8 +149,9 @@ lecture.init = function($, namespace, portletId,urlMarkRead, urlMarkAllRead, url
 	 		function filtrerParRubrique(catid, srcid,
 	 				afficherRubSelect,val) {
 	 			if (afficherRubSelect != '') {
-	 				var reponse = "<label>" + afficherRubSelect + "</label>";
-	 				$("#" + portletId + "rubSelectedDiv1").html(reponse);
+	 				var reponse1="<label>" + afficherRubSelect + "</label>";
+	 				var reponse = "<label>" + afficherRubSelect + "</label><span class='caret pull-right margeCarret'></span>";
+	 				$("#" + portletId + "rubSelectedDiv1").html(reponse1);
 	 				$("#" + portletId + "rubSelectedDiv2").html(reponse);
 	 			}
 	 			$("#" + portletId + "catSeletc").val(catid);
@@ -168,8 +169,9 @@ lecture.init = function($, namespace, portletId,urlMarkRead, urlMarkAllRead, url
 	 			$("#" + portletId + "catSeletc").val('');
 	 			$("#" + portletId + "SrcSeletc").val('');
 	 			$("#" + portletId + "rubSeletc").val('');
-	 			var reponse = "<label>Toutes les actualités</label>";
-	 			$("#" + portletId + "rubSelectedDiv1").html(reponse);
+	 			var reponse1= "<label>Toutes les actualités</label>"
+	 			var reponse = "<label>Toutes les actualités</label><span class='caret pull-right margeCarret'></span>";
+	 			$("#" + portletId + "rubSelectedDiv1").html(reponse1);
 	 			$("#" + portletId + "rubSelectedDiv2").html(reponse);
 	 			filtrerNonLus('');
 	 			if(val=='show'){
@@ -191,10 +193,10 @@ lecture.init = function($, namespace, portletId,urlMarkRead, urlMarkAllRead, url
 	 		window.filtrerPublisherNonLus = filtrerPublisherNonLus;
 	 		function filtrerPublisherNonLusMobile() {
 	 			if ($("#" + portletId + "checkBoxNonLu2").is(':checked')) {
-	 				$("#" + portletId + "listNonLu").val("val2")
+	 				$("#" + portletId + "listNonLu").val("val2");
 	 				filtrerNonLus('');
 	 			} else {
-	 				$("#" + portletId + "listNonLu").val("val1")
+	 				$("#" + portletId + "listNonLu").val("val1");
 	 				AfficherTout();
 	 			}
 	 		}

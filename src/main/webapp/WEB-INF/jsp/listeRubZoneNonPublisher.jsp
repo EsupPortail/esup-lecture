@@ -7,7 +7,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <nav class="col-xs-12 col-sm-3" id='<portlet:namespace />listOfCat'>
 	<ul class="nav nav-pills nav-stacked">
-		<li onclick="AfficherTout('')"><strong><c:out
+		<li class="li_cat" onclick="AfficherTout('')"><strong><c:out
 					value="${contexte.name}"></c:out></strong></li>
 		<c:forEach items="${listCat}" var="cat">
 			<c:set var="idcat" value="${fn:replace(cat.id,' ', '')}"></c:set>

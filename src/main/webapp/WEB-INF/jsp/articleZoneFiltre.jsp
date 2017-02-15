@@ -12,7 +12,7 @@
 				<c:set var="idSources" value="${fn:replace(src.id,' ', '')}"></c:set>
 				<c:set var="idSources" value="${fn:replace(idSources,':', '')}"></c:set>
 				<div class='row'>
-					<div class='col-xs-11 col-sm-11'
+					<div class='col-xs-10 col-sm-11'
 						class="contenuArti${contexte.modePublisher}${article.id}"
 						id="contenuArti${contexte.modePublisher}${article.id}${idSources}">
 						<c:out value="${article.htmlContent}" escapeXml="false"></c:out>
@@ -20,7 +20,7 @@
 					<input type="hidden" class="eye${article.id}"
 						value="${article.id}${idSources}" />
 					<c:if test="${cat.userCanMarkRead=='true'}">
-						<div class='ol-xs-1 col-sm-1 articleDiv'
+						<div class='col-xs-2 col-sm-1 articleDiv'
 							id="eye${article.id}${idSources}">
 							<c:if test="${article.read=='true'}">
 								<input type="hidden" id="arti${article.id}${idSources}"

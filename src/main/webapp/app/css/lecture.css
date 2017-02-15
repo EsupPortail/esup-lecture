@@ -121,6 +121,9 @@
 .esup-lecture .div_cat {
 	width: 10vw;
 }
+.esup-lecture .li_cat {
+	width: 200px;
+}
 @media only screen and (max-width: 935px) {
 	.esup-lecture .navModeDesk {
 		display: none;
@@ -194,11 +197,15 @@
 		padding: 0px;
 		padding-left: 4px;
 	}
-	.esup-lecture .modalPadding{
-    padding: 0px;
-}
-.esup-lecture .modalMarge {
-    margin: 0px;
-    margin-top: 35px;
-}
+	.esup-lecture .modalPadding {
+		padding: 0px;
+	}
+	.esup-lecture .modalMarge {
+		margin: 0px;
+		margin-top: 35px;
+		width: 100vw;
+	}
+	.esup-lecture .margeCarret {
+		margin-top: 10px;
+	}
 }
