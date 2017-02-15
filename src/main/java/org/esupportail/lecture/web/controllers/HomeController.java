@@ -1,10 +1,17 @@
 package org.esupportail.lecture.web.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
+import javax.portlet.WindowState;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.esupportail.commons.services.portal.PortalUtils;
-import org.esupportail.lecture.domain.model.ItemDisplayMode;
-import org.esupportail.lecture.domain.model.UserProfile;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.utils.SeviceUtilLecture;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
@@ -15,7 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.portlet.ModelAndView;
@@ -23,18 +29,6 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
-
-import javax.portlet.*;
-
-import java.nio.file.attribute.UserPrincipal;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.function.Predicate;
 
 @Controller
 @RequestMapping("VIEW")
@@ -65,7 +59,7 @@ public class HomeController extends TwoPanesController {
 		List<CategoryWebBean> listCat = contexte.getCategories();
 		List<ItemWebBean> listeItemAcceuil = new ArrayList<ItemWebBean>();
 		int nbrArticleNonLu = 0;
-		nbrArticleNonLu= SeviceUtilLecture.compteNombreArticleNonLu(contexte);
+		nbrArticleNonLu = SeviceUtilLecture.compteNombreArticleNonLu(contexte);
 		if (contexte.isViewDef()) {
 			nbrArticleNonLu = 0;
 			// la liste des articles à afficher+nombre d'articles non lus
@@ -122,7 +116,7 @@ public class HomeController extends TwoPanesController {
 
 	/**
 	 * action : toggle all item from read to unread and unread to read.
-	 * 
+	 *
 	 * @param isRead
 	 */
 	@ResourceMapping(value = "toggleAllItemReadState")
@@ -142,8 +136,8 @@ public class HomeController extends TwoPanesController {
 				for (SourceWebBean src : cat.getSources()) {
 					for (ItemWebBean item : src.getItems()) {
 						if (LOG.isDebugEnabled()) {
-							LOG.debug("toggleAllItemReadState(" + cat.getId() + ", " + src.getId() + ", " + item.getId()
-									+ ")");
+							LOG.debug("toggleAllItemReadState(" + cat.getId() + ", " + src.getId() + ", "
+									+ item.getId() + ")");
 						}
 						facadeService.markItemReadMode(getUID(), src.getId(), item.getId(), isRead, false);
 					}
@@ -160,7 +154,7 @@ public class HomeController extends TwoPanesController {
 
 	/**
 	 * action : Filter items by idCat, idSrc,
-	 * 
+	 *
 	 * @param idCat
 	 * @param idSrc
 	 * @param filtreNonLu
@@ -181,9 +175,9 @@ public class HomeController extends TwoPanesController {
 			ctxId = facadeService.getCurrentContextId();
 			//ContextWebBean contexte = getContext();
 			if ("val2".equals(filtreNonLu)) {
-				facadeService.markItemDisplayModeContext(getUID(),ctxId, true);
+				facadeService.markItemDisplayModeContext(getUID(), ctxId, true);
 			} else {
-				facadeService.markItemDisplayModeContext(getUID(),ctxId, false);
+				facadeService.markItemDisplayModeContext(getUID(), ctxId, false);
 			}
 			ContextWebBean contexte = getContext();
 			List<CategoryWebBean> listCat = contexte.getCategories();
