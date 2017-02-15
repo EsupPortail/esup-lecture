@@ -12,11 +12,6 @@
 	</context-param>
 
 	<context-param>
-		<param-name>log4jConfigLocation</param-name>
-		<param-value>classpath:/properties/logging/log4j.properties</param-value>
-	</context-param>
-
-	<context-param>
 		<description> The location of the main configuration file of the
 			Spring framework. </description>
 		<param-name>contextConfigLocation</param-name>

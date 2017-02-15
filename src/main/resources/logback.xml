@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- For assistance related to logback-translator or configuration  -->
+<!-- files in general, please contact the logback user mailing list -->
+<!-- at http://www.qos.ch/mailman/listinfo/logback-user             -->
+<!--                                                                -->
+<!-- For professional support please see                            -->
+<!--    http://www.qos.ch/shop/products/professionalSupport         -->
+<!--                                                                -->
+<configuration scan="true" scanPeriod="30 seconds">
+    <contextName>esup-lecture</contextName>
+
+    <!--
+     | Propagate log levels to java.util.logging
+     +-->
+    <contextListener class="ch.qos.logback.classic.jul.LevelChangePropagator">
+        <resetJUL>true</resetJUL>
+    </contextListener>
+
+    <!--
+     | Expose the logback configuration via JMX
+     +-->
+    <jmxConfigurator />
+
+    <!--
+     | Specify the console logger
+     +-->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>utf-8</charset>
+            <Pattern>[%p] %c - %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <!--
+     | Specify a local property that sets up the logging directory
+     +-->
+    <property scope="local" name="LOG_DIR" value="${catalina.base}/logs" />
+
+    <!--
+     | Setup a file based logger that rolls
+     |
+     | http://logback.qos.ch/manual/appenders.html#RollingFileAppender
+     +-->
+    <appender name="LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--
+         | Name of the current log file
+         +-->
+        <File>${LOG_DIR}/${CONTEXT_NAME}.log</File>
+
+        <!--
+         | Log message pattern configuration
+         |
+         | http://logback.qos.ch/manual/layouts.html#conversionWord
+         +-->
+        <encoder>
+            <charset>utf-8</charset>
+            <Pattern>%d %-5level [%thread] %logger: %msg%n</Pattern>
+        </encoder>
+
+        <!--
+         | Rolls the log file every 24 hours
+         | gzip the archived log file
+         | Delete archived log files older than 28 days
+         |
+         | http://logback.qos.ch/manual/appenders.html#TimeBasedRollingPolicy
+         +-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${CONTEXT_NAME}.log.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>366</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <logger name="org.esupportail.lecture" level="INFO" />
+    <logger name="org.esupportail.commons" level="WARN" />
+    <logger name="org.esupportail.portal.ws.client.support.uportal" level="ERROR" />
+    <logger name="rg.esupportail.commons.services.ldap" level="WARN" />
+    <logger name="org.springframework.orm.jpa" level="INFO" />
+    <logger name="org.esupportail.lecture" level="INFO" />
+
+    <!--
+     | Setup default log level to WARN
+     +-->
+    <root level="WARN">
+        <appender-ref ref="LOG" />
+    </root>
+
+</configuration>
