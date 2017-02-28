@@ -16,7 +16,6 @@ import org.esupportail.commons.exceptions.ConfigException;
 import org.esupportail.commons.services.application.Version;
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.services.i18n.I18nService;
-import org.esupportail.lecture.dao.DaoService;
 import org.esupportail.lecture.domain.beans.CategoryBean;
 import org.esupportail.lecture.domain.beans.CategoryDummyBean;
 import org.esupportail.lecture.domain.beans.ContextBean;
@@ -105,7 +104,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 
 	/**
 	 * return the user profile identified by "userId".
-	 * 
+	 *
 	 * @param userId
 	 *            : identifient of the user profile
 	 * @return the user profile
@@ -334,21 +333,22 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		}
 
 	}
+
 	@Override
-	public void markItemDisplayModeContext(final String userId, final String contextId,
-			final boolean isUnreadMode) throws InternalDomainException {
+	public void markItemDisplayModeContext(final String userId, final String contextId, final boolean isUnreadMode)
+			throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("saveMarkItemDisplayModeContext(" + userId + "," + contextId + "," + isUnreadMode + ")");
 		}
-			UserProfile ret = getUserProfile(userId);
-			if(isUnreadMode){
-				ret.setContextUnreadMode(contextId,ItemDisplayMode.UNREAD);
-			}else{
-				ret.setContextUnreadMode(contextId,ItemDisplayMode.ALL);
-			}
-			
+		UserProfile ret = getUserProfile(userId);
+		if (isUnreadMode) {
+			ret.setContextUnreadMode(contextId, ItemDisplayMode.UNREAD);
+		} else {
+			ret.setContextUnreadMode(contextId, ItemDisplayMode.ALL);
+		}
 
 	}
+
 	/**
 	 * @see org.esupportail.lecture.domain.DomainService#setTreeSize(UserProfile,
 	 *      String, int)
@@ -407,7 +407,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * Return visible categories. Obliged, subscribed, obliged for managed
 	 * category or personal category. This for a contextId for user userProfile
 	 * (for EDIT mode)
-	 * 
+	 *
 	 * @param contextId
 	 * @param userProfile
 	 * @return List of CategoryBean
@@ -845,7 +845,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 
 	/**
 	 * populate a SourceWebBean from a SourceBean with or without items
-	 * 
+	 *
 	 * @param sourceBean
 	 * @param userProfile
 	 * @param withItems
@@ -882,6 +882,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			// nouveau parametrage
 			sourceWebBean.setHighlight(sourceBean.getHighlight());
 			sourceWebBean.setColor(sourceBean.getColor());
+			sourceWebBean.setUid(sourceBean.getUid());
 		}
 		return sourceWebBean;
 	}

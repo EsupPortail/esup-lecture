@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
@@ -25,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.portlet.ModelAndView;
+import org.springframework.web.portlet.bind.annotation.ActionMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import org.springframework.web.portlet.bind.annotation.ResourceMapping;
 import org.springframework.web.servlet.View;
@@ -95,7 +98,8 @@ public class HomeController extends TwoPanesController {
 	 * @param isRead
 	 *            is source read ?
 	 */
-	@ResourceMapping(value = "toggleItemReadState")
+	// @ResourceMapping(value = "toggleItemReadState")
+	@RequestMapping(value = { "VIEW" }, params = { "action=toggleItemReadState" })
 	public @ResponseBody void toggleItemReadState(@RequestParam(required = true, value = "p1") String catID,
 			@RequestParam(required = true, value = "p2") String srcID,
 			@RequestParam(required = true, value = "p3") String itemID,
@@ -119,6 +123,8 @@ public class HomeController extends TwoPanesController {
 	 *
 	 * @param isRead
 	 */
+	// @RequestMapping(value = { "VIEW" }, params = {
+	// "action=toggleAllItemReadState" })
 	@ResourceMapping(value = "toggleAllItemReadState")
 	public @ResponseBody ModelAndView toggleAllItemReadState(
 			@RequestParam(required = true, value = "p1") boolean isRead,
@@ -136,8 +142,8 @@ public class HomeController extends TwoPanesController {
 				for (SourceWebBean src : cat.getSources()) {
 					for (ItemWebBean item : src.getItems()) {
 						if (LOG.isDebugEnabled()) {
-							LOG.debug("toggleAllItemReadState(" + cat.getId() + ", " + src.getId() + ", "
-									+ item.getId() + ")");
+							LOG.debug("toggleAllItemReadState(" + cat.getId() + ", " + src.getId() + ", " + item.getId()
+									+ ")");
 						}
 						facadeService.markItemReadMode(getUID(), src.getId(), item.getId(), isRead, false);
 					}
@@ -161,34 +167,117 @@ public class HomeController extends TwoPanesController {
 	 * @param model
 	 * @return
 	 */
-	@ResourceMapping(value = "FilteredItem")
-	public @ResponseBody ModelAndView FilteredItem(@RequestParam(required = true, value = "p1") String idCat,
-			@RequestParam(required = true, value = "p2") String idSrc,
-			@RequestParam(required = true, value = "p3") String filtreNonLu,
-			@RequestParam(required = true, value = "nomSrc") String nameSrc, Model model) {
-		List<CategoryWebBean> listCatFiltre = new ArrayList<CategoryWebBean>();
+
+	@ActionMapping(value = "filteredItem")
+	public void filteredItem(
+			// @RequestParam(required = true, value = "p1") String idCat,
+			// @RequestParam(required = true, value = "p2") String idSrc,
+			// @RequestParam(required = true, value = "p3") String filtreNonLu,
+			// @RequestParam(required = true, value = "nomSrc") String nameSrc,
+			// @RequestParam(required = true, value = "idContexte") String
+			// idContexte,
+			ActionRequest request, ActionResponse response, Model model) {
+		// List<CategoryWebBean> listCatFiltre = new
+		// ArrayList<CategoryWebBean>();
+
 		if (isGuestMode()) {
 			throw new SecurityException("Try to access restricted function is guest mode");
 		}
 		try {
 			String ctxId;
-			ctxId = facadeService.getCurrentContextId();
-			//ContextWebBean contexte = getContext();
+			ctxId = request.getParameter("idContexte");
+			if (ctxId == null) {
+				ctxId = facadeService.getCurrentContextId();
+			}
+			String filtreNonLu = request.getParameter("p3");
+
+			// ContextWebBean contexte = getContext();
 			if ("val2".equals(filtreNonLu)) {
 				facadeService.markItemDisplayModeContext(getUID(), ctxId, true);
 			} else {
 				facadeService.markItemDisplayModeContext(getUID(), ctxId, false);
 			}
-			ContextWebBean contexte = getContext();
+			ContextWebBean contexte = getContext(ctxId);
 			List<CategoryWebBean> listCat = contexte.getCategories();
-			listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc, nameSrc, filtreNonLu);
+			List<ItemWebBean> listeItemAcceuil = new ArrayList<ItemWebBean>();
+			int nbrArticleNonLu = 0;
+			nbrArticleNonLu = SeviceUtilLecture.compteNombreArticleNonLu(contexte);
+			if (contexte.isViewDef()) {
+				nbrArticleNonLu = 0;
+				// la liste des articles à afficher+nombre d'articles non lus
+				listeItemAcceuil = SeviceUtilLecture.getListItemAccueil(contexte, listCat);
+			}
+			// listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, "",
+			// "", "", filtreNonLu);
+			// List<ItemWebBean> listeItemAcceuil = new
+			// ArrayList<ItemWebBean>();
+			// int nbrArticleNonLu = 0;
+			// nbrArticleNonLu =
+			// SeviceUtilLecture.compteNombreArticleNonLu(contexte);
+			// model.addAttribute("contexte", contexte);
+			// model.addAttribute("listCat", listCatFiltre);
+			// model.addAttribute("nombreArticleNonLu", nbrArticleNonLu);
+			// model.addAttribute("listeItemAcceuil", listeItemAcceuil);
+			model.addAttribute("listCat", listCat);
 			model.addAttribute("contexte", contexte);
-			model.addAttribute("listCat", listCatFiltre);
+			model.addAttribute("nombreArticleNonLu", nbrArticleNonLu);
+			model.addAttribute("listeItemAcceuil", listeItemAcceuil);
+			response.setRenderParameter("action", "success");
 		} catch (Exception e) {
 			throw new WebException("Error in FilteredItem", e);
 		}
-		return new ModelAndView("articleZoneFiltre");
+
 	}
+
+	@RenderMapping(params = "action=success")
+	public String viewSuccess() {
+		return "home";
+
+	}
+
+	// @RequestMapping(value = { "VIEW" }, params = { "action=FilteredItem" })
+	// public void FilteredItem(
+	// @RequestParam(required = true, value = "p1") String idCat,
+	// @RequestParam(required = true, value = "p2") String idSrc,
+	// @RequestParam(required = true, value = "p3") String filtreNonLu,
+	// @RequestParam(required = true, value = "nomSrc") String nameSrc,
+	// @RequestParam(required = true, value = "idContexte") String idContexte,
+	// ActionRequest request,
+	// ActionResponse response) {
+	// List<CategoryWebBean> listCatFiltre = new ArrayList<CategoryWebBean>();
+	// ModelMap model = new ModelMap();
+	// if (isGuestMode()) {
+	// throw new SecurityException("Try to access restricted function is guest
+	// mode");
+	// }
+	// try {
+	// String ctxId ;
+	// if (ctxId == null) {
+	// ctxId = facadeService.getCurrentContextId();
+	// }
+	// String filtreNonLu = request.getParameter("p3");
+	// // ContextWebBean contexte = getContext();
+	// if ("val2".equals(filtreNonLu)) {
+	// facadeService.markItemDisplayModeContext(getUID(), ctxId, true);
+	// } else {
+	// facadeService.markItemDisplayModeContext(getUID(), ctxId, false);
+	// }
+	// ContextWebBean contexte = getContext(ctxId);
+	// List<CategoryWebBean> listCat = contexte.getCategories();
+	// listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat,
+	// idSrc, nameSrc, filtreNonLu);
+	// List<ItemWebBean> listeItemAcceuil = new ArrayList<ItemWebBean>();
+	// int nbrArticleNonLu = 0;
+	// nbrArticleNonLu = SeviceUtilLecture.compteNombreArticleNonLu(contexte);
+	// model.addAttribute("contexte", contexte);
+	// model.addAttribute("listCat", listCatFiltre);
+	// model.addAttribute("nombreArticleNonLu", nbrArticleNonLu);
+	// model.addAttribute("listeItemAcceuil", listeItemAcceuil);
+	// } catch (Exception e) {
+	// throw new WebException("Error in FilteredItem", e);
+	// }
+	// response.setRenderParameter("action", "home");
+	// }
 
 	/**
 	 * Model : Context of the connected user.
@@ -198,6 +287,13 @@ public class HomeController extends TwoPanesController {
 	private ContextWebBean getContext() {
 		String ctxId;
 		ctxId = facadeService.getCurrentContextId();
+		boolean viewDef = facadeService.getCurrentViewDef();
+		int nbreArticle = facadeService.getNombreArcticle();
+		String lienVue = facadeService.getLienVue();
+		return facadeService.getContext(getUID(), ctxId, viewDef, nbreArticle, lienVue);
+	}
+
+	private ContextWebBean getContext(String ctxId) {
 		boolean viewDef = facadeService.getCurrentViewDef();
 		int nbreArticle = facadeService.getNombreArcticle();
 		String lienVue = facadeService.getLienVue();
