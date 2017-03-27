@@ -5,7 +5,7 @@
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<div>
+<div id="${n}homeAccueilJspDiv1">
   <div class="portlet-title round-top padding-botom-head">
     <div>
       <div class="row panelHome">
@@ -26,7 +26,7 @@
     </div>
   </div>
 </div>
-<div>
+<div id="${n}homeAccueilJspDiv2">
   <div>
     <div class="panel-body scrollDivArticle"
       id="<portlet:namespace />zoneArticles">

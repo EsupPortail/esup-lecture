@@ -5,28 +5,8 @@
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<div id="<portlet:namespace />modalPublisher"
-  class="modal fade" role="dialog" tabindex="0">
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal"
-        aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <h3 class="modal-title" id="myModalLabel{$uuid}">
-        <xsl:value-of select="title" />
-      </h3>
-    </div>
-    <div class="modal-body">
-      <p>REMOTE CONTENT</p>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
-    </div>
-  </div>
-</div>
 
-<div class="row">
+<div id="${n}homeAutreJsp" class="row">
   <input type="hidden" id="<portlet:namespace />catSeletc" value='' /> <input
     type="hidden" id="<portlet:namespace />SrcSeletc" value='' />
     <input type="hidden"
@@ -44,10 +24,10 @@
   </c:if>
   <c:choose>
   <c:when test="${contexte.treeVisible=='true'}">
-    <div class="col-sm-9 col-xs-12 divModeDesk" id="<portlet:namespace />divModeDesk">
+    <div class="col-sm-9 col-xs-12 divModeDesk" id="<portlet:namespace />divModeDesk"></div>
   </c:when>
   <c:otherwise>
-    <div class="col-xs-12 divModeDesk" id="<portlet:namespace />divModeDesk">
+    <div class="col-xs-12 divModeDesk" id="<portlet:namespace />divModeDesk"></div>
   </c:otherwise>
   </c:choose>
     <div>
