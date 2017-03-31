@@ -7,10 +7,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
 <div id="${n}homeAutreJsp" class="row">
-  <input type="hidden" id="<portlet:namespace />catSeletc" value='' /> <input
-    type="hidden" id="<portlet:namespace />SrcSeletc" value='' />
+  <input type="hidden" id="${n}catSeletc" value='' /> <input
+    type="hidden" id="${n}SrcSeletc" value='' />
     <input type="hidden"
-    id="<portlet:namespace />rubSeletc" value='' />
+    id="${n}rubSeletc" value='' />
     <c:if test="${contexte.treeVisible=='true'}">
       <div class="col-sm-3 .hidden-xs ">
 
@@ -24,16 +24,16 @@
   </c:if>
   <c:choose>
   <c:when test="${contexte.treeVisible=='true'}">
-    <div class="col-sm-9 col-xs-12 divModeDesk" id="<portlet:namespace />divModeDesk"></div>
+    <div class="col-sm-9 col-xs-12 divModeDesk" id="${n}divModeDesk">
   </c:when>
   <c:otherwise>
-    <div class="col-xs-12 divModeDesk" id="<portlet:namespace />divModeDesk"></div>
+    <div class="col-xs-12 divModeDesk" id="${n}divModeDesk">
   </c:otherwise>
   </c:choose>
     <div>
       <div class="panel panel-default">
         <div class="panel panel-heading largeHeadPanel"
-          id="<portlet:namespace />fixHead${contexte.modePublisher}">
+          id="${n}fixHead${contexte.modePublisher}">
           <c:if test="${contexte.modePublisher=='true'}">
             <%@include file="enteteArticlePublisher.jsp"%>
           </c:if>
@@ -41,8 +41,7 @@
             <%@include file="enteteArticleNonPublisher.jsp"%>
           </c:if>
         </div>
-        <div class="panel-body scrollDivArticle"
-          id="<portlet:namespace />zoneArticles">
+        <div class="panel-body scrollDivArticle" id="${n}zoneArticles">
           <%@include file="articleZoneFiltre.jsp"%>
         </div>
       </div>

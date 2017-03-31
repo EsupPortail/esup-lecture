@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -94,34 +95,72 @@ public class SeviceUtilLecture {
 		return listCatFiltre;
 
 	}
+	
+		/**
+		 * Complete le resultat avec les elements de la source pour atteindre minElem .
+		 * idInRsultat doit contenir les identifiants des item deja dans resultat
+		 * quand le restultat est complet return true.
+		 * sinon return false (cas ou la source est trop petite);
+		 * @param source
+		 * @param resultat
+		 * @param minElem
+		 * @param idInResultat
+		 * @return
+		 */
+	private static boolean completed( 
+								List<ItemWebBean> resultat,
+								List<ItemWebBean> source , 
+								int minElem) {
+		if (resultat.size() < minElem) {
+			for (ItemWebBean item : source) {
+				resultat.add(item);
+				if (resultat.size() >= minElem ) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return true;
+	}
 
+	/**
+	 * Donne la liste des articles à afficher en page d'accueil 
+	 * et calcule dans contexte.nbrUnreadItem le nombre d'articles pas encore lue.  
+	 * @param contexte
+	 * @param listCat
+	 * @return
+	 */
 	public static List<ItemWebBean> getListItemAccueil(ContextWebBean contexte, List<CategoryWebBean> listCat) {
-		List<ItemWebBean> listeItemNonDup = new ArrayList<ItemWebBean>();
+		
+			// nombre d'article minimum a afficher si possible.
+		int nbMinArticle = contexte.getNombreArticle();
+		
+			// Les Items a présenter en page d'accueil. C'est le résultat final.
 		List<ItemWebBean> listeItemAcceuil = new ArrayList<ItemWebBean>();
+		
+			// les items pas encore lue a présenter apres les à la une
+		List<ItemWebBean> listeItemNonLue = new ArrayList<ItemWebBean>();
+		
+			// les items  deja lue pour completer la liste juste au nombre d'article minimum.
+		List<ItemWebBean> listeItemDejaLue = new ArrayList<ItemWebBean>();
+
 		int nbrArticleNonLu = 0;
+		
+			// les id des items deja dans listeItemAcceuil
 		Set<String> idBean = new HashSet<String>();
-		int i = 0;
+		
+		
+		
+		// on traite tous les Highlight "a la une" en premier
 		for (CategoryWebBean cat : listCat) {
-
+			
 			for (SourceWebBean src : cat.getSources()) {
-
-				for (ItemWebBean item : src.getItems()) {
-
-					if (src.getHighlight()) {
-						if (i < contexte.getNombreArticle()) {
+			
+				if (src.getHighlight()) {
+					for (ItemWebBean item : src.getItems()) {
+						if (idBean.add(item.getId())) {
+								// si pas deja la on ajoute
 							listeItemAcceuil.add(item);
-							idBean.add(item.getId());
-							if (!item.isRead()) {
-								nbrArticleNonLu++;
-							}
-							i++;
-
-						}
-					} else {
-						// liste des articles qui ne sont pas à la une
-						if (!(idBean.contains(item.getId()))) {
-							listeItemNonDup.add(item);
-							idBean.add(item.getId());
 							if (!item.isRead()) {
 								nbrArticleNonLu++;
 							}
@@ -130,27 +169,30 @@ public class SeviceUtilLecture {
 				}
 			}
 		}
+		
+			// on traite les suivants ceux qui ne sont pas "a la une" :
+		for (CategoryWebBean cat : listCat) {
+			for (SourceWebBean src : cat.getSources()) {
+				if (! src.getHighlight()) {
+					for (ItemWebBean item : src.getItems()) {
+						if ( idBean.add(item.getId())) {
+							if (item.isRead()) {
+								listeItemDejaLue.add(item);
+							} else {
+								listeItemNonLue.add(item);
+								nbrArticleNonLu++;
+							}
+						}
+					}
+				}
+			}
+		}
+		
 		contexte.setNbrUnreadItem(nbrArticleNonLu);
-		if (i < contexte.getNombreArticle()) {
-			for (ItemWebBean item : listeItemNonDup) {
-				// non lu en premier
-				if (!item.isRead() && i < contexte.getNombreArticle()) {
-					listeItemAcceuil.add(item);
-					i++;
-				}
-			}
-			if (i < contexte.getNombreArticle()) {
-				for (ItemWebBean item : listeItemNonDup) {
-					// compléter par les lus
-					if (item.isRead() && i < contexte.getNombreArticle()) {
-						listeItemAcceuil.add(item);
-						i++;
-					}
-
-				}
-			}
+		
+		if (!completed(listeItemAcceuil, listeItemNonLue, nbMinArticle) ){
+			completed(listeItemAcceuil, listeItemDejaLue, nbMinArticle);
 		}
-
 		return listeItemAcceuil;
 
 	}

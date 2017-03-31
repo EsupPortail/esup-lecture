@@ -7,8 +7,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <div class="row enteteEcranLarge">
   <div class="col-xs-7 col-sm-7"
-    id="<portlet:namespace />rubSelectedDiv1">
-    <label>Toutes les actualités</label>
+    id="${n}rubSelectedDiv1">
+    <label class="rubrique_Active ${n}">Toutes les actualités</label>
   </div>
   <div class='col-xs-5 col-sm-5'>
     <div class='row'>
@@ -56,7 +56,7 @@
   <div id="mainmenu<portlet:namespace />" class="col-xs-10 col-sm-11">
     <div id="<portlet:namespace />rubSelectedDiv2" data-toggle="modal"
       data-target="#myModal<portlet:namespace />">
-      <label>Toutes les actualités</label> <span class="caret margeCarret"></span>
+      <label class="rubrique_Active ${n}"> Toutes les actualités</label> <span class="caret margeCarret"></span>
     </div>
   </div>
   <div class="dropdown pull-right col-xs-2 col-sm-1">
@@ -87,19 +87,19 @@
   </div>
 
 </div>
-<div id="myModal<portlet:namespace />" class="modal fade" role="dialog">
+<div id="myModal${n}" class="modal fade" role="dialog">
   <div class="modal-dialog modalMarge">
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-body modalPadding">
-        <a href="#" class="list-group-item" onclick="AfficherTout('')"
+        <a href="#" class="list-group-item" onclick="filterByRubriqueClass('rubrique_all','${n}')"
           data-dismiss="modal"><c:out value="Toutes les actualités"></c:out>
           <span class="badge pull-right"><c:out
               value="${nombreArticleNonLu}"></c:out></span> </a>
         <c:forEach items="${listCat}" var="cat">
           <c:forEach items="${cat.sources}" var="src">
             <a href="#" class="list-group-item"
-              onclick="filtrerParRubrique('${cat.id}','${src.id}','${src.name}','')"
+              onclick="filterByRubriqueClass('rubrique_${src.uid}','${n}')"
               data-dismiss="modal"><c:out value="${src.name}"></c:out><span
               class="badge pull-right" style="background-color:${src.color}"><c:out
                   value="${src.unreadItemsNumber}"></c:out></span></a>
@@ -109,4 +109,4 @@
     </div>
   </div>
 </div>
-
+<!-- onclick="filtrerParRubrique('${cat.id}','${src.id}','${src.name}','')" -->

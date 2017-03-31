@@ -5,7 +5,7 @@
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<nav class="col-xs-12 col-sm-3" id='<portlet:namespace />listOfCat'>
+<nav class="col-xs-12 col-sm-3" id='${n}listOfCat'>
 	<ul class="nav nav-pills nav-stacked">
 		<li class="li_cat" onclick="AfficherTout('')"><strong><c:out
 					value="${contexte.name}"></c:out></strong></li>

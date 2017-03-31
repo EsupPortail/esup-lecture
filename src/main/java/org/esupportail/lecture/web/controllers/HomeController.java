@@ -60,13 +60,14 @@ public class HomeController extends TwoPanesController {
 		}
 		ContextWebBean contexte = getContext();
 		List<CategoryWebBean> listCat = contexte.getCategories();
-		List<ItemWebBean> listeItemAcceuil = new ArrayList<ItemWebBean>();
+		List<ItemWebBean> listeItemAcceuil = null;
 		int nbrArticleNonLu = 0;
-		nbrArticleNonLu = SeviceUtilLecture.compteNombreArticleNonLu(contexte);
 		if (contexte.isViewDef()) {
-			nbrArticleNonLu = 0;
 			// la liste des articles à afficher+nombre d'articles non lus
 			listeItemAcceuil = SeviceUtilLecture.getListItemAccueil(contexte, listCat);
+		} else {
+		//	 listeItemAcceuil = new ArrayList<ItemWebBean>();
+			nbrArticleNonLu = SeviceUtilLecture.compteNombreArticleNonLu(contexte);
 		}
 		model = bindInitialModel(model, response, request);
 		model.addAttribute("listCat", listCat);
@@ -199,13 +200,14 @@ public class HomeController extends TwoPanesController {
 			}
 			ContextWebBean contexte = getContext(ctxId);
 			List<CategoryWebBean> listCat = contexte.getCategories();
-			List<ItemWebBean> listeItemAcceuil = new ArrayList<ItemWebBean>();
+			List<ItemWebBean> listeItemAcceuil = null ;
 			int nbrArticleNonLu = 0;
-			nbrArticleNonLu = SeviceUtilLecture.compteNombreArticleNonLu(contexte);
 			if (contexte.isViewDef()) {
-				nbrArticleNonLu = 0;
 				// la liste des articles à afficher+nombre d'articles non lus
 				listeItemAcceuil = SeviceUtilLecture.getListItemAccueil(contexte, listCat);
+			} else {
+			//	listeItemAcceuil = new ArrayList<ItemWebBean>();
+				nbrArticleNonLu = SeviceUtilLecture.compteNombreArticleNonLu(contexte);	
 			}
 			// listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, "",
 			// "", "", filtreNonLu);
