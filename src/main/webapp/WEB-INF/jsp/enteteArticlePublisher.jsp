@@ -6,14 +6,13 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <div class="row enteteEcranLarge">
-  <div class="col-xs-7 col-sm-7"
+<!--   "col-xs-7 col-sm-7" -->
+  <div class="pull-left"
+ 
     id="${n}rubSelectedDiv1">
     <label class="rubrique_Active ${n}">Toutes les actualités</label>
   </div>
-  <div class='col-xs-5 col-sm-5'>
-    <div class='row'>
 
-      <div class="dropdown col-xs-4 col-sm-2 pull-right">
         <div class="dropdown-toggle  pull-right" data-toggle="dropdown">
           <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
         </div>
@@ -47,9 +46,6 @@
               </c:if>
             </form>
           </div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 <div class="row menuRubDropDown" id="mainmenurow<portlet:namespace />">

@@ -63,6 +63,7 @@
 
 .esup-lecture .divLargeWith {
   width: 15vw;
+  padding-top: 6px;
 }
 
 /*Ajout :*/
@@ -81,9 +82,7 @@
         border-radius: 4px;
         background-color: #ffffff;
 }
-.esup-lecture .largeHeadPanel:hover {
-        background-color: #f3f3f3;
-}
+
 .esup-lecture .menuRubDropDown > div > div, .esup-lecture .menuRubDropDown label {
     cursor: pointer;
 }
@@ -141,7 +140,19 @@
 }
 
 .esup-lecture .classHeadLarg {
-  width: 56.7%
+  width: 70%;
+ 
+}
+@media only screen and (min-width: 1024px) {
+	.esup-lecture .classHeadLarg {
+ /* 		width: calc(17.5% + 536px); */
+ 		width:770px;
+	}
+}
+@media only screen and (min-width: 1300px) {
+	.esup-lecture .classHeadLarg {
+  		width: 57%;
+	}
 }
 
 .esup-lecture .madalSize {
@@ -188,7 +199,7 @@
 /*Fin ajout*/
 }
 
-@media only screen and (max-width: 935px) {
+@media only screen and (max-width: 935px) { 
   .esup-lecture .navModeDesk {
     display: none;
   }
@@ -235,7 +246,8 @@
     padding-bottom: 5%;
   }
   .esup-lecture .classHeadLarg {
-    width: 100%
+    width: 100%;
+    left:0;
   }
   .esup-lecture .ligneRubriqueMenu {
     /* 		width: 100%; */
@@ -272,6 +284,11 @@
   .esup-lecture .margeCarret {
     margin-top: 10px;
   }
+  
+  
+  .esup-lecture .largeHeadPanel:hover {
+        background-color: #f3f3f3;
+}
 }
 
 .itemsPublisher .actualite {
@@ -311,7 +328,7 @@
 .scrollDivArticle > div:FIRST-CHILD  .itemsPublisher .actualite .imageArticle {
 	padding-top: 4px;
 }
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 992px) { 
 	.itemsPublisher .actualite .imageArticle {
 	//	border-radius: 42px; 
 		width: 84px;
