@@ -5,14 +5,12 @@
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<div class="row enteteEcranLarge">
+<div class=" enteteLectureAll">
 <!--   "col-xs-7 col-sm-7" -->
-  <div class="pull-left"
- 
-    id="${n}rubSelectedDiv1">
+  <div class="pull-left noMenuDropDown" id="${n}rubSelectedDiv1">
     <label class="rubrique_Active ${n}">Toutes les actualités</label>
   </div>
-  <div id="${n}rubSelectedDiv2" data-toggle="modal"
+  <div id="${n}rubSelectedDiv2" class="pull-left withMenuDropDown" data-toggle="modal"
       data-target="#myModal<portlet:namespace />">
       <label class="rubrique_Active ${n}"> Toutes les actualités</label> <span class="caret margeCarret"></span>
    </div>
@@ -57,41 +55,7 @@
   </div>
 </div>
   
-<div class="row menuRubDropDown" id="mainmenurow${n}">
-  <div id="mainmenu${n}" class="col-xs-10 col-sm-11">
-    <div id="${n}rubSelectedDiv2" data-toggle="modal"
-      data-target="#myModal<portlet:namespace />">
-      <label class="rubrique_Active ${n}"> Toutes les actualités</label> <span class="caret margeCarret"></span>
-    </div>
-  </div>
-  <div class="dropdown pull-right col-xs-2 col-sm-1">
-    <div class="dropdown-toggle  pull-right" data-toggle="dropdown">
-      <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-    </div>
-    <div class="dropdown-menu pull-right">
-      <div class="checkbox afficherLuWith">
-        <form id="formReadMode<portlet:namespace /> "
-          action="${submitFormURL}" method="post">
-          <input type="hidden" name="p3" id="<portlet:namespace />listNonLu"
-            value="" /> <input name="idContexte" type="hidden"
-            value="contexte.id"> <label> Afficher uniquement
-            les actualités non lues&nbsp;</label>
-          <c:if test="${contexte.itemDisplayMode=='UNREAD'}">
-            <input type="checkbox" id="<portlet:namespace />checkBoxNonLu2"
-               checked="checked">
-<!-- 							 onchange="filtrerPublisherNonLusMobile()" -->
-          </c:if>
-          <c:if test="${contexte.itemDisplayMode=='ALL'}">
-            <input type="checkbox" id="<portlet:namespace />checkBoxNonLu2"
-              >
-<!-- 							onchange="filtrerPublisherNonLusMobile()" -->
-          </c:if>
-        </form>
-      </div>
-    </div>
-  </div>
 
-</div>
 
 <div id="myModal${n}" class="modal fade" role="dialog">
   <div class="modal-dialog modalMarge">

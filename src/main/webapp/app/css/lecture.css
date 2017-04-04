@@ -265,9 +265,7 @@
   .esup-lecture .ligneRubriqueMenu:hover {
     background: #A9A9A9;
   }
-  .esup-lecture .enteteEcranLarge {
-    display: none;
-  }
+ 
   .esup-lecture .menuRubDropDown {
     width: 100%
   }
@@ -366,3 +364,34 @@ div.itemShowFilter.rubriqueInactive {
     border: 0px;
     margin-rigth : 12px;
 }
+
+
+div.noMenuDropDown {
+	display:none;
+}
+div.withMenuDropDown {
+		display: inline-block;
+	}
+@media only screen and (min-width: 934px) { 
+	div.withMenuDropDown {
+		display: none;
+	}
+	div.noMenuDropDown {
+		display:block;
+	}
+}
+@media only screen and (max-width: 992px) { 
+	
+}
+@media only screen and (min-width: 1024px) {
+	.esup-lecture .classHeadLarg {
+ /* 		width: calc(17.5% + 536px); */
+ 		width:770px;
+	}
+}
+@media only screen and (min-width: 1300px) {
+	.esup-lecture .classHeadLarg {
+  		width: 57%;
+	}
+}
+
