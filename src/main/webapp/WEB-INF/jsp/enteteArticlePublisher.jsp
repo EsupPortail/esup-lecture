@@ -12,45 +12,54 @@
     id="${n}rubSelectedDiv1">
     <label class="rubrique_Active ${n}">Toutes les actualités</label>
   </div>
-
+  <div id="${n}rubSelectedDiv2" data-toggle="modal"
+      data-target="#myModal<portlet:namespace />">
+      <label class="rubrique_Active ${n}"> Toutes les actualités</label> <span class="caret margeCarret"></span>
+   </div>
+	<div class="dropdown readNotRead">	
+	<!--		
         <div class="dropdown-toggle  pull-right" data-toggle="dropdown">
           <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
         </div>
-        <portlet:actionURL var="submitFormURL">
+    --> 
+    	<button  class="btn btn-primary dropdown-toggle pull-right" type="button" data-toggle="dropdown"> 
+    		<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+    	</button>
+    	 <portlet:actionURL var="submitFormURL">
           <portlet:param name="action" value="filteredItem"/>
         </portlet:actionURL>
-        <div class="dropdown-menu pull-right">
-          <div class="checkbox afficherLuWith">
-
-            <form id="formReadMode<portlet:namespace />"
-              action="${submitFormURL}" method="post">
-              <input type="hidden" name="p3"
-                id="<portlet:namespace />listNonLu" value="" /> <input
-                name="idContexte" type="hidden" value="${contexte.id}">
-              <c:if test="${contexte.itemDisplayMode=='UNREAD'}">
-                <label> <spring:message code="showUnreadNews" />&nbsp;
+        <ul class="dropdown-menu pull-right">
+          <li class="checkbox afficherLuWith">
+<!--  
+            <form id="formReadMode${n}" action="${submitFormURL}" method="post">
+              <input 	type="hidden" 
+              			name="p3"
+                		id="${n}listNonLu" 
+                		value="" /> 
+              <input	name="idContexte" 
+              			type="hidden" 
+              			value="${contexte.id}" />
+    -->        
+                <label for="checkReadItem${n})" onclick="lecture.jq('input#checkReadItem${n}').click()"> <spring:message code="showUnreadNews" />&nbsp;
                 </label>
-                <input class="checkReadItem" type="checkbox"
-                  id="<portlet:namespace />checkBoxNonLu" checked="checked">
-                <!--                  onchange="filtrerPublisherNonLus()" -->
-
-              </c:if>
-
-              <c:if test="${contexte.itemDisplayMode=='ALL'}">
-                <label> <spring:message code="showUnreadNews" />&nbsp;
-                </label>
-                <input class="checkReadItem" type="checkbox"
-                  onchange="filtrerPublisherNonLus()"
-                  id="<portlet:namespace />checkBoxNonLu">
+                <input 	id = "checkReadItem${n}"
+                		class="checkReadItem" 
+                		type="checkbox"
+                		value="${contexte.itemDisplayMode=='UNREAD'}"
+                  		onchange="filterPublisherNotRead('${n}', this); lecture.jq('#${n}rubSelectedDiv1 ').click();"
+                  id="${n}checkBoxNonLu">
                 <!--                 onchange="filtrerPublisherNonLus()" -->
-              </c:if>
+       <!--       
             </form>
-          </div>
+         --> 
+          </li>
+  </ul>
   </div>
 </div>
-<div class="row menuRubDropDown" id="mainmenurow<portlet:namespace />">
-  <div id="mainmenu<portlet:namespace />" class="col-xs-10 col-sm-11">
-    <div id="<portlet:namespace />rubSelectedDiv2" data-toggle="modal"
+  
+<div class="row menuRubDropDown" id="mainmenurow${n}">
+  <div id="mainmenu${n}" class="col-xs-10 col-sm-11">
+    <div id="${n}rubSelectedDiv2" data-toggle="modal"
       data-target="#myModal<portlet:namespace />">
       <label class="rubrique_Active ${n}"> Toutes les actualités</label> <span class="caret margeCarret"></span>
     </div>
@@ -83,6 +92,7 @@
   </div>
 
 </div>
+
 <div id="myModal${n}" class="modal fade" role="dialog">
   <div class="modal-dialog modalMarge">
     <!-- Modal content-->

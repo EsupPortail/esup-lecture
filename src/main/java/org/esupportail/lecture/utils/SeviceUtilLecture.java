@@ -123,6 +123,7 @@ public class SeviceUtilLecture {
 		return true;
 	}
 
+	
 	/**
 	 * Donne la liste des articles à afficher en page d'accueil 
 	 * et calcule dans contexte.nbrUnreadItem le nombre d'articles pas encore lue.  

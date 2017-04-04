@@ -66,6 +66,7 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
       });
       */
 //filter les non lus
+     /*
       $(".checkReadItem").each(function(){
         $(this).change(function(e) {
           if ($("#" + portletId + "checkBoxNonLu").is(':checked')) {
@@ -76,24 +77,8 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
          $("#formReadMode"+portletId).submit();
         });
       });
-//$(".checkReadItem").each(function(){
-//   $(this).change(function(e) {
-//   if ($(this).is(':checked')) {
-//     $(".itemShowFilter").each(function() {
-//       var isRead=$(this).find(".itemShowFilterIsRead").val();
-//       if(isRead=="true"){
-//         $(this).hide();
-//       }else{
-//         $(this).show();
-//       }
-//     });
-//   }else{
-//     $(".itemShowFilter").each(function() {
-//     $(this).show();
-//     });
-//   }
-//   });
-//});
+*/
+      
       // pour griser les images des articles non lus
       $(".listeIdArtitrue").each(function() {
         var id = $(this).val();
@@ -173,6 +158,48 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
               });
     });
 
+    
+    function toggleArticleRead(idCat, idSrc, idItem, idDivRow, isModePublisher, contextClass) {
+    	var urlAjax = urlMarkRead;
+    	var divRow = $('div#'+ idDivRow);
+    	var divInput;
+    	var divEye;
+    	var readItem ;
+    	console.log("toggleArticleRead ")
+    	if (divRow) {
+    		
+    		divInput=$('input.itemShowFilterIsRead', divRow);
+    		readItem =  divInput.val() == 'true' ? false : true;
+    		divInput.val(readItem);
+    		
+	    	$.ajax({
+	    		url : urlAjax,
+	    		type : 'POST',
+	    		async : true,
+	    		data : {
+	                'p1' : idCat,
+	                'p2' : idSrc,
+	                'p3' : idItem,
+	                'p4' : readItem,
+	                'p5' : isModePublisher
+	              },
+	            success : function(data){
+	            	console.log ("mise a jour ok");
+	            }
+	    	});
+	    	
+	    	if (isModePublisher) {
+	    		if (readItem) {
+	    			$('div.articleEye i', divRow ).addClass('fa-eye-slash').removeClass('fa-eye');
+	    			$(divRow).addClass('dejaLue');
+	    		} else {
+	    			$('div.articleEye i', divRow ).addClass('fa-eye').removeClass('fa-eye-slash');
+	    			(divRow).removeClass('dejaLue');
+	    		}
+	    	}
+    	}
+    }
+    window.toggleArticleRead = toggleArticleRead;
     //marquer un item LU
     function marquerItemLu(idCat, idSrc, idItem, readItem, isModePublisher) {
       var urlAjax = urlMarkRead;
@@ -374,9 +401,9 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
     	
     	$("div.itemShowFilter."+contexte).each(function() {
     		if (classRubrique == 'rubrique_all' || $(this).hasClass(classRubrique)) {
-    			$(this).show();
+    			$(this).removeClass('rubriqueInactive');
     		} else {
-    			$(this).hide();
+    			$(this).addClass('rubriqueInactive');
     		}
     	});
     	console.log("div#"+contexte+"rubSelectedDiv1 label.rubrique_Active: "+text);
@@ -400,8 +427,19 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
       }
     }
     window.AfficherTout = AfficherTout;
-
-    function filtrerPublisherNonLus() {
+    
+ 
+    function filterPublisherNotRead(contextClass, obj) {
+    	var laDiv = $('div.divModeDesk div.panel.'+contextClass);
+    	if (laDiv && obj.checked){
+    		laDiv.addClass('nonLueSeulement');
+    	} else {
+    		laDiv.removeClass('nonLueSeulement');
+    	}
+    	
+    }
+    window.filterPublisherNotRead = filterPublisherNotRead;
+/*    function filtrerPublisherNonLus() {
       if ($("#" + portletId + "checkBoxNonLu").is(':checked')) {
         $("#" + portletId + "listNonLu").val("val2")
         filtrerNonLus('');
@@ -410,7 +448,10 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
         AfficherTout();
       }
     }
+
     window.filtrerPublisherNonLus = filtrerPublisherNonLus;
+  */  
+    
     function filtrerPublisherNonLusMobile() {
       if ($("#" + portletId + "checkBoxNonLu2").is(':checked')) {
         $("#" + portletId + "listNonLu").val("val2");

@@ -70,6 +70,7 @@ public class HomeController extends TwoPanesController {
 			nbrArticleNonLu = SeviceUtilLecture.compteNombreArticleNonLu(contexte);
 		}
 		model = bindInitialModel(model, response, request);
+		model.addAttribute("testListCatSize", listCat==null ? "null" : listCat.size());
 		model.addAttribute("listCat", listCat);
 		model.addAttribute("contexte", contexte);
 		model.addAttribute("nombreArticleNonLu", nbrArticleNonLu);
@@ -220,6 +221,8 @@ public class HomeController extends TwoPanesController {
 			// model.addAttribute("listCat", listCatFiltre);
 			// model.addAttribute("nombreArticleNonLu", nbrArticleNonLu);
 			// model.addAttribute("listeItemAcceuil", listeItemAcceuil);
+		
+			
 			model.addAttribute("listCat", listCat);
 			model.addAttribute("contexte", contexte);
 			model.addAttribute("nombreArticleNonLu", nbrArticleNonLu);
@@ -287,18 +290,15 @@ public class HomeController extends TwoPanesController {
 	 * @return Returns the context.
 	 */
 	private ContextWebBean getContext() {
-		String ctxId;
-		ctxId = facadeService.getCurrentContextId();
-		boolean viewDef = facadeService.getCurrentViewDef();
-		int nbreArticle = facadeService.getNombreArcticle();
-		String lienVue = facadeService.getLienVue();
-		return facadeService.getContext(getUID(), ctxId, viewDef, nbreArticle, lienVue);
+		return getContext(facadeService.getCurrentContextId()) ;
+		
 	}
 
 	private ContextWebBean getContext(String ctxId) {
 		boolean viewDef = facadeService.getCurrentViewDef();
 		int nbreArticle = facadeService.getNombreArcticle();
 		String lienVue = facadeService.getLienVue();
+		LOG.debug(String.format(" facadeService.getContext(%s, %s, %s, %d, %s)", getUID(), ctxId, viewDef, nbreArticle, lienVue));
 		return facadeService.getContext(getUID(), ctxId, viewDef, nbreArticle, lienVue);
 	}
 }

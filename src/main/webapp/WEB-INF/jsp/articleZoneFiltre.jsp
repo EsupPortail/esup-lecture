@@ -6,12 +6,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-
+${contexte.itemDisplayMode}
 
 <c:if test="${contexte.itemDisplayMode=='ALL'}">
+	listcat : ${fn:length(listCat)}
   <c:forEach items="${listCat}" var="cat">
-  	
+  		listSrc : ${fn:length(cat.sources)}
     <c:forEach items="${cat.sources}" var="src">
+    	items : ${fn:length(src.items)}
       <c:forEach items="${src.items}" var="article">
 <%-- 
         <c:set var="idSources" value="${fn:replace(src.id,' ', '')}"></c:set>
@@ -23,7 +25,7 @@
 		
 		<c:set var="idDivRow" value="${n}_articleRow_${nbArticle}" />
 		
-		<div id="${idDivRow}" class="itemShowFilter ${n}">
+		<div id="${idDivRow}" class="itemShowFilter ${n} ${article.id} ${article.read ? 'dejaLue' : ''}">
         	<input type="hidden" class="itemShowFilterIsRead" value="${article.read}"/>
 			<div  class='row '>
 
@@ -34,24 +36,11 @@
 					<c:out value="${article.htmlContent}" escapeXml="false" />
 				</div>
 	
-				<input 	type="hidden" 
-						class="eye${article.id}"
-						value="${article.id}${idSources}" 
-					/>
 				<c:if test="${cat.userCanMarkRead=='true'}">
-					<div class='col-xs-2 col-sm-1 articleDiv'
-						id="eye${article.id}${idSources}">
-						<c:if test="${article.read=='true'}">
-							<input type="hidden" id="arti${article.id}${idSources}"
-								class="listeIdArti${contexte.modePublisher}"
-								value="contenuArti${contexte.modePublisher}${article.id}${idSources}" />
-							<i class="fa fa-eye-slash fa-stack-1x"
-								onclick="marquerItemLu('${cat.id}','${src.id}','${article.id}',${article.read},${contexte.modePublisher})"></i>
-						</c:if>
-						<c:if test="${article.read=='false'}">
-							<i class="fa fa-eye fa-stack-1x"
-								onclick="marquerItemLu('${cat.id}','${src.id}','${article.id}',${article.read},${contexte.modePublisher})"></i>
-						</c:if>
+					<div class="col-xs-2 col-sm-1 articleEye ${article.id} ${n}">
+						<i class="fa ${article.read ? 'fa-eye-slash' :  'fa-eye'} fa-stack-1x"
+							onclick="toggleArticleRead('${cat.id}','${src.id}','${article.id}','${idDivRow}',${contexte.modePublisher}, '${n}');" 
+						></i>
 					</div>
 				</c:if>
 			</div>
@@ -65,8 +54,8 @@
 							onclick="filterByRubriqueClass('rubrique_${rub.uid}', '${n}')">
 							<c:out value="${rub.nom}"></c:out></span>
 						<script>
-						//onclick="filtrerParRubrique('${cat.id}','','${rub.nom}')"
-							lecture.jq(function(){
+								// ajout de la rubrique dans la div hote
+							lecture.jq(function(){ 
 									var t = lecture.jq('#${idDivRow}').addClass('rubrique_${rub.uid}');
 								});
 						</script>

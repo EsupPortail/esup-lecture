@@ -86,6 +86,10 @@
 .esup-lecture .menuRubDropDown > div > div, .esup-lecture .menuRubDropDown label {
     cursor: pointer;
 }
+
+.esup-lecture div.dropdown.readNotRead div.dropdown-toggle{
+	margin-right:6px;
+}
 .esup-lecture .dropdown-toggle.pull-right {
     padding: 0px 10px 5px 10px;
     cursor: pointer;
@@ -341,7 +345,24 @@
 .scrollDivArticle .itemShowFilter .paddingLeft{
 	padding-left: 92px; 
 }
+.scrollDivArticle .itemShowFilter.dejaLue  {
+	filter: grayscale(100%);
+	color: #999999;
+}
 
 ul.menuRubrique li > div.rubriqueFiltre.active {
 	background: #d4d4d4;
+}
+
+div.nonLueSeulement div.dejaLue {
+	display : none;
+}
+div.itemShowFilter.rubriqueInactive {
+	display : none;
+}
+.esup-lecture div.dropdown.readNotRead button.dropdown-toggle  {
+    background-color: transparent;
+    color: black;
+    border: 0px;
+    margin-rigth : 12px;
 }

@@ -30,8 +30,8 @@
     <div class="col-xs-12 divModeDesk" id="${n}divModeDesk">
   </c:otherwise>
   </c:choose>
-    <div>
-      <div class="panel panel-default">
+    <!--  div -->
+      <div class="panel panel-default ${n} ${contexte.itemDisplayMode=='UNREAD' ? 'nonLueSeulement' : ''}">
         <div class="panel panel-heading largeHeadPanel"
           id="${n}fixHead${contexte.modePublisher}">
           <c:if test="${contexte.modePublisher=='true'}">
@@ -46,5 +46,5 @@
         </div>
       </div>
     </div>
-  </div>
+  <!--/div -->
 </div>
