@@ -33,14 +33,14 @@
 					test="${contexte.userCanMarckRead=='true'&&affichereye=='true'}">
 					<input type="hidden" id="<portlet:namespace />listNonLu"
 						value="val1" />
-					<li onclick="filtrerNonLus('val2')">Afficher les articles Non
+					<li onclick="lecture.${n}.filtrerNonLus('val2')">Afficher les articles Non
 						lus</li>
-					<li onclick="filtrerNonLus('val3')">Afficher les articles Non
+					<li onclick="lecture.${n}.filtrerNonLus('val3')">Afficher les articles Non
 						lus en premier</li>
-					<li onclick="filtrerNonLus('val1')">Afficher tous les articles</li>
-					<li onclick="marquerToutItemLu(true)">Marquer tous les
+					<li onclick="lecture.${n}.filtrerNonLus('val1')">Afficher tous les articles</li>
+					<li onclick="lecture['${n}'].marquerToutItemLu(true)">Marquer tous les
 						articles lus</li>
-					<li onclick="marquerToutItemLu(false)">Marquer tous les
+					<li onclick="lecture['${n}'].marquerToutItemLu(false)">Marquer tous les
 						articles non lus</li>
 				</c:if>
 				<c:if test="${contexte.treeVisible=='true'}">

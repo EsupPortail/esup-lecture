@@ -10,7 +10,7 @@
     <div>
       <div class="row panelHome">
         <div class="col-sm-7 col-xs-7"
-          onclick="<portlet:namespace />AfficherTouteActualite()">
+          onclick="lecture.${n}.AfficherTouteActualite()">
           <spring:message
                 code="unreadNews" />
           <strong><c:out value="${contexte.nbrUnreadItem}"></c:out></strong>

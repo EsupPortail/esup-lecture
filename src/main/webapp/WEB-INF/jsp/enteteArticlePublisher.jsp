@@ -38,13 +38,13 @@
               			type="hidden" 
               			value="${contexte.id}" />
     -->        
-                <label for="checkReadItem${n})" onclick="lecture.jq('input#checkReadItem${n}').click()"> <spring:message code="showUnreadNews" />&nbsp;
+                <label for="checkReadItem${n})" onclick="lecture['${n}'].jq('input#checkReadItem${n}').click()"> <spring:message code="showUnreadNews" />&nbsp;
                 </label>
                 <input 	id = "checkReadItem${n}"
                 		class="checkReadItem" 
                 		type="checkbox"
                 		value="${contexte.itemDisplayMode=='UNREAD'}"
-                  		onchange="filterPublisherNotRead('${n}', this); lecture.jq('#${n}rubSelectedDiv1 ').click();"
+                  		onchange="lecture.${n}.filterPublisherNotRead(this); lecture['${n}'].jq('#${n}rubSelectedDiv1 ').click();"
                   id="${n}checkBoxNonLu">
                 <!--                 onchange="filtrerPublisherNonLus()" -->
        <!--       
@@ -62,14 +62,14 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-body modalPadding">
-        <a href="#" class="list-group-item" onclick="filterByRubriqueClass('rubrique_all','${n}')"
+        <a href="#" class="list-group-item" onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')"
           data-dismiss="modal"><c:out value="Toutes les actualités"></c:out>
           <span class="badge pull-right"><c:out
               value="${nombreArticleNonLu}"></c:out></span> </a>
         <c:forEach items="${listCat}" var="cat">
           <c:forEach items="${cat.sources}" var="src">
             <a href="#" class="list-group-item"
-              onclick="filterByRubriqueClass('rubrique_${src.uid}','${n}')"
+              onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}')"
               data-dismiss="modal"><c:out value="${src.name}"></c:out><span
               class="badge pull-right" style="background-color:${src.color}"><c:out
                   value="${src.unreadItemsNumber}"></c:out></span></a>

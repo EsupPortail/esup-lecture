@@ -1,8 +1,22 @@
 var lecture = lecture || {};
-lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
-    urlFiltrItem) {
-	lecture.jq=$;
-//  (function($, namespace, portletId, urlMarkReadv, urlMarkAllRead,
+lecture.init = function($, namespace,  urlMarkRead, urlMarkAllRead, urlFiltrItem) {
+	// creation d'un object privé (par namespace)
+	var priv= new Object();
+	var portletId = namespace;
+	var selector = '#lecture-'+namespace;
+	lecture[namespace] = priv ;
+	priv.urlMarkRead = urlMarkRead;
+	priv.urlMarkAllRead = urlMarkAllRead;
+	priv.urlFiltrItem = urlFiltrItem;
+	priv.selector = selector;
+	priv.namespace=namespace;
+	priv.jq = $;
+	
+	
+	
+	console.log("test lecture " + lecture[namespace].urlMarkRead +"   "+ lecture[namespace].urlMarkAllRead);
+	
+	//  (function($, namespace, namespace, urlMarkReadv, urlMarkAllRead,
  //     urlFiltrItem) {
     $(function() {
   //afficher & cacher la liste des catégories
@@ -22,62 +36,6 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
                   'col-sm-9');
             }
           });
-//filtrer par rubrique les articles publisher
-    /*  $(".rubriqueFiltre").each(function() {
-    	 
-        $(this).click(function(e) {
-        	
-     
-          e.preventDefault();
-          var afficherRubSelect = $(this).find(".srcName").val();
-          var reponse1 = "<label>" + afficherRubSelect + "</label>";
-          var reponse = "<label>" + afficherRubSelect
-              + "</label><span class='caret margeCarret'></span>";
-          $("#" + portletId + "rubSelectedDiv1").html(reponse1);
-          $("#" + portletId + "rubSelectedDiv2").html(reponse);
-          var srcId = $(this).find(".srcId").val();
-          $("#" + portletId + "catSeletc").val('');
-          $("#" + portletId + "SrcSeletc").val(srcId);
-          $("#" + portletId + "rubSeletc").val(afficherRubSelect);
-          if(srcId=="toutRub"){
-            $(".itemShowFilter").each(function() {
-              $(this).show();
-            });
-          }else{
-          $(".itemShowFilter").each(function() {
-            var showItem = false;
-            $(".uidDesRubriquesItem").each(function() {
-              if ($(this).val() == srcId) {
-                showItem = true;
-              }
-            });
-            if (showItem == false) {
-              $(this).hide();
-            }else{
-              $(this).show();
-            }
-          
-          }); 
-          
-          }
-        
-        });
-      
-      });
-      */
-//filter les non lus
-     /*
-      $(".checkReadItem").each(function(){
-        $(this).change(function(e) {
-          if ($("#" + portletId + "checkBoxNonLu").is(':checked')) {
-                  $("#" + portletId + "listNonLu").val("val2")
-                } else {
-                  $("#" + portletId + "listNonLu").val("val1")
-                }
-         $("#formReadMode"+portletId).submit();
-        });
-      });
-*/
       
       // pour griser les images des articles non lus
       $(".listeIdArtitrue").each(function() {
@@ -140,11 +98,11 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
                           console
                               .log(
                                   "test",
-                                  $(namespace
+                                  $(selector
                                       + " #"
                                       + portletId
                                       + "modalPublisher"));
-                          $(namespace
+                          $(selector
                                   + " #"
                                   + portletId
                                   + "modalPublisher")
@@ -158,14 +116,15 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
               });
     });
 
-    
-    function toggleArticleRead(idCat, idSrc, idItem, idDivRow, isModePublisher, contextClass) {
+ 
+
+    function toggleArticleRead(idCat, idSrc, idItem, idDivRow, isModePublisher) {
     	var urlAjax = urlMarkRead;
     	var divRow = $('div#'+ idDivRow);
     	var divInput;
     	var divEye;
     	var readItem ;
-    	console.log("toggleArticleRead ")
+    	console.log("toggleArticleRead :" + urlAjax);
     	if (divRow) {
     		
     		divInput=$('input.itemShowFilterIsRead', divRow);
@@ -191,15 +150,17 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
 	    	if (isModePublisher) {
 	    		if (readItem) {
 	    			$('div.articleEye i', divRow ).addClass('fa-eye-slash').removeClass('fa-eye');
-	    			$(divRow).addClass('dejaLue');
+	    			divRow.addClass('dejaLue');
 	    		} else {
 	    			$('div.articleEye i', divRow ).addClass('fa-eye').removeClass('fa-eye-slash');
-	    			(divRow).removeClass('dejaLue');
+	    			divRow.removeClass('dejaLue');
 	    		}
 	    	}
     	}
     }
-    window.toggleArticleRead = toggleArticleRead;
+    priv.toggleArticleRead = toggleArticleRead;
+    
+    
     //marquer un item LU
     function marquerItemLu(idCat, idSrc, idItem, readItem, isModePublisher) {
       var urlAjax = urlMarkRead;
@@ -232,7 +193,7 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
                             $('#' + idImgi)
                                 .removeClass(
                                     "griseImageArticle");
-                            var htmlCode = '<i class="fa fa-eye fa-stack-1x" onclick="marquerItemLu(\''
+                            var htmlCode = '<i class="fa fa-eye fa-stack-1x" onclick="lecture.'+namespace+'.marquerItemLu(\''
                                 + idCat
                                 + '\',\''
                                 + idSrc
@@ -249,7 +210,7 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
                 } else {
                   $('#' + idImg).removeClass(
                       "griseImageArticle");
-                  var htmlCode = '<i class="fa fa-eye fa-stack-1x" onclick="marquerItemLu(\''
+                  var htmlCode = '<i class="fa fa-eye fa-stack-1x" onclick="lecture.'+namespace+'.marquerItemLu(\''
                       + idCat
                       + '\',\''
                       + idSrc
@@ -273,7 +234,7 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
                             $('#' + idImgi)
                                 .addClass(
                                     "griseImageArticle");
-                            var htmlCode = '<i class="fa fa-eye-slash fa-stack-1x" onclick="marquerItemLu(\''
+                            var htmlCode = '<i class="fa fa-eye-slash fa-stack-1x" onclick="lecture.'+namespace+'.marquerItemLu(\''
                                 + idCat
                                 + '\',\''
                                 + idSrc
@@ -290,7 +251,7 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
                 } else {
                   $('#' + idImg)
                       .addClass("griseImageArticle");
-                  var htmlCode = '<i class="fa fa-eye-slash fa-stack-1x" onclick="marquerItemLu(\''
+                  var htmlCode = '<i class="fa fa-eye-slash fa-stack-1x" onclick="lecture.'+namespace+'.marquerItemLu(\''
                       + idCat
                       + '\',\''
                       + idSrc
@@ -306,7 +267,12 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
             }
           });
     }
-    window.marquerItemLu = marquerItemLu;
+    
+
+    priv.marquerItemLu = marquerItemLu;
+    
+    
+    
     // //marquer tous les articles lu/non lu
     function marquerToutItemLu(isRead) {
       var urlAjax = urlMarkAllRead;
@@ -327,7 +293,11 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
         },
       });
     }
-    window.marquerToutItemLu = marquerToutItemLu;
+    priv.marquerToutItemLu = marquerToutItemLu;
+    
+    
+   
+    
     // //filtrer les articles
     function filtrerNonLus(valFilter) {
       if (valFilter != '') {
@@ -356,16 +326,20 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
         },
       });
     }
-    window.filtrerNonLus = filtrerNonLus;
+    priv.filtrerNonLus = filtrerNonLus;
 
+    
+    
+    
     function filtrerParCategorie(catid) {
       $("#" + portletId + "catSeletc").val(catid);
       $("#" + portletId + "SrcSeletc").val('');
       $("#" + portletId + "rubSeletc").val('');
       filtrerNonLus('');
     }
-    window.filtrerParCategorie = filtrerParCategorie;
+    priv.filtrerParCategorie = filtrerParCategorie;
 
+ 
     function filtrerParRubrique(catid, srcid, afficherRubSelect, val) {
     	console.log("filtrerParRubrique");
       if (afficherRubSelect != '') {
@@ -384,11 +358,12 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
         $("#menupos1" + portletId).hide();
       }
     }
-    window.filtrerParRubrique = filtrerParRubrique;
-
+    priv.filtrerParRubrique = filtrerParRubrique;
+ 
     
-    function filterByRubriqueClass(classRubrique, contexte){
+    function filterByRubriqueClass(classRubrique){
     	var text="Toutes les actualités!";
+    	var contexte = namespace;
     	$("div.rubriqueFiltre."+contexte).each(function(){
     			if ($(this).hasClass(classRubrique)) {
     				$(this).addClass('active');
@@ -409,8 +384,9 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
     	console.log("div#"+contexte+"rubSelectedDiv1 label.rubrique_Active: "+text);
     	$("label.rubrique_Active."+contexte).html(text);
     }
-    window.filterByRubriqueClass =  filterByRubriqueClass;
+    priv.filterByRubriqueClass =  filterByRubriqueClass;
     
+ 
     
     function AfficherTout(val) {
       $("#" + portletId + "catSeletc").val('');
@@ -426,19 +402,25 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
         $("#menupos1" + portletId).hide();
       }
     }
-    window.AfficherTout = AfficherTout;
+    priv.AfficherTout = AfficherTout;
     
  
-    function filterPublisherNotRead(contextClass, obj) {
+ 
+    function filterPublisherNotRead(obj) {
+    	var contextClass = namespace;
     	var laDiv = $('div.divModeDesk div.panel.'+contextClass);
     	if (laDiv && obj.checked){
     		laDiv.addClass('nonLueSeulement');
     	} else {
     		laDiv.removeClass('nonLueSeulement');
     	}
+    	console.log("urlFiltrItem " + urlFiltrItem);
     	
     }
-    window.filterPublisherNotRead = filterPublisherNotRead;
+    priv.filterPublisherNotRead = filterPublisherNotRead;
+    
+    
+ 
 /*    function filtrerPublisherNonLus() {
       if ($("#" + portletId + "checkBoxNonLu").is(':checked')) {
         $("#" + portletId + "listNonLu").val("val2")
@@ -461,6 +443,6 @@ lecture.init = function($, namespace, portletId, urlMarkRead, urlMarkAllRead,
         AfficherTout();
       }
     }
-    window.filtrerPublisherNonLusMobile = filtrerPublisherNonLusMobile;
+    priv.filtrerPublisherNonLusMobile = filtrerPublisherNonLusMobile;
  // })($, namespace, portletId, urlMarkRead, urlMarkAllRead, urlFiltrItem);
 }

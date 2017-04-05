@@ -15,11 +15,11 @@
 					<div class='col-xs-1 col-sm-1 articleDiv' id="eye${article.id}">
 						<c:if test="${isRead=='true'}">
 							<i class="fa fa-eye-slash fa-stack-1x"
-								onclick="<portlet:namespace />marquerItemLu('${cat.id}','${src.id}','${article.id}',${article.read},false)"></i>
+								onclick="lecture['${n}'].marquerItemLu('${cat.id}','${src.id}','${article.id}',${article.read},false)"></i>
 						</c:if>
 						<c:if test="${isRead=='false'}">
 							<i class="fa fa-eye fa-stack-1x"
-								onclick="<portlet:namespace />marquerItemLu('${cat.id}','${src.id}','${article.id}',${article.read},false)"></i>
+								onclick="lecture['${n}'].marquerItemLu('${cat.id}','${src.id}','${article.id}',${article.read},false)"></i>
 						</c:if>
 					</div>
 				</div>

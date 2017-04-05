@@ -31,12 +31,12 @@
   value="${contexte.treeVisible}" />
 <script type="text/javascript">
 	lecture.init(
-		up.jQuery,  
-		'#lecture-${n}',
+		up.jQuery,
 		'${n}', 
 		'${toggleItemReadState}' , 
 		'${toggleAllItemReadState}',
 		'${FilteredItem}');
+	console.log("test after lecture.init" + lecture.${n}.urlMarkRead);
 </script>
 <div class="esup-lecture portlet-container"
   id="lecture-${n}">

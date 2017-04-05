@@ -10,7 +10,7 @@
   <ul class="nav nav-pills nav-stacked menuRubrique"
     id='<portlet:namespace />menuRubrique'>
     <li >
-      <div class="row divLargeWith rubriqueFiltre rubrique_all  ${n} active" onclick="filterByRubriqueClass('rubrique_all', '${n}')">
+      <div class="row divLargeWith rubriqueFiltre rubrique_all  ${n} active" onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')">
         Toutes les actualités<span class="badge pull-right"><c:out
             value="${nombreArticleNonLu}"></c:out>
             <input type="hidden" class="srcId" value="toutRub"/>
@@ -21,7 +21,7 @@
       <c:forEach items="${listCat}" var="cat">
         <c:forEach items="${cat.sources}" var="src">
           <li><div 	class="row divLargeWith rubriqueFiltre rubrique_${src.uid} ${n}"
-          			onclick="filterByRubriqueClass('rubrique_${src.uid}', '${n}'); true"
+          			onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}'); true"
           			>
              
               <c:out value="${src.name}"></c:out>

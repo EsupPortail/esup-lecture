@@ -39,7 +39,7 @@ ${contexte.itemDisplayMode}
 				<c:if test="${cat.userCanMarkRead=='true'}">
 					<div class="col-xs-2 col-sm-1 articleEye ${article.id} ${n}">
 						<i class="fa ${article.read ? 'fa-eye-slash' :  'fa-eye'} fa-stack-1x"
-							onclick="toggleArticleRead('${cat.id}','${src.id}','${article.id}','${idDivRow}',${contexte.modePublisher}, '${n}');" 
+							onclick="lecture['${n}'].toggleArticleRead('${cat.id}','${src.id}','${article.id}','${idDivRow}',${contexte.modePublisher});" 
 						></i>
 					</div>
 				</c:if>
@@ -51,12 +51,13 @@ ${contexte.itemDisplayMode}
 							value="${rub.uid}" />
 						<span class="badge cursPoint"
 							style="background-color:${rub.couleur}"
-							onclick="filterByRubriqueClass('rubrique_${rub.uid}', '${n}')">
+							onclick="article.${n}.filterByRubriqueClass('rubrique_${rub.uid}')">
 							<c:out value="${rub.nom}"></c:out></span>
 						<script>
 								// ajout de la rubrique dans la div hote
-							lecture.jq(function(){ 
-									var t = lecture.jq('#${idDivRow}').addClass('rubrique_${rub.uid}');
+								//lecture.jq
+							lecture['${n}'].jq(function(){ 
+									var t = lecture['${n}'].jq('#${idDivRow}').addClass('rubrique_${rub.uid}');
 								});
 						</script>
 					</c:forEach>
@@ -111,7 +112,7 @@ ${contexte.itemDisplayMode}
                     style="background-color:${rub.couleur}"
                     ><c:out
                       value="${rub.nom}"></c:out><input type="hidden" class="srcName" value="${rub.nom}"/><input type="hidden" class="srcId" value="${rub.uid}"/></span>
-<%--                       onclick="filtrerParRubrique('${cat.id}','','${rub.nom}')" --%>
+<%--                       onclick="lecture.${n}.filtrerParRubrique('${cat.id}','','${rub.nom}')" --%>
                 </c:forEach>
               </div>
             </div>
