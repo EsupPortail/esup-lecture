@@ -1,8 +1,11 @@
 package org.esupportail.lecture.web.controllers;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -14,6 +17,7 @@ import javax.portlet.WindowState;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.web.WebException;
 import org.esupportail.lecture.utils.SeviceUtilLecture;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
@@ -69,12 +73,14 @@ public class HomeController extends TwoPanesController {
 		//	 listeItemAcceuil = new ArrayList<ItemWebBean>();
 			nbrArticleNonLu = SeviceUtilLecture.compteNombreArticleNonLu(contexte);
 		}
+		LOG.debug("goHome context ItemDisplayMode = " +  contexte.getItemDisplayMode() );
 		model = bindInitialModel(model, response, request);
 		model.addAttribute("testListCatSize", listCat==null ? "null" : listCat.size());
 		model.addAttribute("listCat", listCat);
 		model.addAttribute("contexte", contexte);
 		model.addAttribute("nombreArticleNonLu", nbrArticleNonLu);
 		model.addAttribute("listeItemAcceuil", listeItemAcceuil);
+	//	model.addAttribute("", )
 		return "home";
 	}
 
@@ -114,11 +120,74 @@ public class HomeController extends TwoPanesController {
 			LOG.debug("toggleItemReadState(" + catID + ", " + srcID + ", " + itemID + ")");
 		}
 		try {
-			facadeService.markItemReadMode(getUID(), srcID, itemID, isRead, isPublisherMode);
+			facadeService.markItemReadMode(getUID(), srcID, itemID, isRead);
 		} catch (Exception e) {
 			throw new WebException("Error in toggleItemReadState", e);
 		}
 	}
+	
+	@ResourceMapping(value = "markRead")
+	public void markRead(final ResourceRequest request
+			, final ResourceResponse response)  { 
+		LOG.debug("markRead"); 
+		for (Entry<String, String[]> entry	 : request.getParameterMap().entrySet()) {
+			for (String val : entry.getValue()) {
+				LOG.debug(entry.getKey() + " : "+ val);
+			}
+		}
+		String catID = request.getParameter("catId");
+		String srcID = request.getParameter("srcId");
+		String itemID = request.getParameter("itemId");
+		String uid = getUID();
+		boolean isRead = "true".equals(request.getParameter("isRead"));
+		boolean isPublisherMode = "true".equals(request.getParameter("isPublisherMode"));
+		boolean isMarked = false;
+		
+		try {
+			if (isPublisherMode) {
+				// pour le mode publisher ou marque l'article dans toutes ses sources:
+				// il faut donc les trouver:
+				ContextWebBean contexte = getContext();
+				if (contexte == null) {
+					LOG.warn("contexte null pour : "+ uid);
+				} else {
+					List<CategoryWebBean> listCat = contexte.getCategories();
+					if (listCat == null) {
+						LOG.warn("list categorie  null pour : "+ uid);
+					} else {
+						for (CategoryWebBean categoryWebBean : listCat) {
+							List<SourceWebBean> sources = categoryWebBean.getSources();
+							if (sources != null){
+								for (SourceWebBean sourceWebBean : sources) {
+									ItemWebBean item =  sourceWebBean.getItem(itemID);
+									if (item != null) {
+										String idSrc = sourceWebBean.getId();
+										LOG.debug("markRead(" + uid + " , " + idSrc + ", " + itemID + ")");
+										facadeService.markItemReadMode(uid, idSrc, itemID, isRead);
+										if (srcID.equals(idSrc)) {
+											isMarked = true;
+										}
+										
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			if (!isMarked) {
+				facadeService.markItemReadMode(uid, srcID, itemID, isRead);
+			}
+			LOG.debug("markRead OK");
+	//		response.setContentType("application/json");
+	 //       response.getWriter().write("{}");
+		} catch (Exception e) {
+			throw new WebException("Error in markRead", e);
+		}
+		
+	}
+	
 
 	/**
 	 * action : toggle all item from read to unread and unread to read.
@@ -147,7 +216,7 @@ public class HomeController extends TwoPanesController {
 							LOG.debug("toggleAllItemReadState(" + cat.getId() + ", " + src.getId() + ", " + item.getId()
 									+ ")");
 						}
-						facadeService.markItemReadMode(getUID(), src.getId(), item.getId(), isRead, false);
+						facadeService.markItemReadMode(getUID(), src.getId(), item.getId(), isRead);
 					}
 				}
 			}
@@ -160,6 +229,27 @@ public class HomeController extends TwoPanesController {
 		return new ModelAndView("articleZone");
 	}
 
+	
+	@ResourceMapping(value = "filterUnreadOnly")
+	public void filterUnreadOnl(final ResourceRequest request
+		, final ResourceResponse response) throws IOException { 
+			
+			String uid = getUID();
+			String ctxId = request.getParameter("idContexte");
+			if (ctxId == null) {
+				ctxId = facadeService.getCurrentContextId();
+				LOG.debug("ctxId=" + ctxId);
+			}
+			String filtrer = request.getParameter("filter");
+			if (filtrer != null) {
+				try {
+					facadeService.markItemDisplayModeContext(uid, ctxId, Boolean.parseBoolean(filtrer));
+				} catch (Exception e) {
+					throw new WebException("Error in FilterUnreadOnly", e);
+				}
+				LOG.debug("getContext : " + getContext().getItemDisplayMode());
+			}
+	}
 	/**
 	 * action : Filter items by idCat, idSrc,
 	 *
@@ -234,6 +324,8 @@ public class HomeController extends TwoPanesController {
 
 	}
 
+	
+	
 	@RenderMapping(params = "action=success")
 	public String viewSuccess() {
 		return "home";

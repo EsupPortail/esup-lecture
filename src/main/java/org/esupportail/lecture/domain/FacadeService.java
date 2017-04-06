@@ -109,16 +109,16 @@ public class FacadeService implements InitializingBean {
 	/**
 	 * Mark item as read for user userProfile.
 	 * @param userId user ID
-	 * @param itemId item id
 	 * @param sourceId source if
+	 * @param itemId item id
 	 * @param isRead boolean : true = item is read | false = item is not read
 	 * marck a Item form a source for a user as read
 	 * @throws InternalDomainException 
 	 */
 	public void markItemReadMode(final String userId, final String sourceId, 
-			final String itemId, final boolean isRead, final boolean isPublisherMode)
+			final String itemId, final boolean isRead)
 	throws InternalDomainException {
-		domainService.markItemReadMode(userId, sourceId, itemId, isRead,isPublisherMode);
+		domainService.markItemReadMode(userId, sourceId, itemId, isRead);
 	}
 
 	/**

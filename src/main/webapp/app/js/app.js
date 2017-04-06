@@ -1,5 +1,5 @@
 var lecture = lecture || {};
-lecture.init = function($, namespace,  urlMarkRead, urlMarkAllRead, urlFiltrItem) {
+lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAllRead, urlFiltrItem, initialItemDisplayMode) {
 	// creation d'un object privé (par namespace)
 	var priv= new Object();
 	var portletId = namespace;
@@ -7,9 +7,11 @@ lecture.init = function($, namespace,  urlMarkRead, urlMarkAllRead, urlFiltrItem
 	lecture[namespace] = priv ;
 	priv.urlMarkRead = urlMarkRead;
 	priv.urlMarkAllRead = urlMarkAllRead;
-	priv.urlFiltrItem = urlFiltrItem;
+	priv.urlActionMarkRead = urlActionMarkRead;
+	priv.urlFilterItem = urlFiltrItem;
 	priv.selector = selector;
 	priv.namespace=namespace;
+	priv.initialNotReadOnly = 'ALL' != initialItemDisplayMode;
 	priv.jq = $;
 	
 	
@@ -119,7 +121,7 @@ lecture.init = function($, namespace,  urlMarkRead, urlMarkAllRead, urlFiltrItem
  
 
     function toggleArticleRead(idCat, idSrc, idItem, idDivRow, isModePublisher) {
-    	var urlAjax = urlMarkRead;
+    	var urlAjax = urlActionMarkRead;
     	var divRow = $('div#'+ idDivRow);
     	var divInput;
     	var divEye;
@@ -135,12 +137,13 @@ lecture.init = function($, namespace,  urlMarkRead, urlMarkAllRead, urlFiltrItem
 	    		url : urlAjax,
 	    		type : 'POST',
 	    		async : true,
+	    		datatype:'json',
 	    		data : {
-	                'p1' : idCat,
-	                'p2' : idSrc,
-	                'p3' : idItem,
-	                'p4' : readItem,
-	                'p5' : isModePublisher
+	                'catId' : idCat,
+	                'srcId' : idSrc,
+	                'itemId' : idItem,
+	                'isRead' : readItem,
+	                'isPublisherMode' : isModePublisher
 	              },
 	            success : function(data){
 	            	console.log ("mise a jour ok");
@@ -408,14 +411,31 @@ lecture.init = function($, namespace,  urlMarkRead, urlMarkAllRead, urlFiltrItem
  
     function filterPublisherNotRead(obj) {
     	var contextClass = namespace;
-    	var laDiv = $('div.divModeDesk div.panel.'+contextClass);
-    	if (laDiv && obj.checked){
-    		laDiv.addClass('nonLueSeulement');
-    	} else {
-    		laDiv.removeClass('nonLueSeulement');
+    	var url=urlFiltrItem;
+    	if (obj) {
+	    	var laDiv = $('div.divModeDesk div.panel.'+contextClass);
+	    	if (laDiv) {
+		    	if (obj.checked){
+		    		laDiv.addClass('nonLueSeulement');
+		    	} else {
+		    		laDiv.removeClass('nonLueSeulement');
+		    	}
+		    	console.log("urlFiltrItem " + urlFiltrItem);
+		    	
+		    	$.ajax({
+				    url: url,
+				    type: 'POST',
+				    data: {filter : obj.checked},
+				    datatype:'json',
+				    success: function(){
+				    		if (!obj.checked && priv.initialNotReadOnly ) {
+				    			location.reload();
+				    		};
+				    	}
+		    	});	
+		    	
+		    }
     	}
-    	console.log("urlFiltrItem " + urlFiltrItem);
-    	
     }
     priv.filterPublisherNotRead = filterPublisherNotRead;
     
@@ -444,5 +464,5 @@ lecture.init = function($, namespace,  urlMarkRead, urlMarkAllRead, urlFiltrItem
       }
     }
     priv.filtrerPublisherNonLusMobile = filtrerPublisherNonLusMobile;
- // })($, namespace, portletId, urlMarkRead, urlMarkAllRead, urlFiltrItem);
+ 
 }

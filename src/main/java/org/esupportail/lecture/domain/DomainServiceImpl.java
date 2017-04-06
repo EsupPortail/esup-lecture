@@ -266,39 +266,19 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 *      String, String, boolean)
 	 */
 	@Override
-	public void markItemReadMode(final String userId, final String sourceId, final String itemId, final boolean isRead,
-			final boolean isPubliserMode) throws InternalDomainException {
+	public void markItemReadMode(final String userId, final String sourceId, final String itemId, final boolean isRead) throws InternalDomainException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("marckItemReadMode(" + userId + "," + sourceId + "," + itemId + "," + isRead + ")");
 		}
 		try {
 			/* Get customCoategory */
 			UserProfile userProfile = getUserProfile(userId);
-			if (isPubliserMode) {
-				// Modif pour marquer lu l'element sur toutes ses sources
-				for (CustomSource csrs : userProfile.getCustomSources().values()) {
-					try {
-						for (Item itm : csrs.getItems()) {
-							if (itm.getId().equals(itemId)) {
-								csrs.setItemReadMode(itemId, isRead);
-							}
-						}
-					} catch (SourceNotLoadedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ManagedCategoryNotLoadedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ComputeItemsException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			} else {
-				CustomSource customSource;
-				customSource = userProfile.getCustomSource(sourceId);
-				customSource.setItemReadMode(itemId, isRead);
-			}
+
+			CustomSource customSource = userProfile.getCustomSource(sourceId);
+			
+			customSource.setItemReadMode(itemId, isRead);
+			
+			
 
 		} catch (CustomSourceNotFoundException e) {
 			String errorMsg = "CustomSourceNotFoundException for service 'marckItemReadMode(user " + userId

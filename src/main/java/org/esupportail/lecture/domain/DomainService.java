@@ -41,14 +41,14 @@ public interface DomainService {
 
 	/**
 	 * @param userId 
-	 * @param itemId 
 	 * @param sourceId 
+	 * @param itemId 
 	 * @param isRead
 	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
 	 * @see FacadeService#marckItemReadMode(UserProfile, String, String, boolean)
 	 */
-	void markItemReadMode(String userId, String sourceId, String itemId, boolean isRead, boolean isPubliserMode)  
+	void markItemReadMode(String userId, String sourceId, String itemId, boolean isRead)  
 	throws InternalDomainException;
 
 	/**

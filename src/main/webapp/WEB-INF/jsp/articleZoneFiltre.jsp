@@ -6,14 +6,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-${contexte.itemDisplayMode}
+
 
 <c:if test="${contexte.itemDisplayMode=='ALL'}">
-	listcat : ${fn:length(listCat)}
+	
   <c:forEach items="${listCat}" var="cat">
-  		listSrc : ${fn:length(cat.sources)}
+  		
     <c:forEach items="${cat.sources}" var="src">
-    	items : ${fn:length(src.items)}
+    	
       <c:forEach items="${src.items}" var="article">
 <%-- 
         <c:set var="idSources" value="${fn:replace(src.id,' ', '')}"></c:set>

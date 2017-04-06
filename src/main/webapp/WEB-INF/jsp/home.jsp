@@ -18,6 +18,13 @@
 <portlet:actionURL var="toggleItemReadState">
   <portlet:param name="action" value="toggleItemReadState" />
 </portlet:actionURL>
+
+<portlet:resourceURL var="FilteredItem" id="filterUnreadOnly" >
+	<!-- portlet:param name="javax.portlet.action" value="filterUnreadOnly"/-->
+</portlet:resourceURL>
+<portlet:resourceURL var="markReadUrl" id="markRead" >
+	<!-- portlet:param name="javax.portlet.action" value="filterUnreadOnly"/-->
+</portlet:resourceURL>
 <%-- <portlet:actionURL var="toggleAllItemReadState"> --%>
 <%--   <portlet:param name="action" value="toggleAllItemReadState"/> --%>
 <%-- </portlet:actionURL> --%>
@@ -32,11 +39,13 @@
 <script type="text/javascript">
 	lecture.init(
 		up.jQuery,
-		'${n}', 
+		'${n}',
+		'${markReadUrl}' , 
 		'${toggleItemReadState}' , 
 		'${toggleAllItemReadState}',
-		'${FilteredItem}');
-	console.log("test after lecture.init" + lecture.${n}.urlMarkRead);
+		'${FilteredItem}',
+		'${contexte.itemDisplayMode}');
+	console.log("test after lecture.init" + lecture.${n}.urlFilterItem);
 </script>
 <div class="esup-lecture portlet-container"
   id="lecture-${n}">
