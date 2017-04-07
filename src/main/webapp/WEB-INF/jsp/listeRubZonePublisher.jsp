@@ -17,7 +17,6 @@
             <input type="hidden" class="srcName" value="Toutes les actualités"/></span>
       </div>
     </li>
-    <c:forEach items="${listCat}" var="cat">
       <c:forEach items="${listCat}" var="cat">
         <c:forEach items="${cat.sources}" var="src">
           <li><div 	class="row divLargeWith rubriqueFiltre rubrique_${src.uid} ${n}"
@@ -33,7 +32,6 @@
             </div></li>
         </c:forEach>
       </c:forEach>
-    </c:forEach>
 
   </ul>
 </div>

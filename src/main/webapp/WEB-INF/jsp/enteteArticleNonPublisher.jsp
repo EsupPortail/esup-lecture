@@ -13,7 +13,9 @@
 			<c:set var="affichereye" value="false"></c:set>
 		</c:if>
 	</c:forEach>
-	<div class="col-xs-6 col-sm-6"><c:out value="${contexte.name}"></c:out></div>
+	<div class="col-xs-6 col-sm-6 " >
+		<label class="rubrique_Active ${n}"><c:out value="${contexte.name}"></c:out></label>
+	</div>
 	<div class="col-xs-6 col-sm-6">
 		<c:if test="${contexte.viewDef=='true'}">
 			<c:if test="${contexte.lienVue!=null && contexte.lienVue!=''}">

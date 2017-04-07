@@ -16,12 +16,16 @@
 %>
 
 <c:set var="newItem" value="false" />
+<c:set var="nbCat"  value="0" />
+<c:set var="nbSrc" value="0" />
 <%-- 
 <c:if test="${contexte.itemDisplayMode=='ALL'}" >
 --%>
   <c:forEach items="${listCat}" var="cat">
-  		
+  	<c:set var="nbCat" value="${nbCat+1}" />
+  	
     <c:forEach items="${cat.sources}" var="src">
+    	<c:set var="nbSrc" value="${nbSrc+1}" />
     	
       <c:forEach items="${src.items}" var="article">
       
@@ -39,7 +43,7 @@
 			
 			<c:set var="idDivRow" value="${n}_articleRow_${nbArticle}" />
 			
-			<div id="${idDivRow}" class="itemShowFilter itemOpacifiable ${n} ${article.id} ${article.read ? 'dejaLue' : ''}">
+			<div id="${idDivRow}" class="itemShowFilter itemOpacifiable ${n} cat_${nbCat} src_${nbSrc} ${article.id} ${article.read ? 'dejaLue' : ''}">
 	        	<input type="hidden" class="itemShowFilterIsRead" value="${article.read}"/>
 				<div  class='row '>
 	
