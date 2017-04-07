@@ -429,7 +429,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 				    datatype:'json',
 				    success: function(){
 				    		if (!obj.checked && priv.initialNotReadOnly ) {
-				    			location.reload();
+				    		//	location.reload();
 				    		};
 				    	}
 		    	});	

@@ -50,7 +50,7 @@
 }
 
 .esup-lecture .griseImageArticle {
-  filter: grayscale(100%);
+  filter: grayscale(57%);
 }
 
 .esup-lecture i {
@@ -67,7 +67,7 @@
 }
 
 /*Ajout :*/
-.esup-lecture .panelHome {
+.esup-lecture .panel.panelHome {
         background-color: #f5f5f5;
 /*      border: 1px solid #e3e3e3;
         border-radius: 2px;
@@ -321,7 +321,13 @@
 	width:100%;
 	display: inline-block;
 	padding-top: 8px;
+	margin-bottom: 0px;
+	margin-top: 0px;
 }
+.itemsPublisher .actualite div.metaArticle em.pubDate {
+	font-size: 90%;
+}
+
 
 .scrollDivArticle > div:FIRST-CHILD  .itemsPublisher .actualite div.metaArticle {
 	background-image: none;
@@ -343,9 +349,14 @@
 .scrollDivArticle .itemShowFilter .paddingLeft{
 	padding-left: 92px; 
 }
-.scrollDivArticle .itemShowFilter.dejaLue  {
-	filter: grayscale(100%);
-	color: #999999;
+.scrollDivArticle .itemOpacifiable.dejaLue  {
+	//filter: grayscale(100%);
+	//color: #999999;
+	opacity: 0.5;
+}
+
+.scrollDivArticle .itemShowFilter div.articleEye {
+	padding-top: 2em;
 }
 
 ul.menuRubrique li > div.rubriqueFiltre.active {

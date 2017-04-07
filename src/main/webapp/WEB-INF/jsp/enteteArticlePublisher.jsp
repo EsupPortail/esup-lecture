@@ -14,7 +14,7 @@
       data-target="#myModal<portlet:namespace />">
       <label class="rubrique_Active ${n}"> Toutes les actualités</label> <span class="caret margeCarret"></span>
    </div>
-	<div class="dropdown readNotRead">	
+	<div class="dropdown readNotRead ">	
 	<!--		
         <div class="dropdown-toggle  pull-right" data-toggle="dropdown">
           <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
@@ -43,7 +43,7 @@
                 <input 	id = "checkReadItem${n}"
                 		class="checkReadItem" 
                 		type="checkbox"
-                		value="${contexte.itemDisplayMode=='UNREAD'}"
+                		${contexte.itemDisplayMode=='UNREAD'? 'checked' : ''}
                   		onchange="lecture.${n}.filterPublisherNotRead(this); lecture['${n}'].jq('#${n}rubSelectedDiv1 ').click();"
                   id="${n}checkBoxNonLu">
                 <!--                 onchange="filtrerPublisherNonLus()" -->

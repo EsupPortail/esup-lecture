@@ -32,7 +32,7 @@
   </c:choose>
     <!--  div -->
       <div class="panel panel-default ${n} ${contexte.itemDisplayMode=='UNREAD' ? 'nonLueSeulement' : ''}">
-        <div class="panel panel-heading largeHeadPanel"
+        <div class="panel panel-heading largeHeadPanel ${contexte.viewDef ? 'panelHome' : '' }"
           id="${n}fixHead${contexte.modePublisher}">
           <c:if test="${contexte.modePublisher=='true'}">
             <%@include file="enteteArticlePublisher.jsp"%>

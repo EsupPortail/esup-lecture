@@ -6,9 +6,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <div id="${n}homeAccueilJspDiv1">
-  <div class="portlet-title round-top padding-botom-head">
+  <div class="round-top padding-botom-head">
     <div>
-      <div class="row panelHome">
+      <div class="row panel panelHome">
         <div class="col-sm-7 col-xs-7"
           onclick="lecture.${n}.AfficherTouteActualite()">
           <spring:message
@@ -31,13 +31,16 @@
     <div class="panel-body scrollDivArticle"
       id="<portlet:namespace />zoneArticles">
       <c:forEach items="${listeItemAcceuil}" var="article">
-        <c:if test="${article.read=='true'}">
+<%--        <c:if test="${article.read=='true'}">
           <input type="hidden" id="arti${article.id}"
             class="listeIdArti${contexte.modePublisher}"
             value="contenuArti${contexte.modePublisher}${article.id}" />
         </c:if>
+--%>
         <div
-          id="contenuArti${contexte.modePublisher}${article.id}">
+          id="contenuArti${contexte.modePublisher}${article.id}"
+          class="itemOpacifiable   ${article.read ? 'dejaLue' : ''}"
+          >
           <c:out value="${article.htmlContent}" escapeXml="false"></c:out>
         </div>
       </c:forEach>
