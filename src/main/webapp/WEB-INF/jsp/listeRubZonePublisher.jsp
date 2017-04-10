@@ -6,6 +6,9 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<%--
+	affiche la liste des rubrique sur le cote pour les ecrans large
+ --%>
 <div class="navModeDesk navClass" id='${n}listOfCat' >
 	
   <ul 	class="nav nav-pills nav-stacked menuRubrique"

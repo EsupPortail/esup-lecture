@@ -372,9 +372,13 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     		text = $('input.titleName', notRubriqueObj).val();
     		console.log("noRubriqueObj : " + text);
     		$("div.rubriqueFiltre."+contexte).each(function(){
-    			$(this).removeClass('active');
+    			if ($(this).hasClass(classRubrique)) {
+    				$(this).addClass('active');
+    			} else {
+    				$(this).removeClass('active');
+    			}
     		});
-    		$(notRubriqueObj).addClass('active');
+    	//	$(notRubriqueObj).addClass('active');
     	} else {
 	    	$("div.rubriqueFiltre."+contexte).each(function(){
 		    			if ($(this).hasClass(classRubrique)) {

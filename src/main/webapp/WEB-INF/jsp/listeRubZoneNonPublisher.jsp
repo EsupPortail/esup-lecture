@@ -6,6 +6,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+
+<%--
+	affiche la liste des categorie:sources sur le cote pour les ecrans large
+ --%>
+ 
 <c:set var="nbCat"  value="0" />
 <c:set var="nbSrc" value="0" />
 <nav class="navModeDesk navClass" id='${n}listOfCat'>
@@ -26,7 +31,7 @@
 					
 			<li><c:if test="${not empty cat.sources}">
 					
-						<div class="cursPoint  ${n} rubriqueFiltre div_cat "
+						<div class="cursPoint  ${n} rubriqueFiltre div_cat cat_${nbCat}"
 							onclick="lecture.${n}.filterByRubriqueClass('cat_${nbCat}', this)">
 							<!-- onclick="lecture.${n}.filtrerParCategorie('${cat.id}')" -->
 							<c:out value="${cat.name}"></c:out>
@@ -43,7 +48,7 @@
 						<c:forEach items="${cat.sources}" var="src">
 						<c:set var="nbSrc" value="${nbSrc+1}" />
 						
-							<li><div class="row ${n} ligneRubriqueMenu cursPoint rubriqueFiltre"
+							<li><div class="row ${n} ligneRubriqueMenu cursPoint rubriqueFiltre src_${nbSrc}"
 							 		onclick="lecture.${n}.filterByRubriqueClass('src_${nbSrc}', this)"> 
 									<!-- onclick="lecture.${n}.filtrerParRubrique('${cat.id}','${src.id}','','')" -->
 									<c:out value="${src.name}"></c:out>

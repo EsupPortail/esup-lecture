@@ -5,7 +5,12 @@
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<div class="row">
+
+
+<%--
+Partie supperieur de l'affichage des articles avec les boutons et dropdown de selection qui faut quand il faut.
+ --%>
+<div class="enteteLectureAll" >
 	<!-- si au moin une catégorie a le tag userCanMarkRead à false on affiche pas la possibilité de marquer tous les artices àlu ou non lu -->
 	<c:set var="affichereye" value="true"></c:set>
 	<c:forEach items="${listCat}" var="cat">
@@ -13,11 +18,24 @@
 			<c:set var="affichereye" value="false"></c:set>
 		</c:if>
 	</c:forEach>
-	<div class="col-xs-6 col-sm-6 " >
-		<label class="rubrique_Active ${n}"><c:out value="${contexte.name}"></c:out></label>
-	</div>
-	<div class="col-xs-6 col-sm-6">
-		<c:if test="${contexte.viewDef=='true'}">
+	<c:if var="pageAccueil" test="${contexte.viewDef=='true'}" >
+		<div class="pull-left" >	
+			<label class="rubrique_Active ${n}"><c:out value="${contexte.name}"></c:out></label>
+		</div>
+	</c:if>
+	<c:if test="${! pageAccueil}" >
+		<div class="pull-left noMenuDropDown" >	
+			<label class="rubrique_Active ${n}"><c:out value="${contexte.name}"></c:out></label>
+		</div>
+		<div 	class="pull-left withMenuDropDown" 
+				data-toggle="modal"
+      			data-target="#modalRubriqueList${n}">	
+			<label class="rubrique_Active ${n}"><c:out value="${contexte.name}"></c:out></label>
+		</div>
+	</c:if>
+	
+	<div class="pull-right">
+		<c:if test="${pageAccueil}">
 			<c:if test="${contexte.lienVue!=null && contexte.lienVue!=''}">
 				<div>
 					<a type="button" class="btn btn-default pull-right large-btn"
@@ -55,3 +73,49 @@
 		</c:if>
 	</div>
 </div>
+<c:set var="nbCat"  value="0" />
+<c:set var="nbSrc" value="0" />
+
+<div id="modalRubriqueList${n}" class="modal fade" role="dialog">
+  <div class="modal-dialog modalMarge">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-body modalPadding">
+        <a href="#" class="list-group-item" onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')"
+          data-dismiss="modal"><c:out value="Toutes les actualités"></c:out>
+          <span class="badge pull-right"><c:out
+              value="${nombreArticleNonLu}"></c:out></span> </a>
+        <c:forEach items="${listCat}" var="cat">
+        	<c:set var="nbCat" value="${nbCat+1}" />
+        	
+        	<c:if test="${not empty cat.sources}">
+        		<div  class="list-group-item rubriqueFiltre  ${n} cat_${nbCat}"
+	              		onclick="lecture.${n}.filterByRubriqueClass('cat_${nbCat}', this)"
+	              		data-dismiss="modal">
+	              		<c:out value="${cat.name}"></c:out>
+	              
+	              <input type="hidden" class="titleName" value="${cat.name}"/>
+	            </div>
+        	
+	          <c:forEach items="${cat.sources}" var="src">
+	          	<c:set var="nbSrc" value="${nbSrc+1}" />
+	            <div 	class="list-group-item rubriqueFiltre  ${n} src_${nbSrc}"
+	             		onclick="lecture.${n}.filterByRubriqueClass('src_${nbSrc}', this)"
+	            		data-dismiss="modal" >
+	              	<c:out value="${src.name}"></c:out>
+	              	<c:if test="${cat.userCanMarkRead=='true'}">
+	              		<span class="badge pull-right" style="background-color:${src.color}">
+	              			<c:out value="${src.unreadItemsNumber}"></c:out>
+	              		</span>
+	                </c:if>
+	                <input type="hidden" class="titleName" value="${cat.name} > ${src.name}"/>
+	            </div>
+	          </c:forEach>
+          </c:if>
+        </c:forEach>
+      </div>
+    </div>
+  </div>
+</div>
+
+
