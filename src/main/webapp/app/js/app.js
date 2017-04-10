@@ -371,15 +371,19 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     		console.log("noRubriqueObj");
     		text = $('input.titleName', notRubriqueObj).val();
     		console.log("noRubriqueObj : " + text);
+    		$("div.rubriqueFiltre."+contexte).each(function(){
+    			$(this).removeClass('active');
+    		});
+    		$(notRubriqueObj).addClass('active');
     	} else {
 	    	$("div.rubriqueFiltre."+contexte).each(function(){
-	    			if ($(this).hasClass(classRubrique)) {
-	    				$(this).addClass('active');
-	    				text=$('input.srcName', this).val();
-	    			} else {
-	    				$(this).removeClass('active');
-	    			}
-	    	});
+		    			if ($(this).hasClass(classRubrique)) {
+		    				$(this).addClass('active');
+		    				text=$('input.srcName', this).val();
+		    			} else {
+		    				$(this).removeClass('active');
+		    			}
+		    });
     	}
     	
     	$("div.itemShowFilter."+contexte).each(function() {
@@ -391,6 +395,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     	});
     //	console.log("div#"+contexte+"rubSelectedDiv1 label.rubrique_Active: "+text);
     	$("label.rubrique_Active."+contexte).html(text);
+    	markFirtVisible();
     }
     priv.filterByRubriqueClass =  filterByRubriqueClass;
     
@@ -413,7 +418,11 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     priv.AfficherTout = AfficherTout;
     
  
- 
+    
+ /**
+  * affichage des non lue seulement ssi l'object passé est checked.
+  * On memorise l'état coté serveur et client
+  */
     function filterPublisherNotRead(obj) {
     	var contextClass = namespace;
     	var url=urlFiltrItem;
@@ -422,8 +431,10 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 	    	if (laDiv) {
 		    	if (obj.checked){
 		    		laDiv.addClass('nonLueSeulement');
+		    		priv.notReadOnly = true;
 		    	} else {
 		    		laDiv.removeClass('nonLueSeulement');
+		    		priv.notReadOnly = false;
 		    	}
 		    	console.log("urlFiltrItem " + urlFiltrItem);
 		    	
@@ -440,12 +451,34 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 		    	});	
 		    	
 		    }
+	    	markFirtVisible();
     	}
     }
     priv.filterPublisherNotRead = filterPublisherNotRead;
     
-    
+    function markFirtVisible (){
+    	var divNonLue = $('div.divModeDesk div.panel.nonLueSeulement.'+namespace)[0];
+    	var first=true;
+    	var lue = true;
+    	if (divNonLue) {
+    		
+    		lue = false;
+    		
+    	} 
+    	console.log("markFirtVisible " + lue);
+    	$('div.itemShowFilter.'+namespace).each(function() {
+    		console.log($(this).attr('class'));
+    		if (first && (lue ||!$(this).hasClass('dejaLue') ) && ! $(this).hasClass('rubriqueInactive')) {
+    			$(this).addClass('premierVisible');
+    			first = false;
+    			console.log("  marck pv");
+    		} else {
+    			$(this).removeClass('premierVisible');
+    		}
+    	});
+    }
  
+    
 /*    function filtrerPublisherNonLus() {
       if ($("#" + portletId + "checkBoxNonLu").is(':checked')) {
         $("#" + portletId + "listNonLu").val("val2")
@@ -460,6 +493,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
   */  
     
     function filtrerPublisherNonLusMobile() {
+    	
       if ($("#" + portletId + "checkBoxNonLu2").is(':checked')) {
         $("#" + portletId + "listNonLu").val("val2");
         filtrerNonLus('');
@@ -469,5 +503,8 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
       }
     }
     priv.filtrerPublisherNonLusMobile = filtrerPublisherNonLusMobile;
- 
+    
+    $(function() {
+		markFirtVisible();
+	});
 }

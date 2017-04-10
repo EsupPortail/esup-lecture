@@ -43,13 +43,13 @@
 			
 			<c:set var="idDivRow" value="${n}_articleRow_${nbArticle}" />
 			
-			<div id="${idDivRow}" class="itemShowFilter itemOpacifiable ${n} cat_${nbCat} src_${nbSrc} ${article.id} ${article.read ? 'dejaLue' : ''}">
+			<div id="${idDivRow}" 
+				class="itemShowFilter itemOpacifiable ${n} cat_${nbCat} src_${nbSrc} ${article.id} ${article.read ? 'dejaLue' : ''} ">
 	        	<input type="hidden" class="itemShowFilterIsRead" value="${article.read}"/>
 				<div  class='row '>
 	
 					<div 
-						class='col-xs-10 col-sm-11'
-						class="contenuArti${contexte.modePublisher}${article.id}"
+						class="col-xs-10 col-sm-11 ${contexte.modePublisher ? 'modePublisher' : 'modeNoPublisher'}"
 						id="contenuArti${contexte.modePublisher}${article.id}${idSources}">
 						<c:out value="${article.htmlContent}" escapeXml="false" />
 					</div>

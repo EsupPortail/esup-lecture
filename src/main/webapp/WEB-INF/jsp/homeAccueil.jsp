@@ -28,7 +28,7 @@
 </div>
 <div id="${n}homeAccueilJspDiv2">
   <div>
-    <div class="panel-body scrollDivArticle"
+    <div class="panel-body scrollDivArticle ${n}"
       id="<portlet:namespace />zoneArticles">
       <c:forEach items="${listeItemAcceuil}" var="article">
 <%--        <c:if test="${article.read=='true'}">

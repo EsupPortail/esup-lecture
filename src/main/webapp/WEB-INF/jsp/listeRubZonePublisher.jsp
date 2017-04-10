@@ -5,12 +5,14 @@
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<div class="navModeDesk navClass"
-  id='<portlet:namespace />listOfCat'>
-  <ul class="nav nav-pills nav-stacked menuRubrique"
-    id='<portlet:namespace />menuRubrique'>
-    <li >
-      <div class="row divLargeWith rubriqueFiltre rubrique_all  ${n} active" onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')">
+
+<div class="navModeDesk navClass" id='${n}listOfCat' >
+	
+  <ul 	class="nav nav-pills nav-stacked menuRubrique"
+    	id='${n}menuRubrique'>
+    <li>
+      <div 	class="row divLargeWith rubriqueFiltre rubrique_all  ${n} active" 
+      		onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')">
         Toutes les actualités<span class="badge pull-right"><c:out
             value="${nombreArticleNonLu}"></c:out>
             <input type="hidden" class="srcId" value="toutRub"/>

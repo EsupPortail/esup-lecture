@@ -8,12 +8,16 @@
 
 <c:set var="nbCat"  value="0" />
 <c:set var="nbSrc" value="0" />
-<nav class="col-xs-12 col-sm-3" id='${n}listOfCat'>
-	<ul class="nav nav-pills nav-stacked">
-		<li class="li_cat" onclick="lecture.${n}.filterByRubriqueClass('rubrique_all', this)">
-			<strong><c:out value="${contexte.name}"></c:out></strong>
-			<input type="hidden" class="titleName" value="${contexte.name}"/>				
-	</li>
+<nav class="navModeDesk navClass" id='${n}listOfCat'>
+	<ul class="nav nav-pills nav-stacked menuTree">
+		
+		<li class="li_cat" > 
+			<div 	class="row divLargeWith rubriqueFiltre rubrique_all  ${n} active" 
+					onclick="lecture.${n}.filterByRubriqueClass('rubrique_all', this)" >
+				<strong><c:out value="${contexte.name}"></c:out></strong>
+				<input type="hidden" class="titleName" value="${contexte.name}"/>
+			</div>				
+		</li>
 					
 		<c:forEach items="${listCat}" var="cat">
 			<c:set var="nbCat" value="${nbCat+1}" />
@@ -21,8 +25,8 @@
 			<c:set var="idcat" value="${fn:replace(fn:replace(cat.id,' ', ''),':', '')}"></c:set>
 					
 			<li><c:if test="${not empty cat.sources}">
-					<div class="row">
-						<div class="cursPoint div_cat"
+					
+						<div class="cursPoint  ${n} rubriqueFiltre div_cat "
 							onclick="lecture.${n}.filterByRubriqueClass('cat_${nbCat}', this)">
 							<!-- onclick="lecture.${n}.filtrerParCategorie('${cat.id}')" -->
 							<c:out value="${cat.name}"></c:out>
@@ -31,23 +35,24 @@
 						<div id="divThem${idcat}" data-toggle="collapse"
 							data-target="#liThem${idcat}" aria-expanded="true"
 							aria-controls="liThem${idcat}">
-							<span class="caret pull-right"></span>
-							
+							<span class="glyphicon glyphicon-triangle-bottom "></span>
+							<span class="glyphicon glyphicon-triangle-right "></span>
 						</div>
-					</div>
 					<ul class="collapse in" id="liThem${idcat}" aria-expanded="true"
 						aria-labelledby="divThem${idcat}">
 						<c:forEach items="${cat.sources}" var="src">
 						<c:set var="nbSrc" value="${nbSrc+1}" />
 						
-							<li><div class="row ligneRubriqueMenu cursPoint"
+							<li><div class="row ${n} ligneRubriqueMenu cursPoint rubriqueFiltre"
 							 		onclick="lecture.${n}.filterByRubriqueClass('src_${nbSrc}', this)"> 
 									<!-- onclick="lecture.${n}.filtrerParRubrique('${cat.id}','${src.id}','','')" -->
 									<c:out value="${src.name}"></c:out>
-									<c:if test="${cat.userCanMarkRead=='true'}">
+						  			<c:if test="${cat.userCanMarkRead=='true'}">
 										<span class="badge pull-right"><c:out
 												value="${src.unreadItemsNumber}"></c:out></span>
 									</c:if>
+									
+									
 									<input type="hidden" class="titleName" value="${cat.name} > ${src.name}"/>
 								</div></li>
 						</c:forEach>
