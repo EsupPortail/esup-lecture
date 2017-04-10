@@ -148,6 +148,13 @@
   width: 70%;
  
 }
+@media only screen and (min-width: 936px) {
+
+	.esup-lecture .largeHeadPanel div.modalMarge {
+		display: none;
+	}
+}
+
 @media only screen and (min-width: 1024px) {
 	.esup-lecture .classHeadLarg {
  /* 		width: calc(17.5% + 536px); */
@@ -291,7 +298,8 @@
   
   .esup-lecture .largeHeadPanel:hover {
         background-color: #f3f3f3;
-}
+	}
+	
 }
 
 .itemsPublisher .actualite {
@@ -445,11 +453,32 @@ li > div.rubriqueFiltre.div_cat + div {
 	padding-left: 2%;
 	cursor: pointer;
 }
-li > div.rubriqueFiltre.div_cat + div[aria-expanded=false] span.glyphicon-triangle-bottom{
-	display : none;
-}
-li > div.rubriqueFiltre.div_cat + div[aria-expanded=true] span.glyphicon-triangle-right {
+div.rubriqueFiltre + div[aria-expanded=false] > span.glyphicon-triangle-bottom{	
 	display : none;
 }
 
+div.rubriqueFiltre + div[aria-expanded=true] > span.glyphicon-triangle-right {
+	display : none;
+}
+div.filtreInDropDown div {
+	display : inline-block;
+}
+
+div.withCategoriesAndSources div.filtreInDropDown {
+	border-top: 1px solid #ddd;
+}
+
+div.withCategoriesAndSources div.filtreInDropDown + ul.collapse.in + div.filtreInDropDown {
+	border-top: 0px;
+}
+div.withCategoriesAndSources div.filtreInDropDown div.rubriqueFiltre {
+		border-right:0px;
+		border-top:0px;
+}
+div.withCategoriesAndSources ul{
+		padding-left: 0px;
+}
+div.withCategoriesAndSources ul li div.rubriqueFiltre {
+	padding-left: 10ex;
+}
 

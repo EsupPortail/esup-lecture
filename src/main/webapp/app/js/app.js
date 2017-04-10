@@ -367,28 +367,18 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     function filterByRubriqueClass(classRubrique, notRubriqueObj){
     	var text="Toutes les actualités!";
     	var contexte = namespace;
-    	if (notRubriqueObj) {
-    		console.log("noRubriqueObj");
-    		text = $('input.titleName', notRubriqueObj).val();
-    		console.log("noRubriqueObj : " + text);
-    		$("div.rubriqueFiltre."+contexte).each(function(){
-    			if ($(this).hasClass(classRubrique)) {
-    				$(this).addClass('active');
-    			} else {
-    				$(this).removeClass('active');
-    			}
-    		});
-    	//	$(notRubriqueObj).addClass('active');
-    	} else {
-	    	$("div.rubriqueFiltre."+contexte).each(function(){
-		    			if ($(this).hasClass(classRubrique)) {
-		    				$(this).addClass('active');
-		    				text=$('input.srcName', this).val();
-		    			} else {
-		    				$(this).removeClass('active');
-		    			}
-		    });
-    	}
+    	
+    	$("div.rubriqueFiltre."+contexte).each(function(){
+	    			if ($(this).hasClass(classRubrique)) {
+	    				$(this).addClass('active');
+	    				var aux=$('input.titleName', this).val();
+	    				if (aux) {
+	    					text = aux;
+	    				}
+	    			} else {
+	    				$(this).removeClass('active');
+	    			}
+	    });
     	
     	$("div.itemShowFilter."+contexte).each(function() {
     		if (classRubrique == 'rubrique_all' || $(this).hasClass(classRubrique)) {

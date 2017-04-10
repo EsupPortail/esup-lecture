@@ -18,7 +18,7 @@
 		
 		<li class="li_cat" > 
 			<div 	class="row divLargeWith rubriqueFiltre rubrique_all  ${n} active" 
-					onclick="lecture.${n}.filterByRubriqueClass('rubrique_all', this)" >
+					onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')" >
 				<strong><c:out value="${contexte.name}"></c:out></strong>
 				<input type="hidden" class="titleName" value="${contexte.name}"/>
 			</div>				
@@ -32,7 +32,7 @@
 			<li><c:if test="${not empty cat.sources}">
 					
 						<div class="cursPoint  ${n} rubriqueFiltre div_cat cat_${nbCat}"
-							onclick="lecture.${n}.filterByRubriqueClass('cat_${nbCat}', this)">
+							onclick="lecture.${n}.filterByRubriqueClass('cat_${nbCat}')">
 							<!-- onclick="lecture.${n}.filtrerParCategorie('${cat.id}')" -->
 							<c:out value="${cat.name}"></c:out>
 							<input type="hidden" class="titleName" value="${cat.name}"/>
@@ -49,7 +49,7 @@
 						<c:set var="nbSrc" value="${nbSrc+1}" />
 						
 							<li><div class="row ${n} ligneRubriqueMenu cursPoint rubriqueFiltre src_${nbSrc}"
-							 		onclick="lecture.${n}.filterByRubriqueClass('src_${nbSrc}', this)"> 
+							 		onclick="lecture.${n}.filterByRubriqueClass('src_${nbSrc}')"> 
 									<!-- onclick="lecture.${n}.filtrerParRubrique('${cat.id}','${src.id}','','')" -->
 									<c:out value="${src.name}"></c:out>
 						  			<c:if test="${cat.userCanMarkRead=='true'}">

@@ -19,7 +19,7 @@
         Toutes les actualités<span class="badge pull-right"><c:out
             value="${nombreArticleNonLu}"></c:out>
             <input type="hidden" class="srcId" value="toutRub"/>
-            <input type="hidden" class="srcName" value="Toutes les actualités"/></span>
+            <input type="hidden" class="titleName" value="Toutes les actualités"/></span>
       </div>
     </li>
       <c:forEach items="${listCat}" var="cat">
@@ -33,7 +33,7 @@
                 style="background-color:${src.color}"><c:out
                   value="${src.unreadItemsNumber}"></c:out>
                   <input type="hidden" class="srcId" value="${src.uid}"/>
-                  <input type="hidden" class="srcName" value="${src.name}"/></span>
+                  <input type="hidden" class="titleName" value="${src.name}"/></span>
             </div></li>
         </c:forEach>
       </c:forEach>
