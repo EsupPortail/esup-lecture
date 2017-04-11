@@ -44,6 +44,10 @@
   margin-left: 0px;
 }
 
+
+.esup-lecture .rubriqueFiltre {
+	cursor:pointer;
+}
 .esup-lecture .rubriqueFiltre:hover {
   background: #A9A9A9;
 }
@@ -104,6 +108,7 @@
 /*Suppression :
         height: 50px;*/
         z-index: 1;
+        margin-bottom: 0px;
 }
 
 /*Ajout:*/
@@ -119,6 +124,10 @@
   z-index: 1;
   padding-left: 10%;
 }
+
+.esup-lecture .navModeDesk.navClass ul.menuTree {
+	margin-top : 50px; 
+} 
 
 .esup-lecture .afficherLuWith {
   width: 300px;
@@ -302,99 +311,98 @@
 	
 }
 
-.itemsPublisher .actualite {
+.esup-lecture .itemsPublisher .actualite {
     display:flex;
     padding-top: 8px;
 }
 
-.itemsPublisher .actualite .imageArticle {
+.esup-lecture .itemsPublisher .actualite .imageArticle {
 	margin-right: 8px;
 	width: 84px;
 	display: inline-block;
 	padding-top: 12px;
 	
 }
-.itemsPublisher .actualite .imageArticle img {
+.esup-lecture .itemsPublisher .actualite .imageArticle img {
 	border-radius: 4px; 
 	width: 84px;
 	height: 84px;
 	margin-top:0;
 	margin-bottom:10px;
 }
-.itemsPublisher .actualite div.article {
+.esup-lecture .itemsPublisher .actualite div.article {
 	width: calc(100% - 92px);
 }
 
 
-.itemsPublisher .actualite div.metaArticle{
+
+.esup-lecture .itemsPublisher .actualite div.metaArticle{
 	width:100%;
 	display: inline-block;
 	padding-top: 8px;
 	margin-bottom: 0px;
 	margin-top: 0px;
 }
-.itemsPublisher .actualite div.metaArticle em.pubDate {
+.esup-lecture .itemsPublisher .actualite div.metaArticle em.pubDate {
 	font-size: 90%;
 }
 
 
-.scrollDivArticle > div.premierVisible  .itemsPublisher .actualite div.metaArticle ,
-.scrollDivArticle > div:FIRST-CHILD  .itemsPublisher .actualite div.metaArticle {
+.esup-lecture .scrollDivArticle > div.premierVisible  .itemsPublisher .actualite div.metaArticle ,
+.esup-lecture .scrollDivArticle > div:FIRST-CHILD  .itemsPublisher .actualite div.metaArticle {
 	background-image: none;
 	padding-top: 0px;
 }
 
 
-.scrollDivArticle > div:FIRST-CHILD  .itemsPublisher .actualite .imageArticle {
+.esup-lecture .scrollDivArticle > div:FIRST-CHILD  .itemsPublisher .actualite .imageArticle {
 	padding-top: 4px;
 }
 @media only screen and (max-width: 992px) { 
-	.itemsPublisher .actualite .imageArticle {
-	//	border-radius: 42px; 
+	.esup-lecture .itemsPublisher .actualite .imageArticle {
 		width: 84px;
 	}
-	.itemsPublisher .actualite .imageArticle img {
+	.esup-lecture .itemsPublisher .actualite .imageArticle img {
 		border-radius: 50%; 
 	}
 }
 
-.scrollDivArticle .itemShowFilter .paddingLeft{
+.esup-lecture .scrollDivArticle .itemShowFilter .paddingLeft{
 	padding-left: 92px; 
 }
-.scrollDivArticle .itemOpacifiable.dejaLue  {
-	//filter: grayscale(100%);
-	//color: #999999;
+.esup-lecture .scrollDivArticle .itemOpacifiable.dejaLue  {
 	opacity: 0.5;
 }
 
-.scrollDivArticle .itemShowFilter div.articleEye {
+.esup-lecture .scrollDivArticle .itemShowFilter div.articleEye {
 	padding-top: 2em;
 }
 
-.scrollDivArticle > div.itemShowFilter.premierVisible div.modeNoPublisher,
-.scrollDivArticle .itemShowFilter:FIRST-CHILD div.modeNoPublisher {
+.esup-lecture .scrollDivArticle > div.itemShowFilter.premierVisible div.modeNoPublisher,
+.esup-lecture .scrollDivArticle .itemShowFilter:FIRST-CHILD div.modeNoPublisher {
 	background: none;
 	padding-top : 0px;
 }
  
-.scrollDivArticle > div.itemShowFilter div.modeNoPublisher {
+.esup-lecture .scrollDivArticle > div.itemShowFilter div.modeNoPublisher {
 	padding-top : 8px;
 }
 
-.scrollDivArticle .itemShowFilter div.modeNoPublisher {
+.esup-lecture .scrollDivArticle .itemShowFilter div.modeNoPublisher {
 	background: url(/esup-news/images/line_b.gif) no-repeat;
 }
 
 
 
-ul.menuRubrique li > div.rubriqueFiltre.active , ul.menuTree li > div.rubriqueFiltre.active{
+.esup-lecture ul.menuRubrique li > div.rubriqueFiltre.active , ul.menuTree li > div.rubriqueFiltre.active{
 	background: #d4d4d4;
 }
 
-div.nonLueSeulement div.dejaLue {
+.esup-lecture div.nonLueSeulement div.dejaLue {
 	display : none;
 }
-div.itemShowFilter.rubriqueInactive {
+
+.esup-lecture div.itemShowFilter.rubriqueInactive {
 	display : none;
 }
 .esup-lecture div.dropdown.readNotRead button.dropdown-toggle  {
@@ -405,18 +413,18 @@ div.itemShowFilter.rubriqueInactive {
 }
 
 
-div.noMenuDropDown {
+.esup-lecture div.noMenuDropDown {
 	display:none;
 }
 
-div.withMenuDropDown {
+.esup-lecture div.withMenuDropDown {
 		display: inline-block;
 	}
 @media only screen and (min-width: 934px) { 
-	div.withMenuDropDown {
+	.esup-lecture div.withMenuDropDown {
 		display: none;
 	}
-	div.noMenuDropDown {
+	.esup-lecture div.noMenuDropDown {
 		display:block;
 	}
 }
@@ -435,50 +443,91 @@ div.withMenuDropDown {
 	}
 }
 
-span.badge.noColor {
+.esup-lecture span.badge.noColor {
 	background-color: transparent;
 	color: black;
 	border: 1px solid grey;
 }
-li > div.rubriqueFiltre.div_cat {
+
+.esup-lecture li > div.rubriqueFiltre.div_cat {
 	display: inline-block;
 	width: 80%;
 	margin-right:8%;
 }
 
-li > div.rubriqueFiltre.div_cat + div {
+.esup-lecture li > div.rubriqueFiltre.div_cat + div {
 	display: inline-block;
 	width: 10%;
 	
 	padding-left: 2%;
 	cursor: pointer;
 }
-div.rubriqueFiltre + div[aria-expanded=false] > span.glyphicon-triangle-bottom{	
+
+.esup-lecture .collapseInDropDown {
+	height: 30px;
+	width: 48px;
+	padding-left:16px;
+	cursor: pointer;
+}
+
+.esup-lecture div.rubriqueFiltre + div[aria-expanded=false] > span.glyphicon-triangle-bottom{	
 	display : none;
 }
 
-div.rubriqueFiltre + div[aria-expanded=true] > span.glyphicon-triangle-right {
+.esup-lecture div.rubriqueFiltre + div[aria-expanded=true] > span.glyphicon-triangle-right {
 	display : none;
 }
-div.filtreInDropDown div {
+.esup-lecture div.filtreInDropDown div {
 	display : inline-block;
 }
 
-div.withCategoriesAndSources div.filtreInDropDown {
+.esup-lecture div.withCategoriesAndSources div.filtreInDropDown {
 	border-top: 1px solid #ddd;
 }
 
-div.withCategoriesAndSources div.filtreInDropDown + ul.collapse.in + div.filtreInDropDown {
+.esup-lecture div.withCategoriesAndSources div.filtreInDropDown + ul.collapse.in + div.filtreInDropDown {
 	border-top: 0px;
 }
-div.withCategoriesAndSources div.filtreInDropDown div.rubriqueFiltre {
+.esup-lecture div.withCategoriesAndSources div.filtreInDropDown div.rubriqueFiltre {
 		border-right:0px;
 		border-top:0px;
 }
-div.withCategoriesAndSources ul{
+.esup-lecture div.withCategoriesAndSources ul{
 		padding-left: 0px;
 }
-div.withCategoriesAndSources ul li div.rubriqueFiltre {
+.esup-lecture div.withCategoriesAndSources ul li div.rubriqueFiltre {
 	padding-left: 10ex;
 }
 
+
+
+.esup-lecture nav.navModeDesk.navClass.affix {
+	width: calc(24% + 42px);
+	left: calc(10% - 125px);
+}
+.esup-lecture div.enteteLectureAll div.affix {
+	right:0px;
+	left:0px;
+	top: 34px; 
+	padding-top:16px;
+	padding-left: 4px;
+	padding-bottom: 4px;
+	background-color: white;
+	z-index:10;
+	border-bottom: 1px inset gray ;
+}
+
+@media only screen and (min-width: 934px) { 
+	.esup-lecture div.enteteLectureAll div.affix {
+		display : none;
+	} 
+}
+
+/* corection des css superieur */
+ 
+.esup-lecture .modeNoPublisher .metaArticle {
+	background-image: none;
+}
+.esup-lecture div.divModeDesk > div {
+	margin-bottom: 0px;
+}

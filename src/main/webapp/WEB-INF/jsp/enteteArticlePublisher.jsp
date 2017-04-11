@@ -12,7 +12,8 @@
   </div>
   <div id="${n}rubSelectedDiv2" class="pull-left withMenuDropDown" data-toggle="modal"
       data-target="#modalRubriqueList${n}">
-      <label class="rubrique_Active ${n}"> Toutes les actualités</label> <span class="caret margeCarret"></span>
+      <label class="rubrique_Active ${n}"> Toutes les actualités</label> 
+      <span class="caret margeCarret"></span>
    </div>
 	<div class="dropdown readNotRead ">	
 	<!--		

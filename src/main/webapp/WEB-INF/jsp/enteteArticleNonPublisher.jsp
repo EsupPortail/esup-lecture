@@ -10,7 +10,12 @@
 <%--
 Partie supperieur de l'affichage des articles avec les boutons et dropdown de selection qui faut quand il faut.
  --%>
-<div class="enteteLectureAll" >
+ <c:if var="treeVisible" test="${contexte.treeVisible=='true'}" ></c:if>
+<c:if var="pageAccueil" test="${contexte.viewDef=='true'}" ></c:if>
+<c:if var="withDropDown" test="${!pageAccueil && treeVisible}" ></c:if>	
+ 
+ <c:if var="withDropDown" test="${!pageAccueil && treeVisible}" ></c:if>
+<div class="enteteLectureAll "  }>
 	<!-- si au moin une catégorie a le tag userCanMarkRead à false on affiche pas la possibilité de marquer tous les artices àlu ou non lu -->
 	<c:set var="affichereye" value="true"></c:set>
 	<c:forEach items="${listCat}" var="cat">
@@ -19,17 +24,19 @@ Partie supperieur de l'affichage des articles avec les boutons et dropdown de se
 		</c:if>
 	</c:forEach>
 	
-	<c:if var="treeVisible" test="${contexte.treeVisible=='true'}" ></c:if>
-	<c:if var="pageAccueil" test="${contexte.viewDef=='true'}" ></c:if>
 	
-	<c:if var="withDropDown" test="${!pageAccueil && treeVisible}" >
-		<div class="pull-left noMenuDropDown" >	
+	<c:if test="${withDropDown}">
+		<div class="pull-left noMenuDropDown " 
+				>	
 			<label class="rubrique_Active ${n}"><c:out value="${contexte.name}"></c:out></label>
 		</div>
-		<div 	class="pull-left withMenuDropDown" 
+		<div data-spy="affix" data-offset-top="48">
+		<div 	class="pull-left withMenuDropDown cursPoint"
 				data-toggle="modal"
       			data-target="#modalRubriqueList${n}">	
-			<label class="rubrique_Active ${n}"><c:out value="${contexte.name}"></c:out></label>
+			<label class="cursPoint rubrique_Active ${n}"><c:out value="${contexte.name}"></c:out></label>
+			<span class="caret margeCarret"></span>
+		</div>
 		</div>
 	</c:if>
 	<c:if test="${!withDropDown}" >
@@ -120,9 +127,12 @@ Partie supperieur de l'affichage des articles avec les boutons et dropdown de se
 	              		<c:out value="${cat.name}"></c:out>
 	         	</div>
 	            
-	            <div id="divCollapseInDropDown${nbCat}${n}" data-toggle="collapse"
-							data-target="#ulInDropDown${nbCat}${n}" aria-expanded="true"
-							aria-controls="ulInDropDown${nbCat}${n}">
+	            <div id="divCollapseInDropDown${nbCat}${n}"
+	            		class="collapseInDropDown" 
+	            		data-toggle="collapse"
+						data-target="#ulInDropDown${nbCat}${n}" 
+						aria-expanded="true"
+						aria-controls="ulInDropDown${nbCat}${n}">
 							<span class="glyphicon glyphicon-triangle-bottom "></span>
 							<span class="glyphicon glyphicon-triangle-right "></span>
 				</div>

@@ -47,7 +47,7 @@
 		'${contexte.itemDisplayMode}');
 	console.log("test after lecture.init" + lecture.${n}.urlFilterItem);
 </script>
-<div class="esup-lecture portlet-container"
+<div class="esup-lecture portlet-container ${n}"
   id="lecture-${n}">
   <div id="${n}homeJsp">
     <span class="spinner"></span>

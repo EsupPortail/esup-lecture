@@ -89,6 +89,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
               });
             }
           });
+         
       //pour afficher la modale
       $("#lecture-" + portletId + " .actualite a.publisherReadMore")
           .each(
@@ -498,7 +499,25 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     }
     priv.filtrerPublisherNonLusMobile = filtrerPublisherNonLusMobile;
     
+    function resetMinHeightPortlet() {
+    	var divPortlet = $('.esup-lecture.portlet-container.'+ namespace);
+    	var divAffix = $('.esup-lecture.'+ namespace + ' nav.navModeDesk.navClass.affix.affixTree');
+    	var divTop = $('.esup-lecture.'+ namespace + ' div.scrollDivArticle');
+    	if (divAffix && divTop) {
+    		var affixHeight = $(divAffix).height();
+    		var affixTop = $(divTop).offset().top;
+    		var portletTop =  $(divPortlet).offset().top;
+    		console.log('affix =' + affixHeight + " " + affixTop+ " " + portletTop);
+    		if (affixHeight && affixTop && portletTop) {
+    			var minHeight = affixHeight + affixTop - portletTop;
+    			minHeight = $(divPortlet).css('min-height', minHeight + 'px').css('min-height');
+    			console.log('min height =' + minHeight)
+    		}
+    	}
+    }
     $(function() {
+    	// retaillage a cause de l'affix hort flux qui dimensionne mal la fenetre:
+    	resetMinHeightPortlet();
 		markFirtVisible();
 	});
 }

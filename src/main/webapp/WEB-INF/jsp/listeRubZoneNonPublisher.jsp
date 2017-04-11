@@ -9,15 +9,17 @@
 
 <%--
 	affiche la liste des categorie:sources sur le cote pour les ecrans large
+	
+	
  --%>
  
 <c:set var="nbCat"  value="0" />
 <c:set var="nbSrc" value="0" />
-<nav class="navModeDesk navClass" id='${n}listOfCat'>
-	<ul class="nav nav-pills nav-stacked menuTree">
+<nav class="navModeDesk navClass affix affixTree"  id='${n}listOfCat' >
+	<ul class="nav nav-pills nav-stacked menuTree ">
 		
 		<li class="li_cat" > 
-			<div 	class="row divLargeWith rubriqueFiltre rubrique_all  ${n} active" 
+			<div 	class="row cursPoint divLargeWith rubriqueFiltre rubrique_all  ${n} active" 
 					onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')" >
 				<strong><c:out value="${contexte.name}"></c:out></strong>
 				<input type="hidden" class="titleName" value="${contexte.name}"/>
