@@ -69,7 +69,7 @@
 								value="${rub.uid}" />
 							<span class="badge cursPoint"
 								style="background-color:${rub.couleur}"
-								onclick="article.${n}.filterByRubriqueClass('rubrique_${rub.uid}')">
+								onclick="lecture.${n}.filterByRubriqueClass('rubrique_${rub.uid}')">
 								<c:out value="${rub.nom}"></c:out></span>
 							<script>
 									// ajout de la rubrique dans la div hote

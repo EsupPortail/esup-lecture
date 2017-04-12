@@ -9,6 +9,8 @@
 <%--
 	affiche la liste des rubrique sur le cote pour les ecrans large
  --%>
+ <c:set var="nbCat"  value="0" />
+ <c:set var="nbSrc" value="0" />
 <div class="navModeDesk navClass" id='${n}listOfCat' >
 	
   <ul 	class="nav nav-pills nav-stacked menuRubrique"
@@ -23,7 +25,13 @@
       </div>
     </li>
       <c:forEach items="${listCat}" var="cat">
+      	<c:set var="nbCat" value="${nbCat+1}" />
+     	<c:if var="notFromPublisher" test="${!cat.fromPublisher}" >
+     		<%@include file="rubZoneNonPublisher.jsp"%>
+     	</c:if>
+     	<c:if test="${!notFromPublisher}" >
         <c:forEach items="${cat.sources}" var="src">
+        	<c:set var="nbSrc" value="${nbSrc+1}" />
           <li><div 	class="row divLargeWith rubriqueFiltre rubrique_${src.uid} ${n}"
           			onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}'); true"
           			>
@@ -36,6 +44,7 @@
                   <input type="hidden" class="titleName" value="${src.name}"/></span>
             </div></li>
         </c:forEach>
+        </c:if>
       </c:forEach>
 
   </ul>

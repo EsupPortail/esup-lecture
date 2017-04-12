@@ -523,6 +523,18 @@
 	} 
 }
 
+.esup-lecture li.liCategorie {
+	width : 13vw;
+}
+.esup-lecture li.liCategorie ul {
+	padding:0px;
+}
+.esup-lecture li.liCategorie ul > li:FIRST-CHILD > div {
+	margin:0px;
+}
+.esup-lecture li.liCategorie ul > li  {
+	width: 14vw;
+}
 /* corection des css superieur */
  
 .esup-lecture .modeNoPublisher .metaArticle {

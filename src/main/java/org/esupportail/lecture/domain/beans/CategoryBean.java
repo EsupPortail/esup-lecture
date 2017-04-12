@@ -14,6 +14,7 @@ import org.esupportail.lecture.domain.model.CategoryProfile;
 import org.esupportail.lecture.domain.model.CoupleProfileAvailability;
 import org.esupportail.lecture.domain.model.CustomCategory;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.ManagedCategoryProfile;
 import org.esupportail.lecture.exceptions.domain.CategoryProfileNotFoundException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 /**
@@ -53,6 +54,8 @@ public class CategoryBean {
 	 * "owner" --> For personal categories
 	 */
 	private AvailabilityMode type;
+	
+	private boolean fromPublisher = false;
 	/**
 	 * orderedSourceIDs store SourceID and ordering order in the CategoryProfile definition.
 	 */
@@ -78,12 +81,17 @@ public class CategoryBean {
 	public CategoryBean(final CustomCategory customCategory, final CustomContext customContext) 
 			throws CategoryProfileNotFoundException, ManagedCategoryNotLoadedException {
 		CategoryProfile profile = customCategory.getProfile();
+		if (profile instanceof ManagedCategoryProfile ) {
+			this.fromPublisher = ((ManagedCategoryProfile) profile).isFromPublisher();
+		}
 		this.name = profile.getName();
 		this.description = profile.getDescription();
 		this.id = profile.getId();
 		this.folded = customContext.isCategoryFolded(id);
 		this.orderedSourceIDs = profile.getOrderedSourceIDs();
 		this.userCanMarkRead = profile.isUserCanMarkRead();
+		
+		
 	}
 	
 	/**
@@ -93,6 +101,9 @@ public class CategoryBean {
 	 */
 	public CategoryBean(final CoupleProfileAvailability profAv) throws ManagedCategoryNotLoadedException {
 		CategoryProfile profile = (CategoryProfile) profAv.getProfile(); 
+		if (profile instanceof ManagedCategoryProfile ) {
+			this.fromPublisher = ((ManagedCategoryProfile) profile).isFromPublisher();
+		}
 		this.name = profile.getName();
 		this.id = profile.getId();
 		this.type = profAv.getMode();
@@ -213,6 +224,14 @@ public class CategoryBean {
 		string += "     Folded = " + folded + "\n";
 		
 		return string;
+	}
+
+	public boolean isFromPublisher() {
+		return fromPublisher;
+	}
+
+	public void setFromPublisher(boolean fromPublisher) {
+		this.fromPublisher = fromPublisher;
 	}
 	
 }

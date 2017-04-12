@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
@@ -102,8 +103,8 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 */
 	private VisibilitySets visibility;
 
-	private boolean isFromPublisher = false ;
-	private String urlActualites;
+	
+	private String urlActualites = null;
 	/*
 	 ************************** INITIALIZATION ******************************** */
 
@@ -681,12 +682,10 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	}
 
 	public boolean isFromPublisher() {
-		return isFromPublisher;
-	}
-	public void setFromPublisher(boolean b) {
-		this.isFromPublisher=b;
+		return StringUtils.isNotBlank(urlActualites);
 		
 	}
+	
 
 	public String getUrlActualites() {
 		return urlActualites;

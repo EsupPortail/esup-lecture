@@ -806,6 +806,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			categoryWebBean.setAvailabilityMode(categoryBean.getType());
 			categoryWebBean.setDescription(categoryBean.getDescription());
 			categoryWebBean.setUserCanMarkRead(categoryBean.isUserCanMarkRead());
+			categoryWebBean.setFromPublisher(categoryBean.isFromPublisher());
 		}
 		return categoryWebBean;
 	}

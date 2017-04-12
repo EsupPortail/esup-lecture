@@ -49,7 +49,9 @@ public class Context {
 	 * The context id.
 	 */
 	private String id;
-	
+	/**
+	 * un contexte peut mixer le mode publisher et non publisher
+	 */
 	private Boolean modePublisher;
 	private Boolean userCanMarckRead;
 	private Boolean unreadMode;
@@ -374,13 +376,17 @@ public class Context {
 	}
 
 	public Boolean getModePublisher() {
-		return modePublisher;
+		Boolean mp = modePublisher;
+		if (mp == null ) {
+			modePublisher = mp = false;
+		}
+		return mp;
 	}
 
 	public void setModePublisher(Boolean modePublisher) {
 		this.modePublisher = modePublisher;
 	}
-
+	
 	public Boolean getUserCanMarckRead() {
 		return userCanMarckRead;
 	}

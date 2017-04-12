@@ -486,10 +486,8 @@ public class ChannelConfig  {
 						//pour gerer le nouveau parametrage
 						if(categoryProfile.valueOf("@urlCategory") != null && !"".equals(categoryProfile.valueOf("@urlCategory"))){
 							mcp.setCategoryURL(categoryProfile.valueOf("@urlCategory"));
-							c.setModePublisher(false);
 						}else if (!"".equals(categoryProfile.valueOf("@urlActualites"))){
 							c.setModePublisher(true);
-							mcp.setFromPublisher(true);
 							mcp.setUrlActualites(categoryProfile.valueOf("@urlActualites"));
 						}
 
