@@ -52,7 +52,9 @@
   background: #A9A9A9;
 }
 
-
+.esup-lecture .withCategoriesAndSources .rubriqueFiltre:hover {
+  background: #F5F5F5;
+}
 
 .esup-lecture .griseImageArticle {
   filter: grayscale(57%);
@@ -385,7 +387,8 @@
 }
  
 .esup-lecture .scrollDivArticle > div.itemShowFilter div.modeNoPublisher {
-	padding-top : 8px;
+	padding-top : 6px;
+	margin-top : 6px
 }
 
 .esup-lecture .scrollDivArticle .itemShowFilter div.modeNoPublisher {
@@ -494,6 +497,7 @@
 }
 .esup-lecture div.withCategoriesAndSources ul{
 		padding-left: 0px;
+		margin-bottom: 0px;
 }
 .esup-lecture div.withCategoriesAndSources ul li div.rubriqueFiltre {
 	padding-left: 10ex;

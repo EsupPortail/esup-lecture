@@ -89,11 +89,19 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
               });
             }
           });
+      
+      
          
       //pour afficher la modale
-      $("#lecture-" + portletId + " .actualite a.publisherReadMore")
-          .each(
-              function() {
+     $("#lecture-" + portletId + " .actualite ")
+          .each(function(){onClickReadMoreInModal(selector + " #"+ portletId + "modalPublisher", 
+          							this, "publisherReadMore", $('.iframeCacher.'+ namespace) )});
+     $("#lecture-" + portletId + " .modeNoPublisher.contenuArticle ")
+     .each(function(){onClickReadMoreInModal(selector + " #"+ portletId + "modalPublisher", 
+     							this, "readMore").hide()});
+   /*
+         $("#lecture-" + portletId + " .actualite a.publisherReadMore")
+          .each(     function() {
                 $(this)
                     .click(
                         function(e) {
@@ -117,9 +125,57 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
                                           'href'));
                         });
               });
+     */       
     });
 
- 
+
+    function onClickReadMoreInModal(modalSelector, ob, classAncre, iframe){
+    	console.log("onClickReadMoreInModal " );
+    	console.log(modalSelector);
+    	console.log(classAncre);
+    	console.log(ob);
+    	var ancre = $('a.'+classAncre, ob)[0];
+    	var ref = $(ancre).attr('href');
+    	
+    	console.log("onClickReadMoreInModal " + ancre + " " + ref);
+    	if (ancre) {
+    		console.log ("ancre ok" + ob);
+	    	$(ob).click(function(e) {
+	            e.preventDefault();          
+	            var modal = $(modalSelector).modal('show');
+	            var modalBody= modal.find('.modal-body');
+	            	
+	            if (iframe) { // on utilise une iframe pour resoudre les pb de cross domaine cas avec publisher
+		            modalBody.load(
+		            		ref, 
+		            		function(responseTxt, statusTxt, xhr) {
+		            				// si le chargement est en error (pb cross domain) 
+			                	if (statusTxt == 'error') {
+			                			// on fait le chargement dans une iframe caché (plus de pb crossdomaine)
+			                		var fr = $(iframe);
+			                		fr.on('load', 
+			                				function(){
+			                						// quand iframe est chargé on recharge dans la modal
+			                						// et c'est ok car le pb de crossdomain ne sont qu'a l'autentificaton
+			                					modalBody.load(ref, 
+			                									function(){
+			                											// on vire les on(load) posé pour éviter l'accumulation
+			                										fr.unbind('load');
+			                									});
+			                				})
+			                		fr.attr("src" ,ref);
+			                	}   	
+	                });
+	            } else {
+	            	modalBody.load(ref);
+	            }
+	          });
+    	}
+    	return $(ancre);
+    };
+
+    
+   
 
     function toggleArticleRead(idCat, idSrc, idItem, idDivRow, isModePublisher) {
     	var urlAjax = urlActionMarkRead;

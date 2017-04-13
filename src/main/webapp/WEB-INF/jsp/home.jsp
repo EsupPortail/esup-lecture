@@ -84,4 +84,5 @@
       <%@include file="homeAutre.jsp"%>
     </c:if>
   </div>
+  <iframe class="${n} iframeCacher" style="display:none!important" ></iframe>
 </div>

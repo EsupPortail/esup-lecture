@@ -16,11 +16,7 @@
       <span class="caret margeCarret"></span>
    </div>
 	<div class="dropdown readNotRead ">	
-	<!--		
-        <div class="dropdown-toggle  pull-right" data-toggle="dropdown">
-          <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-        </div>
-    --> 
+
     	<button  class="btn btn-primary dropdown-toggle pull-right" type="button" data-toggle="dropdown"> 
     		<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
     	</button>
@@ -29,16 +25,7 @@
         </portlet:actionURL>
         <ul class="dropdown-menu pull-right">
           <li class="checkbox afficherLuWith">
-<!--  
-            <form id="formReadMode${n}" action="${submitFormURL}" method="post">
-              <input 	type="hidden" 
-              			name="p3"
-                		id="${n}listNonLu" 
-                		value="" /> 
-              <input	name="idContexte" 
-              			type="hidden" 
-              			value="${contexte.id}" />
-    -->        
+    
                 <label for="checkReadItem${n})" onclick="lecture['${n}'].jq('input#checkReadItem${n}').click()"> <spring:message code="showUnreadNews" />&nbsp;
                 </label>
                 <input 	id = "checkReadItem${n}"
@@ -47,16 +34,14 @@
                 		${contexte.itemDisplayMode=='UNREAD'? 'checked' : ''}
                   		onchange="lecture.${n}.filterPublisherNotRead(this); lecture['${n}'].jq('#${n}rubSelectedDiv1 ').click();"
                   id="${n}checkBoxNonLu">
-                <!--                 onchange="filtrerPublisherNonLus()" -->
-       <!--       
-            </form>
-         --> 
+             
           </li>
   </ul>
   </div>
 </div>
   
-
+<c:set var="nbCat"  value="0" />
+<c:set var="nbSrc" value="0" />
 
 <div id="modalRubriqueList${n}" class="modal fade" role="dialog">
   <div class="modal-dialog modalMarge">
@@ -68,16 +53,65 @@
           <span class="badge pull-right"><c:out
               value="${nombreArticleNonLu}"></c:out></span> </a>
         <c:forEach items="${listCat}" var="cat">
-          <c:forEach items="${cat.sources}" var="src">
-            <a href="#" class="list-group-item"
-              onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}')"
-              data-dismiss="modal"><c:out value="${src.name}"></c:out><span
-              class="badge pull-right" style="background-color:${src.color}"><c:out
-                  value="${src.unreadItemsNumber}"></c:out></span></a>
-          </c:forEach>
+        <c:set var="nbCat" value="${nbCat+1}" />
+        	<c:if var="notFromPublisher" test="${!cat.fromPublisher}" >
+        	<!-- ******** -->
+     			<c:if test="${not empty cat.sources}">
+     			<div class="withCategoriesAndSources">
+        		<div class="filtreInDropDown" >
+        		<div  class="list-group-item rubriqueFiltre  ${n} cat_${nbCat}"
+	              		onclick="lecture.${n}.filterByRubriqueClass('cat_${nbCat}')"
+	              		data-dismiss="modal">
+	              		<c:out value="${cat.name}"></c:out>
+	         	</div>
+	            
+	            <div id="divCollapseInDropDown${nbCat}${n}"
+	            		class="collapseInDropDown" 
+	            		data-toggle="collapse"
+						data-target="#ulInDropDown${nbCat}${n}" 
+						aria-expanded="true"
+						aria-controls="ulInDropDown${nbCat}${n}">
+							<span class="glyphicon glyphicon-triangle-bottom "></span>
+							<span class="glyphicon glyphicon-triangle-right "></span>
+				</div>
+				</div>
+        		<ul id="ulInDropDown${nbCat}${n}" class="collapse in"  
+        			 aria-expanded="true"
+					aria-labelledby="divCollapseInDropDown${nbCat}${n}">
+	          <c:forEach items="${cat.sources}" var="src">
+	          	<c:set var="nbSrc" value="${nbSrc+1}" />
+	          	<li>
+	            <div 	class="list-group-item rubriqueFiltre  ${n} src_${nbSrc}"
+	             		onclick="lecture.${n}.filterByRubriqueClass('src_${nbSrc}')"
+	            		data-dismiss="modal" >
+	              	<c:out value="${src.name}"></c:out>
+	              	<c:if test="${cat.userCanMarkRead=='true'}">
+	              		<span class="badge pull-right" style="background-color:${src.color}">
+	              			<c:out value="${src.unreadItemsNumber}"></c:out>
+	              		</span>
+	                </c:if>
+	                
+	            </div>
+	            </li>
+	          </c:forEach>
+	          
+	            </ul>
+	            </div>
+	          <!-- ******** --> 
+          </c:if>
+     		</c:if>
+     		<c:if test="${!notFromPublisher}" >
+	          <c:forEach items="${cat.sources}" var="src">
+	          <c:set var="nbSrc" value="${nbSrc+1}" />
+	            <a href="#" class="list-group-item"
+	              onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}')"
+	              data-dismiss="modal"><c:out value="${src.name}"></c:out><span
+	              class="badge pull-right" style="background-color:${src.color}"><c:out
+	                  value="${src.unreadItemsNumber}"></c:out></span></a>
+	          </c:forEach>
+          	</c:if>
         </c:forEach>
       </div>
     </div>
   </div>
 </div>
-<!-- onclick="filtrerParRubrique('${cat.id}','${src.id}','${src.name}','')" -->

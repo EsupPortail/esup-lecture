@@ -23,6 +23,7 @@
 --%>
   <c:forEach items="${listCat}" var="cat">
   	<c:set var="nbCat" value="${nbCat+1}" />
+  	<c:set var="fromPublisher" value="${cat.fromPublisher}" />
   	
     <c:forEach items="${cat.sources}" var="src">
     	<c:set var="nbSrc" value="${nbSrc+1}" />
@@ -49,7 +50,7 @@
 				<div  class='row '>
 	
 					<div 
-						class="col-xs-10 col-sm-11 ${contexte.modePublisher ? 'modePublisher' : 'modeNoPublisher'}"
+						class="col-xs-10 col-sm-11 ${fromPublisher ? 'modePublisher' : 'modeNoPublisher'} contenuArticle"
 						id="contenuArti${contexte.modePublisher}${article.id}${idSources}">
 						<c:out value="${article.htmlContent}" escapeXml="false" />
 					</div>

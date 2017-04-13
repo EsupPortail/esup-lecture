@@ -39,7 +39,7 @@
 --%>
         <div
           id="contenuArti${contexte.modePublisher}${article.id}"
-          class="itemOpacifiable   ${article.read ? 'dejaLue' : ''}"
+          class="itemOpacifiable   ${article.read ? 'dejaLue' : ''} ${article.rubriques != null ? 'modePublisher' : 'modeNoPublisher'} contenuArticle"
           >
           <c:out value="${article.htmlContent}" escapeXml="false"></c:out>
         </div>
