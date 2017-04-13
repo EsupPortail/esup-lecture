@@ -326,7 +326,7 @@ public abstract class Source implements Element, Serializable {
 
 				if (isComplex && parser != null) {
 					parser.setItemXpath(this.getItemXPath());
-					LOG.error(parser.getXMLStream());
+			//		LOG.error(parser.getXMLStream());
 					document = DocumentHelper.parseText(parser.getXMLStream());
 				} else {
 					document = DocumentHelper.parseText(xmlStream);
@@ -376,18 +376,29 @@ public abstract class Source implements Element, Serializable {
 						item = (ComplexItem) item;
 						((ComplexItem) item).setAuthor(parser.getItemAuth().get(item.getId()));
 						((ComplexItem) item).setRubriques(parser.getRubriquesItem().get(item.getId()));
+						
+						try {
+							 //itmes/pubDate error... 
+							SimpleDateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+							Date odt = df.parse(node.selectSingleNode("article/pubDate").getText());
+							item.setPubDate(odt);
+
+						} catch (Exception e) {
+							String errorMsg = "Error parsing Date of the item ";
+							LOG.error(errorMsg, e);
+						}
+					} else {
+						try {
+							 //item/pubDate ou pubDate seulement A AVRIFIER TOUT 
+							SimpleDateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+							Date odt = df.parse(node.selectSingleNode("pubDate").getText());
+							item.setPubDate(odt);
+	
+						} catch (Exception e) {
+							String errorMsg = "Error parsing Date of the item ";
+							LOG.error(errorMsg, e);
+						}
 					}
-
-					try {
-						SimpleDateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
-						Date odt = df.parse(node.selectSingleNode("article/pubDate").getText());
-						item.setPubDate(odt);
-
-					} catch (Exception e) {
-						String errorMsg = "Error parsing Date of the item ";
-						LOG.error(errorMsg, e);
-					}
-
 					items.add(item);
 				}
 			} catch (DocumentException e) {

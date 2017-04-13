@@ -47,7 +47,7 @@
 		'${contexte.itemDisplayMode}');
 	console.log("test after lecture.init" + lecture.${n}.urlFilterItem);
 </script>
-<div class="esup-lecture portlet-container ${n}"
+<div class="esup-lecture portlet-container ${n}  ${contexte.viewDef=='true' ? 'viewDef' :''} ${contexte.modePublisher=='true' ? 'modePublisher' : 'notModePublisher'}"
   id="lecture-${n}">
   <div id="${n}homeJsp">
     <span class="spinner"></span>
@@ -76,7 +76,7 @@
 </div>
     
     <c:if
-      test="${contexte.viewDef=='true'&& contexte.modePublisher=='true'}">
+      test="${contexte.viewDef=='true' && (contexte.modePublisher=='true') }"> 
       <%@include file="homeAccueil.jsp"%>
     </c:if>
     <c:if

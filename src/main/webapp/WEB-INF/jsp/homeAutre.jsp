@@ -12,7 +12,7 @@
     <input type="hidden"
     id="${n}rubSeletc" value='' />
     <c:if test="${contexte.treeVisible=='true'}">
-      <div class="col-sm-3 .hidden-xs ">
+      <div class="col-sm-3 .hidden-xs menuGauche">
 
       <c:if test="${contexte.modePublisher=='true'}">
         <%@include file="listeRubZonePublisher.jsp"%>

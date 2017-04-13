@@ -92,13 +92,13 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
       
       
          
-      //pour afficher la modale
+      //pour afficher la modal
      $("#lecture-" + portletId + " .actualite ")
           .each(function(){onClickReadMoreInModal(selector + " #"+ portletId + "modalPublisher", 
-          							this, "publisherReadMore", $('.iframeCacher.'+ namespace) )});
+          							this, "a.publisherReadMore", $('.iframeCacher.'+ namespace) )});
      $("#lecture-" + portletId + " .modeNoPublisher.contenuArticle ")
      .each(function(){onClickReadMoreInModal(selector + " #"+ portletId + "modalPublisher", 
-     							this, "readMore").hide()});
+     							this, "a.readMore").hide()});
    /*
          $("#lecture-" + portletId + " .actualite a.publisherReadMore")
           .each(     function() {
@@ -129,47 +129,58 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     });
 
 
-    function onClickReadMoreInModal(modalSelector, ob, classAncre, iframe){
-    	console.log("onClickReadMoreInModal " );
-    	console.log(modalSelector);
-    	console.log(classAncre);
-    	console.log(ob);
-    	var ancre = $('a.'+classAncre, ob)[0];
-    	var ref = $(ancre).attr('href');
+    function onClickReadMoreInModal(modalSelector, cibleOnClick, selectorHref, iframe){
+    	// modalSelector : selector jquery de la modal
+    	// cibleOnClick object sur lequel on place le onclick 
+    	// selectorHref selecteur de l'object contenant le lien href de chargement de la modal. null si doit etre egale a cibleOnClick 
+    	// iframe : peut etre null ; iframe cacher de prechargement en cas de cross domain avec l'autentification CAS (pour publisher)
+    	// renvoie l'ancre : object selectioné par selectorHref
+    	var ancre;
+    	var ref = ancre ? $(ancre).attr('href') : $(cibleOnClick).attr('href');
+    	if (selectorHref) {
+    		ancre = $(selectorHref, cibleOnClick)[0];
+    		if (ancre == undefined) {
+    			ancre = $(selectorHref)[0];
+    		}
+    	} else {
+    		ancre = cibleOnClick;
+    	}
     	
-    	console.log("onClickReadMoreInModal " + ancre + " " + ref);
     	if (ancre) {
-    		console.log ("ancre ok" + ob);
-	    	$(ob).click(function(e) {
-	            e.preventDefault();          
-	            var modal = $(modalSelector).modal('show');
-	            var modalBody= modal.find('.modal-body');
-	            	
-	            if (iframe) { // on utilise une iframe pour resoudre les pb de cross domaine cas avec publisher
-		            modalBody.load(
-		            		ref, 
-		            		function(responseTxt, statusTxt, xhr) {
-		            				// si le chargement est en error (pb cross domain) 
-			                	if (statusTxt == 'error') {
-			                			// on fait le chargement dans une iframe caché (plus de pb crossdomaine)
-			                		var fr = $(iframe);
-			                		fr.on('load', 
-			                				function(){
-			                						// quand iframe est chargé on recharge dans la modal
-			                						// et c'est ok car le pb de crossdomain ne sont qu'a l'autentificaton
-			                					modalBody.load(ref, 
-			                									function(){
-			                											// on vire les on(load) posé pour éviter l'accumulation
-			                										fr.unbind('load');
-			                									});
-			                				})
-			                		fr.attr("src" ,ref);
-			                	}   	
-	                });
-	            } else {
-	            	modalBody.load(ref);
-	            }
-	          });
+    		var ref = $(ancre).attr('href') ;
+    		if (ref) {
+    			
+		    	$(cibleOnClick).click(function(e) {
+		            e.preventDefault();          
+		            var modal = $(modalSelector).modal('show');
+		            var modalBody= modal.find('.modal-body');
+		            	
+		            if (iframe) { // on utilise une iframe pour resoudre les pb de cross domaine cas avec publisher
+			            modalBody.load(
+			            		ref, 
+			            		function(responseTxt, statusTxt, xhr) {
+			            				// si le chargement est en error (pb cross domain) 
+				                	if (statusTxt == 'error') {
+				                			// on fait le chargement dans une iframe caché (plus de pb crossdomaine)
+				                		var fr = $(iframe);
+				                		fr.on('load', 
+				                				function(){
+				                						// quand iframe est chargé on recharge dans la modal
+				                						// et c'est ok car le pb de crossdomain ne sont qu'a l'autentificaton
+				                					modalBody.load(ref, 
+				                									function(){
+				                											// on vire les on(load) posé pour éviter l'accumulation
+				                										fr.unbind('load');
+				                									});
+				                				})
+				                		fr.attr("src" ,ref);
+				                	}   	
+		                });
+		            } else {
+		            	modalBody.load(ref);
+		            }
+		        });
+    		}
     	}
     	return $(ancre);
     };
@@ -207,7 +218,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 	            }
 	    	});
 	    	
-	    	if (isModePublisher) {
+	    	if (isModePublisher || true) {
 	    		if (readItem) {
 	    			$('div.articleEye i', divRow ).addClass('fa-eye-slash').removeClass('fa-eye');
 	    			divRow.addClass('dejaLue');

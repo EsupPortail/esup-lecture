@@ -180,8 +180,8 @@ public class HomeController extends TwoPanesController {
 				facadeService.markItemReadMode(uid, srcID, itemID, isRead);
 			}
 			LOG.debug("markRead OK");
-	//		response.setContentType("application/json");
-	 //       response.getWriter().write("{}");
+			response.setContentType("application/json");
+	        response.getWriter().write("{}");
 		} catch (Exception e) {
 			throw new WebException("Error in markRead", e);
 		}

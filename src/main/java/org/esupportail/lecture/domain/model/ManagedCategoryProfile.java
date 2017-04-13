@@ -164,7 +164,11 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 		try {
 			currentName = getElement().getName();
-		} catch (ManagedCategoryNotLoadedException e) {
+		}  catch (java.lang.NullPointerException e){
+			LOG.warn("Category " + getId() + " element is null");
+				currentName = super.getName();
+			}
+			catch (ManagedCategoryNotLoadedException e){
 			LOG.warn("Category " + getId() + " is not loaded");
 			currentName = super.getName();
 		}
@@ -308,23 +312,24 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 
 			if (getTrustCategory()) {
 				ManagedCategory cat = getElement();
-				visibility = cat.inner.getVisibility();
-				edit = cat.inner.getEdit();
-				ttl = cat.inner.getTtl();
-
-				// Inutile : edit est obligatoire dans le XML d'une category
-				if (edit == null) {
-					edit = inner.getEdit();
+				if (cat != null) {
+					visibility = cat.inner.getVisibility();
+					edit = cat.inner.getEdit();
+					ttl = cat.inner.getTtl();
+	
+					// Inutile : edit est obligatoire dans le XML d'une category
+					if (edit == null) {
+						edit = inner.getEdit();
+					}
+					if (visibility == null) {
+						visibility = inner.getVisibility();
+					} else if (visibility.isEmpty()) {
+						visibility = inner.getVisibility();
+					}
+					if (ttl == 0) {
+						ttl = inner.getTtl();
+					}
 				}
-				if (visibility == null) {
-					visibility = inner.getVisibility();
-				} else if (visibility.isEmpty()) {
-					visibility = inner.getVisibility();
-				}
-				if (ttl == 0) {
-					ttl = inner.getTtl();
-				}
-
 			} else {
 				// No trust => features of categoryProfile
 				edit = inner.getEdit();
@@ -475,36 +480,40 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 		 * user app.allowed => rien à faire + sortir
 		 * user n'app. rien => effacer la cat.
 		 */
-
-		VisibilityMode mode = getVisibility().whichVisibility();
-
-		if (mode == VisibilityMode.OBLIGED) {
-			if (LOG.isTraceEnabled()) {
-				LOG.trace("IsInObliged : " + mode);
-			}
-			customContext.addSubscription(this);
-			return mode;
-		}
-
-		if (mode == VisibilityMode.AUTOSUBSCRIBED) {
-			if (LOG.isTraceEnabled()) {
-				LOG.trace("IsInAutoSubscribed : " + mode);
-			}
-			// Enregistrer uniquement si pas desabonne
-			if (!customContext.isUnsubscribedAutoSubscribedCategory(this.getId())) {
+		VisibilitySets vSet = getVisibility();
+		VisibilityMode mode;
+		
+		if (vSet != null) {
+			mode = vSet.whichVisibility();
+			
+			
+			if (mode == VisibilityMode.OBLIGED) {
+				if (LOG.isTraceEnabled()) {
+					LOG.trace("IsInObliged : " + mode);
+				}
 				customContext.addSubscription(this);
+				return mode;
 			}
-			return mode;
-		}
-
-		if (mode == VisibilityMode.ALLOWED) {
-			if (LOG.isTraceEnabled()) {
-				LOG.trace("IsInAllowed : " + mode);
+	
+			if (mode == VisibilityMode.AUTOSUBSCRIBED) {
+				if (LOG.isTraceEnabled()) {
+					LOG.trace("IsInAutoSubscribed : " + mode);
+				}
+				// Enregistrer uniquement si pas desabonne
+				if (!customContext.isUnsubscribedAutoSubscribedCategory(this.getId())) {
+					customContext.addSubscription(this);
+				}
+				return mode;
 			}
-			// Nothing to do
-			return mode;
+	
+			if (mode == VisibilityMode.ALLOWED) {
+				if (LOG.isTraceEnabled()) {
+					LOG.trace("IsInAllowed : " + mode);
+				}
+				// Nothing to do
+				return mode;
+			}
 		}
-
 		// ELSE not Visible
 		customContext.removeCustomManagedCategoryFromProfile(this.getId());
 

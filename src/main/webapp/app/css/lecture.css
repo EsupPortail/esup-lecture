@@ -100,7 +100,13 @@
 .esup-lecture .dropdown-toggle.pull-right {
     padding: 0px 10px 5px 10px;
     cursor: pointer;
+    
 }
+.esup-lecture button.dropdown-toggle.pull-right  {
+    background-color: transparent;
+	border: none;
+}
+
 .esup-lecture .dropdown.pull-right {
     padding-right: 0px;
 }
@@ -538,6 +544,19 @@
 }
 .esup-lecture li.liCategorie ul > li  {
 	width: 14vw;
+}
+
+.esup-lecture.viewDef.notModePublisher div.articleEye {
+	display:none;
+}
+.esup-lecture.viewDef.notModePublisher div.enteteLectureAll div.pull-right > button {
+	display:none;
+}
+.esup-lecture.viewDef.notModePublisher div.menuGauche {
+	display:none;
+}
+.esup-lecture.viewDef.notModePublisher div.divModeDesk{
+	width : 100%;
 }
 /* corection des css superieur */
  
