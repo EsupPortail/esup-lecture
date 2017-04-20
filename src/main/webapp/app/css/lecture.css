@@ -401,7 +401,21 @@
 	background: url(/esup-news/images/line_b.gif) no-repeat;
 }
 
+.esup-lecture.modePublisher.viewDef div.modeNoPublisher  {
+	background: url(/esup-news/images/line_b.gif) no-repeat;
+	margin-top: 8px;
+}
 
+.esup-lecture div.modeNoPublisher .metaArticle .metaArticleDetail {
+	padding-left : 0px;
+}
+.esup-lecture div.modeNoPublisher .metaArticleDatePub {
+	font:90%;
+	font-style: oblique;
+}
+.esup-lecture div.modeNoPublisher .metaArticle + H1 {
+	margin-top : 0px;
+}
 
 .esup-lecture ul.menuRubrique li > div.rubriqueFiltre.active , ul.menuTree li > div.rubriqueFiltre.active{
 	background: #d4d4d4;

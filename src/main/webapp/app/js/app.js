@@ -136,12 +136,17 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     	// iframe : peut etre null ; iframe cacher de prechargement en cas de cross domain avec l'autentification CAS (pour publisher)
     	// renvoie l'ancre : object selectioné par selectorHref
     	var ancre;
-    	var ref = ancre ? $(ancre).attr('href') : $(cibleOnClick).attr('href');
+    	var ref;// = ancre ? $(ancre).attr('href') : $(cibleOnClick).attr('href');
     	if (selectorHref) {
     		ancre = $(selectorHref, cibleOnClick)[0];
-    		if (ancre == undefined) {
-    			ancre = $(selectorHref)[0];
+    	/*	if (ancre == undefined) {
+    			ancre = $('a[target=_blank]', cibleOnClick)[0];
+    			if (ancre == undefined) {
+    				ancre = $(a, cibleOnClick)[0];
+    			}
+    			
     		}
+    	*/
     	} else {
     		ancre = cibleOnClick;
     	}
@@ -228,6 +233,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 	    		}
 	    	}
     	}
+    	markFirtVisible();
     }
     priv.toggleArticleRead = toggleArticleRead;
     
