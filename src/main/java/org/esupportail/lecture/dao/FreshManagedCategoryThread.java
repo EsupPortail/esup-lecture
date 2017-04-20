@@ -215,16 +215,16 @@ public class FreshManagedCategoryThread extends Thread {
 				RubriquesSourceProfile sp = new RubriquesSourceProfile(ret);
 				sp.setName(node.selectSingleNode("name").getText());
 				sp.setColor(node.selectSingleNode("color").getText());
-				sp.setHighlight(false);
+				sp.setHighLight(false);
 				if (node.selectSingleNode("highlight").getText().equals("true")) {
-					sp.setHighlight(true);
+					sp.setHighLight(true);
 				}
 				sp.setUuid(Integer.valueOf(node.selectSingleNode("uuid").getText()));
 				sp.setSourceURL(profile.getUrlActualites() + "#" + sp.getUuid());
 				sp.setFileId(sp.getName().trim() + sp.getUuid());
 				sp.setComplexItems(true);
 				sp.setItemXPath(node.valueOf("@itemXPath"));
-				if (sp.getHighlight()) {
+				if (sp.isHighLight()) {
 					for (Map.Entry<String, Integer> entry : orderedSourceIDs.entrySet()) {
 						entry.setValue(entry.getValue() + 1);
 					}

@@ -10,13 +10,13 @@ public class RubriquesSourceProfile extends ManagedSourceProfile {
 		super(mc);
 	}
 
-	private String color;
-	private int uuid;
-	private boolean highlight;
-	private ManagedCategory category;
-	private ManagedCategoryProfile categoryProfile;
-	private boolean featuresComputed;
-
+//	private String color;
+//	private int uuid;
+//	private boolean highlight;
+//	private ManagedCategory category;
+//	private ManagedCategoryProfile categoryProfile;
+//	private boolean featuresComputed;
+/*
 	public String getColor() {
 		return color;
 	}
@@ -24,7 +24,8 @@ public class RubriquesSourceProfile extends ManagedSourceProfile {
 	public void setColor(String color) {
 		this.color = color;
 	}
-
+*/
+/*
 	public int getUuid() {
 		return uuid;
 	}
@@ -32,19 +33,20 @@ public class RubriquesSourceProfile extends ManagedSourceProfile {
 	public void setUuid(int uuid) {
 		this.uuid = uuid;
 	}
-
-	public boolean getHighlight() {
-		return highlight;
+*/
+/*
+	public boolean isHighLight() {
+		return super.isHighLight();
 	}
 
-	public void setHighlight(boolean highlight) {
-		this.highlight = highlight;
+	public void setHighLight(boolean highlight) {
+		super.setHighLight(highlight);
 	}
-
+*/
 	public ManagedCategory getCategory() {
-		return category;
+		return super.getParent();
 	}
-
+/*
 	public void setCategory(ManagedCategory category) {
 		this.category = category;
 	}
@@ -65,6 +67,6 @@ public class RubriquesSourceProfile extends ManagedSourceProfile {
 		this.featuresComputed = featuresComputed;
 	}
 
-
+*/
 
 }
