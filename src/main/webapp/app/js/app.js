@@ -16,6 +16,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 	
 	
 	
+	
 	console.log("test lecture " + lecture[namespace].urlMarkRead +"   "+ lecture[namespace].urlMarkAllRead);
 	
 	//  (function($, namespace, namespace, urlMarkReadv, urlMarkAllRead,
@@ -60,7 +61,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
       
       var container = $('div.esup-lecture.portlet-container.'+namespace);
       if (container) {
-	      var menu = $('ul.menuRubrique', container);
+	      var menu = $('ul.menuRubrique, nav.affixTree', container);
 	      
 	      if (menu) {
 		      container = $('div.scrollDivArticle', container);
@@ -71,8 +72,9 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 			      priv.gereAffixMenu = function(){
 			    	  var limite = container.offset().top + container.height();
 			    	  var bas = menuObj.mempos + $(window).scrollTop() + menu.height();
-			    	  
-			    	  if (limite  < bas) {
+			    	  var displayHeight = $(parent).height() - menuObj.mempos;
+			    	
+			    	  if ((limite  < bas) || (displayHeight < menu.height())) {
 				    		$(menu).removeClass('affix');
 			    	  } else {
 			    		  $(menu).addClass('affix');

@@ -9,8 +9,11 @@
 
 .esup-lecture .menuRubrique {
   margin-top: 50px;
+ /* position: fixed; */
 }
-
+.esup-lecture .menuRubrique {
+	background-color: #f3f3f3;
+}
 .esup-lecture .menuRubrique li {
   width: 100px;
   height: 30px;
@@ -135,6 +138,7 @@
 
 .esup-lecture .navModeDesk.navClass ul.menuTree {
 	margin-top : 50px; 
+	background-color: #F3F3F3;
 } 
 
 .esup-lecture .afficherLuWith {
@@ -415,6 +419,12 @@
 }
 .esup-lecture div.modeNoPublisher .metaArticle + H1 {
 	margin-top : 0px;
+	margin-bottom: 5px;
+	font-size: 110%;
+}
+
+.esup-lecture div.modeNoPublisher .metaArticle + H1 a{
+	font-weight: bold;
 }
 
 .esup-lecture ul.menuRubrique li > div.rubriqueFiltre.active , ul.menuTree li > div.rubriqueFiltre.active{
@@ -576,6 +586,8 @@
  
 .esup-lecture .modeNoPublisher .metaArticle {
 	background-image: none;
+	font-size: 90%;
+	margin-bottom: 0px;
 }
 .esup-lecture div.divModeDesk > div {
 	margin-bottom: 0px;
