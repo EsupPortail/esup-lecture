@@ -57,39 +57,37 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
       var menuRubriqueHeight = $("#" + portletId + "menuRubrique")
           .height();
       var divMenuScroll = divScroll - 2 * menuRubriqueHeight;
-      $(window).scroll(
-          function() {
-            if (HeaderTop && $(window).scrollTop() > HeaderTop
-                && $(window).scrollTop() < divScroll) {
-              $("#" + portletId + "fixHeadtrue").css({
-                position : 'fixed',
-                top : '30px',
-                display : 'block'
-              });
-              $("#" + portletId + "fixHeadtrue").addClass(
-                  'classHeadLarg');
-            } else {
-              $("#" + portletId + "fixHeadtrue").css({
-                position : 'static',
-                top : '0px'
-              });
-              $("#" + portletId + "fixHeadtrue").removeClass(
-                  'classHeadLarg');
-            }
-            if (listCatTop && $(window).scrollTop() > listCatTop
-                && $(window).scrollTop() < divMenuScroll) {
-              $("#" + portletId + "menuRubrique").css({
-                position : 'fixed',
-                top : '30px'
-              });
-            } else {
-              $("#" + portletId + "menuRubrique").css({
-                position : 'static',
-                top : '30px'
-              });
-            }
-          });
       
+      var container = $('div.esup-lecture.portlet-container.'+namespace);
+      if (container) {
+	      var menu = $('ul.menuRubrique', container);
+	      
+	      if (menu) {
+		      container = $('div.scrollDivArticle', container);
+		      
+		      var menuObj = menu[0];
+		      if (menuObj) {
+			      menuObj.mempos = menu.offset().top;
+			      priv.gereAffixMenu = function(){
+			    	  var limite = container.offset().top + container.height();
+			    	  var bas = menuObj.mempos + $(window).scrollTop() + menu.height();
+			    	  
+			    	  if (limite  < bas) {
+				    		$(menu).removeClass('affix');
+			    	  } else {
+			    		  $(menu).addClass('affix');
+			    	  }
+			      };
+			      
+			      $(window).scroll(function () {
+			    	  priv.gereAffixMenu();
+			   
+			      });
+			      priv.gereAffixMenu();
+		      }
+	      }
+      }
+  
       
          
       //pour afficher la modal
@@ -154,7 +152,6 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     	if (ancre) {
     		var ref = $(ancre).attr('href') ;
     		if (ref) {
-    			
 		    	$(cibleOnClick).click(function(e) {
 		            e.preventDefault();          
 		            var modal = $(modalSelector).modal('show');
@@ -185,6 +182,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 		            	modalBody.load(ref);
 		            }
 		        });
+		    	$(cibleOnClick).css('cursor', 'pointer');
     		}
     	}
     	return $(ancre);
@@ -234,6 +232,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 	    	}
     	}
     	markFirtVisible();
+    	if (priv.gereAffixMenu) {priv.gereAffixMenu() };
     }
     priv.toggleArticleRead = toggleArticleRead;
     
@@ -464,6 +463,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     //	console.log("div#"+contexte+"rubSelectedDiv1 label.rubrique_Active: "+text);
     	$("label.rubrique_Active."+contexte).html(text);
     	markFirtVisible();
+    	if (priv.gereAffixMenu) {priv.gereAffixMenu() };
     }
     priv.filterByRubriqueClass =  filterByRubriqueClass;
     
@@ -520,6 +520,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 		    	
 		    }
 	    	markFirtVisible();
+	    	if (priv.gereAffixMenu) {priv.gereAffixMenu() };
     	}
     }
     priv.filterPublisherNotRead = filterPublisherNotRead;
@@ -592,5 +593,6 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     	// retaillage a cause de l'affix hort flux qui dimensionne mal la fenetre:
     	resetMinHeightPortlet();
 		markFirtVisible();
+		if (priv.gereAffixMenu) {priv.gereAffixMenu() };
 	});
 }

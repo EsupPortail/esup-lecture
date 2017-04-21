@@ -13,7 +13,7 @@
  <c:set var="nbSrc" value="0" />
 <div class="navModeDesk navClass" id='${n}listOfCat' >
 	
-  <ul 	class="nav nav-pills nav-stacked menuRubrique"
+  <ul 	class="nav nav-pills nav-stacked menuRubrique affix"
     	id='${n}menuRubrique'>
     <li>
       <div 	class="row divLargeWith rubriqueFiltre rubrique_all  ${n} active" 
