@@ -19,8 +19,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 	
 	console.log("test lecture " + lecture[namespace].urlMarkRead +"   "+ lecture[namespace].urlMarkAllRead);
 	
-	//  (function($, namespace, namespace, urlMarkReadv, urlMarkAllRead,
- //     urlFiltrItem) {
+	
     $(function() {
   //afficher & cacher la liste des catégories
       $("#" + portletId + "cacherListRubrique").change(
@@ -90,42 +89,21 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 	      }
       }
   
+      var modalPublisherSelector = selector + " #"+ portletId + "modalPublisher";
+       
+      // pour supprimer les doubles scrolls à l'affichage de la modal
+      // ici on remet la scroll principale à la fermeture de la modal (elle est cachée a l'ouverture dans onClickReadMoreInModal)
+      var modalPublisher = $(modalPublisherSelector+ " .btn[data-dismiss=modal]").on('click' , function () {
+    	$('html').css('overflow-y', 'auto');  
+      });
       
-         
       //pour afficher la modal
      $("#lecture-" + portletId + " .actualite ")
-          .each(function(){onClickReadMoreInModal(selector + " #"+ portletId + "modalPublisher", 
+          .each(function(){onClickReadMoreInModal(modalPublisherSelector, 
           							this, "a.publisherReadMore", $('.iframeCacher.'+ namespace) )});
      $("#lecture-" + portletId + " .modeNoPublisher.contenuArticle ")
-     .each(function(){onClickReadMoreInModal(selector + " #"+ portletId + "modalPublisher", 
-     							this, "a.readMore").hide()});
-   /*
-         $("#lecture-" + portletId + " .actualite a.publisherReadMore")
-          .each(     function() {
-                $(this)
-                    .click(
-                        function(e) {
-                          e.preventDefault();
-                          console
-                              .log(
-                                  "test",
-                                  $(selector
-                                      + " #"
-                                      + portletId
-                                      + "modalPublisher"));
-                          $(selector
-                                  + " #"
-                                  + portletId
-                                  + "modalPublisher")
-                              .modal('show')
-                              .find('.modal-body')
-                              .load(
-                                  $(this)
-                                      .attr(
-                                          'href'));
-                        });
-              });
-     */       
+     .each(function(){onClickReadMoreInModal(modalPublisherSelector, 
+     							this, "a.readMore").hide()}); 
     });
 
 
@@ -139,14 +117,6 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     	var ref;// = ancre ? $(ancre).attr('href') : $(cibleOnClick).attr('href');
     	if (selectorHref) {
     		ancre = $(selectorHref, cibleOnClick)[0];
-    	/*	if (ancre == undefined) {
-    			ancre = $('a[target=_blank]', cibleOnClick)[0];
-    			if (ancre == undefined) {
-    				ancre = $(a, cibleOnClick)[0];
-    			}
-    			
-    		}
-    	*/
     	} else {
     		ancre = cibleOnClick;
     	}
@@ -183,6 +153,8 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 		            } else {
 		            	modalBody.load(ref);
 		            }
+		            // on cache la scroll principale pour eviter les doubles scrolls
+		            $('html').css('overflow-y', 'hidden');  
 		        });
 		    	$(cibleOnClick).css('cursor', 'pointer');
     		}
@@ -199,7 +171,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     	var divInput;
     	var divEye;
     	var readItem ;
-    	console.log("toggleArticleRead :" + urlAjax);
+ //   	console.log("toggleArticleRead :" + urlAjax);
     	if (divRow) {
     		
     		divInput=$('input.itemShowFilterIsRead', divRow);
@@ -219,7 +191,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 	                'isPublisherMode' : isModePublisher
 	              },
 	            success : function(data){
-	            	console.log ("mise a jour ok");
+	      //      	console.log ("mise a jour ok");
 	            }
 	    	});
 	    	
@@ -419,7 +391,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 
  
     function filtrerParRubrique(catid, srcid, afficherRubSelect, val) {
-    	console.log("filtrerParRubrique");
+  //  	console.log("filtrerParRubrique");
       if (afficherRubSelect != '') {
         var reponse1 = "<label>" + afficherRubSelect + "</label>";
         var reponse = "<label>" + afficherRubSelect
@@ -506,7 +478,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 		    		laDiv.removeClass('nonLueSeulement');
 		    		priv.notReadOnly = false;
 		    	}
-		    	console.log("urlFiltrItem " + urlFiltrItem);
+	//	    	console.log("urlFiltrItem " + urlFiltrItem);
 		    	
 		    	$.ajax({
 				    url: url,
@@ -536,32 +508,20 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     		lue = false;
     		
     	} 
-    	console.log("markFirtVisible " + lue);
+    //	console.log("markFirtVisible " + lue);
     	$('div.itemShowFilter.'+namespace).each(function() {
-    		console.log($(this).attr('class'));
+   // 		console.log($(this).attr('class'));
     		if (first && (lue ||!$(this).hasClass('dejaLue') ) && ! $(this).hasClass('rubriqueInactive')) {
     			$(this).addClass('premierVisible');
     			first = false;
-    			console.log("  marck pv");
+    //			console.log("  marck pv");
     		} else {
     			$(this).removeClass('premierVisible');
     		}
     	});
     }
  
-    
-/*    function filtrerPublisherNonLus() {
-      if ($("#" + portletId + "checkBoxNonLu").is(':checked')) {
-        $("#" + portletId + "listNonLu").val("val2")
-        filtrerNonLus('');
-      } else {
-        $("#" + portletId + "listNonLu").val("val1")
-        AfficherTout();
-      }
-    }
-
-    window.filtrerPublisherNonLus = filtrerPublisherNonLus;
-  */  
+      
     
     function filtrerPublisherNonLusMobile() {
     	
@@ -583,11 +543,11 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     		var affixHeight = $(divAffix).height();
     		var affixTop = $(divTop).offset().top;
     		var portletTop =  $(divPortlet).offset().top;
-    		console.log('affix =' + affixHeight + " " + affixTop+ " " + portletTop);
+   // 		console.log('affix =' + affixHeight + " " + affixTop+ " " + portletTop);
     		if (affixHeight && affixTop && portletTop) {
     			var minHeight = affixHeight + affixTop - portletTop;
     			minHeight = $(divPortlet).css('min-height', minHeight + 'px').css('min-height');
-    			console.log('min height =' + minHeight)
+   // 			console.log('min height =' + minHeight)
     		}
     	}
     }
