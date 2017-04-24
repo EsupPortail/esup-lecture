@@ -584,7 +584,7 @@
 }
 /* corection des css superieur */
  
-.esup-lecture .modeNoPublisher .metaArticle {
+.esup-lecture .modeNoPublisher > div.metaArticle {
 	background-image: none;
 	font-size: 90%;
 	margin-bottom: 0px;
