@@ -18,6 +18,7 @@
 <c:set var="newItem" value="false" />
 <c:set var="nbCat"  value="0" />
 <c:set var="nbSrc" value="0" />
+<c:set var="nbArticle" value="0" />
 <%-- 
 <c:if test="${contexte.itemDisplayMode=='ALL'}" >
 --%>
@@ -87,6 +88,10 @@
       </c:forEach>
     </c:forEach>
   </c:forEach>
+  <c:if test="${nbArticle == 0}" >
+  	
+  		<span class="noArticle"><spring:message code="noAvailableArticle" /></span>
+  </c:if>
 
 <%-- 
 </c:if>
