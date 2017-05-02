@@ -99,7 +99,7 @@ public class FreshSourceThread extends Thread {
 			//find the dtd
 			DocumentType doctype = document.getDocType();
 			if (doctype != null) {
-				dtd = doctype.getSystemID();				
+				dtd = doctype.getSystemID();
 			}
 			//find root Element
 			Element rootElement = document.getRootElement();
@@ -107,7 +107,7 @@ public class FreshSourceThread extends Thread {
 			//find xmlns on root element
 			Namespace ns = rootElement.getNamespace();
 			if (!ns.getURI().equals("")) {
-				rootNamespace = ns.getURI();				
+				rootNamespace = ns.getURI();
 			}
 			//find XML Schema URL
 			Namespace xmlSchemaNameSpace = 
@@ -133,7 +133,7 @@ public class FreshSourceThread extends Thread {
 		} catch (DocumentException e) {
 			String msg = "getSource with url=" 
 				+ sourceProfile.getSourceURL() + ". Is it a valid XML Source ? ";
-			LOG.error(msg + e.getMessage());
+			LOG.error(msg + e.getMessage(), e);
 			throw new XMLParseException(msg, e);
 		}
 		return ret;
