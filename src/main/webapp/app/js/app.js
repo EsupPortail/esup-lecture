@@ -556,5 +556,12 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     	resetMinHeightPortlet();
 		markFirtVisible();
 		if (priv.gereAffixMenu) {priv.gereAffixMenu() };
+		
+		// effacement des eventuels articles vide
+		$('div.'+namespace + ' div.modeNoPublisher.contenuArticle').each(function() {
+			if (! $('> *:first', this).size()) {
+				$(this).hide();
+			}
+		});
 	});
 }
