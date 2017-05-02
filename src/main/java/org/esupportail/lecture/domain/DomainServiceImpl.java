@@ -475,7 +475,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			LOG.debug("subscribeToSource(" + userId + "," + categoryId + "," + sourceId + ")");
 		}
 		try {
-			UserProfile ret = getAttachedUserProfile(getUserProfile(userId));
+			UserProfile ret = getUserProfile(userId);
 			CustomCategory customCategory = ret.getCustomCategory(categoryId);
 			customCategory.subscribeToSource(sourceId);
 			return ret;
@@ -515,7 +515,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			LOG.debug("subscribeToSource(" + userId + "," + categoryId + "," + sourceId + ")");
 		}
 		try {
-			UserProfile ret = getAttachedUserProfile(getUserProfile(userId));
+			UserProfile ret = getUserProfile(userId);
 			CustomCategory customCategory = ret.getCustomCategory(categoryId);
 			customCategory.unsubscribeToSource(sourceId);
 			return ret;
@@ -557,19 +557,14 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		DomainTools.getDaoService().updateSQL(query);
 	}
 
+	
 	/**
 	 * @param userProfile
 	 *            coming from controller
 	 * @return a userProfile attached to HB session
 	 */
 	private UserProfile getAttachedUserProfile(UserProfile userProfile) {
-		// try to find a UserProfile in database by userId
-		UserProfile ret = DomainTools.getDaoService().getUserProfile(userProfile.getUserId());
-		if (ret == null) {
-			// A new userProfile is inserted in database when merging
-			ret = DomainTools.getDaoService().mergeUserProfile(userProfile);
-		}
-		return ret;
+		return getUserProfile(userProfile.getUserId());
 	}
 
 	/**
