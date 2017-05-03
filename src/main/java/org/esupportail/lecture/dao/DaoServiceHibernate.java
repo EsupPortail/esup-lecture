@@ -6,6 +6,7 @@ package org.esupportail.lecture.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -62,6 +63,7 @@ public class DaoServiceHibernate {
 		UserProfile ret = null;
 		if (userId != null) {
 			Query q = entityManager.createQuery("select userProfile from UserProfile userProfile where userProfile.userId = '" + userId + "'");
+			q.setLockMode(LockModeType.PESSIMISTIC_READ);
 			List<UserProfile> list = (List<UserProfile>)q.getResultList();
 			if (list.size() > 0) {
 				ret = list.get(0);				
