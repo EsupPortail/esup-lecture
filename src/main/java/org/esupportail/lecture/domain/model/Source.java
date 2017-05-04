@@ -26,6 +26,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -372,32 +373,30 @@ public abstract class Source implements Element, Serializable {
 						}
 					}
 					item.setId(hashString.toString());
+					
+					Node nodeDate;
 					if (item instanceof ComplexItem && parser != null) {
 						item = (ComplexItem) item;
 						((ComplexItem) item).setAuthor(parser.getItemAuth().get(item.getId()));
 						((ComplexItem) item).setRubriques(parser.getRubriquesItem().get(item.getId()));
-						
-						try {
-							 //itmes/pubDate error... 
-							SimpleDateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
-							Date odt = df.parse(node.selectSingleNode("article/pubDate").getText());
-							item.setPubDate(odt);
-
-						} catch (Exception e) {
-							String errorMsg = "Error parsing Date of the item ";
-							LOG.error(errorMsg, e);
-						}
+						nodeDate = node.selectSingleNode("article/pubDate");
 					} else {
-						try {
-							 //item/pubDate ou pubDate seulement A AVRIFIER TOUT 
+						nodeDate = node.selectSingleNode("pubDate");
+					}
+					if (nodeDate == null) {
+							nodeDate = node.selectSingleNode("item/pubDate");
+					} 
+					try {
+						if (nodeDate != null) {
 							SimpleDateFormat df = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
-							Date odt = df.parse(node.selectSingleNode("pubDate").getText());
+							Date odt = df.parse(nodeDate.getText());
 							item.setPubDate(odt);
-	
-						} catch (Exception e) {
-							String errorMsg = "Error parsing Date of the item ";
-							LOG.error(errorMsg, e);
+						} else {
+							LOG.debug("No date to parse in node :\n" + node.asXML());
 						}
+					} catch (Exception e) {
+						String errorMsg = "Error parsing Date of the item " + node.asXML();
+						LOG.error(errorMsg, e);
 					}
 					items.add(item);
 				}

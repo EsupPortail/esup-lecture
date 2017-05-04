@@ -117,9 +117,9 @@ public class DaoServiceHibernate {
 			LOG.debug("mergeUserProfile(" + userProfile.getUserId() + ")");			
 		}
 		UserProfile merged = (UserProfile) entityManager.merge(userProfile);
-		if (USEFLUSH) {
+	//	if (USEFLUSH) {
 			entityManager.flush();
-		} 
+	//	} 
 		return merged;
 	}
 
