@@ -3,11 +3,13 @@ package org.esupportail.lecture.utils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.collections.ListUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
@@ -102,6 +104,11 @@ public class SeviceUtilLecture {
 
 	}
 	
+	
+	
+	
+	
+	
 		/**
 		 * Complete le resultat avec les elements de la source pour atteindre minElem .
 		 * idInRsultat doit contenir les identifiants des item deja dans resultat
@@ -129,6 +136,39 @@ public class SeviceUtilLecture {
 		return true;
 	}
 
+	public static void sortItemInHilightSources( List<CategoryWebBean> listCat) {
+		
+		if (listCat == null) return;
+		for (CategoryWebBean cat : listCat) {
+			
+			for (SourceWebBean src : cat.getSources()) {
+				if (src.getHighlight()) {
+					sortItemsByPubDate(src.getItems());
+				}
+			}
+		}
+	}
+	
+	public static void sortItemsByPubDate(List<ItemWebBean> listItems ) {
+		if (listItems == null) return ;
+		Collections.sort(listItems, new Comparator<ItemWebBean>() {
+			@Override
+			public int compare(ItemWebBean item1, ItemWebBean item2) {
+				Date d1 = item1.getPubDate();
+				Date d2 = item2.getPubDate();
+				if (d1 == null ) {
+					if (d2 == null) return 0;
+					return -1;
+				} 
+				if (d2 == null) return 1;
+				if (d1.before(d2)) return 1;
+				if (d1.after(d2)) return -1;
+				return 0;
+			}
+		});
+		
+	}
+	
 	
 	/**
 	 * Donne la liste des articles à afficher en page d'accueil 
