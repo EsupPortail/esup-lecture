@@ -19,7 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.web.WebException;
-import org.esupportail.lecture.utils.SeviceUtilLecture;
+import org.esupportail.lecture.utils.ServiceUtilLecture;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
@@ -68,10 +68,10 @@ public class HomeController extends TwoPanesController {
 		int nbrArticleNonLu = 0;
 		if (contexte.isViewDef()) {
 			// la liste des articles à afficher+nombre d'articles non lus
-			listeItemAcceuil = SeviceUtilLecture.getListItemAccueil(contexte, listCat);
+			listeItemAcceuil = ServiceUtilLecture.getListItemAccueil(contexte, listCat);
 		} else {
 		//	 listeItemAcceuil = new ArrayList<ItemWebBean>();
-			nbrArticleNonLu = SeviceUtilLecture.compteNombreArticleNonLu(contexte);
+			nbrArticleNonLu = ServiceUtilLecture.compteNombreArticleNonLu(contexte);
 		}
 		LOG.debug("goHome context ItemDisplayMode = " +  contexte.getItemDisplayMode() );
 		model = bindInitialModel(model, response, request);
@@ -220,7 +220,7 @@ public class HomeController extends TwoPanesController {
 					}
 				}
 			}
-			listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, idCat, idSrc, "", filtreNonLu);
+			listCatFiltre = ServiceUtilLecture.trierListCategorie(listCat, idCat, idSrc, "", filtreNonLu);
 			model.addAttribute("listCat", listCatFiltre);
 			model.addAttribute("isRead", isRead);
 		} catch (Exception e) {
@@ -295,10 +295,10 @@ public class HomeController extends TwoPanesController {
 			int nbrArticleNonLu = 0;
 			if (contexte.isViewDef()) {
 				// la liste des articles à afficher+nombre d'articles non lus
-				listeItemAcceuil = SeviceUtilLecture.getListItemAccueil(contexte, listCat);
+				listeItemAcceuil = ServiceUtilLecture.getListItemAccueil(contexte, listCat);
 			} else {
 			//	listeItemAcceuil = new ArrayList<ItemWebBean>();
-				nbrArticleNonLu = SeviceUtilLecture.compteNombreArticleNonLu(contexte);	
+				nbrArticleNonLu = ServiceUtilLecture.compteNombreArticleNonLu(contexte);	
 			}
 			// listCatFiltre = SeviceUtilLecture.trierListCategorie(listCat, "",
 			// "", "", filtreNonLu);

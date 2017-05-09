@@ -51,7 +51,7 @@ public class SourceWebBean implements Comparable<SourceWebBean> {
 	 */
 	private String color;
 
-	private Boolean Highlight;
+	private Boolean highlight;
 	/**
 	 * List of items of source.
 	 */
@@ -298,11 +298,11 @@ public class SourceWebBean implements Comparable<SourceWebBean> {
 	}
 
 	public Boolean getHighlight() {
-		return Highlight;
+		return highlight;
 	}
 
 	public void setHighlight(Boolean highlight) {
-		Highlight = highlight;
+		this.highlight = highlight;
 	}
 
 	public int getUid() {

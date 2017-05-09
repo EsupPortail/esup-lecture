@@ -5,11 +5,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
@@ -17,11 +15,11 @@ import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.ItemWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
 
-public class SeviceUtilLecture {
+public class ServiceUtilLecture {
 	/**
 	 * log instance.
 	 */
-	protected static final Log LOG = LogFactory.getLog(SeviceUtilLecture.class);
+	protected static final Log LOG = LogFactory.getLog(ServiceUtilLecture.class);
 	
 	public static List<CategoryWebBean> trierListCategorie(List<CategoryWebBean> listCat, String idCat, String idSrc,
 			String nomSrc, String filtreNonLu) {

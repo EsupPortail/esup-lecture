@@ -47,7 +47,7 @@ import org.esupportail.lecture.exceptions.domain.SourceNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.SourceObligedException;
 import org.esupportail.lecture.exceptions.domain.TreeSizeErrorException;
 import org.esupportail.lecture.exceptions.web.WebException;
-import org.esupportail.lecture.utils.SeviceUtilLecture;
+import org.esupportail.lecture.utils.ServiceUtilLecture;
 import org.esupportail.lecture.web.beans.CategoryWebBean;
 import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.esupportail.lecture.web.beans.SourceWebBean;
@@ -861,7 +861,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			sourceWebBean.setColor(sourceBean.getColor());
 			sourceWebBean.setUid(sourceBean.getUid());
 			if (sourceWebBean.getHighlight()) {
-				SeviceUtilLecture.sortItemsByPubDate(sourceWebBean.getItems());
+				ServiceUtilLecture.sortItemsByPubDate(sourceWebBean.getItems());
 			}
 		}
 		return sourceWebBean;
