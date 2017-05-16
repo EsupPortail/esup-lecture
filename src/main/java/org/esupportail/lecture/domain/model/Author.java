@@ -27,5 +27,13 @@ public class Author {
 	public void setUserArticleAuthor(boolean isUserArticleAuthor) {
 		this.isUserArticleAuthor = isUserArticleAuthor;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Author{" +
+				"uid='" + uid + '\'' +
+				", name='" + name + '\'' +
+				", isUserArticleAuthor=" + isUserArticleAuthor +
+				'}';
+	}
 }

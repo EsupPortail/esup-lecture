@@ -90,10 +90,7 @@ public class RegexOfSet {
 				}
 			}
 		}
-		if (found) {
-			return true;
-		}
-		return false;
+		return found;
 	}
 
 

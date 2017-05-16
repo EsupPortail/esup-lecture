@@ -238,4 +238,17 @@ public class ItemParser {
 		this.itemXpath = itemXpath;
 	}
 
+
+	@Override
+	public String toString() {
+		return "ItemParser{" +
+				"XMLStream='" + XMLStream + '\'' +
+				", source=" + source +
+				", visibleItems=" + visibleItems +
+				", rubriquesPublisher=" + rubriquesPublisher +
+				", itemAuth=" + itemAuth +
+				", rubriquesItem=" + rubriquesItem +
+				", itemXpath='" + itemXpath + '\'' +
+				'}';
+	}
 }

@@ -37,4 +37,13 @@ public class RubriquesPlublisher {
 	private String couleur;
 	private boolean highlight;
 
+	@Override
+	public String toString() {
+		return "RubriquesPlublisher{" +
+				"uid=" + uid +
+				", nom='" + nom + '\'' +
+				", couleur='" + couleur + '\'' +
+				", highlight=" + highlight +
+				'}';
+	}
 }

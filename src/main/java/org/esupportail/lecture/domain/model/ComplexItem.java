@@ -29,4 +29,13 @@ public class ComplexItem extends Item {
 	public void setRubriques( List<RubriquesPlublisher>rubriques) {
 		this.rubriques = rubriques;
 	}
+
+	@Override
+	public String toString() {
+		return "ComplexItem{" +
+				"visibility=" + visibility +
+				", author=" + author +
+				", rubriques=" + rubriques +
+				"} " + super.toString();
+	}
 }

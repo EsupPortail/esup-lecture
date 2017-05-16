@@ -136,6 +136,10 @@ public abstract class SourceProfile implements ElementProfile {
 	   	}else{
 	   		 ret = s.getItems(false, null);
 	   		}
+		if (this.id.startsWith("ActualitesEtab:m:publisher-376")) {
+			LOG.warn("TRACE getItems this : " + this.toString());
+			LOG.warn("TRACE getItems items : " + ret.toString());
+		}
 		return ret;
 		//return s.getItems();
 	}
@@ -171,6 +175,9 @@ public abstract class SourceProfile implements ElementProfile {
 	   	//if (source == null) {
 			loadSource();
 		//}
+		if (this.id.startsWith("ActualitesEtab:m:publisher-376")) {
+			LOG.warn("TRACE getElement : " + this.source);
+		}
 		return source;
 		
 	}
@@ -307,4 +314,20 @@ public abstract class SourceProfile implements ElementProfile {
 		return timeOut;
 	}
 
+	@Override
+	public String toString() {
+		return "SourceProfile{" +
+				"id='" + id + '\'' +
+				", name='" + name + '\'' +
+				", complexItems=" + complexItems +
+				", sourceURL='" + sourceURL + '\'' +
+				", source=" + source +
+				", xsltURL='" + xsltURL + '\'' +
+				", mobileXsltURL='" + mobileXsltURL + '\'' +
+				", itemXPath='" + itemXPath + '\'' +
+				", xPathNameSpaces=" + xPathNameSpaces +
+				", ttl=" + ttl +
+				", timeOut=" + timeOut +
+				'}';
+	}
 }

@@ -139,4 +139,15 @@ public class Item {
 	public Date getPubDate() {
 		return pubDate;
 	}
+
+	@Override
+	public String toString() {
+		return "Item{" +
+				"id='" + id + '\'' +
+				", htmlContent='" + htmlContent + '\'' +
+				", mobileHtmlContent='" + mobileHtmlContent + '\'' +
+				", parent=" + parent +
+				", pubDate=" + pubDate +
+				'}';
+	}
 }

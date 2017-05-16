@@ -238,7 +238,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + this.getId() + " - computeFeatures()");
 		}
-
 		if (!featuresComputed) {
 			if (categoryProfile.getTrustCategory()) {
 				access = inner.getAccess();
@@ -272,6 +271,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				ttl = category.getTtl();
 			}
 			featuresComputed = true;
+		}
+		if (this.getId().startsWith("ActualitesEtab:m:publisher-376")) {
+			LOG.warn("TRACE computeFeatures : " + this.toString());
 		}
 	}
 
@@ -368,6 +370,15 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			this.ttl = ttl;
 		}
 
+		@Override
+		public String toString() {
+			return "InnerFeatures{" +
+					"access=" + access +
+					", visibility=" + visibility +
+					", timeOut=" + timeOut +
+					", ttl=" + ttl +
+					'}';
+		}
 	}
 
 	/* UPDATING */
@@ -412,6 +423,9 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				String errorMsg = "The source " + this.getId() + " is not loaded : DAO return null.";
 				LOG.error(errorMsg);
 				throw new SourceNotLoadedException(errorMsg);
+			}
+			if (this.getId().startsWith("ActualitesEtab:m:publisher-376")) {
+				LOG.warn("TRACE loadSource : " + this.toString());
 			}
 		} catch (InternalDaoException e) {
 			String errorMsg = "The source " + this.getId() + " is impossible to be loaded because of DaoException.";
@@ -565,4 +579,23 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		this.uuid = uuid;
 	}
 
+
+	@Override
+	public String toString() {
+		return "ManagedSourceProfile{" +
+				"specificUserContent=" + specificUserContent +
+				", category=" + category +
+				", categoryProfile=" + categoryProfile +
+				", fileId='" + fileId + '\'' +
+				", inner=" + inner +
+				", featuresComputed=" + featuresComputed +
+				", access=" + access +
+				", visibility=" + visibility +
+				", timeOut=" + timeOut +
+				", ttl=" + ttl +
+				", highLight=" + highLight +
+				", color='" + color + '\'' +
+				", uuid=" + uuid +
+				'}';
+	}
 }
