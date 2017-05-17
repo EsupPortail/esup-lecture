@@ -11,6 +11,7 @@ import net.sf.ehcache.Element;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.client.HttpClient;
 import org.esupportail.commons.utils.Assert;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
@@ -66,6 +67,11 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * the cache.
 	 */
 	private Cache cache;
+
+	/**
+	 * HttpClient to make request
+	 */
+	private HttpClient httpClient;
 
 	/**
 	 * get a Category form cache.
@@ -184,7 +190,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		}
 		ManagedCategory ret = new ManagedCategory(profile);
 		//start a Thread to get FreshManagedCategory
-		FreshManagedCategoryThread thread = new FreshManagedCategoryThread(profile, ptCas);
+		FreshManagedCategoryThread thread = new FreshManagedCategoryThread(profile, ptCas, httpClient);
 
 		int timeout = 0;
 		try {
@@ -341,7 +347,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			sourceProfile.setSourceURL(sourceURL);
 		}
 		//start a Thread to get FreshSource
-		FreshSourceThread thread = new FreshSourceThread(sourceProfile, ptCas);
+		FreshSourceThread thread = new FreshSourceThread(sourceProfile, ptCas, httpClient);
 		int timeout = 0;
 		try {
 			thread.start();
@@ -399,6 +405,9 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			cacheManager.addCache(cacheName);
 		}
 		cache = cacheManager.getCache(cacheName);
+
+		Assert.notNull(this.httpClient, "property httpClient of class " + getClass().getName()
+				+ " can not be null.");
 	}
 
 	/**
@@ -422,4 +431,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		this.cacheManager = cacheManager;
 	}
 
+	public void setHttpClient(final HttpClient httpClient) {
+		this.httpClient = httpClient;
+	}
 }

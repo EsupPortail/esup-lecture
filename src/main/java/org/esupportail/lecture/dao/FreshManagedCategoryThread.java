@@ -1,5 +1,6 @@
 package org.esupportail.lecture.dao;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -8,6 +9,9 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -50,6 +54,11 @@ public class FreshManagedCategoryThread extends Thread {
 	private String ptCas;
 
 	/**
+	 * HttpClient to make request
+	 */
+	private HttpClient httpClient;
+
+	/**
 	 * Constructor.
 	 * 
 	 * @param profile
@@ -57,10 +66,11 @@ public class FreshManagedCategoryThread extends Thread {
 	 * @param ptCas
 	 *            - user and password. null for anonymous access
 	 */
-	public FreshManagedCategoryThread(final ManagedCategoryProfile profile, final String ptCas) {
+	public FreshManagedCategoryThread(final ManagedCategoryProfile profile, final String ptCas, final HttpClient httpClient) {
 		this.managedCategoryProfile = profile;
 		this.exception = null;
 		this.ptCas = ptCas;
+		this.httpClient = httpClient;
 	}
 
 	/**
@@ -97,9 +107,10 @@ public class FreshManagedCategoryThread extends Thread {
 		}
 		// TODO (RB <-- GB) gestion des attributs xml IMPLIED
 		ManagedCategory ret = new ManagedCategory(profile);
+		String categoryURL = null;
 		try {
 			// get the XML
-			String categoryURL = profile.getCategoryURL();
+			categoryURL = profile.getCategoryURL();
 			if (ptCasGet != null) {
 				if (categoryURL.contains("?")) {
 					categoryURL = categoryURL + "&ticket=" + ptCasGet;
@@ -107,8 +118,17 @@ public class FreshManagedCategoryThread extends Thread {
 					categoryURL = categoryURL + "?ticket=" + ptCasGet;
 				}
 			}
+
 			SAXReader reader = new SAXReader();
-			Document document = reader.read(categoryURL);
+			Document document;
+			if (categoryURL.startsWith("http")) {
+				HttpGet getRequest = new HttpGet(categoryURL);
+				getRequest.setHeader("accept", "application/xml");
+				HttpResponse response = httpClient.execute(getRequest);
+				document = reader.read(response.getEntity().getContent());
+			} else {
+				 document = reader.read(categoryURL);
+			}
 			Element root = document.getRootElement();
 			// Category properties
 			ret.setName(root.valueOf("@name"));
@@ -185,6 +205,14 @@ public class FreshManagedCategoryThread extends Thread {
 			visibilitySets.setAutoSubscribed(
 					XMLUtil.loadDefAndContentSets(root.selectSingleNode("/category/visibility/autoSubscribed")));
 			ret.setVisibility(visibilitySets);
+		} catch (IOException e) {
+			String profileId = "null";
+			if (profile != null) {
+				profileId = profile.getId();
+			}
+			String msg = "getFreshManagedCategory(" + profileId + "). Error on requesting url " + categoryURL + "'";
+			LOG.error(msg, e);
+			throw new XMLParseException(msg, e);
 		} catch (DocumentException e) {
 			String profileId = "null";
 			if (profile != null) {

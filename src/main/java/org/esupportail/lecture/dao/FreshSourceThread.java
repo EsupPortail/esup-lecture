@@ -1,9 +1,13 @@
 package org.esupportail.lecture.dao;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -44,15 +48,18 @@ public class FreshSourceThread extends Thread {
 	 */
 	private String ptCas;
 
+	private HttpClient httpClient;
+
 	/**
 	 * Constructor.
 	 * @param sourceProfile used to return a Source
 	 * @param ptCas
 	 */
-	public FreshSourceThread(final SourceProfile sourceProfile, final String ptCas) {
+	public FreshSourceThread(final SourceProfile sourceProfile, final String ptCas, final HttpClient httpClient) {
 		this.profile = sourceProfile;
 		this.ptCas = ptCas;
 		this.exception = null;
+		this.httpClient = httpClient;
 	}
 
 	/**
@@ -78,6 +85,7 @@ public class FreshSourceThread extends Thread {
 	private Source getFreshSource(final SourceProfile sourceProfile, 
 			final String ptCasGet) throws XMLParseException {
 		Source ret = new GlobalSource(sourceProfile);
+		String sourceURL = null;
 		try {
 			String dtd = null;
 			String root = null;
@@ -86,7 +94,7 @@ public class FreshSourceThread extends Thread {
 			String xml = null;
 
 			//get the XML
-			String sourceURL = sourceProfile.getSourceURL();
+			sourceURL = sourceProfile.getSourceURL();
 			if (ptCasGet != null) {
 				if (sourceURL.contains("?")) { 
 					sourceURL = sourceURL + "&ticket=" + ptCasGet;
@@ -95,7 +103,15 @@ public class FreshSourceThread extends Thread {
 				}
 			}
 			SAXReader reader = new SAXReader();
-			Document document = reader.read(sourceURL);
+			Document document;
+			if (sourceURL.startsWith("http")) {
+				HttpGet getRequest = new HttpGet(sourceURL);
+				getRequest.setHeader("accept", "application/xml");
+				HttpResponse response = httpClient.execute(getRequest);
+				document = reader.read(response.getEntity().getContent());
+			} else {
+				document = reader.read(sourceURL);
+			}
 			//find the dtd
 			DocumentType doctype = document.getDocType();
 			if (doctype != null) {
@@ -130,6 +146,14 @@ public class FreshSourceThread extends Thread {
 			ret.setXmlns(rootNamespace);
 			ret.setXmlStream(xml);
 			ret.setXmlType(xmltype);
+		} catch (IOException e) {
+			String profileId = "null";
+			if (profile != null) {
+				profileId = profile.getId();
+			}
+			String msg = "getFreshSource(" + profileId + "). Error on requesting url " + sourceURL + "'";
+			LOG.error(msg, e);
+			throw new XMLParseException(msg, e);
 		} catch (DocumentException e) {
 			String msg = "getSource with url=" 
 				+ sourceProfile.getSourceURL() + ". Is it a valid XML Source ? ";
