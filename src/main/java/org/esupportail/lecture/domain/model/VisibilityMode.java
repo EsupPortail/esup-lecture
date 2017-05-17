@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
+
 /**
  * Visibility mode of a managed element : 
  * user is
@@ -15,7 +17,7 @@ package org.esupportail.lecture.domain.model;
  * @author gbouteil
  *
  */
-public enum VisibilityMode {
+public enum VisibilityMode implements Serializable {
 	/**
 	 * Obliged visibility : automatic subscription with impossible unsubcription.
 	 */

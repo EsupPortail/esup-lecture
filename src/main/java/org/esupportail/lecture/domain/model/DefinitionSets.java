@@ -6,6 +6,7 @@
 package org.esupportail.lecture.domain.model;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -23,7 +24,7 @@ import org.esupportail.lecture.exceptions.domain.InternalExternalException;
  * @author gbouteil
  *
  */
-public class DefinitionSets {
+public class DefinitionSets implements Serializable {
 
 	/*
 	 ************************** PROPERTIES ******************************** */

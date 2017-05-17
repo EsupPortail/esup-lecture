@@ -7,6 +7,7 @@ package org.esupportail.lecture.domain.model;
 
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -349,7 +350,7 @@ public class ManagedCategoryProfile extends CategoryProfile implements ManagedEl
 	 * These values are used according to inheritance regulars
 	 * @author gbouteil
 	 */
-	private class InnerFeatures {
+	private class InnerFeatures implements Serializable {
 
 		/**
 		 * Managed category edit mode .

@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
@@ -272,9 +274,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 			}
 			featuresComputed = true;
 		}
-		if (this.getId().startsWith("ActualitesEtab:m:publisher-376")) {
-			LOG.warn("TRACE computeFeatures : " + this.toString());
-		}
 	}
 
 	/*
@@ -287,7 +286,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 	 *
 	 * @author gbouteil
 	 */
-	private class InnerFeatures {
+	private class InnerFeatures implements Serializable {
 
 		/**
 		 * Access mode on the remote source.
@@ -423,9 +422,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				String errorMsg = "The source " + this.getId() + " is not loaded : DAO return null.";
 				LOG.error(errorMsg);
 				throw new SourceNotLoadedException(errorMsg);
-			}
-			if (this.getId().startsWith("ActualitesEtab:m:publisher-376")) {
-				LOG.warn("TRACE loadSource : " + this.toString());
 			}
 		} catch (InternalDaoException e) {
 			String errorMsg = "The source " + this.getId() + " is impossible to be loaded because of DaoException.";

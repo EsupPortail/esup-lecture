@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
  * @see ElementProfile
  *
  */
-public abstract class SourceProfile implements ElementProfile {
+public abstract class SourceProfile implements ElementProfile, Serializable {
 
 	/*
 	 *************************** PROPERTIES ******************************** */

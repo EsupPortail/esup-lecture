@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundE
  * @author gbouteil
  */
 
-public class Context {
+public class Context implements Serializable {
 	
 	/*
 	 *************************** PROPERTIES ******************************** */

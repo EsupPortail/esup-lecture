@@ -36,14 +36,6 @@ import org.springframework.util.StringUtils;
  * It is the owner of contexts and managed elements.
  * @author gbouteil
  */
-/**
- * @author rihab
- *
- */
-/**
- * @author rihab
- *
- */
 public class Channel implements InitializingBean {
 
 	/*

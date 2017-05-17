@@ -1,5 +1,6 @@
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
@@ -11,7 +12,7 @@ import org.apache.commons.logging.LogFactory;
  * It is self-supported : it represent an XML element extracted from an XML Stream get from a source.
  * This XML element is yet parsed and we can get the HTML content to be displayed on user interface.
  */
-public class Item {
+public class Item implements Serializable {
 
 	/* 
 	 *************************** PROPERTIES ******************************** */	

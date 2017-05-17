@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -20,7 +21,7 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
  * @author gbouteil
  *
  */
-public class RegularOfSet {
+public class RegularOfSet implements Serializable{
 
 	/*
 	 *************************** PROPERTIES ******************************** */

@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -14,7 +16,7 @@ import org.apache.commons.logging.LogFactory;
  * @author gbouteil
  *
  */
-public class VisibilitySets {
+public class VisibilitySets implements Serializable {
 
 	/*
 	 *************************** PROPERTIES ******************************** */	

@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -193,7 +194,7 @@ public class ManagedCategory extends Category {
 	 * These values are used according to inheritance regulars
 	 * @author gbouteil
 	 */
-	protected class InnerFeatures {
+	protected class InnerFeatures implements Serializable {
 		 
 		/** 
 		 * Managed category edit mode.

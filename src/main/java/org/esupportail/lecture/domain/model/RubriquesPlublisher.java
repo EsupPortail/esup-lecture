@@ -1,6 +1,8 @@
 package org.esupportail.lecture.domain.model;
 
-public class RubriquesPlublisher {
+import java.io.Serializable;
+
+public class RubriquesPlublisher implements Serializable {
 	
 	public RubriquesPlublisher(String name, int uuid, String color, boolean highlight2) {
 		this.nom = name;
