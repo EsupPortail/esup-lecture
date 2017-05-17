@@ -17,9 +17,9 @@ import org.dom4j.io.SAXReader;
 import org.esupportail.lecture.dao.RubriquesSourceProfile;
 import org.esupportail.lecture.dao.XMLUtil;
 import org.esupportail.lecture.domain.DomainTools;
-import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
 import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
+import org.springframework.util.StringUtils;
 
 public class ItemParser {
 
@@ -157,8 +157,8 @@ public class ItemParser {
 					Node authorNode = item.selectSingleNode("creator");
 					Node authorNameNode = item.selectSingleNode("article/dc:creator");
 					Author auth = new Author(authorNode.getText(), authorNameNode.getText());
-					ExternalService ex = DomainTools.getExternalService();
-					if (ex.getUserAttribute("uid").get(0).equals(authorNode.getText())){
+					if (DomainTools.getExternalService() != null && StringUtils.hasText(auth.getUid()) &&
+							DomainTools.getExternalService().getConnectedUserId().equals(auth.getUid())){
 						auth.setUserArticleAuthor(true);
 					}
 					this.itemAuth.put(hashString.toString(), auth);

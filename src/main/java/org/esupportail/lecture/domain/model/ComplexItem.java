@@ -38,4 +38,13 @@ public class ComplexItem extends Item {
 				", rubriques=" + rubriques +
 				"} " + super.toString();
 	}
+
+	@Override
+	public String toStringLight() {
+		return "ComplexItem{" +
+				"visibility=" + visibility +
+				", author=" + author +
+				", rubriques=" + rubriques +
+				"} " + super.toStringLight();
+	}
 }

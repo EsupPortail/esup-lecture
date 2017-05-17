@@ -6,6 +6,7 @@
 package org.esupportail.lecture.domain.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -111,9 +112,8 @@ public abstract class SourceProfile implements ElementProfile, Serializable {
 	 * @throws SourceNotLoadedException 
 	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected abstract void loadSource() throws SourceNotLoadedException, ManagedCategoryNotLoadedException; 
-	
-	
+	protected abstract void loadSource() throws SourceNotLoadedException, ManagedCategoryNotLoadedException;
+
 	/**
 	 * Return the list of items to be displayed for this source.
 	 * @return a list of items
@@ -129,18 +129,15 @@ public abstract class SourceProfile implements ElementProfile, Serializable {
 		// GB : ligne a supprimer loadSource();
 		Source s = getElement();
 		List<Item> ret = null;
-	   	if ( this.isComplexItems()){
-	   		//Produit le flux xml (liste d'items) des flux publisher : 
-	   		//	gere la visibilité; les rubriques; permet de generer les rubriques et les auteurs
-	   		ItemParser parser = new ItemParser(s);
-	   		 ret = s.getItems(true, parser);
-	   	}else{
-	   		 ret = s.getItems(false, null);
-	   		}
-		if (this.id.startsWith("ActualitesEtab:m:publisher-376")) {
-			LOG.warn("TRACE getItems this : " + this.toString());
-			LOG.warn("TRACE getItems items : " + ret.toString());
+	   	if ( this.isComplexItems()) {
+			//Produit le flux xml (liste d'items) des flux publisher :
+			//	gere la visibilité; les rubriques; permet de generer les rubriques et les auteurs
+			ItemParser parser = new ItemParser(s);
+			ret = s.getItems(true, parser);
+	   	} else {
+	   		ret = s.getItems(false, null);
 		}
+
 		return ret;
 		//return s.getItems();
 	}
@@ -176,9 +173,6 @@ public abstract class SourceProfile implements ElementProfile, Serializable {
 	   	//if (source == null) {
 			loadSource();
 		//}
-		if (this.id.startsWith("ActualitesEtab:m:publisher-376")) {
-			LOG.warn("TRACE getElement : " + this.source);
-		}
 		return source;
 		
 	}

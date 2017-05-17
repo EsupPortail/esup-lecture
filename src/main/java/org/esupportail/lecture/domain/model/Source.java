@@ -501,10 +501,6 @@ public abstract class Source implements Element, Serializable {
 			LOG.debug("id=" + this.profileId + " - getItems()");
 		}
 		computeItems(isComplex, parser);
-		if (this.profileId.contains("publisher-376")) {
-			LOG.warn("TRACE getItems params are isComplex : " + isComplex + " parser : " + parser);
-			LOG.warn("TRACE getItems computedItems are : " + items.toString());
-		}
 		return items;
 	}
 

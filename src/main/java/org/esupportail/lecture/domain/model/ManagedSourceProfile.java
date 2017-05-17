@@ -592,6 +592,6 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 				", highLight=" + highLight +
 				", color='" + color + '\'' +
 				", uuid=" + uuid +
-				'}';
+				"} " + super.toString();
 	}
 }

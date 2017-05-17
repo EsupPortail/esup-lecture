@@ -151,4 +151,12 @@ public class Item implements Serializable {
 				", pubDate=" + pubDate +
 				'}';
 	}
+
+	public String toStringLight() {
+		return "Item{" +
+				"id='" + id + '\'' +
+				", parent=" + parent.getProfileId() +
+				", pubDate=" + pubDate +
+				'}';
+	}
 }
