@@ -133,11 +133,20 @@ public abstract class SourceProfile implements ElementProfile, Serializable {
 			//Produit le flux xml (liste d'items) des flux publisher :
 			//	gere la visibilité; les rubriques; permet de generer les rubriques et les auteurs
 			ItemParser parser = new ItemParser(s);
-			ret = s.getItems(true, parser);
+			ret = s.getItems(parser);
 	   	} else {
-	   		ret = s.getItems(false, null);
+	   		ret = s.getItems(null);
 		}
-
+		// For complex items we need to check visibility on each users, but all the content + items must be cached
+		if (this.isComplexItems()) {
+			List<Item> cret = new ArrayList<>();
+			for (Item it: ret) {
+				if (((ComplexItem)it).getVisibility().whichVisibility() != VisibilityMode.NOVISIBLE) {
+					cret.add(it);
+				}
+			}
+			return cret;
+		}
 		return ret;
 		//return s.getItems();
 	}

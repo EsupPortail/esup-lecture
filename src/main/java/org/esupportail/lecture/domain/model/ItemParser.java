@@ -1,7 +1,5 @@
 package org.esupportail.lecture.domain.model;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,8 +26,9 @@ public class ItemParser {
 	private Source source;
 	private ArrayList<ComplexItem> visibleItems;
 	private ArrayList<RubriquesPlublisher> rubriquesPublisher;
-	private Map<String, Author> itemAuth;
+	private Map<String, Author> itemAuthors;
 	private Map<String, List<RubriquesPlublisher>> rubriquesItem;
+	private Map<String, VisibilitySets> itemsVisibility;
 	private String itemXpath;
 
 	public ItemParser(Source s) {
@@ -86,83 +85,85 @@ public class ItemParser {
 	private void parseItemsXML() {
 		ArrayList<ComplexItem> ret = new ArrayList<ComplexItem>();
 		ArrayList<RubriquesPlublisher> rubpub = new ArrayList<RubriquesPlublisher>();
-		this.itemAuth = new HashMap<String, Author>();
+		this.itemAuthors = new HashMap<String, Author>();
 		this.rubriquesItem = new HashMap<String, List<RubriquesPlublisher>>();
+		this.itemsVisibility = new HashMap<String, VisibilitySets>();
 		try {
 			// get the XML
 			String categoryURL = this.source.getProfile().getSourceURL();
 			SAXReader reader = new SAXReader();
 			Document document = reader.read(categoryURL);
 			Element root = document.getRootElement();
-			List<Node> items = root.selectNodes(this.itemXpath);
-			for (Node item : items) {
+			List<Node> nodes = root.selectNodes(this.itemXpath);
+			for (Node item : nodes) {
 				ComplexItem sp = new ComplexItem(this.source);
-				VisibilitySets visibilitySets = new VisibilitySets();
-				Node visibilityNode = item.selectSingleNode("visibility/obliged");
-				if(visibilityNode != null){
-					visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(visibilityNode));
-					sp.setVisibility(visibilitySets);
-				}
-				sp.setHtmlContent(item.asXML());
-				String xmlAsString = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";//<item>";
-				xmlAsString += sp.getHtmlContent();
-				byte[] hash = null;
-				try {
-					hash = MessageDigest.getInstance("MD5").digest(xmlAsString.getBytes());
-				} catch (NoSuchAlgorithmException e) {
-					LOG.error("error in get hash : " + e.getLocalizedMessage());
-				}
-				StringBuffer hashString = new StringBuffer();
-				for (int i = 0; i < hash.length; ++i) {
-					String hex = Integer.toHexString(hash[i]);
-					if (hex.length() == 1) {
-						hashString.append('0');
-						hashString.append(hex.charAt(hex.length() - 1));
-					} else {
-						hashString.append(hex.substring(hex.length() - 2));
-					}
-				}
-				if (this.evaluateVisibility(sp) != VisibilityMode.NOVISIBLE) {
-					List<Node> uuidNodes = item.selectNodes("rubriques/uuid");
-					ArrayList<Integer> theUuid = new ArrayList<Integer>();
-					List<Node> rubriquesNode = root.selectNodes("/actualites/rubriques/rubrique");
-					for (Node uuid : uuidNodes) {
-						theUuid.add(Integer.valueOf(uuid.getText()));
-						for (Node rubriqueNode : rubriquesNode) {
 
-							if (uuid.getText().equals(rubriqueNode.selectSingleNode("uuid").getText())) {
-								String name = rubriqueNode.selectSingleNode("name").getText();
-								int uuidNode = Integer.valueOf(rubriqueNode.selectSingleNode("uuid").getText());
-								String color = rubriqueNode.selectSingleNode("color").getText();
-								String highlightText = rubriqueNode.selectSingleNode("highlight").getText();
-								boolean highlight = false;
-								if (highlightText.equals("true")) {
-									highlight = true;
+				sp.setHtmlContent(item.asXML());
+				//String xmlAsString = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>";//<item>";
+				//xmlAsString += sp.getHtmlContent();
+				//item id is needed
+				Node itemIdNode =  item.selectSingleNode("uuid");
+				if (itemIdNode != null) {
+					sp.setId(itemIdNode.getText());
+
+					VisibilitySets visibilitySets = new VisibilitySets();
+					visibilitySets.setObliged(XMLUtil.loadDefAndContentSets(
+							item.selectSingleNode("visibility/obliged")));
+					visibilitySets.setAllowed(XMLUtil.loadDefAndContentSets(
+							item.selectSingleNode("visibility/allowed")));
+					visibilitySets.setAutoSubscribed(XMLUtil.loadDefAndContentSets(
+							item.selectSingleNode("visibility/autoSubscribed")));
+					sp.setVisibility(visibilitySets);
+
+					this.itemsVisibility.put(sp.getId(), sp.getVisibility());
+					// to be efficient we get all items to be cached and we evaluate visibility on getItems
+					//if (this.evaluateVisibility(sp) != VisibilityMode.NOVISIBLE) {
+						List<Node> uuidNodes = item.selectNodes("rubriques/uuid");
+						ArrayList<Integer> theUuid = new ArrayList<Integer>();
+						List<Node> rubriquesNode = root.selectNodes("/actualites/rubriques/rubrique");
+						for (Node uuid : uuidNodes) {
+							theUuid.add(Integer.valueOf(uuid.getText()));
+							for (Node rubriqueNode : rubriquesNode) {
+								if (uuid.getText().equals(rubriqueNode.selectSingleNode("uuid").getText())) {
+									String name = rubriqueNode.selectSingleNode("name").getText();
+									int uuidNode = Integer.valueOf(rubriqueNode.selectSingleNode("uuid").getText());
+									String color = rubriqueNode.selectSingleNode("color").getText();
+									String highlightText = rubriqueNode.selectSingleNode("highlight").getText();
+									boolean highlight = false;
+									if (highlightText.equals("true")) {
+										highlight = true;
+									}
+									RubriquesPlublisher rub = new RubriquesPlublisher(name, uuidNode, color, highlight);
+									if (this.getRubriquesItem().get(sp.getId()) == null) {
+										this.getRubriquesItem().put(sp.getId(),
+												new ArrayList<RubriquesPlublisher>());
+									}
+									this.getRubriquesItem().get(sp.getId()).add(rub);
 								}
-								RubriquesPlublisher rub = new RubriquesPlublisher(name, uuidNode, color, highlight);
-								if (this.getRubriquesItem().get(hashString.toString()) == null) {
-									this.getRubriquesItem().put(hashString.toString(),
-											new ArrayList<RubriquesPlublisher>());
+							}
+							if (this.source.getProfile() instanceof RubriquesSourceProfile) {
+								RubriquesSourceProfile profile = (RubriquesSourceProfile) this.source.getProfile();
+								if (profile.getUuid() == (Integer.valueOf(uuid.getText()))) {
+									ret.add(sp);
 								}
-								this.getRubriquesItem().get(hashString.toString()).add(rub);
 							}
 						}
-						if (this.source.getProfile() instanceof RubriquesSourceProfile) {
-							RubriquesSourceProfile profile = (RubriquesSourceProfile) this.source.getProfile();
-							if (profile.getUuid() == (Integer.valueOf(uuid.getText()))) {
-								ret.add(sp);
+						Node authorNode = item.selectSingleNode("creator");
+						Node authorNameNode = item.selectSingleNode("article/dc:creator");
+						if (authorNode != null && authorNameNode != null) {
+							Author author = new Author(authorNode.getText(), authorNameNode.getText());
+							if (DomainTools.getExternalService() != null && StringUtils.hasText(author.getUid()) &&
+									DomainTools.getExternalService().getConnectedUserId().equals(author.getUid())) {
+								author.setUserArticleAuthor(true);
 							}
-						} 
-					}
-					Node authorNode = item.selectSingleNode("creator");
-					Node authorNameNode = item.selectSingleNode("article/dc:creator");
-					Author auth = new Author(authorNode.getText(), authorNameNode.getText());
-					if (DomainTools.getExternalService() != null && StringUtils.hasText(auth.getUid()) &&
-							DomainTools.getExternalService().getConnectedUserId().equals(auth.getUid())){
-						auth.setUserArticleAuthor(true);
-					}
-					this.itemAuth.put(hashString.toString(), auth);
+							this.itemAuthors.put(sp.getId(), author);
+						}
 
+					//}
+				} else {
+					LOG.error("when parsing actualites the node 'actualites/items[]/item/uuid' wasn't found and is needed");
+					throw new DocumentException(
+							"path : 'actualites/items[]/item/uuid' doesn't exist in parsed source");
 				}
 			}
 		} catch (DocumentException e) {
@@ -214,20 +215,16 @@ public class ItemParser {
 		this.rubriquesPublisher = rubs;
 	}
 
-	public Map<String, Author> getItemAuth() {
-		return itemAuth;
-	}
-
-	public void setItemAuth(Map<String, Author> itemAuth) {
-		this.itemAuth = itemAuth;
+	public Map<String, Author> getItemAuthors() {
+		return itemAuthors;
 	}
 
 	public Map<String, List<RubriquesPlublisher>> getRubriquesItem() {
 		return rubriquesItem;
 	}
 
-	public void setRubriquesItem(Map<String, List<RubriquesPlublisher>> rubriquesItem) {
-		this.rubriquesItem = rubriquesItem;
+	public Map<String, VisibilitySets> getItemsVisibility() {
+		return itemsVisibility;
 	}
 
 	public String getItemXpath() {
@@ -246,7 +243,7 @@ public class ItemParser {
 				", source=" + source +
 				", visibleItems=" + visibleItems +
 				", rubriquesPublisher=" + rubriquesPublisher +
-				", itemAuth=" + itemAuth +
+				", itemAuthors=" + itemAuthors +
 				", rubriquesItem=" + rubriquesItem +
 				", itemXpath='" + itemXpath + '\'' +
 				'}';

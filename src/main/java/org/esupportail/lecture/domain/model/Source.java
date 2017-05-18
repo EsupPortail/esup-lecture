@@ -313,20 +313,23 @@ public abstract class Source implements Element, Serializable {
 	 * @throws ComputeItemsException
 	 */
 	@SuppressWarnings("unchecked")
-	synchronized private void computeItems(boolean isComplex, ItemParser parser) throws ComputeItemsException {
+	synchronized private void computeItems(ItemParser parser) throws ComputeItemsException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.profileId + " - computeItems()");
 		}
 		if (!itemComputed) {
+			boolean isComplex = (parser != null);
 			try {
 				// lauch Xpath find
 				String x = getItemXPath();
 				// create dom4j document
 				Document document = null;
 
-				if (isComplex && parser != null) {
+				if (isComplex) {
 					parser.setItemXpath(this.getItemXPath());
-			//		LOG.error(parser.getXMLStream());
+					if (LOG.isTraceEnabled()) {
+						LOG.trace("computeItems() - will parse xml from ItemParser: " + parser.getXMLStream());
+					}
 					document = DocumentHelper.parseText(parser.getXMLStream());
 				} else {
 					document = DocumentHelper.parseText(xmlStream);
@@ -341,7 +344,7 @@ public abstract class Source implements Element, Serializable {
 				Iterator<Node> iter = list.iterator();
 				while (iter.hasNext()) {
 					Node node = iter.next();
-					Item item = null;
+					Item item;
 					if (!isComplex) {
 						item = new Item(this);
 					} else {
@@ -374,10 +377,14 @@ public abstract class Source implements Element, Serializable {
 					item.setId(hashString.toString());
 					
 					Node nodeDate;
-					if (item instanceof ComplexItem && parser != null) {
-						item = (ComplexItem) item;
-						((ComplexItem) item).setAuthor(parser.getItemAuth().get(item.getId()));
-						((ComplexItem) item).setRubriques(parser.getRubriquesItem().get(item.getId()));
+					if (isComplex) {
+						Node itemIdNode =  node.selectSingleNode("uuid");
+						if (itemIdNode != null && item instanceof ComplexItem) {
+							String itemId = itemIdNode.getText();
+							((ComplexItem) item).setAuthor(parser.getItemAuthors().get(itemId));
+							((ComplexItem) item).setRubriques(parser.getRubriquesItem().get(itemId));
+							((ComplexItem) item).setVisibility(parser.getItemsVisibility().get(itemId));
+						}
 						nodeDate = node.selectSingleNode("article/pubDate");
 					} else {
 						nodeDate = node.selectSingleNode("pubDate");
@@ -496,11 +503,11 @@ public abstract class Source implements Element, Serializable {
 	 * @return the items lits
 	 * @throws ComputeItemsException
 	 */
-	protected List<Item> getItems(boolean isComplex, ItemParser parser) throws ComputeItemsException {
+	protected List<Item> getItems(ItemParser parser) throws ComputeItemsException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.profileId + " - getItems()");
 		}
-		computeItems(isComplex, parser);
+		computeItems(parser);
 		return items;
 	}
 
