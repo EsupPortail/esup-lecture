@@ -315,7 +315,7 @@ public class MappingFile {
 				if (rootElement == null) {
 					rootElement = "";
 				}
-				if (sourceURL + dtd + xmlns + xmlType + rootElement == "") {
+				if ((sourceURL + dtd + xmlns + xmlType + rootElement).equals("")) {
 					String errorMsg = "In mappingFile, a mapping element " 
 					+ "is empty, you must declare sourceURL or dtd or " 
 					+ "xmlns or xmltype or rootElement in a mapping.";
