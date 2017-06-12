@@ -192,6 +192,24 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 	              },
 	            success : function(data){
 	      //      	console.log ("mise a jour ok");
+	            	// on doit décrementer les rubriques/src qui ont été modifieées ou l'inverse
+	            		// table des rubriques (sources) dont les nb de non lue est modfifié. 
+	            	var tabSrc = data.srcsIds;
+	            	if (tabSrc) {
+	            			// pour le compteur total on ajoute une pseudo rubrique
+	            		tabSrc.push('all'); 
+	            		var prefixSelector = 'div.' + portletId + " > span.badge > span[data-idsrc='";
+	            		var sufixSelector = "']";
+		            	for (i = 0; i < tabSrc.length; i++) {
+		            		var idSrc = tabSrc[i];
+		            		$(prefixSelector + idSrc + sufixSelector).each(
+		            				function(){
+			            			//	console.log("		dataIdsrc  OK " );
+				            			var cpt = $(this).html();
+				            			$(this).text(readItem ? --cpt : ++cpt);
+				            		});	            		
+		            	}
+	            	}
 	            }
 	    	});
 	    	
@@ -206,8 +224,11 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 	    	}
     	}
     	markFirtVisible();
-    	if (priv.gereAffixMenu) {priv.gereAffixMenu() };
+    	if (priv.gereAffixMenu) {
+    		priv.gereAffixMenu() 
+    	};
     }
+    
     priv.toggleArticleRead = toggleArticleRead;
     
     

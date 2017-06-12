@@ -38,6 +38,13 @@
       		pageContext.setAttribute("newItem", itemSet.add(id));
       	}
       	%>
+      	<c:if test="${not newItem}"> 
+      		<!-- suppression  
+      			cat : ${cat.id}
+      			src : ${src.id}
+      			article : ${article.id}
+      		-->
+      	</c:if>
   		<c:if test="${newItem}">   
 			<c:set var="idSources" value="${fn:replace(fn:replace(src.id,' ', ''), ':', '')}" />
 			

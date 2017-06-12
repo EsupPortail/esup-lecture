@@ -18,8 +18,8 @@
     <li>
       <div 	class="row divLargeWith rubriqueFiltre rubrique_all  ${n} active" 
       		onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')">
-        Toutes les actualités<span class="badge pull-right"><c:out
-            value="${nombreArticleNonLu}"></c:out>
+        Toutes les actualités<span class="badge pull-right">
+        	<span data-idSrc="all"><c:out value="${nombreArticleNonLu}"></c:out></span>
             <input type="hidden" class="srcId" value="toutRub"/>
             <input type="hidden" class="titleName" value="Toutes les actualités"/></span>
       </div>
@@ -35,11 +35,11 @@
           <li><div 	class="row divLargeWith rubriqueFiltre rubrique_${src.uid} ${n}"
           			onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}'); true"
           			>
-             
               <c:out value="${src.name}"></c:out>
               <span class="badge pull-right"
-                style="background-color:${src.color}"><c:out
-                  value="${src.unreadItemsNumber}"></c:out>
+                style="background-color:${src.color}">
+                <span data-idSrc="${src.id}"><c:out value="${src.unreadItemsNumber}"></c:out></span>
+                </span>
                   <input type="hidden" class="srcId" value="${src.uid}"/>
                   <input type="hidden" class="titleName" value="${src.name}"/></span>
             </div></li>

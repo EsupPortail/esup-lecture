@@ -248,13 +248,18 @@ public class ServiceUtilLecture {
 		listCat = contexte.getCategories();
 		int nbrArtic = 0;
 		// TODO Auto-generated method stub
+		
+		HashSet<String> idsNonLues = new HashSet<String>();
+		
 		for (CategoryWebBean cat : listCat) {
 
 			for (SourceWebBean src : cat.getSources()) {
 
 				for (ItemWebBean item : src.getItems()) {
 					if (!item.isRead()) {
-						nbrArtic++;
+						if (idsNonLues.add(item.getId())) {
+							nbrArtic++;
+						}
 					}
 				}
 			}

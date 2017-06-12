@@ -82,6 +82,8 @@ public class HomeController extends TwoPanesController {
 		model.addAttribute("listeItemAcceuil", listeItemAcceuil);
 	//	model.addAttribute("", )
 		return "home";
+		
+		
 	}
 
 	@ResourceMapping(value = "getJSON")
@@ -126,6 +128,18 @@ public class HomeController extends TwoPanesController {
 		}
 	}
 	
+	private StringBuilder addIdSrc(StringBuilder sb, String id) {
+		if (sb == null) {
+			sb = new StringBuilder("{\"srcsIds\":[");
+		}
+		sb.append('"');
+		sb.append(id);
+		sb.append('"');
+		sb.append(',');
+		
+		return sb;
+	}
+	
 	@ResourceMapping(value = "markRead")
 	public void markRead(final ResourceRequest request
 			, final ResourceResponse response)  { 
@@ -142,6 +156,34 @@ public class HomeController extends TwoPanesController {
 		boolean isRead = "true".equals(request.getParameter("isRead"));
 		boolean isPublisherMode = "true".equals(request.getParameter("isPublisherMode"));
 		boolean isMarked = false;
+		
+		Appendable allSrcMarked = new Appendable() {
+			private StringBuilder sb = new StringBuilder("{\"srcsIds\":[");
+			@Override
+			public Appendable append(CharSequence csq, int start, int end) throws IOException {
+				return null;
+			}
+			@Override
+			public Appendable append(char c) throws IOException {
+				return null;
+			}
+			@Override
+			public Appendable append(CharSequence csq) throws IOException {
+				sb.append('"');
+				sb.append(csq);
+				sb.append('"');
+				sb.append(',');
+				return sb;
+			}
+			@Override 
+			public String toString(){
+				sb.setCharAt(sb.length()-1, ']');
+				sb.append('}');
+				return sb.toString();
+			}
+		};
+		
+		
 		
 		try {
 			if (isPublisherMode) {
@@ -167,7 +209,7 @@ public class HomeController extends TwoPanesController {
 										if (srcID.equals(idSrc)) {
 											isMarked = true;
 										}
-										
+										allSrcMarked.append(idSrc);
 									}
 								}
 							}
@@ -178,10 +220,12 @@ public class HomeController extends TwoPanesController {
 			
 			if (!isMarked) {
 				facadeService.markItemReadMode(uid, srcID, itemID, isRead);
+				allSrcMarked.append(srcID);
 			}
+			
 			LOG.debug("markRead OK");
 			response.setContentType("application/json");
-	        response.getWriter().write("{}");
+	        response.getWriter().write(allSrcMarked.toString());
 		} catch (Exception e) {
 			throw new WebException("Error in markRead", e);
 		}
