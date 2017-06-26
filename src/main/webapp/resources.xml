@@ -4,6 +4,7 @@
 	xsi:schemaLocation="http://www.jasig.org/uportal/web/skin https://source.jasig.org/schemas/resource-server/skin-configuration/skin-configuration-v1.2.xsd">
 	
 	<css>css/lecture.css</css>
+	<css>css/lecture-specific.css</css>
 
 	<!--<css included="plain" resource="true">/rs/fontawesome/4.0.3/css/font-awesome.css</css>-->
 	<!--<css included="aggregated" resource="true">/rs/fontawesome/4.0.3/css/font-awesome.min.css</css>-->

@@ -1,0 +1,78 @@
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/commun/material-design-icons/1.9.32/fonts/materialdesignicons-webfont.eot'); /* For IE6-8 */
+    src: local('Material Icons'),
+    local('MaterialIcons-Regular'),
+    url('/commun/material-design-icons/1.9.32/fonts/materialdesignicons-webfont.woff2') format('woff2'),
+    url('/commun/material-design-icons/1.9.32/fonts/materialdesignicons-webfont.woff') format('woff'),
+    url('/commun/material-design-icons/1.9.32/fonts/materialdesignicons-webfont.ttf') format('truetype');
+}
+
+.esup-lecture .itemsPublisher > .document {
+    display:block;
+    padding-top: 8px;
+}
+.esup-lecture .itemsPublisher > .document > .files > div {
+    display:inline-block;
+    padding-top: 8px;
+}
+
+/** apply material icons. - like class .material-icons **/
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment:before {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;  /* Preferred icon size */
+    display: inline-block;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    white-space: nowrap;
+    direction: ltr;
+
+    /* Support for all WebKit browsers. */
+    -webkit-font-smoothing: antialiased;
+    /* Support for Safari and Chrome. */
+    text-rendering: optimizeLegibility;
+
+    /* Support for Firefox. */
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Support for IE. */
+    font-feature-settings: 'liga';
+}
+
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.image:before {
+    content: "\F21F";
+}
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.video:before {
+    content: "\F22B";
+}
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.audio:before {
+    content: "\F223";
+}
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.text:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application:before {
+    content: "\F219";
+}
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.pdf:before {
+    content: "\F225";
+}
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.odt:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.doc:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.docx:before {
+    content: "\F22C";
+}
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.ods:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.xls:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.xlsx:before {
+    content: "\F21B";
+}
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.odp:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.ppt:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.pptx:before {
+    content: "\F227";
+}
