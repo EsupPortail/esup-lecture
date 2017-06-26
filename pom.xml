@@ -44,15 +44,23 @@
         </pluginRepository>
     </pluginRepositories>
     <distributionManagement>
+        <!--<repository>-->
+            <!--<id>esup</id>-->
+            <!--<name>esup-portail</name>-->
+            <!--<url>https://mvn.esup-portail.org/content/repositories/releases</url>-->
+        <!--</repository>-->
+        <!--<snapshotRepository>-->
+            <!--<id>esup-snapshots</id>-->
+            <!--<name>esup-portail</name>-->
+            <!--<url>https://mvn.esup-portail.org/content/repositories/snapshots</url>-->
+        <!--</snapshotRepository>-->
         <repository>
-            <id>esup</id>
-            <name>esup-portail</name>
-            <url>https://mvn.esup-portail.org/content/repositories/releases</url>
+            <id>esco-releases</id>
+            <url>http://www.esco-portail.org/nexus/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>esup-snapshots</id>
-            <name>esup-portail</name>
-            <url>https://mvn.esup-portail.org/content/repositories/snapshots</url>
+            <id>esco-snapshots</id>
+            <url>http://www.esco-portail.org/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     <scm>
