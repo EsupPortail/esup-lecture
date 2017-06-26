@@ -1,10 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.esupportail</groupId>
     <artifactId>esup-lecture</artifactId>
     <packaging>war</packaging>
-    <version>3.0.3-SNAPSHOT</version>
+    <version>3.0.3-esco-1.1.1</version>
     <name>esup-lecture</name>
     <url><![CDATA[http://www.esup-portail.org/display/PROJESUPLECTURE/Portlet+Lecture]]></url>
     <repositories>
@@ -60,7 +59,7 @@
         <connection>scm:git:ssh://git@github.com/GIP-RECIA/esup-lecture.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/GIP-RECIA/esup-lecture.git</developerConnection>
         <url>https://subversion.cru.fr/esup-lecture</url>
-        <tag>HEAD</tag>
+        <tag>3.0.3-esco-1.1.1</tag>
     </scm>
     <build>
         <defaultGoal>install</defaultGoal>
