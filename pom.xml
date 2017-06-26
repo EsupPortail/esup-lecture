@@ -57,7 +57,8 @@
         </snapshotRepository>
     </distributionManagement>
     <scm>
-        <developerConnection>scm:git:ssh://git@github.com/EsupPortail/esup-lecture.git</developerConnection>
+        <connection>scm:git:ssh://git@github.com/GIP-RECIA/esup-lecture.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/GIP-RECIA/esup-lecture.git</developerConnection>
         <url>https://subversion.cru.fr/esup-lecture</url>
         <tag>HEAD</tag>
     </scm>
