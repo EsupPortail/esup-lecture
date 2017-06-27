@@ -1,15 +1,3 @@
-@font-face {
-    font-family: 'Material Icons';
-    font-style: normal;
-    font-weight: 400;
-    src: url('/commun/material-design-icons/1.9.32/fonts/materialdesignicons-webfont.eot'); /* For IE6-8 */
-    src: local('Material Icons'),
-    local('MaterialIcons-Regular'),
-    url('/commun/material-design-icons/1.9.32/fonts/materialdesignicons-webfont.woff2') format('woff2'),
-    url('/commun/material-design-icons/1.9.32/fonts/materialdesignicons-webfont.woff') format('woff'),
-    url('/commun/material-design-icons/1.9.32/fonts/materialdesignicons-webfont.ttf') format('truetype');
-}
-
 .esup-lecture .itemsPublisher > .document {
     display:block;
     padding-top: 8px;
