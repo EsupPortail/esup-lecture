@@ -55,24 +55,25 @@
     content: "\F223";
 }
 .esup-lecture .itemsPublisher > .document > .files > div > .attachment.text:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment[href$=".txt"]:before,
 .esup-lecture .itemsPublisher > .document > .files > div > .attachment.application:before {
     content: "\F219";
 }
 .esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.pdf:before {
     content: "\F225";
 }
-.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.odt:before,
-.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.doc:before,
-.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.docx:before {
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application[href$=".odt"]:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application[href$=".doc"]:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application[href$=".docx"]:before {
     content: "\F22C";
 }
-.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.ods:before,
-.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.xls:before,
-.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.xlsx:before {
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application[href$=".ods"]:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application[href$=".xls"]:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application[href$=".xlsx"]:before {
     content: "\F21B";
 }
-.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.odp:before,
-.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.ppt:before,
-.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application.pptx:before {
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application[href$=".odp"]:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application[href$=".ppt"]:before,
+.esup-lecture .itemsPublisher > .document > .files > div > .attachment.application[href$=".pptx"]:before {
     content: "\F227";
 }
