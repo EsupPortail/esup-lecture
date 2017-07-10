@@ -189,7 +189,7 @@ public class ChannelConfig  {
 					String categoryProfilesUrlPath = node.valueOf("@url");
 					//URL url = ChannelConfig.class.getResource(categoryProfilesUrlPath);
 					String idPrefix = node.valueOf("@idPrefix");
-					if ((categoryProfilesUrlPath == null) || (categoryProfilesUrlPath == "")) {
+					if ((categoryProfilesUrlPath == null) || "".equals(categoryProfilesUrlPath)) {
 						String errorMsg = "URL of : categoryProfilesUrl with prefix " + idPrefix + " is null or empty.";
 						LOG.warn(errorMsg);
 					} else {
