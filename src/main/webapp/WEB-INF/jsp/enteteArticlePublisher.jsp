@@ -8,11 +8,11 @@
 <div class=" enteteLectureAll">
 <!--   "col-xs-7 col-sm-7" -->
   <div class="pull-left noMenuDropDown" id="${n}rubSelectedDiv1">
-    <label class="rubrique_Active ${n}">Toutes les actualités</label>
+    <label class="rubrique_Active ${n}"><c:out value="${ctxTextFilter}"></c:out></label>
   </div>
   <div id="${n}rubSelectedDiv2" class="pull-left withMenuDropDown" data-toggle="modal"
       data-target="#modalRubriqueList${n}">
-      <label class="rubrique_Active ${n}"> Toutes les actualités</label> 
+      <label class="rubrique_Active ${n}"><c:out value="${ctxTextFilter}"></c:out></label>
       <span class="caret margeCarret"></span>
    </div>
 	<div class="dropdown readNotRead ">	
@@ -26,7 +26,7 @@
         <ul class="dropdown-menu pull-right">
           <li class="checkbox afficherLuWith">
     
-                <label for="checkReadItem${n})" onclick="lecture['${n}'].jq('input#checkReadItem${n}').click()"> <spring:message code="showUnreadNews" />&nbsp;
+                <label for="checkReadItem${n})" onclick="lecture['${n}'].jq('input#checkReadItem${n}').click()"> <c:out value="${showUnreadNews}"></c:out>&nbsp;
                 </label>
                 <input 	id = "checkReadItem${n}"
                 		class="checkReadItem" 
@@ -49,7 +49,7 @@
     <div class="modal-content">
       <div class="modal-body modalPadding">
         <a href="#" class="list-group-item" onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')"
-          data-dismiss="modal"><c:out value="Toutes les actualités"></c:out>
+          data-dismiss="modal"><c:out value="${ctxTextFilter}"></c:out>
           <span class="badge pull-right"><c:out
               value="${nombreArticleNonLu}"></c:out></span> </a>
         <c:forEach items="${listCat}" var="cat">

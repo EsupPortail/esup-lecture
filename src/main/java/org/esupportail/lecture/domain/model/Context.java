@@ -403,7 +403,4 @@ public class Context implements Serializable {
 	public void setUnreadMode(Boolean unreadMode) {
 		this.unreadMode = unreadMode;
 	}
-	
-	
-	
 }

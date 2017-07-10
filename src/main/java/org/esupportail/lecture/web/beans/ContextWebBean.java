@@ -1,6 +1,5 @@
 package org.esupportail.lecture.web.beans;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -59,7 +58,7 @@ public class ContextWebBean {
 	private int nbrUnreadItem;
 	
 	private boolean modePublisher;
-	
+
 	private boolean userCanMarckRead;
 	private ItemDisplayMode itemDisplayMode =ItemDisplayMode.ALL;
 	private Boolean isContextUnreadMode;
@@ -281,7 +280,5 @@ public class ContextWebBean {
 
 	public void setIsContextUnreadMode(Boolean isContextUnreadMode) {
 		this.isContextUnreadMode = isContextUnreadMode;
-	}	
-	
-	
+	}
 }

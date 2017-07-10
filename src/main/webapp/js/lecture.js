@@ -431,9 +431,9 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     }
     priv.filtrerParRubrique = filtrerParRubrique;
  
-    
+    /** Used in listeRubZonePublisher.jsp */
     function filterByRubriqueClass(classRubrique, notRubriqueObj){
-    	var text="Toutes les actualités!";
+    	var text=$("div.rubriqueFiltre.rubrique_all" + contexte + " input.titleName").val();
     	var contexte = namespace;
     	
     	$("div.rubriqueFiltre."+contexte).each(function(){
@@ -458,28 +458,9 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     //	console.log("div#"+contexte+"rubSelectedDiv1 label.rubrique_Active: "+text);
     	$("label.rubrique_Active."+contexte).html(text);
     	markFirtVisible();
-    	if (priv.gereAffixMenu) {priv.gereAffixMenu() };
+    	if (priv.gereAffixMenu) {priv.gereAffixMenu(); }
     }
     priv.filterByRubriqueClass =  filterByRubriqueClass;
-    
- 
-    
-    function AfficherTout(val) {
-      $("#" + portletId + "catSeletc").val('');
-      $("#" + portletId + "SrcSeletc").val('');
-      $("#" + portletId + "rubSeletc").val('');
-      var reponse1 = "<label>Toutes les actualités</label>"
-      var reponse = "<label>Toutes les actualités</label><span class='caret margeCarret'></span>";
-      $("#" + portletId + "rubSelectedDiv1").html(reponse1);
-      $("#" + portletId + "rubSelectedDiv2").html(reponse);
-      filtrerNonLus('');
-      if (val == 'show') {
-        $("#mainmenurow" + portletId).show();
-        $("#menupos1" + portletId).hide();
-      }
-    }
-    priv.AfficherTout = AfficherTout;
-    
  
     
  /**
@@ -541,21 +522,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     		}
     	});
     }
- 
-      
-    
-    function filtrerPublisherNonLusMobile() {
-    	
-      if ($("#" + portletId + "checkBoxNonLu2").is(':checked')) {
-        $("#" + portletId + "listNonLu").val("val2");
-        filtrerNonLus('');
-      } else {
-        $("#" + portletId + "listNonLu").val("val1");
-        AfficherTout();
-      }
-    }
-    priv.filtrerPublisherNonLusMobile = filtrerPublisherNonLusMobile;
-    
+
     function resetMinHeightPortlet() {
     	var divPortlet = $('.esup-lecture.portlet-container.'+ namespace);
     	var divAffix = $('.esup-lecture.'+ namespace + ' nav.navModeDesk.navClass.affix.affixTree');

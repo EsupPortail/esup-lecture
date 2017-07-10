@@ -6,6 +6,11 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
+<spring:message code="showAllItems" var="default_ctxTextFilter" scope="session"></spring:message>
+<spring:message code="${ctx_name}.showAllItems" var="ctxTextFilter" text="${default_ctxTextFilter}"></spring:message>
+<spring:message code="showUnreadNews" var="default_showUnreadNews" scope="session"></spring:message>
+<spring:message code="${ctx_name}.showUnreadNews" var="showUnreadNews" text="${default_showUnreadNews}"></spring:message>
+
 <div id="${n}homeAutreJsp" class="row">
   <input type="hidden" id="${n}catSeletc" value='' /> <input
     type="hidden" id="${n}SrcSeletc" value='' />

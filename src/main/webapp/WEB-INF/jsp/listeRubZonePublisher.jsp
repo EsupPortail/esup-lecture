@@ -18,10 +18,10 @@
     <li>
       <div 	class="row divLargeWith rubriqueFiltre rubrique_all  ${n} active" 
       		onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')">
-        Toutes les actualités<span class="badge pull-right">
+          <c:out value="${ctxTextFilter}"></c:out><span class="badge pull-right">
         	<span data-idSrc="all"><c:out value="${nombreArticleNonLu}"></c:out></span>
             <input type="hidden" class="srcId" value="toutRub"/>
-            <input type="hidden" class="titleName" value="Toutes les actualités"/></span>
+            <input type="hidden" class="titleName" value="${ctxTextFilter}"/></span>
       </div>
     </li>
       <c:forEach items="${listCat}" var="cat">
@@ -49,9 +49,3 @@
 
   </ul>
 </div>
-<%--  onclick="filtrerParRubrique('${cat.id}','${src.id}','${src.name}','')" --%>
-<!-- onclick="AfficherTout('')" 
-
-          			
-
--->

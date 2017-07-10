@@ -7,8 +7,7 @@
 <!ELEMENT context (description,refCategoryProfile*,categoryProfilesUrl*)>
 <!ATTLIST context
     name CDATA #REQUIRED
-	id ID #REQUIRED
-	isPublisher (yes|no) "no"
+    id ID #REQUIRED
     treeVisible (yes|no|forceNo) "yes"
     userCanMarkRead (yes|no) "yes"
     edit (all|personal|managed|no) "no">

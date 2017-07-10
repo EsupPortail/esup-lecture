@@ -11,8 +11,8 @@
       <div class="row panel panelHome">
         <div class="col-sm-7 col-xs-7"
           onclick="lecture.${n}.AfficherTouteActualite()">
-          <spring:message
-                code="unreadNews" />
+          <spring:message code="unreadNews" var="default_unreadNews" scope="session"></spring:message>
+          <spring:message code="${ctx_name}.unreadNews" text="${default_unreadNews}"></spring:message>
           <strong><c:out value="${contexte.nbrUnreadItem}"></c:out></strong>
         </div>
         <c:if test="${contexte.lienVue!=null && contexte.lienVue!=''}">

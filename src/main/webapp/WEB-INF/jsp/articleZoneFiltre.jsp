@@ -97,7 +97,8 @@
   </c:forEach>
   <c:if test="${nbArticle == 0}" >
   	
-  		<span class="noArticle"><spring:message code="noAvailableArticle" /></span>
+  		<span class="noArticle"><spring:message code="noAvailableArticle" var="default_noAvailableArticle" scope="session"></spring:message>
+<spring:message code="${ctx_name}.noAvailableArticle" text="${default_noAvailableArticle}"></spring:message></span>
   </c:if>
 
 <%-- 

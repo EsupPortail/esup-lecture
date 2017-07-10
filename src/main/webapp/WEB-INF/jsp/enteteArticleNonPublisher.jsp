@@ -61,7 +61,7 @@ Partie supperieur de l'affichage des articles avec les boutons et dropdown de se
 			</button>
 			<ul class="dropdown-menu pull-right">
           		<li class="checkbox afficherLuWith">
-          		             <label for="checkReadItem${n})" onclick="lecture['${n}'].jq('input#checkReadItem${n}').click()"> <spring:message code="showUnreadNews" />&nbsp;
+          		             <label for="checkReadItem${n})" onclick="lecture['${n}'].jq('input#checkReadItem${n}').click()"> <c:out value="${showUnreadNews}"></c:out>&nbsp;
                 </label>
                 <input 	id = "checkReadItem${n}"
                 		class="checkReadItem" 

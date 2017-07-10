@@ -167,35 +167,6 @@ public class ContextBean {
 	public Map<String, Integer> getOrderedCategoryIDs() {
 		return orderedCategoryIDs;
 	}
-
-	/*
-	 *************************** METHODS *********************************** */	
-	/**
-	 * @param categoryID - the ID of source to find
-	 * @return the XML order in of the source the CategoryProfile definition
-	 */
-	public int getXMLOrder(final String categoryID) {
-		Integer ret = orderedCategoryIDs.get(categoryID);
-		if (ret == null) {
-			ret = Integer.MAX_VALUE;
-		}
-		return ret;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		String string = "";
-		string += " Id = " + id.toString() + "\n";
-		string += " Name = " + name.toString() + "\n";
-		string += " Desc = " + description.toString() + "\n";
-		string += " TreeSize = " + treeSize +  "\n";
-		string += " TreeVisible = " + treeVisible +  "\n";
-		return string;
-	}
-	
 	
 	/**
 	 * @return the treeVisible
@@ -219,7 +190,31 @@ public class ContextBean {
 		this.modePublisher = modePublisher;
 	}
 
-	
-	
-	
+	/*
+	 *************************** METHODS *********************************** */
+	/**
+	 * @param categoryID - the ID of source to find
+	 * @return the XML order in of the source the CategoryProfile definition
+	 */
+	public int getXMLOrder(final String categoryID) {
+		Integer ret = orderedCategoryIDs.get(categoryID);
+		if (ret == null) {
+			ret = Integer.MAX_VALUE;
+		}
+		return ret;
+	}
+
+	@Override
+	public String toString() {
+		return "ContextBean{" +
+				"id='" + id + '\'' +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", modePublisher=" + modePublisher +
+				", userCanMarckRead=" + userCanMarckRead +
+				", treeSize=" + treeSize +
+				", treeVisible=" + treeVisible +
+				", itemDisplayMode=" + itemDisplayMode +
+				'}';
+	}
 }

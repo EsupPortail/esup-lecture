@@ -34,6 +34,7 @@
 <c:set var="n">
   <portlet:namespace />
 </c:set>
+<c:set var="ctx_name">${contexte.id}</c:set>
 <input type="hidden" id="${n}treeVisible"
   value="${contexte.treeVisible}" />
 <script type="text/javascript">
