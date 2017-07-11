@@ -268,7 +268,7 @@ public class FreshManagedCategoryThread extends Thread {
 			ret.setSourceProfilesHash(sourceProfiles);
 			ret.setOrderedSourceIDs(orderedSourceIDs);
 		} catch (DocumentException e) {
-			LOG.error("error reading document " + e);
+			LOG.error("error reading document ", e);
 		}
 		return ret;
 	}
