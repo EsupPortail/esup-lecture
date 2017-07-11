@@ -19,6 +19,8 @@
 <c:set var="nbCat"  value="0" />
 <c:set var="nbSrc" value="0" />
 <c:set var="nbArticle" value="0" />
+<spring:message code="markAsRead" var="markAsRead" scope="application"></spring:message>
+<spring:message code="markAsUnread" var="markAsUnRead" scope="application"></spring:message>
 <%-- 
 <c:if test="${contexte.itemDisplayMode=='ALL'}" >
 --%>
@@ -65,7 +67,7 @@
 		
 					<c:if test="${cat.userCanMarkRead=='true'}">
 						<div class="col-xs-2 col-sm-1 articleEye ${article.id} ${n}">
-							<i class="fa ${article.read ? 'fa-eye-slash' :  'fa-eye'} fa-stack-1x"
+							<i class="fa ${article.read ? 'fa-eye-slash' :  'fa-eye'} fa-stack-1x" title="${article.read ? markAsUnRead : markAsRead}"
 								onclick="lecture['${n}'].toggleArticleRead('${cat.id}','${src.id}','${article.id}','${idDivRow}',${contexte.modePublisher});" 
 							></i>
 						</div>
