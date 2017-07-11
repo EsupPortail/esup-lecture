@@ -55,7 +55,7 @@ Partie supperieur de l'affichage des articles avec les boutons et dropdown de se
 			</c:if>
 		</c:if>
 		<c:if
-			test="${contexte.userCanMarckRead=='true' && affichereye=='true'}">
+			test="${contexte.userCanMarkRead=='true' && affichereye=='true'}">
 			<button class="dropdown-toggle  pull-right" data-toggle="dropdown">
 				<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
 			</button>
@@ -76,7 +76,7 @@ Partie supperieur de l'affichage des articles avec les boutons et dropdown de se
 	<%-- 
 			<ul class="dropdown-menu pull-right listOptionNonPublisher">
 				<c:if
-					test="${contexte.userCanMarckRead=='true'&&affichereye=='true'}">
+					test="${contexte.userCanMarkRead=='true'&&affichereye=='true'}">
 					<input type="hidden" id="<portlet:namespace />listNonLu"
 						value="val1" />
 					<li onclick="lecture.${n}.filtrerNonLus('val2')">Afficher les articles Non
@@ -111,7 +111,7 @@ Partie supperieur de l'affichage des articles avec les boutons et dropdown de se
         <a href="#" class="list-group-item" onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')"
           data-dismiss="modal"><c:out value="${contexte.name}"></c:out>
           
-          <c:if test="${contexte.userCanMarckRead=='true' && affichereye=='true'}" >
+          <c:if test="${contexte.userCanMarkRead=='true' && affichereye=='true'}" >
           <span class="badge pull-right"><c:out
               value="${nombreArticleNonLu}"></c:out></span> 
            </c:if>

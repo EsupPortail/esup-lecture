@@ -54,7 +54,7 @@ public class Context implements Serializable {
 	 * un contexte peut mixer le mode publisher et non publisher
 	 */
 	private Boolean modePublisher;
-	private Boolean userCanMarckRead;
+	private Boolean userCanMarkRead;
 	private Boolean unreadMode;
 
 	// later 
@@ -388,12 +388,12 @@ public class Context implements Serializable {
 		this.modePublisher = modePublisher;
 	}
 	
-	public Boolean getUserCanMarckRead() {
-		return userCanMarckRead;
+	public Boolean getUserCanMarkRead() {
+		return userCanMarkRead;
 	}
 
-	public void setUserCanMarckRead(Boolean userCanMarckRead) {
-		this.userCanMarckRead = userCanMarckRead;
+	public void setUserCanMarkRead(Boolean userCanMarkRead) {
+		this.userCanMarkRead = userCanMarkRead;
 	}
 
 	public Boolean getUnreadMode() {

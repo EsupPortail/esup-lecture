@@ -396,9 +396,9 @@ public class ChannelConfig  {
 			c.setId(context.valueOf("@id"));
 			c.setName(context.valueOf("@name"));
 			if("yes".equals(context.valueOf("@userCanMarkRead"))){
-				c.setUserCanMarckRead(true);
+				c.setUserCanMarkRead(true);
 			}else{
-				c.setUserCanMarckRead(false);
+				c.setUserCanMarkRead(false);
 			}
 			//treeVisible
 			String treeVisible = context.valueOf("@treeVisible");

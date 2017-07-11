@@ -654,7 +654,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			context.setLienVue(lienVue);
 			context.setTreeVisible(contextBean.getTreeVisible());
 			context.setModePublisher(contextBean.isModePublisher());
-			context.setUserCanMarckRead(contextBean.isUserCanMarckRead());
+			context.setUserCanMarkRead(contextBean.isUserCanMarkRead());
 			context.setItemDisplayMode(contextBean.getItemDisplayMode());
 			// find categories in this context
 			List<CategoryBean> categories = getCategories(ctxId, userProfile);

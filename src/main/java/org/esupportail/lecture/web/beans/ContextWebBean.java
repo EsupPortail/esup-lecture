@@ -59,7 +59,7 @@ public class ContextWebBean {
 	
 	private boolean modePublisher;
 
-	private boolean userCanMarckRead;
+	private boolean userCanMarkRead;
 	private ItemDisplayMode itemDisplayMode =ItemDisplayMode.ALL;
 	private Boolean isContextUnreadMode;
 	/**
@@ -258,12 +258,12 @@ public class ContextWebBean {
 		this.modePublisher = modePublisher;
 	}
 
-	public boolean isUserCanMarckRead() {
-		return userCanMarckRead;
+	public boolean isUserCanMarkRead() {
+		return userCanMarkRead;
 	}
 
-	public void setUserCanMarckRead(boolean userCanMarckRead) {
-		this.userCanMarckRead = userCanMarckRead;
+	public void setUserCanMarkRead(boolean userCanMarkRead) {
+		this.userCanMarkRead = userCanMarkRead;
 	}
 
 	public ItemDisplayMode getItemDisplayMode() {

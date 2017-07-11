@@ -40,7 +40,7 @@ public class ContextBean {
 	/**
 	 * size of tree window.
 	 */
-	private boolean userCanMarckRead;
+	private boolean userCanMarkRead;
 	private int treeSize;
 
 	/**
@@ -78,19 +78,19 @@ public class ContextBean {
 		setOrderedCategoryIDs(context.getOrderedCategoryIDs());
 		setTreeVisible(context.getTreeVisible());
 		setModePublisher(context.getModePublisher());
-		setUserCanMarckRead(context.getUserCanMarckRead());
+		setUserCanMarkRead(context.getUserCanMarkRead());
 		setItemDisplayMode(customContext.getItemDisplayMode());
 	}
 	
 	/*
 	 *************************** ACCESSORS ********************************* */	
 	
-	public boolean isUserCanMarckRead() {
-		return userCanMarckRead;
+	public boolean isUserCanMarkRead() {
+		return userCanMarkRead;
 	}
 
-	public void setUserCanMarckRead(boolean userCanMarckRead) {
-		this.userCanMarckRead = userCanMarckRead;
+	public void setUserCanMarkRead(boolean userCanMarkRead) {
+		this.userCanMarkRead = userCanMarkRead;
 	}
 
 	/**
@@ -211,7 +211,7 @@ public class ContextBean {
 				", name='" + name + '\'' +
 				", description='" + description + '\'' +
 				", modePublisher=" + modePublisher +
-				", userCanMarckRead=" + userCanMarckRead +
+				", userCanMarkRead=" + userCanMarkRead +
 				", treeSize=" + treeSize +
 				", treeVisible=" + treeVisible +
 				", itemDisplayMode=" + itemDisplayMode +
