@@ -65,7 +65,7 @@
 						<c:out value="${article.htmlContent}" escapeXml="false" />
 					</div>
 		
-					<c:if test="${cat.userCanMarkRead=='true'}">
+					<c:if test="${contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true'}">
 						<div class="col-xs-2 col-sm-1 articleEye ${article.id} ${n}">
 							<i class="fa ${article.read ? 'fa-eye-slash' :  'fa-eye'} fa-stack-1x" title="${article.read ? markAsUnRead : markAsRead}"
 								onclick="lecture['${n}'].toggleArticleRead('${cat.id}','${src.id}','${article.id}','${idDivRow}',${contexte.modePublisher});" 

@@ -481,6 +481,11 @@
 	color: black;
 	border: 1px solid grey;
 }
+.esup-lecture span.badge.emptyTextCircle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
 
 .esup-lecture li > div.rubriqueFiltre.div_cat {
 	display: inline-block;

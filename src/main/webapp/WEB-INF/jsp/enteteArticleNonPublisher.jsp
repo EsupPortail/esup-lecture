@@ -16,14 +16,6 @@ Partie supperieur de l'affichage des articles avec les boutons et dropdown de se
  
  <c:if var="withDropDown" test="${!pageAccueil && treeVisible}" ></c:if>
 <div class="enteteLectureAll "  }>
-	<!-- si au moin une catégorie a le tag userCanMarkRead à false on affiche pas la possibilité de marquer tous les artices àlu ou non lu -->
-	<c:set var="affichereye" value="true"></c:set>
-	<c:forEach items="${listCat}" var="cat">
-		<c:if test="${cat.userCanMarkRead=='false'}">
-			<c:set var="affichereye" value="false"></c:set>
-		</c:if>
-	</c:forEach>
-	
 	
 	<c:if test="${withDropDown}">
 		<div class="pull-left noMenuDropDown " 
@@ -54,49 +46,22 @@ Partie supperieur de l'affichage des articles avec les boutons et dropdown de se
 				</div>
 			</c:if>
 		</c:if>
-		<c:if
-			test="${contexte.userCanMarkRead=='true' && affichereye=='true'}">
+		<c:if test="${contexte.userCanMarkRead=='true' && affichereye=='true'}">
 			<button class="dropdown-toggle  pull-right" data-toggle="dropdown">
 				<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
 			</button>
 			<ul class="dropdown-menu pull-right">
           		<li class="checkbox afficherLuWith">
           		             <label for="checkReadItem${n})" onclick="lecture['${n}'].jq('input#checkReadItem${n}').click()"> <c:out value="${showUnreadNews}"></c:out>&nbsp;
-                </label>
-                <input 	id = "checkReadItem${n}"
+					</label>
+					<input 	id = "checkReadItem${n}"
                 		class="checkReadItem" 
                 		type="checkbox"
                 		${contexte.itemDisplayMode=='UNREAD'? 'checked' : ''}
                   		onchange="lecture.${n}.filterPublisherNotRead(this); lecture['${n}'].jq('#${n}rubSelectedDiv1 ').click();"
                   		id="${n}checkBoxNonLu">
-          
-          
           		</li>
   			</ul>
-	<%-- 
-			<ul class="dropdown-menu pull-right listOptionNonPublisher">
-				<c:if
-					test="${contexte.userCanMarkRead=='true'&&affichereye=='true'}">
-					<input type="hidden" id="<portlet:namespace />listNonLu"
-						value="val1" />
-					<li onclick="lecture.${n}.filtrerNonLus('val2')">Afficher les articles Non
-						lus</li>
-					<li onclick="lecture.${n}.filtrerNonLus('val3')">Afficher les articles Non
-						lus en premier</li>
-					<li onclick="lecture.${n}.filtrerNonLus('val1')">Afficher tous les articles</li>
-					<li onclick="lecture['${n}'].marquerToutItemLu(true)">Marquer tous les
-						articles lus</li>
-					<li onclick="lecture['${n}'].marquerToutItemLu(false)">Marquer tous les
-						articles non lus</li>
-				</c:if>
-				<c:if test="${contexte.treeVisible=='true'}">
-					<div class="checkbox afficherLuWith">
-						<label> Cacher l'arbre des catégories&nbsp;</label>
-							<input type="checkbox" id="<portlet:namespace />cacherListRubrique">
-					</div>
-				</c:if>
-			</ul>
-	--%>
 		</c:if>
 	</div>
 </div>
@@ -147,13 +112,10 @@ Partie supperieur de l'affichage des articles avec les boutons et dropdown de se
 	             		onclick="lecture.${n}.filterByRubriqueClass('src_${nbSrc}')"
 	            		data-dismiss="modal" >
 	              	<c:out value="${src.name}"></c:out>
-	              	<c:if test="${cat.userCanMarkRead=='true'}">
-	              		<span class="badge pull-right" style="background-color:${src.color}">
-	              			<c:out value="${src.unreadItemsNumber}"></c:out>
-	              		</span>
-	                </c:if>
-	                
-	            </div>
+					<c:if test="${contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true'}">
+						<span class="badge pull-right"><c:out value="${src.unreadItemsNumber}"></c:out></span>
+					</c:if>
+				</div>
 	            </li>
 	          </c:forEach>
 	          

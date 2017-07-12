@@ -15,29 +15,31 @@
       <label class="rubrique_Active ${n}"><c:out value="${ctxTextFilter}"></c:out></label>
       <span class="caret margeCarret"></span>
    </div>
-	<div class="dropdown readNotRead ">	
+	<c:if test="${contexte.userCanMarkRead=='true' && affichereye=='true'}">
+		<div class="dropdown readNotRead ">
 
-    	<button  class="btn btn-primary dropdown-toggle pull-right" type="button" data-toggle="dropdown"> 
-    		<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-    	</button>
-    	 <portlet:actionURL var="submitFormURL">
-          <portlet:param name="action" value="filteredItem"/>
-        </portlet:actionURL>
-        <ul class="dropdown-menu pull-right">
-          <li class="checkbox afficherLuWith">
-    
-                <label for="checkReadItem${n})" onclick="lecture['${n}'].jq('input#checkReadItem${n}').click()"> <c:out value="${showUnreadNews}"></c:out>&nbsp;
-                </label>
-                <input 	id = "checkReadItem${n}"
-                		class="checkReadItem" 
-                		type="checkbox"
-                		${contexte.itemDisplayMode=='UNREAD'? 'checked' : ''}
-                  		onchange="lecture.${n}.filterPublisherNotRead(this); lecture['${n}'].jq('#${n}rubSelectedDiv1 ').click();"
-                  id="${n}checkBoxNonLu">
-             
-          </li>
-  </ul>
-  </div>
+			<button  class="btn btn-primary dropdown-toggle pull-right" type="button" data-toggle="dropdown">
+				<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+			</button>
+			 <portlet:actionURL var="submitFormURL">
+			  <portlet:param name="action" value="filteredItem"/>
+			</portlet:actionURL>
+			<ul class="dropdown-menu pull-right">
+			  <li class="checkbox afficherLuWith">
+
+					<label for="checkReadItem${n})" onclick="lecture['${n}'].jq('input#checkReadItem${n}').click()"> <c:out value="${showUnreadNews}"></c:out>&nbsp;
+					</label>
+					<input 	id = "checkReadItem${n}"
+							class="checkReadItem"
+							type="checkbox"
+							${contexte.itemDisplayMode=='UNREAD'? 'checked' : ''}
+							onchange="lecture.${n}.filterPublisherNotRead(this); lecture['${n}'].jq('#${n}rubSelectedDiv1 ').click();"
+					  id="${n}checkBoxNonLu">
+
+			  </li>
+			</ul>
+		</div>
+	</c:if>
 </div>
   
 <c:set var="nbCat"  value="0" />
@@ -50,8 +52,11 @@
       <div class="modal-body modalPadding">
         <a href="#" class="list-group-item" onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')"
           data-dismiss="modal"><c:out value="${ctxTextFilter}"></c:out>
+			<c:if test="${contexte.userCanMarkRead=='true' && affichereye=='true'}" >
           <span class="badge pull-right"><c:out
-              value="${nombreArticleNonLu}"></c:out></span> </a>
+				  value="${nombreArticleNonLu}"></c:out></span>
+			</c:if>
+          </a>
         <c:forEach items="${listCat}" var="cat">
         <c:set var="nbCat" value="${nbCat+1}" />
         	<c:if var="notFromPublisher" test="${!cat.fromPublisher}" >
@@ -80,19 +85,16 @@
 					aria-labelledby="divCollapseInDropDown${nbCat}${n}">
 	          <c:forEach items="${cat.sources}" var="src">
 	          	<c:set var="nbSrc" value="${nbSrc+1}" />
-	          	<li>
-	            <div 	class="list-group-item rubriqueFiltre  ${n} src_${nbSrc}"
+                  <li><div class="list-group-item rubriqueFiltre ${n} src_${nbSrc}"
 	             		onclick="lecture.${n}.filterByRubriqueClass('src_${nbSrc}')"
 	            		data-dismiss="modal" >
-	              	<c:out value="${src.name}"></c:out>
-	              	<c:if test="${cat.userCanMarkRead=='true'}">
-	              		<span class="badge pull-right" style="background-color:${src.color}">
+					<c:out value="${src.name}"></c:out>
+					<span class="badge pull-right ${(contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true') ? '' : 'emptyTextCircle'}" style="background-color:${src.color}">
+						<c:if test="${contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true'}">
 	              			<c:out value="${src.unreadItemsNumber}"></c:out>
-	              		</span>
-	                </c:if>
-	                
-	            </div>
-	            </li>
+						</c:if>
+                    </span>
+	            </div></li>
 	          </c:forEach>
 	          
 	            </ul>
@@ -105,9 +107,10 @@
 	          <c:set var="nbSrc" value="${nbSrc+1}" />
 	            <a href="#" class="list-group-item"
 	              onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}')"
-	              data-dismiss="modal"><c:out value="${src.name}"></c:out><span
-	              class="badge pull-right" style="background-color:${src.color}"><c:out
-	                  value="${src.unreadItemsNumber}"></c:out></span></a>
+	              data-dismiss="modal"><c:out value="${src.name}"></c:out>
+					<span class="badge pull-right ${(contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true') ? '' : 'emptyTextCircle'}" style="background-color:${src.color}">
+						<c:if test="${contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true'}" ><c:out
+	                  value="${src.unreadItemsNumber}"></c:out></c:if></span></a>
 	          </c:forEach>
           	</c:if>
         </c:forEach>

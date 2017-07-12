@@ -11,17 +11,19 @@
  --%>
  <c:set var="nbCat"  value="0" />
  <c:set var="nbSrc" value="0" />
-<div class="navModeDesk navClass" id='${n}listOfCat' >
+<div class="navModeDesk navClass" id='${n}listOfCat'>
 	
   <ul 	class="nav nav-pills nav-stacked menuRubrique affix"
     	id='${n}menuRubrique'>
     <li>
-      <div 	class="row divLargeWith rubriqueFiltre rubrique_all  ${n} active" 
+      <div class="row divLargeWith rubriqueFiltre rubrique_all ${n} active"
       		onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')">
-          <c:out value="${ctxTextFilter}"></c:out><span class="badge pull-right">
-        	<span data-idSrc="all"><c:out value="${nombreArticleNonLu}"></c:out></span>
-            <input type="hidden" class="srcId" value="toutRub"/>
-            <input type="hidden" class="titleName" value="${ctxTextFilter}"/></span>
+          <c:out value="${ctxTextFilter}"></c:out>
+          <c:if test="${contexte.userCanMarkRead=='true' && affichereye=='true'}">
+              <span class="badge pull-right"><span data-idSrc="all"><c:out value="${nombreArticleNonLu}"></c:out></span></span>
+          </c:if>
+          <input type="hidden" class="srcId" value="toutRub"/>
+          <input type="hidden" class="titleName" value="${ctxTextFilter}"/>
       </div>
     </li>
       <c:forEach items="${listCat}" var="cat">
@@ -32,16 +34,17 @@
      	<c:if test="${!notFromPublisher}" >
         <c:forEach items="${cat.sources}" var="src">
         	<c:set var="nbSrc" value="${nbSrc+1}" />
-          <li><div 	class="row divLargeWith rubriqueFiltre rubrique_${src.uid} ${n}"
-          			onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}'); true"
-          			>
+          <li><div class="row divLargeWith rubriqueFiltre rubrique_${src.uid} ${n}"
+                   onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}')">
               <c:out value="${src.name}"></c:out>
-              <span class="badge pull-right"
-                style="background-color:${src.color}">
-                <span data-idSrc="${src.id}"><c:out value="${src.unreadItemsNumber}"></c:out></span>
-                </span>
-                  <input type="hidden" class="srcId" value="${src.uid}"/>
-                  <input type="hidden" class="titleName" value="${src.name}"/></span>
+                  <span class="badge pull-right ${(contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true') ? '' : 'emptyTextCircle'}"
+                    style="background-color:${src.color}">
+                    <c:if test="${contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true'}">
+                      <span data-idSrc="${src.id}"><c:out value="${src.unreadItemsNumber}"></c:out></span>
+                    </c:if>
+                  </span>
+              <input type="hidden" class="srcId" value="${src.uid}"/>
+              <input type="hidden" class="titleName" value="${src.name}"/>
             </div></li>
         </c:forEach>
         </c:if>

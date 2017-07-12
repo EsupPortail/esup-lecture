@@ -40,16 +40,14 @@
 			<li><div class="row ${n} ligneRubriqueMenu cursPoint rubriqueFiltre src_${nbSrc}"
 			 		onclick="lecture.${n}.filterByRubriqueClass('src_${nbSrc}')"> 
 					<!-- onclick="lecture.${n}.filtrerParRubrique('${cat.id}','${src.id}','','')" -->
-					<c:out value="${src.name}"></c:out>
-		  			<c:if test="${cat.userCanMarkRead=='true'}">
-						<span class="badge pull-right">
-							<span data-idSrc="${src.id}"><c:out value="${src.unreadItemsNumber}"></c:out></span>
-						</span>
-					</c:if>
-					
-					
-					<input type="hidden" class="titleName" value="${cat.name} > ${src.name}"/>
-				</div></li>
+				<c:out value="${src.name}"></c:out>
+				<c:if test="${contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true'}">
+					<span class="badge pull-right">
+						<span data-idSrc="${src.id}"><c:out value="${src.unreadItemsNumber}"></c:out></span>
+					</span>
+				</c:if>
+				<input type="hidden" class="titleName" value="${cat.name} > ${src.name}"/>
+			</div></li>
 		</c:forEach>
 	</ul>
 </c:if>

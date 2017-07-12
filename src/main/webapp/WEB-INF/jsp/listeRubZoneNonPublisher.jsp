@@ -19,7 +19,7 @@
 	<ul class="nav nav-pills nav-stacked menuTree ">
 		
 		<li class="li_cat" > 
-			<div 	class="row cursPoint divLargeWith rubriqueFiltre rubrique_all  ${n} active" 
+			<div class="row cursPoint divLargeWith rubriqueFiltre rubrique_all  ${n} active"
 					onclick="lecture.${n}.filterByRubriqueClass('rubrique_all')" >
 				<strong><c:out value="${contexte.name}"></c:out></strong>
 				<input type="hidden" class="titleName" value="${contexte.name}"/>
@@ -48,20 +48,17 @@
 					<ul class="collapse in" id="liThem${idcat}" aria-expanded="true"
 						aria-labelledby="divThem${idcat}">
 						<c:forEach items="${cat.sources}" var="src">
-						<c:set var="nbSrc" value="${nbSrc+1}" />
-						
+							<c:set var="nbSrc" value="${nbSrc+1}" />
 							<li><div class="row ${n} ligneRubriqueMenu cursPoint rubriqueFiltre src_${nbSrc}"
 							 		onclick="lecture.${n}.filterByRubriqueClass('src_${nbSrc}')"> 
-									<!-- onclick="lecture.${n}.filtrerParRubrique('${cat.id}','${src.id}','','')" -->
-									<c:out value="${src.name}"></c:out>
-						  			<c:if test="${cat.userCanMarkRead=='true'}">
-										<span class="badge pull-right"><c:out
-												value="${src.unreadItemsNumber}"></c:out></span>
-									</c:if>
-									
-									
-									<input type="hidden" class="titleName" value="${cat.name} > ${src.name}"/>
-								</div></li>
+								<!-- onclick="lecture.${n}.filtrerParRubrique('${cat.id}','${src.id}','','')" -->
+								<c:out value="${src.name}"></c:out>
+								<c:if test="${contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true'}">
+									<span class="badge pull-right ${(contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true') ? '' : 'emptyTextCircle'}">
+										<c:out value="${src.unreadItemsNumber}"></c:out></span>
+								</c:if>
+								<input type="hidden" class="titleName" value="${cat.name} > ${src.name}"/>
+							</div></li>
 						</c:forEach>
 					</ul>
 				</c:if></li>

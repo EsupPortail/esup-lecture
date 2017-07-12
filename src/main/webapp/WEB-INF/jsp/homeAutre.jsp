@@ -11,6 +11,14 @@
 <spring:message code="showUnreadNews" var="default_showUnreadNews" scope="session"></spring:message>
 <spring:message code="${ctx_name}.showUnreadNews" var="showUnreadNews" text="${default_showUnreadNews}"></spring:message>
 
+<!-- si au moin une catégorie a le tag userCanMarkRead à false on affiche pas la possibilité de marquer tous les artices àlu ou non lu -->
+<c:set var="affichereye" value="true"></c:set>
+<c:forEach items="${listCat}" var="cat">
+  <c:if test="${contexte.userCanMarkRead=='false' || cat.userCanMarkRead=='false'}">
+    <c:set var="affichereye" value="false"></c:set>
+  </c:if>
+</c:forEach>
+
 <div id="${n}homeAutreJsp" class="row">
   <input type="hidden" id="${n}catSeletc" value='' /> <input
     type="hidden" id="${n}SrcSeletc" value='' />
