@@ -209,9 +209,6 @@
 .esup-lecture .li_cat {
   width: 200px;
 }
-.esup-lecture .paddingLeft{
-  padding-left: 0px;
-}
 /*640*/
 .esup-lecture .large-btn {
         height: 30px;
@@ -379,9 +376,6 @@
 	}
 }
 
-.esup-lecture .scrollDivArticle .itemShowFilter .paddingLeft{
-	padding-left: 92px; 
-}
 .esup-lecture .scrollDivArticle .itemOpacifiable.dejaLue  {
 	opacity: 0.5;
 }

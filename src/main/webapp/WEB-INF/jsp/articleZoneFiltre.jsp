@@ -74,7 +74,7 @@
 					</c:if>
 				</div>
 				<c:if test="${not empty article.rubriques}">
-					<div class="paddingLeft">
+					<div class="rubriquesOfArticle">
 						<c:forEach items="${article.rubriques}" var="rub">
 							<input type="hidden" class="uidDesRubriquesItem"
 								value="${rub.uid}" />
