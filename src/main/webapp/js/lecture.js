@@ -416,7 +416,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
       if (afficherRubSelect != '') {
         var reponse1 = "<label>" + afficherRubSelect + "</label>";
         var reponse = "<label>" + afficherRubSelect
-            + "</label><span class='caret margeCarret'></span>";
+            + "</label><span class='caret'></span>";
         $("#" + portletId + "rubSelectedDiv1").html(reponse1);
         $("#" + portletId + "rubSelectedDiv2").html(reponse);
       }

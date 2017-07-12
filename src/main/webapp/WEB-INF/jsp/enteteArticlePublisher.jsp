@@ -13,7 +13,7 @@
   <div id="${n}rubSelectedDiv2" class="pull-left withMenuDropDown" data-toggle="modal"
       data-target="#modalRubriqueList${n}">
       <label class="rubrique_Active ${n}"><c:out value="${ctxTextFilter}"></c:out></label>
-      <span class="caret margeCarret"></span>
+      <span class="caret"></span>
    </div>
 	<c:if test="${contexte.userCanMarkRead=='true' && affichereye=='true'}">
 		<div class="dropdown readNotRead ">

@@ -27,7 +27,7 @@ Partie supperieur de l'affichage des articles avec les boutons et dropdown de se
 				data-toggle="modal"
       			data-target="#modalRubriqueList${n}">	
 			<label class="cursPoint rubrique_Active ${n}"><c:out value="${contexte.name}"></c:out></label>
-			<span class="caret margeCarret"></span>
+			<span class="caret"></span>
 		</div>
 		</div>
 	</c:if>
