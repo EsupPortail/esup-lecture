@@ -110,9 +110,9 @@
 	</bean>
 
 	<bean id="requestConfigBuilder" class="org.esupportail.lecture.domain.utils.CustomRequestConfig">
-		<property name="connectionRequestTimeout" value="10000" />
-		<property name="connectTimeout" value="10000" />
-		<property name="socketTimeout" value="10000" />
+		<property name="connectionRequestTimeout" value="15000" />
+		<property name="connectTimeout" value="15000" />
+		<property name="socketTimeout" value="20000" />
 	</bean>
 
 	<bean id="requestConfig" factory-bean="requestConfigBuilder" factory-method="customize" />
