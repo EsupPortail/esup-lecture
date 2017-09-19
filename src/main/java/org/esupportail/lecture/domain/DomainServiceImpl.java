@@ -110,15 +110,28 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 *            : identifient of the user profile
 	 * @return the user profile
 	 */
-	private synchronized UserProfile getUserProfile(final String userId) {
+	private UserProfile getUserProfile(final String userId) {
+		if (userId == null) {
+			throw new NullPointerException("userId is null: can't find it in database");
+		}
+		Object	lock = userId.intern();
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("getFreshUserProfile(" + userId + ")");
+				LOG.debug("getFreshUserProfile(before synchronized " + userId + ")");
 		}
-		UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
-		if (userProfile == null) {
-			userProfile = DomainTools.getDaoService().mergeUserProfile(new UserProfile(userId));
+		
+		synchronized (lock) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("getFreshUserProfile(begin synchronized " + userId + ")");
+			}
+			UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
+			if (userProfile == null) {
+				userProfile = DomainTools.getDaoService().mergeUserProfile(new UserProfile(userId));
+			}
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("getFreshUserProfile(end synchronized " + userId + ")");
+			}
+			return userProfile;
 		}
-		return userProfile;
 	}
 
 	/**
