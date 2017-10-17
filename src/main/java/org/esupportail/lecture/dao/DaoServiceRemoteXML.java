@@ -235,7 +235,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @return the source
 	 * @throws InternalDaoException
 	 */
-	public synchronized Source getSource(final ManagedSourceProfile sourceProfile, Boolean withCAS)
+	public Source getSource(final ManagedSourceProfile sourceProfile, Boolean withCAS)
 	throws InternalDaoException {
 		// TODO (RB <-- GB) Pourquoi ne déclare-tu pas un type Source alors que tu fais un new GlobalSource ?
 		// Je comprends que tu n'as pas le droit de faire un new Source car abstract,
@@ -243,59 +243,62 @@ public class DaoServiceRemoteXML implements InitializingBean {
 		// Ne crois tu pas ? Tu viens m'en parler ?
 		Source ret = new GlobalSource(sourceProfile);
 		String urlSource = sourceProfile.getSourceURL();
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("in getSource");
-		}
-		try {
-			Element element = cache.get(urlSource);
-			if ((element == null)) {
-				try {
-					String ptCas = null;
-					if (withCAS) {
-						String url = sourceProfile.getSourceURL();
-						ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);
-						if (ptCas == null) {
-							LOG.warn("No Proxy Ticket retruned! Have you a ProxyGrantingTicket?");
+		synchronized (urlSource.intern()) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("in getSource");
+			}
+			try {
+				Element element = cache.get(urlSource);
+				if ((element == null)) {
+					try {
+						String ptCas = null;
+						if (withCAS) {
+							String url = sourceProfile.getSourceURL();
+							ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);
+							if (ptCas == null) {
+								LOG.warn("No Proxy Ticket retruned! Have you a ProxyGrantingTicket?");
+							}
+						}
+						ret = getFreshSource(sourceProfile, ptCas);
+					} catch (IllegalStateException ise) {
+						throw ise;
+					} catch (Exception e) {
+						ret = new SourceDummy(sourceProfile, e);
+						String msg = "Create dummy source : " + urlSource + "\ncause: " + e.getCause();
+						LOG.warn("=========");
+						LOG.warn(msg);
+						LOG.warn("=========");
+					}
+					if (!sourceProfile.isSpecificUserContent()) {
+						Element cacheElement = new Element(urlSource, ret);
+						cacheElement.setTimeToLive(ret.getTtl());
+						cache.put(cacheElement);
+						if (LOG.isDebugEnabled()) {
+							LOG.debug("Put source in cache : " + urlSource
+								+ " Ttl: " + String.valueOf(ret.getTtl()));
+						}
+					} else {
+						// don't put SpecificUserContent in cache
+						if (LOG.isDebugEnabled()) {
+							LOG.debug("Source SpecificUserContent (not in cache) : " + urlSource);
 						}
 					}
-					ret = getFreshSource(sourceProfile, ptCas);
-				} catch (Exception e) {
-					ret = new SourceDummy(sourceProfile, e);
-					String msg = "Create dummy source : " + urlSource + "\ncause: " + e.getCause();
-					LOG.warn("=========");
-					LOG.warn(msg);
-					LOG.warn("=========");
-				}
-				if (!sourceProfile.isSpecificUserContent()) {
-					Element cacheElement = new Element(urlSource, ret);
-					cacheElement.setTimeToLive(ret.getTtl());
-					cache.put(cacheElement);
-					if (LOG.isDebugEnabled()) {
-						LOG.debug("Put source in cache : " + urlSource
-							+ " Ttl: " + String.valueOf(ret.getTtl()));
-					}
 				} else {
-					// don't put SpecificUserContent in cache
-					if (LOG.isDebugEnabled()) {
-						LOG.debug("Source SpecificUserContent (not in cache) : " + urlSource);
+					LOG.debug("Already in cache : " + urlSource
+						+ " Ttl: " + String.valueOf(element.getTimeToLive()));
+					//LOG.debug("Already in cache : "+urlSource+ " Creation time : "+ String.valueOf(element.getCreationTime()));
+					ret = (Source) element.getObjectValue();
+					if (ret instanceof SourceDummy) {
+						ret = (SourceDummy) element.getObjectValue();
 					}
 				}
-			} else {
-				LOG.debug("Already in cache : " + urlSource
-					+ " Ttl: " + String.valueOf(element.getTimeToLive()));
-				//LOG.debug("Already in cache : "+urlSource+ " Creation time : "+ String.valueOf(element.getCreationTime()));
-				ret = (Source) element.getObjectValue();
-				if (ret instanceof SourceDummy) {
-					ret = (SourceDummy) element.getObjectValue();
-				}
+			} catch (IllegalStateException e) {
+				throw new InternalDaoException(e);
+			} catch (CacheException e) {
+				throw new InternalDaoException(e);
 			}
-		} catch (IllegalStateException e) {
-			throw new InternalDaoException(e);
-		} catch (CacheException e) {
-			throw new InternalDaoException(e);
-		}
 		return ret;
-
+		}
 	}
 
 	/**

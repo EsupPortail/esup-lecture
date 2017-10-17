@@ -104,6 +104,9 @@ public class PortletService implements ModeService, InitializingBean {
 					(Map<String, ArrayList<String>>) request.getAttribute("org.jasig.portlet.USER_INFO_MULTIVALUED");
 					//(Map<String, ArrayList<String>>) request.getAttribute(PortletRequest.USER_INFO);
 			values = userInfo.get(attribute);
+		} catch (RuntimeException re) {
+			LOG.error("getUserAttribut: "+attribute, re);
+			throw re;
 		} catch (Exception e) {
 			LOG.error("Can't find attribute " + attribute);
 			throw new InternalExternalException(e);
