@@ -9,6 +9,10 @@ import java.io.Serializable;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
 
 /**
@@ -73,31 +77,46 @@ public class VisibilitySets implements Serializable {
 	 * Return the visibility mode for current user (user connected to externalService).
 	 * @return visibilityMode 
 	 */
-	protected synchronized VisibilityMode whichVisibility() {
-		
-		VisibilityMode mode = VisibilityMode.NOVISIBLE;
-		
-		boolean isVisible = false;
-		
-		isVisible = obliged.evaluateVisibility();
-		if (isVisible) {
-			mode = VisibilityMode.OBLIGED;
-		
-		} else {
-			isVisible = autoSubscribed.evaluateVisibility();
+	protected  VisibilityMode whichVisibility() {
+		Object  lock = this;
+		try {
+			ExternalService ex = DomainTools.getExternalService();
+			lock = ex.getConnectedUserId().intern();
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("whichVisibility lock on uid" + lock );
+			}
+		} catch (Exception e) {
+			lock = this;
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("whichVisibility lock on VisibilitySets object");
+			}
+		} 
+		synchronized (lock) {
+			VisibilityMode mode = VisibilityMode.NOVISIBLE;
+			
+			boolean isVisible = false;
+			
+			isVisible = obliged.evaluateVisibility();
 			if (isVisible) {
-				mode = VisibilityMode.AUTOSUBSCRIBED;
+				mode = VisibilityMode.OBLIGED;
 			
 			} else {
-				isVisible = allowed.evaluateVisibility();
+				isVisible = autoSubscribed.evaluateVisibility();
 				if (isVisible) {
-					mode = VisibilityMode.ALLOWED;
+					mode = VisibilityMode.AUTOSUBSCRIBED;
+				
 				} else {
-					mode = VisibilityMode.NOVISIBLE;
+					isVisible = allowed.evaluateVisibility();
+					if (isVisible) {
+						mode = VisibilityMode.ALLOWED;
+					} else {
+						mode = VisibilityMode.NOVISIBLE;
+					}
 				}
 			}
-		}
+		
 		return mode;
+		}
 	}
 	
 	/**

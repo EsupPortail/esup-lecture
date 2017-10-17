@@ -124,12 +124,14 @@ public class Context implements Serializable {
 	 * defined in this Context, according to managedCategory visibilities
 	 * @param customContext customContext to update
 	 */
-	protected synchronized void updateCustom(final CustomContext customContext) {
+	protected  void updateCustom(final CustomContext customContext) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + id + " - updateCustom(" + customContext.getElementId() + ")");
 		}
-		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
+		Object lock = customContext.getUserProfile().getUserId().intern();
+		synchronized (lock) {
+		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		// update for managedCategories defined in this context
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet) {
 			try {
@@ -144,6 +146,7 @@ public class Context implements Serializable {
 		}
 		// update for managedCategories not anymore in this context
 		updateCustomForVanishedSubscriptions(customContext);
+		}
 	}
 
 	/**
