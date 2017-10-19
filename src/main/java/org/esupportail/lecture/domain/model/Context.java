@@ -129,7 +129,7 @@ public class Context implements Serializable {
 			LOG.debug("id=" + id + " - updateCustom(" + customContext.getElementId() + ")");
 		}
 		
-		Object lock = customContext.getUserProfile().getUserId().intern();
+		Object lock = customContext; 
 		synchronized (lock) {
 		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		// update for managedCategories defined in this context
@@ -153,16 +153,18 @@ public class Context implements Serializable {
 	 * Update customContext for managedCategories not anymore in this context.
 	 * @param customContext
 	 */
-	private synchronized void updateCustomForVanishedSubscriptions(final CustomContext customContext) {
-		List<String> cids = new ArrayList<String>();
-		for (String categoryId : customContext.getSubscriptions().keySet()) {
-			cids.add(categoryId);
-		}
-		for (String categoryId : cids) {
-			if (!containsCategory(categoryId)) {
-				customContext.removeCustomManagedCategory(categoryId);
-				UserProfile user = customContext.getUserProfile();
-				user.removeCustomManagedCategoryIfOrphan(categoryId);
+	private  void updateCustomForVanishedSubscriptions(final CustomContext customContext) {
+		synchronized (customContext) {
+			List<String> cids = new ArrayList<String>();
+			for (String categoryId : customContext.getSubscriptions().keySet()) {
+				cids.add(categoryId);
+			}
+			for (String categoryId : cids) {
+				if (!containsCategory(categoryId)) {
+					customContext.removeCustomManagedCategory(categoryId);
+					UserProfile user = customContext.getUserProfile();
+					user.removeCustomManagedCategoryIfOrphan(categoryId);
+				}
 			}
 		}
 	}
@@ -177,38 +179,41 @@ public class Context implements Serializable {
 	 * @return list of CoupleProfileVisibility
 	 * @see Context#updateCustom(CustomContext)
 	 */
-	protected synchronized List<CoupleProfileVisibility> getVisibleCategoriesAndUpdateCustom(
+	protected  List<CoupleProfileVisibility> getVisibleCategoriesAndUpdateCustom(
 			final CustomContext customContext) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getId() + " - getVisibleCategoriesAndUpdateCustom("
-					+ this.getId() + ")");
-		}
-		List<CoupleProfileVisibility> couplesVisib = new Vector<CoupleProfileVisibility>();
-		Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
 		
-		// update and get managedSources defined in this managedCategory 
-		while (iterator.hasNext()) {
-			ManagedCategoryProfile mcp = iterator.next();
-			CoupleProfileVisibility couple;
-			try {				
-				VisibilityMode mode = mcp.updateCustomContext(customContext);
-				if (mode != VisibilityMode.NOVISIBLE) {
-					couple = new CoupleProfileVisibility(mcp, mode);
-					couplesVisib.add(couple);
-				}
-			} catch (ManagedCategoryNotLoadedException e) {
-				LOG.error("Impossible to update CustomContext associated to context " + getId()
-						+ " for managedCategoryProfile " + mcp.getId()
-						+ " because its category is not loaded - " 
-						+ " It is very strange because loadCategory() has " 
-						+ "been called before in mcp.updateCustomContext() ...", e);
-			} 
-		}
-		
-		// update for managedCategories not anymore in this Context
-		updateCustomForVanishedSubscriptions(customContext);
+		synchronized (customContext) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("id=" + this.getId() + " - getVisibleCategoriesAndUpdateCustom("
+						+ this.getId() + ")");
+			}
+			List<CoupleProfileVisibility> couplesVisib = new Vector<CoupleProfileVisibility>();
+			Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
+			
+			// update and get managedSources defined in this managedCategory 
+			while (iterator.hasNext()) {
+				ManagedCategoryProfile mcp = iterator.next();
+				CoupleProfileVisibility couple;
+				try {				
+					VisibilityMode mode = mcp.updateCustomContext(customContext);
+					if (mode != VisibilityMode.NOVISIBLE) {
+						couple = new CoupleProfileVisibility(mcp, mode);
+						couplesVisib.add(couple);
+					}
+				} catch (ManagedCategoryNotLoadedException e) {
+					LOG.error("Impossible to update CustomContext associated to context " + getId()
+							+ " for managedCategoryProfile " + mcp.getId()
+							+ " because its category is not loaded - " 
+							+ " It is very strange because loadCategory() has " 
+							+ "been called before in mcp.updateCustomContext() ...", e);
+				} 
+			}
+			
+			// update for managedCategories not anymore in this Context
+			updateCustomForVanishedSubscriptions(customContext);
 		
 		return couplesVisib;
+		}
 	}
 	
 

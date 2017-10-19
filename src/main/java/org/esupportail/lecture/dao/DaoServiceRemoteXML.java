@@ -81,7 +81,7 @@ public class DaoServiceRemoteXML implements InitializingBean {
 	 * @return the Category
 	 * @throws InternalDaoException
 	 */
-	public synchronized ManagedCategory getManagedCategory(final ManagedCategoryProfile profile, boolean withCAS) throws InternalDaoException {
+	public  ManagedCategory getManagedCategory(final ManagedCategoryProfile profile, boolean withCAS) throws InternalDaoException {
 
 		/* *************************************
 		 * Cache logic :
@@ -110,57 +110,59 @@ public class DaoServiceRemoteXML implements InitializingBean {
 			LOG.debug("in getManagedCategory");
 		}
 
-		ManagedCategory ret = new ManagedCategory(profile);
+		ManagedCategory ret ; //new ManagedCategory(profile);
 		String urlCategory = profile.getCategoryURL();
 		String cacheKey = "CAT:" + profile.getId() + urlCategory;
-		try {
-			Element element = cache.get(cacheKey);
-			if (element == null) {
-				try {
-					String ptCas = null;
-					if (withCAS) {
-						String url = profile.getCategoryURL();
-						ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);
+		synchronized (cacheKey.intern()) {
+			try {
+				Element element = cache.get(cacheKey);
+				if (element == null) {
+					try {
+						String ptCas = null;
+						if (withCAS) {
+							String url = profile.getCategoryURL();
+							ptCas = DomainTools.getExternalService().getUserProxyTicketCAS(url);
+						}
+						ret = getFreshManagedCategory(profile, ptCas);
+					} catch (Exception e) {
+						ret = new ManagedCategoryDummy(profile, e);
+						String msg = "Create dummy category : " + cacheKey + "\ncause: " + e.getCause();
+						LOG.warn("=========");
+						LOG.warn(msg);
+						LOG.warn("=========");
 					}
-					ret = getFreshManagedCategory(profile, ptCas);
-				} catch (Exception e) {
-					ret = new ManagedCategoryDummy(profile, e);
-					String msg = "Create dummy category : " + cacheKey + "\ncause: " + e.getCause();
-					LOG.warn("=========");
-					LOG.warn(msg);
-					LOG.warn("=========");
-				}
-				if (!profile.isSpecificUserContent()) {
-					cache.put(new Element(cacheKey, ret));
-					Element e = cache.get(cacheKey);
-					int ttl = ret.getTtl();
-					e.setTimeToLive(ttl);
-
-					if (LOG.isDebugEnabled()) {
-						LOG.debug("Put category in cache : " + cacheKey
-							+ " Ttl: " + String.valueOf(ret.getTtl()));
+					if (!profile.isSpecificUserContent()) {
+						cache.put(new Element(cacheKey, ret));
+						Element e = cache.get(cacheKey);
+						int ttl = ret.getTtl();
+						e.setTimeToLive(ttl);
+	
+						if (LOG.isDebugEnabled()) {
+							LOG.debug("Put category in cache : " + cacheKey
+								+ " Ttl: " + String.valueOf(ret.getTtl()));
+						}
+					} else {
+						// don't put SpecificUserContent in cache
+						if (LOG.isDebugEnabled()) {
+							LOG.debug("Category SpecificUserContent (not in cache) : " + urlCategory);
+						}
 					}
 				} else {
-					// don't put SpecificUserContent in cache
-					if (LOG.isDebugEnabled()) {
-						LOG.debug("Category SpecificUserContent (not in cache) : " + urlCategory);
+					LOG.debug("Already in cache : " + cacheKey
+						+ " Ttl: " + String.valueOf(element.getTimeToLive()));
+					//LOG.debug("Already in cache : "+cacheKey+ " Creation time : "+ String.valueOf(element.getCreationTime()));
+					ret = (ManagedCategory) element.getObjectValue();
+					if (ret instanceof ManagedCategoryDummy) {
+						ret = (ManagedCategoryDummy) element.getObjectValue();
 					}
 				}
-			} else {
-				LOG.debug("Already in cache : " + cacheKey
-					+ " Ttl: " + String.valueOf(element.getTimeToLive()));
-				//LOG.debug("Already in cache : "+cacheKey+ " Creation time : "+ String.valueOf(element.getCreationTime()));
-				ret = (ManagedCategory) element.getObjectValue();
-				if (ret instanceof ManagedCategoryDummy) {
-					ret = (ManagedCategoryDummy) element.getObjectValue();
-				}
+			} catch (IllegalStateException e) {
+				throw new InternalDaoException(e);
+			} catch (CacheException e) {
+				throw new InternalDaoException(e);
 			}
-		} catch (IllegalStateException e) {
-			throw new InternalDaoException(e);
-		} catch (CacheException e) {
-			throw new InternalDaoException(e);
+			return ret;
 		}
-		return ret;
 	}
 
 	/**
