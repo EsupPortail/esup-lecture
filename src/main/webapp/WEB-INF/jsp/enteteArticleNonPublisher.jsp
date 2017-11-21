@@ -37,7 +37,7 @@ Partie supperieur de l'affichage des articles avec les boutons et dropdown de se
 		</div>
 	</c:if>
 	
-	<div class="pull-right">
+	<div class="pull-right ${(contexte.userCanMarkRead=='true' && affichereye=='true') ? 'dropdown' : ''}">
 		<c:if test="${pageAccueil}">
 			<c:if test="${contexte.lienVue!=null && contexte.lienVue!=''}">
 				<div>
