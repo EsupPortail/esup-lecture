@@ -326,7 +326,7 @@
 	width: 84px;
 	display: inline-block;
 	padding-top: 12px;
-	
+	min-height: 84px;	
 }
 .esup-lecture .itemsPublisher .actualite .imageArticle img {
 	border-radius: 4px; 
@@ -353,16 +353,6 @@
 }
 
 
-.esup-lecture .scrollDivArticle > div.premierVisible  .itemsPublisher .actualite div.metaArticle ,
-.esup-lecture .scrollDivArticle > div:FIRST-CHILD  .itemsPublisher .actualite div.metaArticle {
-	background-image: none;
-	padding-top: 0px;
-}
-
-
-.esup-lecture .scrollDivArticle > div:FIRST-CHILD  .itemsPublisher .actualite .imageArticle {
-	padding-top: 4px;
-}
 @media only screen and (max-width: 992px) { 
 	.esup-lecture .itemsPublisher .actualite .imageArticle {
 		width: 84px;
@@ -380,31 +370,48 @@
 	padding-top: 2em;
 }
 
-.esup-lecture .scrollDivArticle > div.itemShowFilter.premierVisible div.modeNoPublisher,
-.esup-lecture .scrollDivArticle .itemShowFilter:FIRST-CHILD div.modeNoPublisher {
-	background: none;
-	padding-top : 0px;
+.esup-lecture .itemOpacifiable~.itemOpacifiable {
+    padding-top: 8px;
 }
- 
-.esup-lecture .scrollDivArticle > div.itemShowFilter div.modeNoPublisher {
-	padding-top : 6px;
-	margin-top : 6px
+.esup-lecture .itemOpacifiable~.itemOpacifiable:before {
+    background: #054460;
+    /* IE10+ */
+    background-image: -ms-linear-gradient(left, #fff 0%, #054460 15%, #fff 60%);
+    /* Mozilla Firefox */
+    background-image: -moz-linear-gradient(left, #fff 0%, #054460 15%, #fff 60%);
+    /* Opera */
+    background-image: -o-linear-gradient(left, #fff 0%, #054460 15%, #fff 60%);
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #fff), color-stop(15, #054460), color-stop(60, #fff));
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(left, #fff 0%, #054460 15%, #fff 60%);
+    /* W3C Markup */
+    background-image: linear-gradient(to right, #fff 0%, #054460 15%, #fff 60%);
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    background-color: transparent;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    content:" ";
 }
 
-.esup-lecture .scrollDivArticle .itemShowFilter div.modeNoPublisher {
-	background: url(/esup-news/images/line_b.gif) no-repeat;
+.esup-lecture .itemOpacifiable.premierVisible:before {
+    background: none;
 }
-
-.esup-lecture.modePublisher.viewDef div.modeNoPublisher  {
-	background: url(/esup-news/images/line_b.gif) no-repeat;
-	margin-top: 8px;
+.esup-lecture .scrollDivArticle .premierVisible div.itemShowFilter div.modeNoPublisher,
+.esup-lecture .scrollDivArticle .premierVisible > div.itemShowFilter div.modeNoPublisher,
+.esup-lecture .premierVisible .itemsPublisher .actualite {
+    padding-top: 0px;
+    margin-top: 0px;
 }
-
 .esup-lecture div.modeNoPublisher .metaArticle .metaArticleDetail {
 	padding-left : 0px;
+	padding-top: 8px;
 }
-.esup-lecture div.modeNoPublisher .metaArticleDatePub {
-	font:90%;
+.esup-lecture div.modeNoPublisher .metaArticleDatePub,
+.esup-lecture .itemOpacifiable .metaArticle .pubDate {
+	font-size:90%;
 	font-style: oblique;
 }
 .esup-lecture div.modeNoPublisher .metaArticle + H1 {
@@ -576,14 +583,4 @@
 }
 .esup-lecture.viewDef.notModePublisher div.divModeDesk{
 	width : 100%;
-}
-/* corection des css superieur */
- 
-.esup-lecture .modeNoPublisher > div.metaArticle {
-	background-image: none;
-	font-size: 90%;
-	margin-bottom: 0px;
-}
-.esup-lecture div.divModeDesk > div {
-	margin-bottom: 0px;
 }
