@@ -78,20 +78,6 @@ public class VisibilitySets implements Serializable {
 	 * @return visibilityMode 
 	 */
 	protected  VisibilityMode whichVisibility() {
-		Object  lock = this;
-		try {
-			ExternalService ex = DomainTools.getExternalService();
-			lock = ex.getConnectedUserId().intern();
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("whichVisibility lock on uid" + lock );
-			}
-		} catch (Exception e) {
-			lock = this;
-			if (LOG.isDebugEnabled()) {
-				LOG.debug("whichVisibility lock on VisibilitySets object");
-			}
-		} 
-		synchronized (lock) {
 			VisibilityMode mode = VisibilityMode.NOVISIBLE;
 			
 			boolean isVisible = false;
@@ -116,7 +102,7 @@ public class VisibilitySets implements Serializable {
 			}
 		
 		return mode;
-		}
+
 	}
 	
 	/**
