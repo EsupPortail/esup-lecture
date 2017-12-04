@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -193,7 +194,7 @@ public class ManagedCategory extends Category {
 	 * These values are used according to inheritance regulars
 	 * @author gbouteil
 	 */
-	protected class InnerFeatures {
+	protected class InnerFeatures implements Serializable {
 		 
 		/** 
 		 * Managed category edit mode.
@@ -265,22 +266,25 @@ public class ManagedCategory extends Category {
 	 * (there is not any loading of source at this time)
 	 * @param customManagedCategory customManagedCategory to update
 	 */
-	protected synchronized void updateCustom(final CustomManagedCategory customManagedCategory) {
+	protected  void updateCustom(final CustomManagedCategory customManagedCategory) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id = " + getProfileId() + " - updateCustom("
 					+ customManagedCategory.getElementId() + ")");
 		}
-		Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
 		
-		// update for managedSources defined in this managedCategory
-		while (iterator.hasNext()) {
-			ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
-			msp.updateCustomCategory(customManagedCategory);
-		
+		synchronized (customManagedCategory) {
+			Iterator<SourceProfile> iterator = getSourceProfilesHash().values().iterator();
+			
+			// update for managedSources defined in this managedCategory
+			while (iterator.hasNext()) {
+				ManagedSourceProfile msp = (ManagedSourceProfile) iterator.next();
+				msp.updateCustomCategory(customManagedCategory);
+			
+			}
+			
+			// update managedSources not anymore in this managedCategory
+			updateCustomForVanishedSubscriptions(customManagedCategory);
 		}
-		
-		// update managedSources not anymore in this managedCategory
-		updateCustomForVanishedSubscriptions(customManagedCategory);
 	}
 	
 	/**

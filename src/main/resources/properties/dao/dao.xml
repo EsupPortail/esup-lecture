@@ -97,7 +97,34 @@
 		<property name="defaultTimeout" value="3000">
 			<description>Timeout used when getting a category or a source from URL in milliseconds</description>
 		</property>
+		<property name="httpClient" ref="httpClient" />
 	</bean>
+
+	<bean id="sslContext" class="org.apache.http.ssl.SSLContexts" factory-method="createSystemDefault" />
+
+	<bean id="sslSocketFactory" class="org.apache.http.conn.ssl.SSLConnectionSocketFactory">
+		<constructor-arg ref="sslContext" />
+		<constructor-arg >
+			<bean class="org.apache.http.conn.ssl.DefaultHostnameVerifier" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="requestConfigBuilder" class="org.esupportail.lecture.domain.utils.CustomRequestConfig">
+		<property name="connectionRequestTimeout" value="15000" />
+		<property name="connectTimeout" value="15000" />
+		<property name="socketTimeout" value="20000" />
+	</bean>
+
+	<bean id="requestConfig" factory-bean="requestConfigBuilder" factory-method="customize" />
+
+	<bean id="httpClientBuilder" class="org.esupportail.lecture.domain.utils.CustomHttpClientConfig">
+		<property name="sslConnectionSocketFactory" ref="sslSocketFactory" />
+		<property name="requestConfig" ref="requestConfig" />
+		<property name="maxConnPerRoute" value="20" />
+		<property name="maxConnTotal" value="50" />
+	</bean>
+
+	<bean id="httpClient" factory-bean="httpClientBuilder" factory-method="customize" />
 
 	<bean id="daoServiceHibernate" 
         class="org.esupportail.lecture.dao.DaoServiceHibernate"

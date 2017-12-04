@@ -189,7 +189,7 @@ public class ChannelConfig  {
 					String categoryProfilesUrlPath = node.valueOf("@url");
 					//URL url = ChannelConfig.class.getResource(categoryProfilesUrlPath);
 					String idPrefix = node.valueOf("@idPrefix");
-					if ((categoryProfilesUrlPath == null) || (categoryProfilesUrlPath == "")) {
+					if ((categoryProfilesUrlPath == null) || "".equals(categoryProfilesUrlPath)) {
 						String errorMsg = "URL of : categoryProfilesUrl with prefix " + idPrefix + " is null or empty.";
 						LOG.warn(errorMsg);
 					} else {
@@ -395,6 +395,11 @@ public class ChannelConfig  {
 			Context c = new Context();
 			c.setId(context.valueOf("@id"));
 			c.setName(context.valueOf("@name"));
+			if("yes".equals(context.valueOf("@userCanMarkRead"))){
+				c.setUserCanMarkRead(true);
+			}else{
+				c.setUserCanMarkRead(false);
+			}
 			//treeVisible
 			String treeVisible = context.valueOf("@treeVisible");
 			if (treeVisible.equals("no")) {
@@ -478,6 +483,13 @@ public class ChannelConfig  {
 						visibilitySets.setAutoSubscribed(loadDefAndContentSets("autoSubscribed", categoryProfile));
 						visibilitySets.setObliged(loadDefAndContentSets("obliged", categoryProfile));
 						mcp.setVisibility(visibilitySets);
+						//pour gerer le nouveau parametrage
+						if(categoryProfile.valueOf("@urlCategory") != null && !"".equals(categoryProfile.valueOf("@urlCategory"))){
+							mcp.setCategoryURL(categoryProfile.valueOf("@urlCategory"));
+						}else if (!"".equals(categoryProfile.valueOf("@urlActualites"))){
+							c.setModePublisher(true);
+							mcp.setUrlActualites(categoryProfile.valueOf("@urlActualites"));
+						}
 
 						channel.addManagedCategoryProfile(mcp);
 						c.addRefIdManagedCategoryProfile(mcp.getId());

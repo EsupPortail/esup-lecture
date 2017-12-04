@@ -1,0 +1,586 @@
+.esup-lecture .imageArticle img {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.esup-lecture .imageArticle {
+  font-size: 13px;
+}
+
+.esup-lecture .menuRubrique {
+  margin-top: 50px;
+ /* position: fixed; */
+}
+.esup-lecture .menuRubrique {
+	background-color: #f3f3f3;
+}
+.esup-lecture .menuRubrique li {
+  width: 100px;
+/*  height: 30px;*/
+  cursor: pointer;
+}
+
+.esup-lecture .menuRubrique li div {
+  height: 100%;
+  cursor: pointer;
+}
+
+.esup-lecture .menuRubrique li div:hover {
+  background: #A9A9A9;
+}
+
+.esup_lecture_margin_bottom {
+  margin-bottom: 10px;
+}
+
+.esup_lecture_margin_top {
+  margin-top: 10px;
+}
+
+.esup-lecture .menuRubDropDown {
+  display: none;
+}
+
+.esup-lecture .ligneRubriqueMenu {
+  margin: auto;
+  margin-top: 10px;
+  margin-left: 0px;
+}
+
+
+.esup-lecture .rubriqueFiltre {
+	cursor:pointer;
+}
+.esup-lecture .rubriqueFiltre:hover {
+  background: #A9A9A9;
+}
+
+.esup-lecture .withCategoriesAndSources .rubriqueFiltre:hover {
+  background: #F5F5F5;
+}
+
+.esup-lecture .griseImageArticle {
+  filter: grayscale(57%);
+}
+
+.esup-lecture i {
+  cursor: pointer;
+}
+
+.esup-lecture .cursPoint {
+  cursor: pointer;
+}
+
+.esup-lecture .divLargeWith {
+  width: 15vw;
+  padding-top: 6px;
+}
+
+/*Ajout :*/
+.esup-lecture .panel.panelHome {
+        background-color: #f5f5f5;
+/*      border: 1px solid #e3e3e3;
+        border-radius: 2px;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);*/
+        height: 50px;
+        margin-top: -12px;
+        margin-bottom: 0;
+        padding-top: 12px;
+}
+.esup-lecture .panel {
+        border: none;
+        border-radius: 4px;
+        background-color: #ffffff;
+}
+
+.esup-lecture .menuRubDropDown > div > div, .esup-lecture .menuRubDropDown label {
+    cursor: pointer;
+}
+
+.esup-lecture div.dropdown.readNotRead div.dropdown-toggle{
+	margin-right:6px;
+}
+.esup-lecture .dropdown-toggle.pull-right {
+    padding: 0px 10px 5px 10px;
+    cursor: pointer;
+    
+}
+.esup-lecture button.dropdown-toggle.pull-right  {
+    background-color: transparent;
+	border: none;
+}
+
+.esup-lecture .dropdown.pull-right {
+    padding-right: 0px;
+}
+/* Fin Ajout*/
+
+.esup-lecture .largeHeadPanel {
+/*Suppression :
+        height: 50px;*/
+        z-index: 1;
+        margin-bottom: 0px;
+}
+
+/*Ajout:*/
+.esuplecture .largeHeadPanel label {
+        cursor: pointer;
+}
+.esup-lecture .largeHeadPanel {
+  height: 50px;
+  z-index: 1;
+}
+
+.esup-lecture .navClass {
+  z-index: 1;
+  padding-left: 10%;
+}
+
+.esup-lecture .navModeDesk.navClass ul.menuTree {
+	margin-top : 50px; 
+	background-color: #F3F3F3;
+} 
+
+.esup-lecture .afficherLuWith {
+  width: 300px;
+}
+
+.esup-lecture input[type="checkbox"] {
+  margin-left: auto;
+}
+
+.esup-lecture p {
+  font-size: 13px;
+}
+
+.esup-lecture .listOptionNonPublisher li:hover {
+  background: #A9A9A9;
+}
+
+.esup-lecture .listOptionNonPublisher li {
+  height: 30px;
+  cursor: pointer;
+  margin-left: 5px;
+  border-bottom: solid 0.1px;
+  margin-right: 5px;
+}
+
+.esup-lecture .classHeadLarg {
+  width: 70%;
+ 
+}
+@media only screen and (min-width: 936px) {
+
+	.esup-lecture .largeHeadPanel div.modalMarge {
+		display: none;
+	}
+}
+
+@media only screen and (min-width: 1024px) {
+	.esup-lecture .classHeadLarg {
+ /* 		width: calc(17.5% + 536px); */
+ 		width:770px;
+	}
+}
+@media only screen and (min-width: 1300px) {
+	.esup-lecture .classHeadLarg {
+  		width: 57%;
+	}
+}
+
+.esup-lecture .madalSize {
+  width: initial;
+  margin-top: 2%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+/*640*/
+.esup-lecture .large-btn {
+  height: 30px;
+}
+
+.esup-lecture .padding-botom-head {
+  padding-bottom: 2%;
+}
+
+.esup-lecture .div_cat {
+  width: 10vw;
+}
+.esup-lecture .li_cat {
+  width: 200px;
+}
+/*640*/
+.esup-lecture .large-btn {
+        height: 30px;
+/* Ajout
+        background-color: #e6e6e6;
+        border-color: #adadad;
+        box-shadow: 0 3px 5px rgba(0, 0, 0, 0.125) inset; */
+}
+.esup-lecture .large-btn:hover {
+    background-color: #d4d4d4;
+    border-color: #8c8c8c;
+}
+/*Fin ajout*/
+.esup-lecture .divModeDesk {
+        padding: 0;
+/* Ajout */
+        border: none;
+/*Fin ajout*/
+}
+
+@media only screen and (max-width: 935px) { 
+  .esup-lecture .navModeDesk {
+    display: none;
+  }
+  .esup-lecture .divModeDesk {
+    width: 100%;
+    display: block;
+    padding: 0;
+  }
+  .esup-lecture .imageArticle img {
+    width: 5em;
+    height: 5em;
+    border-radius: 5em;
+    /*margin-left: 5%; */
+  }
+  .esup-lecture .imageArticle {
+    font-size: 10px;
+  }
+  .esup-lecture .rubriqueArticle {
+    margin-left: 10%;
+  }
+  .esup-lecture p {
+    font-size: 11px;
+  }
+  .esup-lecture span {
+    font-size: 11px;
+  }
+  .esup-lecture .menuRubDropDown {
+    display: block;
+  }
+  .esup-lecture .btnRubriqueDropDown {
+    width: 100%;
+    height: 50px;
+    padding-top: 5%;
+    /* 		border: transparent; */
+  }
+  .esup-lecture .mobileiconList {
+    display: none;
+  }
+  .esup-lecture .menuListRubrique {
+    width: 90vw;
+    margin-left: 5%;
+    left: -54vw;
+    padding-left: 5%;
+    padding-bottom: 5%;
+  }
+  .esup-lecture .classHeadLarg {
+    width: 100%;
+    left:0;
+  }
+  .esup-lecture .ligneRubriqueMenu {
+    /* 		width: 100%; */
+    margin: auto;
+    height: 30px;
+    margin-left: 0px;
+  }
+  .esup-lecture .ligneRubriqueMenuPub {
+    width: 90%;
+  }
+  .esup-lecture .ligneRubriqueMenu:hover {
+    background: #A9A9A9;
+  }
+ 
+  .esup-lecture .menuRubDropDown {
+    width: 100%
+  }
+  .esup-lecture .listRubPers {
+    background-color: whitesmoke;
+    border: 0px;
+    padding: 0px;
+    padding-left: 4px;
+  }
+  .esup-lecture .modalPadding {
+    padding: 0px;
+  }
+  .esup-lecture .modalMarge {
+    margin: 0px;
+    margin-top: 35px;
+    width: 100vw;
+  }
+  
+  .esup-lecture .largeHeadPanel:hover {
+        background-color: #f3f3f3;
+	}
+	
+}
+
+.esup-lecture .itemsPublisher .actualite {
+    display:flex;
+    padding-top: 8px;
+}
+
+.esup-lecture .itemsPublisher .actualite .imageArticle {
+	margin-right: 8px;
+	width: 84px;
+	display: inline-block;
+	padding-top: 12px;
+	min-height: 84px;	
+}
+.esup-lecture .itemsPublisher .actualite .imageArticle img {
+	border-radius: 4px; 
+	width: 84px;
+	height: 84px;
+	margin-top:0;
+	margin-bottom:10px;
+}
+.esup-lecture .itemsPublisher .actualite div.article {
+	width: calc(100% - 92px);
+}
+
+
+
+.esup-lecture .itemsPublisher .actualite div.metaArticle{
+	width:100%;
+	display: inline-block;
+	padding-top: 8px;
+	margin-bottom: 0px;
+	margin-top: 0px;
+}
+.esup-lecture .itemsPublisher .actualite div.metaArticle em.pubDate {
+	font-size: 90%;
+}
+
+
+@media only screen and (max-width: 992px) { 
+	.esup-lecture .itemsPublisher .actualite .imageArticle {
+		width: 84px;
+	}
+	.esup-lecture .itemsPublisher .actualite .imageArticle img {
+		border-radius: 50%; 
+	}
+}
+
+.esup-lecture .scrollDivArticle .itemOpacifiable.dejaLue  {
+	opacity: 0.5;
+}
+
+.esup-lecture .scrollDivArticle .itemShowFilter div.articleEye {
+	padding-top: 2em;
+}
+
+.esup-lecture .itemOpacifiable~.itemOpacifiable {
+    padding-top: 8px;
+}
+.esup-lecture .itemOpacifiable~.itemOpacifiable:before {
+    background: #054460;
+    /* IE10+ */
+    background-image: -ms-linear-gradient(left, #fff 0%, #054460 15%, #fff 60%);
+    /* Mozilla Firefox */
+    background-image: -moz-linear-gradient(left, #fff 0%, #054460 15%, #fff 60%);
+    /* Opera */
+    background-image: -o-linear-gradient(left, #fff 0%, #054460 15%, #fff 60%);
+    /* Webkit (Safari/Chrome 10) */
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #fff), color-stop(15, #054460), color-stop(60, #fff));
+    /* Webkit (Chrome 11+) */
+    background-image: -webkit-linear-gradient(left, #fff 0%, #054460 15%, #fff 60%);
+    /* W3C Markup */
+    background-image: linear-gradient(to right, #fff 0%, #054460 15%, #fff 60%);
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    background-color: transparent;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    content:" ";
+}
+
+.esup-lecture .itemOpacifiable.premierVisible:before {
+    background: none;
+}
+.esup-lecture .scrollDivArticle .premierVisible div.itemShowFilter div.modeNoPublisher,
+.esup-lecture .scrollDivArticle .premierVisible > div.itemShowFilter div.modeNoPublisher,
+.esup-lecture .premierVisible .itemsPublisher .actualite {
+    padding-top: 0px;
+    margin-top: 0px;
+}
+.esup-lecture div.modeNoPublisher .metaArticle .metaArticleDetail {
+	padding-left : 0px;
+	padding-top: 8px;
+}
+.esup-lecture div.modeNoPublisher .metaArticleDatePub,
+.esup-lecture .itemOpacifiable .metaArticle .pubDate {
+	font-size:90%;
+	font-style: oblique;
+}
+.esup-lecture div.modeNoPublisher .metaArticle + H1 {
+	margin-top : 0px;
+	margin-bottom: 5px;
+	font-size: 110%;
+}
+
+.esup-lecture div.modeNoPublisher .metaArticle + H1 a{
+	font-weight: bold;
+}
+
+.esup-lecture ul.menuRubrique li > div.rubriqueFiltre.active , ul.menuTree li > div.rubriqueFiltre.active{
+	background: #d4d4d4;
+}
+
+.esup-lecture div.nonLueSeulement div.dejaLue {
+	display : none;
+}
+
+.esup-lecture div.itemShowFilter.rubriqueInactive {
+	display : none;
+}
+.esup-lecture div.dropdown.readNotRead button.dropdown-toggle  {
+    background-color: transparent;
+    color: black;
+    border: 0px;
+    margin-rigth : 12px;
+}
+
+
+.esup-lecture div.noMenuDropDown {
+	display:none;
+}
+
+.esup-lecture div.withMenuDropDown {
+		display: inline-block;
+	}
+@media only screen and (min-width: 934px) { 
+	.esup-lecture div.withMenuDropDown {
+		display: none;
+	}
+	.esup-lecture div.noMenuDropDown {
+		display:block;
+	}
+}
+@media only screen and (max-width: 992px) { 
+	
+}
+@media only screen and (min-width: 1024px) {
+	.esup-lecture .classHeadLarg {
+ /* 		width: calc(17.5% + 536px); */
+ 		width:770px;
+	}
+}
+@media only screen and (min-width: 1300px) {
+	.esup-lecture .classHeadLarg {
+  		width: 57%;
+	}
+}
+
+.esup-lecture span.badge.noColor {
+	background-color: transparent;
+	color: black;
+	border: 1px solid grey;
+}
+.esup-lecture span.badge.emptyTextCircle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+}
+
+.esup-lecture li > div.rubriqueFiltre.div_cat {
+	display: inline-block;
+	width: 80%;
+	margin-right:8%;
+}
+
+.esup-lecture li > div.rubriqueFiltre.div_cat + div {
+	display: inline-block;
+	width: 10%;
+	
+	padding-left: 2%;
+	cursor: pointer;
+}
+
+.esup-lecture .collapseInDropDown {
+	height: 30px;
+	width: 48px;
+	padding-left:16px;
+	cursor: pointer;
+}
+
+.esup-lecture div.rubriqueFiltre + div[aria-expanded=false] > span.glyphicon-triangle-bottom{	
+	display : none;
+}
+
+.esup-lecture div.rubriqueFiltre + div[aria-expanded=true] > span.glyphicon-triangle-right {
+	display : none;
+}
+.esup-lecture div.filtreInDropDown div {
+	display : inline-block;
+}
+
+.esup-lecture div.withCategoriesAndSources div.filtreInDropDown {
+	border-top: 1px solid #ddd;
+}
+
+.esup-lecture div.withCategoriesAndSources div.filtreInDropDown + ul.collapse.in + div.filtreInDropDown {
+	border-top: 0px;
+}
+.esup-lecture div.withCategoriesAndSources div.filtreInDropDown div.rubriqueFiltre {
+		border-right:0px;
+		border-top:0px;
+}
+.esup-lecture div.withCategoriesAndSources ul{
+		padding-left: 0px;
+		margin-bottom: 0px;
+}
+.esup-lecture div.withCategoriesAndSources ul li div.rubriqueFiltre {
+	padding-left: 10ex;
+}
+
+
+
+.esup-lecture nav.navModeDesk.navClass.affix {
+	width: calc(24% + 42px);
+	left: calc(10% - 125px);
+}
+.esup-lecture div.enteteLectureAll div.affix {
+	right:0px;
+	left:0px;
+	top: 34px; 
+	padding-top:16px;
+	padding-left: 4px;
+	padding-bottom: 4px;
+	background-color: white;
+	z-index:10;
+	border-bottom: 1px inset gray ;
+}
+
+@media only screen and (min-width: 934px) { 
+	.esup-lecture div.enteteLectureAll div.affix {
+		display : none;
+	} 
+}
+
+.esup-lecture li.liCategorie {
+	width : 13vw;
+}
+.esup-lecture li.liCategorie ul {
+	padding:0px;
+}
+.esup-lecture li.liCategorie ul > li:FIRST-CHILD > div {
+	margin:0px;
+}
+.esup-lecture li.liCategorie ul > li  {
+	width: 14vw;
+}
+
+.esup-lecture.viewDef.notModePublisher div.articleEye {
+	display:none;
+}
+.esup-lecture.viewDef.notModePublisher div.enteteLectureAll div.pull-right > button {
+	display:none;
+}
+.esup-lecture.viewDef.notModePublisher div.menuGauche {
+	display:none;
+}
+.esup-lecture.viewDef.notModePublisher div.divModeDesk{
+	width : 100%;
+}

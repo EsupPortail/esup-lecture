@@ -5,8 +5,14 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.domain.DomainTools;
+import org.esupportail.lecture.domain.ExternalService;
+import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 
 
 /**
@@ -14,7 +20,7 @@ import org.apache.commons.logging.LogFactory;
  * @author gbouteil
  *
  */
-public class VisibilitySets {
+public class VisibilitySets implements Serializable {
 
 	/*
 	 *************************** PROPERTIES ******************************** */	
@@ -71,31 +77,32 @@ public class VisibilitySets {
 	 * Return the visibility mode for current user (user connected to externalService).
 	 * @return visibilityMode 
 	 */
-	protected synchronized VisibilityMode whichVisibility() {
-		
-		VisibilityMode mode = VisibilityMode.NOVISIBLE;
-		
-		boolean isVisible = false;
-		
-		isVisible = obliged.evaluateVisibility();
-		if (isVisible) {
-			mode = VisibilityMode.OBLIGED;
-		
-		} else {
-			isVisible = autoSubscribed.evaluateVisibility();
+	protected  VisibilityMode whichVisibility() {
+			VisibilityMode mode = VisibilityMode.NOVISIBLE;
+			
+			boolean isVisible = false;
+			
+			isVisible = obliged.evaluateVisibility();
 			if (isVisible) {
-				mode = VisibilityMode.AUTOSUBSCRIBED;
+				mode = VisibilityMode.OBLIGED;
 			
 			} else {
-				isVisible = allowed.evaluateVisibility();
+				isVisible = autoSubscribed.evaluateVisibility();
 				if (isVisible) {
-					mode = VisibilityMode.ALLOWED;
+					mode = VisibilityMode.AUTOSUBSCRIBED;
+				
 				} else {
-					mode = VisibilityMode.NOVISIBLE;
+					isVisible = allowed.evaluateVisibility();
+					if (isVisible) {
+						mode = VisibilityMode.ALLOWED;
+					} else {
+						mode = VisibilityMode.NOVISIBLE;
+					}
 				}
 			}
-		}
+		
 		return mode;
+
 	}
 	
 	/**

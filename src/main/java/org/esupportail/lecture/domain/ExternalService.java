@@ -65,5 +65,17 @@ public interface ExternalService {
 	 * @throws NoExternalValueException
 	 */
 	String getPreferences(String name) throws NoExternalValueException, InternalExternalException;
+	
+	/**
+	 * get current view
+	 * @return
+	 */
+	boolean getCurrentViewDef();
+	/**
+	 * get number of items to display
+	 */
+	int getNombreArticle();
+	
+	String getLienVue();
 
 }

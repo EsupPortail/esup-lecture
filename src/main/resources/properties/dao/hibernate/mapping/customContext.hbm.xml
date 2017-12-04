@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC
 	"-//Hibernate/Hibernate Mapping DTD//EN"
-	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" >
 
 <hibernate-mapping package="org.esupportail.lecture.domain.model">
 	<class name="CustomContext" table="LECT_CUSTOMCONTEXT">
@@ -22,6 +22,9 @@
         </natural-id>
 		<property name="treeSize" type="int">
 			<column name="TREEWINWIDTH" not-null="true"/>
+		</property>
+		<property name="itemDisplayMode" type="org.esupportail.lecture.dao.ItemDisplayModeUserType">
+			<column name="DISPLAYMODECTX" not-null="true" length="32" />
 		</property>
 		<map name="subscriptions" cascade="all, delete-orphan">
 			<key foreign-key="FK_CUSTOMCATEGORY_CUSTOMCONTEXT_CUSTOMCONTEXTPK_SUBSCRIBED">

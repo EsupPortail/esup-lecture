@@ -5,12 +5,14 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
+
 /**
  * Editability mode of an element.
  * @author gbouteil
  *
  */
-public enum Editability { 
+public enum Editability implements Serializable {
 	/**
 	 * no editibility.
 	 */

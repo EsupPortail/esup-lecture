@@ -283,9 +283,4 @@ public abstract class CustomCategory implements CustomElement {
 	public void setElementId(final String elementId) {
 		this.elementId = elementId;
 	}
-
-
-	
-	
-
 }

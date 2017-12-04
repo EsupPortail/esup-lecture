@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.esupportail.lecture.domain.model.Context;
 import org.esupportail.lecture.domain.model.CustomContext;
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.TreeDisplayMode;
 import org.esupportail.lecture.exceptions.domain.ContextNotFoundException;
 
@@ -35,15 +36,25 @@ public class ContextBean {
 	 */
 	private String description;
 	
+	private boolean modePublisher;
 	/**
 	 * size of tree window.
 	 */
+	private boolean userCanMarkRead;
 	private int treeSize;
 
 	/**
 	* visibility of the tree panel.
 	*/
 	private TreeDisplayMode treeVisible = TreeDisplayMode.VISIBLE;
+	private ItemDisplayMode itemDisplayMode;
+	public ItemDisplayMode getItemDisplayMode() {
+		return itemDisplayMode;
+	}
+
+	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) {
+		this.itemDisplayMode = itemDisplayMode;
+	}
 
 	/**
 	 * orderedSourceIDs store SourceID and ordering order in the CategoryProfile definition.
@@ -66,11 +77,22 @@ public class ContextBean {
 		setId(context.getId());
 		setOrderedCategoryIDs(context.getOrderedCategoryIDs());
 		setTreeVisible(context.getTreeVisible());
+		setModePublisher(context.getModePublisher());
+		setUserCanMarkRead(context.getUserCanMarkRead());
+		setItemDisplayMode(customContext.getItemDisplayMode());
 	}
 	
 	/*
 	 *************************** ACCESSORS ********************************* */	
 	
+	public boolean isUserCanMarkRead() {
+		return userCanMarkRead;
+	}
+
+	public void setUserCanMarkRead(boolean userCanMarkRead) {
+		this.userCanMarkRead = userCanMarkRead;
+	}
+
 	/**
 	 * get the id of the context.
 	 * @return id of context
@@ -145,35 +167,6 @@ public class ContextBean {
 	public Map<String, Integer> getOrderedCategoryIDs() {
 		return orderedCategoryIDs;
 	}
-
-	/*
-	 *************************** METHODS *********************************** */	
-	/**
-	 * @param categoryID - the ID of source to find
-	 * @return the XML order in of the source the CategoryProfile definition
-	 */
-	public int getXMLOrder(final String categoryID) {
-		Integer ret = orderedCategoryIDs.get(categoryID);
-		if (ret == null) {
-			ret = Integer.MAX_VALUE;
-		}
-		return ret;
-	}
-
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		String string = "";
-		string += " Id = " + id.toString() + "\n";
-		string += " Name = " + name.toString() + "\n";
-		string += " Desc = " + description.toString() + "\n";
-		string += " TreeSize = " + treeSize +  "\n";
-		string += " TreeVisible = " + treeVisible +  "\n";
-		return string;
-	}
-	
 	
 	/**
 	 * @return the treeVisible
@@ -188,5 +181,40 @@ public class ContextBean {
 	public void setTreeVisible(final TreeDisplayMode treeVisible) {
 		this.treeVisible = treeVisible;
 	}
-	
+
+	public boolean isModePublisher() {
+		return modePublisher;
+	}
+
+	public void setModePublisher(boolean modePublisher) {
+		this.modePublisher = modePublisher;
+	}
+
+	/*
+	 *************************** METHODS *********************************** */
+	/**
+	 * @param categoryID - the ID of source to find
+	 * @return the XML order in of the source the CategoryProfile definition
+	 */
+	public int getXMLOrder(final String categoryID) {
+		Integer ret = orderedCategoryIDs.get(categoryID);
+		if (ret == null) {
+			ret = Integer.MAX_VALUE;
+		}
+		return ret;
+	}
+
+	@Override
+	public String toString() {
+		return "ContextBean{" +
+				"id='" + id + '\'' +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", modePublisher=" + modePublisher +
+				", userCanMarkRead=" + userCanMarkRead +
+				", treeSize=" + treeSize +
+				", treeVisible=" + treeVisible +
+				", itemDisplayMode=" + itemDisplayMode +
+				'}';
+	}
 }

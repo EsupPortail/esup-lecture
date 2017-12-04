@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -22,10 +23,11 @@ import org.esupportail.lecture.exceptions.domain.SourceProfileNotFoundException;
  * @author gbouteil
  *
  */
-public abstract class CategoryProfile implements ElementProfile {
+public abstract class CategoryProfile implements ElementProfile, Serializable {
 	
 	/* 
 	 *************************** PROPERTIES *********************************/	
+
 
 	/**
 	 * Log instance. 

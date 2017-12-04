@@ -68,7 +68,7 @@ public class FreshXmlFileThread extends Thread {
 			
 		} catch (DocumentException e) {
 			String msg = "getFreshXmlFileThread(" + xmlFilePathGet + "). Can't read configuration file.";
-			LOG.error(msg);
+			LOG.error(msg, e);
 			throw new XMLParseException(msg , e);
 		}
 		return document;

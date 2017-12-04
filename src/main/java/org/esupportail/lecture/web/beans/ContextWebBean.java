@@ -1,9 +1,9 @@
 package org.esupportail.lecture.web.beans;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.esupportail.lecture.domain.model.ItemDisplayMode;
 import org.esupportail.lecture.domain.model.TreeDisplayMode;
 
 /**
@@ -40,7 +40,28 @@ public class ContextWebBean {
 	* visibility of the tree panel
 	*/
 	private TreeDisplayMode treeVisible;
+	
+	/**
+	 * if the current page is the first one
+	 */
+	private boolean viewDef;
+	/**
+	 * the number of items to display
+	 */
+	private int nombreArticle;
+	
+	/**
+	 * link to see all items
+	 */
+	private String lienVue;
+	
+	private int nbrUnreadItem;
+	
+	private boolean modePublisher;
 
+	private boolean userCanMarkRead;
+	private ItemDisplayMode itemDisplayMode =ItemDisplayMode.ALL;
+	private Boolean isContextUnreadMode;
 	/**
 	 * get the id of the context.
 	 * @return id of context
@@ -196,5 +217,68 @@ public class ContextWebBean {
 	public void setTreeVisible(TreeDisplayMode treeVisible) {
 		this.treeVisible = treeVisible;
 	}
-	
+
+	public boolean isViewDef() {
+		return viewDef;
+	}
+
+	public void setViewDef(boolean viewDef) {
+		this.viewDef = viewDef;
+	}
+
+	public int getNombreArticle() {
+		return nombreArticle;
+	}
+
+	public void setNombreArticle(int nombreArticle) {
+		this.nombreArticle = nombreArticle;
+	}
+
+	public String getLienVue() {
+		return lienVue;
+	}
+
+	public void setLienVue(String lienVue) {
+		this.lienVue = lienVue;
+	}
+
+	public int getNbrUnreadItem() {
+		return nbrUnreadItem;
+	}
+
+	public void setNbrUnreadItem(int nbrUnreadItem) {
+		this.nbrUnreadItem = nbrUnreadItem;
+	}
+
+	public boolean isModePublisher() {
+		return modePublisher;
+	}
+
+	public void setModePublisher(boolean modePublisher) {
+		this.modePublisher = modePublisher;
+	}
+
+	public boolean isUserCanMarkRead() {
+		return userCanMarkRead;
+	}
+
+	public void setUserCanMarkRead(boolean userCanMarkRead) {
+		this.userCanMarkRead = userCanMarkRead;
+	}
+
+	public ItemDisplayMode getItemDisplayMode() {
+		return itemDisplayMode;
+	}
+
+	public void setItemDisplayMode(ItemDisplayMode itemDisplayMode) {
+		this.itemDisplayMode = itemDisplayMode;
+	}
+
+	public Boolean getIsContextUnreadMode() {
+		return isContextUnreadMode;
+	}
+
+	public void setIsContextUnreadMode(Boolean isContextUnreadMode) {
+		this.isContextUnreadMode = isContextUnreadMode;
+	}
 }

@@ -5,6 +5,8 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +24,7 @@ import org.esupportail.lecture.exceptions.domain.SourceNotLoadedException;
  * @see ElementProfile
  *
  */
-public abstract class SourceProfile implements ElementProfile {
+public abstract class SourceProfile implements ElementProfile, Serializable {
 
 	/*
 	 *************************** PROPERTIES ******************************** */
@@ -78,6 +80,15 @@ public abstract class SourceProfile implements ElementProfile {
 	 */
 	private int timeOut;
 
+	public boolean isComplexItems() {
+		return complexItems;
+	}
+
+	public void setComplexItems(boolean complexItems) {
+		this.complexItems = complexItems;
+	}
+
+	private boolean complexItems;
 	/*
 	 *************************** INIT	 ******************************** */	
 		
@@ -101,9 +112,8 @@ public abstract class SourceProfile implements ElementProfile {
 	 * @throws SourceNotLoadedException 
 	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected abstract void loadSource() throws SourceNotLoadedException, ManagedCategoryNotLoadedException; 
-	
-	
+	protected abstract void loadSource() throws SourceNotLoadedException, ManagedCategoryNotLoadedException;
+
 	/**
 	 * Return the list of items to be displayed for this source.
 	 * @return a list of items
@@ -118,7 +128,27 @@ public abstract class SourceProfile implements ElementProfile {
     	}
 		// GB : ligne a supprimer loadSource();
 		Source s = getElement();
-		return s.getItems();
+		List<Item> ret = null;
+	   	if ( this.isComplexItems()) {
+			//Produit le flux xml (liste d'items) des flux publisher :
+			//	gere la visibilité; les rubriques; permet de generer les rubriques et les auteurs
+			ItemParser parser = new ItemParser(s);
+			ret = s.getItems(parser);
+	   	} else {
+	   		ret = s.getItems(null);
+		}
+		// For complex items we need to check visibility on each users, but all the content + items must be cached
+		if (this.isComplexItems()) {
+			List<Item> cret = new ArrayList<>();
+			for (Item it: ret) {
+				if (((ComplexItem)it).getVisibility().whichVisibility() != VisibilityMode.NOVISIBLE) {
+					cret.add(it);
+				}
+			}
+			return cret;
+		}
+		return ret;
+		//return s.getItems();
 	}
 
 	/**
@@ -288,4 +318,20 @@ public abstract class SourceProfile implements ElementProfile {
 		return timeOut;
 	}
 
+	@Override
+	public String toString() {
+		return "SourceProfile{" +
+				"id='" + id + '\'' +
+				", name='" + name + '\'' +
+				", complexItems=" + complexItems +
+				", sourceURL='" + sourceURL + '\'' +
+				", source=" + source +
+				", xsltURL='" + xsltURL + '\'' +
+				", mobileXsltURL='" + mobileXsltURL + '\'' +
+				", itemXPath='" + itemXPath + '\'' +
+				", xPathNameSpaces=" + xPathNameSpaces +
+				", ttl=" + ttl +
+				", timeOut=" + timeOut +
+				'}';
+	}
 }

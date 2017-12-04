@@ -1,13 +1,17 @@
 package org.esupportail.lecture.domain.model;
 
 
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.EntityManager;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.esupportail.lecture.dao.ItemDisplayModeUserType;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.domain.CategoryNotVisibleException;
 import org.esupportail.lecture.exceptions.domain.CategoryTimeOutException;
@@ -17,6 +21,7 @@ import org.esupportail.lecture.exceptions.domain.CustomSourceNotFoundException;
 import org.esupportail.lecture.exceptions.domain.InternalDomainException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryNotLoadedException;
 import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundException;
+import org.hibernate.sql.ordering.antlr.GeneratedOrderByLexer;
 
 
 
@@ -59,6 +64,7 @@ public class UserProfile {
 	 * Hashtable of CustomSource defined for the user, indexed by SourceProfilID.
 	 */
 	private Map<String, CustomSource> customSources = new Hashtable<String, CustomSource>();
+
 	
 	/**
 	 * Database Primary Key.
@@ -116,12 +122,21 @@ public class UserProfile {
 				LOG.error(errorMsg);
 				throw new RuntimeException(errorMsg);
 			}
-			customContext = new CustomContext(contextId, this);
+			customContext = new CustomContext(contextId,this);
 			addCustomContext(customContext);
 		}		
 		return customContext;
 	}
 	
+	public void updateCustomContext(final CustomContext customContext){
+		if (LOG.isDebugEnabled()) {
+    		LOG.debug(ID + userId + " - updateCustomContext(" + customContext.getElementId() + ")");
+    	}
+		if(customContext!=null){
+			customContexts.remove(customContext.getElementId());
+			addCustomContext(customContext);
+		}
+	}
 	/**
 	 * Return the customCategory identified by the category id
 	 * if exist,else,create it.
@@ -177,7 +192,6 @@ public class UserProfile {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug(ID + userId + " - updateCustomContextsForOneManagedCategory(" + categoryProfileId + ",ex)");
     	}
-		
 	   	boolean categoryIsVisible = true;
 		try {
 			ManagedCategoryProfile mcp = 
@@ -635,6 +649,11 @@ public class UserProfile {
 			return false;
 		}
 		return true;
+	}
+	
+	public void setContextUnreadMode(final String contextId,final ItemDisplayMode dispMode) {
+		CustomContext cust = customContexts.get(contextId);
+		cust.setItemDisplayMode(dispMode);
 	}
 	
 }

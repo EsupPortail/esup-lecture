@@ -3,7 +3,7 @@
     <groupId>org.esupportail</groupId>
     <artifactId>esup-lecture</artifactId>
     <packaging>war</packaging>
-    <version>3.0.3-SNAPSHOT</version>
+    <version>3.0.3-esco-1.1.9-SNAPSHOT</version>
     <name>esup-lecture</name>
     <url><![CDATA[http://www.esup-portail.org/display/PROJESUPLECTURE/Portlet+Lecture]]></url>
     <repositories>
@@ -44,19 +44,28 @@
         </pluginRepository>
     </pluginRepositories>
     <distributionManagement>
+        <!--<repository>-->
+            <!--<id>esup</id>-->
+            <!--<name>esup-portail</name>-->
+            <!--<url>https://mvn.esup-portail.org/content/repositories/releases</url>-->
+        <!--</repository>-->
+        <!--<snapshotRepository>-->
+            <!--<id>esup-snapshots</id>-->
+            <!--<name>esup-portail</name>-->
+            <!--<url>https://mvn.esup-portail.org/content/repositories/snapshots</url>-->
+        <!--</snapshotRepository>-->
         <repository>
-            <id>esup</id>
-            <name>esup-portail</name>
-            <url>https://mvn.esup-portail.org/content/repositories/releases</url>
+            <id>esco-releases</id>
+            <url>http://www.esco-portail.org/nexus/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>esup-snapshots</id>
-            <name>esup-portail</name>
-            <url>https://mvn.esup-portail.org/content/repositories/snapshots</url>
+            <id>esco-snapshots</id>
+            <url>http://www.esco-portail.org/nexus/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     <scm>
-        <developerConnection>scm:git:ssh://git@github.com/EsupPortail/esup-lecture.git</developerConnection>
+        <connection>scm:git:ssh://git@github.com/GIP-RECIA/esup-lecture.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com/GIP-RECIA/esup-lecture.git</developerConnection>
         <url>https://subversion.cru.fr/esup-lecture</url>
         <tag>HEAD</tag>
     </scm>
@@ -95,11 +104,12 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.6.1</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
             <plugin>
@@ -117,27 +127,6 @@
                     <wtpversion>1.5</wtpversion>
                 </configuration>
             </plugin>
-
-            <!--<plugin>-->
-                <!--<groupId>net.alchim31.maven</groupId>-->
-                <!--<artifactId>yuicompressor-maven-plugin</artifactId>-->
-                <!--<version>1.1</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>compress</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<excludes>-->
-                        <!--<exclude>**/rs/**/*.css</exclude>-->
-                        <!--<exclude>**/rs/**/*.min.js</exclude>-->
-                    <!--</excludes>-->
-                    <!--<suffix>-${project.version}.min</suffix>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-
             <plugin>
                 <groupId>net.jlehtinen.portlet</groupId>
                 <artifactId>portlet-prototyping-maven-plugin</artifactId>
@@ -157,14 +146,15 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <packagingExcludes>WEB-INF/classes/properties/config.properties</packagingExcludes>
+                    <!-- <packagingExcludes>WEB-INF/classes/properties/config.properties</packagingExcludes> -->
                     <warName>${project.artifactId}-portlet-uP4</warName>
                 </configuration>
             </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
-                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <!--This plugin's configuration is used to store Eclipse m2e settings
+                    only. It has no influence on the Maven build itself. -->
                 <plugin>
                     <groupId>org.eclipse.m2e</groupId>
                     <artifactId>lifecycle-mapping</artifactId>
@@ -201,6 +191,16 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.1.10</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>jcl-over-slf4j</artifactId>
+                <version>1.7.22</version>
+            </dependency>
+            <dependency>
                 <groupId>commons-collections</groupId>
                 <artifactId>commons-collections</artifactId>
                 <version>3.2.2</version>
@@ -220,6 +220,10 @@
                             jsr168forwardport.org.springframework.web.portlet
                         </artifactId>
                         <groupId>org.springframework</groupId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>net.sf.ehcache</groupId>
+                        <artifactId>ehcache</artifactId>
                     </exclusion>
                 </exclusions>
             </dependency>
@@ -249,8 +253,8 @@
                 <artifactId>jaxen</artifactId>
                 <version>1.1.1</version>
             </dependency>
-            <!-- overwrite xom 1.0 from jaxen to avoid icu4j used.
-                 icu4j is not compatible with jetty -->
+            <!-- overwrite xom 1.0 from jaxen to avoid icu4j used. icu4j is not compatible
+                with jetty -->
             <dependency>
                 <groupId>xom</groupId>
                 <artifactId>xom</artifactId>
@@ -303,13 +307,18 @@
             <dependency>
                 <groupId>org.jasig.resourceserver</groupId>
                 <artifactId>resource-server-utils</artifactId>
-                <version>1.0.35</version>
+                <version>1.0.44</version>
                 <exclusions>
                     <exclusion>
                         <artifactId>slf4j-api</artifactId>
                         <groupId>org.slf4j</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>4.5.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -318,14 +327,44 @@
         <dependency>
             <groupId>org.esupportail</groupId>
             <artifactId>esup-commons2-exceptionHandling</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.esupportail</groupId>
             <artifactId>esup-commons2-auth</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.esupportail</groupId>
             <artifactId>esup-commons2-jpa</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>log4j</groupId>
+                    <artifactId>log4j</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-simple</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -338,12 +377,38 @@
         <dependency>
             <groupId>jaxen</groupId>
             <artifactId>jaxen</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>xercesImpl</artifactId>
+                    <groupId>xerces</groupId>
+                </exclusion>
+                <exclusion>
+                    <groupId>xerces</groupId>
+                    <artifactId>xmlParserAPIs</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
-        <!-- overwrite xom 1.0 from jaxen to avoid icu4j used.
-             icu4j is not compatible with jetty -->
+        <!-- pour pouvoir parser resourcesLecture.xml -->
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
+        </dependency>
+        <!-- overwrite xom 1.0 from jaxen to avoid icu4j used. icu4j is not compatible
+            with jetty -->
         <dependency>
             <groupId>xom</groupId>
             <artifactId>xom</artifactId>
+            <exclusions>
+                <exclusion>
+                    <artifactId>xercesImpl</artifactId>
+                    <groupId>xerces</groupId>
+                </exclusion>
+                <!-- <exclusion> -->
+                <!-- <artifactId>xmlParserAPIs</artifactId> -->
+                <!-- <groupId>xerces</groupId> -->
+                <!-- </exclusion> -->
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>cglib</groupId>
@@ -389,8 +454,23 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
     </dependencies>
     <properties>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javax.servlet.version>2.5</javax.servlet.version>
         <esupcommons.version>0.3.3</esupcommons.version>
         <config.url.prefix>file://${project.build.outputDirectory}/properties</config.url.prefix>

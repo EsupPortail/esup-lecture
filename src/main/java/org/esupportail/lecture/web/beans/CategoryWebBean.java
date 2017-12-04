@@ -49,6 +49,8 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 */
 	private int xmlOrder = Integer.MAX_VALUE;
 
+	private boolean fromPublisher;
+	
 	/**
 	 * Default constructor.
 	 */
@@ -219,6 +221,14 @@ public class CategoryWebBean implements Comparable<CategoryWebBean> {
 	 */
 	public void setUserCanMarkRead(final boolean userCanMarkRead) {
 		this.userCanMarkRead = userCanMarkRead;
+	}
+
+	public boolean isFromPublisher() {
+		return fromPublisher;
+	}
+
+	public void setFromPublisher(boolean fromPublisher) {
+		this.fromPublisher = fromPublisher;
 	}
 
 }

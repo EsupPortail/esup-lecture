@@ -30,7 +30,7 @@ public interface DomainService {
 	 * @param ctxId : Context ID
 	 * @return Computed web bean context of the connected user.
 	 */
-	public ContextWebBean getContext(String userId, String ctxId);
+	public ContextWebBean getContext(String userId, String ctxId, boolean viewDef, int nombreArticle,String lienVue);
 
 	/**
 	 * @param userId : User ID
@@ -41,8 +41,8 @@ public interface DomainService {
 
 	/**
 	 * @param userId 
-	 * @param itemId 
 	 * @param sourceId 
+	 * @param itemId 
 	 * @param isRead
 	 * @return hibernate modified UserProfile
 	 * @throws InternalDomainException 
@@ -167,5 +167,8 @@ public interface DomainService {
 	 * @param query
 	 */
 	void updateSQL(String query);
+
+	void markItemDisplayModeContext(String userId, String contextId,boolean isUnreadMode)
+			throws InternalDomainException;
 	
 }

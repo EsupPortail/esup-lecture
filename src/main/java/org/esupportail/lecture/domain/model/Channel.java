@@ -180,8 +180,32 @@ public class Channel implements InitializingBean {
 	 */
 	private Cache cache;
 	
+	/**
+	 * the current view
+	 */
+	private String viewDef;
+
+	/**
+	 * Number of articles to display
+	 */
+	private String nbreArticle;
+	
+	/**
+	 * link to see all
+	 */
+	private String lienVue;
+
+	
 	/*
 	 ************************** INIT *********************************/	
+
+	public String getLienVue() {
+		return lienVue;
+	}
+
+	public void setLienVue(String lienVue) {
+		this.lienVue = lienVue;
+	}
 
 	/**
 	 * default constructor.
@@ -241,6 +265,9 @@ public class Channel implements InitializingBean {
 		DomainTools.setDefaultTimeOut(defaultTimeOut);
 		DomainTools.setMaxTreeSize(maxTreeSize);
 		DomainTools.setDefaultTreeSize(defaultTreeSize);
+		DomainTools.setViewDef(viewDef);
+		DomainTools.setNbreArticle(nbreArticle);
+		DomainTools.setLienVue(lienVue);
 	}
 	
 	/**
@@ -895,5 +922,23 @@ public class Channel implements InitializingBean {
 	public void setCacheManager(final CacheManager cacheManager) {
 		this.cacheManager = cacheManager;
 	}
+
+	public String getViewDef() {
+		return viewDef;
+	}
+
+	public void setViewDef(String viewDef) {
+		this.viewDef = viewDef;
+	}
+
+	public String getNbreArticle() {
+		return nbreArticle;
+	}
+
+	public void setNbreArticle(String nbreArticle) {
+		this.nbreArticle = nbreArticle;
+	}
+	
+	
 	
 }

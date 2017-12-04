@@ -12,3 +12,5 @@
 .idea/
 esup-lecture.iml
 lectureDB.*
+
+/src/main/webapp/META-INF**

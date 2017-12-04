@@ -9,6 +9,7 @@ import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
+
 import org.esupportail.commons.services.authentication.AuthenticationService;
 import org.esupportail.commons.services.i18n.I18nService;
 import org.esupportail.lecture.domain.DomainTools;
@@ -21,90 +22,90 @@ import org.springframework.web.context.request.RequestContextHolder;
  * @author bourges
  */
 class TwoPanesController {
-    protected static final String MESSAGES = "messages";
-    final String STATICRESOURCESPATH = "resourcesPath";
-    final String DYNAMICRESOURCESPATTERN = "dynamicResourcesPattern";
-    final String GUEST_MODE = "guestMode";
-    final String CONTEXT = "context";
+	protected static final String MESSAGES = "messages";
+	final String STATICRESOURCESPATH = "resourcesPath";
+	final String DYNAMICRESOURCESPATTERN = "dynamicResourcesPattern";
+	final String GUEST_MODE = "guestMode";
+	final String CONTEXT = "context";
 
-    /**
-     * Access to facade services (init by Spring).
-     */
-    @Resource(name = "facadeService")
-    protected FacadeService facadeService;
-    
-    /**
-     * The authentication service.
-     */
-    @Resource(name = "authenticationService")
-    protected AuthenticationService authenticationService;
-    
-    /**
-     * The i18nService
-     */
-    @Resource(name = "i18nService")
-    protected I18nService i18nService;
+	/**
+	 * Access to facade services (init by Spring).
+	 */
+	@Resource(name = "facadeService")
+	protected FacadeService facadeService;
 
-    /**
-     * Add ressourceURL to spring MVC model
-     * @param model
-     * @param response
-     * @param request
-     * @return completed spring MVC model
-     */
-    protected ModelMap bindInitialModel(ModelMap model, final RenderResponse response, final RenderRequest request) {
-        model.addAttribute(STATICRESOURCESPATH, response.encodeURL(request.getContextPath()));
-        ResourceURL resourceURL = response.createResourceURL();
-        resourceURL.setResourceID("@@id@@");
-        resourceURL.setParameter("p1", "__p1__");
-        resourceURL.setParameter("p2", "__p2__");
-        resourceURL.setParameter("p3", "__p3__");
-        resourceURL.setParameter("p4", "__p4__");
-        model.addAttribute(DYNAMICRESOURCESPATTERN, resourceURL);
-        return model;
-    }
+	/**
+	 * The authentication service.
+	 */
+	@Resource(name = "authenticationService")
+	protected AuthenticationService authenticationService;
 
-    /**
-     * Model : Guest mode
-     *
-     * @return true if current is the guest user.
-     */
-    protected boolean isGuestMode() {
-        Boolean guestMode = (Boolean) getFromSession(GUEST_MODE);
-        if (guestMode == null) {
-            guestMode = facadeService.isGuestMode();
-            setInSession(GUEST_MODE, guestMode);
-        }
-        return guestMode;
-    }
+	/**
+	 * The i18nService
+	 */
+	@Resource(name = "i18nService")
+	protected I18nService i18nService;
 
-    /**
-     * @param name of stored object
-     * @return the object stored in session
-     */
-    protected Object getFromSession(final String name) {
-        return RequestContextHolder.getRequestAttributes().getAttribute(name, PortletSession.PORTLET_SCOPE);
-    }
+	/**
+	 * Add ressourceURL to spring MVC model
+	 * @param model
+	 * @param response
+	 * @param request
+	 * @return completed spring MVC model
+	 */
+	protected ModelMap bindInitialModel(ModelMap model, final RenderResponse response, final RenderRequest request) {
+		model.addAttribute(STATICRESOURCESPATH, response.encodeURL(request.getContextPath()));
+		ResourceURL resourceURL = response.createResourceURL();
+		resourceURL.setResourceID("@@id@@");
+		resourceURL.setParameter("p1", "__p1__");
+		resourceURL.setParameter("p2", "__p2__");
+		resourceURL.setParameter("p3", "__p3__");
+		resourceURL.setParameter("p4", "__p4__");
+		model.addAttribute(DYNAMICRESOURCESPATTERN, resourceURL);
+		return model;
+	}
 
-    /**
-     * Store a object in session
-     *
-     * @param name of stored object
-     * @param value of stored object
-     */
-    protected void setInSession(final String name, Object value) {
-        RequestContextHolder.getRequestAttributes().setAttribute(name, value, PortletSession.PORTLET_SCOPE);
-    }
+	/**
+	 * Model : Guest mode
+	 *
+	 * @return true if current is the guest user.
+	 */
+	protected boolean isGuestMode() {
+		Boolean guestMode = (Boolean) getFromSession(GUEST_MODE);
+		if (guestMode == null) {
+			guestMode = facadeService.isGuestMode();
+			setInSession(GUEST_MODE, guestMode);
+		}
+		return guestMode;
+	}
 
-    /*
-     * **************** Getter and Setter ****************
-     */
-    /**
-     * @return the connected user UID
-     */
-    protected String getUID() {
-        String ret = DomainTools.getCurrentUserId(authenticationService);
-        return ret;
-    }
-    
+	/**
+	 * @param name of stored object
+	 * @return the object stored in session
+	 */
+	protected Object getFromSession(final String name) {
+		return RequestContextHolder.getRequestAttributes().getAttribute(name, PortletSession.PORTLET_SCOPE);
+	}
+
+	/**
+	 * Store a object in session
+	 *
+	 * @param name of stored object
+	 * @param value of stored object
+	 */
+	protected void setInSession(final String name, Object value) {
+		RequestContextHolder.getRequestAttributes().setAttribute(name, value, PortletSession.PORTLET_SCOPE);
+	}
+
+	/*
+	 * **************** Getter and Setter ****************
+	 */
+	/**
+	 * @return the connected user UID
+	 */
+	protected String getUID() {
+		String ret = DomainTools.getCurrentUserId(authenticationService);
+		return ret;
+	}
+
 }

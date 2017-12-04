@@ -6,6 +6,16 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
 	>
 
+	<bean id="managementService" class="net.sf.ehcache.management.ManagementService"
+				init-method="init"
+				destroy-method="dispose">
+		<constructor-arg ref="cacheManager"/>
+		<constructor-arg ref="mbeanServer"/>
+		<constructor-arg index="2" value="true"/>
+		<constructor-arg index="3" value="true"/>
+		<constructor-arg index="4" value="true"/>
+		<constructor-arg index="5" value="true"/>
+	</bean>
 	<!-- 
 		/properties/cache/cache.xml
 		The configuration file for caching features.
@@ -21,6 +31,12 @@
 			This bean is used to configure EhCache.
 		</description>
 		<property name="configLocation" value="classpath:/properties/cache/ehcache.xml" />
+		<property name="shared" value="true" />
+		<property name="cacheManagerName" value="esup-lecture.CacheManager" />
+	</bean>
+
+	<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+  	<property name="locateExistingServerIfPossible" value="true"/>
 	</bean>
 
 </beans>

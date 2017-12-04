@@ -20,10 +20,3 @@
     </form:form>
 </div>
 
-<rs:aggregatedResources path="/resources-footer.xml"/>
-<script type="text/javascript">
-    angular.element(document).ready(function() {
-        lectureEdit("<portlet:namespace/>", "${resourcesPath}/app", "${dynamicResourcesPattern}");
-        angular.bootstrap(angular.element(document.getElementById("lecture-<portlet:namespace/>")), ["<portlet:namespace/>"]);
-    });
-</script>

@@ -5,7 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
-import java.util.Iterator;
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -21,7 +21,7 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
  * @author gbouteil
  *
  */
-public class RegularOfSet {
+public class RegularOfSet implements Serializable{
 
 	/*
 	 *************************** PROPERTIES ******************************** */
@@ -78,16 +78,10 @@ public class RegularOfSet {
 		// TODO (GB later) voir le cas ou il y est mais que le portail ne connait pas
 
 		boolean found = false;
-		Iterator<String> itAttrs = userAttributeValues.iterator();
 		if (value != null && value.length() > 0) {
-			while (!found && itAttrs.hasNext()){
-				found = itAttrs.next().equals(value);
-			}
+			found =  userAttributeValues.contains(value);
 		}
-		if (found) {
-			return true;
-		}
-		return false;
+		return found;
 	}
 
 

@@ -22,6 +22,8 @@ import org.esupportail.lecture.web.beans.ContextWebBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.Assert;
 
+import antlr.collections.List;
+
 /**
  * The facade service.
  * It provide services from DomainService and external service
@@ -96,8 +98,8 @@ public class FacadeService implements InitializingBean {
 	 * @param ctxId : Context ID
 	 * @return Computed web bean context of the connected user.
 	 */
-	public ContextWebBean getContext(String userId, String ctxId) {
-		return domainService.getContext(userId, ctxId);
+	public ContextWebBean getContext(String userId, String ctxId, boolean viewDef, int nbreArticle, String lienVue) {
+		return domainService.getContext(userId, ctxId, viewDef, nbreArticle,lienVue);
 	}
 
 	public ContextWebBean getEditContext(String userId, String ctxId) {
@@ -107,8 +109,8 @@ public class FacadeService implements InitializingBean {
 	/**
 	 * Mark item as read for user userProfile.
 	 * @param userId user ID
-	 * @param itemId item id
 	 * @param sourceId source if
+	 * @param itemId item id
 	 * @param isRead boolean : true = item is read | false = item is not read
 	 * marck a Item form a source for a user as read
 	 * @throws InternalDomainException 
@@ -132,6 +134,9 @@ public class FacadeService implements InitializingBean {
 		return domainService.markItemDisplayMode(userProfile, sourceId, mode);
 	}
 	
+	public void markItemDisplayModeContext(final String userId, final String contextId,final boolean isUnreadMode) throws InternalDomainException{
+		 domainService.markItemDisplayModeContext(userId, contextId, isUnreadMode);
+	}
 	/**
 	 * Set the tree size of the customContext.
 	 * @param userProfile user ID
@@ -270,5 +275,17 @@ public class FacadeService implements InitializingBean {
 		return externalService;
 	}
 
+	public boolean getCurrentViewDef() {
+		return externalService.getCurrentViewDef();
+	}
+
+
+	public int getNombreArcticle() {
+		return externalService.getNombreArticle();
+	}
+	
+	public String getLienVue() {
+		return externalService.getLienVue();
+	}
 
 }

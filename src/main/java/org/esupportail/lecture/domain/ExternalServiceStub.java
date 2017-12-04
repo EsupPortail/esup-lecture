@@ -108,6 +108,25 @@ public class ExternalServiceStub implements ExternalService {
 
 	}
 
+	@Override
+	public boolean getCurrentViewDef() {
+		if ("true".equalsIgnoreCase(getPreferences(DomainTools.getViewDef()))){
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public int getNombreArticle() {
+		return 0;
+	}
+
+	@Override
+	public String getLienVue() {
+		return "";
+	}
+
+
 	/*
 	 ************************* ACCESSORS ******************************** */
 

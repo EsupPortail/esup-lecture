@@ -5,8 +5,14 @@
 */
 package org.esupportail.lecture.domain.beans;
 
+import java.util.Date;
+import java.util.List;
+
+import org.esupportail.lecture.domain.model.Author;
+import org.esupportail.lecture.domain.model.ComplexItem;
 import org.esupportail.lecture.domain.model.CustomSource;
 import org.esupportail.lecture.domain.model.Item;
+import org.esupportail.lecture.domain.model.RubriquesPlublisher;
 
 /**
  * used to store item informations.
@@ -32,7 +38,23 @@ public class ItemBean {
 	/**
 	 * store if item is read or not.
 	 */
-	private boolean read;
+	private boolean read;	
+	/**
+	 * uidAuthor of item
+	 */
+	private String uidAuthor;
+	/**
+	 * rubriques of item
+	 */
+	private List<RubriquesPlublisher> rubriques;
+	/**
+	 * Author of item
+	 */
+	private Author author;
+	/**
+	 * pubDate of item
+	 */
+	private Date pubDate;
 	
 	/*
 	 *************************** INIT ************************************** */	
@@ -53,6 +75,14 @@ public class ItemBean {
 		htmlContent = it.getHtmlContent();
 		mobileHtmlContent = it.getMobileHtmlContent();
 		read = customSource.isItemRead(id);
+		//nouveau parametrage
+		pubDate = it.getPubDate();
+		if (it instanceof ComplexItem){
+			ComplexItem cIt = (ComplexItem) it;
+			this.setUidAuthor(cIt.getAuthor().getUid());
+			this.setRubriques(cIt.getRubriques());
+			this.setAuthor(cIt.getAuthor());
+		}
 	}
 	
 	/*
@@ -115,6 +145,40 @@ public class ItemBean {
 	public boolean isDummy() {
 		return false;
 	}
+	
+	
+	public String getUidAuthor() {
+		return uidAuthor;
+	}
+
+	public void setUidAuthor(String uidAuthor) {
+		this.uidAuthor = uidAuthor;
+	}
+
+	public List<RubriquesPlublisher> getRubriques() {
+		return rubriques;
+	}
+
+	public void setRubriques(List<RubriquesPlublisher> rubriques) {
+		this.rubriques = rubriques;
+	}
+
+	public Author getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
+
+	public Date getPubDate() {
+		return pubDate;
+	}
+
+	public void setPubDate(Date pubDate) {
+		this.pubDate = pubDate;
+	}
+
 	/*
 	 *************************** METHODS *********************************** */	
 	/**

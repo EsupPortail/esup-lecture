@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -22,7 +23,7 @@ import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
  * @author jgribonvald
  *
  */
-public class RegexOfSet {
+public class RegexOfSet implements Serializable {
 
 	/*
 	 *************************** PROPERTIES ******************************** */
@@ -90,10 +91,7 @@ public class RegexOfSet {
 				}
 			}
 		}
-		if (found) {
-			return true;
-		}
-		return false;
+		return found;
 	}
 
 

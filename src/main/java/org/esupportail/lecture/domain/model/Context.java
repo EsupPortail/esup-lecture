@@ -5,6 +5,7 @@
 */
 package org.esupportail.lecture.domain.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ import org.esupportail.lecture.exceptions.domain.ManagedCategoryProfileNotFoundE
  * @author gbouteil
  */
 
-public class Context {
+public class Context implements Serializable {
 	
 	/*
 	 *************************** PROPERTIES ******************************** */
@@ -49,6 +50,12 @@ public class Context {
 	 * The context id.
 	 */
 	private String id;
+	/**
+	 * un contexte peut mixer le mode publisher et non publisher
+	 */
+	private Boolean modePublisher;
+	private Boolean userCanMarkRead;
+	private Boolean unreadMode;
 
 	// later 
 //	/**
@@ -117,12 +124,14 @@ public class Context {
 	 * defined in this Context, according to managedCategory visibilities
 	 * @param customContext customContext to update
 	 */
-	protected synchronized void updateCustom(final CustomContext customContext) {
+	protected  void updateCustom(final CustomContext customContext) {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + id + " - updateCustom(" + customContext.getElementId() + ")");
 		}
-		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		
+		Object lock = customContext; 
+		synchronized (lock) {
+		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		// update for managedCategories defined in this context
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet) {
 			try {
@@ -137,22 +146,25 @@ public class Context {
 		}
 		// update for managedCategories not anymore in this context
 		updateCustomForVanishedSubscriptions(customContext);
+		}
 	}
 
 	/**
 	 * Update customContext for managedCategories not anymore in this context.
 	 * @param customContext
 	 */
-	private synchronized void updateCustomForVanishedSubscriptions(final CustomContext customContext) {
-		List<String> cids = new ArrayList<String>();
-		for (String categoryId : customContext.getSubscriptions().keySet()) {
-			cids.add(categoryId);
-		}
-		for (String categoryId : cids) {
-			if (!containsCategory(categoryId)) {
-				customContext.removeCustomManagedCategory(categoryId);
-				UserProfile user = customContext.getUserProfile();
-				user.removeCustomManagedCategoryIfOrphan(categoryId);
+	private  void updateCustomForVanishedSubscriptions(final CustomContext customContext) {
+		synchronized (customContext) {
+			List<String> cids = new ArrayList<String>();
+			for (String categoryId : customContext.getSubscriptions().keySet()) {
+				cids.add(categoryId);
+			}
+			for (String categoryId : cids) {
+				if (!containsCategory(categoryId)) {
+					customContext.removeCustomManagedCategory(categoryId);
+					UserProfile user = customContext.getUserProfile();
+					user.removeCustomManagedCategoryIfOrphan(categoryId);
+				}
 			}
 		}
 	}
@@ -167,38 +179,41 @@ public class Context {
 	 * @return list of CoupleProfileVisibility
 	 * @see Context#updateCustom(CustomContext)
 	 */
-	protected synchronized List<CoupleProfileVisibility> getVisibleCategoriesAndUpdateCustom(
+	protected  List<CoupleProfileVisibility> getVisibleCategoriesAndUpdateCustom(
 			final CustomContext customContext) {
-		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + this.getId() + " - getVisibleCategoriesAndUpdateCustom("
-					+ this.getId() + ")");
-		}
-		List<CoupleProfileVisibility> couplesVisib = new Vector<CoupleProfileVisibility>();
-		Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
 		
-		// update and get managedSources defined in this managedCategory 
-		while (iterator.hasNext()) {
-			ManagedCategoryProfile mcp = iterator.next();
-			CoupleProfileVisibility couple;
-			try {				
-				VisibilityMode mode = mcp.updateCustomContext(customContext);
-				if (mode != VisibilityMode.NOVISIBLE) {
-					couple = new CoupleProfileVisibility(mcp, mode);
-					couplesVisib.add(couple);
-				}
-			} catch (ManagedCategoryNotLoadedException e) {
-				LOG.error("Impossible to update CustomContext associated to context " + getId()
-						+ " for managedCategoryProfile " + mcp.getId()
-						+ " because its category is not loaded - " 
-						+ " It is very strange because loadCategory() has " 
-						+ "been called before in mcp.updateCustomContext() ...", e);
-			} 
-		}
-		
-		// update for managedCategories not anymore in this Context
-		updateCustomForVanishedSubscriptions(customContext);
+		synchronized (customContext) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("id=" + this.getId() + " - getVisibleCategoriesAndUpdateCustom("
+						+ this.getId() + ")");
+			}
+			List<CoupleProfileVisibility> couplesVisib = new Vector<CoupleProfileVisibility>();
+			Iterator<ManagedCategoryProfile> iterator = managedCategoryProfilesSet.iterator();
+			
+			// update and get managedSources defined in this managedCategory 
+			while (iterator.hasNext()) {
+				ManagedCategoryProfile mcp = iterator.next();
+				CoupleProfileVisibility couple;
+				try {				
+					VisibilityMode mode = mcp.updateCustomContext(customContext);
+					if (mode != VisibilityMode.NOVISIBLE) {
+						couple = new CoupleProfileVisibility(mcp, mode);
+						couplesVisib.add(couple);
+					}
+				} catch (ManagedCategoryNotLoadedException e) {
+					LOG.error("Impossible to update CustomContext associated to context " + getId()
+							+ " for managedCategoryProfile " + mcp.getId()
+							+ " because its category is not loaded - " 
+							+ " It is very strange because loadCategory() has " 
+							+ "been called before in mcp.updateCustomContext() ...", e);
+				} 
+			}
+			
+			// update for managedCategories not anymore in this Context
+			updateCustomForVanishedSubscriptions(customContext);
 		
 		return couplesVisib;
+		}
 	}
 	
 
@@ -368,5 +383,32 @@ public class Context {
 	public void setTreeVisible(TreeDisplayMode treeVisible) {
 		this.treeVisible = treeVisible;
 	}
+
+	public Boolean getModePublisher() {
+		Boolean mp = modePublisher;
+		if (mp == null ) {
+			modePublisher = mp = false;
+		}
+		return mp;
+	}
+
+	public void setModePublisher(Boolean modePublisher) {
+		this.modePublisher = modePublisher;
+	}
 	
+	public Boolean getUserCanMarkRead() {
+		return userCanMarkRead;
+	}
+
+	public void setUserCanMarkRead(Boolean userCanMarkRead) {
+		this.userCanMarkRead = userCanMarkRead;
+	}
+
+	public Boolean getUnreadMode() {
+		return unreadMode;
+	}
+
+	public void setUnreadMode(Boolean unreadMode) {
+		this.unreadMode = unreadMode;
+	}
 }

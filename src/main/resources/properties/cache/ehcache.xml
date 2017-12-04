@@ -75,12 +75,38 @@
     	overflowToDisk="true" 
     	/>
 
+    <cache
+    	name="org.esupportail.lecture.dao.DaoServiceRemoteXML"
+    	maxElementsInMemory="10000"
+    	eternal="false"
+    	timeToIdleSeconds="3600"
+    	timeToLiveSeconds="3600"
+    	overflowToDisk="false"
+    	/>
+
+	<cache
+			name="org.esupportail.lecture.domain.DomainTools"
+			maxElementsInMemory="100"
+			eternal="false"
+			timeToIdleSeconds="86400"
+			timeToLiveSeconds="86400"
+			overflowToDisk="false"
+			/>
+	<cache
+			name="org.esupportail.lecture.domain.model.Channel"
+			maxElementsInMemory="100"
+			eternal="false"
+			timeToIdleSeconds="86400"
+			timeToLiveSeconds="86400"
+			overflowToDisk="false"
+			/>
+
     <defaultCache
             maxElementsInMemory="10000"
             eternal="false"
             timeToIdleSeconds="120"
             timeToLiveSeconds="120"
-            overflowToDisk="true"
+            overflowToDisk="false"
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"
             memoryStoreEvictionPolicy="LRU"
