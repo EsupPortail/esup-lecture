@@ -57,7 +57,7 @@
     </distributionManagement>
     <scm>
         <developerConnection>scm:git:ssh://git@github.com/EsupPortail/esup-lecture.git</developerConnection>
-        <url>https://subversion.cru.fr/esup-lecture</url>
+        <!--<url>https://subversion.cru.fr/esup-lecture</url>-->
         <tag>HEAD</tag>
     </scm>
     <build>
@@ -80,14 +80,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.5</version>
+                <version>2.5.3</version>
                 <configuration>
                     <tagNameFormat>@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>3.0.0</version>
                 <configuration>
                     <goal>javadoc:javadoc</goal>
                     <reportOutputDirectory>docs/javadoc</reportOutputDirectory>
@@ -96,48 +96,12 @@
             </plugin>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.7.0</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-eclipse-plugin</artifactId>
-                <version>2.8</version>
-                <configuration>
-                    <additionalProjectnatures>
-                        <projectnature>org.springframework.ide.eclipse.core.springnature</projectnature>
-                    </additionalProjectnatures>
-                    <additionalBuildcommands>
-                        <buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
-                    </additionalBuildcommands>
-                    <downloadSources>true</downloadSources>
-                    <downloadJavadocs>true</downloadJavadocs>
-                    <wtpversion>1.5</wtpversion>
-                </configuration>
-            </plugin>
-
-            <!--<plugin>-->
-                <!--<groupId>net.alchim31.maven</groupId>-->
-                <!--<artifactId>yuicompressor-maven-plugin</artifactId>-->
-                <!--<version>1.1</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>compress</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<excludes>-->
-                        <!--<exclude>**/rs/**/*.css</exclude>-->
-                        <!--<exclude>**/rs/**/*.min.js</exclude>-->
-                    <!--</excludes>-->
-                    <!--<suffix>-${project.version}.min</suffix>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
-
             <plugin>
                 <groupId>net.jlehtinen.portlet</groupId>
                 <artifactId>portlet-prototyping-maven-plugin</artifactId>
@@ -162,48 +126,21 @@
                 </configuration>
             </plugin>
         </plugins>
-        <pluginManagement>
-            <plugins>
-                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>
-                                            net.alchim31.maven
-                                        </groupId>
-                                        <artifactId>
-                                            yuicompressor-maven-plugin
-                                        </artifactId>
-                                        <versionRange>
-                                            [1.1,)
-                                        </versionRange>
-                                        <goals>
-                                            <goal>compress</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore />
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>3.2.2</version>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-framework-bom</artifactId>
+                <version>3.2.18.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+                <exclusions>
+                    <exclusion>
+                        <artifactId>commons-logging</artifactId>
+                        <groupId>commons-logging</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>org.esupportail</groupId>
@@ -216,12 +153,15 @@
                 <version>${esupcommons.version}</version>
                 <exclusions>
                     <exclusion>
-                        <artifactId>
-                            jsr168forwardport.org.springframework.web.portlet
-                        </artifactId>
                         <groupId>org.springframework</groupId>
+                        <artifactId>jsr168forwardport.org.springframework.web.portlet</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.jasig.cas.client</groupId>
+                <artifactId>cas-client-core</artifactId>
+                <version>3.5.0</version>
             </dependency>
             <dependency>
                 <groupId>org.esupportail</groupId>
@@ -240,6 +180,26 @@
                 </exclusions>
             </dependency>
             <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.25</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>1.7.25</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>3.2.2</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-logging</groupId>
+                <artifactId>commons-logging</artifactId>
+                <version>1.2</version>
+            </dependency>
+            <dependency>
                 <groupId>dom4j</groupId>
                 <artifactId>dom4j</artifactId>
                 <version>1.6.1</version>
@@ -248,6 +208,16 @@
                 <groupId>jaxen</groupId>
                 <artifactId>jaxen</artifactId>
                 <version>1.1.1</version>
+            </dependency>
+            <dependency>
+                <groupId>xerces</groupId>
+                <artifactId>xercesImpl</artifactId>
+                <version>2.9.1</version>
+            </dependency>
+            <dependency>
+                <groupId>xml-apis</groupId>
+                <artifactId>xml-apis</artifactId>
+                <version>2.0.2</version>
             </dependency>
             <!-- overwrite xom 1.0 from jaxen to avoid icu4j used.
                  icu4j is not compatible with jetty -->
@@ -281,11 +251,6 @@
                 <scope>provided</scope>
             </dependency>
             <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-webmvc-portlet</artifactId>
-                <version>3.0.6.RELEASE</version>
-            </dependency>
-            <dependency>
                 <groupId>javax.inject</groupId>
                 <artifactId>javax.inject</artifactId>
                 <version>1</version>
@@ -310,6 +275,16 @@
                         <groupId>org.slf4j</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>3.12.1.GA</version>
+            </dependency>
+            <dependency>
+                <groupId>net.sf.ehcache</groupId>
+                <artifactId>ehcache-core</artifactId>
+                <version>2.6.11</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -384,10 +359,6 @@
         <dependency>
             <groupId>org.jasig.resourceserver</groupId>
             <artifactId>resource-server-utils</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
         </dependency>
     </dependencies>
     <properties>
