@@ -56,11 +56,11 @@
         <!--</snapshotRepository>-->
         <repository>
             <id>esco-releases</id>
-            <url>http://www.esco-portail.org/nexus/content/repositories/releases/</url>
+            <url>https://nexus.recia.fr/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
             <id>esco-snapshots</id>
-            <url>http://www.esco-portail.org/nexus/content/repositories/snapshots/</url>
+            <url>https://nexus.recia.fr/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
     <scm>
