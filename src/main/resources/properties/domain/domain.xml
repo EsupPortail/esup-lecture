@@ -80,7 +80,7 @@
 		<property name="daoService" ref="daoService"/>
 		<property name="externalService" ref="${externalService.bean}"/>
 		<property name="configFilePath" value="${configFilePath}"/>
-		<property name="mappingFilePath" value="/properties/mappings.xml"/>	
+		<property name="mappingFilePath" value="${mappingFilePath}"/>
 		
 		<!--  TODO : export these values in config.properties -->
 		
