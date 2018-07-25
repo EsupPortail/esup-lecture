@@ -63,12 +63,13 @@
             <url>https://nexus.recia.fr/content/repositories/snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
+    
     <scm>
         <connection>scm:git:ssh://git@github.com/GIP-RECIA/esup-lecture.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/GIP-RECIA/esup-lecture.git</developerConnection>
-        <url>https://subversion.cru.fr/esup-lecture</url>
         <tag>HEAD</tag>
     </scm>
+    
     <build>
         <defaultGoal>install</defaultGoal>
         <resources>
