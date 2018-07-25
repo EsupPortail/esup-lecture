@@ -22,7 +22,7 @@ jndi.datasource=jdbc/lectureDB
 ##### smtp #####
 # --> SMTP server
 #The host name or IP number of the server.
-smtp.host.host=localhost
+smtp.host=localhost
 #The port number the SMTP server is running on .
 smtp.port=25
 #The SMTP user (leave empty for an anonymous connection).
