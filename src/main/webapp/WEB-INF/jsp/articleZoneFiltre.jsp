@@ -53,9 +53,13 @@
 			<c:set var="nbArticle" value="${nbArticle+1}" />
 			
 			<c:set var="idDivRow" value="${n}_articleRow_${nbArticle}" />
+
+			<c:set var="idsRubriques">
+				<c:if test="${not empty article.rubriques}"><c:forEach items="${article.rubriques}" var="rub"> rubrique_${rub.uid}</c:forEach></c:if>
+			</c:set>
 			
 			<div id="${idDivRow}" 
-				class="itemShowFilter itemOpacifiable ${n} cat_${nbCat} src_${nbSrc} ${article.id} ${article.read ? 'dejaLue' : ''} ">
+				class="itemShowFilter itemOpacifiable ${n} cat_${nbCat} src_${nbSrc} ${article.id} ${idsRubriques} ${article.read ? 'dejaLue' : ''}">
 	        	<input type="hidden" class="itemShowFilterIsRead" value="${article.read}"/>
 				<div  class='row '>
 	
@@ -82,13 +86,6 @@
 								style="background-color:${rub.couleur}"
 								onclick="lecture.${n}.filterByRubriqueClass('rubrique_${rub.uid}')">
 								<c:out value="${rub.nom}"></c:out></span>
-							<script>
-									// ajout de la rubrique dans la div hote
-									//lecture.jq
-								lecture['${n}'].jq(function(){ 
-										var t = lecture['${n}'].jq('#${idDivRow}').addClass('rubrique_${rub.uid}');
-									});
-							</script>
 						</c:forEach>
 					</div>
 				</c:if>
