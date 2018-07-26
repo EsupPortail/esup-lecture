@@ -1,11 +1,15 @@
 package org.esupportail.lecture.dao;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
+import org.springframework.core.io.UrlResource;
 
 /**
  * Get a Freash config File from a distinct Thread.
@@ -41,7 +45,7 @@ public class FreshXmlFileThread extends Thread {
 	 * @see java.lang.Thread#run()
 	 */
 	@Override
-	public void run() {
+	public void run(){
 		try {
 			this.xmlFile = getFreshXmlFileThread(xmlFilePath);
 		} catch (XMLParseException e) {
@@ -64,10 +68,18 @@ public class FreshXmlFileThread extends Thread {
 		Document document = null;
 		try {
 			SAXReader reader = new SAXReader();
-			document = reader.read(xmlFilePathGet);
+			document = reader.read((new UrlResource(xmlFilePathGet)).getURL());
 			
 		} catch (DocumentException e) {
 			String msg = "getFreshXmlFileThread(" + xmlFilePathGet + "). Can't read configuration file.";
+			LOG.error(msg, e);
+			throw new XMLParseException(msg , e);
+		} catch (MalformedURLException e) {
+			String msg = "getFreshXmlFileThread(" + xmlFilePathGet + "). The configuration file path is not usable.";
+			LOG.error(msg, e);
+			throw new XMLParseException(msg , e);
+		} catch (IOException e) {
+			String msg = "getFreshXmlFileThread(" + xmlFilePathGet + "). Can't open to configuration file.";
 			LOG.error(msg, e);
 			throw new XMLParseException(msg , e);
 		}

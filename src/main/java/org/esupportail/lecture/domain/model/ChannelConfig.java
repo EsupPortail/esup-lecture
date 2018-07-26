@@ -5,8 +5,7 @@
  */
 package org.esupportail.lecture.domain.model;
 
-import java.io.File;
-import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +20,8 @@ import org.esupportail.lecture.dao.FreshXmlFileThread;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
 import org.esupportail.lecture.exceptions.domain.ChannelConfigException;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
 /**
  * Channel Config : class used to load and parse XML channel file config.
@@ -49,11 +50,6 @@ public class ChannelConfig  {
 	 *  relative classpath of the file to load.
 	 */
 	private static String filePath;
-
-	/**
-	 *  Base path of the file to load.
-	 */
-	private static String fileBasePath;
 
 	/**
 	 * Indicates if file has been modified since last getInstance() calling.
@@ -133,28 +129,29 @@ public class ChannelConfig  {
 			LOG.error(errorMsg);
 			throw new ChannelConfigException(errorMsg);
 		}
+		try {
+			Resource rs = new UrlResource(filePath);
 
-		URL url = ChannelConfig.class.getResource(filePath);
-		if (url == null) {
+			LOG.debug("File path '" + filePath + "' to load !");
+
+			Document xmlFileLoading = null;
+
+			xmlFileLoading = getFreshConfigFile(filePath);
+
+			if (xmlFileLoading != null) {
+				xmlFileLoading = checkConfigFile(xmlFileLoading);
+			}
+			if (xmlFileLoading == null) {
+				String errorMsg = "Impossible to load XML Channel config (" + filePath + ")";
+				LOG.error(errorMsg);
+				throw new ChannelConfigException(errorMsg);
+			}
+			xmlFile = xmlFileLoading;
+		} catch (MalformedURLException e) {
 			String errorMsg = "Config file: " + filePath + " not found.";
-			LOG.error(errorMsg);
-			throw new ChannelConfigException(errorMsg);
+			LOG.error(errorMsg, e);
+			throw new ChannelConfigException(errorMsg, e);
 		}
-		File file = new File(url.getFile());
-		fileBasePath = file.getAbsolutePath();
-		Document xmlFileLoading = null;
-
-		xmlFileLoading = getFreshConfigFile(fileBasePath);
-
-		if (xmlFileLoading != null) {
-			xmlFileLoading = checkConfigFile(xmlFileLoading);
-		}
-		if (xmlFileLoading == null) {
-			String errorMsg = "Impossible to load XML Channel config (" + fileBasePath + ")";
-			LOG.error(errorMsg);
-			throw new ChannelConfigException(errorMsg);
-		}
-		xmlFile = xmlFileLoading;
 	}
 	/**
 	 * Check syntax file that cannot be checked by DTD.

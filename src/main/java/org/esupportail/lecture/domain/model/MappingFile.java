@@ -4,8 +4,7 @@ package org.esupportail.lecture.domain.model;
 * For any information please refer to http://esup-helpdesk.sourceforge.net
 * You may obtain a copy of the licence at http://www.esup-portail.org/license/
 */
-import java.io.File;
-import java.net.URL;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +17,8 @@ import org.dom4j.Node;
 import org.esupportail.lecture.dao.FreshXmlFileThread;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
 import org.esupportail.lecture.exceptions.domain.MappingFileException;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 
 
 /**
@@ -45,11 +46,6 @@ public class MappingFile {
 	 *  relative classpath of the file to load.
 	 */
 	private static String filePath;
-	
-	/**
-	 *  Base path of the file to load.
-	 */
-	private static String fileBasePath;
 	
 	/**
 	 * Indicates if file has been modified since the last getInstance() calling.
@@ -201,26 +197,25 @@ public class MappingFile {
 			LOG.error(errorMsg);
 			throw new MappingFileException(errorMsg);
 		}
-		
-		URL url = ChannelConfig.class.getResource(filePath);
-		if (url == null) {
+		try {
+			Resource rs = new UrlResource(filePath);
+
+			LOG.debug("File path '" + filePath + "' to load !");
+
+			Document xmlFileLoading = null;
+			xmlFileLoading = getFreshMappingFile(filePath);
+			if (xmlFileLoading != null) {
+				xmlFileLoading = checkMappingFile(xmlFileLoading);
+			}
+			if (xmlFileLoading == null) {
+				String errorMsg = "Impossible to load XML Channel config (" + filePath + ")";
+				LOG.error(errorMsg);
+				throw new MappingFileException(errorMsg);
+			}
+		} catch (MalformedURLException e) {
 			String errorMsg = "Mapping file: " + filePath + " not found.";
-			LOG.error(errorMsg);
-			throw new MappingFileException(errorMsg);
-		}
-		File file = new File(url.getFile());
-		fileBasePath = file.getAbsolutePath();
-		Document xmlFileLoading = null;
-		
-		xmlFileLoading = getFreshMappingFile(fileBasePath);
-		
-		if (xmlFileLoading != null) {
-			xmlFileLoading = checkMappingFile(xmlFileLoading);
-		}
-		if (xmlFileLoading == null) {
-			String errorMsg = "Impossible to load XML Channel config (" + fileBasePath + ")";
-			LOG.error(errorMsg);
-			throw new MappingFileException(errorMsg);
+			LOG.error(errorMsg, e);
+			throw new MappingFileException(errorMsg, e);
 		}
 	}
 
