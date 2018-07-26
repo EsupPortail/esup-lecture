@@ -71,21 +71,35 @@
   cursor: pointer;
 }
 
-.esup-lecture .divLargeWith {
+.esup-lecture .divLargeWith{
+  padding: 5px;
+}
+.esup-lecture .affix .divLargeWith {
   width: 15vw;
-  padding-top: 6px;
 }
 
-/*Ajout :*/
+  /*Ajout :*/
 .esup-lecture .panel.panelHome {
-        background-color: #f5f5f5;
-/*      border: 1px solid #e3e3e3;
-        border-radius: 2px;
-        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);*/
-        height: 50px;
-        margin-top: -12px;
-        margin-bottom: 0;
-        padding-top: 12px;
+  background-color: #f5f5f5;
+  /*border: 1px solid #e3e3e3;
+  border-radius: 2px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.05);*/
+  height: 50px;
+  /*margin-top: -12px;*/
+  margin-bottom: 0;
+  /*padding-top: 12px;*/
+  padding: 0 10px;
+
+}
+.esup-lecture .panel.panelHome > div[class*="col-"] {
+  padding: 0;
+}
+.esup-lecture.viewDef .panel.panelHome > .enteteLectureAll, .esup-lecture.viewDef.modePublisher .panel.panelHome {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
 }
 .esup-lecture .panel {
         border: none;
@@ -199,16 +213,16 @@
   height: 30px;
 }
 
-.esup-lecture .padding-botom-head {
-  padding-bottom: 2%;
-}
+/*.esup-lecture .padding-botom-head {*/
+  /*padding-bottom: 2%;*/
+/*}*/
 
 .esup-lecture .div_cat {
   width: 10vw;
 }
-.esup-lecture .li_cat {
-  width: 200px;
-}
+/*.esup-lecture .li_cat {*/
+  /*width: 100%;*/
+/*}*/
 /*640*/
 .esup-lecture .large-btn {
         height: 30px;
@@ -307,7 +321,6 @@
   .esup-lecture .modalMarge {
     margin: 0px;
     margin-top: 35px;
-    width: 100vw;
   }
   
   .esup-lecture .largeHeadPanel:hover {
@@ -482,19 +495,19 @@
     width: 16px;
     height: 16px;
     border-radius: 50%;
+  margin-right: 10px;
 }
 
 .esup-lecture li > div.rubriqueFiltre.div_cat {
 	display: inline-block;
 	width: 80%;
-	margin-right:8%;
+	margin-left: 15px;
 }
 
 .esup-lecture li > div.rubriqueFiltre.div_cat + div {
 	display: inline-block;
 	width: 10%;
-	
-	padding-left: 2%;
+	/*padding-left: 2%;*/
 	cursor: pointer;
 }
 
