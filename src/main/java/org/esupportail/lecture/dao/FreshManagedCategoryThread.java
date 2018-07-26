@@ -249,7 +249,7 @@ public class FreshManagedCategoryThread extends Thread {
 				}
 				sp.setUuid(Integer.valueOf(node.selectSingleNode("uuid").getText()));
 				sp.setSourceURL(profile.getUrlActualites() + "#" + sp.getUuid());
-				sp.setFileId(sp.getName().trim() + sp.getUuid());
+				sp.setFileId(String.valueOf(sp.getUuid()));
 				sp.setComplexItems(true);
 				sp.setItemXPath(node.valueOf("@itemXPath"));
 				if (sp.isHighLight()) {
