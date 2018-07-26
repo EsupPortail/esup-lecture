@@ -3,7 +3,7 @@
     <groupId>org.esupportail</groupId>
     <artifactId>esup-lecture</artifactId>
     <packaging>war</packaging>
-    <version>3.0.3-esco-1.2.0</version>
+    <version>3.0.3-esco-1.2.1-SNAPSHOT</version>
     <name>esup-lecture</name>
     <url><![CDATA[http://www.esup-portail.org/display/PROJESUPLECTURE/Portlet+Lecture]]></url>
     <repositories>
@@ -67,7 +67,7 @@
     <scm>
         <connection>scm:git:ssh://git@github.com/GIP-RECIA/esup-lecture.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/GIP-RECIA/esup-lecture.git</developerConnection>
-        <tag>3.0.3-esco-1.2.0</tag>
+        <tag>HEAD</tag>
     </scm>
     
     <build>
