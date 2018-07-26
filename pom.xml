@@ -148,7 +148,7 @@
                 <version>2.2</version>
                 <configuration>
                     <!-- <packagingExcludes>WEB-INF/classes/properties/config.properties</packagingExcludes> -->
-                    <warName>${project.artifactId}-portlet-uP4</warName>
+                    <warName>${project.artifactId}-portlet</warName>
                 </configuration>
             </plugin>
         </plugins>
