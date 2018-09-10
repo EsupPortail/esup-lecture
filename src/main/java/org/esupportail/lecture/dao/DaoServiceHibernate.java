@@ -63,8 +63,8 @@ public class DaoServiceHibernate {
 		UserProfile ret = null;
 		if (userId != null) {
 			Query q = entityManager.createQuery("select userProfile from UserProfile userProfile where userProfile.userId = '" + userId + "'");
-			q.setLockMode(LockModeType.PESSIMISTIC_READ);
-			q.setHint("javax.persistence.query.timeout", 30000);
+	//		q.setLockMode(LockModeType.PESSIMISTIC_READ);
+	//		q.setHint("javax.persistence.query.timeout", 30000);
 			List<UserProfile> list = (List<UserProfile>)q.getResultList();
 			if (list.size() > 0) {
 				ret = list.get(0);				
@@ -118,6 +118,7 @@ public class DaoServiceHibernate {
 			LOG.debug("mergeUserProfile(" + userProfile.getUserId() + ")");			
 		}
 		UserProfile merged = (UserProfile) entityManager.merge(userProfile);
+		
 	//	if (USEFLUSH) {
 			entityManager.flush();
 	//	} 

@@ -114,21 +114,22 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 		if (userId == null) {
 			throw new NullPointerException("userId is null: can't find it in database");
 		}
-		Object	lock = userId.intern();
+		String	lock = (userId + "userProfile").intern();
+
 		if (LOG.isDebugEnabled()) {
-				LOG.debug("getFreshUserProfile(before synchronized " + userId + ")");
+				LOG.debug("getUserProfile(before synchronized " + lock + ")");
 		}
 		
 		synchronized (lock) {
 			if (LOG.isDebugEnabled()) {
-				LOG.debug("getFreshUserProfile(begin synchronized " + userId + ")");
+				LOG.debug("getUserProfile(begin synchronized " + lock + ")");
 			}
 			UserProfile userProfile = DomainTools.getDaoService().getUserProfile(userId);
 			if (userProfile == null) {
 				userProfile = DomainTools.getDaoService().mergeUserProfile(new UserProfile(userId));
 			}
 			if (LOG.isDebugEnabled()) {
-				LOG.debug("getFreshUserProfile(end synchronized " + userId + ")");
+				LOG.debug("getUserProfile(end synchronized " + lock + ")");
 			}
 			return userProfile;
 		}

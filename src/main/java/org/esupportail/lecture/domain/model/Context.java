@@ -130,7 +130,13 @@ public class Context implements Serializable {
 		}
 		
 		Object lock = customContext; 
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("updateCustom(before synchronized " + customContext.getElementId() + ")");
+		}
 		synchronized (lock) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("updateCustom(begin synchronized " + customContext.getElementId() + ")");
+			}
 		//TODO (GB later) optimise evaluation process (trustCategory + real loadding)
 		// update for managedCategories defined in this context
 		for (ManagedCategoryProfile mcp : managedCategoryProfilesSet) {
@@ -146,6 +152,9 @@ public class Context implements Serializable {
 		}
 		// update for managedCategories not anymore in this context
 		updateCustomForVanishedSubscriptions(customContext);
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("updateCustom(end synchronized " + customContext.getElementId() + ")");
+		}
 		}
 	}
 
@@ -154,7 +163,13 @@ public class Context implements Serializable {
 	 * @param customContext
 	 */
 	private  void updateCustomForVanishedSubscriptions(final CustomContext customContext) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("updateCustomForVanishedSubscriptions(before synchronized " + customContext.getElementId() + ")");
+		}
 		synchronized (customContext) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("updateCustomForVanishedSubscriptions(begin synchronized " + customContext.getElementId() + ")");
+			}	
 			List<String> cids = new ArrayList<String>();
 			for (String categoryId : customContext.getSubscriptions().keySet()) {
 				cids.add(categoryId);
@@ -165,6 +180,9 @@ public class Context implements Serializable {
 					UserProfile user = customContext.getUserProfile();
 					user.removeCustomManagedCategoryIfOrphan(categoryId);
 				}
+			}
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("updateCustomForVanishedSubscriptions(end synchronized " + customContext.getElementId() + ")");
 			}
 		}
 	}
@@ -181,8 +199,13 @@ public class Context implements Serializable {
 	 */
 	protected  List<CoupleProfileVisibility> getVisibleCategoriesAndUpdateCustom(
 			final CustomContext customContext) {
-		
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("getVisibleCategoriesAndUpdateCustom(before synchronized " + customContext.getElementId() + ")");
+		}
 		synchronized (customContext) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("getVisibleCategoriesAndUpdateCustom(begin synchronized " + customContext.getElementId() + ")");
+			}
 			if (LOG.isDebugEnabled()) {
 				LOG.debug("id=" + this.getId() + " - getVisibleCategoriesAndUpdateCustom("
 						+ this.getId() + ")");
@@ -211,7 +234,9 @@ public class Context implements Serializable {
 			
 			// update for managedCategories not anymore in this Context
 			updateCustomForVanishedSubscriptions(customContext);
-		
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("getVisibleCategoriesAndUpdateCustom(end synchronized " + customContext.getElementId() + ")");
+			}
 		return couplesVisib;
 		}
 	}
@@ -233,11 +258,23 @@ public class Context implements Serializable {
 	 * Add a managed category profile id to this context.
 	 * @param s the id to add
 	 */
-	protected synchronized void addRefIdManagedCategoryProfile(final String s) {
+	protected  void addRefIdManagedCategoryProfile(final String s) {
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("id=" + id + " - addRefIdManagedCategoryProfile(" + s + ")");
+			LOG.debug("addRefIdManagedCategoryProfile(before synchronized " + this.name + ")");
 		}
-		refIdManagedCategoryProfilesSet.add(s);
+		synchronized (this) {
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("addRefIdManagedCategoryProfile(begin synchronized " + this.name + ")");
+			}
+			
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("id=" + id + " - addRefIdManagedCategoryProfile(" + s + ")");
+			}
+			refIdManagedCategoryProfilesSet.add(s);
+			if (LOG.isDebugEnabled()) {
+				LOG.debug("addRefIdManagedCategoryProfile(end synchronized " + this.name + ")");
+			}
+		}
 	}
 	
 	/** 
