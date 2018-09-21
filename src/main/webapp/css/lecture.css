@@ -385,31 +385,31 @@
 
 .esup-lecture .itemOpacifiable~.itemOpacifiable {
     padding-top: 8px;
+    position: relative;
 }
-.esup-lecture .itemOpacifiable~.itemOpacifiable:before {
+.esup-lecture .itemOpacifiable~.itemOpacifiable::before {
     background: #054460;
     /* IE10+ */
-    background-image: -ms-linear-gradient(left, #fff 0%, #054460 15%, #fff 60%);
+    background-image: -ms-linear-gradient(left, #fff 0%, #054460 15%, #fff 100%);
     /* Mozilla Firefox */
-    background-image: -moz-linear-gradient(left, #fff 0%, #054460 15%, #fff 60%);
+    background-image: -moz-linear-gradient(left, #fff 0%, #054460 15%, #fff 100%);
     /* Opera */
-    background-image: -o-linear-gradient(left, #fff 0%, #054460 15%, #fff 60%);
+    background-image: -o-linear-gradient(left, #fff 0%, #054460 15%, #fff 100%);
     /* Webkit (Safari/Chrome 10) */
-    background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #fff), color-stop(15, #054460), color-stop(60, #fff));
+    background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #fff), color-stop(15, #054460), color-stop(100, #fff));
     /* Webkit (Chrome 11+) */
-    background-image: -webkit-linear-gradient(left, #fff 0%, #054460 15%, #fff 60%);
+    background-image: -webkit-linear-gradient(left, #fff 0%, #054460 15%, #fff 100%);
     /* W3C Markup */
-    background-image: linear-gradient(to right, #fff 0%, #054460 15%, #fff 60%);
+    background-image: linear-gradient(to right, #fff 0%, #054460 15%, #fff 100%);
     width: 100%;
     height: 1px;
     position: absolute;
-    background-color: transparent;
     padding-top: 0px;
     padding-bottom: 0px;
     content:" ";
 }
 
-.esup-lecture .itemOpacifiable.premierVisible:before {
+.esup-lecture .itemOpacifiable.premierVisible::before {
     background: none;
 }
 .esup-lecture .scrollDivArticle .premierVisible div.itemShowFilter div.modeNoPublisher,
