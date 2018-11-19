@@ -90,12 +90,6 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
       }
   
       var modalPublisherSelector = selector + " #"+ portletId + "modalPublisher";
-       
-      // pour supprimer les doubles scrolls à l'affichage de la modal
-      // ici on remet la scroll principale à la fermeture de la modal (elle est cachée a l'ouverture dans onClickReadMoreInModal)
-      var modalPublisher = $(modalPublisherSelector+ " .btn[data-dismiss=modal]").on('click' , function () {
-    	$('html').css('overflow-y', 'auto');  
-      });
       
       //pour afficher la modal
      $("#lecture-" + portletId + " .actualite ")
@@ -125,8 +119,19 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     		var ref = $(ancre).attr('href') ;
     		if (ref) {
 		    	$(cibleOnClick).click(function(e) {
-		            e.preventDefault();          
-		            var modal = $(modalSelector).modal('show');
+		            e.preventDefault();
+		            var modal = $(modalSelector);
+		            if (!modal.traitementScroll) {
+		            	// gestion de la scroll principale
+			            modal.on('show.bs.modal', function (e) {
+			            	$('html').css('overflow-y', 'hidden');
+			            });
+			            modal.on('hidden.bs.modal', function (e) {
+			            	$('html').css('overflow-y', 'auto');
+			            });
+			            modal.traitementScroll = true;
+		            }
+		            modal.modal('show');
 		            var modalBody= modal.find('.modal-body');
 		            	
 		            if (iframe) { // on utilise une iframe pour resoudre les pb de cross domaine cas avec publisher
@@ -153,8 +158,6 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 		            } else {
 		            	modalBody.load(ref);
 		            }
-		            // on cache la scroll principale pour eviter les doubles scrolls
-		            $('html').css('overflow-y', 'hidden');  
 		        });
 		    	$(cibleOnClick).css('cursor', 'pointer');
     		}
