@@ -44,7 +44,7 @@
                     </c:if>
                   </span>
               <input type="hidden" class="srcId" value="${src.uid}"/>
-              <input type="hidden" class="titleName" value="${src.name}"/>
+              <input type="hidden" class="titleName" value="<c:out value="${src.name}" />"/>
             </div></li>
         </c:forEach>
         </c:if>
