@@ -5,13 +5,6 @@
  */
 package org.esupportail.lecture.domain.model;
 
-import java.io.File;
-import java.net.URL;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Document;
@@ -21,6 +14,13 @@ import org.esupportail.lecture.dao.FreshXmlFileThread;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.exceptions.dao.XMLParseException;
 import org.esupportail.lecture.exceptions.domain.ChannelConfigException;
+
+import java.io.File;
+import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Channel Config : class used to load and parse XML channel file config.
@@ -345,6 +345,12 @@ public class ChannelConfig  {
 			regexOfSet.setPattern(regex.valueOf("@pattern"));
 			defAndContentSets.addRegex(regexOfSet);
 		}
+
+        fatherPath = "visibility/" + fatherName + "/guest";
+        List<Node> guest = categoryProfile.selectNodes(fatherPath);
+        if (!guest.isEmpty()) {
+            defAndContentSets.addGuest();
+        }
 
 		return defAndContentSets;
 	}

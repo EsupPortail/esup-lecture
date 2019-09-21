@@ -38,9 +38,9 @@
 
 <!ELEMENT visibility (allowed,autoSubscribed,obliged)>
 
-<!ELEMENT allowed (regular*, regex*, group*)>
-<!ELEMENT autoSubscribed (regular*, regex*, group*)>
-<!ELEMENT obliged (regular*, regex*, group*)>
+<!ELEMENT allowed (regular*, regex*, group*, guest?)>
+<!ELEMENT autoSubscribed (regular*, regex*, group*, guest?)>
+<!ELEMENT obliged (regular*, regex*, group*, guest?)>
 
 <!ELEMENT regular EMPTY>
 <!ATTLIST regular

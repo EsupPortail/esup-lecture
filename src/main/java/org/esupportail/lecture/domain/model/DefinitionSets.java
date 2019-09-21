@@ -15,6 +15,7 @@ import org.apache.commons.logging.LogFactory;
 import org.esupportail.lecture.domain.DomainTools;
 import org.esupportail.lecture.domain.ExternalService;
 import org.esupportail.lecture.exceptions.domain.InternalExternalException;
+import org.esupportail.lecture.exceptions.domain.NoExternalValueException;
 /**
  * DefinitionSets is a the set definition.
  * It can be defined by two ways :
@@ -25,198 +26,235 @@ import org.esupportail.lecture.exceptions.domain.InternalExternalException;
  */
 public class DefinitionSets {
 
-	/*
-	 ************************** PROPERTIES ******************************** */
-	/**
-	 * Log instance.
-	 */
-	protected static final Log LOG = LogFactory.getLog(DefinitionSets.class);
-	/**
-	 * groups : set definition by existent group listing.
-	 */
-	private List<String> groups = new ArrayList<String>();
+    /*
+     ************************** PROPERTIES ******************************** */
+    /**
+     * Log instance.
+     */
+    protected static final Log LOG = LogFactory.getLog(DefinitionSets.class);
+    /**
+     * groups : set definition by existent group listing.
+     */
+    private List<String> groups = new ArrayList<String>();
 
-	/**
-	 * regulars : set definition by regulars.
-	 */
-	private List<RegularOfSet> regulars = new ArrayList<RegularOfSet>();
+    /**
+     * regulars : set definition by regulars.
+     */
+    private List<RegularOfSet> regulars = new ArrayList<RegularOfSet>();
 
-	/**
-	 * regexs : set definition by regexs.
-	 */
-	private List<RegexOfSet> regexs = new ArrayList<RegexOfSet>();
+    /**
+     * regexs : set definition by regexs.
+     */
+    private List<RegexOfSet> regexs = new ArrayList<RegexOfSet>();
 
-	/*
-	 ************************** INIT **********************************/
+    /**
+     * guest : set definition by is current user is guestUser
+     */
+    private boolean guest = false;
 
-	/**
-	 * Constructor.
-	 */
-	public DefinitionSets() {
-		// Nothing to do
-	}
+    /*
+     ************************** INIT **********************************/
 
-	/*
-	 *************************** METHODS ******************************** */
+    /**
+     * Constructor.
+     */
+    public DefinitionSets() {
+        // Nothing to do
+    }
 
-	/**
-	 * Check existence of group names, attributes names used in group enumeration.
-	 * and regulars definition
-	 * Not used for the moment : see later
-	 * Not ready to use without modification
-	 * @deprecated
-	 */
-	@Deprecated
-	protected void checkNamesExistence() {
-	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("checkNamesExistence()");
-    	}
+    /*
+     *************************** METHODS ******************************** */
+
+    /**
+     * Check existence of group names, attributes names used in group enumeration.
+     * and regulars definition
+     * Not used for the moment : see later
+     * Not ready to use without modification
+     * @deprecated
+     */
+    @Deprecated
+    protected void checkNamesExistence() {
+           if (LOG.isDebugEnabled()) {
+            LOG.debug("checkNamesExistence()");
+        }
 //		Iterator<String> iteratorString;
 //		iteratorString = groups.iterator();
 //		for(String group = null; iteratorString.hasNext();){
 //			group = iteratorString.next();
 //			 TODO (GB later) verification de l'existence du groupe dans le portail
-			// si PB : log.warn();
-			// PAs sure que c'est par le qu'on le fasse
+            // si PB : log.warn();
+            // PAs sure que c'est par le qu'on le fasse
 //		}
 
-		for (RegularOfSet reg : regulars) {
-			reg.checkNamesExistence();
-		}
+        for (RegularOfSet reg : regulars) {
+            reg.checkNamesExistence();
+        }
 
-		// sur le même principe que les regular
-		for (RegexOfSet reg : regexs) {
-			reg.checkNamesExistence();
-		}
-	}
+        // sur le même principe que les regular
+        for (RegexOfSet reg : regexs) {
+            reg.checkNamesExistence();
+        }
+    }
 
-	/**
-	 * Evaluate current user visibility for this DefinitionSets.
-	 * @return true if the user to the set defined by this DefinitionSets
-	 */
-	protected boolean evaluateVisibility() {
-	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("evaluateVisibility()");
-    	}
+    /**
+     * Evaluate current user visibility for this DefinitionSets.
+     * @return true if the user to the set defined by this DefinitionSets
+     */
+    protected boolean evaluateVisibility() {
+           if (LOG.isDebugEnabled()) {
+            LOG.debug("evaluateVisibility()");
+        }
 
-		/* group evaluation */
-		Iterator<String> iteratorGroups = groups.iterator();
-		while (iteratorGroups.hasNext()) {
-			String group = iteratorGroups.next();
-			if (LOG.isTraceEnabled()) {
-				LOG.trace("DefinitionSets, evaluation on group : " + group);
-			}
-			try {
-				ExternalService ex = DomainTools.getExternalService();
-				if (ex.isUserInGroup(group)) {
-					return true;
-				}
-			} catch (InternalExternalException e) {
-				LOG.error("Group user evaluation impossible (external service unavailable) : "
-						+ e.getMessage());
-			}
+        /* group evaluation */
+        Iterator<String> iteratorGroups = groups.iterator();
+        while (iteratorGroups.hasNext()) {
+            String group = iteratorGroups.next();
+            if (LOG.isTraceEnabled()) {
+                LOG.trace("DefinitionSets, evaluation on group : " + group);
+            }
+            try {
+                ExternalService ex = DomainTools.getExternalService();
+                if (ex.isUserInGroup(group)) {
+                    return true;
+                }
+            } catch (InternalExternalException e) {
+                LOG.error("Group user evaluation impossible (external service unavailable) : "
+                        + e.getMessage());
+            }
 
-		}
+        }
 
-		/* regulars evaluation */
-		Iterator<RegularOfSet> iteratorReg = regulars.iterator();
-		while (iteratorReg.hasNext()) {
-			RegularOfSet reg = iteratorReg.next();
-			if (LOG.isTraceEnabled()) {
-				LOG.trace("DefinionSets, evaluation regular : attr("
-					+ reg.getAttribute() + ") val(" + reg.getValue() + ")");
-			}
-			if (reg.evaluate()) {
-				return true;
-			}
-		}
+        /* regulars evaluation */
+        Iterator<RegularOfSet> iteratorReg = regulars.iterator();
+        while (iteratorReg.hasNext()) {
+            RegularOfSet reg = iteratorReg.next();
+            if (LOG.isTraceEnabled()) {
+                LOG.trace("DefinionSets, evaluation regular : attr("
+                    + reg.getAttribute() + ") val(" + reg.getValue() + ")");
+            }
+            if (reg.evaluate()) {
+                return true;
+            }
+        }
 
-		/* regexs evaluation */
-		Iterator<RegexOfSet> iteratorRegex = regexs.iterator();
-		while (iteratorRegex.hasNext()) {
-			RegexOfSet reg = iteratorRegex.next();
-			if (LOG.isTraceEnabled()) {
-				LOG.trace("DefinionSets, evaluation regex : attr("+ reg.toString() + ")");
-			}
-			if (reg.evaluate()) {
-				return true;
-			}
-		}
+        /* regexs evaluation */
+        Iterator<RegexOfSet> iteratorRegex = regexs.iterator();
+        while (iteratorRegex.hasNext()) {
+            RegexOfSet reg = iteratorRegex.next();
+            if (LOG.isTraceEnabled()) {
+                LOG.trace("DefinionSets, evaluation regex : attr("+ reg.toString() + ")");
+            }
+            if (reg.evaluate()) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        /* guest evaluation */
+        if (LOG.isTraceEnabled()) {
+            LOG.trace("DefinitionSets, evaluation on guest : " + guest);
+        }
+        if (guest) {
+            try {
+                ExternalService ex = DomainTools.getExternalService();
+                if (ex.getConnectedUserId().equalsIgnoreCase(DomainTools.getGuestUser())) {
+                    return true;
+                }
+            } catch (NoExternalValueException e) {
+                LOG.warn("Guest user evaluation impossible (NoExternalValueException) : " + e.getMessage());
+                return false;
+            } catch (InternalExternalException e) {
+                LOG.error("Guest user evaluation impossible (external service unavailable) : "
+                        + e.getMessage());
+                return false;
+            }
+        }
 
-	/**
-	 * Add a group in groups enumeration of this DefintionSets.
-	 * @param group group to add
-	 * @see DefinitionSets#groups
-	 */
-	public synchronized void addGroup(final String group) {
-	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("addGroup(" + group + ")");
-    	}
-		this.groups.add(group);
-	}
+        return false;
+    }
 
-	/**
-	 * Add a regulars in list of regulars of this DefintionSets.
-	 * @param regular
-	 * @see DefinitionSets#regulars
-	 */
-	public synchronized void addRegular(final RegularOfSet regular) {
-	   	if (LOG.isDebugEnabled()) {
-	   		LOG.debug("addRegular(" + regular.toString() + ")");
-    	}
-		this.regulars.add(regular);
-	}
+    /**
+     * Add a group in groups enumeration of this DefintionSets.
+     * @param group group to add
+     * @see DefinitionSets#groups
+     */
+    public synchronized void addGroup(final String group) {
+           if (LOG.isDebugEnabled()) {
+            LOG.debug("addGroup(" + group + ")");
+        }
+        this.groups.add(group);
+    }
 
-	/**
-	 * Add a regexs in list of regexs of this DefintionSets.
-	 * @param regex
-	 * @see DefinitionSets#regexs
-	 */
-	public synchronized void addRegex(final RegexOfSet regex) {
-	   	if (LOG.isDebugEnabled()) {
-    		LOG.debug("addRegex(" + regex.toString() + ")");
-    	}
-		this.regexs.add(regex);
-	}
+    /**
+     * Add a regulars in list of regulars of this DefintionSets.
+     * @param regular
+     * @see DefinitionSets#regulars
+     */
+    public synchronized void addRegular(final RegularOfSet regular) {
+           if (LOG.isDebugEnabled()) {
+               LOG.debug("addRegular(" + regular.toString() + ")");
+        }
+        this.regulars.add(regular);
+    }
 
-	/**
-	 * Add a definitionSets to the current definitionSets.
-	 * @param definitionSets - the definitionSets to add
-	 */
-	public void addDefinitionSets(final DefinitionSets definitionSets) {
-		this.groups.addAll(definitionSets.groups);
-		this.regulars.addAll(definitionSets.regulars);
-		this.regexs.addAll(definitionSets.regexs);
-	}
+    /**
+     * Add a regexs in list of regexs of this DefintionSets.
+     * @param regex
+     * @see DefinitionSets#regexs
+     */
+    public synchronized void addRegex(final RegexOfSet regex) {
+           if (LOG.isDebugEnabled()) {
+            LOG.debug("addRegex(" + regex.toString() + ")");
+        }
+        this.regexs.add(regex);
+    }
 
-	/**
-	 * @return if DefinitionSets is Empty or not
-	 */
-	public boolean isEmpty() {
-		boolean ret = false;
-		if (groups.isEmpty() && regulars.isEmpty() && regexs.isEmpty()) {
-			ret = true;
-		}
-		return ret;
-	}
+    /**
+     * Add a Guest test of this DefintionSets
+     */
+    public synchronized void addGuest() {
+        if (LOG.isDebugEnabled()) {
+            LOG.debug("addGuest");
+        }
+        this.guest = true;
+    }
 
-	/**
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+    /**
+     * Add a definitionSets to the current definitionSets.
+     * @param definitionSets - the definitionSets to add
+     */
+    public void addDefinitionSets(final DefinitionSets definitionSets) {
+        this.groups.addAll(definitionSets.groups);
+        this.regulars.addAll(definitionSets.regulars);
+        this.regexs.addAll(definitionSets.regexs);
+        this.guest = definitionSets.guest;
+    }
 
-		String string = "";
-		string += "		groups : " + groups.toString() + "\n";
-		string += "		regulars : " + regulars.toString() + "\n";
-		string += "		regexs : " + regexs.toString() + "\n";
+    /**
+     * @return if DefinitionSets is Empty or not
+     */
+    public boolean isEmpty() {
+        boolean ret = false;
+        if (groups.isEmpty() && regulars.isEmpty() && regexs.isEmpty() && !guest) {
+            ret = true;
+        }
+        return ret;
+    }
 
-		return string;
-	}
+    /**
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
 
-	/* ************************** ACCESSORS ******************************** */
+        String string = "";
+        string += "		groups : " + groups.toString() + "\n";
+        string += "		regulars : " + regulars.toString() + "\n";
+        string += "		regexs : " + regexs.toString() + "\n";
+        string += "		guest : " + guest + "\n";
+
+        return string;
+    }
+
+    /* ************************** ACCESSORS ******************************** */
 
 }
