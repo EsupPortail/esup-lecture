@@ -239,6 +239,49 @@ public class DomainTools implements InitializingBean {
 		return ret;
 	}
 
+	final static String startIndex = "${";
+	final static String endIndex = "}";
+
+	public static String replaceWithSystemProperty(final String value) {
+		if (LOG.isDebugEnabled()) {
+			LOG.debug("replaceWithSystemProperty(" + value + ")");
+		}
+		String ret = null;
+		if (value != null) {
+			// find and replace {...}
+			int firstIndex = value.indexOf(startIndex);
+			int lastIndex = value.indexOf(endIndex);
+			//is { and } in value
+			if (firstIndex != -1 && lastIndex != -1) {
+				String begin = value.substring(0, firstIndex);
+				//med = attribute to replace
+				String med = value.substring(firstIndex + startIndex.length(), lastIndex);
+				String end = value.substring(lastIndex + endIndex.length(), value.length());
+				//replacing med value
+				String realMedValue = System.getProperty(med);
+				if (realMedValue == null) {
+					LOG.error("System.getProperty(" + med + ") "
+							+ "return no value, watch if the property is set !");
+				}
+				//generate return value
+				ret = begin + realMedValue + end;
+				if (LOG.isDebugEnabled()) {
+					LOG.debug("replaceWithSystemProperty" + " :: replace " + value + " by " + ret);
+				}
+				//is there some other { } ?
+				int firstIndex2 = ret.indexOf(startIndex);
+				int lastIndex2 = ret.indexOf(endIndex);
+				//is { and } in value
+				if (firstIndex2 != -1 && lastIndex2 != -1) {
+					ret = replaceWithSystemProperty(ret);
+				}
+			} else {
+				ret = value;
+			}
+		}
+		return ret;
+	}
+
 	/*
 	 ************************** ACCESSORS *********************************/
 	/**
@@ -407,14 +450,16 @@ public class DomainTools implements InitializingBean {
 	public static String getXsltFile(final String xsltFileURL)
 			throws IOException {
 
+		final String xsltFile = replaceWithSystemProperty(xsltFileURL);
+
 		if (LOG.isDebugEnabled()) {
-			LOG.debug("getXsltFile(" + xsltFileURL + ")");
+			LOG.debug("getXsltFile(" + xsltFile + ")");
 		}
 		String inputXslt;
-		String cacheKey = "XSLT:" + xsltFileURL;
+		String cacheKey = "XSLT:" + xsltFile;
 		Element element = cache.get(cacheKey);
 		if (element == null) {
-			URL url2 = new URL(xsltFileURL);
+			URL url2 = new URL(xsltFile);
 			InputStream is =  url2.openStream();
 
 			BufferedReader in = new BufferedReader(

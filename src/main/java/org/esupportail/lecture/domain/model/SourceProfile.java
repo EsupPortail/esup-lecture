@@ -245,7 +245,7 @@ public abstract class SourceProfile implements ElementProfile, Serializable {
 	 */
 	public void setSourceURL(final String sourceURL) {
 		//RB sourceURL = DomainTools.replaceWithUserAttributes(sourceURL);
-		this.sourceURL = sourceURL;
+		this.sourceURL = DomainTools.replaceWithSystemProperty(sourceURL);
 	}
 
 	/**
