@@ -5,7 +5,12 @@
 <%@ taglib prefix="portlet" uri="http://java.sun.com/portlet_2_0"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<div class=" enteteLectureAll">
+
+
+<c:set var="treeVisible"><c:if test="${contexte.treeVisible=='false'}">noTreeVisible</c:if></c:set>
+
+
+<div class=" enteteLectureAll ${treeVisible}">
 <!--   "col-xs-7 col-sm-7" -->
   <div class="pull-left noMenuDropDown" id="${n}rubSelectedDiv1">
     <label class="rubrique_Active ${n}"><c:out value="${ctxTextFilter}"></c:out></label>
@@ -41,11 +46,11 @@
 		</div>
 	</c:if>
 </div>
-  
+
 <c:set var="nbCat"  value="0" />
 <c:set var="nbSrc" value="0" />
 
-<div id="modalRubriqueList${n}" class="modal fade" role="dialog">
+<div id="modalRubriqueList${n}" class="modal fade ${treeVisible}" role="dialog">
   <div class="modal-dialog modalMarge">
     <!-- Modal content-->
     <div class="modal-content">
@@ -69,18 +74,18 @@
 	              		data-dismiss="modal">
 	              		<c:out value="${cat.name}"></c:out>
 	         	</div>
-	            
+
 	            <div id="divCollapseInDropDown${nbCat}${n}"
-	            		class="collapseInDropDown" 
+	            		class="collapseInDropDown"
 	            		data-toggle="collapse"
-						data-target="#ulInDropDown${nbCat}${n}" 
+						data-target="#ulInDropDown${nbCat}${n}"
 						aria-expanded="true"
 						aria-controls="ulInDropDown${nbCat}${n}">
 							<span class="glyphicon glyphicon-triangle-bottom "></span>
 							<span class="glyphicon glyphicon-triangle-right "></span>
 				</div>
 				</div>
-        		<ul id="ulInDropDown${nbCat}${n}" class="collapse in"  
+        		<ul id="ulInDropDown${nbCat}${n}" class="collapse in"
         			 aria-expanded="true"
 					aria-labelledby="divCollapseInDropDown${nbCat}${n}">
 	          <c:forEach items="${cat.sources}" var="src">
@@ -96,10 +101,10 @@
                     </span>
 	            </div></li>
 	          </c:forEach>
-	          
+
 	            </ul>
 	            </div>
-	          <!-- ******** --> 
+	          <!-- ******** -->
           </c:if>
      		</c:if>
      		<c:if test="${!notFromPublisher}" >
