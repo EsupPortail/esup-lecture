@@ -52,6 +52,9 @@ public class SourceWebBean implements Comparable<SourceWebBean> {
 	private String color;
 
 	private Boolean highlight;
+
+	private Boolean hiddenIfEmpty;
+
 	/**
 	 * List of items of source.
 	 */
@@ -311,6 +314,14 @@ public class SourceWebBean implements Comparable<SourceWebBean> {
 
 	public void setUid(int uid) {
 		this.uid = uid;
+	}
+
+	public Boolean getHiddenIfEmpty(){
+		return this.hiddenIfEmpty;
+	}
+
+	public void setHiddenIfEmpty(Boolean hiddenIfEmpty){
+		this.hiddenIfEmpty = hiddenIfEmpty;
 	}
 
 }

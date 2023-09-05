@@ -239,6 +239,7 @@ public class FreshManagedCategoryThread extends Thread {
 			Element root = doc.getRootElement();
 			List<Node> rubriquesNodes = root.selectNodes("/actualites/rubriques/rubrique");
 			int xmlOrder = 1;
+			// Création des sources en fonction du XML
 			for (Node node : rubriquesNodes) {
 				RubriquesSourceProfile sp = new RubriquesSourceProfile(ret);
 				sp.setName(node.selectSingleNode("name").getText());
@@ -246,6 +247,11 @@ public class FreshManagedCategoryThread extends Thread {
 				sp.setHighLight(false);
 				if (node.selectSingleNode("highlight").getText().equals("true")) {
 					sp.setHighLight(true);
+				}
+				// Nouveau paramètre hiddenIfEmpty
+				sp.setHiddenIfEmpty(false);
+				if (node.selectSingleNode("hiddenIfEmpty").getText().equals("true")) {
+					sp.setHiddenIfEmpty(true);
 				}
 				sp.setUuid(Integer.valueOf(node.selectSingleNode("uuid").getText()));
 				sp.setSourceURL(profile.getUrlActualites() + "#" + sp.getUuid());

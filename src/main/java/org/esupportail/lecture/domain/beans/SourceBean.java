@@ -60,6 +60,7 @@ public class SourceBean {
 
 	private String color;
 	private Boolean highlight;
+	private Boolean hiddenIfEmpty;
 	/*
 	 *************************** INIT **************************************
 	 */
@@ -98,6 +99,7 @@ public class SourceBean {
 			this.setColor(msp.getColor());
 			this.setHighlight(msp.isHighLight());
 			this.setUid(msp.getUuid());
+			this.setHiddenIfEmpty(msp.isHiddenIfEmpty());
 		}
 	}
 
@@ -197,6 +199,14 @@ public class SourceBean {
 
 	public void setUid(int uid) {
 		this.uid = uid;
+	}
+
+	public Boolean getHiddenIfEmpty(){
+		return this.hiddenIfEmpty;
+	}
+
+	public void setHiddenIfEmpty(Boolean hiddenIfEmpty){
+		this.hiddenIfEmpty = hiddenIfEmpty;
 	}
 
 	/*

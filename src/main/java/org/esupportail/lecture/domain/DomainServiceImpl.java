@@ -683,6 +683,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 						List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
 						if (sources != null) {
 							for (SourceBean sourceBean : sources) {
+								// Creating sourceWebBean from sourceBean
 								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile);
 								// we add the source order in the Category XML
 								// definition file
@@ -874,6 +875,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			sourceWebBean.setHighlight(sourceBean.getHighlight());
 			sourceWebBean.setColor(sourceBean.getColor());
 			sourceWebBean.setUid(sourceBean.getUid());
+			sourceWebBean.setHiddenIfEmpty(sourceBean.getHiddenIfEmpty());
 			if (sourceWebBean.getHighlight()) {
 				ServiceUtilLecture.sortItemsByPubDate(sourceWebBean.getItems());
 			}

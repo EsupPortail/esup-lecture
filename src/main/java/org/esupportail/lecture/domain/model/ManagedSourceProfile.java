@@ -86,6 +86,7 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 
 	private String color;
 	private int uuid;
+	private boolean hiddenIfEmpty;
 	/*
 	 ************************** INIT ********************************
 	 */
@@ -575,6 +576,13 @@ public class ManagedSourceProfile extends SourceProfile implements ManagedElemen
 		this.uuid = uuid;
 	}
 
+	public boolean isHiddenIfEmpty(){
+		return this.hiddenIfEmpty;
+	}
+
+	public void setHiddenIfEmpty(boolean hiddenIfEmpty){
+		this.hiddenIfEmpty = hiddenIfEmpty;
+	}
 
 	@Override
 	public String toString() {

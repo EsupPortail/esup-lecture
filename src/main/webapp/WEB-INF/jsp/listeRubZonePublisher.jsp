@@ -26,29 +26,31 @@
           <input type="hidden" class="titleName" value="${ctxTextFilter}"/>
       </div>
     </li>
-      <c:forEach items="${listCat}" var="cat">
-      	<c:set var="nbCat" value="${nbCat+1}" />
-     	<c:if var="notFromPublisher" test="${!cat.fromPublisher}" >
-     		<%@include file="rubZoneNonPublisher.jsp"%>
-     	</c:if>
-     	<c:if test="${!notFromPublisher}" >
-        <c:forEach items="${cat.sources}" var="src">
-        	<c:set var="nbSrc" value="${nbSrc+1}" />
-          <li><div class="row divLargeWith rubriqueFiltre rubrique_${src.uid} ${n}"
-                   onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}')">
-              <c:out value="${src.name}"></c:out>
-                  <span class="badge pull-right ${(contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true') ? '' : 'emptyTextCircle'}"
-                    style="background-color:${src.color}">
-                    <c:if test="${contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true'}">
-                      <span data-idSrc="${src.id}"><c:out value="${src.unreadItemsNumber}"></c:out></span>
+        <c:forEach items="${listCat}" var="cat">
+            <c:set var="nbCat" value="${nbCat+1}" />
+            <c:if var="notFromPublisher" test="${!cat.fromPublisher}" >
+                <%@include file="rubZoneNonPublisher.jsp"%>
+            </c:if>
+            <c:if test="${!notFromPublisher}" >
+                <c:forEach items="${cat.sources}" var="src">
+                    <c:if test="${!(src.hiddenIfEmpty && src.itemsNumber == 0)}" >
+                        <c:set var="nbSrc" value="${nbSrc+1}" />
+                        <li>
+                            <div class="row divLargeWith rubriqueFiltre rubrique_${src.uid} ${n}" onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}')">
+                                <c:out value="${src.name}"></c:out>
+                                <span class="badge pull-right ${(contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true') ? '' : 'emptyTextCircle'}" style="background-color:${src.color}">
+                                    <c:if test="${contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true'}">
+                                        <span data-idSrc="${src.id}"><c:out value="${src.unreadItemsNumber}"></c:out></span>
+                                    </c:if>
+                                </span>
+                                <input type="hidden" class="srcId" value="${src.uid}"/>
+                                <input type="hidden" class="titleName" value="<c:out value="${src.name}" />"/>
+                            </div>
+                        </li>
                     </c:if>
-                  </span>
-              <input type="hidden" class="srcId" value="${src.uid}"/>
-              <input type="hidden" class="titleName" value="<c:out value="${src.name}" />"/>
-            </div></li>
+                </c:forEach>
+            </c:if>
         </c:forEach>
-        </c:if>
-      </c:forEach>
 
   </ul>
 </div>

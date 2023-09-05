@@ -109,13 +109,15 @@
      		</c:if>
      		<c:if test="${!notFromPublisher}" >
 	          <c:forEach items="${cat.sources}" var="src">
-	          <c:set var="nbSrc" value="${nbSrc+1}" />
-	            <a href="#" class="list-group-item"
-	              onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}')"
-	              data-dismiss="modal"><c:out value="${src.name}"></c:out>
-					<span class="badge pull-right ${(contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true') ? '' : 'emptyTextCircle'}" style="background-color:${src.color}">
-						<c:if test="${contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true'}" ><c:out
-	                  value="${src.unreadItemsNumber}"></c:out></c:if></span></a>
+                  <c:if test="${!(src.hiddenIfEmpty && src.itemsNumber == 0)}" >
+                      <c:set var="nbSrc" value="${nbSrc+1}" />
+                        <a href="#" class="list-group-item"
+                          onclick="lecture.${n}.filterByRubriqueClass('rubrique_${src.uid}')"
+                          data-dismiss="modal"><c:out value="${src.name}"></c:out>
+                            <span class="badge pull-right ${(contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true') ? '' : 'emptyTextCircle'}" style="background-color:${src.color}">
+                                <c:if test="${contexte.userCanMarkRead=='true' && cat.userCanMarkRead=='true'}" ><c:out
+                              value="${src.unreadItemsNumber}"></c:out></c:if></span></a>
+                  </c:if>
 	          </c:forEach>
           	</c:if>
         </c:forEach>
