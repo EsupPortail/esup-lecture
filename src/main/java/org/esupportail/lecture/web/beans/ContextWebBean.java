@@ -56,11 +56,13 @@ public class ContextWebBean {
 	private String lienVue;
 	
 	private int nbrUnreadItem;
+
+	private int nbrUnreadItemHighlight;
 	
 	private boolean modePublisher;
 
 	private boolean userCanMarkRead;
-	private ItemDisplayMode itemDisplayMode =ItemDisplayMode.ALL;
+	private ItemDisplayMode itemDisplayMode = ItemDisplayMode.ALL;
 	private Boolean isContextUnreadMode;
 	/**
 	 * get the id of the context.
@@ -248,6 +250,14 @@ public class ContextWebBean {
 
 	public void setNbrUnreadItem(int nbrUnreadItem) {
 		this.nbrUnreadItem = nbrUnreadItem;
+	}
+
+	public int getNbrUnreadItemHighlight() {
+		return nbrUnreadItemHighlight;
+	}
+
+	public void setNbrUnreadItemHighlight(int nbrUnreadItemHighlight) {
+		this.nbrUnreadItemHighlight = nbrUnreadItemHighlight;
 	}
 
 	public boolean isModePublisher() {

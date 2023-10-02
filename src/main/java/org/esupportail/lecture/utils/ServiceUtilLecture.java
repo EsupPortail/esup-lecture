@@ -166,8 +166,8 @@ public class ServiceUtilLecture {
 		});
 		
 	}
-	
-	
+
+
 	/**
 	 * Donne la liste des articles à afficher en page d'accueil 
 	 * et calcule dans contexte.nbrUnreadItem le nombre d'articles pas encore lue.  
@@ -190,6 +190,7 @@ public class ServiceUtilLecture {
 		List<ItemWebBean> listeItemDejaLue = new ArrayList<ItemWebBean>();
 
 		int nbrArticleNonLu = 0;
+		int nbrArticleALaUneNonLu = 0;
 		
 			// les id des items deja dans listeItemAcceuil
 		Set<String> idBean = new HashSet<String>();
@@ -209,6 +210,7 @@ public class ServiceUtilLecture {
 							listeItemAcceuil.add(item);
 							if (!item.isRead()) {
 								nbrArticleNonLu++;
+								nbrArticleALaUneNonLu++;
 							}
 						}
 					}
@@ -235,10 +237,129 @@ public class ServiceUtilLecture {
 		}
 		
 		contexte.setNbrUnreadItem(nbrArticleNonLu);
-		
+		contexte.setNbrUnreadItemHighlight(nbrArticleALaUneNonLu);
+
 		if (!completed(listeItemAcceuil, listeItemNonLue, nbMinArticle) ){
 			completed(listeItemAcceuil, listeItemDejaLue, nbMinArticle);
 		}
+		return listeItemAcceuil;
+
+	}
+
+	/**
+	 * Donne la liste des articles à afficher en page d'accueil si on veut masquer les articles déjà lus
+	 * NbrUnreadItem et setNbrUnreadItemHighlight ont été calculés au préalable et sont dispo dans le contexte
+	 * @param contexte
+	 * @param listCat
+	 * @return
+	 */
+	public static List<ItemWebBean> getListItemAccueilMasquerDejaLues(ContextWebBean contexte, List<CategoryWebBean> listCat) {
+
+		// Nombre d'articles minimum a afficher si possible.
+		int nbMinArticle = contexte.getNombreArticle();
+
+		// Les Items a présenter en page d'accueil. C'est le résultat final.
+		List<ItemWebBean> listeItemAcceuil = new ArrayList<ItemWebBean>();
+
+		// Les items pas encore lus a présenter apres les à la une
+		List<ItemWebBean> listeItemNonLue = new ArrayList<ItemWebBean>();
+
+		// Les id des items deja dans listeItemAcceuil
+		Set<String> idBean = new HashSet<String>();
+
+		// Première étape : on va chercher les à la une
+		for (CategoryWebBean cat : listCat) {
+			for (SourceWebBean src : cat.getSources()) {
+				if (src.getHighlight()) {
+					if(src.getItems().size() >= nbMinArticle){
+						if(contexte.getNbrUnreadItemHighlight() >= nbMinArticle){
+							// 1. Cas ou on a plus de nbMinArticle articles à la une non lus
+							// On affiche alors juste tous les à la une non lus
+							for (ItemWebBean item : src.getItems()) {
+								if (!item.isRead()){
+									listeItemAcceuil.add(item);
+								}
+							}
+						}
+						// 2. Cas ou on a plus de nbMinArticle articles à la une, mais pas plus de nbMinArticle articles à la une non lus
+						else{
+							// On ajoute d'abord les non lus
+							for (ItemWebBean item : src.getItems()) {
+								if (!item.isRead()){
+									if (idBean.add(item.getId())) {
+										listeItemAcceuil.add(item);
+									}
+								}
+							}
+							// Puis on complète avec des lus
+							for (ItemWebBean item : src.getItems()) {
+								if (item.isRead() && listeItemAcceuil.size() < nbMinArticle){
+									if (idBean.add(item.getId())) {
+										listeItemAcceuil.add(item);
+									}
+								}
+							}
+						}
+					}
+					// 3. Cas ou on a moins de nbMinArticle articles à la une
+					// On complète alors jusqu'à nbMinArticle avec des autres non lus
+					else {
+						// On ajoute tous les à la une non lues puis lues
+						for (ItemWebBean item : src.getItems()) {
+							if (!item.isRead()){
+								if (idBean.add(item.getId())) {
+									listeItemAcceuil.add(item);
+								}
+							}
+						}
+						for (ItemWebBean item : src.getItems()) {
+							if (item.isRead()){
+								if (idBean.add(item.getId())) {
+									listeItemAcceuil.add(item);
+								}
+							}
+						}
+						// On ajoutera les autres dans la boucle suivante
+					}
+				}
+			}
+		}
+
+		// Deuxième étape : on traite les articles qui ne sont pas "a la une" (on ne prend que les non lus)
+		if(listeItemAcceuil.size() < nbMinArticle){
+			for (CategoryWebBean cat : listCat) {
+				for (SourceWebBean src : cat.getSources()) {
+					if (!src.getHighlight()) {
+						for (ItemWebBean item : src.getItems()) {
+							if ( idBean.add(item.getId())) {
+								if (!item.isRead()) {
+									listeItemNonLue.add(item);
+								}
+							}
+						}
+					}
+				}
+			}
+
+			// On complète avec les articles qui manquent (ordonnés par date) pour le cas 3. jusqu'à nbMinArticle
+			// On trie par date de publication
+			Collections.sort(listeItemNonLue, new Comparator<ItemWebBean>() {
+				@Override
+				public int compare(ItemWebBean obj1, ItemWebBean obj2) {
+					Date date1 = obj1.getPubDate();
+					Date date2 = obj2.getPubDate();
+					return -date1.compareTo(date2);
+				}
+			});
+			// Puis on ajoute les X premiers si on en a assez
+			final int nbArticlesMaxaAjouter = nbMinArticle-listeItemAcceuil.size();
+			for(int i=0; i<nbArticlesMaxaAjouter; i++){
+				if(listeItemNonLue.size() > i){
+					listeItemAcceuil.add(listeItemNonLue.get(i));
+				}
+			}
+		}
+
 		return listeItemAcceuil;
 
 	}

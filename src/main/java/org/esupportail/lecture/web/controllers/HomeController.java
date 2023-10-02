@@ -65,10 +65,14 @@ public class HomeController extends TwoPanesController {
 		ContextWebBean contexte = getContext();
 		List<CategoryWebBean> listCat = contexte.getCategories();
 		List<ItemWebBean> listeItemAcceuil = null;
+		List<ItemWebBean> listeItemAcceuilMasquerDejaLues = null;
 		int nbrArticleNonLu = 0;
 		if (contexte.isViewDef()) {
 			// la liste des articles à afficher+nombre d'articles non lus
 			listeItemAcceuil = ServiceUtilLecture.getListItemAccueil(contexte, listCat);
+			// la liste des articles à afficher dans le cas ou on veut masquer les déjà lu
+			listeItemAcceuilMasquerDejaLues = ServiceUtilLecture.getListItemAccueilMasquerDejaLues(contexte, listCat);
+
 		} else {
 		//	 listeItemAcceuil = new ArrayList<ItemWebBean>();
 			nbrArticleNonLu = ServiceUtilLecture.compteNombreArticleNonLu(contexte);
@@ -80,6 +84,7 @@ public class HomeController extends TwoPanesController {
 		model.addAttribute("contexte", contexte);
 		model.addAttribute("nombreArticleNonLu", nbrArticleNonLu);
 		model.addAttribute("listeItemAcceuil", listeItemAcceuil);
+		model.addAttribute("listeItemAcceuilMasquerDejaLues", listeItemAcceuilMasquerDejaLues);
 	//	model.addAttribute("", )
 		return "home";
 		

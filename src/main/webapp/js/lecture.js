@@ -484,7 +484,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 		    		priv.notReadOnly = false;
 		    	}
 	//	    	console.log("urlFiltrItem " + urlFiltrItem);
-		    	
+
 		    	$.ajax({
 				    url: url,
 				    type: 'POST',
@@ -503,7 +503,48 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
     	}
     }
     priv.filterPublisherNotRead = filterPublisherNotRead;
-    
+
+
+    /**
+      * Affichage spécifique des non lus seulement sur la page principale
+      */
+        function filterPublisherNotReadAccueil(obj) {
+        	var contextClass = namespace;
+        	console.log(contextClass)
+        	var url=urlFiltrItem;
+        	if (obj) {
+    	    	var hiddenDivs = $('div.'+contextClass+' div.contenuArticle[hidden]');
+    	    	var notHiddenDivs = $('div.'+contextClass+' div.contenuArticle:not([hidden])');
+                hiddenDivs.each(function() {
+                    $(this).removeAttr('hidden');
+                })
+                notHiddenDivs.each(function() {
+                    $(this).attr('hidden','true');
+                })
+                if (obj.checked){
+                    priv.notReadOnly = true;
+                } else {
+                    priv.notReadOnly = false;
+                }
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {filter : obj.checked},
+                    datatype:'json',
+                    success: function(){
+                            if (!obj.checked && priv.initialNotReadOnly ) {
+                            //	location.reload();
+                            };
+                        }
+                });
+
+
+    	    	if (priv.gereAffixMenu) {priv.gereAffixMenu() };
+        	}
+        }
+        priv.filterPublisherNotReadAccueil = filterPublisherNotReadAccueil;
+
     function markFirtVisible (){
     	var divNonLue = $('div.divModeDesk div.panel.nonLueSeulement.'+namespace)[0];
     	var first=true;
