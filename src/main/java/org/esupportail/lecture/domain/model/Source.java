@@ -477,7 +477,7 @@ public abstract class Source implements Element, Serializable {
 			StreamSource source = new StreamSource(inputStream);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			StreamResult result = new StreamResult(outputStream);
-			transformer.setParameter("fname","/portail/api/ExternalURLStats?fname="+fname+"-click&service=");
+			transformer.setParameter("fname",fname+"-click");
 			transformer.transform(source, result);
 			ret = outputStream.toString("UTF-8");
 		} catch (TransformerConfigurationException e) {
