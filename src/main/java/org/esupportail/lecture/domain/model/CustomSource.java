@@ -100,7 +100,7 @@ public abstract class CustomSource implements CustomElement {
 	 * @throws ComputeItemsException 
 	 * @throws InternalDomainException 
 	 */
-	public List<Item> getItems() 
+	public List<Item> getItems(final String fname)
 	throws SourceNotLoadedException, ManagedCategoryNotLoadedException, 
 	ComputeItemsException, InternalDomainException {
 		if (LOG.isDebugEnabled()) {
@@ -120,7 +120,7 @@ public abstract class CustomSource implements CustomElement {
 		}
 		List<Item> listItems = null;
 		try {
-			listItems = profile.getItems();
+			listItems = profile.getItems(fname);
 			// pas de catch de categoryNotLoaded : cela entraine trop de compliaction
 		} catch (SourceNotLoadedException e) {
 			// Dans ce cas : la mise à jour du customCategory n'a pas été effectuée

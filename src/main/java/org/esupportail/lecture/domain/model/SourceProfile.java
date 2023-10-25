@@ -121,7 +121,7 @@ public abstract class SourceProfile implements ElementProfile, Serializable {
 	 * @throws ComputeItemsException 
 	 * @throws ManagedCategoryNotLoadedException 
 	 */
-	protected List<Item> getItems() 
+	protected List<Item> getItems(final String fname)
 	throws SourceNotLoadedException, ComputeItemsException, ManagedCategoryNotLoadedException {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id = " + this.id + " - getItems()");
@@ -133,9 +133,9 @@ public abstract class SourceProfile implements ElementProfile, Serializable {
 			//Produit le flux xml (liste d'items) des flux publisher :
 			//	gere la visibilité; les rubriques; permet de generer les rubriques et les auteurs
 			ItemParser parser = new ItemParser(s);
-			ret = s.getItems(parser);
+			ret = s.getItems(parser, fname);
 	   	} else {
-	   		ret = s.getItems(null);
+	   		ret = s.getItems(null, fname);
 		}
 		// For complex items we need to check visibility on each users, but all the content + items must be cached
 		if (this.isComplexItems()) {

@@ -243,7 +243,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @throws InternalDomainException
 	 * @throws ManagedCategoryNotLoadedException
 	 */
-	private List<ItemBean> getItems(final UserProfile userProfile, final String sourceId)
+	private List<ItemBean> getItems(final UserProfile userProfile, final String sourceId, final String fname)
 			throws InternalDomainException, SourceNotLoadedException, ManagedCategoryNotLoadedException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("getItems(" + userProfile.getUserId() + "," + sourceId + ")");
@@ -254,7 +254,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			/* Get current user profile and customCoategory */
 			CustomSource customSource = userProfile.getCustomSource(sourceId);
 			List<Item> listItems;
-			listItems = customSource.getItems();
+			listItems = customSource.getItems(fname);
 
 			for (Item item : listItems) {
 				ItemBean itemBean = new ItemBean(item, customSource);
@@ -684,7 +684,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 						if (sources != null) {
 							for (SourceBean sourceBean : sources) {
 								// Creating sourceWebBean from sourceBean
-								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile);
+								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile, true, contextBean.getId());
 								// we add the source order in the Category XML
 								// definition file
 								int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
@@ -731,7 +731,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 						List<SourceWebBean> sourcesWeb = new ArrayList<SourceWebBean>();
 						if (sources != null) {
 							for (SourceBean sourceBean : sources) {
-								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile, false);
+								SourceWebBean sourceWebBean = populateSourceWebBean(sourceBean, userProfile, false, contextBean.getId());
 								// we add the source order in the Category XML
 								// definition file
 								int xmlOrder = categoryBean.getXMLOrder(sourceBean.getId());
@@ -832,7 +832,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 */
 	private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, UserProfile userProfile)
 			throws DomainServiceException {
-		return populateSourceWebBean(sourceBean, userProfile, true);
+		return populateSourceWebBean(sourceBean, userProfile, true, null);
 	}
 
 	/**
@@ -841,10 +841,11 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 	 * @param sourceBean
 	 * @param userProfile
 	 * @param withItems
+	 * @param fname
 	 * @return populated SourceWebBean with or without items
 	 * @throws DomainServiceException
 	 */
-	private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, UserProfile userProfile, boolean withItems)
+	private SourceWebBean populateSourceWebBean(final SourceBean sourceBean, UserProfile userProfile, boolean withItems, String fname)
 			throws DomainServiceException {
 		SourceWebBean sourceWebBean;
 		if (sourceBean instanceof SourceDummyBean) {
@@ -861,7 +862,7 @@ public class DomainServiceImpl implements DomainService, InitializingBean {
 			// get Item for the source
 			List<ItemBean> itemsBeans = new ArrayList<ItemBean>();
 			if (withItems) {
-				itemsBeans = getItems(userProfile, sourceBean.getId());
+				itemsBeans = getItems(userProfile, sourceBean.getId(), fname);
 			}
 			sourceWebBean = new SourceWebBean(itemsBeans);
 			sourceWebBean.setId(sourceBean.getId());

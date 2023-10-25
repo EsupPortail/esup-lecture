@@ -313,7 +313,7 @@ public abstract class Source implements Element, Serializable {
 	 * @throws ComputeItemsException
 	 */
 	@SuppressWarnings("unchecked")
-	synchronized private void computeItems(ItemParser parser) throws ComputeItemsException {
+	synchronized private void computeItems(ItemParser parser, final String fname) throws ComputeItemsException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.profileId + " - computeItems()");
 		}
@@ -357,9 +357,9 @@ public abstract class Source implements Element, Serializable {
 					xml.append("\" ?>");
 					xml.append(node.asXML());
 					String xmlAsString = xml.toString();
-					String htmlContent = xml2html(xmlAsString, getXsltURL(), encoding);
+					String htmlContent = xml2html(xmlAsString, getXsltURL(), encoding, fname);
 					item.setHtmlContent(htmlContent);
-					String MobileHtmlContent = xml2html(xmlAsString, getMobileXsltURL(), encoding);
+					String MobileHtmlContent = xml2html(xmlAsString, getMobileXsltURL(), encoding, fname);
 					item.setMobileHtmlContent(MobileHtmlContent);
 					// find MD5 of item content for his ID
 
@@ -440,10 +440,12 @@ public abstract class Source implements Element, Serializable {
 	 *            URL of XSLT file
 	 * @param encoding
 	 *            of xml to transform
+	 * @param fname
+	 *            of the context
 	 * @return html content
 	 * @throws Xml2HtmlException
 	 */
-	private String xml2html(final String xml, final String xsltFileURL, final String encoding)
+	private String xml2html(final String xml, final String xsltFileURL, final String encoding, final String fname)
 			throws Xml2HtmlException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.profileId + " - xml2html(xml,xsltFileURL)");
@@ -475,6 +477,7 @@ public abstract class Source implements Element, Serializable {
 			StreamSource source = new StreamSource(inputStream);
 			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 			StreamResult result = new StreamResult(outputStream);
+			transformer.setParameter("fname","/portail/api/ExternalURLStats?fname="+fname+"-click&service=");
 			transformer.transform(source, result);
 			ret = outputStream.toString("UTF-8");
 		} catch (TransformerConfigurationException e) {
@@ -503,11 +506,11 @@ public abstract class Source implements Element, Serializable {
 	 * @return the items lits
 	 * @throws ComputeItemsException
 	 */
-	protected List<Item> getItems(ItemParser parser) throws ComputeItemsException {
+	protected List<Item> getItems(ItemParser parser, final String fname) throws ComputeItemsException {
 		if (LOG.isDebugEnabled()) {
 			LOG.debug("id=" + this.profileId + " - getItems()");
 		}
-		computeItems(parser);
+		computeItems(parser, fname);
 		return items;
 	}
 

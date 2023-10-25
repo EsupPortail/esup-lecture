@@ -64,7 +64,7 @@ public class SourceDummy extends Source implements DummyInterface {
 	 * @return an empty items list
 	 */
 	@Override
-	protected List<Item> getItems(ItemParser parser) {
+	protected List<Item> getItems(ItemParser parser, final String fname) {
 	   	if (LOG.isDebugEnabled()) {
     		LOG.debug("id=" + super.getProfileId() + " - getItems()");
     	}
