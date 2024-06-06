@@ -133,7 +133,7 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 		            }
 		            modal.modal('show');
 		            var modalBody= modal.find('.modal-body');
-		            	
+                modalBody[0].querySelector('#openInNewTab').href = ref;
 		            if (iframe) { // on utilise une iframe pour resoudre les pb de cross domaine cas avec publisher
 			            modalBody.load(
 			            		ref, 

@@ -68,7 +68,7 @@
       </h3>
     </div>
     <div class="modal-body">
-      <p>REMOTE CONTENT</p>
+      <p><spring:message code="loadingError" /></p>
     </div>
     <div class="modal-footer">
       <button class="btn" data-dismiss="modal" aria-hidden="true"><spring:message code="close" /></button>
