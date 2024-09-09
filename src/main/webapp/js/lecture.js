@@ -132,8 +132,9 @@ lecture.init = function($, namespace, urlActionMarkRead, urlMarkRead, urlMarkAll
 			            modal.traitementScroll = true;
 		            }
 		            modal.modal('show');
-		            var modalBody= modal.find('.modal-body');
-                modalBody[0].querySelector('#openInNewTab').href = ref;
+		            var modalBody = modal.find('.modal-body');
+                var link = modal.find('#openInNewTab');
+                if (link) link.href = ref;
 		            if (iframe) { // on utilise une iframe pour resoudre les pb de cross domaine cas avec publisher
 			            modalBody.load(
 			            		ref, 
